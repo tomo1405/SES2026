@@ -1,0 +1,80 @@
+F...FFFF                                                                 [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+smtp_server = 'smtp.example.com', smtp_port = 587
+smtp_username = 'user@example.com', smtp_password = 'password'
+request_data = {'subject': 'Test Email', 'message': 'This is a test email.', 'to': 'recipient@example.com'}
+
+    def test_task_func(smtp_server, smtp_port, smtp_username, smtp_password, request_data):
+        handler = task_func(smtp_server, smtp_port, smtp_username, smtp_password)
+>       assert handler.smtp_server == smtp_server
+               ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: type object 'EmailRequestHandler' has no attribute 'smtp_server'
+
+test_0275.py:30: AttributeError
+______________________________ test_parse_header _______________________________
+
+smtp_server = 'smtp.example.com', smtp_port = 587
+smtp_username = 'user@example.com', smtp_password = 'password'
+request_data = {'subject': 'Test Email', 'message': 'This is a test email.', 'to': 'recipient@example.com'}
+
+    def test_parse_header(smtp_server, smtp_port, smtp_username, smtp_password, request_data):
+        handler = task_func(smtp_server, smtp_port, smtp_username, smtp_password)
+>       assert hasattr(handler, "parse_header")
+E       AssertionError: assert False
+E        +  where False = hasattr(<class 'src_0275.task_func.<locals>.EmailRequestHandler'>, 'parse_header')
+
+test_0275.py:50: AssertionError
+__________________________________ test_loads __________________________________
+
+smtp_server = 'smtp.example.com', smtp_port = 587
+smtp_username = 'user@example.com', smtp_password = 'password'
+request_data = {'subject': 'Test Email', 'message': 'This is a test email.', 'to': 'recipient@example.com'}
+
+    def test_loads(smtp_server, smtp_port, smtp_username, smtp_password, request_data):
+        handler = task_func(smtp_server, smtp_port, smtp_username, smtp_password)
+>       assert hasattr(handler, "loads")
+E       AssertionError: assert False
+E        +  where False = hasattr(<class 'src_0275.task_func.<locals>.EmailRequestHandler'>, 'loads')
+
+test_0275.py:54: AssertionError
+__________________________________ test_login __________________________________
+
+smtp_server = 'smtp.example.com', smtp_port = 587
+smtp_username = 'user@example.com', smtp_password = 'password'
+request_data = {'subject': 'Test Email', 'message': 'This is a test email.', 'to': 'recipient@example.com'}
+
+    def test_login(smtp_server, smtp_port, smtp_username, smtp_password, request_data):
+        handler = task_func(smtp_server, smtp_port, smtp_username, smtp_password)
+>       assert hasattr(handler, "login")
+E       AssertionError: assert False
+E        +  where False = hasattr(<class 'src_0275.task_func.<locals>.EmailRequestHandler'>, 'login')
+
+test_0275.py:58: AssertionError
+________________________________ test_sendmail _________________________________
+
+smtp_server = 'smtp.example.com', smtp_port = 587
+smtp_username = 'user@example.com', smtp_password = 'password'
+request_data = {'subject': 'Test Email', 'message': 'This is a test email.', 'to': 'recipient@example.com'}
+
+    def test_sendmail(smtp_server, smtp_port, smtp_username, smtp_password, request_data):
+        handler = task_func(smtp_server, smtp_port, smtp_username, smtp_password)
+>       assert hasattr(handler, "sendmail")
+E       AssertionError: assert False
+E        +  where False = hasattr(<class 'src_0275.task_func.<locals>.EmailRequestHandler'>, 'sendmail')
+
+test_0275.py:62: AssertionError
+=============================== warnings summary ===============================
+../../../src/src_0275.py:1
+  /work/tomohiro-w/utg/src/src_0275.py:1: DeprecationWarning: 'cgi' is deprecated and slated for removal in Python 3.13
+    import cgi
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0275.py::test_task_func - AttributeError: type object 'EmailReque...
+FAILED test_0275.py::test_parse_header - AssertionError: assert False
+FAILED test_0275.py::test_loads - AssertionError: assert False
+FAILED test_0275.py::test_login - AssertionError: assert False
+FAILED test_0275.py::test_sendmail - AssertionError: assert False
+5 failed, 3 passed, 1 warning in 0.56s

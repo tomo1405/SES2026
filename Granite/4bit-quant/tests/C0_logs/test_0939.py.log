@@ -1,0 +1,36 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        input_df = pd.DataFrame({
+            'text': ['Hello, world!', '12345', None]
+        })
+        expected_output = pd.DataFrame({
+            'clean_text': ['HelloWorld', '12345', ''],
+            'text_length': [11, 5, 0]
+        })
+        output_df = task_func(input_df)
+>       pd.testing.assert_frame_equal(output_df, expected_output)
+
+test_0939.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/_testing/asserters.py:846: in assert_extension_array_equal
+    _testing.assert_almost_equal(
+pandas/_libs/testing.pyx:53: in pandas._libs.testing.assert_almost_equal
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   AssertionError: DataFrame.iloc[:, 0] (column name="clean_text") are different
+E   
+E   DataFrame.iloc[:, 0] (column name="clean_text") values are different (33.33333 %)
+E   [index]: [0, 1, 2]
+E   [left]:  [Helloworld, 12345, ]
+E   [right]: [HelloWorld, 12345, ]
+E   At positional index 0, first diff: Helloworld != HelloWorld
+
+pandas/_libs/testing.pyx:171: AssertionError
+=========================== short test summary info ============================
+FAILED test_0939.py::test_task_func - AssertionError: DataFrame.iloc[:, 0] (c...
+1 failed, 1 passed in 1.46s

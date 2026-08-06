@@ -1,0 +1,22 @@
+..F..                                                                    [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_files_found __________________________
+
+mock_os_path = None, mock_glob = None
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7841db709040>
+
+    def test_task_func_files_found(mock_os_path, mock_glob, monkeypatch):
+        monkeypatch.setattr(glob, 'glob', lambda pattern, recursive: ["/test/directory/file1.txt", "/test/directory/subdir/file2.txt"])
+        result = task_func("/test/directory")
+>       assert result == Counter({'.txt': 2})
+E       AssertionError: assert Counter({'.tx...2, '.csv': 2}) == Counter({'.txt': 2})
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Left contains 3 more items:
+E         {'.csv': 2, '.docx': 2, '.xlsx': 2}
+E         Use -v to get more diff
+
+test_0962.py:46: AssertionError
+=========================== short test summary info ============================
+FAILED test_0962.py::test_task_func_files_found - AssertionError: assert Coun...
+1 failed, 4 passed in 0.47s

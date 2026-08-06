@@ -1,0 +1,27 @@
+F..                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data_list = ["apple, banana, orange", "grape, melon, watermelon", "lemon, lime, grapefruit"]
+        seed = 42
+        df = task_func(data_list, seed)
+        assert isinstance(df, pd.DataFrame)
+        assert "Original String" in df.columns
+        assert "Modified String" in df.columns
+        for s in data_list:
+            substrings = re.split(", ", s)
+            random_substring = random.choice(substrings)
+            modified_s = (
+                s.replace(", " + random_substring, "")
+                if ", " + random_substring in s
+                else s.replace(random_substring + ", ", "")
+            )
+>           assert modified_s in df["Modified String"].values
+E           AssertionError: assert 'grape, watermelon' in <ArrowStringArray>\n['apple, banana', 'melon, watermelon', 'lime, grapefruit']\nLength: 3, dtype: str
+E            +  where <ArrowStringArray>\n['apple, banana', 'melon, watermelon', 'lime, grapefruit']\nLength: 3, dtype: str = 0        apple, banana\n1    melon, watermelon\n2     lime, grapefruit\nName: Modified String, dtype: str.values
+
+test_0479.py:23: AssertionError
+=========================== short test summary info ============================
+FAILED test_0479.py::test_task_func - AssertionError: assert 'grape, watermel...
+1 failed, 2 passed in 1.14s

@@ -1,0 +1,39 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        json_data = '{"key1": {"key2": [1, 2, 3]}}'
+        data_key = "key1.key2"
+        values, normalized_values, ax = task_func(json_data, data_key)
+        assert values.equals(pd.Series([1, 2, 3], dtype=pd.Float64Dtype))
+>       assert normalized_values.equals(pd.Series([0.5, 1, 1.5], dtype=pd.Float64Dtype))
+E       AssertionError: assert False
+E        +  where False = equals(0    0.5\n1    1.0\n2    1.5\ndtype: Float64)
+E        +    where equals = 0    0.0\n1    0.5\n2    1.0\ndtype: Float64.equals
+E        +    and   0    0.5\n1    1.0\n2    1.5\ndtype: Float64 = <class 'pandas.Series'>([0.5, 1, 1.5], dtype=<class 'pandas.Float64Dtype'>)
+E        +      where <class 'pandas.Series'> = pd.Series
+E        +      and   <class 'pandas.Float64Dtype'> = pd.Float64Dtype
+
+test_0988.py:10: AssertionError
+=============================== warnings summary ===============================
+Codellama/4bit-quant/tests/test_0988.py::test_task_func
+  /work/tomohiro-w/utg/src/src_0988.py:11: UserWarning: Instantiating Float64Dtype without any arguments.Pass a Float64Dtype instance to silence this warning.
+    values = pd.Series(data, dtype=pd.Float64Dtype)
+
+Codellama/4bit-quant/tests/test_0988.py::test_task_func
+  /work/tomohiro-w/utg/src/src_0988.py:19: UserWarning: Instantiating Float64Dtype without any arguments.Pass a Float64Dtype instance to silence this warning.
+    normalized_values = pd.Series(
+
+Codellama/4bit-quant/tests/test_0988.py::test_task_func
+  /work/tomohiro-w/utg/Codellama/4bit-quant/tests/test_0988.py:9: UserWarning: Instantiating Float64Dtype without any arguments.Pass a Float64Dtype instance to silence this warning.
+    assert values.equals(pd.Series([1, 2, 3], dtype=pd.Float64Dtype))
+
+Codellama/4bit-quant/tests/test_0988.py::test_task_func
+  /work/tomohiro-w/utg/Codellama/4bit-quant/tests/test_0988.py:10: UserWarning: Instantiating Float64Dtype without any arguments.Pass a Float64Dtype instance to silence this warning.
+    assert normalized_values.equals(pd.Series([0.5, 1, 1.5], dtype=pd.Float64Dtype))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0988.py::test_task_func - AssertionError: assert False
+1 failed, 4 warnings in 3.37s

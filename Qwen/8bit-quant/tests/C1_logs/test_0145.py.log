@@ -1,0 +1,19 @@
+.F..                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_invalid_ip_range ________________________
+
+    def test_task_func_invalid_ip_range():
+        ip_range = "256.256.256.256/30"
+        timeout = 1
+        with pytest.raises(ValueError) as excinfo:
+            task_func(ip_range, timeout)
+>       assert str(excinfo.value) == "Invalid IP range: invalid IPv4 address"
+E       assert "Invalid IP r....256.256.256'" == 'Invalid IP r... IPv4 address'
+E         
+E         - Invalid IP range: invalid IPv4 address
+E         + Invalid IP range: Octet 256 (> 255) not permitted in '256.256.256.256'
+
+test_0145.py:17: AssertionError
+=========================== short test summary info ============================
+FAILED test_0145.py::test_task_func_invalid_ip_range - assert "Invalid IP r.....
+1 failed, 3 passed in 2.68s

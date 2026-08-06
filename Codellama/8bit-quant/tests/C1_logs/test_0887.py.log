@@ -1,0 +1,83 @@
+F...FF                                                                   [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data = {'Name': 'John', 'Age': 25, 'Score': 90}
+>       df, avg_scores, most_common_age = task_func(data)
+                                          ^^^^^^^^^^^^^^^
+
+test_0887.py:6: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0887.py:9: in task_func
+    df = pd.DataFrame(data).sort_values(['Name', 'Age'])
+         ^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:769: in __init__
+    mgr = dict_to_mgr(data, index, columns, dtype=dtype, copy=copy)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:460: in dict_to_mgr
+    return arrays_to_mgr(arrays, columns, index, dtype=dtype, consolidate=copy)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:113: in arrays_to_mgr
+    index = _extract_index(arrays)
+            ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = ['John', 25, 90]
+
+    def _extract_index(data) -> Index:
+        """
+        Try to infer an Index from the passed data, raise ValueError on failure.
+        """
+        index: Index
+        if len(data) == 0:
+            return default_index(0)
+    
+        raw_lengths = set()
+        indexes: list[list[Hashable] | Index] = []
+    
+        have_raw_arrays = False
+        have_series = False
+        have_dicts = False
+    
+        for val in data:
+            if isinstance(val, ABCSeries):
+                have_series = True
+                indexes.append(val.index)
+            elif isinstance(val, dict):
+                have_dicts = True
+                indexes.append(list(val.keys()))
+            elif is_list_like(val) and getattr(val, "ndim", 1) == 1:
+                have_raw_arrays = True
+                raw_lengths.add(len(val))
+            elif isinstance(val, np.ndarray) and val.ndim > 1:
+                raise ValueError("Per-column arrays must each be 1-dimensional")
+    
+        if not indexes and not raw_lengths:
+>           raise ValueError("If using all scalar values, you must pass an index")
+E           ValueError: If using all scalar values, you must pass an index
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:634: ValueError
+________________________ test_task_func_invalid_sort_by ________________________
+
+    def test_task_func_invalid_sort_by():
+        data = {'Name': 'John', 'Age': 25, 'Score': 90}
+        with pytest.raises(ValueError):
+>           task_func(data, sort_by='invalid')
+E           TypeError: task_func() got an unexpected keyword argument 'sort_by'
+
+test_0887.py:29: TypeError
+________________________ test_task_func_invalid_groupby ________________________
+
+    def test_task_func_invalid_groupby():
+        data = {'Name': 'John', 'Age': 25, 'Score': 90}
+        with pytest.raises(ValueError):
+>           task_func(data, groupby='invalid')
+E           TypeError: task_func() got an unexpected keyword argument 'groupby'
+
+test_0887.py:34: TypeError
+=========================== short test summary info ============================
+FAILED test_0887.py::test_task_func - ValueError: If using all scalar values,...
+FAILED test_0887.py::test_task_func_invalid_sort_by - TypeError: task_func() ...
+FAILED test_0887.py::test_task_func_invalid_groupby - TypeError: task_func() ...
+3 failed, 3 passed in 1.31s

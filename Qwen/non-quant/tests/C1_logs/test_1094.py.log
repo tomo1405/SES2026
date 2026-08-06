@@ -1,0 +1,25 @@
+...F                                                                     [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_nested_dicts __________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1653/test_task_func_nested_dicts0')
+
+    def test_task_func_nested_dicts(tmp_path):
+        content = '{"a": {"b": {"c": "d"}}}\n{"e": "f"}'
+        temp_file = tmp_path / "nested_dicts.txt"
+        temp_file.write_text(content)
+        result = task_func(str(temp_file))
+        expected_result = [
+            {'a': {'b': {'c': 'd'}}},
+            {'e': 'f'}
+        ]
+>       assert result == expected_result
+E       AssertionError: assert [{'b': {'c': ...}, {'e': 'f'}] == [{'a': {'b': ...}, {'e': 'f'}]
+E         
+E         At index 0 diff: {'b': {'c': 'd'}} != {'a': {'b': {'c': 'd'}}}
+E         Use -v to get more diff
+
+test_1094.py:43: AssertionError
+=========================== short test summary info ============================
+FAILED test_1094.py::test_task_func_nested_dicts - AssertionError: assert [{'...
+1 failed, 3 passed in 0.50s

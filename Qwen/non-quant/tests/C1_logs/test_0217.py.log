@@ -1,0 +1,87 @@
+FFF.                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_os = None, mock_json = None, mock_open = None
+
+    def test_task_func(mock_os, mock_json, mock_open):
+        json_dir_path = '/path/to/json/dir'
+        word_count = 2
+>       result = task_func(json_dir_path, word_count)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0217.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+json_dir_path = '/path/to/json/dir', word_count = 2
+
+    def task_func(json_dir_path, word_count):
+        word_counter = Counter()
+    
+        for filename in os.listdir(json_dir_path):
+            if filename.endswith('.json'):
+>               with open(os.path.join(json_dir_path, filename), 'r') as f:
+E               TypeError: 'MockOpen' object does not support the context manager protocol
+
+../../../src/src_0217.py:10: TypeError
+_________________________ test_task_func_no_json_files _________________________
+
+mock_os = None, mock_json = None, mock_open = None
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d5432d3b830>
+
+    def test_task_func_no_json_files(mock_os, mock_json, mock_open, monkeypatch):
+        def mock_listdir(path):
+            return ['file1.txt', 'file2.json']
+        monkeypatch.setattr(os, 'listdir', mock_listdir)
+        json_dir_path = '/path/to/json/dir'
+        word_count = 2
+>       result = task_func(json_dir_path, word_count)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0217.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+json_dir_path = '/path/to/json/dir', word_count = 2
+
+    def task_func(json_dir_path, word_count):
+        word_counter = Counter()
+    
+        for filename in os.listdir(json_dir_path):
+            if filename.endswith('.json'):
+>               with open(os.path.join(json_dir_path, filename), 'r') as f:
+E               TypeError: 'MockOpen' object does not support the context manager protocol
+
+../../../src/src_0217.py:10: TypeError
+__________________________ test_task_func_empty_text ___________________________
+
+mock_os = None, mock_json = None, mock_open = None
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d5432d3a570>
+
+    def test_task_func_empty_text(mock_os, mock_json, mock_open, monkeypatch):
+        def mock_load(file_obj):
+            return {'text': ''}
+        monkeypatch.setattr(json, 'load', mock_load)
+        json_dir_path = '/path/to/json/dir'
+        word_count = 2
+>       result = task_func(json_dir_path, word_count)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0217.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+json_dir_path = '/path/to/json/dir', word_count = 2
+
+    def task_func(json_dir_path, word_count):
+        word_counter = Counter()
+    
+        for filename in os.listdir(json_dir_path):
+            if filename.endswith('.json'):
+>               with open(os.path.join(json_dir_path, filename), 'r') as f:
+E               TypeError: 'MockOpen' object does not support the context manager protocol
+
+../../../src/src_0217.py:10: TypeError
+=========================== short test summary info ============================
+FAILED test_0217.py::test_task_func - TypeError: 'MockOpen' object does not s...
+FAILED test_0217.py::test_task_func_no_json_files - TypeError: 'MockOpen' obj...
+FAILED test_0217.py::test_task_func_empty_text - TypeError: 'MockOpen' object...
+3 failed, 1 passed in 1.01s

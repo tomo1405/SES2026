@@ -1,0 +1,42 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+input_data = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+
+    def test_task_func(input_data):
+        df = pd.DataFrame(input_data)
+        result = task_func(df)
+        assert result is not None
+>       assert isinstance(result, sns.matrix.Heatmap)
+                                  ^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'seaborn.matrix' has no attribute 'Heatmap'. Did you mean: 'heatmap'?
+
+test_0417.py:15: AttributeError
+______________________ test_task_func_with_invalid_column ______________________
+
+input_data = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+
+    def test_task_func_with_invalid_column(input_data):
+        df = pd.DataFrame(input_data)
+        result = task_func(df, column="invalid_column")
+>       assert result is None
+E       assert <Axes: > is None
+
+test_0417.py:20: AssertionError
+____________________ test_task_func_with_no_numeric_columns ____________________
+
+input_data = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+
+    def test_task_func_with_no_numeric_columns(input_data):
+        df = pd.DataFrame(input_data, columns=["a", "b", "c"])
+        result = task_func(df)
+>       assert result is None
+E       assert <Axes: > is None
+
+test_0417.py:25: AssertionError
+=========================== short test summary info ============================
+FAILED test_0417.py::test_task_func - AttributeError: module 'seaborn.matrix'...
+FAILED test_0417.py::test_task_func_with_invalid_column - assert <Axes: > is ...
+FAILED test_0417.py::test_task_func_with_no_numeric_columns - assert <Axes: >...
+3 failed in 3.86s

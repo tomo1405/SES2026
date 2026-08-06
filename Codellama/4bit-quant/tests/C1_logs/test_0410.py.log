@@ -1,0 +1,29 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: File not found
+        with pytest.raises(FileNotFoundError):
+            task_func('path/to/file', 'file_name', 'column_name')
+    
+        # Test case 2: Column not found
+        with pytest.raises(ValueError):
+>           task_func('path/to/file', 'file_name', 'column_name')
+
+test_0410.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+excel_file_path = 'path/to/file', file_name = 'file_name'
+column_name = 'column_name'
+
+    def task_func(excel_file_path, file_name, column_name):
+        excel_file = os.path.join(excel_file_path, file_name)
+        if not os.path.exists(excel_file):
+>           raise FileNotFoundError(f"No file found at {excel_file}")
+E           FileNotFoundError: No file found at path/to/file/file_name
+
+../../../src/src_0410.py:7: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0410.py::test_task_func - FileNotFoundError: No file found at pat...
+1 failed in 1.10s

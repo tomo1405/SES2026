@@ -1,0 +1,113 @@
+....F.F.                                                                 [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_windows ____________________________
+
+mock_open = <MagicMock name='open' id='130617217526400'>
+mock_check_output = <MagicMock name='check_output' id='130617217530336'>
+mock_platform_system = <MagicMock name='system' id='130617217523184'>
+
+    @patch('src_1029.platform.system')
+    @patch('src_1029.subprocess.check_output')
+    @patch('src_1029.open', new_callable=MagicMock)
+    def test_task_func_windows(mock_open, mock_check_output, mock_platform_system):
+        mock_platform_system.return_value = "Windows"
+        mock_check_output.return_value = b'{"Time Stamp": "1633072800", "\\Processor(_Total)\\% Processor Time": "10.5"}'
+    
+>       result = task_func(1, 2)
+                 ^^^^^^^^^^^^^^^
+
+test_1029.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+interval = 1, duration = 2
+
+    def task_func(interval, duration):
+        if interval <= 0 or duration <= 0:
+            raise ValueError("Interval and duration must be greater than zero.")
+    
+        start_time = time.time()
+        try:
+            with open(LOGFILE_PATH, "w", encoding="utf-8") as logfile:
+                while time.time() - start_time <= duration:
+                    operation_start_time = time.time()
+    
+                    # Check the operating system
+                    if platform.system() == "Windows":
+                        # Windows command for CPU usage
+                        command = [
+                            "typeperf",
+                            "\\Processor(_Total)\\% Processor Time",
+                            "-sc",
+                            "1",
+                        ]
+                    else:
+                        # Unix/Linux command for CPU usage
+                        command = ["top", "-b", "-n1"]
+    
+                    output = subprocess.check_output(command)
+                    cpu_usage_line = (
+>                       output.decode("utf-8").split("\n")[2]
+                        if platform.system() == "Windows"
+                        else output.decode("utf-8").split("\n")[2]
+                    )
+E                   IndexError: list index out of range
+
+../../../src/src_1029.py:31: IndexError
+__________________________ test_task_func_sleep_time ___________________________
+
+mock_open = <MagicMock name='open' id='130617215688608'>
+mock_check_output = <MagicMock name='check_output' id='130617215692640'>
+mock_platform_system = <MagicMock name='system' id='130617215695328'>
+mock_sleep = <MagicMock name='sleep' id='130617215764816'>
+
+    @patch('src_1029.time.sleep')
+    @patch('src_1029.platform.system')
+    @patch('src_1029.subprocess.check_output')
+    @patch('src_1029.open', new_callable=MagicMock)
+    def test_task_func_sleep_time(mock_open, mock_check_output, mock_platform_system, mock_sleep):
+        mock_platform_system.return_value = "Windows"
+        mock_check_output.return_value = b'{"Time Stamp": "1633072800", "\\Processor(_Total)\\% Processor Time": "10.5"}'
+    
+>       task_func(2, 5)
+
+test_1029.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+interval = 2, duration = 5
+
+    def task_func(interval, duration):
+        if interval <= 0 or duration <= 0:
+            raise ValueError("Interval and duration must be greater than zero.")
+    
+        start_time = time.time()
+        try:
+            with open(LOGFILE_PATH, "w", encoding="utf-8") as logfile:
+                while time.time() - start_time <= duration:
+                    operation_start_time = time.time()
+    
+                    # Check the operating system
+                    if platform.system() == "Windows":
+                        # Windows command for CPU usage
+                        command = [
+                            "typeperf",
+                            "\\Processor(_Total)\\% Processor Time",
+                            "-sc",
+                            "1",
+                        ]
+                    else:
+                        # Unix/Linux command for CPU usage
+                        command = ["top", "-b", "-n1"]
+    
+                    output = subprocess.check_output(command)
+                    cpu_usage_line = (
+>                       output.decode("utf-8").split("\n")[2]
+                        if platform.system() == "Windows"
+                        else output.decode("utf-8").split("\n")[2]
+                    )
+E                   IndexError: list index out of range
+
+../../../src/src_1029.py:31: IndexError
+=========================== short test summary info ============================
+FAILED test_1029.py::test_task_func_windows - IndexError: list index out of r...
+FAILED test_1029.py::test_task_func_sleep_time - IndexError: list index out o...
+2 failed, 6 passed in 2.51s

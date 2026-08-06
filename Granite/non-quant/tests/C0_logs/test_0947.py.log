@@ -1,0 +1,59 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Default arguments
+        df = task_func()
+        assert df.shape == (3, 2)
+>       assert df.min().item() == 0
+               ^^^^^^^^^^^^^^^
+
+test_0947.py:8: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = 0    33
+1     5
+dtype: int64
+
+    @final
+    def item(self):
+        """
+        Return the first element of the underlying data as a Python scalar.
+    
+        Returns
+        -------
+        scalar
+            The first element of Series or Index.
+    
+        Raises
+        ------
+        ValueError
+            If the data is not length = 1.
+    
+        See Also
+        --------
+        Index.values : Returns an array representing the data in the Index.
+        Series.head : Returns the first `n` rows.
+    
+        Examples
+        --------
+        >>> s = pd.Series([1])
+        >>> s.item()
+        1
+    
+        For an index:
+    
+        >>> s = pd.Series([1], index=["a"])
+        >>> s.index.item()
+        'a'
+        """
+        if len(self) == 1:
+            return next(iter(self))
+>       raise ValueError("can only convert an array of size 1 to a Python scalar")
+E       ValueError: can only convert an array of size 1 to a Python scalar
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/base.py:427: ValueError
+=========================== short test summary info ============================
+FAILED test_0947.py::test_task_func - ValueError: can only convert an array o...
+1 failed in 1.25s

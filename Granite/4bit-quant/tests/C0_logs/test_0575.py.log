@@ -1,0 +1,20 @@
+.F                                                                       [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_custom_params _______________________
+
+    def test_task_func_with_custom_params():
+        array_length = 200
+        noise_level = 0.5
+        ax = task_func(array_length, noise_level)
+        assert ax is not None
+        assert isinstance(ax, plt.Axes)
+        x = np.linspace(0, 4*np.pi, array_length)
+        y = np.sin(x) + noise_level * np.random.rand(array_length)
+>       popt, pcov = curve_fit(func, x, y, p0=[1, 1])
+                     ^^^^^^^^^
+E       NameError: name 'curve_fit' is not defined
+
+test_0575.py:19: NameError
+=========================== short test summary info ============================
+FAILED test_0575.py::test_task_func_with_custom_params - NameError: name 'cur...
+1 failed, 1 passed in 2.60s

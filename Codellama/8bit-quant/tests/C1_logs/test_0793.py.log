@@ -1,0 +1,25 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        df = pd.DataFrame({'feature': [1, 2, 3, 4, 5], 'target': [10, 20, 30, 40, 50]})
+        feature = 'feature'
+        target = 'target'
+        n = 2
+    
+        largest_residual_indices, model = task_func(df, feature, target, n)
+    
+        assert len(largest_residual_indices) == n
+        assert all(largest_residual_indices[i] in df.index for i in range(n))
+>       assert model.coef_[0] == pytest.approx(1)
+E       assert np.float64(9.999999999999998) == 1 ± 1.0e-06
+E         
+E         comparison failed
+E         Obtained: 9.999999999999998
+E         Expected: 1 ± 1.0e-06
+
+test_0793.py:16: AssertionError
+=========================== short test summary info ============================
+FAILED test_0793.py::test_task_func - assert np.float64(9.999999999999998) ==...
+1 failed in 2.86s

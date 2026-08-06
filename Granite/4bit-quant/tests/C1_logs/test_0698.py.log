@@ -1,0 +1,39 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        df = {'feature': [1, 2, 3, 4, 5], 'value': [2, 4, 6, 8, 10]}
+        expected_output = {'coefficients': [1.4], 'intercept': [1.4]}
+        output = task_func(df)
+>       assert output == expected_output, "Output does not match expected output"
+E       AssertionError: Output does not match expected output
+E       assert {'coefficient...rcept': [0.0]} == {'coefficient...rcept': [1.4]}
+E         
+E         Differing items:
+E         {'coefficients': [[2.0]]} != {'coefficients': [1.4]}
+E         {'intercept': [0.0]} != {'intercept': [1.4]}
+E         Use -v to get more diff
+
+test_0698.py:8: AssertionError
+______________________ test_task_func_with_invalid_input _______________________
+
+    def test_task_func_with_invalid_input():
+        with pytest.raises(ValueError):
+>           task_func('invalid input')
+
+test_0698.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df = 'invalid input'
+
+    def task_func(df):
+>       X = np.array(df['feature']).reshape(-1,1)  # Explicitly converting to numpy array and reshaping
+                     ^^^^^^^^^^^^^
+E       TypeError: string indices must be integers, not 'str'
+
+../../../src/src_0698.py:4: TypeError
+=========================== short test summary info ============================
+FAILED test_0698.py::test_task_func - AssertionError: Output does not match e...
+FAILED test_0698.py::test_task_func_with_invalid_input - TypeError: string in...
+2 failed in 3.22s

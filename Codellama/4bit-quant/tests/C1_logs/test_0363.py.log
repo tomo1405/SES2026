@@ -1,0 +1,28 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that the function raises an error when the original file does not exist
+        with pytest.raises(FileNotFoundError):
+            task_func("non_existent_file.xlsx")
+    
+        # Test that the function raises an error when the sheet name is invalid
+        with pytest.raises(ValueError):
+>           task_func("test.xlsx", sheet_name="invalid_sheet")
+
+test_0363.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+original_file_location = 'test.xlsx', new_file_location = 'new_test.xlsx'
+sheet_name = 'invalid_sheet'
+
+    def task_func(original_file_location="test.xlsx", new_file_location="new_test.xlsx", sheet_name="Sheet1"):
+        if not os.path.exists(original_file_location):
+>           raise FileNotFoundError(f"No file found at {original_file_location}")
+E           FileNotFoundError: No file found at test.xlsx
+
+../../../src/src_0363.py:5: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0363.py::test_task_func - FileNotFoundError: No file found at tes...
+1 failed in 1.13s

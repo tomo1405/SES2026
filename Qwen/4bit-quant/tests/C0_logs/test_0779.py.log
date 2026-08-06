@@ -1,0 +1,62 @@
+F.F..                                                                    [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        articles = [
+            {'category': 'Sports', 'id': 1, 'title': 'Football Match', 'title_url': 'url1'},
+            {'category': 'Sports', 'id': 2, 'title': 'Basketball Game', 'title_url': 'url2'},
+            {'category': 'Tech', 'id': 3, 'title': 'New Phone Release', 'title_url': 'url3'},
+            {'category': 'Tech', 'id': 4, 'title': 'AI Update', 'title_url': 'url4'}
+        ]
+        expected_output = {
+            'Sports': [
+                {'category': 'Sports', 'id': 1, 'title': 'Football Match', 'title_url': 'url1'},
+                {'category': 'Sports', 'id': 2, 'title': 'Basketball Game', 'title_url': 'url2'}
+            ],
+            'Tech': [
+                {'category': 'Tech', 'id': 3, 'title': 'New Phone Release', 'title_url': 'url3'},
+                {'category': 'Tech', 'id': 4, 'title': 'AI Update', 'title_url': 'url4'}
+            ]
+        }
+>       assert task_func(articles) == expected_output
+E       AssertionError: assert defaultdict(<...l': 'url3'}]}) == {'Sports': [{...rl': 'url4'}]}
+E         
+E         Differing items:
+E         {'Tech': [{'category': 'Tech', 'id': 4, 'title': 'AI Update', 'title_url': 'url4'}, {'category': 'Tech', 'id': 3, 'title': 'New Phone Release', 'title_url': 'url3'}]} != {'Tech': [{'category': 'Tech', 'id': 3, 'title': 'New Phone Release', 'title_url': 'url3'}, {'category': 'Tech', 'id': 4, 'title': 'AI Update', 'title_url': 'url4'}]}
+E         {'Sports': [{'category': 'Sports', 'id': 2, 'title': 'Basketball Game', 'title_url': 'url2'}, {'category': 'Sports', 'id': 1, 'title': 'Football Match', 'title_url': 'url1'}]} != {'Sports': [{'category': 'Sports', 'id': 1, '...
+E         
+E         ...Full output truncated (2 lines hidden), use '-vv' to show
+
+test_0779.py:21: AssertionError
+___________________________ test_task_func_extra_key ___________________________
+
+    def test_task_func_extra_key():
+        articles = [
+            {'category': 'Sports', 'id': 1, 'title': 'Football Match', 'title_url': 'url1', 'extra': 'value'},
+            {'category': 'Sports', 'id': 2, 'title': 'Basketball Game', 'title_url': 'url2'}
+        ]
+        expected_output = {
+            'Sports': [
+                {'category': 'Sports', 'id': 1, 'title': 'Football Match', 'title_url': 'url1', 'extra': 'value'},
+                {'category': 'Sports', 'id': 2, 'title': 'Basketball Game', 'title_url': 'url2'}
+            ]
+        }
+>       assert task_func(articles) == expected_output
+               ^^^^^^^^^^^^^^^^^^^
+
+test_0779.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+news_articles = [{'category': 'Sports', 'id': 1, 'title': 'Football Match', 'title_url': 'url1', ...}, {'category': 'Sports', 'id': 2, 'title': 'Basketball Game', 'title_url': 'url2'}]
+
+    def task_func(news_articles):
+        if any(not sorted(dic.keys()) == ['category', 'id', 'title', 'title_url']  for dic in news_articles):
+>           raise ValueError("input dictionaries must contain the following keys: 'category', 'id', 'title', 'title_url'")
+E           ValueError: input dictionaries must contain the following keys: 'category', 'id', 'title', 'title_url'
+
+../../../src/src_0779.py:6: ValueError
+=========================== short test summary info ============================
+FAILED test_0779.py::test_task_func_valid_input - AssertionError: assert defa...
+FAILED test_0779.py::test_task_func_extra_key - ValueError: input dictionarie...
+2 failed, 3 passed in 0.51s

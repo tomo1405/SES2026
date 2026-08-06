@@ -1,0 +1,35 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_valid_filepath _________________________
+
+    def test_task_func_valid_filepath():
+        filepath = "test_file.txt"
+        expected_result = {'size': '100 bytes', 'last_modified': '2022-01-01 00:00:00'}
+        with open(filepath, "w") as f:
+            f.write("test")
+        result = task_func(filepath)
+>       assert result == expected_result
+E       AssertionError: assert {'size': '4 b...-28 17:53:11'} == {'size': '100...-01 00:00:00'}
+E         
+E         Differing items:
+E         {'last_modified': '2026-07-28 17:53:11'} != {'last_modified': '2022-01-01 00:00:00'}
+E         {'size': '4 bytes'} != {'size': '100 bytes'}
+E         Use -v to get more diff
+
+test_0782.py:10: AssertionError
+_______________________ test_task_func_invalid_filepath ________________________
+
+    def test_task_func_invalid_filepath():
+        filepath = "invalid_file.txt"
+        with pytest.raises(Exception) as e:
+            task_func(filepath)
+>       assert "Error: No such file or directory" in str(e.value)
+E       assert 'Error: No such file or directory' in "Error: [Errno 2] No such file or directory: 'invalid_file.txt'"
+E        +  where "Error: [Errno 2] No such file or directory: 'invalid_file.txt'" = str(Exception("Error: [Errno 2] No such file or directory: 'invalid_file.txt'"))
+E        +    where Exception("Error: [Errno 2] No such file or directory: 'invalid_file.txt'") = <ExceptionInfo Exception("Error: [Errno 2] No such file or directory: 'invalid_file.txt'") tblen=2>.value
+
+test_0782.py:16: AssertionError
+=========================== short test summary info ============================
+FAILED test_0782.py::test_task_func_valid_filepath - AssertionError: assert {...
+FAILED test_0782.py::test_task_func_invalid_filepath - assert 'Error: No such...
+2 failed in 0.47s

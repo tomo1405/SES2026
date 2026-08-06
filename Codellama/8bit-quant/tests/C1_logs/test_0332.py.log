@@ -1,0 +1,53 @@
+FF..F                                                                    [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_returns_correct_list ______________________
+
+    def test_task_func_returns_correct_list():
+        num = 5
+        list_length = 5
+        min_value = 0
+        max_value = 10
+        expected_list = [random.randint(min_value, max_value) for _ in range(list_length)]
+        expected_list.insert(bisect.bisect(expected_list, num), num)
+>       assert task_func(num, list_length, min_value, max_value) == (expected_list, expected_list)
+E       assert ([8, 2, 8, 8,... 5, 8, 8, 10]) == ([8, 8, 4, 5,..., 4, 5, 8, 6])
+E         
+E         At index 0 diff: [8, 2, 8, 8, 10] != [8, 8, 4, 5, 8, 6]
+E         Use -v to get more diff
+
+test_0332.py:14: AssertionError
+__________________ test_task_func_returns_correct_sorted_list __________________
+
+    def test_task_func_returns_correct_sorted_list():
+        num = 5
+        list_length = 5
+        min_value = 0
+        max_value = 10
+        expected_list = [random.randint(min_value, max_value) for _ in range(list_length)]
+        expected_list.insert(bisect.bisect(expected_list, num), num)
+>       assert task_func(num, list_length, min_value, max_value)[1] == sorted(expected_list)
+E       assert [4, 5, 9, 6, 3, 4] == [0, 5, 5, 7, 7, 8]
+E         
+E         At index 0 diff: 4 != 0
+E         Use -v to get more diff
+
+test_0332.py:23: AssertionError
+___________________ test_task_func_returns_correct_max_value ___________________
+
+    def test_task_func_returns_correct_max_value():
+        num = 5
+        list_length = 5
+        min_value = 0
+        max_value = 10
+        expected_list = [random.randint(min_value, max_value) for _ in range(list_length)]
+        expected_list.insert(bisect.bisect(expected_list, num), num)
+>       assert max(task_func(num, list_length, min_value, max_value)[0]) == max_value
+E       assert 4 == 10
+E        +  where 4 = max([3, 3, 4, 0, 2])
+
+test_0332.py:50: AssertionError
+=========================== short test summary info ============================
+FAILED test_0332.py::test_task_func_returns_correct_list - assert ([8, 2, 8, ...
+FAILED test_0332.py::test_task_func_returns_correct_sorted_list - assert [4, ...
+FAILED test_0332.py::test_task_func_returns_correct_max_value - assert 4 == 10
+3 failed, 2 passed in 0.48s

@@ -1,0 +1,57 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with default parameters
+        fig = task_func()
+        assert isinstance(fig, plt.Figure)
+        assert len(fig.axes) == 1
+        assert fig.axes[0].get_title() == ''
+        assert fig.axes[0].get_xlabel() == ''
+        assert fig.axes[0].get_ylabel() == ''
+    
+        # Test with custom number of rows and random range
+        fig = task_func(num_rows=3, rand_range=(10, 20))
+        assert isinstance(fig, plt.Figure)
+        assert len(fig.axes) == 1
+        assert fig.axes[0].get_title() == ''
+        assert fig.axes[0].get_xlabel() == ''
+        assert fig.axes[0].get_ylabel() == ''
+    
+        # Test with no rows
+        with pytest.raises(ValueError):
+>           task_func(num_rows=0)
+
+test_0166.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0166.py:10: in task_func
+    data.plot(kind='bar', stacked=True, ax=ax)
+../../../.venv/lib/python3.12/site-packages/pandas/plotting/_core.py:1185: in __call__
+    return plot_backend.plot(data, kind=kind, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/plotting/_matplotlib/__init__.py:71: in plot
+    plot_obj.generate()
+../../../.venv/lib/python3.12/site-packages/pandas/plotting/_matplotlib/core.py:525: in generate
+    self._post_plot_logic(ax, self.data)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.plotting._matplotlib.core.BarPlot object at 0x77b71a3ce030>
+ax = <Axes: >, data = Empty DataFrame
+Columns: [A, B, C, D, E]
+Index: []
+
+    def _post_plot_logic(self, ax: Axes, data) -> None:
+        if self.use_index:
+            str_index = [pprint_thing(key) for key in data.index]
+        else:
+            str_index = [pprint_thing(key) for key in range(data.shape[0])]
+    
+>       s_edge = self.ax_pos[0] - 0.25 + self.lim_offset
+                 ^^^^^^^^^^^^^^
+E       IndexError: index 0 is out of bounds for axis 0 with size 0
+
+../../../.venv/lib/python3.12/site-packages/pandas/plotting/_matplotlib/core.py:2049: IndexError
+=========================== short test summary info ============================
+FAILED test_0166.py::test_task_func - IndexError: index 0 is out of bounds fo...
+1 failed in 2.12s

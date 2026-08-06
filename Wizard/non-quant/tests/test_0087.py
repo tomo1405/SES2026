@@ -1,0 +1,20 @@
+python
+import numpy as np
+import pandas as pd
+import pytest
+
+def task_func(students=["Alice", "Bob", "Charlie", "David", "Eve"], seed=42):
+    np.random.seed(seed)
+    scores_data = [(student, np.random.randint(0, 100)) for student in students]
+    df = pd.DataFrame(scores_data, columns=["Student", "Score"])
+    df.sort_values("Score", inplace=True)
+
+    ax = df.plot(x='Student', y='Score', kind='bar', legend=False)
+    ax.set_ylabel("Score")
+
+    return df, ax
+
+def test_task_func():
+    df, ax = task_func()
+    assert isinstance(df, pd.DataFrame)
+    assert isinstance(ax, matplotlib.axes._subplots.AxesSubplot)

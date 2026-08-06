@@ -1,0 +1,28 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with default parameters
+        result = task_func(5, 10)
+        assert isinstance(result, Counter)
+        assert sum(result.values()) == 50  # 10 strings of length 5 each
+    
+        # Test with specific seed to ensure reproducibility
+        result_with_seed = task_func(3, 4, seed=42)
+        expected_result = Counter({'a': 6, 'b': 5, 'c': 5, 'd': 5, 'e': 3})
+>       assert result_with_seed == expected_result
+E       AssertionError: assert Counter({'d':...': 2, 'e': 1}) == Counter({'a':...': 5, 'e': 3})
+E         
+E         Differing items:
+E         {'b': 3} != {'b': 5}
+E         {'e': 1} != {'e': 3}
+E         {'d': 3} != {'d': 5}
+E         {'a': 3} != {'a': 6}
+E         {'c': 2} != {'c': 5}
+E         Use -v to get more diff
+
+test_0897.py:14: AssertionError
+=========================== short test summary info ============================
+FAILED test_0897.py::test_task_func - AssertionError: assert Counter({'d':......
+1 failed in 0.47s

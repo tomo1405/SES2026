@@ -1,0 +1,60 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        text = "This is a test sentence with some URLs: http://example.com and http://test.com"
+        expected_result = [
+            ('This', 1),
+            ('is', 1),
+            ('a', 1),
+            ('test', 1),
+            ('sentence', 1),
+            ('with', 1),
+            ('some', 1),
+            ('URLs', 1),
+            ('and', 1),
+            ('http', 1),
+            ('example', 1),
+            ('com', 1),
+            ('test', 1),
+            ('com', 1)
+        ]
+        result = task_func(text)
+>       assert result == expected_result
+E       AssertionError: assert [('is', 1), (...), ('and', 1)] == [('This', 1),...ith', 1), ...]
+E         
+E         At index 0 diff: ('is', 1) != ('This', 1)
+E         Right contains 10 more items, first extra item: ('sentence', 1)
+E         Use -v to get more diff
+
+test_1100.py:23: AssertionError
+________________________ test_task_func_with_stopwords _________________________
+
+    def test_task_func_with_stopwords():
+        text = "This is a test sentence with some stopwords like 'the' and 'is'"
+        expected_result = [
+            ('This', 1),
+            ('test', 1),
+            ('sentence', 1),
+            ('with', 1),
+            ('some', 1),
+            ('stopwords', 1),
+            ('like', 1),
+            ("'the'", 1),
+            ('and', 1),
+            ("'is'", 1)
+        ]
+        result = task_func(text)
+>       assert result == expected_result
+E       AssertionError: assert [('is', 2), (...), ('and', 1)] == [('This', 1),...rds', 1), ...]
+E         
+E         At index 0 diff: ('is', 2) != ('This', 1)
+E         Right contains 5 more items, first extra item: ('stopwords', 1)
+E         Use -v to get more diff
+
+test_1100.py:40: AssertionError
+=========================== short test summary info ============================
+FAILED test_1100.py::test_task_func - AssertionError: assert [('is', 1), (......
+FAILED test_1100.py::test_task_func_with_stopwords - AssertionError: assert [...
+2 failed, 1 passed in 0.69s

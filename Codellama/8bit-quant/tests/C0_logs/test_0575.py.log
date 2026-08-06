@@ -1,0 +1,22 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that the function returns a matplotlib axis object
+        ax = task_func()
+        assert isinstance(ax, plt.Axes)
+    
+        # Test that the function plots the data and the fit correctly
+        x = np.linspace(0, 4*np.pi, 100)
+        y = np.sin(x) + 0.2 * np.random.rand(100)
+        expected_fit = np.sin(x)
+>       assert np.allclose(ax.lines[0].get_data()[1], y)
+E       assert False
+E        +  where False = <function allclose at 0x749d01b6dbf0>(array([ 0.14541311,  0.26843438,  0.39059586,  0.47771758,  0.58175811,\n        0.63350034,  0.80083388,  0.78358137, ...43817 , -0.72797764, -0.67131555, -0.53835425,\n       -0.46396714, -0.25200894, -0.12544391, -0.06198146,  0.16276519]), array([ 0.09670205,  0.31422501,  0.34320591,  0.45548127,  0.53366427,\n        0.79237186,  0.84091075,  0.95676153, ...95054 , -0.60609077, -0.54491866, -0.49137468,\n       -0.42880757, -0.17915032, -0.18271822, -0.12422715,  0.01086328]))
+E        +    where <function allclose at 0x749d01b6dbf0> = np.allclose
+
+test_0575.py:15: AssertionError
+=========================== short test summary info ============================
+FAILED test_0575.py::test_task_func - assert False
+1 failed in 2.37s

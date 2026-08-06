@@ -1,0 +1,32 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Test that the function raises a ValueError when the DataFrame is empty
+        df = pd.DataFrame()
+        col1 = "a"
+        col2 = "b"
+        with pytest.raises(ValueError):
+            task_func(df, col1, col2)
+    
+        # Test case 2: Test that the function raises a ValueError when the specified column does not exist
+        df = pd.DataFrame({"a": [1, 2, 3], "b": [4, 5, 6]})
+        col1 = "c"
+        col2 = "d"
+        with pytest.raises(ValueError):
+            task_func(df, col1, col2)
+    
+        # Test case 3: Test that the function returns a valid Seaborn axis object when the DataFrame is not empty and the specified columns exist
+        df = pd.DataFrame({"a": [1, 2, 3], "b": [4, 5, 6]})
+        col1 = "a"
+        col2 = "b"
+        ax = task_func(df, col1, col2)
+>       assert isinstance(ax, sns.axis.Axis)
+                              ^^^^^^^^
+E       AttributeError: module 'seaborn' has no attribute 'axis'
+
+test_0346.py:26: AttributeError
+=========================== short test summary info ============================
+FAILED test_0346.py::test_task_func - AttributeError: module 'seaborn' has no...
+1 failed in 3.63s

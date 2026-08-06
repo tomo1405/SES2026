@@ -1,0 +1,117 @@
+F.FF                                                                     [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_success ____________________________
+
+mock_sendgrid_client = <MagicMock name='SendGridAPIClient' id='126653297936624'>
+mock_listdir = <MagicMock name='listdir' id='126653270413232'>
+
+    @patch('os.listdir')
+    @patch('sendgrid.SendGridAPIClient')
+    def test_task_func_success(mock_sendgrid_client, mock_listdir):
+        # Arrange
+        dir = '/test/dir'
+        api_key = 'test_api_key'
+        recipient_email = 'test@example.com'
+        mock_listdir.return_value = ['file1.txt', 'file2.txt']
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_sendgrid_client.return_value.send.return_value = mock_response
+    
+        # Act
+>       result = task_func(dir, api_key, recipient_email)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0316.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0316.py:21: in task_func
+    response = sg.send(message)
+               ^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sendgrid/base_interface.py:63: in send
+    return self.client.mail.send.post(request_body=message)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/python_http_client/client.py:277: in http_request
+    self._make_request(opener, request, timeout=timeout)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <python_http_client.client.Client object at 0x7330c3320590>
+opener = <urllib.request.OpenerDirector object at 0x7330c3320650>
+request = <urllib.request.Request object at 0x7330c3320a40>, timeout = None
+
+    def _make_request(self, opener, request, timeout=None):
+        """Make the API call and return the response. This is separated into
+           it's own function, so we can mock it easily for testing.
+    
+        :param opener:
+        :type opener:
+        :param request: url payload to request
+        :type request: urllib.Request object
+        :param timeout: timeout value or None
+        :type timeout: float
+        :return: urllib response
+        """
+        timeout = timeout or self.timeout
+        try:
+            return opener.open(request, timeout=timeout)
+        except HTTPError as err:
+            exc = handle_error(err)
+            exc.__cause__ = None
+            _logger.debug('{method} Response: {status} {body}'.format(
+                method=request.get_method(),
+                status=exc.status_code,
+                body=exc.body))
+>           raise exc
+E           python_http_client.exceptions.UnauthorizedError: HTTP Error 401: Unauthorized
+
+../../../.venv/lib/python3.12/site-packages/python_http_client/client.py:184: UnauthorizedError
+----------------------------- Captured stdout call -----------------------------
+HTTP error occurred: HTTP Error 401: Unauthorized
+__________________________ test_task_func_http_error ___________________________
+
+mock_sendgrid_client = <MagicMock name='SendGridAPIClient' id='126653270473808'>
+mock_listdir = <MagicMock name='listdir' id='126653270739808'>
+
+    @patch('os.listdir')
+    @patch('sendgrid.SendGridAPIClient')
+    def test_task_func_http_error(mock_sendgrid_client, mock_listdir):
+        # Arrange
+        dir = '/test/dir'
+        api_key = 'test_api_key'
+        recipient_email = 'test@example.com'
+        mock_listdir.return_value = ['file1.txt', 'file2.txt']
+>       mock_sendgrid_client.return_value.send.side_effect = HTTPError("HTTP Error")
+                                                             ^^^^^^^^^
+E       NameError: name 'HTTPError' is not defined
+
+test_0316.py:49: NameError
+_______________________ test_task_func_general_exception _______________________
+
+mock_sendgrid_client = <MagicMock name='SendGridAPIClient' id='126653270472080'>
+mock_listdir = <MagicMock name='listdir' id='126653270744608'>
+
+    @patch('os.listdir')
+    @patch('sendgrid.SendGridAPIClient')
+    def test_task_func_general_exception(mock_sendgrid_client, mock_listdir):
+        # Arrange
+        dir = '/test/dir'
+        api_key = 'test_api_key'
+        recipient_email = 'test@example.com'
+        mock_listdir.return_value = ['file1.txt', 'file2.txt']
+        mock_sendgrid_client.return_value.send.side_effect = Exception("General Error")
+    
+        # Act & Assert
+        with pytest.raises(Exception) as excinfo:
+            task_func(dir, api_key, recipient_email)
+>       assert str(excinfo.value) == "General Error"
+E       AssertionError: assert 'HTTP Error 401: Unauthorized' == 'General Error'
+E         
+E         - General Error
+E         + HTTP Error 401: Unauthorized
+
+test_0316.py:69: AssertionError
+----------------------------- Captured stdout call -----------------------------
+HTTP error occurred: HTTP Error 401: Unauthorized
+=========================== short test summary info ============================
+FAILED test_0316.py::test_task_func_success - python_http_client.exceptions.U...
+FAILED test_0316.py::test_task_func_http_error - NameError: name 'HTTPError' ...
+FAILED test_0316.py::test_task_func_general_exception - AssertionError: asser...
+3 failed, 1 passed in 1.60s

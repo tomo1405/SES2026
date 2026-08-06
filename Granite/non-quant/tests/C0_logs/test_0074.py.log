@@ -1,0 +1,34 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        db_file = "test_db.db"
+        conn = sqlite3.connect(db_file)
+        df = pd.DataFrame({"list": [[1, 2, 3], [4, 5, 6], [7, 8, 9]]})
+>       df.to_sql("EmailData", conn, index=False)
+
+test_0074.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:3052: in to_sql
+    return sql.to_sql(
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:841: in to_sql
+    return pandas_sql.to_sql(
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:2879: in to_sql
+    table.create()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.io.sql.SQLiteTable object at 0x74163ae7f950>
+
+    def create(self) -> None:
+        if self.exists():
+            if self.if_exists == "fail":
+>               raise ValueError(f"Table '{self.name}' already exists.")
+E               ValueError: Table 'EmailData' already exists.
+
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:988: ValueError
+=========================== short test summary info ============================
+FAILED test_0074.py::test_task_func - ValueError: Table 'EmailData' already e...
+1 failed in 2.29s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

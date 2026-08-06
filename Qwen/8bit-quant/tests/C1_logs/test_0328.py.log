@@ -1,0 +1,83 @@
+.FFF.                                                                    [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_single_row ________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-2070/test_task_func_with_single_row0')
+
+    def test_task_func_with_single_row(tmp_path):
+        # Create a CSV file with a single row
+        single_row_file = tmp_path / "single_row.csv"
+        single_row_file.write_text("Hello, World!")
+    
+        # Call the function with the path to the single row file
+        result = task_func(str(single_row_file))
+    
+        # Expected matches: ['Hello', ',', 'World', '!']
+        expected_result = {'Hello': 1, ',': 1, 'World': 1, '!': 1}
+>       assert result == expected_result
+E       AssertionError: assert {'Hello': 1} == {'Hello': 1, ...d': 1, '!': 1}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Right contains 3 more items:
+E         {'!': 1, ',': 1, 'World': 1}
+E         Use -v to get more diff
+
+test_0328.py:25: AssertionError
+______________________ test_task_func_with_multiple_rows _______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-2070/test_task_func_with_multiple_r0')
+
+    def test_task_func_with_multiple_rows(tmp_path):
+        # Create a CSV file with multiple rows
+        multiple_rows_file = tmp_path / "multiple_rows.csv"
+        multiple_rows_file.write_text("Hello, World!\nPython is great!")
+    
+        # Call the function with the path to the multiple rows file
+        result = task_func(str(multiple_rows_file))
+    
+        # Expected matches: ['Hello', ',', 'World', '!', 'Python', 'is', 'great', '!']
+        expected_result = {'Hello': 1, ',': 1, 'World': 1, '!': 2, 'Python': 1, 'is': 1, 'great': 1}
+>       assert result == expected_result
+E       AssertionError: assert {'Hello': 1, ... 'is': 1, ...} == {'Hello': 1, ..., '!': 2, ...}
+E         
+E         Omitting 4 identical items, use -vv to show
+E         Differing items:
+E         {'!': 1} != {'!': 2}
+E         Left contains 1 more item:
+E         {' ': 3}
+E         Right contains 2 more items:
+E         {',': 1, 'World': 1}
+E         Use -v to get more diff
+
+test_0328.py:37: AssertionError
+_______________________ test_task_func_with_custom_regex _______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-2070/test_task_func_with_custom_reg0')
+
+    def test_task_func_with_custom_regex(tmp_path):
+        # Create a CSV file with a single row
+        custom_regex_file = tmp_path / "custom_regex.csv"
+        custom_regex_file.write_text("Hello, World!")
+    
+        # Define a custom regex pattern
+        custom_pattern = r'\b\w+\b'
+    
+        # Call the function with the path to the custom regex file and the custom pattern
+        result = task_func(str(custom_regex_file), regex_pattern=custom_pattern)
+    
+        # Expected matches: ['Hello', 'World']
+        expected_result = {'Hello': 1, 'World': 1}
+>       assert result == expected_result
+E       AssertionError: assert {'Hello': 1} == {'Hello': 1, 'World': 1}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Right contains 1 more item:
+E         {'World': 1}
+E         Use -v to get more diff
+
+test_0328.py:52: AssertionError
+=========================== short test summary info ============================
+FAILED test_0328.py::test_task_func_with_single_row - AssertionError: assert ...
+FAILED test_0328.py::test_task_func_with_multiple_rows - AssertionError: asse...
+FAILED test_0328.py::test_task_func_with_custom_regex - AssertionError: asser...
+3 failed, 2 passed in 0.44s

@@ -1,0 +1,13 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import itertools
+def task_func(data_list):
+    unzipped_data = list(itertools.zip_longest(*data_list, fillvalue=np.nan))
+    if len(unzipped_data) == 0:
+        raise ValueError('Empty data_list')
+    
+    fig, ax = plt.subplots()
+    for i, column in enumerate(unzipped_data[1:], start=1):
+        ax.plot(column, label='Position {}'.format(i))
+    ax.legend()
+    return ax

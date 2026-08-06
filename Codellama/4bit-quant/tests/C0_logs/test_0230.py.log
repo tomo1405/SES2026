@@ -1,0 +1,28 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that the function returns the correct file path
+        file_path = 'test_log.json'
+        num_entries = 10
+        seed = 1234
+        result = task_func(file_path, num_entries, seed)
+        assert result == file_path
+    
+        # Test that the function creates a JSON file with the correct number of entries
+        with open(file_path, 'r') as json_file:
+            log_entries = json.load(json_file)
+            assert len(log_entries) == num_entries
+    
+        # Test that the function creates a JSON file with the correct format
+        for entry in log_entries:
+            assert 'user' in entry and 'action' in entry and 'timestamp' in entry
+>           assert entry['user'] in USERS
+                                    ^^^^^
+E           NameError: name 'USERS' is not defined
+
+test_0230.py:24: NameError
+=========================== short test summary info ============================
+FAILED test_0230.py::test_task_func - NameError: name 'USERS' is not defined
+1 failed in 0.41s

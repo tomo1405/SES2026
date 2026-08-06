@@ -1,0 +1,46 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        t = [1, 2, 3, 4, 5]
+        n = 3
+        combinations = list(itertools.combinations(t, n))
+        expected_output = random.choice(combinations)
+        actual_output = task_func(t, n)
+>       assert actual_output == expected_output
+E       assert (1, 4, 5) == (2, 3, 5)
+E         
+E         At index 0 diff: 1 != 2
+E         Use -v to get more diff
+
+test_0695.py:12: AssertionError
+______________________ test_task_func_with_invalid_input _______________________
+
+    def test_task_func_with_invalid_input():
+        with pytest.raises(ValueError):
+>           task_func([1, 2], 5)
+
+test_0695.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0695.py:5: in task_func
+    selected_combination = random.choice(combinations)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <random.Random object at 0x1f73a410>, seq = []
+
+    def choice(self, seq):
+        """Choose a random element from a non-empty sequence."""
+    
+        # As an accommodation for NumPy, we don't use "if not seq"
+        # because bool(numpy.array()) raises a ValueError.
+        if not len(seq):
+>           raise IndexError('Cannot choose from an empty sequence')
+E           IndexError: Cannot choose from an empty sequence
+
+/usr/lib/python3.12/random.py:347: IndexError
+=========================== short test summary info ============================
+FAILED test_0695.py::test_task_func - assert (1, 4, 5) == (2, 3, 5)
+FAILED test_0695.py::test_task_func_with_invalid_input - IndexError: Cannot c...
+2 failed in 0.54s

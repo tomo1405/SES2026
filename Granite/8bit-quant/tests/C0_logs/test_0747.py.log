@@ -1,0 +1,173 @@
+...FFF.                                                                  [100%]
+=================================== FAILURES ===================================
+__________________ test_task_func_df_values_should_be_numeric __________________
+
+    def test_task_func_df_values_should_be_numeric():
+        df = pd.DataFrame({'A': ['a', 'b', 'c'], 'B': [4, 5, 6]})
+        target_column = 'B'
+        with pytest.raises(ValueError) as excinfo:
+>           task_func(df, target_column)
+
+test_0747.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0747.py:15: in task_func
+    if not all(np.issubdtype(dtype, np.number) for dtype in df.dtypes):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../src/src_0747.py:15: in <genexpr>
+    if not all(np.issubdtype(dtype, np.number) for dtype in df.dtypes):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+arg1 = <StringDtype(na_value=nan)>, arg2 = <class 'numpy.number'>
+
+    @set_module('numpy')
+    def issubdtype(arg1, arg2):
+        r"""
+        Returns True if first argument is a typecode lower/equal in type hierarchy.
+    
+        This is like the builtin :func:`issubclass`, but for `dtype`\ s.
+    
+        Parameters
+        ----------
+        arg1, arg2 : dtype_like
+            `dtype` or object coercible to one
+    
+        Returns
+        -------
+        out : bool
+    
+        See Also
+        --------
+        :ref:`arrays.scalars` : Overview of the numpy type hierarchy.
+    
+        Examples
+        --------
+        `issubdtype` can be used to check the type of arrays:
+    
+        >>> ints = np.array([1, 2, 3], dtype=np.int32)
+        >>> np.issubdtype(ints.dtype, np.integer)
+        True
+        >>> np.issubdtype(ints.dtype, np.floating)
+        False
+    
+        >>> floats = np.array([1, 2, 3], dtype=np.float32)
+        >>> np.issubdtype(floats.dtype, np.integer)
+        False
+        >>> np.issubdtype(floats.dtype, np.floating)
+        True
+    
+        Similar types of different sizes are not subdtypes of each other:
+    
+        >>> np.issubdtype(np.float64, np.float32)
+        False
+        >>> np.issubdtype(np.float32, np.float64)
+        False
+    
+        but both are subtypes of `floating`:
+    
+        >>> np.issubdtype(np.float64, np.floating)
+        True
+        >>> np.issubdtype(np.float32, np.floating)
+        True
+    
+        For convenience, dtype-like objects are allowed too:
+    
+        >>> np.issubdtype('S1', np.bytes_)
+        True
+        >>> np.issubdtype('i4', np.signedinteger)
+        True
+    
+        """
+        if not issubclass_(arg1, generic):
+>           arg1 = dtype(arg1).type
+                   ^^^^^^^^^^^
+E           TypeError: Cannot interpret '<StringDtype(na_value=nan)>' as a data type
+
+../../../.venv/lib/python3.12/site-packages/numpy/_core/numerictypes.py:470: TypeError
+_____________ test_task_func_target_values_should_be_in_dataframe ______________
+
+    def test_task_func_target_values_should_be_in_dataframe():
+        df = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]})
+        target_column = 'A'
+        target_values = [1, 3, 5]
+        with pytest.raises(ValueError) as excinfo:
+>           task_func(df, target_column, target_values)
+
+test_0747.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0747.py:19: in task_func
+    df = df.applymap(lambda x: x if x in target_values else 0)
+         ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =    A  B
+0  1  4
+1  2  5
+2  3  6, name = 'applymap'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute 'applymap'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+________________ test_task_func_target_values_should_be_numeric ________________
+
+    def test_task_func_target_values_should_be_numeric():
+        df = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]})
+        target_column = 'A'
+        target_values = ['a', 'b', 'c']
+        with pytest.raises(ValueError) as excinfo:
+>           task_func(df, target_column, target_values)
+
+test_0747.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0747.py:19: in task_func
+    df = df.applymap(lambda x: x if x in target_values else 0)
+         ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =    A  B
+0  1  4
+1  2  5
+2  3  6, name = 'applymap'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute 'applymap'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+=========================== short test summary info ============================
+FAILED test_0747.py::test_task_func_df_values_should_be_numeric - TypeError: ...
+FAILED test_0747.py::test_task_func_target_values_should_be_in_dataframe - At...
+FAILED test_0747.py::test_task_func_target_values_should_be_numeric - Attribu...
+3 failed, 4 passed in 2.99s

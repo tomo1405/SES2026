@@ -1,0 +1,56 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        obj_list = [
+            {'name': 'John', 'age': 25},
+            {'name': 'Jane', 'age': 30},
+            {'name': 'Jim', 'age': 35},
+        ]
+        attr = 'name'
+        expected_result = pd.DataFrame({'attribute': ['John', 'Jane', 'Jim'], 'count': [1, 1, 1]})
+>       result = task_func(obj_list, attr)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0847.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+obj_list = [{'name': 'John', 'age': 25}, {'name': 'Jane', 'age': 30}, {'name': 'Jim', 'age': 35}]
+attr = 'name'
+
+    def task_func(obj_list, attr):
+>       attr_values = [getattr(obj, attr) for obj in obj_list]
+                       ^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'dict' object has no attribute 'name'
+
+../../../src/src_0847.py:4: AttributeError
+_________________________ test_task_func_invalid_attr __________________________
+
+    def test_task_func_invalid_attr():
+        obj_list = [
+            {'name': 'John', 'age': 25},
+            {'name': 'Jane', 'age': 30},
+            {'name': 'Jim', 'age': 35},
+        ]
+        attr = 'invalid_attr'
+        expected_result = pd.DataFrame()
+>       result = task_func(obj_list, attr)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0847.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+obj_list = [{'name': 'John', 'age': 25}, {'name': 'Jane', 'age': 30}, {'name': 'Jim', 'age': 35}]
+attr = 'invalid_attr'
+
+    def task_func(obj_list, attr):
+>       attr_values = [getattr(obj, attr) for obj in obj_list]
+                       ^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'dict' object has no attribute 'invalid_attr'
+
+../../../src/src_0847.py:4: AttributeError
+=========================== short test summary info ============================
+FAILED test_0847.py::test_task_func - AttributeError: 'dict' object has no at...
+FAILED test_0847.py::test_task_func_invalid_attr - AttributeError: 'dict' obj...
+2 failed, 1 passed in 1.11s

@@ -1,0 +1,84 @@
+FF..                                                                     [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_save_path _________________________
+
+mock_file = <_io.StringIO object at 0x7efc6b869000>
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1413/test_task_func_with_save_path0')
+
+    def test_task_func_with_save_path(mock_file, tmpdir):
+        temp_file = tmpdir.join("test_output.png")
+>       result = task_func(mock_file, str(temp_file))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1053.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1053.py:7: in task_func
+    df = pd.read_csv(file_path, header=None, names=["Text"])
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:873: in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:306: in _read
+    return parser.read(nrows)
+           ^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:1947: in read
+    ) = self._engine.read(  # type: ignore[attr-defined]
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/c_parser_wrapper.py:215: in read
+    chunks = self._reader.read_low_memory(nrows)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pandas/_libs/parsers.pyx:832: in pandas._libs.parsers.TextReader.read_low_memory
+    ???
+pandas/_libs/parsers.pyx:897: in pandas._libs.parsers.TextReader._read_rows
+    ???
+pandas/_libs/parsers.pyx:868: in pandas._libs.parsers.TextReader._tokenize_rows
+    ???
+pandas/_libs/parsers.pyx:885: in pandas._libs.parsers.TextReader._check_tokenize_status
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   pandas.errors.ParserError: Error tokenizing data. C error: Expected 2 fields in line 3, saw 4
+
+pandas/_libs/parsers.pyx:2084: ParserError
+_______________________ test_task_func_without_save_path _______________________
+
+mock_file = <_io.StringIO object at 0x7efc6b86a140>
+
+    def test_task_func_without_save_path(mock_file):
+>       result = task_func(mock_file)
+                 ^^^^^^^^^^^^^^^^^^^^
+
+test_1053.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1053.py:7: in task_func
+    df = pd.read_csv(file_path, header=None, names=["Text"])
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:873: in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:306: in _read
+    return parser.read(nrows)
+           ^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:1947: in read
+    ) = self._engine.read(  # type: ignore[attr-defined]
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/c_parser_wrapper.py:215: in read
+    chunks = self._reader.read_low_memory(nrows)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pandas/_libs/parsers.pyx:832: in pandas._libs.parsers.TextReader.read_low_memory
+    ???
+pandas/_libs/parsers.pyx:897: in pandas._libs.parsers.TextReader._read_rows
+    ???
+pandas/_libs/parsers.pyx:868: in pandas._libs.parsers.TextReader._tokenize_rows
+    ???
+pandas/_libs/parsers.pyx:885: in pandas._libs.parsers.TextReader._check_tokenize_status
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   pandas.errors.ParserError: Error tokenizing data. C error: Expected 2 fields in line 3, saw 4
+
+pandas/_libs/parsers.pyx:2084: ParserError
+=========================== short test summary info ============================
+FAILED test_1053.py::test_task_func_with_save_path - pandas.errors.ParserErro...
+FAILED test_1053.py::test_task_func_without_save_path - pandas.errors.ParserE...
+2 failed, 2 passed in 4.33s

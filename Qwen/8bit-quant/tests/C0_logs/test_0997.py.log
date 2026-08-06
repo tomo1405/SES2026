@@ -1,0 +1,86 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_open = <MagicMock name='open' id='138195895480496'>
+mock_get = <MagicMock name='get' id='138195895819232'>
+mock_response = <test_0997.mock_response.<locals>.MockResponse object at 0x7db03d427200>
+
+    @patch('requests.get')
+    @patch('builtins.open', new_callable=mock_open)
+    def test_task_func(mock_open, mock_get, mock_response):
+        mock_get.return_value = mock_response
+        url = "http://example.com"
+        file_name = "test_output.txt"
+    
+        result = task_func(url, file_name)
+    
+        assert result == file_name
+    
+        mock_get.assert_called_once_with(url, timeout=5)
+        mock_open.assert_called_once_with(file_name, "a", encoding="utf-8")
+        handle = mock_open()
+>       handle().write.assert_called_once_with('{"title": "Test Title"}\n')
+
+test_0997.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='open()().write' id='138195895880880'>
+args = ('{"title": "Test Title"}\n',), kwargs = {}
+
+    def assert_called_once_with(self, /, *args, **kwargs):
+        """assert that the mock was called exactly once and that that call was
+        with the specified arguments."""
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to be called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'write' to be called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:955: AssertionError
+___________________________ test_task_func_no_title ____________________________
+
+mock_response = <test_0997.mock_response.<locals>.MockResponse object at 0x7db03d48a870>
+
+    def test_task_func_no_title(mock_response):
+        class MockResponseNoTitle:
+            def __init__(self, text):
+                self.text = text
+    
+        mock_response_no_title = MockResponseNoTitle('<html><head></head><body></body></html>')
+    
+        with patch('requests.get', return_value=mock_response_no_title), \
+>            patch('builtins.open', new_callable=mock_open) as mock_open:
+                                                 ^^^^^^^^^
+E            UnboundLocalError: cannot access local variable 'mock_open' where it is not associated with a value
+
+test_0997.py:38: UnboundLocalError
+_________________________ test_task_func_file_creation _________________________
+
+    def test_task_func_file_creation():
+        url = "http://example.com"
+        file_name = "test_output.txt"
+    
+        try:
+            os.remove(file_name)
+        except FileNotFoundError:
+            pass
+    
+        task_func(url, file_name)
+    
+        assert os.path.exists(file_name)
+    
+        with open(file_name, 'r', encoding='utf-8') as f:
+            content = f.read()
+    
+>       assert '{"title": null}' in content
+E       assert '{"title": null}' in '{"title": "Example Domain"}\n{"title": "Example Domain"}\n'
+
+test_0997.py:67: AssertionError
+=========================== short test summary info ============================
+FAILED test_0997.py::test_task_func - AssertionError: Expected 'write' to be ...
+FAILED test_0997.py::test_task_func_no_title - UnboundLocalError: cannot acce...
+FAILED test_0997.py::test_task_func_file_creation - assert '{"title": null}' ...
+3 failed in 1.41s

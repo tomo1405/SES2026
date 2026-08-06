@@ -1,0 +1,63 @@
+F..FFF                                                                   [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        numbers = [1, 2, 3, 4, 5]
+        expected_result = 10.0
+>       assert task_func(numbers) == expected_result
+E       assert 76.59986788451276 == 10.0
+E        +  where 76.59986788451276 = task_func([1, 2, 3, 4, 5])
+
+test_0098.py:7: AssertionError
+_____________________ test_task_func_with_negative_numbers _____________________
+
+    def test_task_func_with_negative_numbers():
+        numbers = [-1, -2, -3, -4, -5]
+        expected_result = -10.0
+>       assert task_func(numbers) == expected_result
+               ^^^^^^^^^^^^^^^^^^
+
+test_0098.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+numbers = [-1, -2, -3, -4, -5]
+
+    def task_func(numbers):
+        sum_log_products = 0
+    
+        for r in range(1, len(numbers) + 1):
+            combinations = itertools.combinations(numbers, r)
+            for combination in combinations:
+                product = reduce(lambda x, y: x * y, combination)
+>               sum_log_products += math.log(product)
+                                    ^^^^^^^^^^^^^^^^^
+E               ValueError: math domain error
+
+../../../src/src_0098.py:11: ValueError
+__________________ test_task_func_with_floating_point_numbers __________________
+
+    def test_task_func_with_floating_point_numbers():
+        numbers = [1.5, 2.5, 3.5, 4.5, 5.5]
+        expected_result = 10.0
+>       assert task_func(numbers) == expected_result
+E       assert 92.5335087598782 == 10.0
+E        +  where 92.5335087598782 = task_func([1.5, 2.5, 3.5, 4.5, 5.5])
+
+test_0098.py:27: AssertionError
+______________________ test_task_func_with_large_numbers _______________________
+
+    def test_task_func_with_large_numbers():
+        numbers = [1000000000, 2000000000, 3000000000, 4000000000, 5000000000]
+        expected_result = 10.0
+>       assert task_func(numbers) == expected_result
+E       assert 1734.4611348402257 == 10.0
+E        +  where 1734.4611348402257 = task_func([1000000000, 2000000000, 3000000000, 4000000000, 5000000000])
+
+test_0098.py:32: AssertionError
+=========================== short test summary info ============================
+FAILED test_0098.py::test_task_func - assert 76.59986788451276 == 10.0
+FAILED test_0098.py::test_task_func_with_negative_numbers - ValueError: math ...
+FAILED test_0098.py::test_task_func_with_floating_point_numbers - assert 92.5...
+FAILED test_0098.py::test_task_func_with_large_numbers - assert 1734.46113484...
+4 failed, 2 passed in 0.53s

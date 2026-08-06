@@ -1,0 +1,51 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Invalid 'df' (not a DataFrame)
+        with pytest.raises(ValueError) as exc_info:
+            task_func('not_a_dataframe')
+        assert "Invalid 'df': must be a DataFrame with 'group', 'date', and 'value' columns." in str(exc_info.value)
+    
+        # Test case 2: Invalid 'df' (missing columns)
+        df = pd.DataFrame({'group': ['A', 'B'], 'date': [1, 2], 'value': [3, 4]})
+        with pytest.raises(ValueError) as exc_info:
+>           task_func(df)
+
+test_0105.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test_0105.py:15: in task_func
+    group_df['date'] = group_df['date'].apply(lambda x: x.toordinal())
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/series.py:5084: in apply
+    ).apply()
+      ^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/apply.py:1520: in apply
+    return self.apply_standard()
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/apply.py:1578: in apply_standard
+    mapped = obj._map_values(mapper=curried)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/base.py:1022: in _map_values
+    return algorithms.map_array(arr, mapper, na_action=na_action)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/algorithms.py:1715: in map_array
+    return lib.map_infer(values, mapper)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pandas/_libs/lib.pyx:3071: in pandas._libs.lib.map_infer
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+x = 1
+
+>   group_df['date'] = group_df['date'].apply(lambda x: x.toordinal())
+                                                        ^^^^^^^^^^^
+E   AttributeError: 'int' object has no attribute 'toordinal'
+
+test_0105.py:15: AttributeError
+=========================== short test summary info ============================
+FAILED test_0105.py::test_task_func - AttributeError: 'int' object has no att...
+1 failed in 2.28s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

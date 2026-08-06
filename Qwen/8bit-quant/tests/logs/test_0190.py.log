@@ -1,0 +1,19 @@
+..F.                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_missing_names_key _______________________
+
+    def test_task_func_missing_names_key():
+        # Mock the requests.get call to return a JSON response without 'names' key
+        mock_response = requests.Response()
+        mock_response.status_code = 200
+        mock_response._content = b'{"other_key": ["Alice", "Bob", "Charlie"]}'
+    
+        with patch('requests.get', return_value=mock_response):
+            result = task_func("http://example.com/data")
+>           assert result == []
+E           AssertionError: assert 'Invalid url input' == []
+
+test_0190.py:30: AssertionError
+=========================== short test summary info ============================
+FAILED test_0190.py::test_task_func_missing_names_key - AssertionError: asser...
+1 failed, 3 passed in 0.63s

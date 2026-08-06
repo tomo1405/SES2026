@@ -1,0 +1,200 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a sample dataframe and target variable
+        df = pd.DataFrame({'x1': [1, 2, 3], 'x2': [4, 5, 6], 'y': [7, 8, 9]})
+        target = 'y'
+    
+        # Call the task_func function
+        score = task_func(df, target)
+    
+        # Calculate the expected score using the r2_score function
+>       expected_score = r2_score(df[target], df.drop(target, axis=1).dot(df.y))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0702.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =    x1  x2
+0   1   4
+1   2   5
+2   3   6
+other = 0    7
+1    8
+2    9
+Name: y, dtype: int64
+
+    def dot(self, other: AnyArrayLike | DataFrame) -> DataFrame | Series:
+        """
+        Compute the matrix multiplication between the DataFrame and other.
+    
+        This method computes the matrix product between the DataFrame and the
+        values of an other Series, DataFrame or a numpy array.
+    
+        It can also be called using ``self @ other``.
+    
+        Parameters
+        ----------
+        other : Series, DataFrame or array-like
+            The other object to compute the matrix product with.
+    
+        Returns
+        -------
+        Series or DataFrame
+            If other is a Series, return the matrix product between self and
+            other as a Series. If other is a DataFrame or a numpy.array, return
+            the matrix product of self and other in a DataFrame of a np.array.
+    
+        See Also
+        --------
+        Series.dot: Similar method for Series.
+    
+        Notes
+        -----
+        The dimensions of DataFrame and other must be compatible in order to
+        compute the matrix multiplication. In addition, the column names of
+        DataFrame and the index of other must contain the same values, as they
+        will be aligned prior to the multiplication.
+    
+        The dot method for Series computes the inner product, instead of the
+        matrix product here.
+    
+        Examples
+        --------
+        Here we multiply a DataFrame with a Series.
+    
+        >>> df = pd.DataFrame([[0, 1, -2, -1], [1, 1, 1, 1]])
+        >>> s = pd.Series([1, 1, 2, 1])
+        >>> df.dot(s)
+        0    -4
+        1     5
+        dtype: int64
+    
+        Here we multiply a DataFrame with another DataFrame.
+    
+        >>> other = pd.DataFrame([[0, 1], [1, 2], [-1, -1], [2, 0]])
+        >>> df.dot(other)
+            0   1
+        0   1   4
+        1   2   2
+    
+        Note that the dot method give the same result as @
+    
+        >>> df @ other
+            0   1
+        0   1   4
+        1   2   2
+    
+        The dot method works also if other is an np.array.
+    
+        >>> arr = np.array([[0, 1], [1, 2], [-1, -1], [2, 0]])
+        >>> df.dot(arr)
+            0   1
+        0   1   4
+        1   2   2
+    
+        Note how shuffling of the objects does not change the result.
+    
+        >>> s2 = s.reindex([1, 0, 2, 3])
+        >>> df.dot(s2)
+        0    -4
+        1     5
+        dtype: int64
+        """
+        if isinstance(other, (Series, DataFrame)):
+            common = self.columns.union(other.index)
+            if len(common) > len(self.columns) or len(common) > len(other.index):
+>               raise ValueError("matrices are not aligned")
+E               ValueError: matrices are not aligned
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:1765: ValueError
+___________________________ test_task_func_with_nan ____________________________
+
+    def test_task_func_with_nan():
+        # Create a sample dataframe with a missing value and target variable
+        df = pd.DataFrame({'x1': [1, 2, 3], 'x2': [4, 5, np.nan], 'y': [7, 8, 9]})
+        target = 'y'
+    
+        # Call the task_func function
+>       score = task_func(df, target)
+                ^^^^^^^^^^^^^^^^^^^^^
+
+test_0702.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test_0702.py:12: in task_func
+    model.fit(X, y)
+../../../.venv/lib/python3.12/site-packages/sklearn/base.py:1403: in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/linear_model/_base.py:681: in fit
+    X, y = validate_data(
+../../../.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:3055: in validate_data
+    X, y = check_X_y(X, y, **check_params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:1327: in check_X_y
+    X = check_array(
+../../../.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:1087: in check_array
+    _assert_all_finite(
+../../../.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:137: in _assert_all_finite
+    _assert_all_finite_element_wise(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+X = array([[ 1.,  4.],
+       [ 2.,  5.],
+       [ 3., nan]])
+xp = <module 'sklearn.externals.array_api_compat.numpy' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/sklearn/externals/array_api_compat/numpy/__init__.py'>
+allow_nan = False, msg_dtype = None, estimator_name = 'LinearRegression'
+input_name = 'X'
+
+    def _assert_all_finite_element_wise(
+        X, *, xp, allow_nan, msg_dtype=None, estimator_name=None, input_name=""
+    ):
+        # Cython implementation doesn't support FP16 or complex numbers
+        use_cython = (
+            xp is np and X.data.contiguous and X.dtype.type in {np.float32, np.float64}
+        )
+        if use_cython:
+            out = cy_isfinite(X.reshape(-1), allow_nan=allow_nan)
+            has_nan_error = False if allow_nan else out == FiniteStatus.has_nan
+            has_inf = out == FiniteStatus.has_infinite
+        else:
+            has_inf = xp.any(xp.isinf(X))
+            has_nan_error = False if allow_nan else xp.any(xp.isnan(X))
+        if has_inf or has_nan_error:
+            if has_nan_error:
+                type_err = "NaN"
+            else:
+                msg_dtype = msg_dtype if msg_dtype is not None else X.dtype
+                type_err = f"infinity or a value too large for {msg_dtype!r}"
+            padded_input_name = input_name + " " if input_name else ""
+            msg_err = f"Input {padded_input_name}contains {type_err}."
+            if estimator_name and input_name == "X" and has_nan_error:
+                # Improve the error message on how to handle missing values in
+                # scikit-learn.
+                msg_err += (
+                    f"\n{estimator_name} does not accept missing values"
+                    " encoded as NaN natively. For supervised learning, you might want"
+                    " to consider sklearn.ensemble.HistGradientBoostingClassifier and"
+                    " Regressor which accept missing values encoded as NaNs natively."
+                    " Alternatively, it is possible to preprocess the data, for"
+                    " instance by using an imputer transformer in a pipeline or drop"
+                    " samples with missing values. See"
+                    " https://scikit-learn.org/stable/modules/impute.html"
+                    " You can find a list of all estimators that handle NaN values"
+                    " at the following page:"
+                    " https://scikit-learn.org/stable/modules/impute.html"
+                    "#estimators-that-handle-nan-values"
+                )
+>           raise ValueError(msg_err)
+E           ValueError: Input X contains NaN.
+E           LinearRegression does not accept missing values encoded as NaN natively. For supervised learning, you might want to consider sklearn.ensemble.HistGradientBoostingClassifier and Regressor which accept missing values encoded as NaNs natively. Alternatively, it is possible to preprocess the data, for instance by using an imputer transformer in a pipeline or drop samples with missing values. See https://scikit-learn.org/stable/modules/impute.html You can find a list of all estimators that handle NaN values at the following page: https://scikit-learn.org/stable/modules/impute.html#estimators-that-handle-nan-values
+
+../../../.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:186: ValueError
+=========================== short test summary info ============================
+FAILED test_0702.py::test_task_func - ValueError: matrices are not aligned
+FAILED test_0702.py::test_task_func_with_nan - ValueError: Input X contains NaN.
+2 failed in 3.78s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

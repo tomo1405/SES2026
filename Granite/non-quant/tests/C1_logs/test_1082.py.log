@@ -1,0 +1,24 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Validate weight values are strings
+        with pytest.raises(ValueError) as excinfo:
+            task_func(data={"Weight_String": [60.5, 65.7, 70.2, 75.9, 80.1], "Height": [160, 165, 170, 175, 180]})
+        assert "Weights must be provided as strings." in str(excinfo.value)
+    
+        # Test case 2: Validate weight values are strings
+        with pytest.raises(ValueError) as excinfo:
+            task_func(data={"Weight_String": ["60.5", "65.7", "70.2", "75.9", "80.1"], "Height": [160, 165, 170, 175, 180, "invalid"]})
+>       assert "Weights must be provided as strings." in str(excinfo.value)
+E       AssertionError: assert 'Weights must be provided as strings.' in 'All arrays must be of the same length'
+E        +  where 'All arrays must be of the same length' = str(ValueError('All arrays must be of the same length'))
+E        +    where ValueError('All arrays must be of the same length') = <ExceptionInfo ValueError('All arrays must be of the same length') tblen=6>.value
+
+test_1082.py:35: AssertionError
+=========================== short test summary info ============================
+FAILED test_1082.py::test_task_func - AssertionError: assert 'Weights must be...
+1 failed in 4.16s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

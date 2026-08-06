@@ -1,0 +1,29 @@
+F....                                                                    [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_valid_csv _________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1748/test_task_func_with_valid_csv0')
+
+    def test_task_func_with_valid_csv(tmp_path):
+        # Create a temporary CSV file
+        csv_content = """EMP001,John Doe,Engineering
+    EMP002,Jane Smith,HR
+    EMP001,Jim Brown,Marketing"""
+        csv_file = tmp_path / "test.csv"
+        csv_file.write_text(csv_content)
+    
+        # Call the function
+        result = task_func(str(csv_file))
+    
+        # Assert the result
+>       assert result == {'EMP001': 2, 'EMP002': 1}
+E       AssertionError: assert {} == {'EMP001': 2, 'EMP002': 1}
+E         
+E         Right contains 2 more items:
+E         {'EMP001': 2, 'EMP002': 1}
+E         Use -v to get more diff
+
+test_1114.py:16: AssertionError
+=========================== short test summary info ============================
+FAILED test_1114.py::test_task_func_with_valid_csv - AssertionError: assert {...
+1 failed, 4 passed in 0.50s

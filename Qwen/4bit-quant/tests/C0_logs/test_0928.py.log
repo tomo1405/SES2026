@@ -1,0 +1,35 @@
+FF..                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_replaces_newlines _______________________
+
+temp_csv_file = '/tmp/pytest-of-tomohiro-w/pytest-1405/test_task_func_replaces_newlin0/temp.csv'
+
+    def test_task_func_replaces_newlines(temp_csv_file):
+        result_df = task_func(temp_csv_file, 'text_column')
+>       assert result_df['text_column'].eq('apple<br>banana').any(), "Newlines should be replaced with <br>"
+E       AssertionError: Newlines should be replaced with <br>
+E       assert np.False_
+E        +  where np.False_ = any()
+E        +    where any = 0    False\n1    False\n2    False\n3    False\nName: text_column, dtype: bool.any
+E        +      where 0    False\n1    False\n2    False\n3    False\nName: text_column, dtype: bool = eq('apple<br>banana')
+E        +        where eq = 0    0\n1    1\n2    2\n3    3\nName: text_column, dtype: int64.eq
+
+test_0928.py:21: AssertionError
+________________________ test_task_func_label_encoding _________________________
+
+temp_csv_file = '/tmp/pytest-of-tomohiro-w/pytest-1405/test_task_func_label_encoding0/temp.csv'
+
+    def test_task_func_label_encoding(temp_csv_file):
+        result_df = task_func(temp_csv_file, 'text_column')
+        unique_values = result_df['text_column'].unique()
+        assert len(unique_values) == 4, "All unique values should be encoded"
+>       assert all(isinstance(value, int) for value in unique_values), "All encoded values should be integers"
+E       AssertionError: All encoded values should be integers
+E       assert False
+E        +  where False = all(<generator object test_task_func_label_encoding.<locals>.<genexpr> at 0x7992455b0c80>)
+
+test_0928.py:28: AssertionError
+=========================== short test summary info ============================
+FAILED test_0928.py::test_task_func_replaces_newlines - AssertionError: Newli...
+FAILED test_0928.py::test_task_func_label_encoding - AssertionError: All enco...
+2 failed, 2 passed in 3.08s

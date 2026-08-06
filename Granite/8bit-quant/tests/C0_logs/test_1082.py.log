@@ -1,0 +1,36 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_with_no_data __________________________
+
+sample_data = {'Weight_String': ['60.5', '65.7', '70.2', '75.9', '80.1'], 'Height': [160, 165, 170, 175, 180]}
+
+    def test_task_func_with_no_data(sample_data):
+        ax = task_func()
+        df = pd.DataFrame(sample_data)
+        assert ax.get_title() == "Weight vs Height"
+>       assert df["Weight_String"].dtype == "object"
+E       AssertionError: assert <StringDtype(na_value=nan)> == 'object'
+E        +  where <StringDtype(na_value=nan)> = 0    60.5\n1    65.7\n2    70.2\n3    75.9\n4    80.1\nName: Weight_String, dtype: str.dtype
+
+test_1082.py:18: AssertionError
+_______________________ test_task_func_with_custom_data ________________________
+
+sample_data = {'Weight_String': ['60.5', '65.7', '70.2', '75.9', '80.1'], 'Height': [160, 165, 170, 175, 180]}
+
+    def test_task_func_with_custom_data(sample_data):
+        custom_data = {
+            "Weight_String": ["65.0", "70.5", "75.2", "80.1", "85.5"],
+            "Height": [165, 170, 175, 180, 185],
+        }
+        ax = task_func(custom_data)
+        df = pd.DataFrame(custom_data)
+        assert ax.get_title() == "Weight vs Height"
+>       assert df["Weight_String"].dtype == "object"
+E       AssertionError: assert <StringDtype(na_value=nan)> == 'object'
+E        +  where <StringDtype(na_value=nan)> = 0    65.0\n1    70.5\n2    75.2\n3    80.1\n4    85.5\nName: Weight_String, dtype: str.dtype
+
+test_1082.py:29: AssertionError
+=========================== short test summary info ============================
+FAILED test_1082.py::test_task_func_with_no_data - AssertionError: assert <St...
+FAILED test_1082.py::test_task_func_with_custom_data - AssertionError: assert...
+2 failed, 1 passed in 5.30s

@@ -1,0 +1,119 @@
+F...FF                                                                   [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_valid_data ________________________
+
+sample_data = ([array([ 0.        ,  0.20408163,  0.40816327,  0.6122449 ,  0.81632653,
+        1.02040816,  1.2244898 ,  1.42857143...695319, -0.05624014,
+        0.14099378, -0.01625245,  0.17077225, -0.072549  ,  0.08592498])], ['Curve 1', 'Curve 2'])
+
+    def test_task_func_with_valid_data(sample_data):
+        x, y, labels = sample_data
+>       fig = task_func(x, y, labels)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0664.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+x = [array([ 0.        ,  0.20408163,  0.40816327,  0.6122449 ,  0.81632653,
+        1.02040816,  1.2244898 ,  1.42857143,...69388, 17.14285714, 17.55102041, 17.95918367,
+       18.36734694, 18.7755102 , 19.18367347, 19.59183673, 20.        ])]
+y = [array([1.15553906, 0.9081905 , 0.85680436, 1.02395381, 0.96125449,
+       0.95876272, 0.68676182, 0.74480288, 0.80272...7197 ,  0.06950983,  0.18695319, -0.05624014,
+        0.14099378, -0.01625245,  0.17077225, -0.072549  ,  0.08592498])]
+labels = ['Curve 1', 'Curve 2']
+
+    def task_func(x, y, labels):
+    
+        if not x or not y or not labels:
+            raise ValueError("Empty data lists provided.")
+    
+        def exponential_func(x, a, b, c):
+            """Exponential function model for curve fitting."""
+            return a * np.exp(-b * x) + c
+    
+>       fig, ax = plt.subplots()
+                  ^^^
+E       NameError: name 'plt' is not defined
+
+../../../src/src_0664.py:12: NameError
+____________________ test_task_func_with_mismatched_lengths ____________________
+
+sample_data = ([array([ 0.        ,  0.20408163,  0.40816327,  0.6122449 ,  0.81632653,
+        1.02040816,  1.2244898 ,  1.42857143...349008, -0.04661503,
+        0.09689142, -0.04689382, -0.07261872, -0.04388029, -0.2275737 ])], ['Curve 1', 'Curve 2'])
+
+    def test_task_func_with_mismatched_lengths(sample_data):
+        x, y, labels = sample_data
+        x.append(np.linspace(0, 30, 50))
+        with pytest.raises(IndexError):
+>           task_func(x, y, labels)
+
+test_0664.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+x = [array([ 0.        ,  0.20408163,  0.40816327,  0.6122449 ,  0.81632653,
+        1.02040816,  1.2244898 ,  1.42857143,...04082, 25.71428571, 26.32653061, 26.93877551,
+       27.55102041, 28.16326531, 28.7755102 , 29.3877551 , 30.        ])]
+y = [array([1.13804645, 1.04811373, 1.01067778, 1.0601465 , 1.09613168,
+       0.8763548 , 0.84541891, 1.06501295, 0.73014...95484,  0.12573704,  0.15349008, -0.04661503,
+        0.09689142, -0.04689382, -0.07261872, -0.04388029, -0.2275737 ])]
+labels = ['Curve 1', 'Curve 2']
+
+    def task_func(x, y, labels):
+    
+        if not x or not y or not labels:
+            raise ValueError("Empty data lists provided.")
+    
+        def exponential_func(x, a, b, c):
+            """Exponential function model for curve fitting."""
+            return a * np.exp(-b * x) + c
+    
+>       fig, ax = plt.subplots()
+                  ^^^
+E       NameError: name 'plt' is not defined
+
+../../../src/src_0664.py:12: NameError
+_______________________ test_task_func_with_single_curve _______________________
+
+sample_data = ([array([ 0.        ,  0.20408163,  0.40816327,  0.6122449 ,  0.81632653,
+        1.02040816,  1.2244898 ,  1.42857143...013635, -0.03954219,
+        0.16093382,  0.00301745, -0.07441862, -0.01795058,  0.06186815])], ['Curve 1', 'Curve 2'])
+
+    def test_task_func_with_single_curve(sample_data):
+        x, y, labels = sample_data
+        x = [x[0]]
+        y = [y[0]]
+        labels = [labels[0]]
+>       fig = task_func(x, y, labels)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0664.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+x = [array([ 0.        ,  0.20408163,  0.40816327,  0.6122449 ,  0.81632653,
+        1.02040816,  1.2244898 ,  1.42857143,...34694,  8.57142857,  8.7755102 ,  8.97959184,
+        9.18367347,  9.3877551 ,  9.59183673,  9.79591837, 10.        ])]
+y = [array([1.00384046, 1.02664073, 1.22516117, 0.77971804, 0.97664932,
+       0.89594722, 0.89784134, 1.03548976, 0.84562...2, 0.36616885, 0.55253886, 0.32769648, 0.41691151,
+       0.54356499, 0.59101606, 0.41438011, 0.26350912, 0.34370338])]
+labels = ['Curve 1']
+
+    def task_func(x, y, labels):
+    
+        if not x or not y or not labels:
+            raise ValueError("Empty data lists provided.")
+    
+        def exponential_func(x, a, b, c):
+            """Exponential function model for curve fitting."""
+            return a * np.exp(-b * x) + c
+    
+>       fig, ax = plt.subplots()
+                  ^^^
+E       NameError: name 'plt' is not defined
+
+../../../src/src_0664.py:12: NameError
+=========================== short test summary info ============================
+FAILED test_0664.py::test_task_func_with_valid_data - NameError: name 'plt' i...
+FAILED test_0664.py::test_task_func_with_mismatched_lengths - NameError: name...
+FAILED test_0664.py::test_task_func_with_single_curve - NameError: name 'plt'...
+3 failed, 3 passed in 2.26s

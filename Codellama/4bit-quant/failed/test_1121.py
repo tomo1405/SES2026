@@ -1,0 +1,25 @@
+import pytest
+from src_1121 import task_func
+
+def test_task_func():
+    myString = "https://www.example.com"
+    API_KEY = "your_api_key"
+    expected_output = {
+        "www.example.com": {
+            "status": "success",
+            "country": "United States",
+            "countryCode": "US",
+            "region": "California",
+            "regionName": "California",
+            "city": "San Francisco",
+            "zip": "94103",
+            "lat": 37.7697,
+            "lon": -122.406,
+            "timezone": "America/Los_Angeles",
+            "isp": "Comcast Cable Communications, Inc.",
+            "org": "AS15169 Comcast Cable Communications, Inc.",
+            "as": "AS15169 Comcast Cable Communications, Inc.",
+            "query": "www.example.com"
+        }
+    }
+    assert task_func(myString, API_KEY) == expected_output

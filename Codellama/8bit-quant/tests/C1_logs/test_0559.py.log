@@ -1,0 +1,34 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_empty_input __________________________
+
+    def test_task_func_empty_input():
+        a = []
+        b = []
+        columns = ['A', 'B']
+        df, ax = task_func(a, b, columns)
+        assert isinstance(df, pd.DataFrame)
+        assert isinstance(ax, plt.Axes)
+        assert df.empty
+>       assert ax.get_figure().get_size_inches() == (0, 0)
+E       ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+test_0559.py:16: ValueError
+________________________ test_task_func_non_empty_input ________________________
+
+    def test_task_func_non_empty_input():
+        a = [1, 2, 3]
+        b = [4, 5, 6]
+        columns = ['A', 'B']
+        df, ax = task_func(a, b, columns)
+        assert isinstance(df, pd.DataFrame)
+        assert isinstance(ax, plt.Axes)
+        assert not df.empty
+>       assert ax.get_figure().get_size_inches() != (0, 0)
+E       ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+test_0559.py:26: ValueError
+=========================== short test summary info ============================
+FAILED test_0559.py::test_task_func_empty_input - ValueError: The truth value...
+FAILED test_0559.py::test_task_func_non_empty_input - ValueError: The truth v...
+2 failed in 3.46s

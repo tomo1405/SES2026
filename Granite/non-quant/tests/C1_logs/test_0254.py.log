@@ -1,0 +1,47 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+    
+        # Mock the matplotlib Axes object
+        class MockAxes:
+            def plot(self, x, y, color):
+                assert isinstance(x, np.ndarray)
+                assert isinstance(y, np.ndarray)
+                assert color in COLORS
+    
+            def set_rlabel_position(self, position):
+                assert 0 <= position <= 180
+    
+        # Test with different input values
+        ax = MockAxes()
+>       color = task_func(ax)
+                ^^^^^^^^^^^^^
+
+test_0254.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0254.py:11: in task_func
+    ax.plot(x, y, color=color)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <test_0254.test_task_func.<locals>.MockAxes object at 0x7d04f555cf20>
+x = array([0.        , 0.00628947, 0.01257895, 0.01886842, 0.0251579 ,
+       0.03144737, 0.03773685, 0.04402632, 0.050315...03, 6.23286951, 6.23915898, 6.24544846, 6.25173793,
+       6.25802741, 6.26431688, 6.27060636, 6.27689583, 6.28318531])
+y = array([ 0.00000000e+00,  6.28532900e-02,  1.25458030e-01,  1.87566653e-01,
+        2.48933554e-01,  3.09316061e-01,  3...5395e-01, -3.09316061e-01, -2.48933554e-01,
+       -1.87566653e-01, -1.25458030e-01, -6.28532900e-02, -2.44929360e-15])
+color = 'c'
+
+    def plot(self, x, y, color):
+        assert isinstance(x, np.ndarray)
+        assert isinstance(y, np.ndarray)
+>       assert color in COLORS
+                        ^^^^^^
+E       NameError: name 'COLORS' is not defined
+
+test_0254.py:12: NameError
+=========================== short test summary info ============================
+FAILED test_0254.py::test_task_func - NameError: name 'COLORS' is not defined
+1 failed in 0.56s

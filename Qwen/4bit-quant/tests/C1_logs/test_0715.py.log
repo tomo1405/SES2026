@@ -1,0 +1,167 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_default_path __________________________
+
+self = PosixPath('/path/to/whatever'), mode = 511, parents = True
+exist_ok = True
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileNotFoundError: [Errno 2] No such file or directory: '/path/to/whatever'
+
+/usr/lib/python3.12/pathlib.py:1313: FileNotFoundError
+
+During handling of the above exception, another exception occurred:
+
+self = PosixPath('/path/to'), mode = 511, parents = True, exist_ok = True
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileNotFoundError: [Errno 2] No such file or directory: '/path/to'
+
+/usr/lib/python3.12/pathlib.py:1313: FileNotFoundError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func_default_path():
+        # Test with the default path
+>       result = task_func()
+                 ^^^^^^^^^^^
+
+test_0715.py:8: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0715.py:7: in task_func
+    Path(path_to_append).mkdir(parents=True, exist_ok=True)
+/usr/lib/python3.12/pathlib.py:1317: in mkdir
+    self.parent.mkdir(parents=True, exist_ok=True)
+/usr/lib/python3.12/pathlib.py:1317: in mkdir
+    self.parent.mkdir(parents=True, exist_ok=True)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/path'), mode = 511, parents = True, exist_ok = True
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           PermissionError: [Errno 13] Permission denied: '/path'
+
+/usr/lib/python3.12/pathlib.py:1313: PermissionError
+__________________________ test_task_func_custom_path __________________________
+
+self = PosixPath('/custom/path'), mode = 511, parents = True, exist_ok = True
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileNotFoundError: [Errno 2] No such file or directory: '/custom/path'
+
+/usr/lib/python3.12/pathlib.py:1313: FileNotFoundError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func_custom_path():
+        # Test with a custom path
+        custom_path = '/custom/path'
+>       result = task_func(custom_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^
+
+test_0715.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0715.py:7: in task_func
+    Path(path_to_append).mkdir(parents=True, exist_ok=True)
+/usr/lib/python3.12/pathlib.py:1317: in mkdir
+    self.parent.mkdir(parents=True, exist_ok=True)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/custom'), mode = 511, parents = True, exist_ok = True
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           PermissionError: [Errno 13] Permission denied: '/custom'
+
+/usr/lib/python3.12/pathlib.py:1313: PermissionError
+_________________________ test_task_func_existing_path _________________________
+
+self = PosixPath('/existing/path'), mode = 511, parents = True, exist_ok = True
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileNotFoundError: [Errno 2] No such file or directory: '/existing/path'
+
+/usr/lib/python3.12/pathlib.py:1313: FileNotFoundError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func_existing_path():
+        # Test with an existing path
+        existing_path = '/existing/path'
+>       Path(existing_path).mkdir(parents=True, exist_ok=True)
+
+test_0715.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1317: in mkdir
+    self.parent.mkdir(parents=True, exist_ok=True)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/existing'), mode = 511, parents = True, exist_ok = True
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           PermissionError: [Errno 13] Permission denied: '/existing'
+
+/usr/lib/python3.12/pathlib.py:1313: PermissionError
+_________________________ test_task_func_no_permission _________________________
+
+    def test_task_func_no_permission():
+        # Test with a path that cannot be created (e.g., root directory)
+        # This test is more of a conceptual check since pytest does not run as root by default.
+        # In practice, you would need to handle exceptions or permissions separately.
+>       with pytest.raises(PermissionError):
+E       Failed: DID NOT RAISE PermissionError
+
+test_0715.py:34: Failed
+_________________________ test_task_func_relative_path _________________________
+
+    def test_task_func_relative_path():
+        # Test with a relative path
+        relative_path = 'relative/path'
+        result = task_func(relative_path)
+>       assert result == Path.cwd() / relative_path
+E       AssertionError: assert 'relative/path' == (PosixPath('/work/tomohiro-w/utg/Qwen/4bit-quant/tests') / 'relative/path')
+E        +  where PosixPath('/work/tomohiro-w/utg/Qwen/4bit-quant/tests') = cwd()
+E        +    where cwd = Path.cwd
+
+test_0715.py:41: AssertionError
+=========================== short test summary info ============================
+FAILED test_0715.py::test_task_func_default_path - PermissionError: [Errno 13...
+FAILED test_0715.py::test_task_func_custom_path - PermissionError: [Errno 13]...
+FAILED test_0715.py::test_task_func_existing_path - PermissionError: [Errno 1...
+FAILED test_0715.py::test_task_func_no_permission - Failed: DID NOT RAISE Per...
+FAILED test_0715.py::test_task_func_relative_path - AssertionError: assert 'r...
+5 failed in 0.62s

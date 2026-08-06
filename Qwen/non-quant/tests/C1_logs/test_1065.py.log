@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a sample 2D array
+        arr = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+    
+        # Call the function
+        ax = task_func(arr)
+    
+        # Check if the returned object is an AxesSubplot
+        assert isinstance(ax, plt.Axes), "The function should return an AxesSubplot object"
+    
+        # Check if the title is set correctly
+        assert ax.get_title() == "Heatmap of the 2D Array", "The title of the heatmap is incorrect"
+    
+        # Check if the heatmap data is correct
+        heatmap_data = ax.collections[0].get_array()
+>       assert np.array_equal(heatmap_data, arr.ravel()), "The heatmap data does not match the input array"
+E       AssertionError: The heatmap data does not match the input array
+E       assert False
+E        +  where False = <function array_equal at 0x73dcc0501330>(masked_array(\n  data=[[1, 2, 3],\n        [4, 5, 6],\n        [7, 8, 9]],\n  mask=False,\n  fill_value=999999), array([1, 2, 3, 4, 5, 6, 7, 8, 9]))
+E        +    where <function array_equal at 0x73dcc0501330> = np.array_equal
+E        +    and   array([1, 2, 3, 4, 5, 6, 7, 8, 9]) = <built-in method ravel of numpy.ndarray object at 0x73db94c906f0>()
+E        +      where <built-in method ravel of numpy.ndarray object at 0x73db94c906f0> = array([[1, 2, 3],\n       [4, 5, 6],\n       [7, 8, 9]]).ravel
+
+test_1065.py:21: AssertionError
+=========================== short test summary info ============================
+FAILED test_1065.py::test_task_func - AssertionError: The heatmap data does n...
+1 failed in 3.56s

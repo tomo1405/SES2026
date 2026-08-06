@@ -1,0 +1,36 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a simple list of tuples
+        input_data = [(1, 2), (3, 4), (5, 6)]
+        arr, computed_stats, ax = task_func(input_data)
+    
+        # Check if the array is correctly created
+        expected_arr = np.array([2, 4, 6])
+        assert np.array_equal(arr, expected_arr)
+    
+        # Check if the computed statistics are correct
+        expected_stats = {
+            'mean': 4.0,
+            'std': np.std(expected_arr),
+            'min': 2,
+            'max': 6
+        }
+        assert computed_stats == expected_stats
+    
+        # Check if the plot is correctly created
+        assert isinstance(ax, plt.Axes)
+        assert ax.get_title() == 'Histogram with PDF'
+>       assert len(ax.get_lines()) == 2  # One for histogram and one for PDF
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 1 == 2
+E        +  where 1 = len(<a list of 1 Line2D objects>)
+E        +    where <a list of 1 Line2D objects> = get_lines()
+E        +      where get_lines = <Axes: title={'center': 'Histogram with PDF'}>.get_lines
+
+test_0240.py:28: AssertionError
+=========================== short test summary info ============================
+FAILED test_0240.py::test_task_func - AssertionError: assert 1 == 2
+1 failed in 2.93s

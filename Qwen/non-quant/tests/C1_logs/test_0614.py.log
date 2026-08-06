@@ -1,0 +1,58 @@
+F.FF.                                                                    [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_with_no_teams _________________________
+
+    def test_task_func_with_no_teams():
+        goals = {}
+        penalties = {}
+        expected_df = pd.DataFrame(columns=['Team', 'Score'])
+        result_df = task_func(goals, penalties)
+>       pd.testing.assert_frame_equal(result_df, expected_df)
+E       AssertionError: DataFrame are different
+E       
+E       DataFrame shape mismatch
+E       [left]:  (5, 2)
+E       [right]: (0, 2)
+
+test_0614.py:10: AssertionError
+______________________ test_task_func_with_negative_goals ______________________
+
+    def test_task_func_with_negative_goals():
+        goals = {'Team A': -5, 'Team B': 0, 'Team C': 5}
+        penalties = {'Team A': 0, 'Team B': 0, 'Team C': 0}
+        expected_df = pd.DataFrame({
+            'Team': ['Team A', 'Team B', 'Team C'],
+            'Score': [-5, 0, 5]
+        })
+        result_df = task_func(goals, penalties)
+>       pd.testing.assert_frame_equal(result_df, expected_df)
+E       AssertionError: DataFrame are different
+E       
+E       DataFrame shape mismatch
+E       [left]:  (5, 2)
+E       [right]: (3, 2)
+
+test_0614.py:30: AssertionError
+__________________ test_task_func_with_exceeding_goals_range ___________________
+
+    def test_task_func_with_exceeding_goals_range():
+        goals = {'Team A': 15, 'Team B': -15}
+        penalties = {'Team A': 0, 'Team B': 0}
+        expected_df = pd.DataFrame({
+            'Team': ['Team A', 'Team B'],
+            'Score': [10, -10]
+        })
+        result_df = task_func(goals, penalties)
+>       pd.testing.assert_frame_equal(result_df, expected_df)
+E       AssertionError: DataFrame are different
+E       
+E       DataFrame shape mismatch
+E       [left]:  (5, 2)
+E       [right]: (2, 2)
+
+test_0614.py:40: AssertionError
+=========================== short test summary info ============================
+FAILED test_0614.py::test_task_func_with_no_teams - AssertionError: DataFrame...
+FAILED test_0614.py::test_task_func_with_negative_goals - AssertionError: Dat...
+FAILED test_0614.py::test_task_func_with_exceeding_goals_range - AssertionErr...
+3 failed, 2 passed in 2.05s

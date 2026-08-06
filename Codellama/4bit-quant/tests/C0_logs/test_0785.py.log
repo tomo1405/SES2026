@@ -1,0 +1,64 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that the function returns a pandas DataFrame
+        df = task_func(n=10)
+        assert isinstance(df, pd.DataFrame)
+    
+        # Test that the DataFrame has the correct columns
+        expected_columns = ['Site', 'Category', 'Response', 'Value']
+        assert list(df.columns) == expected_columns
+    
+        # Test that the DataFrame has the correct number of rows
+        expected_rows = 10
+        assert len(df) == expected_rows
+    
+        # Test that the DataFrame contains the correct data
+        expected_data = [
+            {'Site': 'New York Times', 'Category': 'Sports', 'Response': 'Strongly Disagree', 'Value': 1},
+            {'Site': 'USA Today', 'Category': 'Technology', 'Response': 'Disagree', 'Value': 2},
+            {'Site': 'Apple News', 'Category': 'Business', 'Response': 'Neither Agree nor Disagree', 'Value': 3},
+            {'Site': 'CNN', 'Category': 'Politics', 'Response': 'Agree', 'Value': 4},
+            {'Site': 'BBC', 'Category': 'Entertainment', 'Response': 'Strongly Agree', 'Value': 5}
+        ]
+>       assert df.equals(expected_data)
+E       AssertionError: assert False
+E        +  where False = equals([{'Site': 'New York Times', 'Category': 'Sports', 'Response': 'Strongly Disagree', 'Value': 1}, {'Site': 'USA Today', ...esponse': 'Agree', 'Value': 4}, {'Site': 'BBC', 'Category': 'Entertainment', 'Response': 'Strongly Agree', 'Value': 5}])
+E        +    where equals =              Site       Category                    Response  Value\n0             CNN     Technology                  ...s         Sports                       Agree      4\n9             CNN       Politics              Strongly Agree      5.equals
+
+test_0785.py:26: AssertionError
+_______________________ test_task_func_with_random_seed ________________________
+
+    def test_task_func_with_random_seed():
+        # Test that the function returns a pandas DataFrame with the correct data when a random seed is specified
+        df = task_func(n=10, random_seed=42)
+        assert isinstance(df, pd.DataFrame)
+    
+        # Test that the DataFrame has the correct columns
+        expected_columns = ['Site', 'Category', 'Response', 'Value']
+        assert list(df.columns) == expected_columns
+    
+        # Test that the DataFrame has the correct number of rows
+        expected_rows = 10
+        assert len(df) == expected_rows
+    
+        # Test that the DataFrame contains the correct data
+        expected_data = [
+            {'Site': 'New York Times', 'Category': 'Sports', 'Response': 'Strongly Disagree', 'Value': 1},
+            {'Site': 'USA Today', 'Category': 'Technology', 'Response': 'Disagree', 'Value': 2},
+            {'Site': 'Apple News', 'Category': 'Business', 'Response': 'Neither Agree nor Disagree', 'Value': 3},
+            {'Site': 'CNN', 'Category': 'Politics', 'Response': 'Agree', 'Value': 4},
+            {'Site': 'BBC', 'Category': 'Entertainment', 'Response': 'Strongly Agree', 'Value': 5}
+        ]
+>       assert df.equals(expected_data)
+E       AssertionError: assert False
+E        +  where False = equals([{'Site': 'New York Times', 'Category': 'Sports', 'Response': 'Strongly Disagree', 'Value': 1}, {'Site': 'USA Today', ...esponse': 'Agree', 'Value': 4}, {'Site': 'BBC', 'Category': 'Entertainment', 'Response': 'Strongly Agree', 'Value': 5}])
+E        +    where equals =              Site       Category                    Response  Value\n0  New York Times         Sports  Neither Agree no...N  Entertainment  Neither Agree nor Disagree      3\n9  New York Times     Technology                       Agree      4.equals
+
+test_0785.py:49: AssertionError
+=========================== short test summary info ============================
+FAILED test_0785.py::test_task_func - AssertionError: assert False
+FAILED test_0785.py::test_task_func_with_random_seed - AssertionError: assert...
+2 failed in 1.14s

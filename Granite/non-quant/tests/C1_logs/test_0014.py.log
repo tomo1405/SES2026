@@ -1,0 +1,92 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+ftp_server = 'ftp.dlptest.com', ftp_user = 'dlpuser'
+ftp_password = 'rNrKYTX9g7z3RgJRmxWuGHbeu', ftp_dir = '/ftp/test'
+
+    def task_func(ftp_server='ftp.dlptest.com', ftp_user='dlpuser', ftp_password='rNrKYTX9g7z3RgJRmxWuGHbeu', ftp_dir='/ftp/test'):
+        # Attempt to connect to the FTP server
+        try:
+            ftp_obj = ftplib.FTP(ftp_server)
+        except Exception as e:
+            raise Exception(f'Failed to connect to FTP server {ftp_server}: {str(e)}')
+    
+        # Attempt to login to the FTP server
+        try:
+            ftp_obj.login(ftp_user, ftp_password)
+        except Exception as e:
+            raise Exception(f'Failed to log into FTP server {ftp_server} with user {ftp_user}: {str(e)}')
+    
+        # Attempt to change to the specified directory
+        try:
+>           ftp_obj.cwd(ftp_dir)
+
+../../../src/src_0014.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/ftplib.py:619: in cwd
+    return self.voidcmd(cmd)
+           ^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/ftplib.py:286: in voidcmd
+    return self.voidresp()
+           ^^^^^^^^^^^^^^^
+/usr/lib/python3.12/ftplib.py:259: in voidresp
+    resp = self.getresp()
+           ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <ftplib.FTP object at 0x7c50049b67b0>
+
+    def getresp(self):
+        resp = self.getmultiline()
+        if self.debugging:
+            print('*resp*', self.sanitize(resp))
+        self.lastresp = resp[:3]
+        c = resp[:1]
+        if c in {'1', '2', '3'}:
+            return resp
+        if c == '4':
+            raise error_temp(resp)
+        if c == '5':
+>           raise error_perm(resp)
+E           ftplib.error_perm: 550 Failed to change directory.
+
+/usr/lib/python3.12/ftplib.py:254: error_perm
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func():
+        # Test case 1: Valid FTP connection and file download
+>       downloaded_files = task_func()
+                           ^^^^^^^^^^^
+
+test_0014.py:6: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ftp_server = 'ftp.dlptest.com', ftp_user = 'dlpuser'
+ftp_password = 'rNrKYTX9g7z3RgJRmxWuGHbeu', ftp_dir = '/ftp/test'
+
+    def task_func(ftp_server='ftp.dlptest.com', ftp_user='dlpuser', ftp_password='rNrKYTX9g7z3RgJRmxWuGHbeu', ftp_dir='/ftp/test'):
+        # Attempt to connect to the FTP server
+        try:
+            ftp_obj = ftplib.FTP(ftp_server)
+        except Exception as e:
+            raise Exception(f'Failed to connect to FTP server {ftp_server}: {str(e)}')
+    
+        # Attempt to login to the FTP server
+        try:
+            ftp_obj.login(ftp_user, ftp_password)
+        except Exception as e:
+            raise Exception(f'Failed to log into FTP server {ftp_server} with user {ftp_user}: {str(e)}')
+    
+        # Attempt to change to the specified directory
+        try:
+            ftp_obj.cwd(ftp_dir)
+        except Exception as e:
+>           raise Exception(f'Failed to change to directory {ftp_dir} on server {ftp_server}: {str(e)}')
+E           Exception: Failed to change to directory /ftp/test on server ftp.dlptest.com: 550 Failed to change directory.
+
+../../../src/src_0014.py:21: Exception
+=========================== short test summary info ============================
+FAILED test_0014.py::test_task_func - Exception: Failed to change to director...
+1 failed in 1.46s

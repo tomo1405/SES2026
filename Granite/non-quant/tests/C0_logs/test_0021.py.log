@@ -1,0 +1,78 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        csv_file = "test.csv"
+>       df, ax = task_func(csv_file)
+                 ^^^^^^^^^^^^^^^^^^^
+
+test_0021.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test_0021.py:7: in task_func
+    df = pd.read_csv(csv_file)
+         ^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:873: in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:300: in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:1645: in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:1922: in _make_engine
+    return mapping[engine](f, **self.options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/c_parser_wrapper.py:95: in __init__
+    self._reader = parsers.TextReader(src, **kwds)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   pandas.errors.EmptyDataError: No columns to parse from file
+
+pandas/_libs/parsers.pyx:575: EmptyDataError
+___________________________ test_task_func_with_mock ___________________________
+
+mock_literal_eval = <MagicMock name='literal_eval' id='138906643880160'>
+
+    @patch("ast.literal_eval")
+    def test_task_func_with_mock(mock_literal_eval):
+        mock_literal_eval.return_value = {"key": "value"}
+        csv_file = "test.csv"
+>       df, ax = task_func(csv_file)
+                 ^^^^^^^^^^^^^^^^^^^
+
+test_0021.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test_0021.py:7: in task_func
+    df = pd.read_csv(csv_file)
+         ^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:873: in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:300: in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:1645: in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:1922: in _make_engine
+    return mapping[engine](f, **self.options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/c_parser_wrapper.py:95: in __init__
+    self._reader = parsers.TextReader(src, **kwds)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   pandas.errors.EmptyDataError: No columns to parse from file
+
+pandas/_libs/parsers.pyx:575: EmptyDataError
+=========================== short test summary info ============================
+FAILED test_0021.py::test_task_func - pandas.errors.EmptyDataError: No column...
+FAILED test_0021.py::test_task_func_with_mock - pandas.errors.EmptyDataError:...
+2 failed in 3.63s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

@@ -1,0 +1,56 @@
+.FF...                                                                   [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_invalid_input _________________________
+
+df =          Word
+0       Apple
+1      Banana
+2      Cherry
+3        Date
+4  Elderberry
+
+    def test_task_func_invalid_input(df):
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0602.py:15: Failed
+----------------------------- Captured stdout call -----------------------------
+No words start with the letter 'Z'.
+___________________________ test_task_func_empty_df ____________________________
+
+df = Empty DataFrame
+Columns: []
+Index: []
+
+    def test_task_func_empty_df(df):
+        df = pd.DataFrame()
+>       assert task_func(df, 'A') is None
+               ^^^^^^^^^^^^^^^^^^
+
+test_0602.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df = Empty DataFrame
+Columns: []
+Index: [], letter = 'A'
+
+    def task_func(df, letter):
+        start_time = time.time()
+        # Validate if 'Word' column exists in df
+        if 'Word' not in df.columns:
+>           raise ValueError("The DataFrame should contain a 'Word' column.")
+E           ValueError: The DataFrame should contain a 'Word' column.
+
+../../../src/src_0602.py:7: ValueError
+=============================== warnings summary ===============================
+Granite/8bit-quant/tests/test_0602.py::test_task_func_valid_input
+Granite/8bit-quant/tests/test_0602.py::test_task_func_boxplot_title
+Granite/8bit-quant/tests/test_0602.py::test_task_func_timing
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/categorical.py:700: MatplotlibDeprecationWarning: vert: bool was deprecated in Matplotlib 3.11 and will be removed in 3.13. Use orientation: {'vertical', 'horizontal'} instead.
+    artists = ax.bxp(**boxplot_kws)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0602.py::test_task_func_invalid_input - Failed: DID NOT RAISE Val...
+FAILED test_0602.py::test_task_func_empty_df - ValueError: The DataFrame shou...
+2 failed, 4 passed, 3 warnings in 4.05s

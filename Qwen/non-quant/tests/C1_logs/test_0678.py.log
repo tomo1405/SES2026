@@ -1,0 +1,35 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a sample DataFrame
+        data = {
+            'var1': [1, 2, 3, 4, 5],
+            'var2': [2, 4, 6, 8, 10]
+        }
+        df = pd.DataFrame(data)
+    
+        # Calculate expected results using linregress
+        regression = linregress(df['var1'], df['var2'])
+        expected_predictions = regression.slope * df['var1'] + regression.intercept
+    
+        # Call the function to be tested
+        result_df = task_func(df)
+    
+        # Check if the 'predicted' column exists in the result DataFrame
+        assert 'predicted' in result_df.columns, "The 'predicted' column is missing from the result DataFrame."
+    
+        # Check if the 'predicted' column values match the expected predictions
+        np.testing.assert_array_almost_equal(result_df['predicted'], expected_predictions, decimal=6, err_msg="The predicted values do not match the expected values.")
+    
+        # Check if the original DataFrame is not modified
+>       assert 'predicted' not in df.columns, "The original DataFrame should not have the 'predicted' column added."
+E       AssertionError: The original DataFrame should not have the 'predicted' column added.
+E       assert 'predicted' not in Index(['var1', 'var2', 'predicted'], dtype='str')
+E        +  where Index(['var1', 'var2', 'predicted'], dtype='str') =    var1  var2  predicted\n0     1     2        2.0\n1     2     4        4.0\n2     3     6        6.0\n3     4     8        8.0\n4     5    10       10.0.columns
+
+test_0678.py:29: AssertionError
+=========================== short test summary info ============================
+FAILED test_0678.py::test_task_func - AssertionError: The original DataFrame ...
+1 failed in 2.43s

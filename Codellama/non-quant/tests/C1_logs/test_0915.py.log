@@ -1,0 +1,41 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a sample dataframe
+        df = pd.DataFrame({'date': ['2022-01-01', '2022-01-02', '2022-01-03', '2022-01-04', '2022-01-05'],
+                           'closing_price': [100, 110, 120, 130, 140]})
+    
+        # Convert date to timestamp
+        df['date'] = pd.to_datetime(df['date'])
+        df['date'] = df['date'].map(pd.Timestamp.timestamp)
+    
+        # Prepare data
+        X = df['date'].values.reshape(-1, 1)
+        y = df['closing_price'].values
+    
+        # Fit model
+        model = LinearRegression()
+        model.fit(X, y)
+    
+        # Predict future prices
+        future_dates = np.array([df['date'].max() + i*24*60*60 for i in range(1, 8)]).reshape(-1, 1)
+        pred_prices = model.predict(future_dates)
+    
+        # Plot
+        fig, ax = plt.subplots()
+        ax.scatter(df['date'], df['closing_price'], color='black')
+        ax.plot(future_dates, pred_prices, color='blue', linewidth=3)
+    
+        # Test that the function returns the correct values
+>       assert task_func(df) == (pred_prices.tolist(), ax)
+E       assert ([9999946556......], <Axes: >) == ([150.0, 160......], <Axes: >)
+E         
+E         At index 0 diff: [9999946556.634178, 19999892973.245316, 29999839389.856453, 39999785806.46758, 49999732223.07872, 59999678639.68986, 69999625056.30101] != [150.0, 160.0, 170.0, 180.0, 190.0, 200.0, 210.0]
+E         Use -v to get more diff
+
+test_0915.py:35: AssertionError
+=========================== short test summary info ============================
+FAILED test_0915.py::test_task_func - assert ([9999946556......], <Axes: >) =...
+1 failed in 3.50s

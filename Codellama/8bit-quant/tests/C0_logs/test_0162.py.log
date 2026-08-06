@@ -1,0 +1,70 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_valid_log_file _________________________
+
+    def test_task_func_valid_log_file():
+        log_file = 'valid_log_file.log'
+>       output_csv_path = task_func(log_file)
+                          ^^^^^^^^^^^^^^^^^^^
+
+test_0162.py:6: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+log_file = 'valid_log_file.log'
+
+    def task_func(log_file):
+        log_pattern = r'(ERROR|INFO): \[\s*(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\s*\] - (.*)'
+        parsed_data = []
+    
+>       with open(log_file, 'r') as file:
+             ^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'valid_log_file.log'
+
+../../../src/src_0162.py:8: FileNotFoundError
+_______________________ test_task_func_invalid_log_file ________________________
+
+    def test_task_func_invalid_log_file():
+        log_file = 'invalid_log_file.log'
+        with pytest.raises(ValueError):
+>           task_func(log_file)
+
+test_0162.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+log_file = 'invalid_log_file.log'
+
+    def task_func(log_file):
+        log_pattern = r'(ERROR|INFO): \[\s*(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\s*\] - (.*)'
+        parsed_data = []
+    
+>       with open(log_file, 'r') as file:
+             ^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'invalid_log_file.log'
+
+../../../src/src_0162.py:8: FileNotFoundError
+________________________ test_task_func_empty_log_file _________________________
+
+    def test_task_func_empty_log_file():
+        log_file = 'empty_log_file.log'
+        with pytest.raises(ValueError):
+>           task_func(log_file)
+
+test_0162.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+log_file = 'empty_log_file.log'
+
+    def task_func(log_file):
+        log_pattern = r'(ERROR|INFO): \[\s*(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\s*\] - (.*)'
+        parsed_data = []
+    
+>       with open(log_file, 'r') as file:
+             ^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'empty_log_file.log'
+
+../../../src/src_0162.py:8: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0162.py::test_task_func_valid_log_file - FileNotFoundError: [Errn...
+FAILED test_0162.py::test_task_func_invalid_log_file - FileNotFoundError: [Er...
+FAILED test_0162.py::test_task_func_empty_log_file - FileNotFoundError: [Errn...
+3 failed in 1.12s

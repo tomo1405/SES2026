@@ -1,0 +1,25 @@
+....F                                                                    [100%]
+=================================== FAILURES ===================================
+______________ test_task_func_with_special_characters_in_hex_str _______________
+
+    def test_task_func_with_special_characters_in_hex_str():
+        hex_str = "68656c6c6f21@#"
+        salt_size = 16
+>       result = task_func(hex_str, salt_size)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0131.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+hex_str = '68656c6c6f21@#', salt_size = 16
+
+    def task_func(hex_str, salt_size):
+        salt = os.urandom(salt_size)
+>       data = binascii.unhexlify(hex_str.replace('\\x', ''))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       binascii.Error: Non-hexadecimal digit found
+
+../../../src/src_0131.py:7: Error
+=========================== short test summary info ============================
+FAILED test_0131.py::test_task_func_with_special_characters_in_hex_str - bina...
+1 failed, 4 passed in 0.38s

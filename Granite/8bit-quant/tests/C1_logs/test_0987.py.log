@@ -1,0 +1,42 @@
+FF..                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        json_data = '{"key1": {"key2": "1,2,3,4,5"}}'
+        key_path = ["key1", "key2"]
+        expected_values = np.array([1, 2, 3, 4, 5])
+        expected_df = pd.DataFrame(expected_values, columns=["Values"])
+        expected_fig, expected_ax = plt.subplots()
+        sns.boxplot(data=expected_df, ax=expected_ax)
+        actual_fig = task_func(json_data, key_path)
+>       assert actual_fig == expected_fig
+E       assert <Figure size 640x480 with 1 Axes> == <Figure size 640x480 with 1 Axes>
+
+test_0987.py:36: AssertionError
+_______________________ test_task_func_json_decode_error _______________________
+
+    def test_task_func_json_decode_error():
+        json_data = '{"key1": {"key2": "abc"}}'
+        key_path = ["key1", "key2"]
+        with pytest.raises(ValueError) as e:
+            task_func(json_data, key_path)
+>       assert "Input malformed" in str(e.value)
+E       AssertionError: assert 'Input malformed' in 'Value error occurred: string or file could not be read to its end due to unmatched data'
+E        +  where 'Value error occurred: string or file could not be read to its end due to unmatched data' = str(ValueError('Value error occurred: string or file could not be read to its end due to unmatched data'))
+E        +    where ValueError('Value error occurred: string or file could not be read to its end due to unmatched data') = <ExceptionInfo ValueError('Value error occurred: string or file could not be read to its end due to unmatched data') tblen=2>.value
+
+test_0987.py:42: AssertionError
+=============================== warnings summary ===============================
+Granite/8bit-quant/tests/test_0987.py::test_task_func
+Granite/8bit-quant/tests/test_0987.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/categorical.py:700: MatplotlibDeprecationWarning: vert: bool was deprecated in Matplotlib 3.11 and will be removed in 3.13. Use orientation: {'vertical', 'horizontal'} instead.
+    artists = ax.bxp(**boxplot_kws)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0987.py::test_task_func - assert <Figure size 640x480 with 1 Axes...
+FAILED test_0987.py::test_task_func_json_decode_error - AssertionError: asser...
+2 failed, 2 passed, 2 warnings in 3.44s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

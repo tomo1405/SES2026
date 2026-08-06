@@ -1,0 +1,86 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        L = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        expected_result = 3
+        actual_result = task_func(L)
+>       assert actual_result == expected_result
+E       assert np.float64(4.0) == 3
+
+test_0739.py:8: AssertionError
+________________________ test_task_func_with_empty_list ________________________
+
+    def test_task_func_with_empty_list():
+        L = []
+        expected_result = None
+        actual_result = task_func(L)
+>       assert actual_result == expected_result
+E       assert np.float64(nan) == None
+
+test_0739.py:14: AssertionError
+______________________ test_task_func_with_invalid_input _______________________
+
+    def test_task_func_with_invalid_input():
+        L = "invalid input"
+        expected_result = None
+>       actual_result = task_func(L)
+                        ^^^^^^^^^^^^
+
+test_0739.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0739.py:5: in task_func
+    iqr_value = iqr(flattened)
+                ^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:601: in axis_nan_policy_wrapper
+    res = hypotest_fun_out(*samples, **kwds)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/scipy/stats/_stats_py.py:3197: in iqr
+    pct = stats.quantile(x, rng, axis=-1, method=interpolation, keepdims=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/scipy/stats/_quantile.py:393: in quantile
+    temp = _quantile_iv(x, p, method, axis, nan_policy, keepdims, weights)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+x = array(['invalid input'], dtype='<U13'), p = array([0.25, 0.75])
+method = 'linear', axis = -1, nan_policy = 'propagate', keepdims = True
+weights = None, fun = 'quantile'
+
+    def _quantile_iv(x, p, method, axis, nan_policy, keepdims, weights, fun='quantile'):
+        xp = array_namespace(x, p, weights)
+    
+        if fun == "quantile":
+            methods = {'inverted_cdf', 'averaged_inverted_cdf', 'closest_observation',
+                       'hazen', 'interpolated_inverted_cdf', 'linear',
+                       'median_unbiased', 'normal_unbiased', 'weibull',
+                       'harrell-davis', '_lower', '_midpoint', '_higher', '_nearest',
+                       'round_outward', 'round_inward', 'round_nearest'}
+            allowed_types = 'real floating'
+            def mask_fun(p): return (p > 1) | (p < 0) | xp.isnan(p)
+            var2_name = 'p'
+            var2_type_msg = '`p` must have real floating dtype.'
+        else:
+            methods = set(_estimated_cdf_methods)
+            allowed_types = ('integral', 'real floating')
+            mask_fun = xp.isnan
+            var2_name = 'y'
+            var2_type_msg = '`y` must have real dtype.'
+    
+        if not xp.isdtype(xp.asarray(x).dtype, ('integral', 'real floating')):
+>           raise ValueError("`x` must have real dtype.")
+E           ValueError: `x` must have real dtype.
+
+../../../.venv/lib/python3.12/site-packages/scipy/stats/_quantile.py:40: ValueError
+=============================== warnings summary ===============================
+Codellama/non-quant/tests/test_0739.py::test_task_func_with_empty_list
+  /work/tomohiro-w/utg/src/src_0739.py:5: SmallSampleWarning: One or more sample arguments is too small; all returned values will be NaN. See documentation for sample size requirements.
+    iqr_value = iqr(flattened)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0739.py::test_task_func - assert np.float64(4.0) == 3
+FAILED test_0739.py::test_task_func_with_empty_list - assert np.float64(nan) ...
+FAILED test_0739.py::test_task_func_with_invalid_input - ValueError: `x` must...
+3 failed, 1 warning in 1.90s

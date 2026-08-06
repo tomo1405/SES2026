@@ -1,0 +1,33 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_invalid_cursor _________________________
+
+    def test_task_func_invalid_cursor():
+        with pytest.raises(TypeError):
+>           task_func("salt", 123)
+
+test_1132.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+salt = 'salt', cursor = 123
+
+    def task_func(salt, cursor):
+        if not isinstance(salt, str):
+            raise TypeError
+>       cursor.execute("SELECT id, password FROM users")
+        ^^^^^^^^^^^^^^
+E       AttributeError: 'int' object has no attribute 'execute'
+
+../../../src/src_1132.py:6: AttributeError
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+>       cursor = MagicMock()
+                 ^^^^^^^^^
+E       NameError: name 'MagicMock' is not defined
+
+test_1132.py:14: NameError
+=========================== short test summary info ============================
+FAILED test_1132.py::test_task_func_invalid_cursor - AttributeError: 'int' ob...
+FAILED test_1132.py::test_task_func_valid_input - NameError: name 'MagicMock'...
+2 failed, 1 passed in 0.51s

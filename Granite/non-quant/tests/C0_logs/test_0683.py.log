@@ -1,0 +1,50 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+nested_dict = {'a': {'x': 1, 'y': 2}, 'b': {'y': 3, 'z': 4}, 'c': {'x': 5, 'z': 6}}
+
+    def test_task_func(nested_dict):
+        result = task_func(nested_dict)
+        assert isinstance(result, dict)
+        assert all(isinstance(k, str) and isinstance(v, float) for k, v in result.items())
+        assert len(result) == 3
+        for k, v in result.items():
+>           assert math.sin(nested_dict[k][k]) == v
+                            ^^^^^^^^^^^^^^
+E           KeyError: 'x'
+
+test_0683.py:16: KeyError
+________________________ test_task_func_with_empty_dict ________________________
+
+nested_dict = {'a': {'x': 1, 'y': 2}, 'b': {'y': 3, 'z': 4}, 'c': {'x': 5, 'z': 6}, 'empty': {}}
+
+    def test_task_func_with_empty_dict(nested_dict):
+        nested_dict['empty'] = {}
+        result = task_func(nested_dict)
+        assert isinstance(result, dict)
+        assert all(isinstance(k, str) and isinstance(v, float) for k, v in result.items())
+>       assert len(result) == 4
+E       AssertionError: assert 3 == 4
+E        +  where 3 = len({'x': -0.27941549819892586, 'y': -0.9589242746631385, 'z': -0.5440211108893698})
+
+test_0683.py:23: AssertionError
+_____________________ test_task_func_with_negative_values ______________________
+
+nested_dict = {'a': {'x': 1, 'y': 2}, 'b': {'y': 3, 'z': 4}, 'c': {'x': 5, 'z': 6}, 'negative': {'x': -1, 'y': -2, 'z': -3}}
+
+    def test_task_func_with_negative_values(nested_dict):
+        nested_dict['negative'] = {'x': -1, 'y': -2, 'z': -3}
+        result = task_func(nested_dict)
+        assert isinstance(result, dict)
+        assert all(isinstance(k, str) and isinstance(v, float) for k, v in result.items())
+>       assert len(result) == 4
+E       AssertionError: assert 3 == 4
+E        +  where 3 = len({'x': -0.9589242746631385, 'y': 0.1411200080598672, 'z': 0.6569865987187891})
+
+test_0683.py:35: AssertionError
+=========================== short test summary info ============================
+FAILED test_0683.py::test_task_func - KeyError: 'x'
+FAILED test_0683.py::test_task_func_with_empty_dict - AssertionError: assert ...
+FAILED test_0683.py::test_task_func_with_negative_values - AssertionError: as...
+3 failed in 0.48s

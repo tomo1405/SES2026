@@ -1,0 +1,48 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        source_dir = "source_directory"
+        target_dir = "target_directory"
+        prefix = "#Hash: "
+>       new_files = task_func(source_dir, target_dir, prefix)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1135.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+source_dir = 'source_directory', target_dir = 'target_directory'
+prefix = '#Hash: '
+
+    def task_func(source_dir, target_dir, prefix='#Hash: '):
+        if not os.path.exists(source_dir):
+>           raise FileNotFoundError(f"Source directory '{source_dir}' does not exist.")
+E           FileNotFoundError: Source directory 'source_directory' does not exist.
+
+../../../src/src_1135.py:6: FileNotFoundError
+__________________ test_task_func_with_nonexistent_target_dir __________________
+
+    def test_task_func_with_nonexistent_target_dir():
+        source_dir = "source_directory"
+        target_dir = "nonexistent_directory"
+        prefix = "#Hash: "
+>       new_files = task_func(source_dir, target_dir, prefix)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1135.py:30: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+source_dir = 'source_directory', target_dir = 'nonexistent_directory'
+prefix = '#Hash: '
+
+    def task_func(source_dir, target_dir, prefix='#Hash: '):
+        if not os.path.exists(source_dir):
+>           raise FileNotFoundError(f"Source directory '{source_dir}' does not exist.")
+E           FileNotFoundError: Source directory 'source_directory' does not exist.
+
+../../../src/src_1135.py:6: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_1135.py::test_task_func - FileNotFoundError: Source directory 'so...
+FAILED test_1135.py::test_task_func_with_nonexistent_target_dir - FileNotFoun...
+2 failed, 1 passed in 0.51s

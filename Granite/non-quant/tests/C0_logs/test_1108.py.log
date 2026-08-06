@@ -1,0 +1,25 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        unix_timestamp = 1631833600
+        target_timezone = 'US/Eastern'
+        expected_output = '2021-09-17 12:00:00'
+    
+        datetime_utc = datetime.utcfromtimestamp(unix_timestamp).replace(tzinfo=pytz.utc)
+        datetime_in_target_timezone = datetime_utc.astimezone(pytz.timezone(target_timezone))
+>       formatted_datetime = datetime_in_target_timezone.strftime(DATE_FORMAT)
+                                                                  ^^^^^^^^^^^
+E       NameError: name 'DATE_FORMAT' is not defined
+
+test_1108.py:14: NameError
+=============================== warnings summary ===============================
+Granite/non-quant/tests/test_1108.py::test_task_func
+  /work/tomohiro-w/utg/Granite/non-quant/tests/test_1108.py:12: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+    datetime_utc = datetime.utcfromtimestamp(unix_timestamp).replace(tzinfo=pytz.utc)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_1108.py::test_task_func - NameError: name 'DATE_FORMAT' is not de...
+1 failed, 1 warning in 0.73s

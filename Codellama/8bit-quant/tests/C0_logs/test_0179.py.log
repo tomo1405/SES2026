@@ -1,0 +1,53 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_valid_ip ____________________________
+
+    def test_task_func_valid_ip():
+        ip_address = '192.168.1.1'
+        expected_result = '192.168.1.1'
+>       assert task_func(ip_address) == expected_result
+E       AssertionError: assert 'Extra data: ...mn 8 (char 7)' == '192.168.1.1'
+E         
+E         - 192.168.1.1
+E         + Extra data: line 1 column 8 (char 7)
+
+test_0179.py:7: AssertionError
+__________________________ test_task_func_invalid_ip ___________________________
+
+    def test_task_func_invalid_ip():
+        ip_address = '192.168.1.1.1'
+        expected_result = 'Invalid IP address received'
+>       assert task_func(ip_address) == expected_result
+E       AssertionError: assert 'Extra data: ...mn 8 (char 7)' == 'Invalid IP address received'
+E         
+E         - Invalid IP address received
+E         + Extra data: line 1 column 8 (char 7)
+
+test_0179.py:12: AssertionError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        ip_address = 'invalid_input'
+        expected_result = 'Invalid IP address received'
+>       assert task_func(ip_address) == expected_result
+E       AssertionError: assert 'Expecting va...mn 1 (char 0)' == 'Invalid IP address received'
+E         
+E         - Invalid IP address received
+E         + Expecting value: line 1 column 1 (char 0)
+
+test_0179.py:17: AssertionError
+___________________________ test_task_func_exception ___________________________
+
+    def test_task_func_exception():
+        ip_address = '192.168.1.1'
+        expected_result = 'Invalid IP address received'
+>       with pytest.raises(Exception):
+E       Failed: DID NOT RAISE Exception
+
+test_0179.py:22: Failed
+=========================== short test summary info ============================
+FAILED test_0179.py::test_task_func_valid_ip - AssertionError: assert 'Extra ...
+FAILED test_0179.py::test_task_func_invalid_ip - AssertionError: assert 'Extr...
+FAILED test_0179.py::test_task_func_invalid_input - AssertionError: assert 'E...
+FAILED test_0179.py::test_task_func_exception - Failed: DID NOT RAISE Exception
+4 failed in 0.41s

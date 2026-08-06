@@ -1,0 +1,21 @@
+.....F..                                                                 [100%]
+=================================== FAILURES ===================================
+__________________ test_task_func_random_grades_distribution ___________________
+
+    def test_task_func_random_grades_distribution():
+        np.random.seed(0)  # For reproducibility
+        df = task_func()
+        for column in df.columns[:-1]:  # Exclude 'Average Grade' column
+            grades = df[column]
+>           assert np.allclose(np.mean(grades), 54.88, atol=1)  # Approximate mean due to randomness
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           assert False
+E            +  where False = <function allclose at 0x74b0c9a24ef0>(np.float64(49.75), 54.88, atol=1)
+E            +    where <function allclose at 0x74b0c9a24ef0> = np.allclose
+E            +    and   np.float64(49.75) = <function mean at 0x74b0c9a19d70>(Student_1      53.00\nStudent_2      65.00\nStudent_3      39.00\nStudent_4      77.00\nStudent_5      66.00\n             ..._98     56.00\nStudent_99     53.00\nStudent_100    76.00\nAverage        49.75\nName: Physics, Length: 101, dtype: float64)
+E            +      where <function mean at 0x74b0c9a19d70> = np.mean
+
+test_0309.py:41: AssertionError
+=========================== short test summary info ============================
+FAILED test_0309.py::test_task_func_random_grades_distribution - assert False
+1 failed, 7 passed in 1.11s

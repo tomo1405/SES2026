@@ -1,0 +1,51 @@
+...FFF                                                                   [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_noise_level __________________________
+
+    def test_task_func_noise_level():
+        ax = task_func(noise_level=0.1)
+        y = ax.lines[0].get_ydata()
+        x = ax.lines[0].get_xdata()
+        noise = y - np.sin(x)
+>       assert np.allclose(np.std(noise), 0.1, atol=0.05), "The standard deviation of the noise should match the specified noise_level."
+E       AssertionError: The standard deviation of the noise should match the specified noise_level.
+E       assert False
+E        +  where False = <function allclose at 0x7f408dffef30>(np.float64(0.02885834850455331), 0.1, atol=0.05)
+E        +    where <function allclose at 0x7f408dffef30> = np.allclose
+E        +    and   np.float64(0.02885834850455331) = <function std at 0x7f408dffbe30>(array([0.0757009 , 0.01132153, 0.04321863, 0.05605383, 0.03025637,\n       0.040852  , 0.09922513, 0.09255218, 0.074456...02, 0.01525888, 0.01864883, 0.00839572, 0.00257734,\n       0.03630822, 0.04821667, 0.09927797, 0.08840999, 0.07962977]))
+E        +      where <function std at 0x7f408dffbe30> = np.std
+
+test_0575.py:31: AssertionError
+______________________ test_task_func_default_parameters _______________________
+
+    def test_task_func_default_parameters():
+        ax = task_func()
+        x = ax.lines[0].get_xdata()
+        assert len(x) == 100, "The default array_length should be 100."
+        y = ax.lines[0].get_ydata()
+        noise = y - np.sin(x)
+>       assert np.allclose(np.std(noise), 0.2, atol=0.05), "The default noise_level should be 0.2."
+E       AssertionError: The default noise_level should be 0.2.
+E       assert False
+E        +  where False = <function allclose at 0x7f408dffef30>(np.float64(0.052647355624864396), 0.2, atol=0.05)
+E        +    where <function allclose at 0x7f408dffef30> = np.allclose
+E        +    and   np.float64(0.052647355624864396) = <function std at 0x7f408dffbe30>(array([0.11776121, 0.04989937, 0.17361607, 0.13623033, 0.09725932,\n       0.08664283, 0.07424596, 0.10540408, 0.156440...37, 0.15462003, 0.07771398, 0.10357465, 0.07122638,\n       0.10435919, 0.00082447, 0.10184029, 0.0491028 , 0.08262965]))
+E        +      where <function std at 0x7f408dffbe30> = np.std
+
+test_0575.py:39: AssertionError
+________________________ test_task_func_fit_parameters _________________________
+
+    def test_task_func_fit_parameters():
+        ax = task_func()
+        fit_line = ax.lines[1]
+        label = fit_line.get_label()
+>       a, b = map(float, label.split('=')[1].split(','))
+        ^^^^
+E       ValueError: could not convert string to float: ' b'
+
+test_0575.py:45: ValueError
+=========================== short test summary info ============================
+FAILED test_0575.py::test_task_func_noise_level - AssertionError: The standar...
+FAILED test_0575.py::test_task_func_default_parameters - AssertionError: The ...
+FAILED test_0575.py::test_task_func_fit_parameters - ValueError: could not co...
+3 failed, 3 passed in 2.51s

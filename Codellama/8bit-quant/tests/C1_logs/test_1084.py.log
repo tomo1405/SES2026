@@ -1,0 +1,174 @@
+FF.F                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+data = {'Salary_String': ['$100,000', '$200,000', '$300,000'], 'Experience': [1, 2, 3]}
+
+    def task_func(data):
+        # Validate input data
+        if not all(key in data for key in ["Salary_String", "Experience"]):
+            raise ValueError(
+                "Input data must contain 'Salary_String' and 'Experience' keys."
+            )
+    
+        # Convert data to DataFrame
+        df = pd.DataFrame(data)
+    
+        # Check if the data is empty
+        if df.empty:
+            # Handle empty data case (e.g., return a default Axes instance or raise an error)
+            _, ax = plt.subplots()
+            ax.set_title("Normalized Salary vs Experience")
+            ax.set_xlabel("Experience")
+            ax.set_ylabel("Normalized Salary")
+            return ax
+    
+        # Convert Salary_String to float and handle potential conversion errors
+        try:
+>           df["Salary_Float"] = df["Salary_String"].str.replace(",", "").astype(float)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../../../src/src_1084.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6541: in astype
+    new_data = self._mgr.astype(dtype=dtype, errors=errors)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/managers.py:614: in astype
+    return self.apply("astype", dtype=dtype, errors=errors)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/managers.py:445: in apply
+    applied = getattr(b, f)(**kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/blocks.py:607: in astype
+    new_values = astype_array_safe(values, dtype, errors=errors)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/dtypes/astype.py:240: in astype_array_safe
+    new_values = astype_array(values, dtype, copy=copy)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/dtypes/astype.py:182: in astype_array
+    values = values.astype(dtype, copy=copy)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/string_arrow.py:336: in astype
+    return self.to_numpy(dtype=dtype, na_value=np.nan)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <ArrowStringArray>
+['$100000', '$200000', '$300000']
+Length: 3, dtype: str
+dtype = dtype('float64'), copy = False, na_value = nan
+
+    @doc(ExtensionArray.to_numpy)
+    def to_numpy(
+        self,
+        dtype: npt.DTypeLike | None = None,
+        copy: bool = False,
+        na_value: object = lib.no_default,
+    ) -> np.ndarray:
+        original_na_value = na_value
+        dtype, na_value = to_numpy_dtype_inference(self, dtype, na_value, self._hasna)
+        pa_type = self._pa_array.type
+        if not self._hasna or isna(na_value) or pa.types.is_null(pa_type):
+            data = self
+        else:
+            data = self.fillna(na_value)
+            copy = False
+    
+        if pa.types.is_timestamp(pa_type) or pa.types.is_duration(pa_type):
+            # GH 55997
+            if dtype != object and na_value is self.dtype.na_value:
+                na_value = lib.no_default
+            result = data._maybe_convert_datelike_array().to_numpy(
+                dtype=dtype, na_value=na_value
+            )
+        elif pa.types.is_time(pa_type) or pa.types.is_date(pa_type):
+            # convert to list of python datetime.time objects before
+            # wrapping in ndarray
+            result = np.array(list(data), dtype=dtype)
+            if data._hasna:
+                result[data.isna()] = na_value
+        elif pa.types.is_null(pa_type):
+            if dtype is not None and isna(na_value):
+                na_value = None
+            result = np.full(len(data), fill_value=na_value, dtype=dtype)
+        elif not data._hasna or (
+            pa.types.is_floating(pa_type)
+            and (
+                na_value is np.nan
+                or (
+                    original_na_value is lib.no_default
+                    and is_float_dtype(dtype)
+                    and is_nan_na()
+                )
+            )
+        ):
+            result = data._pa_array.to_numpy()
+            if dtype is not None:
+>               result = result.astype(dtype, copy=False)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               ValueError: could not convert string to float: '$100000'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/arrow/array.py:1729: ValueError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func_valid_input():
+        data = {"Salary_String": ["$100,000", "$200,000", "$300,000"], "Experience": [1, 2, 3]}
+>       ax = task_func(data)
+             ^^^^^^^^^^^^^^^
+
+test_1084.py:6: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = {'Salary_String': ['$100,000', '$200,000', '$300,000'], 'Experience': [1, 2, 3]}
+
+    def task_func(data):
+        # Validate input data
+        if not all(key in data for key in ["Salary_String", "Experience"]):
+            raise ValueError(
+                "Input data must contain 'Salary_String' and 'Experience' keys."
+            )
+    
+        # Convert data to DataFrame
+        df = pd.DataFrame(data)
+    
+        # Check if the data is empty
+        if df.empty:
+            # Handle empty data case (e.g., return a default Axes instance or raise an error)
+            _, ax = plt.subplots()
+            ax.set_title("Normalized Salary vs Experience")
+            ax.set_xlabel("Experience")
+            ax.set_ylabel("Normalized Salary")
+            return ax
+    
+        # Convert Salary_String to float and handle potential conversion errors
+        try:
+            df["Salary_Float"] = df["Salary_String"].str.replace(",", "").astype(float)
+        except ValueError:
+>           raise ValueError("Error converting Salary_String to float.")
+E           ValueError: Error converting Salary_String to float.
+
+../../../src/src_1084.py:27: ValueError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        data = {"Salary_String": ["$100,000", "$200,000", "$300,000"], "Experience": [1, 2, 3]}
+        with pytest.raises(ValueError):
+>           task_func(data, "Salary_String")
+E           TypeError: task_func() takes 1 positional argument but 2 were given
+
+test_1084.py:15: TypeError
+_____________________ test_task_func_invalid_salary_string _____________________
+
+    def test_task_func_invalid_salary_string():
+        data = {"Salary_String": ["$100,000", "$200,000", "$300,000"], "Experience": [1, 2, 3]}
+        with pytest.raises(ValueError):
+>           task_func(data, "Salary_String")
+E           TypeError: task_func() takes 1 positional argument but 2 were given
+
+test_1084.py:28: TypeError
+=========================== short test summary info ============================
+FAILED test_1084.py::test_task_func_valid_input - ValueError: Error convertin...
+FAILED test_1084.py::test_task_func_invalid_input - TypeError: task_func() ta...
+FAILED test_1084.py::test_task_func_invalid_salary_string - TypeError: task_f...
+3 failed, 1 passed in 3.80s

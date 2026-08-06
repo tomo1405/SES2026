@@ -1,0 +1,144 @@
+FF...                                                                    [100%]
+=================================== FAILURES ===================================
+___________________ test_task_func[df0-columns0-50-900-0.0] ____________________
+
+df =    A  B  C
+0  1  4  7
+1  2  5  8
+2  3  6  9, columns = ['A', 'B', 'C']
+larger = 50, equal = 900, expected = 0.0
+
+    @pytest.mark.parametrize("df, columns, larger, equal, expected", [
+        (pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]}), ['A', 'B', 'C'], 50, 900, 0.0),
+        (pd.DataFrame({'A': [10, 20, 30], 'B': [40, 50, 60], 'C': [70, 80, 90]}), ['A', 'B', 'C'], 50, 900, 0.0),
+        (pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]}), ['D', 'E', 'F'], 50, 900, ValueError),
+        (pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]}), ['A', 'B', 'C'], 50, 900, ValueError),
+        (pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]}), ['A', 'B', 'C'], 50, 900, ValueError),
+    ])
+    def test_task_func(df, columns, larger, equal, expected):
+>       with pytest.raises(expected):
+             ^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0885.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/_pytest/raises.py:624: in __init__
+    self.expected_exceptions = tuple(
+../../../.venv/lib/python3.12/site-packages/_pytest/raises.py:625: in <genexpr>
+    self._parse_exc(e, expected="a BaseException type")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <[AttributeError("'RaisesExc' object has no attribute 'expected_exceptions'") raised in repr()] RaisesExc object at 0x7278626db890>
+exc = 0.0, expected = 'a BaseException type'
+
+    def _parse_exc(
+        self, exc: type[BaseExcT_1] | types.GenericAlias, expected: str
+    ) -> type[BaseExcT_1]:
+        if isinstance(exc, type) and issubclass(exc, BaseException):
+            if not issubclass(exc, Exception):
+                self.is_baseexception = True
+            return exc
+        # because RaisesGroup does not support variable number of exceptions there's
+        # still a use for RaisesExc(ExceptionGroup[Exception]).
+        origin_exc: type[BaseException] | None = get_origin(exc)
+        if origin_exc and issubclass(origin_exc, BaseExceptionGroup):
+            exc_type = get_args(exc)[0]
+            if (
+                issubclass(origin_exc, ExceptionGroup) and exc_type in (Exception, Any)
+            ) or (
+                issubclass(origin_exc, BaseExceptionGroup)
+                and exc_type in (BaseException, Any)
+            ):
+                if not issubclass(origin_exc, ExceptionGroup):
+                    self.is_baseexception = True
+                return cast(type[BaseExcT_1], origin_exc)
+            else:
+                raise ValueError(
+                    f"Only `ExceptionGroup[Exception]` or `BaseExceptionGroup[BaseException]` "
+                    f"are accepted as generic types but got `{exc}`. "
+                    f"As `raises` will catch all instances of the specified group regardless of the "
+                    f"generic argument specific nested exceptions has to be checked "
+                    f"with `RaisesGroup`."
+                )
+        # unclear if the Type/ValueError distinction is even helpful here
+        msg = f"Expected {expected}, but got "
+        if isinstance(exc, type):  # type: ignore[unreachable]
+            raise ValueError(msg + f"{exc.__name__!r}")
+        if isinstance(exc, BaseException):  # type: ignore[unreachable]
+            raise TypeError(msg + f"an exception instance: {type(exc).__name__}")
+>       raise TypeError(msg + repr(type(exc).__name__))
+E       TypeError: Expected a BaseException type, but got 'float'
+
+../../../.venv/lib/python3.12/site-packages/_pytest/raises.py:454: TypeError
+___________________ test_task_func[df1-columns1-50-900-0.0] ____________________
+
+df =     A   B   C
+0  10  40  70
+1  20  50  80
+2  30  60  90
+columns = ['A', 'B', 'C'], larger = 50, equal = 900, expected = 0.0
+
+    @pytest.mark.parametrize("df, columns, larger, equal, expected", [
+        (pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]}), ['A', 'B', 'C'], 50, 900, 0.0),
+        (pd.DataFrame({'A': [10, 20, 30], 'B': [40, 50, 60], 'C': [70, 80, 90]}), ['A', 'B', 'C'], 50, 900, 0.0),
+        (pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]}), ['D', 'E', 'F'], 50, 900, ValueError),
+        (pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]}), ['A', 'B', 'C'], 50, 900, ValueError),
+        (pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]}), ['A', 'B', 'C'], 50, 900, ValueError),
+    ])
+    def test_task_func(df, columns, larger, equal, expected):
+>       with pytest.raises(expected):
+             ^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0885.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/_pytest/raises.py:624: in __init__
+    self.expected_exceptions = tuple(
+../../../.venv/lib/python3.12/site-packages/_pytest/raises.py:625: in <genexpr>
+    self._parse_exc(e, expected="a BaseException type")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <[AttributeError("'RaisesExc' object has no attribute 'expected_exceptions'") raised in repr()] RaisesExc object at 0x7278224d5280>
+exc = 0.0, expected = 'a BaseException type'
+
+    def _parse_exc(
+        self, exc: type[BaseExcT_1] | types.GenericAlias, expected: str
+    ) -> type[BaseExcT_1]:
+        if isinstance(exc, type) and issubclass(exc, BaseException):
+            if not issubclass(exc, Exception):
+                self.is_baseexception = True
+            return exc
+        # because RaisesGroup does not support variable number of exceptions there's
+        # still a use for RaisesExc(ExceptionGroup[Exception]).
+        origin_exc: type[BaseException] | None = get_origin(exc)
+        if origin_exc and issubclass(origin_exc, BaseExceptionGroup):
+            exc_type = get_args(exc)[0]
+            if (
+                issubclass(origin_exc, ExceptionGroup) and exc_type in (Exception, Any)
+            ) or (
+                issubclass(origin_exc, BaseExceptionGroup)
+                and exc_type in (BaseException, Any)
+            ):
+                if not issubclass(origin_exc, ExceptionGroup):
+                    self.is_baseexception = True
+                return cast(type[BaseExcT_1], origin_exc)
+            else:
+                raise ValueError(
+                    f"Only `ExceptionGroup[Exception]` or `BaseExceptionGroup[BaseException]` "
+                    f"are accepted as generic types but got `{exc}`. "
+                    f"As `raises` will catch all instances of the specified group regardless of the "
+                    f"generic argument specific nested exceptions has to be checked "
+                    f"with `RaisesGroup`."
+                )
+        # unclear if the Type/ValueError distinction is even helpful here
+        msg = f"Expected {expected}, but got "
+        if isinstance(exc, type):  # type: ignore[unreachable]
+            raise ValueError(msg + f"{exc.__name__!r}")
+        if isinstance(exc, BaseException):  # type: ignore[unreachable]
+            raise TypeError(msg + f"an exception instance: {type(exc).__name__}")
+>       raise TypeError(msg + repr(type(exc).__name__))
+E       TypeError: Expected a BaseException type, but got 'float'
+
+../../../.venv/lib/python3.12/site-packages/_pytest/raises.py:454: TypeError
+=========================== short test summary info ============================
+FAILED test_0885.py::test_task_func[df0-columns0-50-900-0.0] - TypeError: Exp...
+FAILED test_0885.py::test_task_func[df1-columns1-50-900-0.0] - TypeError: Exp...
+2 failed, 3 passed in 2.87s

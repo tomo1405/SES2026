@@ -1,0 +1,31 @@
+F..                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data_list = ["apple, banana, carrot", "dog, cat, mouse", "a, b, c, d, e"]
+        seed = 42
+        df = task_func(data_list, seed)
+        assert isinstance(df, pd.DataFrame)
+        assert df.shape == (3, 2)
+        assert df.columns.tolist() == ["Original String", "Shuffled String"]
+        assert df["Original String"].tolist() == data_list
+        for s in df["Shuffled String"]:
+            substrings = re.split("\s*,\s*", s)
+            assert len(substrings) == len(data_list[0].split(", "))
+>           assert set(substrings) == set(data_list[0].split(", "))
+E           AssertionError: assert {'cat', 'dog', 'mouse'} == {'apple', 'banana', 'carrot'}
+E             
+E             Extra items in the left set:
+E             'mouse'
+E             'dog'
+E             'cat'
+E             Extra items in the right set:
+E             'carrot'...
+E             
+E             ...Full output truncated (3 lines hidden), use '-vv' to show
+
+test_0481.py:19: AssertionError
+=========================== short test summary info ============================
+FAILED test_0481.py::test_task_func - AssertionError: assert {'cat', 'dog', '...
+1 failed, 2 passed in 1.23s

@@ -1,0 +1,73 @@
+.F.F                                                                     [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_empty_column __________________________
+
+    def test_task_func_empty_column():
+        df_empty = pd.DataFrame({
+            'column': ['', '  ', np.nan]
+        })
+>       counts = task_func(df_empty, 'column')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0348.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0348.py:8: in task_func
+    matches = df[column].apply(lambda x: re.findall(PATTERN, x))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/series.py:5084: in apply
+    ).apply()
+      ^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/apply.py:1520: in apply
+    return self.apply_standard()
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/apply.py:1578: in apply_standard
+    mapped = obj._map_values(mapper=curried)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/base.py:1020: in _map_values
+    return arr.map(mapper, na_action=na_action)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/arrow/array.py:1753: in map
+    return super().map(mapper, na_action)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/base.py:2745: in map
+    return map_array(self, mapper, na_action=na_action)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/algorithms.py:1715: in map_array
+    return lib.map_infer(values, mapper)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pandas/_libs/lib.pyx:3071: in pandas._libs.lib.map_infer
+    ???
+../../../src/src_0348.py:8: in <lambda>
+    matches = df[column].apply(lambda x: re.findall(PATTERN, x))
+                                         ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pattern = '([a-fA-F\\d]{32})', string = nan, flags = 0
+
+    def findall(pattern, string, flags=0):
+        """Return a list of all non-overlapping matches in the string.
+    
+        If one or more capturing groups are present in the pattern, return
+        a list of groups; this will be a list of tuples if the pattern
+        has more than one group.
+    
+        Empty matches are included in the result."""
+>       return _compile(pattern, flags).findall(string)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: expected string or bytes-like object, got 'float'
+
+/usr/lib/python3.12/re/__init__.py:217: TypeError
+________________________ test_task_func_invalid_pattern ________________________
+
+    def test_task_func_invalid_pattern():
+        df_invalid = pd.DataFrame({
+            'column': ['abc1234567890abcdef1234567890abcdefg', 'def4567890abcdef1234567890abcdefabcd', 'ghi7890abcdef1234567890abcdefabc4567']
+        })
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0348.py:39: Failed
+=========================== short test summary info ============================
+FAILED test_0348.py::test_task_func_empty_column - TypeError: expected string...
+FAILED test_0348.py::test_task_func_invalid_pattern - Failed: DID NOT RAISE V...
+2 failed, 2 passed in 1.24s

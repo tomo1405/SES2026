@@ -1,0 +1,46 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a sample data matrix
+        data_matrix = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+    
+        # Expected feature column names
+        expected_feature_columns = ["Feature 1", "Feature 2", "Feature 3"]
+    
+        # Call the function
+        df, ax = task_func(data_matrix)
+    
+        # Check if the DataFrame has the correct shape
+        assert df.shape == (data_matrix.shape[0], data_matrix.shape[1] + 1), "DataFrame shape is incorrect"
+    
+        # Check if the DataFrame has the correct feature columns
+        assert all(df.columns[:-1] == expected_feature_columns), "Feature column names are incorrect"
+    
+        # Check if the DataFrame has a 'Mean' column
+        assert 'Mean' in df.columns, "DataFrame does not have a 'Mean' column"
+    
+        # Check if the 'Mean' column values are correct
+        expected_means = np.array([2.0, 5.0, 8.0])
+>       assert np.allclose(df['Mean'].values, expected_means), "Mean column values are incorrect"
+E       AssertionError: Mean column values are incorrect
+E       assert False
+E        +  where False = <function allclose at 0x7e64827dbf30>(array([0., 0., 0.]), array([2., 5., 8.]))
+E        +    where <function allclose at 0x7e64827dbf30> = np.allclose
+E        +    and   array([0., 0., 0.]) = 0    0.0\n1    0.0\n2    0.0\nName: Mean, dtype: float64.values
+
+test_0041.py:27: AssertionError
+=============================== warnings summary ===============================
+Qwen/8bit-quant/tests/test_0041.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/matrix.py:202: RuntimeWarning: All-NaN slice encountered
+    vmin = np.nanmin(calc_data)
+
+Qwen/8bit-quant/tests/test_0041.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/matrix.py:207: RuntimeWarning: All-NaN slice encountered
+    vmax = np.nanmax(calc_data)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0041.py::test_task_func - AssertionError: Mean column values are ...
+1 failed, 2 warnings in 3.32s

@@ -1,0 +1,30 @@
+F..                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sample_data =            date  closing_price
+0  1.672531e+09            100
+1  1.672618e+09            102
+2  1.672704e+09            101
+
+    def test_task_func(sample_data):
+        predicted_prices, ax = task_func(sample_data)
+    
+        # Check if the number of predicted prices is correct
+        assert len(predicted_prices) == 7, "The number of predicted prices should be 7."
+    
+        # Check if the plot is created correctly
+        assert isinstance(ax, plt.Axes), "The function should return a matplotlib Axes object."
+    
+        # Check if the predicted prices are within a reasonable range
+        min_price = sample_data['closing_price'].min()
+        max_price = sample_data['closing_price'].max()
+>       assert all(min_price <= price <= max_price for price in predicted_prices), "Predicted prices should be within the range of the input data."
+E       AssertionError: Predicted prices should be within the range of the input data.
+E       assert False
+E        +  where False = all(<generator object test_task_func.<locals>.<genexpr> at 0x73f3f231ea40>)
+
+test_0915.py:27: AssertionError
+=========================== short test summary info ============================
+FAILED test_0915.py::test_task_func - AssertionError: Predicted prices should...
+1 failed, 2 passed in 4.04s

@@ -1,0 +1,46 @@
+...FFF.                                                                  [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_zero_steps ___________________________
+
+    def test_task_func_zero_steps():
+        ax = task_func(10, 0)
+        assert len(ax.lines) == 10
+        for line in ax.lines:
+>           assert len(line.get_xdata()) == 1
+E           assert 0 == 1
+E            +  where 0 = len(array([], dtype=float64))
+E            +    where array([], dtype=float64) = get_xdata()
+E            +      where get_xdata = <matplotlib.lines.Line2D object at 0x7a53162b9610>.get_xdata
+
+test_0474.py:22: AssertionError
+_______________________ test_task_func_one_walk_one_step _______________________
+
+    def test_task_func_one_walk_one_step():
+        ax = task_func(1, 1)
+        assert len(ax.lines) == 1
+        line = ax.lines[0]
+>       assert len(line.get_xdata()) == 2
+E       assert 1 == 2
+E        +  where 1 = len(array([0.]))
+E        +    where array([0.]) = get_xdata()
+E        +      where get_xdata = <matplotlib.lines.Line2D object at 0x7a53163348c0>.get_xdata
+
+test_0474.py:29: AssertionError
+_____________________ test_task_func_multiple_walks_steps ______________________
+
+    def test_task_func_multiple_walks_steps():
+        ax = task_func(3, 5, seed=42)
+        assert len(ax.lines) == 3
+        for i, line in enumerate(ax.lines):
+>           assert len(line.get_xdata()) == 6
+E           assert 5 == 6
+E            +  where 5 = len(array([0., 1., 2., 3., 4.]))
+E            +    where array([0., 1., 2., 3., 4.]) = get_xdata()
+E            +      where get_xdata = <matplotlib.lines.Line2D object at 0x7a531635e0f0>.get_xdata
+
+test_0474.py:37: AssertionError
+=========================== short test summary info ============================
+FAILED test_0474.py::test_task_func_zero_steps - assert 0 == 1
+FAILED test_0474.py::test_task_func_one_walk_one_step - assert 1 == 2
+FAILED test_0474.py::test_task_func_multiple_walks_steps - assert 5 == 6
+3 failed, 4 passed in 1.56s

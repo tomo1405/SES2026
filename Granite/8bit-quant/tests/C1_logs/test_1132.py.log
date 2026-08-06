@@ -1,0 +1,41 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Mock the cursor object
+        cursor = Mock()
+    
+        # Test case 1: salt is not a string
+        with pytest.raises(TypeError):
+            task_func(123, cursor)
+    
+        # Test case 2: salt is a string, but not a valid salt
+        with pytest.raises(TypeError):
+            task_func("not a salt", cursor)
+    
+        # Test case 3: valid salt, no users to update
+        salt = "abc123"
+        cursor.execute.return_value = None
+>       assert task_func(salt, cursor) == 0
+               ^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1132.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+salt = 'abc123', cursor = <Mock id='128003031930000'>
+
+    def task_func(salt, cursor):
+        if not isinstance(salt, str):
+            raise TypeError
+        cursor.execute("SELECT id, password FROM users")
+        users = cursor.fetchall()
+        count_updated = 0
+    
+>       for user in users:
+E       TypeError: 'Mock' object is not iterable
+
+../../../src/src_1132.py:10: TypeError
+=========================== short test summary info ============================
+FAILED test_1132.py::test_task_func - TypeError: 'Mock' object is not iterable
+1 failed in 0.51s

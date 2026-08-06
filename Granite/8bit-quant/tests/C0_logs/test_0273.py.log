@@ -1,0 +1,50 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        request_handler = task_func()
+>       assert request_handler.do_POST() == None
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: task_func.<locals>.PostRequestHandler.do_POST() missing 1 required positional argument: 'self'
+
+test_0273.py:6: TypeError
+____________________ test_do_POST_with_invalid_content_type ____________________
+
+    def test_do_POST_with_invalid_content_type():
+        request_handler = task_func()
+>       request_handler.headers['content-type'] = 'text/html'
+        ^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: type object 'PostRequestHandler' has no attribute 'headers'
+
+test_0273.py:10: AttributeError
+__________________________ test_do_POST_with_no_data ___________________________
+
+    def test_do_POST_with_no_data():
+        request_handler = task_func()
+>       request_handler.headers['content-type'] = 'application/json'
+        ^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: type object 'PostRequestHandler' has no attribute 'headers'
+
+test_0273.py:15: AttributeError
+_________________________ test_do_POST_with_valid_data _________________________
+
+    def test_do_POST_with_valid_data():
+        request_handler = task_func()
+>       request_handler.headers['content-type'] = 'application/json'
+        ^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: type object 'PostRequestHandler' has no attribute 'headers'
+
+test_0273.py:21: AttributeError
+=============================== warnings summary ===============================
+../../../src/src_0273.py:1
+  /work/tomohiro-w/utg/src/src_0273.py:1: DeprecationWarning: 'cgi' is deprecated and slated for removal in Python 3.13
+    import cgi
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0273.py::test_task_func - TypeError: task_func.<locals>.PostReque...
+FAILED test_0273.py::test_do_POST_with_invalid_content_type - AttributeError:...
+FAILED test_0273.py::test_do_POST_with_no_data - AttributeError: type object ...
+FAILED test_0273.py::test_do_POST_with_valid_data - AttributeError: type obje...
+4 failed, 1 warning in 0.57s

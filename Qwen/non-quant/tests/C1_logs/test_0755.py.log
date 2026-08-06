@@ -1,0 +1,25 @@
+..F.                                                                     [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_numeric_values _________________________
+
+    def test_task_func_numeric_values():
+        result = [{'from_user': 1}, {'from_user': 2}, {'from_user': 3}]
+        summary_series = task_func(result)
+        expected_summary = {
+            'mean': 2.0,
+            'median': 2.0,
+            'min': 1,
+            'max': 3,
+            'std': 1.0,
+            'current_time': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        }
+        expected_series = pd.Series(expected_summary)
+>       assert summary_series.equals(expected_series)
+E       assert False
+E        +  where False = equals(mean                            2.0\nmedian                          2.0\nmin                               1\nmax                               3\nstd                             1.0\ncurrent_time    2026-07-29 01:35:12\ndtype: object)
+E        +    where equals = mean                            2.0\nmedian                          2.0\nmin                               1\nmax                               3\nstd                        0.816497\ncurrent_time    2026-07-29 01:35:12\ndtype: object.equals
+
+test_0755.py:38: AssertionError
+=========================== short test summary info ============================
+FAILED test_0755.py::test_task_func_numeric_values - assert False
+1 failed, 3 passed in 1.11s

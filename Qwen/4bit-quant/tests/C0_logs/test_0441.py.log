@@ -1,0 +1,82 @@
+.FFFFF                                                                   [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_incompatible_shapes ______________________
+
+    def test_task_func_incompatible_shapes():
+        P = np.array([[1, 2], [3, 4]])
+        T = np.array([1, 2])
+>       with pytest.raises(ValueError, match="Matrix P shape 2 and Tensor T shape 2 are incompatible for tensor multiplication."):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'Matrix P shape 2 and Tensor T shape 2 are incompatible for tensor multiplication.'
+E         Actual message: 'axis2: axis 1 is out of bounds for array of dimension 1'
+
+test_0441.py:15: AssertionError
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        P = np.array([[1, 2], [3, 4]])
+        T = np.array([[1, 2], [3, 4]])
+        result = task_func(P, T)
+        assert isinstance(result, pd.DataFrame)
+>       assert result.shape == (2, 4)
+E       assert (2, 2) == (2, 4)
+E         
+E         At index 1 diff: 2 != 4
+E         Use -v to get more diff
+
+test_0441.py:23: AssertionError
+_________________________ test_task_func_result_values _________________________
+
+    def test_task_func_result_values():
+        P = np.array([[1, 2], [3, 4]])
+        T = np.array([[1, 2], [3, 4]])
+        result = task_func(P, T)
+        expected_mean = 0
+        expected_std = 1
+        assert np.isclose(result.mean().values, expected_mean, atol=1e-5).all()
+>       assert np.isclose(result.std().values, expected_std, atol=1e-5).all()
+E       assert np.False_
+E        +  where np.False_ = <built-in method all of numpy.ndarray object at 0x7225ae8e3b70>()
+E        +    where <built-in method all of numpy.ndarray object at 0x7225ae8e3b70> = array([False, False]).all
+E        +      where array([False, False]) = <function isclose at 0x7226d956c0f0>(array([1.41421356, 1.41421356]), 1, atol=1e-05)
+E        +        where <function isclose at 0x7226d956c0f0> = np.isclose
+E        +        and   array([1.41421356, 1.41421356]) = feature_0    1.414214\nfeature_1    1.414214\ndtype: float64.values
+E        +          where feature_0    1.414214\nfeature_1    1.414214\ndtype: float64 = std()
+E        +            where std =    feature_0  feature_1\n0       -1.0       -1.0\n1        1.0        1.0.std
+
+test_0441.py:33: AssertionError
+_________________________ test_task_func_single_row_P __________________________
+
+    def test_task_func_single_row_P():
+        P = np.array([[1, 2]])
+        T = np.array([[1, 2], [3, 4]])
+        result = task_func(P, T)
+        assert isinstance(result, pd.DataFrame)
+>       assert result.shape == (1, 4)
+E       assert (2, 1) == (1, 4)
+E         
+E         At index 0 diff: 2 != 1
+E         Use -v to get more diff
+
+test_0441.py:40: AssertionError
+________________________ test_task_func_single_column_T ________________________
+
+    def test_task_func_single_column_T():
+        P = np.array([[1, 2], [3, 4]])
+        T = np.array([[1], [2]])
+        result = task_func(P, T)
+        assert isinstance(result, pd.DataFrame)
+>       assert result.shape == (2, 2)
+E       assert (1, 2) == (2, 2)
+E         
+E         At index 0 diff: 1 != 2
+E         Use -v to get more diff
+
+test_0441.py:48: AssertionError
+=========================== short test summary info ============================
+FAILED test_0441.py::test_task_func_incompatible_shapes - AssertionError: Reg...
+FAILED test_0441.py::test_task_func_valid_input - assert (2, 2) == (2, 4)
+FAILED test_0441.py::test_task_func_result_values - assert np.False_
+FAILED test_0441.py::test_task_func_single_row_P - assert (2, 1) == (1, 4)
+FAILED test_0441.py::test_task_func_single_column_T - assert (1, 2) == (2, 2)
+5 failed, 1 passed in 2.99s

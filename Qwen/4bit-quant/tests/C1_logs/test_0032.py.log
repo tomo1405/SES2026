@@ -1,0 +1,99 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_no_dollar_words ________________________
+
+setup_plot = None
+
+    def test_task_func_no_dollar_words(setup_plot):
+        text = "This is a test text without any dollar words."
+>       result = task_func(text)
+                 ^^^^^^^^^^^^^^^
+
+test_0032.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0032.py:20: in task_func
+    sns.barplot(x=freq.keys(), y=freq.values())
+                  ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <test_0032.MockFreqDist object at 0x762ac0142b40>
+
+    def keys(self):
+>       return list(self.data.keys())
+                    ^^^^^^^^^^^^^^
+E       AttributeError: 'list' object has no attribute 'keys'
+
+test_0032.py:12: AttributeError
+_______________________ test_task_func_with_dollar_words _______________________
+
+setup_plot = None
+
+    def test_task_func_with_dollar_words(setup_plot):
+        text = "$money $cash $$$$ $"
+        expected_freq = {'$money': 1, '$cash': 1}
+        with pytest.raises(AttributeError):  # Mocking the plot to check frequency distribution
+            task_func(text)
+>       assert MockFreqDist.data == expected_freq
+               ^^^^^^^^^^^^^^^^^
+E       AttributeError: type object 'MockFreqDist' has no attribute 'data'
+
+test_0032.py:40: AttributeError
+_______________________ test_task_func_with_punctuation ________________________
+
+setup_plot = None
+
+    def test_task_func_with_punctuation(setup_plot):
+        text = "$money! $cash? $$$$ $"
+        expected_freq = {'$money!': 1, '$cash?': 1}
+        with pytest.raises(AttributeError):  # Mocking the plot to check frequency distribution
+            task_func(text)
+>       assert MockFreqDist.data == expected_freq
+               ^^^^^^^^^^^^^^^^^
+E       AttributeError: type object 'MockFreqDist' has no attribute 'data'
+
+test_0032.py:47: AttributeError
+_____________________ test_task_func_with_single_character _____________________
+
+setup_plot = None
+
+    def test_task_func_with_single_character(setup_plot):
+        text = "$ $$$$"
+>       result = task_func(text)
+                 ^^^^^^^^^^^^^^^
+
+test_0032.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0032.py:20: in task_func
+    sns.barplot(x=freq.keys(), y=freq.values())
+                  ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <test_0032.MockFreqDist object at 0x762abfece1b0>
+
+    def keys(self):
+>       return list(self.data.keys())
+                    ^^^^^^^^^^^^^^
+E       AttributeError: 'list' object has no attribute 'keys'
+
+test_0032.py:12: AttributeError
+__________________ test_task_func_with_multiple_dollar_words ___________________
+
+setup_plot = None
+
+    def test_task_func_with_multiple_dollar_words(setup_plot):
+        text = "$money $money $cash $cash $$$$ $"
+        expected_freq = {'$money': 2, '$cash': 2}
+        with pytest.raises(AttributeError):  # Mocking the plot to check frequency distribution
+            task_func(text)
+>       assert MockFreqDist.data == expected_freq
+               ^^^^^^^^^^^^^^^^^
+E       AttributeError: type object 'MockFreqDist' has no attribute 'data'
+
+test_0032.py:59: AttributeError
+=========================== short test summary info ============================
+FAILED test_0032.py::test_task_func_no_dollar_words - AttributeError: 'list' ...
+FAILED test_0032.py::test_task_func_with_dollar_words - AttributeError: type ...
+FAILED test_0032.py::test_task_func_with_punctuation - AttributeError: type o...
+FAILED test_0032.py::test_task_func_with_single_character - AttributeError: '...
+FAILED test_0032.py::test_task_func_with_multiple_dollar_words - AttributeErr...
+5 failed in 4.57s

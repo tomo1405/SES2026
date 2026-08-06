@@ -1,0 +1,51 @@
+F.F..F                                                                   [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_no_names ____________________________
+
+    def test_task_func_no_names():
+        text = "No names here!"
+        name_freqs, ax, skewness, kurtosis = task_func(text)
+>       assert name_freqs.empty
+E       assert False
+E        +  where False = No names here!    1\nName: count, dtype: int64.empty
+
+test_0322.py:10: AssertionError
+________________________ test_task_func_multiple_names _________________________
+
+    def test_task_func_multiple_names():
+        text = "John Doe [Manager], Jane Smith [Developer], John Doe [Designer]"
+        name_freqs, ax, skewness, kurtosis = task_func(text)
+        expected_freqs = pd.Series({'John Doe': 2, 'Jane Smith': 1})
+>       assert name_freqs.equals(expected_freqs)
+E       assert False
+E        +  where False = equals(John Doe      2\nJane Smith    1\ndtype: int64)
+E        +    where equals = John Doe        1\n, Jane Smith    1\n, John Doe      1\nName: count, dtype: int64.equals
+
+test_0322.py:28: AssertionError
+______________________ test_task_func_special_characters _______________________
+
+    def test_task_func_special_characters():
+        text = "John@Doe! Jane#Smith$"
+        name_freqs, ax, skewness, kurtosis = task_func(text)
+        expected_freqs = pd.Series({'John@Doe!': 1, 'Jane#Smith$': 1})
+>       assert name_freqs.equals(expected_freqs)
+E       assert False
+E        +  where False = equals(John@Doe!      1\nJane#Smith$    1\ndtype: int64)
+E        +    where equals = John@Doe! Jane#Smith$    1\nName: count, dtype: int64.equals
+
+test_0322.py:53: AssertionError
+=============================== warnings summary ===============================
+Qwen/4bit-quant/tests/test_0322.py::test_task_func_multiple_names
+  /work/tomohiro-w/utg/src/src_0322.py:15: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+    skewness = stats.skew(name_freqs)
+
+Qwen/4bit-quant/tests/test_0322.py::test_task_func_multiple_names
+  /work/tomohiro-w/utg/src/src_0322.py:16: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+    kurtosis = stats.kurtosis(name_freqs)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0322.py::test_task_func_no_names - assert False
+FAILED test_0322.py::test_task_func_multiple_names - assert False
+FAILED test_0322.py::test_task_func_special_characters - assert False
+3 failed, 3 passed, 2 warnings in 3.46s

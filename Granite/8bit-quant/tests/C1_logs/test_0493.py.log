@@ -1,0 +1,31 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        epoch_milliseconds = int(datetime.now().timestamp() * 1000)
+        random_seed = 0
+        products = ["Product1", "Product2", "Product3", "Product4", "Product5"]
+        df = task_func(epoch_milliseconds, random_seed, products)
+        assert isinstance(df, pd.DataFrame)
+>       assert df.shape == (365 * 5, 3)
+E       assert (5, 3) == (1825, 3)
+E         
+E         At index 0 diff: 5 != 1825
+E         Use -v to get more diff
+
+test_0493.py:13: AssertionError
+______________________ test_task_func_invalid_start_time _______________________
+
+    def test_task_func_invalid_start_time():
+        epoch_milliseconds = int(datetime.now().timestamp() * 1000) - 1000
+        random_seed = 0
+        products = ["Product1", "Product2", "Product3", "Product4", "Product5"]
+>       with pytest.raises(ValueError) as exc_info:
+E       Failed: DID NOT RAISE ValueError
+
+test_0493.py:28: Failed
+=========================== short test summary info ============================
+FAILED test_0493.py::test_task_func_valid_input - assert (5, 3) == (1825, 3)
+FAILED test_0493.py::test_task_func_invalid_start_time - Failed: DID NOT RAIS...
+2 failed, 1 passed in 1.07s

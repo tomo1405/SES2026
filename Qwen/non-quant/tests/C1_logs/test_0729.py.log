@@ -1,0 +1,48 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_default_encoding ________________________
+
+    def test_task_func_default_encoding():
+        # Create a CSV file with cp1251 encoding
+        input_csv = u"Name,Age\nIvan,30\nPetr,25"
+>       input_file = io.StringIO(input_csv.encode('cp1251'))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: initial_value must be str or None, not bytes
+
+test_0729.py:9: TypeError
+________________________ test_task_func_custom_encoding ________________________
+
+    def test_task_func_custom_encoding():
+        # Create a CSV file with a custom encoding
+        input_csv = u"Name,Age\nIvan,30\nPetr,25"
+>       input_file = io.StringIO(input_csv.encode('latin1'))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: initial_value must be str or None, not bytes
+
+test_0729.py:26: TypeError
+_______________________ test_task_func_custom_delimiter ________________________
+
+    def test_task_func_custom_delimiter():
+        # Create a CSV file with a custom delimiter
+        input_csv = u"Name;Age\nIvan;30\nPetr;25"
+>       input_file = io.StringIO(input_csv.encode('cp1251'))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: initial_value must be str or None, not bytes
+
+test_0729.py:43: TypeError
+_________________________ test_task_func_no_fieldnames _________________________
+
+    def test_task_func_no_fieldnames():
+        # Create a CSV file without headers
+        input_csv = u"Ivan,30\nPetr,25"
+>       input_file = io.StringIO(input_csv.encode('cp1251'))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: initial_value must be str or None, not bytes
+
+test_0729.py:60: TypeError
+=========================== short test summary info ============================
+FAILED test_0729.py::test_task_func_default_encoding - TypeError: initial_val...
+FAILED test_0729.py::test_task_func_custom_encoding - TypeError: initial_valu...
+FAILED test_0729.py::test_task_func_custom_delimiter - TypeError: initial_val...
+FAILED test_0729.py::test_task_func_no_fieldnames - TypeError: initial_value ...
+4 failed in 0.46s

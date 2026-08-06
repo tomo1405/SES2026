@@ -1,0 +1,246 @@
+.FFFF                                                                    [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_single_csv_file ________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1208/test_task_func_single_csv_file0')
+
+    def test_task_func_single_csv_file(tmpdir):
+        # Create a temporary directory with a single CSV file
+        csv_content = "email,list\na,[1, 2, 3]\nb,[4, 5]"
+        csv_file = tmpdir.join("test.csv")
+        csv_file.write(csv_content)
+    
+>       result_df, hist = task_func(tmpdir)
+                          ^^^^^^^^^^^^^^^^^
+
+test_0073.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0073.py:17: in task_func
+    df["list"] = df["list"].map(ast.literal_eval)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/series.py:4675: in map
+    new_values = self._map_values(func, na_action=na_action)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/base.py:1020: in _map_values
+    return arr.map(mapper, na_action=na_action)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/arrow/array.py:1753: in map
+    return super().map(mapper, na_action)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/base.py:2745: in map
+    return map_array(self, mapper, na_action=na_action)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/algorithms.py:1715: in map_array
+    return lib.map_infer(values, mapper)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pandas/_libs/lib.pyx:3071: in pandas._libs.lib.map_infer
+    ???
+/usr/lib/python3.12/ast.py:66: in literal_eval
+    node_or_string = parse(node_or_string.lstrip(" \t"), mode='eval')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+source = '3]', filename = '<unknown>', mode = 'eval', type_comments = False
+feature_version = -1
+
+    def parse(source, filename='<unknown>', mode='exec', *,
+              type_comments=False, feature_version=None):
+        """
+        Parse the source into an AST node.
+        Equivalent to compile(source, filename, mode, PyCF_ONLY_AST).
+        Pass type_comments=True to get back type comments where the syntax allows.
+        """
+        flags = PyCF_ONLY_AST
+        if type_comments:
+            flags |= PyCF_TYPE_COMMENTS
+        if feature_version is None:
+            feature_version = -1
+        elif isinstance(feature_version, tuple):
+            major, minor = feature_version  # Should be a 2-tuple.
+            if major != 3:
+                raise ValueError(f"Unsupported major version: {major}")
+            feature_version = minor
+        # Else it should be an int giving the minor version for 3.x.
+>       return compile(source, filename, mode, flags,
+                       _feature_version=feature_version)
+E         File "<unknown>", line 1
+E           3]
+E            ^
+E       SyntaxError: unmatched ']'
+
+/usr/lib/python3.12/ast.py:52: SyntaxError
+______________________ test_task_func_multiple_csv_files _______________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1208/test_task_func_multiple_csv_fi0')
+
+    def test_task_func_multiple_csv_files(tmpdir):
+        # Create a temporary directory with multiple CSV files
+        csv_content_1 = "email,list\na,[1, 2, 3]\nb,[4, 5]"
+        csv_content_2 = "email,list\nc,[6, 7, 8, 9]"
+        csv_file_1 = tmpdir.join("file1.csv")
+        csv_file_2 = tmpdir.join("file2.csv")
+        csv_file_1.write(csv_content_1)
+        csv_file_2.write(csv_content_2)
+    
+>       result_df, hist = task_func(tmpdir)
+                          ^^^^^^^^^^^^^^^^^
+
+test_0073.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0073.py:17: in task_func
+    df["list"] = df["list"].map(ast.literal_eval)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/series.py:4675: in map
+    new_values = self._map_values(func, na_action=na_action)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/base.py:1020: in _map_values
+    return arr.map(mapper, na_action=na_action)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/arrow/array.py:1753: in map
+    return super().map(mapper, na_action)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/base.py:2745: in map
+    return map_array(self, mapper, na_action=na_action)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/algorithms.py:1715: in map_array
+    return lib.map_infer(values, mapper)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pandas/_libs/lib.pyx:3071: in pandas._libs.lib.map_infer
+    ???
+/usr/lib/python3.12/ast.py:66: in literal_eval
+    node_or_string = parse(node_or_string.lstrip(" \t"), mode='eval')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+source = '9]', filename = '<unknown>', mode = 'eval', type_comments = False
+feature_version = -1
+
+    def parse(source, filename='<unknown>', mode='exec', *,
+              type_comments=False, feature_version=None):
+        """
+        Parse the source into an AST node.
+        Equivalent to compile(source, filename, mode, PyCF_ONLY_AST).
+        Pass type_comments=True to get back type comments where the syntax allows.
+        """
+        flags = PyCF_ONLY_AST
+        if type_comments:
+            flags |= PyCF_TYPE_COMMENTS
+        if feature_version is None:
+            feature_version = -1
+        elif isinstance(feature_version, tuple):
+            major, minor = feature_version  # Should be a 2-tuple.
+            if major != 3:
+                raise ValueError(f"Unsupported major version: {major}")
+            feature_version = minor
+        # Else it should be an int giving the minor version for 3.x.
+>       return compile(source, filename, mode, flags,
+                       _feature_version=feature_version)
+E         File "<unknown>", line 1
+E           9]
+E            ^
+E       SyntaxError: unmatched ']'
+
+/usr/lib/python3.12/ast.py:52: SyntaxError
+________________________ test_task_func_empty_csv_file _________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1208/test_task_func_empty_csv_file0')
+
+    def test_task_func_empty_csv_file(tmpdir):
+        # Create a temporary directory with an empty CSV file
+        csv_content = ""
+        csv_file = tmpdir.join("empty.csv")
+        csv_file.write(csv_content)
+    
+>       result_df, hist = task_func(tmpdir)
+                          ^^^^^^^^^^^^^^^^^
+
+test_0073.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0073.py:16: in task_func
+    df = pd.read_csv(os.path.join(directory, name))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:873: in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:300: in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:1645: in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:1922: in _make_engine
+    return mapping[engine](f, **self.options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/c_parser_wrapper.py:95: in __init__
+    self._reader = parsers.TextReader(src, **kwds)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   pandas.errors.EmptyDataError: No columns to parse from file
+
+pandas/_libs/parsers.pyx:575: EmptyDataError
+______________________ test_task_func_invalid_csv_content ______________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1208/test_task_func_invalid_csv_con0')
+
+    def test_task_func_invalid_csv_content(tmpdir):
+        # Create a temporary directory with a CSV file containing invalid data
+        csv_content = "email,list\na,not_a_list"
+        csv_file = tmpdir.join("invalid.csv")
+        csv_file.write(csv_content)
+    
+>       result_df, hist = task_func(tmpdir)
+                          ^^^^^^^^^^^^^^^^^
+
+test_0073.py:69: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0073.py:17: in task_func
+    df["list"] = df["list"].map(ast.literal_eval)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/series.py:4675: in map
+    new_values = self._map_values(func, na_action=na_action)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/base.py:1020: in _map_values
+    return arr.map(mapper, na_action=na_action)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/arrow/array.py:1753: in map
+    return super().map(mapper, na_action)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/base.py:2745: in map
+    return map_array(self, mapper, na_action=na_action)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/algorithms.py:1715: in map_array
+    return lib.map_infer(values, mapper)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pandas/_libs/lib.pyx:3071: in pandas._libs.lib.map_infer
+    ???
+/usr/lib/python3.12/ast.py:112: in literal_eval
+    return _convert(node_or_string)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/ast.py:111: in _convert
+    return _convert_signed_num(node)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/ast.py:85: in _convert_signed_num
+    return _convert_num(node)
+           ^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/ast.py:76: in _convert_num
+    _raise_malformed_node(node)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+node = <ast.Name object at 0x7c11e047c410>
+
+    def _raise_malformed_node(node):
+        msg = "malformed node or string"
+        if lno := getattr(node, 'lineno', None):
+            msg += f' on line {lno}'
+>       raise ValueError(msg + f': {node!r}')
+E       ValueError: malformed node or string on line 1: <ast.Name object at 0x7c11e047c410>
+
+/usr/lib/python3.12/ast.py:73: ValueError
+=========================== short test summary info ============================
+FAILED test_0073.py::test_task_func_single_csv_file -   File "<unknown>", line 1
+FAILED test_0073.py::test_task_func_multiple_csv_files -   File "<unknown>", ...
+FAILED test_0073.py::test_task_func_empty_csv_file - pandas.errors.EmptyDataE...
+FAILED test_0073.py::test_task_func_invalid_csv_content - ValueError: malform...
+4 failed, 1 passed in 1.67s

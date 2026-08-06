@@ -1,0 +1,30 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with an empty DataFrame
+        df_empty = pd.DataFrame()
+        result_empty = task_func(df_empty)
+        assert result_empty == {}
+    
+        # Test with a DataFrame having one row
+        df_single_row = pd.DataFrame({
+            'A': [1],
+            'B': [2]
+        })
+        result_single_row = task_func(df_single_row)
+        expected_single_row = {((1, 2),): 1}
+>       assert result_single_row == expected_single_row
+E       assert {(1, 2): 1} == {((1, 2),): 1}
+E         
+E         Left contains 1 more item:
+E         {(1, 2): 1}
+E         Right contains 1 more item:
+E         {((1, 2),): 1}
+E         Use -v to get more diff
+
+test_0680.py:19: AssertionError
+=========================== short test summary info ============================
+FAILED test_0680.py::test_task_func - assert {(1, 2): 1} == {((1, 2),): 1}
+1 failed in 1.14s

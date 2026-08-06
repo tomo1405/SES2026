@@ -1,0 +1,9 @@
+import numpy as np
+from sklearn.linear_model import LinearRegression
+def task_func(df):
+    X = np.array(df['feature']).reshape(-1,1)  # Explicitly converting to numpy array and reshaping
+    y = np.array(df['value']).reshape(-1,1)    # Explicitly converting to numpy array and reshaping
+
+    model = LinearRegression().fit(X, y)
+
+    return {'coefficients': model.coef_.tolist(), 'intercept': model.intercept_.tolist()}

@@ -1,0 +1,284 @@
+FFF.FF                                                                   [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        path = 'path/to/file.txt'
+        delimiter = '/'
+        expected_result = [('path', None), ('to', None), ('file.txt', 'sha256_hash_value')]
+>       assert task_func(path, delimiter) == expected_result
+E       AssertionError: assert [('path', Non...e.txt', None)] == [('path', Non..._hash_value')]
+E         
+E         At index 1 diff: ('/', None) != ('to', None)
+E         Left contains 2 more items, first extra item: ('/', None)
+E         Use -v to get more diff
+
+test_1128.py:8: AssertionError
+___________________ test_task_func_with_multiple_delimiters ____________________
+
+    def test_task_func_with_multiple_delimiters():
+        path = 'path/to/file.txt'
+        delimiter = '/'
+        expected_result = [('path', None), ('to', None), ('file.txt', 'sha256_hash_value')]
+>       assert task_func(path, delimiter) == expected_result
+E       AssertionError: assert [('path', Non...e.txt', None)] == [('path', Non..._hash_value')]
+E         
+E         At index 1 diff: ('/', None) != ('to', None)
+E         Left contains 2 more items, first extra item: ('/', None)
+E         Use -v to get more diff
+
+test_1128.py:14: AssertionError
+_______________________ test_task_func_with_invalid_path _______________________
+
+    def test_task_func_with_invalid_path():
+        path = 'path/to/file.txt'
+        delimiter = '/'
+        expected_result = [('path', None), ('to', None), ('file.txt', 'sha256_hash_value')]
+>       assert task_func(path, delimiter) == expected_result
+E       AssertionError: assert [('path', Non...e.txt', None)] == [('path', Non..._hash_value')]
+E         
+E         At index 1 diff: ('/', None) != ('to', None)
+E         Left contains 2 more items, first extra item: ('/', None)
+E         Use -v to get more diff
+
+test_1128.py:20: AssertionError
+_____________________ test_task_func_with_empty_delimiter ______________________
+
+    def test_task_func_with_empty_delimiter():
+        path = 'path/to/file.txt'
+        delimiter = ''
+        expected_result = [('path/to/file.txt', 'sha256_hash_value')]
+>       assert task_func(path, delimiter) == expected_result
+E       AssertionError: assert [('', None), ...', None), ...] == [('path/to/fi..._hash_value')]
+E         
+E         At index 0 diff: ('', None) != ('path/to/file.txt', 'sha256_hash_value')
+E         Left contains 15 more items, first extra item: ('', None)
+E         Use -v to get more diff
+
+test_1128.py:32: AssertionError
+____________________ test_task_func_with_invalid_delimiter _____________________
+
+    def test_task_func_with_invalid_delimiter():
+        path = 'path/to/file.txt'
+        delimiter = '*'
+        expected_result = [('path/to/file.txt', 'sha256_hash_value')]
+>       assert task_func(path, delimiter) == expected_result
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1128.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1128.py:5: in task_func
+    path_components = re.split(f'({delimiter})', path)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/re/__init__.py:207: in split
+    return _compile(pattern, flags).split(string, maxsplit)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/re/__init__.py:307: in _compile
+    p = _compiler.compile(pattern, flags)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/re/_compiler.py:745: in compile
+    p = _parser.parse(p, flags)
+        ^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/re/_parser.py:979: in parse
+    p = _parse_sub(source, state, flags & SRE_FLAG_VERBOSE, 0)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/re/_parser.py:460: in _parse_sub
+    itemsappend(_parse(source, state, verbose, nested + 1,
+/usr/lib/python3.12/re/_parser.py:862: in _parse
+    p = _parse_sub(source, state, sub_verbose, nested + 1)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/re/_parser.py:460: in _parse_sub
+    itemsappend(_parse(source, state, verbose, nested + 1,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+source = <re._parser.Tokenizer object at 0x76aba7ebde50>
+state = <re._parser.State object at 0x76aba7ebd5b0>, verbose = 0, nested = 3
+first = False
+
+    def _parse(source, state, verbose, nested, first=False):
+        # parse a simple pattern
+        subpattern = SubPattern(state)
+    
+        # precompute constants into local variables
+        subpatternappend = subpattern.append
+        sourceget = source.get
+        sourcematch = source.match
+        _len = len
+        _ord = ord
+    
+        while True:
+    
+            this = source.next
+            if this is None:
+                break # end of pattern
+            if this in "|)":
+                break # end of subpattern
+            sourceget()
+    
+            if verbose:
+                # skip whitespace and comments
+                if this in WHITESPACE:
+                    continue
+                if this == "#":
+                    while True:
+                        this = sourceget()
+                        if this is None or this == "\n":
+                            break
+                    continue
+    
+            if this[0] == "\\":
+                code = _escape(source, this, state)
+                subpatternappend(code)
+    
+            elif this not in SPECIAL_CHARS:
+                subpatternappend((LITERAL, _ord(this)))
+    
+            elif this == "[":
+                here = source.tell() - 1
+                # character set
+                set = []
+                setappend = set.append
+    ##          if sourcematch(":"):
+    ##              pass # handle character classes
+                if source.next == '[':
+                    import warnings
+                    warnings.warn(
+                        'Possible nested set at position %d' % source.tell(),
+                        FutureWarning, stacklevel=nested + 6
+                    )
+                negate = sourcematch("^")
+                # check remaining characters
+                while True:
+                    this = sourceget()
+                    if this is None:
+                        raise source.error("unterminated character set",
+                                           source.tell() - here)
+                    if this == "]" and set:
+                        break
+                    elif this[0] == "\\":
+                        code1 = _class_escape(source, this)
+                    else:
+                        if set and this in '-&~|' and source.next == this:
+                            import warnings
+                            warnings.warn(
+                                'Possible set %s at position %d' % (
+                                    'difference' if this == '-' else
+                                    'intersection' if this == '&' else
+                                    'symmetric difference' if this == '~' else
+                                    'union',
+                                    source.tell() - 1),
+                                FutureWarning, stacklevel=nested + 6
+                            )
+                        code1 = LITERAL, _ord(this)
+                    if sourcematch("-"):
+                        # potential range
+                        that = sourceget()
+                        if that is None:
+                            raise source.error("unterminated character set",
+                                               source.tell() - here)
+                        if that == "]":
+                            if code1[0] is IN:
+                                code1 = code1[1][0]
+                            setappend(code1)
+                            setappend((LITERAL, _ord("-")))
+                            break
+                        if that[0] == "\\":
+                            code2 = _class_escape(source, that)
+                        else:
+                            if that == '-':
+                                import warnings
+                                warnings.warn(
+                                    'Possible set difference at position %d' % (
+                                        source.tell() - 2),
+                                    FutureWarning, stacklevel=nested + 6
+                                )
+                            code2 = LITERAL, _ord(that)
+                        if code1[0] != LITERAL or code2[0] != LITERAL:
+                            msg = "bad character range %s-%s" % (this, that)
+                            raise source.error(msg, len(this) + 1 + len(that))
+                        lo = code1[1]
+                        hi = code2[1]
+                        if hi < lo:
+                            msg = "bad character range %s-%s" % (this, that)
+                            raise source.error(msg, len(this) + 1 + len(that))
+                        setappend((RANGE, (lo, hi)))
+                    else:
+                        if code1[0] is IN:
+                            code1 = code1[1][0]
+                        setappend(code1)
+    
+                set = _uniq(set)
+                # XXX: <fl> should move set optimization to compiler!
+                if _len(set) == 1 and set[0][0] is LITERAL:
+                    # optimization
+                    if negate:
+                        subpatternappend((NOT_LITERAL, set[0][1]))
+                    else:
+                        subpatternappend(set[0])
+                else:
+                    if negate:
+                        set.insert(0, (NEGATE, None))
+                    # charmap optimization can't be added here because
+                    # global flags still are not known
+                    subpatternappend((IN, set))
+    
+            elif this in REPEAT_CHARS:
+                # repeat previous item
+                here = source.tell()
+                if this == "?":
+                    min, max = 0, 1
+                elif this == "*":
+                    min, max = 0, MAXREPEAT
+    
+                elif this == "+":
+                    min, max = 1, MAXREPEAT
+                elif this == "{":
+                    if source.next == "}":
+                        subpatternappend((LITERAL, _ord(this)))
+                        continue
+    
+                    min, max = 0, MAXREPEAT
+                    lo = hi = ""
+                    while source.next in DIGITS:
+                        lo += sourceget()
+                    if sourcematch(","):
+                        while source.next in DIGITS:
+                            hi += sourceget()
+                    else:
+                        hi = lo
+                    if not sourcematch("}"):
+                        subpatternappend((LITERAL, _ord(this)))
+                        source.seek(here)
+                        continue
+    
+                    if lo:
+                        min = int(lo)
+                        if min >= MAXREPEAT:
+                            raise OverflowError("the repetition number is too large")
+                    if hi:
+                        max = int(hi)
+                        if max >= MAXREPEAT:
+                            raise OverflowError("the repetition number is too large")
+                        if max < min:
+                            raise source.error("min repeat greater than max repeat",
+                                               source.tell() - here)
+                else:
+                    raise AssertionError("unsupported quantifier %r" % (char,))
+                # figure out which item to repeat
+                if subpattern:
+                    item = subpattern[-1:]
+                else:
+                    item = None
+                if not item or item[0][0] is AT:
+>                   raise source.error("nothing to repeat",
+                                       source.tell() - here + len(this))
+E                   re.error: nothing to repeat at position 1
+
+/usr/lib/python3.12/re/_parser.py:687: error
+=========================== short test summary info ============================
+FAILED test_1128.py::test_task_func - AssertionError: assert [('path', Non......
+FAILED test_1128.py::test_task_func_with_multiple_delimiters - AssertionError...
+FAILED test_1128.py::test_task_func_with_invalid_path - AssertionError: asser...
+FAILED test_1128.py::test_task_func_with_empty_delimiter - AssertionError: as...
+FAILED test_1128.py::test_task_func_with_invalid_delimiter - re.error: nothin...
+5 failed, 1 passed in 0.62s

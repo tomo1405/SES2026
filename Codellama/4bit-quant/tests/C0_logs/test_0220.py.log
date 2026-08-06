@@ -1,0 +1,91 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        input_list = [1, 2, 3, 4, 5]
+        expected_output = (2.5, 3, 3, 2.5, 3, 3)
+>       assert task_func(input_list) == expected_output
+E       assert (3, 3, 1, 330, 244, 244) == (2.5, 3, 3, 2.5, 3, 3)
+E         
+E         At index 0 diff: 3 != 2.5
+E         Use -v to get more diff
+
+test_0220.py:9: AssertionError
+__________________________ test_task_func_empty_input __________________________
+
+    def test_task_func_empty_input():
+        input_list = []
+        expected_output = (None, None, None, None, None, None)
+>       assert task_func(input_list) == expected_output
+               ^^^^^^^^^^^^^^^^^^^^^
+
+test_0220.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0220.py:5: in task_func
+    fft = np.abs(np.fft.fft([math.degrees(x) for x in input_list]))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/numpy/fft/_pocketfft.py:215: in fft
+    output = _raw_fft(a, n, axis, False, True, norm, out)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = array([], dtype=float64), n = 0, axis = -1, is_real = False
+is_forward = True, norm = None, out = None
+
+    def _raw_fft(a, n, axis, is_real, is_forward, norm, out=None):
+        if n < 1:
+>           raise ValueError(f"Invalid number of FFT data points ({n}) specified.")
+E           ValueError: Invalid number of FFT data points (0) specified.
+
+../../../.venv/lib/python3.12/site-packages/numpy/fft/_pocketfft.py:60: ValueError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        input_list = [1, 2, 3, 4, "a"]
+        expected_output = (None, None, None, None, None, None)
+>       assert task_func(input_list) == expected_output
+               ^^^^^^^^^^^^^^^^^^^^^
+
+test_0220.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input_list = [1, 2, 3, 4, 'a']
+
+    def task_func(input_list):
+>       fft = np.abs(np.fft.fft([math.degrees(x) for x in input_list]))
+                                 ^^^^^^^^^^^^^^^
+E       TypeError: must be real number, not str
+
+../../../src/src_0220.py:5: TypeError
+______________________ test_task_func_invalid_input_type _______________________
+
+    def test_task_func_invalid_input_type():
+        input_list = [1, 2, 3, 4, 5.5]
+        expected_output = (None, None, None, None, None, None)
+>       assert task_func(input_list) == expected_output
+E       assert (3.1, 3, 1, 353, 262, 262) == (None, None, ...e, None, None)
+E         
+E         At index 0 diff: 3.1 != None
+E         Use -v to get more diff
+
+test_0220.py:24: AssertionError
+______________________ test_task_func_invalid_input_range ______________________
+
+    def test_task_func_invalid_input_range():
+        input_list = [1, 2, 3, 4, 100]
+        expected_output = (None, None, None, None, None, None)
+>       assert task_func(input_list) == expected_output
+E       assert (22, 3, 1, 5731, 5590, 5590) == (None, None, ...e, None, None)
+E         
+E         At index 0 diff: 22 != None
+E         Use -v to get more diff
+
+test_0220.py:29: AssertionError
+=========================== short test summary info ============================
+FAILED test_0220.py::test_task_func - assert (3, 3, 1, 330, 244, 244) == (2.5...
+FAILED test_0220.py::test_task_func_empty_input - ValueError: Invalid number ...
+FAILED test_0220.py::test_task_func_invalid_input - TypeError: must be real n...
+FAILED test_0220.py::test_task_func_invalid_input_type - assert (3.1, 3, 1, 3...
+FAILED test_0220.py::test_task_func_invalid_input_range - assert (22, 3, 1, 5...
+5 failed in 0.60s

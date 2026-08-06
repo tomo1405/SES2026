@@ -1,0 +1,47 @@
+.FF.                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_single_obj ___________________________
+
+    def test_task_func_single_obj():
+        obj_list = [{'attr': 'value'}]
+        attr = 'attr'
+        expected = pd.DataFrame({'attribute': ['value'], 'count': [1]})
+>       assert task_func(obj_list, attr).equals(expected)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0847.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+obj_list = [{'attr': 'value'}], attr = 'attr'
+
+    def task_func(obj_list, attr):
+>       attr_values = [getattr(obj, attr) for obj in obj_list]
+                       ^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'dict' object has no attribute 'attr'
+
+../../../src/src_0847.py:4: AttributeError
+_________________________ test_task_func_multiple_objs _________________________
+
+    def test_task_func_multiple_objs():
+        obj_list = [{'attr': 'value1'}, {'attr': 'value2'}, {'attr': 'value1'}]
+        attr = 'attr'
+        expected = pd.DataFrame({'attribute': ['value1', 'value2'], 'count': [2, 1]})
+>       assert task_func(obj_list, attr).equals(expected)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0847.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+obj_list = [{'attr': 'value1'}, {'attr': 'value2'}, {'attr': 'value1'}]
+attr = 'attr'
+
+    def task_func(obj_list, attr):
+>       attr_values = [getattr(obj, attr) for obj in obj_list]
+                       ^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'dict' object has no attribute 'attr'
+
+../../../src/src_0847.py:4: AttributeError
+=========================== short test summary info ============================
+FAILED test_0847.py::test_task_func_single_obj - AttributeError: 'dict' objec...
+FAILED test_0847.py::test_task_func_multiple_objs - AttributeError: 'dict' ob...
+2 failed, 2 passed in 1.18s

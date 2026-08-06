@@ -1,0 +1,37 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+df =    A  B
+0  1  4
+1  2  5
+2  3  6
+
+    def test_task_func(df):
+        target_value = '2'
+        counts, ax = task_func(df, target_value)
+        assert isinstance(counts, pd.Series)
+        assert ax is not None or ax is None
+>       assert 'Operation completed in' in counts.name
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: argument of type 'NoneType' is not iterable
+
+test_0652.py:16: TypeError
+___________________________ test_task_func_empty_df ____________________________
+
+df = Empty DataFrame
+Columns: []
+Index: []
+
+    def test_task_func_empty_df(df):
+        df = pd.DataFrame()
+        target_value = '2'
+        counts, ax = task_func(df, target_value)
+>       assert counts is None
+E       assert Series([], dtype: float64) is None
+
+test_0652.py:22: AssertionError
+=========================== short test summary info ============================
+FAILED test_0652.py::test_task_func - TypeError: argument of type 'NoneType' ...
+FAILED test_0652.py::test_task_func_empty_df - assert Series([], dtype: float...
+2 failed in 2.21s

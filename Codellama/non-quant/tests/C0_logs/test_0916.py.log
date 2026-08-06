@@ -1,0 +1,22 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a sample dataframe
+        df = pd.DataFrame({'closing_price': [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]})
+    
+        # Test with default Z-score threshold
+        outliers, ax = task_func(df)
+        assert np.allclose(outliers['closing_price'], [100])
+        assert ax.get_xlabel() == 'Index'
+        assert ax.get_ylabel() == 'Closing Price'
+        assert ax.get_title() == 'Outliers in Closing Prices'
+>       assert ax.get_legend()[0].get_text() == 'Normal'
+               ^^^^^^^^^^^^^^^^^^
+E       TypeError: 'Legend' object is not subscriptable
+
+test_0916.py:16: TypeError
+=========================== short test summary info ============================
+FAILED test_0916.py::test_task_func - TypeError: 'Legend' object is not subsc...
+1 failed in 3.48s

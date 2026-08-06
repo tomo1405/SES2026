@@ -1,0 +1,32 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sample_data = (array([1, 2, 3, 4, 5]), array([ 2,  4,  6,  8, 10]))
+
+    def test_task_func(sample_data):
+        X, Y = sample_data
+        params, ax = task_func(X, Y)
+    
+        # Check if the parameters are returned as a list
+        assert isinstance(params, list)
+        assert len(params) == 3
+    
+        # Check if the plot is created correctly
+        assert isinstance(ax, plt.Axes)
+>       assert len(ax.lines) == 2  # One for scatter and one for fit line
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert 1 == 2
+E        +  where 1 = len(<Axes.ArtistList of 1 lines>)
+E        +    where <Axes.ArtistList of 1 lines> = <Axes: >.lines
+
+test_0477.py:23: AssertionError
+=============================== warnings summary ===============================
+Qwen/8bit-quant/tests/test_0477.py::test_task_func
+  /work/tomohiro-w/utg/src/src_0477.py:8: OptimizeWarning: Covariance of the parameters could not be estimated
+    popt, pcov = curve_fit(func, X, Y)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0477.py::test_task_func - assert 1 == 2
+1 failed, 1 warning in 2.22s

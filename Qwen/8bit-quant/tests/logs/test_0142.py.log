@@ -1,0 +1,29 @@
+...FF..                                                                  [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_default_columns ________________________
+
+    def test_task_func_default_columns():
+        df, stats_dict = task_func(5)
+        assert df.shape == (5, 6)
+        assert list(df.columns) == ['A', 'B', 'C', 'D', 'E', 'F']
+>       assert all(isinstance(stats_dict[col]['mean'], float) for col in df.columns)
+E       assert False
+E        +  where False = all(<generator object test_task_func_default_columns.<locals>.<genexpr> at 0x77da5655f300>)
+
+test_0142.py:20: AssertionError
+________________________ test_task_func_custom_columns _________________________
+
+    def test_task_func_custom_columns():
+        columns = ['X', 'Y', 'Z']
+        df, stats_dict = task_func(3, columns=columns)
+        assert df.shape == (3, 3)
+        assert list(df.columns) == columns
+>       assert all(isinstance(stats_dict[col]['mean'], float) for col in df.columns)
+E       assert False
+E        +  where False = all(<generator object test_task_func_custom_columns.<locals>.<genexpr> at 0x77da565acd60>)
+
+test_0142.py:28: AssertionError
+=========================== short test summary info ============================
+FAILED test_0142.py::test_task_func_default_columns - assert False
+FAILED test_0142.py::test_task_func_custom_columns - assert False
+2 failed, 5 passed in 1.11s

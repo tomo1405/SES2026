@@ -1,0 +1,47 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+>   ???
+E   TypeError: Cannot cast array data from dtype('O') to dtype('float64') according to the rule 'safe'
+
+pandas/_libs/parsers.pyx:1116: TypeError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func():
+        # Test case 1: Default arguments
+>       df, ax, croot = task_func()
+                        ^^^^^^^^^^^
+
+test_0469.py:8: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0469.py:4: in task_func
+    df = pd.read_csv(file_path, dtype=float)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:873: in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:306: in _read
+    return parser.read(nrows)
+           ^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:1947: in read
+    ) = self._engine.read(  # type: ignore[attr-defined]
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/c_parser_wrapper.py:215: in read
+    chunks = self._reader.read_low_memory(nrows)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pandas/_libs/parsers.pyx:832: in pandas._libs.parsers.TextReader.read_low_memory
+    ???
+pandas/_libs/parsers.pyx:911: in pandas._libs.parsers.TextReader._read_rows
+    ???
+pandas/_libs/parsers.pyx:1009: in pandas._libs.parsers.TextReader._convert_column_data
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   ValueError: could not convert string to float: '0:00'
+
+pandas/_libs/parsers.pyx:1122: ValueError
+=========================== short test summary info ============================
+FAILED test_0469.py::test_task_func - ValueError: could not convert string to...
+1 failed in 1.13s

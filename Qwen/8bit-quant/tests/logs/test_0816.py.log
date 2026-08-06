@@ -1,0 +1,43 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_valid_student _________________________
+
+    def test_task_func_valid_student():
+        test_scores = [
+            {'Student': 'Alice', 'Score': 85},
+            {'Student': 'Alice', 'Score': 90},
+            {'Student': 'Bob', 'Score': 92},
+            {'Student': 'Bob', 'Score': 88}
+        ]
+        student = 'Alice'
+        expected_average = (85 + 90) / 2
+        expected_std = np.std([85, 90])
+        expected_result = np.array([expected_average, expected_std])
+        result, df = task_func(test_scores, student)
+>       assert np.allclose(result, expected_result)
+E       assert False
+E        +  where False = <function allclose at 0x7c3eafa0f9b0>(array([87.5       ,  3.53553391]), array([87.5,  2.5]))
+E        +    where <function allclose at 0x7c3eafa0f9b0> = np.allclose
+
+test_0816.py:28: AssertionError
+_________________________ test_task_func_single_score __________________________
+
+    def test_task_func_single_score():
+        test_scores = [
+            {'Student': 'Alice', 'Score': 85}
+        ]
+        student = 'Alice'
+        expected_average = 85
+        expected_std = 0
+        expected_result = np.array([expected_average, expected_std])
+        result, df = task_func(test_scores, student)
+>       assert np.allclose(result, expected_result)
+E       assert False
+E        +  where False = <function allclose at 0x7c3eafa0f9b0>(array([85., nan]), array([85,  0]))
+E        +    where <function allclose at 0x7c3eafa0f9b0> = np.allclose
+
+test_0816.py:41: AssertionError
+=========================== short test summary info ============================
+FAILED test_0816.py::test_task_func_valid_student - assert False
+FAILED test_0816.py::test_task_func_single_score - assert False
+2 failed, 1 passed in 1.19s

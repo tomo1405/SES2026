@@ -1,0 +1,54 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        precision = 2
+        seed = 0
+        np.random.seed(seed)
+        a = np.random.uniform(-10, 10)
+        b = np.random.uniform(-10, 10)
+        c = np.random.uniform(-10, 10)
+    
+        x = symbols('x')
+        equation = a * x**2 + b * x + c
+    
+        solutions = solve(equation, x)
+        expected_solutions = [complex(round(complex(solution).real, precision), round(complex(solution).imag, precision)) for solution in solutions]
+    
+        actual_solutions = task_func(precision, seed)
+    
+>       assert actual_solutions == expected_solutions
+E       assert ((-3.86+0j), (-0.54+0j)) == [(-3.86+0j), (-0.54+0j)]
+E         
+E         Use -v to get more diff
+
+test_0279.py:21: AssertionError
+________________ test_task_func_with_custom_precision_and_seed _________________
+
+    def test_task_func_with_custom_precision_and_seed():
+        precision = 3
+        seed = 42
+        np.random.seed(seed)
+        a = np.random.uniform(-10, 10)
+        b = np.random.uniform(-10, 10)
+        c = np.random.uniform(-10, 10)
+    
+        x = symbols('x')
+        equation = a * x**2 + b * x + c
+    
+        solutions = solve(equation, x)
+        expected_solutions = [complex(round(complex(solution).real, precision), round(complex(solution).imag, precision)) for solution in solutions]
+    
+        actual_solutions = task_func(precision, seed)
+    
+>       assert actual_solutions == expected_solutions
+E       assert ((-0.457+0j), (4.049+0j)) == [(-0.457+0j), (4.049+0j)]
+E         
+E         Use -v to get more diff
+
+test_0279.py:39: AssertionError
+=========================== short test summary info ============================
+FAILED test_0279.py::test_task_func - assert ((-3.86+0j), (-0.54+0j)) == [(-3...
+FAILED test_0279.py::test_task_func_with_custom_precision_and_seed - assert (...
+2 failed in 4.70s

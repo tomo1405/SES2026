@@ -1,0 +1,47 @@
+FF..FF                                                                   [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_no_column ___________________________
+
+    def test_task_func_no_column():
+        data = {'a': [1, 2, 3], 'b': [4, 5, 6]}
+        result = task_func(data)
+>       assert isinstance(result, sns.axisgrid.HeatMap)
+                                  ^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'seaborn.axisgrid' has no attribute 'HeatMap'
+
+test_0417.py:9: AttributeError
+__________________________ test_task_func_with_column __________________________
+
+    def test_task_func_with_column():
+        data = {'a': [1, 2, 3], 'b': [4, 5, 6], 'c': [7, 8, 9]}
+        result = task_func(data, column='c')
+>       assert isinstance(result, sns.axisgrid.HeatMap)
+                                  ^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'seaborn.axisgrid' has no attribute 'HeatMap'
+
+test_0417.py:14: AttributeError
+_______________________ test_task_func_mixed_data_types ________________________
+
+    def test_task_func_mixed_data_types():
+        data = {'a': [1, 2, 3], 'b': ['p', 'q', 'r'], 'c': [7, 8, 9]}
+        result = task_func(data, column='b')
+>       assert isinstance(result, sns.axisgrid.HeatMap)
+                                  ^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'seaborn.axisgrid' has no attribute 'HeatMap'
+
+test_0417.py:29: AttributeError
+_____________________ test_task_func_single_numeric_column _____________________
+
+    def test_task_func_single_numeric_column():
+        data = {'a': [1, 2, 3]}
+        result = task_func(data)
+>       assert result is None
+E       assert <Axes: > is None
+
+test_0417.py:34: AssertionError
+=========================== short test summary info ============================
+FAILED test_0417.py::test_task_func_no_column - AttributeError: module 'seabo...
+FAILED test_0417.py::test_task_func_with_column - AttributeError: module 'sea...
+FAILED test_0417.py::test_task_func_mixed_data_types - AttributeError: module...
+FAILED test_0417.py::test_task_func_single_numeric_column - assert <Axes: > i...
+4 failed, 2 passed in 3.75s

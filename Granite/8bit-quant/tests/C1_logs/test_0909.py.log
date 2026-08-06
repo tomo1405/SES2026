@@ -1,0 +1,50 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+setup = ('path/to/directory', 'pattern')
+
+    def test_task_func(setup):
+        directory, pattern = setup
+>       plots = task_func(directory, pattern)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0909.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = 'path/to/directory', pattern = 'pattern'
+
+    def task_func(directory: str, pattern: str) -> list:
+    
+        plots = []
+>       for file in os.listdir(directory):
+                    ^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'path/to/directory'
+
+../../../src/src_0909.py:8: FileNotFoundError
+_____________________ test_task_func_with_invalid_pattern ______________________
+
+setup = ('path/to/directory', 'pattern')
+
+    def test_task_func_with_invalid_pattern(setup):
+        directory, pattern = setup
+        with pytest.raises(ValueError):
+>           task_func(directory, 'invalid_pattern')
+
+test_0909.py:30: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = 'path/to/directory', pattern = 'invalid_pattern'
+
+    def task_func(directory: str, pattern: str) -> list:
+    
+        plots = []
+>       for file in os.listdir(directory):
+                    ^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'path/to/directory'
+
+../../../src/src_0909.py:8: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0909.py::test_task_func - FileNotFoundError: [Errno 2] No such fi...
+FAILED test_0909.py::test_task_func_with_invalid_pattern - FileNotFoundError:...
+2 failed, 1 passed in 2.14s

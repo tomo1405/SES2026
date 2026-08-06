@@ -1,0 +1,26 @@
+import pytest
+from src_1076 import task_func
+import numpy as np
+import matplotlib.pyplot as plt
+
+def test_task_func():
+    # Test case 1: Check if the function returns a valid plot object
+    time_strings = ["01/01/01 00:00:00.000", "01/01/01 00:00:01.000", "01/01/01 00:00:02.000"]
+    plot = task_func(time_strings)
+    assert isinstance(plot, plt.Axes)
+
+    # Test case 2: Check if the plot has the correct title
+    assert plot.title.get_text() == "Time Differences Between Consecutive Timestamps"
+
+    # Test case 3: Check if the plot has the correct x-axis label
+    assert plot.xaxis.get_label_text() == "Index"
+
+    # Test case 4: Check if the plot has the correct y-axis label
+    assert plot.yaxis.get_label_text() == "Time Difference (seconds)"
+
+    # Test case 5: Check if the plot has the correct number of bars
+    assert len(plot.patches) == len(time_strings) - 1
+
+    # Test case 6: Check if the plot has the correct bar heights
+    expected_differences = np.diff([datetime.datetime.strptime(t, TIME_FORMAT) for t in time_strings]).astype("timedelta64[s]").astype(int)
+    assert np.allclose(plot.patches[0].get_height(), expected_differences)

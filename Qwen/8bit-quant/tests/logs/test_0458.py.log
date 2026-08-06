@@ -1,0 +1,60 @@
+FFF.F.                                                                   [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        L = [[1, 2, 3], [4, 5], [6]]
+        ax = task_func(L)
+>       assert isinstance(ax, pd.Series)
+E       AssertionError: assert False
+E        +  where False = isinstance(<Axes: ylabel='Frequency'>, <class 'pandas.Series'>)
+E        +    where <class 'pandas.Series'> = pd.Series
+
+test_0458.py:9: AssertionError
+________________________ test_task_func_empty_sublists _________________________
+
+    def test_task_func_empty_sublists():
+        L = [[], [1, 2], [], [3]]
+        ax = task_func(L)
+>       assert isinstance(ax, pd.Series)
+E       AssertionError: assert False
+E        +  where False = isinstance(<Axes: ylabel='Frequency'>, <class 'pandas.Series'>)
+E        +    where <class 'pandas.Series'> = pd.Series
+
+test_0458.py:15: AssertionError
+_____________________ test_task_func_single_element_lists ______________________
+
+    def test_task_func_single_element_lists():
+        L = [[1], [2], [3]]
+        ax = task_func(L)
+>       assert isinstance(ax, pd.Series)
+E       AssertionError: assert False
+E        +  where False = isinstance(<Axes: ylabel='Frequency'>, <class 'pandas.Series'>)
+E        +    where <class 'pandas.Series'> = pd.Series
+
+test_0458.py:21: AssertionError
+__________________________ test_task_func_empty_list ___________________________
+
+    def test_task_func_empty_list():
+        L = []
+        with pytest.raises(TypeError, match="Expected list of list of int"):
+>           task_func(L)
+
+test_0458.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+L = []
+
+    def task_func(L):
+    
+>       flattened = np.concatenate([l for l in L if l])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: need at least one array to concatenate
+
+../../../src/src_0458.py:5: ValueError
+=========================== short test summary info ============================
+FAILED test_0458.py::test_task_func_valid_input - AssertionError: assert False
+FAILED test_0458.py::test_task_func_empty_sublists - AssertionError: assert F...
+FAILED test_0458.py::test_task_func_single_element_lists - AssertionError: as...
+FAILED test_0458.py::test_task_func_empty_list - ValueError: need at least on...
+4 failed, 2 passed in 2.07s

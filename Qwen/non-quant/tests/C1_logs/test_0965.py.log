@@ -1,0 +1,26 @@
+..F....                                                                  [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_single_txt_file ________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1642/test_task_func_single_txt_file0')
+
+    def test_task_func_single_txt_file(tmp_path):
+        source_dir = tmp_path / "source"
+        source_dir.mkdir()
+        target_dir = tmp_path / "target"
+        (source_dir / "test.txt").write_text("Hello\nWorld")
+        assert task_func(str(source_dir), str(target_dir)) == 1
+        converted_file = target_dir / "test.csv"
+        assert converted_file.exists()
+        df = pd.read_csv(converted_file)
+>       assert df.equals(pd.DataFrame({"Text": ["Hello", "World"]}))
+E       AssertionError: assert False
+E        +  where False = equals(    Text\n0  Hello\n1  World)
+E        +    where equals =       Text\n0  Hello\n\n1    World.equals
+E        +    and       Text\n0  Hello\n1  World = <class 'pandas.DataFrame'>({'Text': ['Hello', 'World']})
+E        +      where <class 'pandas.DataFrame'> = pd.DataFrame
+
+test_0965.py:29: AssertionError
+=========================== short test summary info ============================
+FAILED test_0965.py::test_task_func_single_txt_file - AssertionError: assert ...
+1 failed, 6 passed in 1.83s

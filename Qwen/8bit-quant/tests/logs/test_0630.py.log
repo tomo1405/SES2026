@@ -1,0 +1,57 @@
+.F..F                                                                    [100%]
+=================================== FAILURES ===================================
+____________________ test_task_func_writes_correct_content _____________________
+
+dataset = [   A  B
+0  1  3
+1  2  4,    C  D
+0  5  7
+1  6  8]
+filename = 'test_output.csv'
+output_dir = local('/tmp/pytest-of-tomohiro-w/pytest-1477/test_task_func_writes_correct_0/output')
+
+    def test_task_func_writes_correct_content(dataset, filename, output_dir):
+        task_func(dataset, filename, str(output_dir))
+        with open(os.path.join(str(output_dir), filename), 'r') as f:
+            content = f.read()
+        expected_content = ("A,B\n1,3\n2,4\n------\nC,D\n5,6\n7,8\n")
+>       assert content == expected_content
+E       AssertionError: assert 'A,B\n1,3\n2,...D\n5,7\n6,8\n' == 'A,B\n1,3\n2,...D\n5,6\n7,8\n'
+E         
+E           A,B
+E           1,3
+E           2,4
+E         + 
+E           ------
+E           C,D...
+E         
+E         ...Full output truncated (8 lines hidden), use '-vv' to show
+
+test_0630.py:30: AssertionError
+____________________________ test_task_func_timing _____________________________
+
+dataset = [   A  B
+0  1  3
+1  2  4,    C  D
+0  5  7
+1  6  8]
+filename = 'test_output.csv'
+output_dir = local('/tmp/pytest-of-tomohiro-w/pytest-1477/test_task_func_timing0/output')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ff2fe839e20>
+
+    def test_task_func_timing(dataset, filename, output_dir, monkeypatch):
+        mock_time = [0, 1]  # Start and end times
+        monkeypatch.setattr(time, 'time', lambda: mock_time.pop(0))
+        task_func(dataset, filename, str(output_dir))
+        with open(os.path.join(str(output_dir), filename), 'r') as f:
+            lines = f.readlines()
+>       assert lines[-1].startswith("Operation completed in 1.0 seconds.")
+E       AssertionError: assert False
+E        +  where False = <built-in method startswith of str object at 0x7ff2fe839ec0>('Operation completed in 1.0 seconds.')
+E        +    where <built-in method startswith of str object at 0x7ff2fe839ec0> = '6,8\n'.startswith
+
+test_0630.py:52: AssertionError
+=========================== short test summary info ============================
+FAILED test_0630.py::test_task_func_writes_correct_content - AssertionError: ...
+FAILED test_0630.py::test_task_func_timing - AssertionError: assert False
+2 failed, 3 passed in 1.25s

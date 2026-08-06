@@ -1,0 +1,73 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a temporary directory for output
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Define a sample DataFrame
+            data = {'Name': ['Alice', 'Bob'], 'Age': [25, 30]}
+            df = pd.DataFrame(data)
+    
+            # Define the filename
+            filename = 'test_output.csv'
+    
+            # Call the function
+            result_path = task_func(df, filename, output_dir=temp_dir)
+    
+            # Check if the file exists
+            assert os.path.exists(result_path)
+    
+            # Read the CSV file and check its contents
+            with open(result_path, newline='') as csvfile:
+                reader = csv.reader(csvfile)
+                rows = list(reader)
+    
+            # Check the header and data
+            assert rows[0] == ['Name', 'Age']
+>           assert rows[1] == ['"Alice"', '"25"']
+E           assert ['Alice', '25'] == ['"Alice"', '"25"']
+E             
+E             At index 0 diff: 'Alice' != '"Alice"'
+E             Use -v to get more diff
+
+test_0632.py:32: AssertionError
+_____________________ test_task_func_nonexistent_directory _____________________
+
+    def test_task_func_nonexistent_directory():
+        # Create a temporary directory for output
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Define a non-existent subdirectory
+            non_existent_subdir = os.path.join(temp_dir, 'non_existent')
+    
+            # Define a sample DataFrame
+            data = {'Name': ['Alice', 'Bob'], 'Age': [25, 30]}
+            df = pd.DataFrame(data)
+    
+            # Define the filename
+            filename = 'test_output.csv'
+    
+            # Call the function
+            result_path = task_func(df, filename, output_dir=non_existent_subdir)
+    
+            # Check if the file exists
+            assert os.path.exists(result_path)
+    
+            # Read the CSV file and check its contents
+            with open(result_path, newline='') as csvfile:
+                reader = csv.reader(csvfile)
+                rows = list(reader)
+    
+            # Check the header and data
+            assert rows[0] == ['Name', 'Age']
+>           assert rows[1] == ['"Alice"', '"25"']
+E           assert ['Alice', '25'] == ['"Alice"', '"25"']
+E             
+E             At index 0 diff: 'Alice' != '"Alice"'
+E             Use -v to get more diff
+
+test_0632.py:61: AssertionError
+=========================== short test summary info ============================
+FAILED test_0632.py::test_task_func - assert ['Alice', '25'] == ['"Alice"', '...
+FAILED test_0632.py::test_task_func_nonexistent_directory - assert ['Alice', ...
+2 failed in 1.64s

@@ -1,0 +1,40 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        dict1 = {
+            'EMP$$123': 5,
+            'EMP$$456': 3,
+            'TMP$$789': 1
+        }
+        expected_output = {
+            'EMP$$123': [randint(1, 100) for _ in range(5)],
+            'EMP$$456': [randint(1, 100) for _ in range(3)]
+        }
+        actual_output = task_func(dict1)
+>       assert actual_output == expected_output
+E       AssertionError: assert {'EMP$$123': ... [84, 71, 93]} == {'EMP$$123': ... [45, 75, 19]}
+E         
+E         Differing items:
+E         {'EMP$$456': [84, 71, 93]} != {'EMP$$456': [45, 75, 19]}
+E         {'EMP$$123': [91, 27, 70, 78, 73]} != {'EMP$$123': [31, 19, 26, 44, 29]}
+E         Use -v to get more diff
+
+test_1115.py:17: AssertionError
+______________________ test_task_func_with_invalid_input _______________________
+
+    def test_task_func_with_invalid_input():
+        dict1 = {
+            'TMP$$123': 5,
+            'TMP$$456': 3,
+            'TMP$$789': 1
+        }
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_1115.py:25: Failed
+=========================== short test summary info ============================
+FAILED test_1115.py::test_task_func - AssertionError: assert {'EMP$$123': ......
+FAILED test_1115.py::test_task_func_with_invalid_input - Failed: DID NOT RAIS...
+2 failed in 1.04s

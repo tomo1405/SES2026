@@ -1,0 +1,157 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+data_url = 'http://lib.stat.cmu.edu/datasets/boston', seed = 42
+
+    def task_func(data_url="http://lib.stat.cmu.edu/datasets/boston", seed=42):
+        try:
+            # Set font to Arial
+            font = {'sans-serif': 'Arial', 'family': 'sans-serif'}
+            plt.rc('font', **font)
+    
+            # boston = load_boston()
+            # boston_df = pd.DataFrame(data=boston.data, columns=boston.feature_names)
+            # corr = boston_df.corr()
+    
+            raw_df = pd.read_csv(data_url, sep="\s+", skiprows=22, header=None)
+>           data = np.hstack([raw_df.values[::2, :], raw_df.values[1::2, :2]])
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../../../src/src_0102.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tup = [array([[6.3200e-03, 1.8000e+01, 2.3100e+00, 0.0000e+00, 5.3800e-01,
+        6.5750e+00, 6.5200e+01, 4.0900e+00, 1.000...00e+01, 4.9671e+00, 2.0000e+00, 2.4200e+02,
+        1.7800e+01, 3.9283e+02, 4.0300e+00]]), array([[0.02731, 0.     ]])]
+dtype = None, casting = 'same_kind'
+
+    @array_function_dispatch(_vhstack_dispatcher)
+    def hstack(tup, *, dtype=None, casting="same_kind"):
+        """
+        Stack arrays in sequence horizontally (column wise).
+    
+        This is equivalent to concatenation along the second axis, except for 1-D
+        arrays where it concatenates along the first axis. Rebuilds arrays divided
+        by `hsplit`.
+    
+        This function makes most sense for arrays with up to 3 dimensions. For
+        instance, for pixel-data with a height (first axis), width (second axis),
+        and r/g/b channels (third axis). The functions `concatenate`, `stack` and
+        `block` provide more general stacking and concatenation operations.
+    
+        Parameters
+        ----------
+        tup : sequence of ndarrays
+            The arrays must have the same shape along all but the second axis,
+            except 1-D arrays which can be any length. In the case of a single
+            array_like input, it will be treated as a sequence of arrays; i.e.,
+            each element along the zeroth axis is treated as a separate array.
+    
+        dtype : str or dtype
+            If provided, the destination array will have this dtype. Cannot be
+            provided together with `out`.
+    
+            .. versionadded:: 1.24
+    
+        casting : {'no', 'equiv', 'safe', 'same_kind', 'unsafe'}, optional
+            Controls what kind of data casting may occur. Defaults to 'same_kind'.
+    
+            .. versionadded:: 1.24
+    
+        Returns
+        -------
+        stacked : ndarray
+            The array formed by stacking the given arrays.
+    
+        See Also
+        --------
+        concatenate : Join a sequence of arrays along an existing axis.
+        stack : Join a sequence of arrays along a new axis.
+        block : Assemble an nd-array from nested lists of blocks.
+        vstack : Stack arrays in sequence vertically (row wise).
+        dstack : Stack arrays in sequence depth wise (along third axis).
+        column_stack : Stack 1-D arrays as columns into a 2-D array.
+        hsplit : Split an array into multiple sub-arrays
+                 horizontally (column-wise).
+        unstack : Split an array into a tuple of sub-arrays along an axis.
+    
+        Examples
+        --------
+        >>> import numpy as np
+        >>> a = np.array((1,2,3))
+        >>> b = np.array((4,5,6))
+        >>> np.hstack((a,b))
+        array([1, 2, 3, 4, 5, 6])
+        >>> a = np.array([[1],[2],[3]])
+        >>> b = np.array([[4],[5],[6]])
+        >>> np.hstack((a,b))
+        array([[1, 4],
+               [2, 5],
+               [3, 6]])
+    
+        """
+        arrs = atleast_1d(*tup)
+        if not isinstance(arrs, tuple):
+            arrs = (arrs,)
+        # As a special case, dimension 0 of 1-dimensional arrays is "horizontal"
+        if arrs and arrs[0].ndim == 1:
+            return _nx.concatenate(arrs, 0, dtype=dtype, casting=casting)
+        else:
+>           return _nx.concatenate(arrs, 1, dtype=dtype, casting=casting)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           ValueError: all the input array dimensions except for the concatenation axis must match exactly, but along dimension 0, the array at index 0 has size 2 and the array at index 1 has size 1
+
+../../../.venv/lib/python3.12/site-packages/numpy/_core/shape_base.py:365: ValueError
+
+During handling of the above exception, another exception occurred:
+
+mock_data = None
+
+    def test_task_func(mock_data):
+>       ax = task_func()
+             ^^^^^^^^^^^
+
+test_0102.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data_url = 'http://lib.stat.cmu.edu/datasets/boston', seed = 42
+
+    def task_func(data_url="http://lib.stat.cmu.edu/datasets/boston", seed=42):
+        try:
+            # Set font to Arial
+            font = {'sans-serif': 'Arial', 'family': 'sans-serif'}
+            plt.rc('font', **font)
+    
+            # boston = load_boston()
+            # boston_df = pd.DataFrame(data=boston.data, columns=boston.feature_names)
+            # corr = boston_df.corr()
+    
+            raw_df = pd.read_csv(data_url, sep="\s+", skiprows=22, header=None)
+            data = np.hstack([raw_df.values[::2, :], raw_df.values[1::2, :2]])
+            target = raw_df.values[1::2, 2]
+    
+            # Step 1: Convert data and target into DataFrame
+            columns = ['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAX', 'PTRATIO', 'B', 'LSTAT']
+            boston_df = pd.DataFrame(data=data, columns=columns)
+    
+            # Step 2: Compute correlation matrix
+            corr = boston_df.corr()
+    
+    
+            sns.set_theme(style="white")  # Optional: for better aesthetics
+            plt.figure(figsize=(10, 8))  # Optional: adjust the size of the heatmap
+            ax = sns.heatmap(corr, annot=True)  # 'annot=True' to display correlation values
+            # if file_path:
+            #     plt.savefig(file_path)
+    
+            return ax
+    
+        except Exception as e:
+>           raise ValueError(f"An error occurred: {e}")
+E           ValueError: An error occurred: all the input array dimensions except for the concatenation axis must match exactly, but along dimension 0, the array at index 0 has size 2 and the array at index 1 has size 1
+
+../../../src/src_0102.py:36: ValueError
+=========================== short test summary info ============================
+FAILED test_0102.py::test_task_func - ValueError: An error occurred: all the ...
+1 failed, 1 passed in 3.66s

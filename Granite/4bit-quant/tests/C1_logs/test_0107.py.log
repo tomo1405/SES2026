@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test invalid input
+        with patch('matplotlib.pyplot.show') as mock_show:
+            with pytest.raises(ValueError) as exc_info:
+                task_func('not a DataFrame')
+            assert "Invalid 'df': must be a DataFrame with 'group', 'date', and 'value' columns." in str(exc_info.value)
+            mock_show.assert_not_called()
+    
+        # Test valid input
+        df = pd.DataFrame({
+            'group': ['A', 'B', 'C'],
+            'date': [pd.Timestamp('2022-01-01'), pd.Timestamp('2022-01-02'), pd.Timestamp('2022-01-03')],
+            'value': [10, 20, 30]
+        })
+        model, y_pred, ax = task_func(df)
+        assert isinstance(model, LinearRegression)
+>       assert isinstance(y_pred, pd.Series)
+E       AssertionError: assert False
+E        +  where False = isinstance(array([10., 20., 30.]), <class 'pandas.Series'>)
+E        +    where <class 'pandas.Series'> = pd.Series
+
+test_0107.py:46: AssertionError
+=========================== short test summary info ============================
+FAILED test_0107.py::test_task_func - AssertionError: assert False
+1 failed in 4.33s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

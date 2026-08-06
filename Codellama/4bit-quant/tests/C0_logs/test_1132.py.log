@@ -1,0 +1,26 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        salt = "my_salt"
+        cursor = "my_cursor"
+>       count_updated = task_func(salt, cursor)
+                        ^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1132.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+salt = 'my_salt', cursor = 'my_cursor'
+
+    def task_func(salt, cursor):
+        if not isinstance(salt, str):
+            raise TypeError
+>       cursor.execute("SELECT id, password FROM users")
+        ^^^^^^^^^^^^^^
+E       AttributeError: 'str' object has no attribute 'execute'
+
+../../../src/src_1132.py:6: AttributeError
+=========================== short test summary info ============================
+FAILED test_1132.py::test_task_func - AttributeError: 'str' object has no att...
+1 failed in 0.73s

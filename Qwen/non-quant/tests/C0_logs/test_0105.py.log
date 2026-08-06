@@ -1,0 +1,102 @@
+..FF                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        df = pd.DataFrame({
+            'group': ['A', 'A', 'B', 'B'],
+            'date': ['2021-01-01', '2021-01-02', '2021-01-03', '2021-01-04'],
+            'value': [10, 20, 30, 40]
+        })
+>       ax = task_func(df)
+             ^^^^^^^^^^^^^
+
+test_0105.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0105.py:14: in task_func
+    group_df['date'] = group_df['date'].apply(lambda x: x.toordinal())
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/series.py:5084: in apply
+    ).apply()
+      ^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/apply.py:1520: in apply
+    return self.apply_standard()
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/apply.py:1578: in apply_standard
+    mapped = obj._map_values(mapper=curried)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/base.py:1020: in _map_values
+    return arr.map(mapper, na_action=na_action)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/arrow/array.py:1753: in map
+    return super().map(mapper, na_action)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/base.py:2745: in map
+    return map_array(self, mapper, na_action=na_action)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/algorithms.py:1715: in map_array
+    return lib.map_infer(values, mapper)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pandas/_libs/lib.pyx:3071: in pandas._libs.lib.map_infer
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+x = '2021-01-01'
+
+>   group_df['date'] = group_df['date'].apply(lambda x: x.toordinal())
+                                                        ^^^^^^^^^^^
+E   AttributeError: 'str' object has no attribute 'toordinal'
+
+../../../src/src_0105.py:14: AttributeError
+______________________ test_task_func_with_custom_groups _______________________
+
+    def test_task_func_with_custom_groups():
+        df = pd.DataFrame({
+            'group': ['X', 'X', 'Y', 'Y'],
+            'date': ['2021-01-01', '2021-01-02', '2021-01-03', '2021-01-04'],
+            'value': [10, 20, 30, 40]
+        })
+>       ax = task_func(df, groups=['X', 'Y'])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0105.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0105.py:14: in task_func
+    group_df['date'] = group_df['date'].apply(lambda x: x.toordinal())
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/series.py:5084: in apply
+    ).apply()
+      ^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/apply.py:1520: in apply
+    return self.apply_standard()
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/apply.py:1578: in apply_standard
+    mapped = obj._map_values(mapper=curried)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/base.py:1020: in _map_values
+    return arr.map(mapper, na_action=na_action)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/arrow/array.py:1753: in map
+    return super().map(mapper, na_action)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/base.py:2745: in map
+    return map_array(self, mapper, na_action=na_action)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/algorithms.py:1715: in map_array
+    return lib.map_infer(values, mapper)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pandas/_libs/lib.pyx:3071: in pandas._libs.lib.map_infer
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+x = '2021-01-01'
+
+>   group_df['date'] = group_df['date'].apply(lambda x: x.toordinal())
+                                                        ^^^^^^^^^^^
+E   AttributeError: 'str' object has no attribute 'toordinal'
+
+../../../src/src_0105.py:14: AttributeError
+=========================== short test summary info ============================
+FAILED test_0105.py::test_task_func_valid_input - AttributeError: 'str' objec...
+FAILED test_0105.py::test_task_func_with_custom_groups - AttributeError: 'str...
+2 failed, 2 passed in 2.30s

@@ -1,0 +1,102 @@
+FF.FF                                                                    [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        input_list = [math.pi, math.e, math.sqrt(2), 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        expected_output = (
+            4.577215664901533,
+            4.5,
+            1,
+            5,
+            5,
+            5
+        )
+        output = task_func(input_list)
+>       assert output == expected_output
+E       assert (4.7903144649...96, 241, 1354) == (4.5772156649...5, 1, 5, 5, 5)
+E         
+E         At index 0 diff: 4.790314464955533 != 4.577215664901533
+E         Use -v to get more diff
+
+test_0220.py:18: AssertionError
+_____________________ test_task_func_with_negative_numbers _____________________
+
+    def test_task_func_with_negative_numbers():
+        input_list = [-math.pi, -math.e, -math.sqrt(2), -1, -2, -3, -4, -5, -6, -7, -8, -9, -10]
+        expected_output = (
+            -4.577215664901533,
+            -4.5,
+            -1,
+            5,
+            5,
+            5
+        )
+        output = task_func(input_list)
+>       assert output == expected_output
+E       assert (-4.790314464...96, 241, 1354) == (-4.577215664..., -1, 5, 5, 5)
+E         
+E         At index 0 diff: -4.790314464955533 != -4.577215664901533
+E         Use -v to get more diff
+
+test_0220.py:31: AssertionError
+_______________________ test_task_func_with_one_element ________________________
+
+    def test_task_func_with_one_element():
+        input_list = [math.pi]
+        expected_output = (
+            math.pi,
+            math.pi,
+            math.pi,
+            1,
+            1,
+            1
+        )
+        output = task_func(input_list)
+>       assert output == expected_output
+E       assert (3.1415926535...180, 180, 180) == (3.1415926535...9793, 1, 1, 1)
+E         
+E         At index 3 diff: 180 != 1
+E         Use -v to get more diff
+
+test_0220.py:57: AssertionError
+________________________ test_task_func_with_empty_list ________________________
+
+    def test_task_func_with_empty_list():
+        input_list = []
+        expected_output = (
+            None,
+            None,
+            None,
+            None,
+            None,
+            None
+        )
+>       output = task_func(input_list)
+                 ^^^^^^^^^^^^^^^^^^^^^
+
+test_0220.py:69: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0220.py:5: in task_func
+    fft = np.abs(np.fft.fft([math.degrees(x) for x in input_list]))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/numpy/fft/_pocketfft.py:215: in fft
+    output = _raw_fft(a, n, axis, False, True, norm, out)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = array([], dtype=float64), n = 0, axis = -1, is_real = False
+is_forward = True, norm = None, out = None
+
+    def _raw_fft(a, n, axis, is_real, is_forward, norm, out=None):
+        if n < 1:
+>           raise ValueError(f"Invalid number of FFT data points ({n}) specified.")
+E           ValueError: Invalid number of FFT data points (0) specified.
+
+../../../.venv/lib/python3.12/site-packages/numpy/fft/_pocketfft.py:60: ValueError
+=========================== short test summary info ============================
+FAILED test_0220.py::test_task_func - assert (4.7903144649...96, 241, 1354) =...
+FAILED test_0220.py::test_task_func_with_negative_numbers - assert (-4.790314...
+FAILED test_0220.py::test_task_func_with_one_element - assert (3.1415926535.....
+FAILED test_0220.py::test_task_func_with_empty_list - ValueError: Invalid num...
+4 failed, 1 passed in 0.60s

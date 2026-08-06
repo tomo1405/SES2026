@@ -1,0 +1,38 @@
+F....F.                                                                  [100%]
+=================================== FAILURES ===================================
+_____________________________ test_task_func_basic _____________________________
+
+    def test_task_func_basic():
+        text = "This is a simple test."
+        result = task_func(text, n=2)
+        expected = Counter([("this", "simple"), ("simple", "test")])
+>       assert result == expected
+E       AssertionError: assert Counter({('si..., 'test'): 1}) == Counter({('th..., 'test'): 1})
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Right contains 1 more item:
+E         {('this', 'simple'): 1}
+E         Use -v to get more diff
+
+test_0807.py:16: AssertionError
+____________________________ test_task_func_large_n ____________________________
+
+    def test_task_func_large_n():
+        text = "This is a test for large n-grams"
+        result = task_func(text, n=4)
+        expected = Counter([("this", "is", "a", "test"), ("is", "a", "test", "for"), ("a", "test", "for", "large"), ("test", "for", "large", "ngrams")])
+>       assert result == expected
+E       AssertionError: assert Counter() == Counter({('th...'ngrams'): 1})
+E         
+E         Right contains 4 more items:
+E         {('a', 'test', 'for', 'large'): 1,
+E          ('is', 'a', 'test', 'for'): 1,
+E          ('test', 'for', 'large', 'ngrams'): 1,
+E          ('this', 'is', 'a', 'test'): 1}
+E         Use -v to get more diff
+
+test_0807.py:46: AssertionError
+=========================== short test summary info ============================
+FAILED test_0807.py::test_task_func_basic - AssertionError: assert Counter({(...
+FAILED test_0807.py::test_task_func_large_n - AssertionError: assert Counter(...
+2 failed, 5 passed in 3.40s

@@ -1,0 +1,217 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_empty_file ________________________
+
+    def test_task_func_with_empty_file():
+        file_name = "empty_file.csv"
+>       data = np.genfromtxt(file_name, delimiter=',', names=True, dtype=None, encoding=None)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0802.py:8: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/numpy/lib/_npyio_impl.py:1982: in genfromtxt
+    fid = np.lib._datasource.open(fname, 'rt', encoding=encoding)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/numpy/lib/_datasource.py:192: in open
+    return ds.open(path, mode, encoding=encoding, newline=newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <numpy.lib.npyio.DataSource object at 0x79332355d070>
+path = 'empty_file.csv', mode = 'rt', encoding = None, newline = None
+
+    def open(self, path, mode='r', encoding=None, newline=None):
+        """
+        Open and return file-like object.
+    
+        If `path` is a URL, it will be downloaded, stored in the
+        `DataSource` directory and opened from there.
+    
+        Parameters
+        ----------
+        path : str or pathlib.Path
+            Local file path or URL to open.
+        mode : {'r', 'w', 'a'}, optional
+            Mode to open `path`.  Mode 'r' for reading, 'w' for writing,
+            'a' to append. Available modes depend on the type of object
+            specified by `path`. Default is 'r'.
+        encoding : {None, str}, optional
+            Open text file with given encoding. The default encoding will be
+            what `open` uses.
+        newline : {None, str}, optional
+            Newline to use when reading text file.
+    
+        Returns
+        -------
+        out : file object
+            File object.
+    
+        """
+    
+        # TODO: There is no support for opening a file for writing which
+        #       doesn't exist yet (creating a file).  Should there be?
+    
+        # TODO: Add a ``subdir`` parameter for specifying the subdirectory
+        #       used to store URLs in self._destpath.
+    
+        if self._isurl(path) and self._iswritemode(mode):
+            raise ValueError("URLs are not writeable")
+    
+        # NOTE: _findfile will fail on a new file opened for writing.
+        found = self._findfile(path)
+        if found:
+            _fname, ext = self._splitzipext(found)
+            if ext == 'bz2':
+                mode.replace("+", "")
+            return _file_openers[ext](found, mode=mode,
+                                      encoding=encoding, newline=newline)
+        else:
+>           raise FileNotFoundError(f"{path} not found.")
+E           FileNotFoundError: empty_file.csv not found.
+
+../../../.venv/lib/python3.12/site-packages/numpy/lib/_datasource.py:529: FileNotFoundError
+_______________________ test_task_func_with_one_row_file _______________________
+
+    def test_task_func_with_one_row_file():
+        file_name = "one_row_file.csv"
+>       data = np.genfromtxt(file_name, delimiter=',', names=True, dtype=None, encoding=None)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0802.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/numpy/lib/_npyio_impl.py:1982: in genfromtxt
+    fid = np.lib._datasource.open(fname, 'rt', encoding=encoding)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/numpy/lib/_datasource.py:192: in open
+    return ds.open(path, mode, encoding=encoding, newline=newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <numpy.lib.npyio.DataSource object at 0x7932978db620>
+path = 'one_row_file.csv', mode = 'rt', encoding = None, newline = None
+
+    def open(self, path, mode='r', encoding=None, newline=None):
+        """
+        Open and return file-like object.
+    
+        If `path` is a URL, it will be downloaded, stored in the
+        `DataSource` directory and opened from there.
+    
+        Parameters
+        ----------
+        path : str or pathlib.Path
+            Local file path or URL to open.
+        mode : {'r', 'w', 'a'}, optional
+            Mode to open `path`.  Mode 'r' for reading, 'w' for writing,
+            'a' to append. Available modes depend on the type of object
+            specified by `path`. Default is 'r'.
+        encoding : {None, str}, optional
+            Open text file with given encoding. The default encoding will be
+            what `open` uses.
+        newline : {None, str}, optional
+            Newline to use when reading text file.
+    
+        Returns
+        -------
+        out : file object
+            File object.
+    
+        """
+    
+        # TODO: There is no support for opening a file for writing which
+        #       doesn't exist yet (creating a file).  Should there be?
+    
+        # TODO: Add a ``subdir`` parameter for specifying the subdirectory
+        #       used to store URLs in self._destpath.
+    
+        if self._isurl(path) and self._iswritemode(mode):
+            raise ValueError("URLs are not writeable")
+    
+        # NOTE: _findfile will fail on a new file opened for writing.
+        found = self._findfile(path)
+        if found:
+            _fname, ext = self._splitzipext(found)
+            if ext == 'bz2':
+                mode.replace("+", "")
+            return _file_openers[ext](found, mode=mode,
+                                      encoding=encoding, newline=newline)
+        else:
+>           raise FileNotFoundError(f"{path} not found.")
+E           FileNotFoundError: one_row_file.csv not found.
+
+../../../.venv/lib/python3.12/site-packages/numpy/lib/_datasource.py:529: FileNotFoundError
+____________________ test_task_func_with_multiple_rows_file ____________________
+
+    def test_task_func_with_multiple_rows_file():
+        file_name = "multiple_rows_file.csv"
+>       data = np.genfromtxt(file_name, delimiter=',', names=True, dtype=None, encoding=None)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0802.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/numpy/lib/_npyio_impl.py:1982: in genfromtxt
+    fid = np.lib._datasource.open(fname, 'rt', encoding=encoding)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/numpy/lib/_datasource.py:192: in open
+    return ds.open(path, mode, encoding=encoding, newline=newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <numpy.lib.npyio.DataSource object at 0x79329795de50>
+path = 'multiple_rows_file.csv', mode = 'rt', encoding = None, newline = None
+
+    def open(self, path, mode='r', encoding=None, newline=None):
+        """
+        Open and return file-like object.
+    
+        If `path` is a URL, it will be downloaded, stored in the
+        `DataSource` directory and opened from there.
+    
+        Parameters
+        ----------
+        path : str or pathlib.Path
+            Local file path or URL to open.
+        mode : {'r', 'w', 'a'}, optional
+            Mode to open `path`.  Mode 'r' for reading, 'w' for writing,
+            'a' to append. Available modes depend on the type of object
+            specified by `path`. Default is 'r'.
+        encoding : {None, str}, optional
+            Open text file with given encoding. The default encoding will be
+            what `open` uses.
+        newline : {None, str}, optional
+            Newline to use when reading text file.
+    
+        Returns
+        -------
+        out : file object
+            File object.
+    
+        """
+    
+        # TODO: There is no support for opening a file for writing which
+        #       doesn't exist yet (creating a file).  Should there be?
+    
+        # TODO: Add a ``subdir`` parameter for specifying the subdirectory
+        #       used to store URLs in self._destpath.
+    
+        if self._isurl(path) and self._iswritemode(mode):
+            raise ValueError("URLs are not writeable")
+    
+        # NOTE: _findfile will fail on a new file opened for writing.
+        found = self._findfile(path)
+        if found:
+            _fname, ext = self._splitzipext(found)
+            if ext == 'bz2':
+                mode.replace("+", "")
+            return _file_openers[ext](found, mode=mode,
+                                      encoding=encoding, newline=newline)
+        else:
+>           raise FileNotFoundError(f"{path} not found.")
+E           FileNotFoundError: multiple_rows_file.csv not found.
+
+../../../.venv/lib/python3.12/site-packages/numpy/lib/_datasource.py:529: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0802.py::test_task_func_with_empty_file - FileNotFoundError: empt...
+FAILED test_0802.py::test_task_func_with_one_row_file - FileNotFoundError: on...
+FAILED test_0802.py::test_task_func_with_multiple_rows_file - FileNotFoundErr...
+3 failed in 0.73s

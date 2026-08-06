@@ -1,0 +1,28 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        with pytest.raises(Exception) as exc_info:
+            task_func(ftp_server='not_a_valid_server', ftp_user='user', ftp_password='password', ftp_dir='/dir')
+        assert 'Failed to connect to FTP server' in str(exc_info.value)
+    
+        with pytest.raises(Exception) as exc_info:
+            task_func(ftp_server='ftp.dlptest.com', ftp_user='not_a_valid_user', ftp_password='password', ftp_dir='/dir')
+        assert 'Failed to log into FTP server' in str(exc_info.value)
+    
+        with pytest.raises(Exception) as exc_info:
+            task_func(ftp_server='ftp.dlptest.com', ftp_user='user', ftp_password='not_a_valid_password', ftp_dir='/dir')
+        assert 'Failed to log into FTP server' in str(exc_info.value)
+    
+        with pytest.raises(Exception) as exc_info:
+            task_func(ftp_server='ftp.dlptest.com', ftp_user='user', ftp_password='password', ftp_dir='not_a_valid_dir')
+>       assert 'Failed to change to directory' in str(exc_info.value)
+E       AssertionError: assert 'Failed to change to directory' in 'Failed to log into FTP server ftp.dlptest.com with user user: 530 Login incorrect.'
+E        +  where 'Failed to log into FTP server ftp.dlptest.com with user user: 530 Login incorrect.' = str(Exception('Failed to log into FTP server ftp.dlptest.com with user user: 530 Login incorrect.'))
+E        +    where Exception('Failed to log into FTP server ftp.dlptest.com with user user: 530 Login incorrect.') = <ExceptionInfo Exception('Failed to log into FTP server ftp.dlptest.com with user user: 530 Login incorrect.') tblen=2>.value
+
+test_0014.py:19: AssertionError
+=========================== short test summary info ============================
+FAILED test_0014.py::test_task_func - AssertionError: assert 'Failed to chang...
+1 failed in 10.31s

@@ -1,0 +1,28 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: input is a pandas DataFrame with 'id', 'age', and 'income' columns
+        df = pd.DataFrame({
+            'id': [1, 1, 2, 2],
+            'age': [20, 30, 25, 35],
+            'income': [50000, 60000, 55000, 65000]
+        })
+        expected_output = pd.DataFrame({
+            'id': [1, 1, 2, 2],
+            'age': [-1.0, 1.0, -0.5, 0.5],
+            'income': [-1.0, 1.0, -0.5, 0.5]
+        })
+        output = task_func(df)
+>       assert output.equals(expected_output)
+E       assert False
+E        +  where False = equals(   id  age  income\n0   1 -1.0    -1.0\n1   1  1.0     1.0\n2   2 -0.5    -0.5\n3   2  0.5     0.5)
+E        +    where equals =       age  income\nid               \n1  0 -1.0    -1.0\n   1  1.0     1.0\n2  2 -1.0    -1.0\n   3  1.0     1.0.equals
+
+test_0295.py:28: AssertionError
+=========================== short test summary info ============================
+FAILED test_0295.py::test_task_func - assert False
+1 failed in 2.74s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

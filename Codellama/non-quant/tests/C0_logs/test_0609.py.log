@@ -1,0 +1,58 @@
+.FFF.                                                                    [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_non_empty_df __________________________
+
+    def test_task_func_non_empty_df():
+        df = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9], 'D': [10, 11, 12], 'E': [13, 14, 15]})
+        tuples = [('A', 'B'), ('C', 'D')]
+        n_plots = 2
+        expected_df = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9], 'D': [10, 11, 12], 'E': [13, 14, 15]})
+        expected_plots = [sns.pairplot(df, vars=['A', 'B']), sns.pairplot(df, vars=['C', 'D'])]
+        actual_df, actual_plots = task_func(df, tuples, n_plots)
+        assert actual_df.equals(expected_df)
+>       assert actual_plots == expected_plots
+E       assert [<seaborn.axi...76c382b96060>] == [<seaborn.axi...76c3c562ee40>]
+E         
+E         At index 0 diff: <seaborn.axisgrid.PairGrid object at 0x76c382d49d30> != <seaborn.axisgrid.PairGrid object at 0x76c3c53977d0>
+E         Use -v to get more diff
+
+test_0609.py:24: AssertionError
+______________ test_task_func_non_empty_df_with_duplicate_tuples _______________
+
+    def test_task_func_non_empty_df_with_duplicate_tuples():
+        df = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9], 'D': [10, 11, 12], 'E': [13, 14, 15]})
+        tuples = [('A', 'B'), ('C', 'D'), ('A', 'B')]
+        n_plots = 2
+        expected_df = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9], 'D': [10, 11, 12], 'E': [13, 14, 15]})
+        expected_plots = [sns.pairplot(df, vars=['A', 'B']), sns.pairplot(df, vars=['C', 'D'])]
+        actual_df, actual_plots = task_func(df, tuples, n_plots)
+        assert actual_df.equals(expected_df)
+>       assert actual_plots == expected_plots
+E       assert [<seaborn.axi...76c38264e000>] == [<seaborn.axi...76c382db15b0>]
+E         
+E         At index 0 diff: <seaborn.axisgrid.PairGrid object at 0x76c3828b1520> != <seaborn.axisgrid.PairGrid object at 0x76c4f30e34a0>
+E         Use -v to get more diff
+
+test_0609.py:34: AssertionError
+_______________ test_task_func_non_empty_df_with_invalid_tuples ________________
+
+    def test_task_func_non_empty_df_with_invalid_tuples():
+        df = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9], 'D': [10, 11, 12], 'E': [13, 14, 15]})
+        tuples = [('A', 'B'), ('C', 'D'), ('X', 'Y')]
+        n_plots = 2
+        expected_df = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9], 'D': [10, 11, 12], 'E': [13, 14, 15]})
+        expected_plots = [sns.pairplot(df, vars=['A', 'B']), sns.pairplot(df, vars=['C', 'D'])]
+        actual_df, actual_plots = task_func(df, tuples, n_plots)
+        assert actual_df.equals(expected_df)
+>       assert actual_plots == expected_plots
+E       assert [<seaborn.axi...76c3826aff20>] == [<seaborn.axi...76c382a04b60>]
+E         
+E         At index 0 diff: <seaborn.axisgrid.PairGrid object at 0x76c38284c050> != <seaborn.axisgrid.PairGrid object at 0x76c38244eea0>
+E         Use -v to get more diff
+
+test_0609.py:44: AssertionError
+=========================== short test summary info ============================
+FAILED test_0609.py::test_task_func_non_empty_df - assert [<seaborn.axi...76c...
+FAILED test_0609.py::test_task_func_non_empty_df_with_duplicate_tuples - asse...
+FAILED test_0609.py::test_task_func_non_empty_df_with_invalid_tuples - assert...
+3 failed, 2 passed in 6.50s

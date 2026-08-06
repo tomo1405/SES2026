@@ -1,0 +1,66 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_default_parameters _______________________
+
+    def test_task_func_default_parameters():
+        # Mock the subprocess call and file operations
+        def mock_subprocess_call(args):
+            return 0
+    
+        def mock_open(*args, **kwargs):
+            class MockFile:
+                def write(self, data):
+                    pass
+            return MockFile()
+    
+>       monkeypatch.setattr(subprocess, 'call', mock_subprocess_call)
+        ^^^^^^^^^^^
+E       NameError: name 'monkeypatch' is not defined
+
+test_0013.py:19: NameError
+__________________ test_task_func_custom_script_and_log_file ___________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73daecedf950>
+
+    def test_task_func_custom_script_and_log_file(monkeypatch):
+        # Mock the subprocess call and file operations
+        def mock_subprocess_call(args):
+            return 0
+    
+        def mock_open(*args, **kwargs):
+            class MockFile:
+                def write(self, data):
+                    pass
+            return MockFile()
+    
+        monkeypatch.setattr(subprocess, 'call', mock_subprocess_call)
+        monkeypatch.setattr('builtins.open', mock_open)
+    
+        # Define custom script and log file paths
+        custom_script = '/path/to/custom_script.sh'
+        custom_log_file = '/path/to/custom_log.json'
+    
+        # Ensure the custom log file does not exist before running the test
+        if os.path.exists(custom_log_file):
+            os.remove(custom_log_file)
+    
+>       result = task_func(script_name=custom_script, log_file=custom_log_file)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0013.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+script_name = '/path/to/custom_script.sh', log_file = '/path/to/custom_log.json'
+
+    def task_func(script_name='backup.sh', log_file='/home/user/backup_log.json'):
+        log_data = {}
+    
+        if not os.path.isfile(script_name):
+>           raise FileNotFoundError(f"Script {script_name} does not exist.")
+E           FileNotFoundError: Script /path/to/custom_script.sh does not exist.
+
+../../../src/src_0013.py:9: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0013.py::test_task_func_default_parameters - NameError: name 'mon...
+FAILED test_0013.py::test_task_func_custom_script_and_log_file - FileNotFound...
+2 failed, 1 passed in 0.45s

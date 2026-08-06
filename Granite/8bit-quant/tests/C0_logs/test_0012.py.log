@@ -1,0 +1,22 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        T1 = [['1', '2', '3'], ['4', '5', '6'], ['7', '8', '9']]
+        p25, p50, p75 = task_func(T1)
+        assert isinstance(p25, float) and isinstance(p50, float) and isinstance(p75, float)
+        assert 0 <= p25 <= 100 and 0 <= p50 <= 100 and 0 <= p75 <= 100
+        int_list = [list(map(int, x)) for x in T1]
+        flattened_list = list(itertools.chain(*int_list))
+        total_nums = sum(flattened_list)
+        random_nums = [random.randint(0, 100) for _ in range(total_nums)]
+>       assert np.percentile(random_nums, 25) == p25
+E       assert np.float64(19.0) == np.float64(24.0)
+E        +  where np.float64(19.0) = <function percentile at 0x7d5e02bef7b0>([67, 82, 70, 64, 90, 19, ...], 25)
+E        +    where <function percentile at 0x7d5e02bef7b0> = np.percentile
+
+test_0012.py:15: AssertionError
+=========================== short test summary info ============================
+FAILED test_0012.py::test_task_func - assert np.float64(19.0) == np.float64(2...
+1 failed in 0.54s

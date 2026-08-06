@@ -1,0 +1,41 @@
+FF..                                                                     [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_no_sample ___________________________
+
+    def test_task_func_no_sample():
+        dictionary = {'A': [1, 2, 3], 'B': [4, 5, 6]}
+        item = 2
+        expected_positions = [(0, 'A')]
+        expected_dataframe = pd.DataFrame(dictionary)
+    
+        positions, dataframe = task_func(dictionary, item)
+    
+>       assert positions == expected_positions
+E       AssertionError: assert [(1, 'A')] == [(0, 'A')]
+E         
+E         At index 0 diff: (1, 'A') != (0, 'A')
+E         Use -v to get more diff
+
+test_0812.py:13: AssertionError
+__________________________ test_task_func_with_sample __________________________
+
+    def test_task_func_with_sample():
+        dictionary = {'A': [1, 2, 3, 2], 'B': [4, 5, 6, 2]}
+        item = 2
+        sample_size = 2
+        random_seed = 42
+        expected_positions = [(0, 'A'), (1, 'B'), (3, 'B')]
+        expected_dataframe = pd.DataFrame(dictionary)
+    
+        positions, dataframe = task_func(dictionary, item, sample_size=sample_size, random_seed=random_seed)
+    
+        assert len(positions) == sample_size
+>       assert all(pos in expected_positions for pos in positions)
+E       assert False
+E        +  where False = all(<generator object test_task_func_with_sample.<locals>.<genexpr> at 0x752a59662330>)
+
+test_0812.py:27: AssertionError
+=========================== short test summary info ============================
+FAILED test_0812.py::test_task_func_no_sample - AssertionError: assert [(1, '...
+FAILED test_0812.py::test_task_func_with_sample - assert False
+2 failed, 2 passed in 1.34s

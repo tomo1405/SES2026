@@ -1,0 +1,32 @@
+..FF..                                                                   [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_data_below_threshold ______________________
+
+    def test_task_func_data_below_threshold():
+        custom_data = np.array([[0.4, 0.5, 0.6, 0.7, 0.8], [0.1, 0.2, 0.3, 0.4, 0.5]])
+        result = task_func(custom_data)
+>       assert result.iloc[0].sum() == 0  # All values below 0.5 should be set to 0
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert np.float64(4.0) == 0
+E        +  where np.float64(4.0) = sum()
+E        +    where sum = 0    0.0\n1    1.0\n2    1.0\n3    1.0\n4    1.0\nName: 0, dtype: float64.sum
+
+test_1089.py:23: AssertionError
+____________________________ test_task_func_scaling ____________________________
+
+    def test_task_func_scaling():
+        custom_data = np.array([[0.6, 0.7, 0.8, 0.9, 1.0], [0.1, 0.2, 0.3, 0.4, 0.5]])
+        result = task_func(custom_data)
+        scaler = StandardScaler()
+        expected_scaled_data = scaler.fit_transform(pd.DataFrame(custom_data))
+        expected_df = pd.DataFrame(expected_scaled_data, columns=[0, 1, 2, 3, 4])
+>       assert result.equals(expected_df)
+E       assert False
+E        +  where False = equals(     0    1    2    3    4\n0  1.0  1.0  1.0  1.0  1.0\n1 -1.0 -1.0 -1.0 -1.0 -1.0)
+E        +    where equals =      0    1    2    3    4\n0  1.0  1.0  1.0  1.0  1.0\n1 -1.0 -1.0 -1.0 -1.0 -1.0.equals
+
+test_1089.py:32: AssertionError
+=========================== short test summary info ============================
+FAILED test_1089.py::test_task_func_data_below_threshold - assert np.float64(...
+FAILED test_1089.py::test_task_func_scaling - assert False
+2 failed, 4 passed in 3.08s

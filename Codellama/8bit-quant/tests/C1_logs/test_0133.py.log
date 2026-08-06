@@ -1,0 +1,39 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_valid_hex_string ________________________
+
+hex_str = '0x1234567890abcdef'
+
+    def task_func(hex_str):
+        hex_str_cleaned = hex_str.replace('\\x', '')
+        try:
+>           bytes_data = binascii.unhexlify(hex_str_cleaned)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           binascii.Error: Non-hexadecimal digit found
+
+../../../src/src_0133.py:8: Error
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func_valid_hex_string():
+        hex_str = '0x1234567890abcdef'
+>       df, ax = task_func(hex_str)
+                 ^^^^^^^^^^^^^^^^^^
+
+test_0133.py:6: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+hex_str = '0x1234567890abcdef'
+
+    def task_func(hex_str):
+        hex_str_cleaned = hex_str.replace('\\x', '')
+        try:
+            bytes_data = binascii.unhexlify(hex_str_cleaned)
+        except binascii.Error:
+>           raise ValueError("Invalid hex string")
+E           ValueError: Invalid hex string
+
+../../../src/src_0133.py:10: ValueError
+=========================== short test summary info ============================
+FAILED test_0133.py::test_task_func_valid_hex_string - ValueError: Invalid he...
+1 failed, 1 passed in 2.07s

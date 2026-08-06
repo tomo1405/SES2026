@@ -1,0 +1,50 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_randint = None
+
+    def test_task_func(mock_randint):
+        goals = 5
+        penalties = 2
+        results_df, plots = task_func(goals, penalties)
+    
+        # Check if the DataFrame has the correct shape
+        assert isinstance(results_df, pd.DataFrame)
+        assert results_df.shape == (5, 3)  # 5 teams, 3 columns
+    
+        # Check if the DataFrame columns are correct
+        assert list(results_df.columns) == ['Team', 'Goals', 'Penalty Cost']
+    
+        # Check if the DataFrame values are as expected
+        expected_teams = ['Team A', 'Team B', 'Team C', 'Team D', 'Team E']
+        expected_goals = [3, 3, 3, 3, 3]  # Since randint is mocked to return 3
+        expected_penalty_costs = [3000, 3000, 3000, 3000, 3000]  # 3 penalties * 1000 cost
+    
+        assert list(results_df['Team']) == expected_teams
+>       assert list(results_df['Goals']) == expected_goals
+E       assert [4, 3, 4, 4, 5] == [3, 3, 3, 3, 3]
+E         
+E         At index 0 diff: 4 != 3
+E         Use -v to get more diff
+
+test_0619.py:29: AssertionError
+=============================== warnings summary ===============================
+Qwen/non-quant/tests/test_0619.py::test_task_func
+  /work/tomohiro-w/utg/src/src_0619.py:19: FutureWarning: 
+  
+  Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+  
+    plot1 = sns.barplot(x='Team', y='Goals', data=results_df, palette='viridis')
+
+Qwen/non-quant/tests/test_0619.py::test_task_func
+  /work/tomohiro-w/utg/src/src_0619.py:21: FutureWarning: 
+  
+  Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+  
+    plot2 = sns.barplot(x='Team', y='Penalty Cost', data=results_df, palette='viridis')
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0619.py::test_task_func - assert [4, 3, 4, 4, 5] == [3, 3, 3, 3, 3]
+1 failed, 2 warnings in 3.44s

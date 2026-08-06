@@ -1,0 +1,21 @@
+.F.                                                                      [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_replace_values _________________________
+
+    def test_task_func_replace_values():
+        """
+        Test if the function replaces values in the DataFrame using the dictionary mapping.
+        """
+        df = pd.DataFrame({"column1": [1, 2, 3], "column2": [4, 5, 6], "column3": [7, 8, 9]})
+        dct = {"1": "one", "2": "two", "3": "three"}
+        expected_df = pd.DataFrame({"column1": ["one", "two", "three"], "column2": ["four", "five", "six"], "column3": ["seven", "eight", "nine"]})
+        actual_df = task_func(df, dct)
+>       assert actual_df.equals(expected_df)
+E       assert False
+E        +  where False = equals(  column1 column2 column3\n0     one    four   seven\n1     two    five   eight\n2   three     six    nine)
+E        +    where equals =          column1  column2  column3\ncolumn1      1.0      1.0      1.0\ncolumn2      1.0      1.0      1.0\ncolumn3      1.0      1.0      1.0.equals
+
+test_0229.py:27: AssertionError
+=========================== short test summary info ============================
+FAILED test_0229.py::test_task_func_replace_values - assert False
+1 failed, 2 passed in 1.07s

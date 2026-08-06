@@ -1,0 +1,42 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data_dir = "path/to/data/dir"
+        csv_file = "data.csv"
+        df = pd.DataFrame({"A": [1, 2, 3], "B": [4, 5, 6]})
+>       df.to_csv(os.path.join(data_dir, csv_file), index=False)
+
+test_0890.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:3988: in to_csv
+    return DataFrameRenderer(formatter).to_csv(
+../../../.venv/lib/python3.12/site-packages/pandas/io/formats/format.py:1025: in to_csv
+    csv_formatter.save()
+../../../.venv/lib/python3.12/site-packages/pandas/io/formats/csvs.py:251: in save
+    with get_handle(
+../../../.venv/lib/python3.12/site-packages/pandas/io/common.py:797: in get_handle
+    check_parent_directory(str(handle))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = 'path/to/data/dir/data.csv'
+
+    def check_parent_directory(path: Path | str) -> None:
+        """
+        Check if parent directory of a file exists, raise OSError if it does not
+    
+        Parameters
+        ----------
+        path: Path or str
+            Path to check parent directory of
+        """
+        parent = Path(path).parent
+        if not parent.is_dir():
+>           raise OSError(rf"Cannot save file into a non-existent directory: '{parent}'")
+E           OSError: Cannot save file into a non-existent directory: 'path/to/data/dir'
+
+../../../.venv/lib/python3.12/site-packages/pandas/io/common.py:656: OSError
+=========================== short test summary info ============================
+FAILED test_0890.py::test_task_func - OSError: Cannot save file into a non-ex...
+1 failed in 1.31s

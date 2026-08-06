@@ -1,0 +1,80 @@
+F.FF..                                                                   [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_input_type ___________________________
+
+    def test_task_func_input_type():
+        with pytest.raises(TypeError):
+>           task_func("not a list")
+
+test_0621.py:6: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+L = 'not a list'
+
+    def task_func(L):
+>       rows, columns = L[0][0] * L[0][1], L[1][0] * L[1][1]
+                                  ^^^^^^^
+E       IndexError: string index out of range
+
+../../../src/src_0621.py:6: IndexError
+_________________________ test_task_func_input_values __________________________
+
+    def test_task_func_input_values():
+        with pytest.raises(ValueError):
+>           task_func([[1, 2], [3, "a"]])
+
+test_0621.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0621.py:7: in task_func
+    random_array = np.random.randint(RANGE[0], RANGE[1], size=(rows, columns))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+numpy/random/mtrand.pyx:801: in numpy.random.mtrand.RandomState.randint
+    ???
+numpy/random/_bounded_integers.pyx:1315: in numpy.random._bounded_integers._rand_int64
+    ???
+../../../.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:3442: in prod
+    return _wrapreduction(a, np.multiply, 'prod', axis, dtype, out,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+obj = (2, 'aaa'), ufunc = <ufunc 'multiply'>, method = 'prod', axis = None
+dtype = None, out = None
+kwargs = {'keepdims': <no value>, 'initial': <no value>, 'where': <no value>}
+
+    def _wrapreduction(obj, ufunc, method, axis, dtype, out, **kwargs):
+        passkwargs = {k: v for k, v in kwargs.items()
+                      if v is not np._NoValue}
+    
+        if type(obj) is not mu.ndarray:
+            try:
+                reduction = getattr(obj, method)
+            except AttributeError:
+                pass
+            else:
+                # This branch is needed for reductions like any which don't
+                # support a dtype.
+                if dtype is not None:
+                    return reduction(axis=axis, dtype=dtype, out=out, **passkwargs)
+                else:
+                    return reduction(axis=axis, out=out, **passkwargs)
+    
+>       return ufunc.reduce(obj, axis, dtype, out, **passkwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       numpy._core._exceptions._UFuncNoLoopError: ufunc 'multiply' did not contain a loop with signature matching types (dtype('<U21'), dtype('<U21')) -> None
+
+../../../.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:83: UFuncTypeError
+_________________________ test_task_func_output_shape __________________________
+
+    def test_task_func_output_shape():
+        result = task_func([[2, 3], [4, 5]])
+>       assert result.shape == (6, 15)
+E       assert (6, 20) == (6, 15)
+E         
+E         At index 1 diff: 20 != 15
+E         Use -v to get more diff
+
+test_0621.py:18: AssertionError
+=========================== short test summary info ============================
+FAILED test_0621.py::test_task_func_input_type - IndexError: string index out...
+FAILED test_0621.py::test_task_func_input_values - numpy._core._exceptions._U...
+FAILED test_0621.py::test_task_func_output_shape - assert (6, 20) == (6, 15)
+3 failed, 3 passed in 1.22s

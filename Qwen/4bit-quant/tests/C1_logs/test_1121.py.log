@@ -1,0 +1,64 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_valid_url _________________________
+
+    def test_task_func_with_valid_url():
+        myString = "Check out https://example.com and http://test.com"
+        API_KEY = "valid_api_key"
+        expected_output = {
+            "example.com": {"status": "success", "country": "US"},
+            "test.com": {"status": "fail", "message": "Invalid API key"}
+        }
+>       assert task_func(myString, API_KEY) == expected_output
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1121.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+myString = 'Check out https://example.com and http://test.com'
+API_KEY = 'valid_api_key'
+
+    def task_func(myString, API_KEY):
+        urls = re.findall(r'(https?://[^\s,]+)', myString)
+        geo_data = {}
+    
+        for url in urls:
+            domain = urllib.parse.urlparse(url).netloc
+            response = requests.get(f"http://ip-api.com/json/{domain}?access_key={API_KEY}")
+>           geo_data[domain] = json.loads(response.text)
+                                          ^^^^^^^^^^^^^
+E           AttributeError: 'MockResponse' object has no attribute 'text'
+
+../../../src/src_1121.py:12: AttributeError
+_____________________ test_task_func_with_invalid_api_key ______________________
+
+    def test_task_func_with_invalid_api_key():
+        myString = "Check out https://example.com"
+        API_KEY = "invalid_api_key"
+        expected_output = {
+            "example.com": {"status": "error", "message": "Not found"}
+        }
+>       assert task_func(myString, API_KEY) == expected_output
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1121.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+myString = 'Check out https://example.com', API_KEY = 'invalid_api_key'
+
+    def task_func(myString, API_KEY):
+        urls = re.findall(r'(https?://[^\s,]+)', myString)
+        geo_data = {}
+    
+        for url in urls:
+            domain = urllib.parse.urlparse(url).netloc
+            response = requests.get(f"http://ip-api.com/json/{domain}?access_key={API_KEY}")
+>           geo_data[domain] = json.loads(response.text)
+                                          ^^^^^^^^^^^^^
+E           AttributeError: 'MockResponse' object has no attribute 'text'
+
+../../../src/src_1121.py:12: AttributeError
+=========================== short test summary info ============================
+FAILED test_1121.py::test_task_func_with_valid_url - AttributeError: 'MockRes...
+FAILED test_1121.py::test_task_func_with_invalid_api_key - AttributeError: 'M...
+2 failed, 1 passed in 0.75s

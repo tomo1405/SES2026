@@ -1,0 +1,76 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+____________________ test_task_func[2023-01-01-2023-01-05] _____________________
+
+setup = None, start_time = '2023-01-01', end_time = '2023-01-05'
+
+    @pytest.mark.parametrize("start_time, end_time", [
+        ("2023-01-01", "2023-01-05"),
+        ("2023-06-01", "2023-06-10"),
+        ("2023-12-25", "2023-12-31")
+    ])
+    def test_task_func(setup, start_time, end_time):
+        ax = task_func(start_time, end_time)
+        assert isinstance(ax, plt.Axes)
+        assert len(ax.lines) == 5  # There should be 5 lines, one for each timezone
+    
+        # Check that the x-axis labels are dates within the given range
+        x_labels = [label.get_text() for label in ax.get_xticklabels()]
+        start_date = datetime.strptime(start_time, "%Y-%m-%d")
+        end_date = datetime.strptime(end_time, "%Y-%m-%d")
+>       expected_dates = np.arange(start_date, end_date, timedelta(days=1)).astype(datetime)
+                                                         ^^^^^^^^^
+E       NameError: name 'timedelta' is not defined
+
+test_0486.py:27: NameError
+____________________ test_task_func[2023-06-01-2023-06-10] _____________________
+
+setup = None, start_time = '2023-06-01', end_time = '2023-06-10'
+
+    @pytest.mark.parametrize("start_time, end_time", [
+        ("2023-01-01", "2023-01-05"),
+        ("2023-06-01", "2023-06-10"),
+        ("2023-12-25", "2023-12-31")
+    ])
+    def test_task_func(setup, start_time, end_time):
+        ax = task_func(start_time, end_time)
+        assert isinstance(ax, plt.Axes)
+        assert len(ax.lines) == 5  # There should be 5 lines, one for each timezone
+    
+        # Check that the x-axis labels are dates within the given range
+        x_labels = [label.get_text() for label in ax.get_xticklabels()]
+        start_date = datetime.strptime(start_time, "%Y-%m-%d")
+        end_date = datetime.strptime(end_time, "%Y-%m-%d")
+>       expected_dates = np.arange(start_date, end_date, timedelta(days=1)).astype(datetime)
+                                                         ^^^^^^^^^
+E       NameError: name 'timedelta' is not defined
+
+test_0486.py:27: NameError
+____________________ test_task_func[2023-12-25-2023-12-31] _____________________
+
+setup = None, start_time = '2023-12-25', end_time = '2023-12-31'
+
+    @pytest.mark.parametrize("start_time, end_time", [
+        ("2023-01-01", "2023-01-05"),
+        ("2023-06-01", "2023-06-10"),
+        ("2023-12-25", "2023-12-31")
+    ])
+    def test_task_func(setup, start_time, end_time):
+        ax = task_func(start_time, end_time)
+        assert isinstance(ax, plt.Axes)
+        assert len(ax.lines) == 5  # There should be 5 lines, one for each timezone
+    
+        # Check that the x-axis labels are dates within the given range
+        x_labels = [label.get_text() for label in ax.get_xticklabels()]
+        start_date = datetime.strptime(start_time, "%Y-%m-%d")
+        end_date = datetime.strptime(end_time, "%Y-%m-%d")
+>       expected_dates = np.arange(start_date, end_date, timedelta(days=1)).astype(datetime)
+                                                         ^^^^^^^^^
+E       NameError: name 'timedelta' is not defined
+
+test_0486.py:27: NameError
+=========================== short test summary info ============================
+FAILED test_0486.py::test_task_func[2023-01-01-2023-01-05] - NameError: name ...
+FAILED test_0486.py::test_task_func[2023-06-01-2023-06-10] - NameError: name ...
+FAILED test_0486.py::test_task_func[2023-12-25-2023-12-31] - NameError: name ...
+3 failed in 1.95s

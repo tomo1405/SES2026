@@ -1,0 +1,29 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Valid input
+        array = [[1, 2, 3, 4, 5], [6, 7, 8, 9, 10]]
+        df, results = task_func(array)
+        assert isinstance(df, pd.DataFrame)
+        assert isinstance(results, sm.regression.linear_model.RegressionResultsWrapper)
+    
+        # Test case 2: Invalid input
+        array = [[1, 2, 3, 4], [6, 7, 8, 9]]
+        with pytest.raises(ValueError):
+            task_func(array)
+    
+        # Test case 3: Random seed
+        array = [[1, 2, 3, 4, 5], [6, 7, 8, 9, 10]]
+        df1, results1 = task_func(array, random_seed=0)
+        df2, results2 = task_func(array, random_seed=1)
+>       assert not np.array_equal(df1, df2)
+E       assert not True
+E        +  where True = <function array_equal at 0x7e155e636a70>(   A  B  C  D  Response\n0  1  2  3  4         5\n1  6  7  8  9        10,    A  B  C  D  Response\n0  1  2  3  4         5\n1  6  7  8  9        10)
+E        +    where <function array_equal at 0x7e155e636a70> = np.array_equal
+
+test_0517.py:23: AssertionError
+=========================== short test summary info ============================
+FAILED test_0517.py::test_task_func - assert not True
+1 failed in 3.00s

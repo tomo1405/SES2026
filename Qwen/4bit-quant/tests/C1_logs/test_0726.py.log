@@ -1,0 +1,33 @@
+EF.                                                                      [100%]
+==================================== ERRORS ====================================
+_______________________ ERROR at setup of test_task_func _______________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1715/test_task_func0')
+
+    @pytest.fixture
+    def setup_files(tmpdir):
+        # Create a temporary directory and some sample files
+        temp_dir = tmpdir.mkdir("temp_files")
+        test_files = [
+            temp_dir.join("file1.txt"),
+            temp_dir.join("file2.txt"),
+            temp_dir.join("file3.txt")
+        ]
+        for file in test_files:
+>           file.write("Hello, world!", encoding='cp1251')
+E           TypeError: LocalPath.write() got an unexpected keyword argument 'encoding'
+
+test_0726.py:21: TypeError
+=================================== FAILURES ===================================
+_____________________ test_task_func_nonexistent_directory _____________________
+
+    def test_task_func_nonexistent_directory():
+        # Test with a non-existent directory
+>       with pytest.raises(FileNotFoundError):
+E       Failed: DID NOT RAISE FileNotFoundError
+
+test_0726.py:36: Failed
+=========================== short test summary info ============================
+FAILED test_0726.py::test_task_func_nonexistent_directory - Failed: DID NOT R...
+ERROR test_0726.py::test_task_func - TypeError: LocalPath.write() got an unex...
+1 failed, 1 passed, 1 error in 0.46s

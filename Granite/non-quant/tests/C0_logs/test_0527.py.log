@@ -1,0 +1,52 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        input_file = "data.json"
+        with open(input_file, "r") as f:
+            data = json.load(f)
+>       df = task_func(input_file)
+             ^^^^^^^^^^^^^^^^^^^^^
+
+test_0527.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0527.py:9: in task_func
+    all_keys = set().union(*(d.keys() for d in data))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <dict_keyiterator object at 0x701d7a9a1b70>
+
+>   all_keys = set().union(*(d.keys() for d in data))
+                             ^^^^^^
+E   AttributeError: 'str' object has no attribute 'keys'
+
+../../../src/src_0527.py:9: AttributeError
+_______________________ test_task_func_with_missing_data _______________________
+
+    def test_task_func_with_missing_data():
+        input_file = "data.json"
+        with open(input_file, "r") as f:
+            data = json.load(f)
+>       data[0]["key1"] = "value1"
+        ^^^^^^^
+E       KeyError: 0
+
+test_0527.py:19: KeyError
+_____________________ test_task_func_with_non_numeric_data _____________________
+
+    def test_task_func_with_non_numeric_data():
+        input_file = "data.json"
+        with open(input_file, "r") as f:
+            data = json.load(f)
+>       data[0]["key1"] = "value1"
+        ^^^^^^^
+E       KeyError: 0
+
+test_0527.py:26: KeyError
+=========================== short test summary info ============================
+FAILED test_0527.py::test_task_func - AttributeError: 'str' object has no att...
+FAILED test_0527.py::test_task_func_with_missing_data - KeyError: 0
+FAILED test_0527.py::test_task_func_with_non_numeric_data - KeyError: 0
+3 failed in 1.15s

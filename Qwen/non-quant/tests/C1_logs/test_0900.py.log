@@ -1,0 +1,27 @@
+....FF                                                                   [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_random_steps __________________________
+
+    def test_task_func_random_steps():
+        result = task_func(seed=42)
+>       assert all(step in [-1, 1] for step in result[1:])  # Exclude the initial 0
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert False
+E        +  where False = all(<generator object test_task_func_random_steps.<locals>.<genexpr> at 0x7b3f8ed8ca00>)
+
+test_0900.py:24: AssertionError
+________________________ test_task_func_cumulative_sum _________________________
+
+    def test_task_func_cumulative_sum():
+        result = task_func(length=5, seed=42)
+        expected = np.cumsum([0, 1, -1, 1, -1, 1])
+>       assert np.array_equal(result, expected)
+E       assert False
+E        +  where False = <function array_equal at 0x7b3f8f7d0230>(array([ 0,  1,  0, -1, -2, -1]), array([0, 1, 0, 1, 0, 1]))
+E        +    where <function array_equal at 0x7b3f8f7d0230> = np.array_equal
+
+test_0900.py:29: AssertionError
+=========================== short test summary info ============================
+FAILED test_0900.py::test_task_func_random_steps - assert False
+FAILED test_0900.py::test_task_func_cumulative_sum - assert False
+2 failed, 4 passed in 0.64s

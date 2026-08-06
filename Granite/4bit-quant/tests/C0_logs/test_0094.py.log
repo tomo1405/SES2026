@@ -1,0 +1,25 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data = np.random.rand(100, 10)
+        n_components = 2
+        expected_columns = [f'PC{i+1}' for i in range(n_components)]
+        expected_data = pd.DataFrame(np.random.rand(100, n_components), columns=expected_columns)
+        expected_ax = plt.axes()
+    
+        transformed_data, ax = task_func(data, n_components)
+    
+        assert isinstance(transformed_data, pd.DataFrame)
+        assert transformed_data.columns.tolist() == expected_columns
+>       assert transformed_data.values.tolist() == expected_data.values.tolist()
+E       assert [[-0.28919596...2337467], ...] == [[0.557314456...8088293], ...]
+E         
+E         At index 0 diff: [-0.28919596699761674, 0.4736340954795981] != [0.5573144560118852, 0.8393106283762712]
+E         Use -v to get more diff
+
+test_0094.py:19: AssertionError
+=========================== short test summary info ============================
+FAILED test_0094.py::test_task_func - assert [[-0.28919596...2337467], ...] =...
+1 failed, 1 passed in 4.43s

@@ -1,0 +1,30 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with simple arrays
+        a = np.array([1, 2, 3])
+        b = np.array([4, 5, 6])
+        euclidean_distance, df, ax = task_func(a, b)
+    
+        # Check if the Euclidean distance is calculated correctly
+        expected_distance = distance.euclidean(a, b)
+        assert np.isclose(euclidean_distance, expected_distance), f"Expected distance {expected_distance}, got {euclidean_distance}"
+    
+        # Check if the DataFrame is created correctly
+        expected_df = pd.DataFrame({'A': a, 'B': b})
+        pd.testing.assert_frame_equal(df, expected_df)
+    
+        # Check if the plot is created correctly
+        assert isinstance(ax, plt.Axes), "ax should be an instance of matplotlib.axes._subplots.AxesSubplot"
+    
+        # Close the plot to avoid displaying it during tests
+>       plt.close(fig)
+                  ^^^
+E       NameError: name 'fig' is not defined
+
+test_0560.py:27: NameError
+=========================== short test summary info ============================
+FAILED test_0560.py::test_task_func - NameError: name 'fig' is not defined
+1 failed in 2.55s

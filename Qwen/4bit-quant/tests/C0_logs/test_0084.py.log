@@ -1,0 +1,42 @@
+.F                                                                       [100%]
+=================================== FAILURES ===================================
+_____________________________ test_send_mail_route _____________________________
+
+app = <Flask 'src_0084'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x71830b581ac0>
+
+    def test_send_mail_route(app, monkeypatch):
+        # Mocking the mail.send method to avoid sending actual emails
+        def mock_send_message(message):
+            pass
+    
+        monkeypatch.setattr(Mail, 'send', mock_send_message)
+    
+        with app.test_client() as client:
+            response = client.get('/send_mail')
+>           assert response.status_code == 200
+E           assert 500 == 200
+E            +  where 500 = <WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]>.status_code
+
+test_0084.py:33: AssertionError
+------------------------------ Captured log call -------------------------------
+ERROR    src_0084:app.py:875 Exception on /send_mail [GET]
+Traceback (most recent call last):
+  File "/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/tomohiro-w/utg/src/src_0084.py", line 18, in send_mail
+    mail.send(msg)
+TypeError: test_send_mail_route.<locals>.mock_send_message() takes 1 positional argument but 2 were given
+=========================== short test summary info ============================
+FAILED test_0084.py::test_send_mail_route - assert 500 == 200
+1 failed, 1 passed in 0.77s

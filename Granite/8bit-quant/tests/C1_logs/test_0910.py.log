@@ -1,0 +1,45 @@
+F.FF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        df = task_func()
+        assert isinstance(df, pd.DataFrame)
+        assert 'Letter' in df.columns
+        assert 'Category' in df.columns
+>       assert len(df) == len(letters) * len(categories)
+                              ^^^^^^^
+E       NameError: name 'letters' is not defined
+
+test_0910.py:10: NameError
+__________________________ test_task_func_categories ___________________________
+
+    def test_task_func_categories():
+        categories = ['Category 1', 'Category 2', 'Category 3']
+        df = task_func(categories=categories)
+>       assert df['Category'].unique().tolist() == categories
+E       AssertionError: assert ['Category 1'... 'Category 2'] == ['Category 1'... 'Category 3']
+E         
+E         At index 1 diff: 'Category 3' != 'Category 2'
+E         Use -v to get more diff
+
+test_0910.py:20: AssertionError
+______________________ test_task_func_letters_categories _______________________
+
+    def test_task_func_letters_categories():
+        letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
+        categories = ['Category 1', 'Category 2', 'Category 3']
+        df = task_func(letters=letters, categories=categories)
+        assert df['Letter'].unique().tolist() == letters
+>       assert df['Category'].unique().tolist() == categories
+E       AssertionError: assert ['Category 2'... 'Category 1'] == ['Category 1'... 'Category 3']
+E         
+E         At index 0 diff: 'Category 2' != 'Category 1'
+E         Use -v to get more diff
+
+test_0910.py:27: AssertionError
+=========================== short test summary info ============================
+FAILED test_0910.py::test_task_func - NameError: name 'letters' is not defined
+FAILED test_0910.py::test_task_func_categories - AssertionError: assert ['Cat...
+FAILED test_0910.py::test_task_func_letters_categories - AssertionError: asse...
+3 failed, 1 passed in 1.26s

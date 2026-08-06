@@ -1,0 +1,131 @@
+F.FF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data = np.array([[1, 2], [3, 4], [5, 6]])
+        target = [1, 2]
+        k = 2
+        expected_result = [[1, 2], [3, 4]]
+>       assert task_func(data, target, k) == expected_result
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0091.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = array([[1, 2],
+       [3, 4],
+       [5, 6]]), target = [1, 2], k = 2
+
+    def task_func(data, target, k):
+        if not isinstance(k, int) or k < 0:
+            raise ValueError("'k' must be a non-negative integer")
+    
+        RADIUS_EARTH_KM = 6371.0  # Radius of the Earth in kilometers
+    
+        def calculate_distance(coord1, coord2):
+            # Convert coordinates from degrees to radians
+            lat1, lon1 = math.radians(coord1[0]), math.radians(coord1[1])
+            lat2, lon2 = math.radians(coord2[0]), math.radians(coord2[1])
+    
+            # Haversine formula
+            dlat = lat2 - lat1
+            dlon = lon2 - lon1
+            a = math.sin(dlat/2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon/2)**2
+            c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+    
+            return RADIUS_EARTH_KM * c
+    
+>       distances = np.array([calculate_distance(target, coord) for coord in data.to_numpy()])
+                                                                             ^^^^^^^^^^^^^
+E       AttributeError: 'numpy.ndarray' object has no attribute 'to_numpy'
+
+../../../src/src_0091.py:22: AttributeError
+_________________________ test_task_func_invalid_data __________________________
+
+    def test_task_func_invalid_data():
+        data = np.array([[1, 2], [3, 4], [5, 6]])
+        target = [1, 2]
+        k = 2
+        data = np.array([[1, 2], [3, 4], [5, 6], [7, 8]])
+        with pytest.raises(ValueError):
+>           task_func(data, target, k)
+
+test_0091.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = array([[1, 2],
+       [3, 4],
+       [5, 6],
+       [7, 8]])
+target = [1, 2], k = 2
+
+    def task_func(data, target, k):
+        if not isinstance(k, int) or k < 0:
+            raise ValueError("'k' must be a non-negative integer")
+    
+        RADIUS_EARTH_KM = 6371.0  # Radius of the Earth in kilometers
+    
+        def calculate_distance(coord1, coord2):
+            # Convert coordinates from degrees to radians
+            lat1, lon1 = math.radians(coord1[0]), math.radians(coord1[1])
+            lat2, lon2 = math.radians(coord2[0]), math.radians(coord2[1])
+    
+            # Haversine formula
+            dlat = lat2 - lat1
+            dlon = lon2 - lon1
+            a = math.sin(dlat/2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon/2)**2
+            c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+    
+            return RADIUS_EARTH_KM * c
+    
+>       distances = np.array([calculate_distance(target, coord) for coord in data.to_numpy()])
+                                                                             ^^^^^^^^^^^^^
+E       AttributeError: 'numpy.ndarray' object has no attribute 'to_numpy'
+
+../../../src/src_0091.py:22: AttributeError
+________________________ test_task_func_invalid_target _________________________
+
+    def test_task_func_invalid_target():
+        data = np.array([[1, 2], [3, 4], [5, 6]])
+        target = [1, 2, 3]
+        k = 2
+        with pytest.raises(ValueError):
+>           task_func(data, target, k)
+
+test_0091.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = array([[1, 2],
+       [3, 4],
+       [5, 6]]), target = [1, 2, 3], k = 2
+
+    def task_func(data, target, k):
+        if not isinstance(k, int) or k < 0:
+            raise ValueError("'k' must be a non-negative integer")
+    
+        RADIUS_EARTH_KM = 6371.0  # Radius of the Earth in kilometers
+    
+        def calculate_distance(coord1, coord2):
+            # Convert coordinates from degrees to radians
+            lat1, lon1 = math.radians(coord1[0]), math.radians(coord1[1])
+            lat2, lon2 = math.radians(coord2[0]), math.radians(coord2[1])
+    
+            # Haversine formula
+            dlat = lat2 - lat1
+            dlon = lon2 - lon1
+            a = math.sin(dlat/2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon/2)**2
+            c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+    
+            return RADIUS_EARTH_KM * c
+    
+>       distances = np.array([calculate_distance(target, coord) for coord in data.to_numpy()])
+                                                                             ^^^^^^^^^^^^^
+E       AttributeError: 'numpy.ndarray' object has no attribute 'to_numpy'
+
+../../../src/src_0091.py:22: AttributeError
+=========================== short test summary info ============================
+FAILED test_0091.py::test_task_func - AttributeError: 'numpy.ndarray' object ...
+FAILED test_0091.py::test_task_func_invalid_data - AttributeError: 'numpy.nda...
+FAILED test_0091.py::test_task_func_invalid_target - AttributeError: 'numpy.n...
+3 failed, 1 passed in 0.58s

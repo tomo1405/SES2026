@@ -1,0 +1,35 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+number_list = [1, 2, 2, 3, 4, 5, ...]
+bins = array([1. , 2.6, 4.2, 5.8, 7.4, 9. ])
+
+    def test_task_func(number_list, bins):
+        # Redirect stdout to capture any print statements
+        captured_output = io.StringIO()
+        sys.stdout = captured_output
+    
+        # Call the function
+        ax = task_func(number_list, bins)
+    
+        # Restore stdout
+        sys.stdout = sys.__stdout__
+    
+        # Check if the returned object is an AxesSubplot
+        assert isinstance(ax, plt.Axes), "The function should return an AxesSubplot object"
+    
+        # Check if the plot has the correct title and labels
+        assert ax.get_title() == 'Histogram', "The plot should have the title 'Histogram'"
+        assert ax.get_xlabel() == 'Number', "The plot should have the x-label 'Number'"
+        assert ax.get_ylabel() == 'Frequency', "The plot should have the y-label 'Frequency'"
+    
+        # Check if the plot has the correct number of bins
+        n, bins, patches = ax.hist(number_list, bins=bins)
+>       assert len(bins) == bins + 1, f"The plot should have {bins + 1} bins"
+E       ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+test_0367.py:36: ValueError
+=========================== short test summary info ============================
+FAILED test_0367.py::test_task_func - ValueError: The truth value of an array...
+1 failed in 1.55s

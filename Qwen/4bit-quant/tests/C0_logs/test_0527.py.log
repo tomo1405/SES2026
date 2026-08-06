@@ -1,0 +1,32 @@
+F...                                                                     [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_valid_data ________________________
+
+mock_json_data = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1370/test_task_func_with_valid_data0/data.json')
+
+    def test_task_func_with_valid_data(mock_json_data):
+        df = task_func(str(mock_json_data))
+        expected_columns = ['mean', 'median']
+        assert list(df.columns) == expected_columns
+        assert len(df) == 3  # There are 3 unique keys across all entries: 'a', 'b', and 'c'
+        assert df.loc['a']['mean'] == 3.0
+        assert df.loc['a']['median'] == 3.0
+>       assert np.isnan(df.loc['b']['mean'])
+E       AssertionError: assert np.False_
+E        +  where np.False_ = <ufunc 'isnan'>(np.float64(3.5))
+E        +    where <ufunc 'isnan'> = np.isnan
+
+test_0527.py:27: AssertionError
+=============================== warnings summary ===============================
+Qwen/4bit-quant/tests/test_0527.py::test_task_func_with_valid_data
+  /work/tomohiro-w/utg/src/src_0527.py:20: RuntimeWarning: Mean of empty slice
+    k: {"mean": np.nanmean(v), "median": np.nanmedian(v)} for k, v in stats.items()
+
+Qwen/4bit-quant/tests/test_0527.py::test_task_func_with_valid_data
+  /work/tomohiro-w/utg/src/src_0527.py:20: RuntimeWarning: All-NaN slice encountered
+    k: {"mean": np.nanmean(v), "median": np.nanmedian(v)} for k, v in stats.items()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0527.py::test_task_func_with_valid_data - AssertionError: assert ...
+1 failed, 3 passed, 2 warnings in 1.06s

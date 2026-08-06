@@ -1,0 +1,100 @@
+...F...F                                                                 [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_mixed_data_types _____________________
+
+    def test_task_func_with_mixed_data_types():
+        file_content = '["not a dict", {"key1": "value1"}, 123, {"key2": "value2"}]'
+        with StringIO(file_content) as f:
+>           result = task_func(f)
+                     ^^^^^^^^^^^^
+
+test_1091.py:30: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1091.py:12: in task_func
+    item = ast.literal_eval(item)
+           ^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/ast.py:66: in literal_eval
+    node_or_string = parse(node_or_string.lstrip(" \t"), mode='eval')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+source = 'not a dict', filename = '<unknown>', mode = 'eval'
+type_comments = False, feature_version = -1
+
+    def parse(source, filename='<unknown>', mode='exec', *,
+              type_comments=False, feature_version=None):
+        """
+        Parse the source into an AST node.
+        Equivalent to compile(source, filename, mode, PyCF_ONLY_AST).
+        Pass type_comments=True to get back type comments where the syntax allows.
+        """
+        flags = PyCF_ONLY_AST
+        if type_comments:
+            flags |= PyCF_TYPE_COMMENTS
+        if feature_version is None:
+            feature_version = -1
+        elif isinstance(feature_version, tuple):
+            major, minor = feature_version  # Should be a 2-tuple.
+            if major != 3:
+                raise ValueError(f"Unsupported major version: {major}")
+            feature_version = minor
+        # Else it should be an int giving the minor version for 3.x.
+>       return compile(source, filename, mode, flags,
+                       _feature_version=feature_version)
+E         File "<unknown>", line 1
+E           not a dict
+E                 ^^^^
+E       SyntaxError: invalid syntax
+
+/usr/lib/python3.12/ast.py:52: SyntaxError
+_____________ test_task_func_with_string_items_that_are_not_dicts ______________
+
+    def test_task_func_with_string_items_that_are_not_dicts():
+        file_content = '["not a dict", "another not a dict"]'
+        with StringIO(file_content) as f:
+>           result = task_func(f)
+                     ^^^^^^^^^^^^
+
+test_1091.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1091.py:12: in task_func
+    item = ast.literal_eval(item)
+           ^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/ast.py:66: in literal_eval
+    node_or_string = parse(node_or_string.lstrip(" \t"), mode='eval')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+source = 'not a dict', filename = '<unknown>', mode = 'eval'
+type_comments = False, feature_version = -1
+
+    def parse(source, filename='<unknown>', mode='exec', *,
+              type_comments=False, feature_version=None):
+        """
+        Parse the source into an AST node.
+        Equivalent to compile(source, filename, mode, PyCF_ONLY_AST).
+        Pass type_comments=True to get back type comments where the syntax allows.
+        """
+        flags = PyCF_ONLY_AST
+        if type_comments:
+            flags |= PyCF_TYPE_COMMENTS
+        if feature_version is None:
+            feature_version = -1
+        elif isinstance(feature_version, tuple):
+            major, minor = feature_version  # Should be a 2-tuple.
+            if major != 3:
+                raise ValueError(f"Unsupported major version: {major}")
+            feature_version = minor
+        # Else it should be an int giving the minor version for 3.x.
+>       return compile(source, filename, mode, flags,
+                       _feature_version=feature_version)
+E         File "<unknown>", line 1
+E           not a dict
+E                 ^^^^
+E       SyntaxError: invalid syntax
+
+/usr/lib/python3.12/ast.py:52: SyntaxError
+=========================== short test summary info ============================
+FAILED test_1091.py::test_task_func_with_mixed_data_types -   File "<unknown>...
+FAILED test_1091.py::test_task_func_with_string_items_that_are_not_dicts -   ...
+2 failed, 6 passed in 0.59s

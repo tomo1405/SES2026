@@ -1,0 +1,70 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        count = 10
+        seed = 0
+        pairs = [('a', 'b'), ('c', 'd'), ('e', 'a'), ('b', 'c'), ('d', 'e')]
+        pair_frequency = Counter(pairs)
+    
+>       assert task_func(count, seed) == pair_frequency
+E       AssertionError: assert Counter({('c'...'b', 'd'): 1}) == Counter({('a'...'d', 'e'): 1})
+E         
+E         Left contains 7 more items:
+E         {('b', 'd'): 1,
+E          ('c', 'b'): 1,
+E          ('c', 'c'): 2,
+E          ('d', 'b'): 2,
+E          ('e', 'c'): 1,...
+E         
+E         ...Full output truncated (5 lines hidden), use '-vv' to show
+
+test_0899.py:12: AssertionError
+______________________ test_task_func_with_different_seed ______________________
+
+    def test_task_func_with_different_seed():
+        count = 10
+        seed = 1
+        pairs = [('a', 'b'), ('c', 'd'), ('e', 'a'), ('b', 'c'), ('d', 'e')]
+        pair_frequency = Counter(pairs)
+    
+>       assert task_func(count, seed) == pair_frequency
+E       AssertionError: assert Counter({('a'...'e', 'a'): 1}) == Counter({('a'...'d', 'e'): 1})
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Left contains 8 more items:
+E         {('a', 'a'): 1,
+E          ('a', 'e'): 1,
+E          ('b', 'e'): 1,
+E          ('c', 'c'): 1,...
+E         
+E         ...Full output truncated (7 lines hidden), use '-vv' to show
+
+test_0899.py:20: AssertionError
+_____________________ test_task_func_with_different_count ______________________
+
+    def test_task_func_with_different_count():
+        count = 20
+        seed = 0
+        pairs = [('a', 'b'), ('c', 'd'), ('e', 'a'), ('b', 'c'), ('d', 'e')]
+        pair_frequency = Counter(pairs)
+    
+>       assert task_func(count, seed) == pair_frequency
+E       AssertionError: assert Counter({('e'...'b', 'e'): 1}) == Counter({('a'...'d', 'e'): 1})
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Left contains 10 more items:
+E         {('b', 'd'): 2,
+E          ('b', 'e'): 1,
+E          ('c', 'a'): 2,
+E          ('c', 'b'): 1,...
+E         
+E         ...Full output truncated (9 lines hidden), use '-vv' to show
+
+test_0899.py:28: AssertionError
+=========================== short test summary info ============================
+FAILED test_0899.py::test_task_func - AssertionError: assert Counter({('c'......
+FAILED test_0899.py::test_task_func_with_different_seed - AssertionError: ass...
+FAILED test_0899.py::test_task_func_with_different_count - AssertionError: as...
+3 failed in 0.48s

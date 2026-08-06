@@ -1,0 +1,40 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Prepare test data
+        a = ['apple', 'banana', 'apple']
+        b = ['banana', 'apple', 'orange']
+    
+        # Call the function
+        ax = task_func(a, b)
+    
+        # Check if the plot is created correctly
+        assert isinstance(ax, plt.Axes), "The function should return a matplotlib Axes object"
+    
+        # Check if the correct items and counts are plotted
+        expected_items = ['apple', 'banana']
+        expected_counts = [3, 2]  # 'apple' appears 3 times, 'banana' appears 2 times
+    
+        # Retrieve the data from the plot
+        bars = ax.patches
+        assert len(bars) == len(expected_items), "The number of bars in the plot should match the number of items"
+    
+        for i, bar in enumerate(bars):
+            assert bar.get_height() == expected_counts[i], f"The count for {expected_items[i]} should be {expected_counts[i]}"
+    
+        # Check labels and title
+        assert ax.get_xlabel() == 'Items', "The x-axis label should be 'Items'"
+        assert ax.get_ylabel() == 'Frequency', "The y-axis label should be 'Frequency'"
+        assert ax.get_title() == 'Item Frequency in Combined List', "The plot title should be 'Item Frequency in Combined List'"
+    
+        # Check if x-ticks are rotated
+>       assert ax.xaxis.get_tick_params(rotation=45).get_rotation() == 45, "X-ticks should be rotated by 45 degrees"
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Axis.get_tick_params() got an unexpected keyword argument 'rotation'
+
+test_0553.py:33: TypeError
+=========================== short test summary info ============================
+FAILED test_0553.py::test_task_func - TypeError: Axis.get_tick_params() got a...
+1 failed in 1.53s

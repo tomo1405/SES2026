@@ -1,0 +1,67 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_read_csv = <MagicMock name='read_csv' id='133628689118560'>
+mock_os_join = <MagicMock name='join' id='133628689359376'>
+
+    @patch('os.path.join')
+    @patch('pandas.read_csv')
+    def test_task_func(mock_read_csv, mock_os_join):
+        # Mocking os.path.join to return a fixed path
+        mock_os_join.return_value = 'mocked/path/to/file.csv'
+    
+        # Mocking pandas.read_csv to return a sample DataFrame
+        sample_df = pd.DataFrame({'A': [1, 2], 'B': [3, 4]})
+        mock_read_csv.return_value = sample_df
+    
+        # Define the data directory and CSV files list
+        data_dir = 'test_data'
+        csv_files = ['file1.csv', 'file2.csv']
+    
+        # Expected result after merging two DataFrames
+        expected_df = pd.concat([sample_df, sample_df], ignore_index=True)
+    
+        # Call the function
+        result_df = task_func(data_dir, csv_files)
+    
+        # Assert that the result matches the expected DataFrame
+        pd.testing.assert_frame_equal(result_df, expected_df)
+    
+        # Assert that os.path.join was called correctly
+>       mock_os_join.assert_called_with(data_dir, 'file1.csv')
+
+test_0889.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='join' id='133628689359376'>
+args = ('test_data', 'file1.csv'), kwargs = {}
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\n  Actual: %s'
+                    % (expected, actual))
+            raise AssertionError(error_message)
+    
+        def _error_message():
+            msg = self._format_mock_failure_message(args, kwargs)
+            return msg
+        expected = self._call_matcher(_Call((args, kwargs), two=True))
+        actual = self._call_matcher(self.call_args)
+        if actual != expected:
+            cause = expected if isinstance(expected, Exception) else None
+>           raise AssertionError(_error_message()) from cause
+E           AssertionError: expected call not found.
+E           Expected: join('test_data', 'file1.csv')
+E             Actual: join('test_data', 'file2.csv')
+
+/usr/lib/python3.12/unittest/mock.py:944: AssertionError
+=========================== short test summary info ============================
+FAILED test_0889.py::test_task_func - AssertionError: expected call not found.
+1 failed in 1.24s

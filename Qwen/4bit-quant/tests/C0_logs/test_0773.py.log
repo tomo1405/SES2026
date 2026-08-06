@@ -1,0 +1,26 @@
+...F..F                                                                  [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_zero_variance _______________________
+
+    def test_task_func_with_zero_variance():
+        mse = task_func(num_samples=1000, k=0, d=2)
+>       assert mse == 0
+E       assert 4.0 == 0
+
+test_0773.py:24: AssertionError
+________________________ test_task_func_with_no_scaling ________________________
+
+    def test_task_func_with_no_scaling():
+        data = np.random.randn(1000, 1) * 5 + 2
+        scaler = StandardScaler()
+        scaled_data = scaler.fit_transform(data)
+        mse = mean_squared_error(data, scaled_data)
+>       assert mse == task_func(num_samples=1000, k=5, d=2, random_seed=None)
+E       assert 18.84844576169513 == 19.92055776766393
+E        +  where 19.92055776766393 = task_func(num_samples=1000, k=5, d=2, random_seed=None)
+
+test_0773.py:41: AssertionError
+=========================== short test summary info ============================
+FAILED test_0773.py::test_task_func_with_zero_variance - assert 4.0 == 0
+FAILED test_0773.py::test_task_func_with_no_scaling - assert 18.8484457616951...
+2 failed, 5 passed in 2.95s

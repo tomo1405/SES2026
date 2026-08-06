@@ -1,0 +1,20 @@
+F.....                                                                   [100%]
+=================================== FAILURES ===================================
+__________________ test_task_func_valid_dates_and_num_series ___________________
+
+    def test_task_func_valid_dates_and_num_series():
+        start_date = "2023-01-01"
+        end_date = "2023-01-10"
+        num_series = 3
+        df, ax = task_func(start_date, end_date, num_series)
+        assert isinstance(df, pd.DataFrame)
+        assert len(df.columns) == num_series
+        assert len(df.index) == (datetime.strptime(end_date, "%Y-%m-%d") - datetime.strptime(start_date, "%Y-%m-%d")).days + 1
+>       assert all(isinstance(value, int) and 0 <= value <= 100 for value in df.values.flatten())
+E       assert False
+E        +  where False = all(<generator object test_task_func_valid_dates_and_num_series.<locals>.<genexpr> at 0x7a1e55fd8820>)
+
+test_0982.py:14: AssertionError
+=========================== short test summary info ============================
+FAILED test_0982.py::test_task_func_valid_dates_and_num_series - assert False
+1 failed, 5 passed in 2.59s

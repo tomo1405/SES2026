@@ -1,0 +1,52 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data_dict = {'key1': 'value1', 'key2': 'value2'}
+        seed = 0
+        random.seed(seed)
+        salt = ''.join(random.choice(string.ascii_lowercase) for _ in range(5))
+        for key in data_dict.keys():
+            data_dict[key] = hashlib.sha256((str(data_dict[key]) + salt).encode()).hexdigest()
+        data_dict['timestamp'] = time.time()
+        result = task_func(data_dict, seed)
+>       assert result['a'] == 1
+E       AssertionError: assert '373f3d39a5d5075dfb4503ebe44f70eed8a48e1a32be02d182b2a26695c6f694' == 1
+
+test_0272.py:17: AssertionError
+___________________________ test_task_func_with_seed ___________________________
+
+    def test_task_func_with_seed():
+        data_dict = {'key1': 'value1', 'key2': 'value2'}
+        seed = 42
+        random.seed(seed)
+        salt = ''.join(random.choice(string.ascii_lowercase) for _ in range(5))
+        for key in data_dict.keys():
+            data_dict[key] = hashlib.sha256((str(data_dict[key]) + salt).encode()).hexdigest()
+        data_dict['timestamp'] = time.time()
+        result = task_func(data_dict, seed)
+>       assert result['a'] == 1
+E       AssertionError: assert 'b925c3013a69fe5608d1fbcaebdcf2ac8ff3d1050b85bd2fb9abcd22636257d0' == 1
+
+test_0272.py:30: AssertionError
+________________________ test_task_func_with_empty_dict ________________________
+
+    def test_task_func_with_empty_dict():
+        data_dict = {}
+        seed = 0
+        random.seed(seed)
+        salt = ''.join(random.choice(string.ascii_lowercase) for _ in range(5))
+        for key in data_dict.keys():
+            data_dict[key] = hashlib.sha256((str(data_dict[key]) + salt).encode()).hexdigest()
+        data_dict['timestamp'] = time.time()
+        result = task_func(data_dict, seed)
+>       assert result['a'] == 1
+E       AssertionError: assert '373f3d39a5d5075dfb4503ebe44f70eed8a48e1a32be02d182b2a26695c6f694' == 1
+
+test_0272.py:43: AssertionError
+=========================== short test summary info ============================
+FAILED test_0272.py::test_task_func - AssertionError: assert '373f3d39a5d5075...
+FAILED test_0272.py::test_task_func_with_seed - AssertionError: assert 'b925c...
+FAILED test_0272.py::test_task_func_with_empty_dict - AssertionError: assert ...
+3 failed in 0.44s

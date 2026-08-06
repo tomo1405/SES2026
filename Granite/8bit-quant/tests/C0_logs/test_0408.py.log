@@ -1,0 +1,39 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        file_name = 'example.xlsx'
+        excel_file_path = '/path/to/excel/files'
+        csv_file_path = '/path/to/csv/files'
+    
+        with pytest.raises(FileNotFoundError):
+            task_func(file_name, excel_file_path, csv_file_path)
+    
+        file_name = 'example.xlsx'
+        excel_file_path = '/path/to/excel/files'
+        csv_file_path = '/path/to/csv/files'
+    
+>       csv_file_name = task_func(file_name, excel_file_path, csv_file_path)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0408.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_name = 'example.xlsx', excel_file_path = '/path/to/excel/files'
+csv_file_path = '/path/to/csv/files'
+
+    def task_func(file_name, excel_file_path, csv_file_path) -> str:
+    
+        excel_file = os.path.join(excel_file_path, file_name)
+        # Check if the Excel file exists
+        if not os.path.isfile(excel_file):
+>           raise FileNotFoundError(f"[Errno 2] No such file or directory: '{excel_file}'")
+E           FileNotFoundError: [Errno 2] No such file or directory: '/path/to/excel/files/example.xlsx'
+
+test_0408.py:11: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0408.py::test_task_func - FileNotFoundError: [Errno 2] No such fi...
+1 failed in 0.79s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

@@ -1,0 +1,62 @@
+...F                                                                     [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_custom_object _______________________
+
+    def test_task_func_with_custom_object():
+        class CustomObject:
+            def __init__(self, value):
+                self.value = value
+        my_obj = {"custom_object": CustomObject("test")}
+        expected_result = json.dumps({"custom_object": {"value": "test"}})
+>       result = task_func(my_obj)
+                 ^^^^^^^^^^^^^^^^^
+
+test_0466.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0466.py:16: in task_func
+    return json.dumps(my_obj, cls=ComplexEncoder)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/__init__.py:238: in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+/usr/lib/python3.12/json/encoder.py:200: in encode
+    chunks = self.iterencode(o, _one_shot=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/encoder.py:258: in iterencode
+    return _iterencode(o, 0)
+           ^^^^^^^^^^^^^^^^^
+../../../src/src_0466.py:15: in default
+    return json.JSONEncoder.default(self, obj)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <src_0466.task_func.<locals>.ComplexEncoder object at 0x7467043ff0e0>
+o = <test_0466.test_task_func_with_custom_object.<locals>.CustomObject object at 0x7467043ff110>
+
+    def default(self, o):
+        """Implement this method in a subclass such that it returns
+        a serializable object for ``o``, or calls the base implementation
+        (to raise a ``TypeError``).
+    
+        For example, to support arbitrary iterators, you could
+        implement default like this::
+    
+            def default(self, o):
+                try:
+                    iterable = iter(o)
+                except TypeError:
+                    pass
+                else:
+                    return list(iterable)
+                # Let the base class default method raise the TypeError
+                return super().default(o)
+    
+        """
+>       raise TypeError(f'Object of type {o.__class__.__name__} '
+                        f'is not JSON serializable')
+E       TypeError: Object of type CustomObject is not JSON serializable
+
+/usr/lib/python3.12/json/encoder.py:180: TypeError
+=========================== short test summary info ============================
+FAILED test_0466.py::test_task_func_with_custom_object - TypeError: Object of...
+1 failed, 3 passed in 0.66s

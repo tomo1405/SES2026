@@ -1,0 +1,101 @@
+....FFF                                                                  [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1738/test_task_func_valid_input0')
+
+    def test_task_func_valid_input(tmp_path):
+        log_file_path = tmp_path / "logfile.log"
+        os.environ["LOGFILE_PATH"] = str(log_file_path)
+    
+        task_func(1, 2)
+    
+>       assert log_file_path.exists()
+E       AssertionError: assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1738/test_task_func_valid_input0/logfile.log').exists
+
+test_1029.py:32: AssertionError
+_______________________ test_task_func_file_write_error ________________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x729b691845f0>
+
+    def test_task_func_file_write_error(monkeypatch):
+        def mock_check_output(*args, **kwargs):
+            raise subprocess.CalledProcessError(1, args[0])
+    
+        monkeypatch.setattr(subprocess, "check_output", mock_check_output)
+    
+>       log_file_path = task_func(1, 2)
+                        ^^^^^^^^^^^^^^^
+
+test_1029.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1029.py:29: in task_func
+    output = subprocess.check_output(command)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (['top', '-b', '-n1'],), kwargs = {}
+
+    def mock_check_output(*args, **kwargs):
+>       raise subprocess.CalledProcessError(1, args[0])
+E       subprocess.CalledProcessError: Command '['top', '-b', '-n1']' returned non-zero exit status 1.
+
+test_1029.py:47: CalledProcessError
+_____________________ test_task_func_sleep_time_adjustment _____________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x729b69184f20>
+
+    def test_task_func_sleep_time_adjustment(monkeypatch):
+        def mock_check_output(*args, **kwargs):
+            return b"Mock CPU Usage Data"
+    
+        monkeypatch.setattr(subprocess, "check_output", mock_check_output)
+    
+        start_time = time.time()
+>       task_func(0.5, 1)
+
+test_1029.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+interval = 0.5, duration = 1
+
+    def task_func(interval, duration):
+        if interval <= 0 or duration <= 0:
+            raise ValueError("Interval and duration must be greater than zero.")
+    
+        start_time = time.time()
+        try:
+            with open(LOGFILE_PATH, "w", encoding="utf-8") as logfile:
+                while time.time() - start_time <= duration:
+                    operation_start_time = time.time()
+    
+                    # Check the operating system
+                    if platform.system() == "Windows":
+                        # Windows command for CPU usage
+                        command = [
+                            "typeperf",
+                            "\\Processor(_Total)\\% Processor Time",
+                            "-sc",
+                            "1",
+                        ]
+                    else:
+                        # Unix/Linux command for CPU usage
+                        command = ["top", "-b", "-n1"]
+    
+                    output = subprocess.check_output(command)
+                    cpu_usage_line = (
+                        output.decode("utf-8").split("\n")[2]
+                        if platform.system() == "Windows"
+>                       else output.decode("utf-8").split("\n")[2]
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    )
+E                   IndexError: list index out of range
+
+../../../src/src_1029.py:33: IndexError
+=========================== short test summary info ============================
+FAILED test_1029.py::test_task_func_valid_input - AssertionError: assert False
+FAILED test_1029.py::test_task_func_file_write_error - subprocess.CalledProce...
+FAILED test_1029.py::test_task_func_sleep_time_adjustment - IndexError: list ...
+3 failed, 4 passed in 2.51s

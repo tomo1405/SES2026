@@ -1,0 +1,26 @@
+F..                                                                      [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_valid_predicates ________________________
+
+    def test_task_func_valid_predicates():
+        predicates = ["is_file", "is_dir"]
+        dir_path = "/path/to/directory"
+        with patch("os.path.exists", return_value=True), patch(
+            "os.path.isdir", return_value=True
+        ), patch("os.listdir", return_value=["file1.txt", "file2.txt"]):
+            results = task_func(dir_path, predicates)
+>           assert results == {
+                "file1.txt": {"is_file": True, "is_dir": True},
+                "file2.txt": {"is_file": True, "is_dir": True},
+            }
+E           AssertionError: assert {'file1.txt':..._dir': False}} == {'file1.txt':...s_dir': True}}
+E             
+E             Differing items:
+E             {'file2.txt': {'is_file': False, 'is_dir': False}} != {'file2.txt': {'is_file': True, 'is_dir': True}}
+E             {'file1.txt': {'is_file': False, 'is_dir': False}} != {'file1.txt': {'is_file': True, 'is_dir': True}}
+E             Use -v to get more diff
+
+test_0989.py:17: AssertionError
+=========================== short test summary info ============================
+FAILED test_0989.py::test_task_func_valid_predicates - AssertionError: assert...
+1 failed, 2 passed in 0.50s

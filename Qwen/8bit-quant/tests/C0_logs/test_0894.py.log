@@ -1,0 +1,74 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_no_errors ___________________________
+
+    def test_task_func_no_errors():
+        logs = [
+            "INFO 2023-10-01 12:30:45 - Starting process",
+            "DEBUG 2023-10-01 12:35:10 - Process running smoothly",
+            "INFO 2023-10-01 12:40:20 - Process completed"
+        ]
+>       expected_output = ([], time(0, 0))
+                               ^^^^^^^^^^
+E       TypeError: 'module' object is not callable. Did you mean: 'time.time(...)'?
+
+test_0894.py:12: TypeError
+_________________________ test_task_func_single_error __________________________
+
+    def test_task_func_single_error():
+        logs = [
+            "ERROR 2023-10-01 12:30:45 - Something went wrong",
+            "INFO 2023-10-01 12:35:10 - Process running smoothly",
+            "INFO 2023-10-01 12:40:20 - Process completed"
+        ]
+>       expected_output = ([time(12, 30)], time(12, 30))
+                            ^^^^^^^^^^^^
+E       TypeError: 'module' object is not callable. Did you mean: 'time.time(...)'?
+
+test_0894.py:21: TypeError
+________________________ test_task_func_multiple_errors ________________________
+
+    def test_task_func_multiple_errors():
+        logs = [
+            "ERROR 2023-10-01 12:30:45 - Something went wrong",
+            "ERROR 2023-10-01 13:45:10 - Another issue",
+            "INFO 2023-10-01 12:40:20 - Process completed"
+        ]
+>       expected_output = ([time(12, 30), time(13, 45)], time(13, 7))
+                            ^^^^^^^^^^^^
+E       TypeError: 'module' object is not callable. Did you mean: 'time.time(...)'?
+
+test_0894.py:30: TypeError
+______________________ test_task_func_invalid_time_format ______________________
+
+    def test_task_func_invalid_time_format():
+        logs = [
+            "ERROR 2023-10-01 12:30:45 - Something went wrong",
+            "ERROR 2023-10-01 13:45:10 - Another issue",
+            "ERROR 2023-10-01 14:60:20 - Invalid time"
+        ]
+>       expected_output = ([time(12, 30), time(13, 45)], time(13, 7))
+                            ^^^^^^^^^^^^
+E       TypeError: 'module' object is not callable. Did you mean: 'time.time(...)'?
+
+test_0894.py:39: TypeError
+__________________________ test_task_func_all_errors ___________________________
+
+    def test_task_func_all_errors():
+        logs = [
+            "ERROR 2023-10-01 12:30:45 - Something went wrong",
+            "ERROR 2023-10-01 13:45:10 - Another issue",
+            "ERROR 2023-10-01 14:15:20 - Yet another problem"
+        ]
+>       expected_output = ([time(12, 30), time(13, 45), time(14, 15)], time(13, 20))
+                            ^^^^^^^^^^^^
+E       TypeError: 'module' object is not callable. Did you mean: 'time.time(...)'?
+
+test_0894.py:48: TypeError
+=========================== short test summary info ============================
+FAILED test_0894.py::test_task_func_no_errors - TypeError: 'module' object is...
+FAILED test_0894.py::test_task_func_single_error - TypeError: 'module' object...
+FAILED test_0894.py::test_task_func_multiple_errors - TypeError: 'module' obj...
+FAILED test_0894.py::test_task_func_invalid_time_format - TypeError: 'module'...
+FAILED test_0894.py::test_task_func_all_errors - TypeError: 'module' object i...
+5 failed in 0.58s

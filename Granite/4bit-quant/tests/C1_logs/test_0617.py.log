@@ -1,0 +1,61 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        goals = 10
+        penalties = 5
+        rng_seed = 42
+        teams = ['Team A', 'Team B', 'Team C', 'Team D', 'Team E']
+        penalty_cost = 1000
+        expected_results = [
+            ['Team A', 5, 2000],
+            ['Team B', 7, 1400],
+            ['Team C', 3, 300],
+            ['Team D', 8, 1600],
+            ['Team E', 2, 200]
+        ]
+        expected_df = pd.DataFrame(expected_results, columns=['Team', 'Goals', 'Penalty Cost'])
+    
+        results_df, ax = task_func(goals, penalties, teams, penalty_cost, rng_seed)
+    
+>       assert results_df.equals(expected_df)
+E       assert False
+E        +  where False = equals(     Team  Goals  Penalty Cost\n0  Team A      5          2000\n1  Team B      7          1400\n2  Team C      3           300\n3  Team D      8          1600\n4  Team E      2           200)
+E        +    where equals =      Team  Goals  Penalty Cost\n0  Team A     10             0\n1  Team B      0          5000\n2  Team C      4          1000\n3  Team D      3          1000\n4  Team E      1          5000.equals
+
+test_0617.py:23: AssertionError
+_________________________ test_task_func_default_args __________________________
+
+    def test_task_func_default_args():
+        goals = 10
+        penalties = 5
+        expected_results = [
+            ['Team A', 5, 5000],
+            ['Team B', 7, 3500],
+            ['Team C', 3, 300],
+            ['Team D', 8, 4000],
+            ['Team E', 2, 200]
+        ]
+        expected_df = pd.DataFrame(expected_results, columns=['Team', 'Goals', 'Penalty Cost'])
+    
+        results_df, ax = task_func(goals, penalties)
+    
+>       assert results_df.equals(expected_df)
+E       assert False
+E        +  where False = equals(     Team  Goals  Penalty Cost\n0  Team A      5          5000\n1  Team B      7          3500\n2  Team C      3           300\n3  Team D      8          4000\n4  Team E      2           200)
+E        +    where equals =      Team  Goals  Penalty Cost\n0  Team A      8             0\n1  Team B      9          3000\n2  Team C      0             0\n3  Team D      1          1000\n4  Team E      3          4000.equals
+
+test_0617.py:40: AssertionError
+_________________________ test_task_func_invalid_args __________________________
+
+    def test_task_func_invalid_args():
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0617.py:44: Failed
+=========================== short test summary info ============================
+FAILED test_0617.py::test_task_func - assert False
+FAILED test_0617.py::test_task_func_default_args - assert False
+FAILED test_0617.py::test_task_func_invalid_args - Failed: DID NOT RAISE Valu...
+3 failed in 2.25s

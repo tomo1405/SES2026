@@ -1,0 +1,18 @@
+import numpy as np
+from difflib import SequenceMatcher
+import matplotlib.pyplot as plt
+def task_func(s_list, plot_path=None):
+    if not all(isinstance(item, str) for item in s_list):
+        raise ValueError("All items in s_list must be strings.")
+
+    avg_scores = []
+    for s in s_list:
+        scores = [SequenceMatcher(None, s, other_s).ratio() for other_s in s_list if s != other_s]
+        avg_score = np.mean(scores)
+        avg_scores.append(avg_score)
+
+    if plot_path:
+        plt.bar(s_list, avg_scores)
+        plt.savefig(plot_path)
+    
+    return avg_scores

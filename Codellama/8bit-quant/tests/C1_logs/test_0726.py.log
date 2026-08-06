@@ -1,0 +1,26 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        directory = './files/'
+        from_encoding = 'cp1251'
+        to_encoding = 'utf8'
+    
+        task_func(directory, from_encoding, to_encoding)
+    
+        for filename in glob.glob(os.path.join(directory, '*.txt')):
+            with codecs.open(filename, 'r', from_encoding) as file:
+                content = file.read()
+    
+            with codecs.open(filename, 'w', to_encoding) as file:
+                file.write(content)
+    
+>       assert os.path.exists(filename)
+                              ^^^^^^^^
+E       UnboundLocalError: cannot access local variable 'filename' where it is not associated with a value
+
+test_0726.py:22: UnboundLocalError
+=========================== short test summary info ============================
+FAILED test_0726.py::test_task_func - UnboundLocalError: cannot access local ...
+1 failed in 0.46s

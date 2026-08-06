@@ -1,0 +1,114 @@
+F.FFFFFFF                                                                [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_empty_list ________________________
+
+    def test_task_func_with_empty_list():
+        with pytest.raises(statistics.StatisticsError):
+>           task_func([])
+
+test_0220.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0220.py:5: in task_func
+    fft = np.abs(np.fft.fft([math.degrees(x) for x in input_list]))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/numpy/fft/_pocketfft.py:215: in fft
+    output = _raw_fft(a, n, axis, False, True, norm, out)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = array([], dtype=float64), n = 0, axis = -1, is_real = False
+is_forward = True, norm = None, out = None
+
+    def _raw_fft(a, n, axis, is_real, is_forward, norm, out=None):
+        if n < 1:
+>           raise ValueError(f"Invalid number of FFT data points ({n}) specified.")
+E           ValueError: Invalid number of FFT data points (0) specified.
+
+../../../.venv/lib/python3.12/site-packages/numpy/fft/_pocketfft.py:60: ValueError
+_____________________ test_task_func_with_uniform_elements _____________________
+
+    def test_task_func_with_uniform_elements():
+        result = task_func([1, 1, 1])
+>       assert result == (1, 1, 1, 0, 0, 0)
+E       assert (1, 1, 1, 57, 0, 0) == (1, 1, 1, 0, 0, 0)
+E         
+E         At index 3 diff: 57 != 0
+E         Use -v to get more diff
+
+test_0220.py:17: AssertionError
+____________________ test_task_func_with_distinct_elements _____________________
+
+    def test_task_func_with_distinct_elements():
+        result = task_func([0, 90, 180, 270])
+>       assert result == (135, 90, 0, 1, 1, 1)
+E       assert (135, 135.0, ... 14585, 14585) == (135, 90, 0, 1, 1, 1)
+E         
+E         At index 1 diff: 135.0 != 90
+E         Use -v to get more diff
+
+test_0220.py:21: AssertionError
+_______________ test_task_func_with_negative_and_positive_angles _______________
+
+    def test_task_func_with_negative_and_positive_angles():
+        result = task_func([-90, 90, 180, -180])
+>       assert result == (45, 0, -180, 1, 1, 1)
+E       assert (0, 0.0, -180... 16095, 21878) == (45, 0, -180, 1, 1, 1)
+E         
+E         At index 0 diff: 0 != 45
+E         Use -v to get more diff
+
+test_0220.py:25: AssertionError
+____________________ test_task_func_with_non_integer_angles ____________________
+
+    def test_task_func_with_non_integer_angles():
+        result = task_func([0.5, 90.5, 180.5, 270.5])
+>       assert result == (135.375, 90.5, 0.5, 1, 1, 1)
+E       assert (135.5, 135.5... 14585, 14585) == (135.375, 90.5, 0.5, 1, 1, 1)
+E         
+E         At index 0 diff: 135.5 != 135.375
+E         Use -v to get more diff
+
+test_0220.py:29: AssertionError
+_______________________ test_task_func_with_large_angles _______________________
+
+    def test_task_func_with_large_angles():
+        result = task_func([360, 720, 1080, 1440])
+>       assert result == (1080, 720, 360, 1, 1, 1)
+E       assert (900, 900.0, ... 58340, 58340) == (1080, 720, 360, 1, 1, 1)
+E         
+E         At index 0 diff: 900 != 1080
+E         Use -v to get more diff
+
+test_0220.py:33: AssertionError
+_____________________ test_task_func_with_repeated_angles ______________________
+
+    def test_task_func_with_repeated_angles():
+        result = task_func([45, 45, 45, 45])
+>       assert result == (45, 45, 45, 1, 1, 1)
+E       assert (45, 45.0, 45, 2578, 0, 0) == (45, 45, 45, 1, 1, 1)
+E         
+E         At index 3 diff: 2578 != 1
+E         Use -v to get more diff
+
+test_0220.py:37: AssertionError
+_____________________ test_task_func_with_irregular_angles _____________________
+
+    def test_task_func_with_irregular_angles():
+        result = task_func([10, 20, 30, 40, 50])
+>       assert result == (30, 30, 10, 1, 1, 1)
+E       assert (30, 30, 10, 3296, 2437, 2437) == (30, 30, 10, 1, 1, 1)
+E         
+E         At index 3 diff: 3296 != 1
+E         Use -v to get more diff
+
+test_0220.py:41: AssertionError
+=========================== short test summary info ============================
+FAILED test_0220.py::test_task_func_with_empty_list - ValueError: Invalid num...
+FAILED test_0220.py::test_task_func_with_uniform_elements - assert (1, 1, 1, ...
+FAILED test_0220.py::test_task_func_with_distinct_elements - assert (135, 135...
+FAILED test_0220.py::test_task_func_with_negative_and_positive_angles - asser...
+FAILED test_0220.py::test_task_func_with_non_integer_angles - assert (135.5, ...
+FAILED test_0220.py::test_task_func_with_large_angles - assert (900, 900.0, ....
+FAILED test_0220.py::test_task_func_with_repeated_angles - assert (45, 45.0, ...
+FAILED test_0220.py::test_task_func_with_irregular_angles - assert (30, 30, 1...
+8 failed, 1 passed in 0.60s

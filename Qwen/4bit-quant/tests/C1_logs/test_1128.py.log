@@ -1,0 +1,57 @@
+FF..F                                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_single_file ________________________
+
+    def test_task_func_with_single_file():
+        # Create a temporary file for testing
+        with open('test_file.txt', 'w') as f:
+            f.write('Hello, World!')
+    
+        # Test with a path that includes the file
+        result = task_func('test_file.txt', '/')
+>       assert result == [('test_file.txt', None)]
+E       AssertionError: assert [('test_file....a362182986f')] == [('test_file.txt', None)]
+E         
+E         At index 0 diff: ('test_file.txt', 'dffd6021bb2bd5b0af676290809ec3a53191dd81c7f70a4b28688a362182986f') != ('test_file.txt', None)
+E         Use -v to get more diff
+
+test_1128.py:13: AssertionError
+____________________ test_task_func_with_delimiter_in_path _____________________
+
+    def test_task_func_with_delimiter_in_path():
+        # Create a temporary directory and file for testing
+        os.makedirs('test_dir', exist_ok=True)
+        with open('test_dir/test_file.txt', 'w') as f:
+            f.write('Hello, World!')
+    
+        # Test with a path that includes the directory and file
+        result = task_func('test_dir/test_file.txt', '/')
+        expected_result = [
+            ('test_dir/', None),
+            ('test_file.txt', '315f5bdb76d09c113e2a7d82e6d64a7e3b03e2a0a2a2e1b1e1e1e1e1e1e1e1e1')
+        ]
+>       assert result == expected_result
+E       AssertionError: assert [('test_dir',...a362182986f')] == [('test_dir/'...1e1e1e1e1e1')]
+E         
+E         At index 0 diff: ('test_dir', None) != ('test_dir/', None)
+E         Left contains one more item: ('test_file.txt', 'dffd6021bb2bd5b0af676290809ec3a53191dd81c7f70a4b28688a362182986f')
+E         Use -v to get more diff
+
+test_1128.py:30: AssertionError
+______________________ test_task_func_with_only_delimiter ______________________
+
+    def test_task_func_with_only_delimiter():
+        # Test with a path that only contains the delimiter
+        result = task_func('/', '/')
+>       assert result == [('/', None)]
+E       AssertionError: assert [('', None)] == [('/', None)]
+E         
+E         At index 0 diff: ('', None) != ('/', None)
+E         Use -v to get more diff
+
+test_1128.py:49: AssertionError
+=========================== short test summary info ============================
+FAILED test_1128.py::test_task_func_with_single_file - AssertionError: assert...
+FAILED test_1128.py::test_task_func_with_delimiter_in_path - AssertionError: ...
+FAILED test_1128.py::test_task_func_with_only_delimiter - AssertionError: ass...
+3 failed, 2 passed in 0.51s

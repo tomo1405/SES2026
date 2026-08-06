@@ -1,0 +1,18 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import norm
+def task_func(n_samples=1000, mu=0, sigma=1, random_seed=0):
+    if n_samples <= 0 or sigma <= 0:
+        raise ValueError("Invalid n_samples or sigma")
+    np.random.seed(random_seed)
+    plt.figure()
+    samples = np.random.normal(mu, sigma, n_samples)
+    _, _, _ = plt.hist(samples, 30, density=True)
+    ax = plt.gca()
+    ax.plot(
+        np.linspace(mu - 4 * sigma, mu + 4 * sigma, 1000),
+        norm.pdf(np.linspace(mu - 4 * sigma, mu + 4 * sigma, 1000), mu, sigma),
+        linewidth=2,
+        color="r",
+    )
+    return ax, samples

@@ -1,0 +1,49 @@
+.FF...F                                                                  [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_uneven_tuples _______________________
+
+    def test_task_func_with_uneven_tuples():
+        data_list = [(1, 2), (3, 4, 5), (6,)]
+        expected_output = [3.0, 3.0, np.nan]
+>       assert np.allclose(task_func(data_list), expected_output, equal_nan=True)
+E       assert False
+E        +  where False = <function allclose at 0x7ad85cb117b0>([np.float64(3.3333333333333335), np.float64(3.0), np.float64(5.0)], [3.0, 3.0, nan], equal_nan=True)
+E        +    where <function allclose at 0x7ad85cb117b0> = np.allclose
+E        +    and   [np.float64(3.3333333333333335), np.float64(3.0), np.float64(5.0)] = task_func([(1, 2), (3, 4, 5), (6,)])
+
+test_0873.py:13: AssertionError
+____________________ test_task_func_with_non_numeric_values ____________________
+
+    def test_task_func_with_non_numeric_values():
+        data_list = [(1, 'a', 3), (4, 5, 'b'), (7, 8, 9)]
+        expected_output = [4.0, 5.0, 8.0]
+>       assert task_func(data_list) == expected_output
+E       assert [np.float64(4....float64(6.0)] == [4.0, 5.0, 8.0]
+E         
+E         At index 1 diff: np.float64(6.5) != 5.0
+E         Use -v to get more diff
+
+test_0873.py:18: AssertionError
+_______________________ test_task_func_with_mixed_types ________________________
+
+    def test_task_func_with_mixed_types():
+        data_list = [(1, 'a', 3.5), (4, 5, 'b'), (7, 8, 9)]
+        expected_output = [4.0, 5.0, 8.0]
+>       assert task_func(data_list) == expected_output
+E       assert [np.float64(4...float64(6.25)] == [4.0, 5.0, 8.0]
+E         
+E         At index 1 diff: np.float64(6.5) != 5.0
+E         Use -v to get more diff
+
+test_0873.py:38: AssertionError
+=============================== warnings summary ===============================
+Qwen/4bit-quant/tests/test_0873.py::test_task_func_with_all_non_numeric
+  /work/tomohiro-w/utg/src/src_0873.py:8: RuntimeWarning: Mean of empty slice
+    mean_values = [np.nanmean([val for val in column if isinstance(val, (int, float))]) for column in unzipped_data]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0873.py::test_task_func_with_uneven_tuples - assert False
+FAILED test_0873.py::test_task_func_with_non_numeric_values - assert [np.floa...
+FAILED test_0873.py::test_task_func_with_mixed_types - assert [np.float64(4.....
+3 failed, 4 passed, 1 warning in 0.65s

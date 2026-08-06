@@ -1,0 +1,165 @@
+FFF.                                                                     [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_valid_url _________________________
+
+setup_test_environment = '/tmp/tmpkbxvnswm'
+
+    def test_task_func_with_valid_url(setup_test_environment):
+        url = "https://example.com/sample.zip"
+        destination_directory = setup_test_environment
+        headers = {
+            'accept': 'application/octet-stream'
+        }
+    
+        # Mocking the requests.get to simulate a successful response
+        def mock_get(url, headers):
+            class MockResponse:
+                def __init__(self, content):
+                    self.content = content
+    
+                def raise_for_status(self):
+                    pass
+    
+            # Simulate a zip file content
+            with open("tests/data/sample.zip", "rb") as f:
+                content = f.read()
+    
+            return MockResponse(content)
+    
+        requests.get = mock_get
+    
+>       extracted_files = task_func(url, destination_directory, headers)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0212.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0212.py:11: in task_func
+    response = requests.get(url, headers=headers)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'https://example.com/sample.zip'
+headers = {'accept': 'application/octet-stream'}
+
+    def mock_get(url, headers):
+        class MockResponse:
+            def __init__(self, content):
+                self.content = content
+    
+            def raise_for_status(self):
+                pass
+    
+        # Simulate a zip file content
+>       with open("tests/data/sample.zip", "rb") as f:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'tests/data/sample.zip'
+
+test_0212.py:35: FileNotFoundError
+________________________ test_task_func_without_headers ________________________
+
+setup_test_environment = '/tmp/tmpoe0qy93g'
+
+    def test_task_func_without_headers(setup_test_environment):
+        url = "https://example.com/sample.zip"
+        destination_directory = setup_test_environment
+    
+        # Mocking the requests.get to simulate a successful response
+        def mock_get(url, headers):
+            class MockResponse:
+                def __init__(self, content):
+                    self.content = content
+    
+                def raise_for_status(self):
+                    pass
+    
+            # Simulate a zip file content
+            with open("tests/data/sample.zip", "rb") as f:
+                content = f.read()
+    
+            return MockResponse(content)
+    
+        requests.get = mock_get
+    
+>       extracted_files = task_func(url, destination_directory)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0212.py:69: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0212.py:11: in task_func
+    response = requests.get(url, headers=headers)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'https://example.com/sample.zip'
+headers = {'accept': 'application/octet-stream'}
+
+    def mock_get(url, headers):
+        class MockResponse:
+            def __init__(self, content):
+                self.content = content
+    
+            def raise_for_status(self):
+                pass
+    
+        # Simulate a zip file content
+>       with open("tests/data/sample.zip", "rb") as f:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'tests/data/sample.zip'
+
+test_0212.py:62: FileNotFoundError
+_______________________ test_task_func_with_invalid_url ________________________
+
+setup_test_environment = '/tmp/tmpxhua7u8q'
+
+    def test_task_func_with_invalid_url(setup_test_environment):
+        url = "https://example.com/nonexistent.zip"
+        destination_directory = setup_test_environment
+        headers = {
+            'accept': 'application/octet-stream'
+        }
+    
+        # Mocking the requests.get to simulate a failed response
+        def mock_get(url, headers):
+            class MockResponse:
+                def __init__(self, status_code):
+                    self.status_code = status_code
+    
+                def raise_for_status(self):
+                    raise requests.exceptions.HTTPError(f"HTTP {self.status_code}")
+    
+            return MockResponse(404)
+    
+        requests.get = mock_get
+    
+        with pytest.raises(requests.exceptions.HTTPError) as excinfo:
+>           task_func(url, destination_directory, headers)
+
+test_0212.py:96: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'https://example.com/nonexistent.zip'
+destination_directory = '/tmp/tmpxhua7u8q'
+headers = {'accept': 'application/octet-stream'}
+
+    def task_func(url, destination_directory, headers=None):
+    
+        if headers is None:
+            headers = {
+                'accept': 'application/octet-stream'
+            }
+    
+        response = requests.get(url, headers=headers)
+        filename = os.path.basename(url)
+        zip_path = os.path.join(destination_directory, filename)
+    
+        with open(zip_path, 'wb') as f:
+>           f.write(response.content)
+                    ^^^^^^^^^^^^^^^^
+E           AttributeError: 'MockResponse' object has no attribute 'content'
+
+../../../src/src_0212.py:16: AttributeError
+=========================== short test summary info ============================
+FAILED test_0212.py::test_task_func_with_valid_url - FileNotFoundError: [Errn...
+FAILED test_0212.py::test_task_func_without_headers - FileNotFoundError: [Err...
+FAILED test_0212.py::test_task_func_with_invalid_url - AttributeError: 'MockR...
+3 failed, 1 passed in 0.67s

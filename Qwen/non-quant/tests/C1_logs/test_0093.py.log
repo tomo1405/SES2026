@@ -1,0 +1,36 @@
+...FF                                                                    [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_kmeans_fit_predict _______________________
+
+    def test_task_func_kmeans_fit_predict():
+        data = pd.DataFrame({'feature1': [1, 2, 3], 'feature2': [4, 5, 6]})
+        labels, _ = task_func(data, n_clusters=2)
+    
+        kmeans = KMeans(n_clusters=2)
+        expected_labels = kmeans.fit_predict(data)
+    
+>       assert np.array_equal(labels, expected_labels)
+E       assert False
+E        +  where False = <function array_equal at 0x7d68845e09b0>(array([0, 0, 1], dtype=int32), array([1, 0, 0], dtype=int32))
+E        +    where <function array_equal at 0x7d68845e09b0> = np.array_equal
+
+test_0093.py:34: AssertionError
+_________________________ test_task_func_plot_content __________________________
+
+    def test_task_func_plot_content():
+        data = pd.DataFrame({'feature1': [1, 2, 3], 'feature2': [4, 5, 6]})
+        _, ax = task_func(data, n_clusters=2)
+    
+        lines = ax.get_lines()
+        collections = ax.collections
+    
+>       assert len(lines) == 1  # Centroids line
+        ^^^^^^^^^^^^^^^^^^^^^^
+E       assert 0 == 1
+E        +  where 0 = len(<a list of 0 Line2D objects>)
+
+test_0093.py:43: AssertionError
+=========================== short test summary info ============================
+FAILED test_0093.py::test_task_func_kmeans_fit_predict - assert False
+FAILED test_0093.py::test_task_func_plot_content - assert 0 == 1
+2 failed, 3 passed in 3.70s

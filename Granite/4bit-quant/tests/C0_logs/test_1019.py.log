@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Test with valid URL and from_encoding
+        soup = task_func(url="http://example.com", from_encoding="cp1251", use_lxml=False)
+        assert soup is not None
+    
+        # Test case 2: Test with invalid URL
+        soup = task_func(url="invalid_url", from_encoding="cp1251", use_lxml=False)
+        assert soup is None
+    
+        # Test case 3: Test with valid URL and from_encoding, use_lxml=True
+        soup = task_func(url="http://example.com", from_encoding="cp1251", use_lxml=True)
+        assert soup is not None
+    
+        # Test case 4: Test with valid URL and from_encoding, use_lxml=False, and timeout
+        with pytest.raises(Exception) as exc_info:
+            task_func(url="http://example.com", from_encoding="cp1251", use_lxml=False, timeout=0.01)
+>       assert "Connection aborted" in str(exc_info.value)
+E       assert 'Connection aborted' in "task_func() got an unexpected keyword argument 'timeout'"
+E        +  where "task_func() got an unexpected keyword argument 'timeout'" = str(TypeError("task_func() got an unexpected keyword argument 'timeout'"))
+E        +    where TypeError("task_func() got an unexpected keyword argument 'timeout'") = <ExceptionInfo TypeError("task_func() got an unexpected keyword argument 'timeout'") tblen=1>.value
+
+test_1019.py:20: AssertionError
+----------------------------- Captured stdout call -----------------------------
+An error occurred: Invalid URL 'invalid_url': No scheme supplied. Perhaps you meant https://invalid_url?
+=========================== short test summary info ============================
+FAILED test_1019.py::test_task_func - assert 'Connection aborted' in "task_fu...
+1 failed in 1.37s

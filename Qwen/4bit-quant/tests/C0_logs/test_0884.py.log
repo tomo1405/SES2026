@@ -1,0 +1,41 @@
+F.F.                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_no_unique_values ________________________
+
+sample_df =    column_a  column_b  column_c
+0        10        60       900
+1        20        70       900
+2        30        80       900
+3        40        90       900
+4        50       100       900
+
+    def test_task_func_no_unique_values(sample_df):
+>       assert task_func(sample_df, 'column_a', 'column_b', 'column_c') == True
+E       AssertionError: assert np.False_ == True
+E        +  where np.False_ = task_func(   column_a  column_b  column_c\n0        10        60       900\n1        20        70       900\n2        30        80       900\n3        40        90       900\n4        50       100       900, 'column_a', 'column_b', 'column_c')
+
+test_0884.py:15: AssertionError
+_________________________ test_task_func_adf_test_pass _________________________
+
+sample_df =    column_a  column_b  column_c
+0        10        60       900
+1        20        70       900
+2        30        80       900
+3        40        90       900
+4        50       100       900
+
+    def test_task_func_adf_test_pass(sample_df):
+        # Mocking the adfuller result to simulate p-value <= 0.05
+        def mock_adfuller(series):
+            return (0.0, 0.04, None, None, None, None)
+    
+        adfuller = mock_adfuller
+>       assert task_func(sample_df, 'column_a', 'column_b', 'column_c') == True
+E       AssertionError: assert np.False_ == True
+E        +  where np.False_ = task_func(   column_a  column_b  column_c\n0        10        60       900\n1        20        70       900\n2        30        80       900\n3        40        90       900\n4        50       100       900, 'column_a', 'column_b', 'column_c')
+
+test_0884.py:27: AssertionError
+=========================== short test summary info ============================
+FAILED test_0884.py::test_task_func_no_unique_values - AssertionError: assert...
+FAILED test_0884.py::test_task_func_adf_test_pass - AssertionError: assert np...
+2 failed, 2 passed in 2.70s

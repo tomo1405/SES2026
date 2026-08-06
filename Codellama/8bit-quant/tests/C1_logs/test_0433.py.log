@@ -1,0 +1,118 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        df1 = pd.DataFrame({"id": [1, 2, 3], "feature1": [1, 2, 3]})
+        df2 = pd.DataFrame({"id": [1, 2, 3], "feature2": [1, 2, 3]})
+>       p, heatmap = task_func(df1, df2)
+                     ^^^^^^^^^^^^^^^^^^^
+
+test_0433.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df1 =    id  feature1
+0   1         1
+1   2         2
+2   3         3
+df2 =    id  feature2
+0   1         1
+1   2         2
+2   3         3
+column1 = 'feature1', column2 = 'feature2'
+
+    def task_func(df1, df2, column1="feature1", column2="feature2"):
+>       df = pd.merge(df1, df2, on="id")
+             ^^
+E       NameError: name 'pd' is not defined
+
+../../../src/src_0433.py:4: NameError
+___________________ test_task_func_with_custom_column_names ____________________
+
+    def test_task_func_with_custom_column_names():
+        df1 = pd.DataFrame({"id": [1, 2, 3], "feature1": [1, 2, 3]})
+        df2 = pd.DataFrame({"id": [1, 2, 3], "feature2": [1, 2, 3]})
+>       p, heatmap = task_func(df1, df2, column1="feature1", column2="feature2")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0433.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df1 =    id  feature1
+0   1         1
+1   2         2
+2   3         3
+df2 =    id  feature2
+0   1         1
+1   2         2
+2   3         3
+column1 = 'feature1', column2 = 'feature2'
+
+    def task_func(df1, df2, column1="feature1", column2="feature2"):
+>       df = pd.merge(df1, df2, on="id")
+             ^^
+E       NameError: name 'pd' is not defined
+
+../../../src/src_0433.py:4: NameError
+___________________ test_task_func_with_invalid_column_names ___________________
+
+    def test_task_func_with_invalid_column_names():
+        df1 = pd.DataFrame({"id": [1, 2, 3], "feature1": [1, 2, 3]})
+        df2 = pd.DataFrame({"id": [1, 2, 3], "feature2": [1, 2, 3]})
+        with pytest.raises(ValueError):
+>           p, heatmap = task_func(df1, df2, column1="invalid_column", column2="invalid_column")
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0433.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df1 =    id  feature1
+0   1         1
+1   2         2
+2   3         3
+df2 =    id  feature2
+0   1         1
+1   2         2
+2   3         3
+column1 = 'invalid_column', column2 = 'invalid_column'
+
+    def task_func(df1, df2, column1="feature1", column2="feature2"):
+>       df = pd.merge(df1, df2, on="id")
+             ^^
+E       NameError: name 'pd' is not defined
+
+../../../src/src_0433.py:4: NameError
+____________________ test_task_func_with_invalid_dataframe _____________________
+
+    def test_task_func_with_invalid_dataframe():
+        df1 = pd.DataFrame({"id": [1, 2, 3], "feature1": [1, 2, 3]})
+        df2 = pd.DataFrame({"id": [1, 2, 3], "feature2": [1, 2, 3]})
+        with pytest.raises(ValueError):
+>           p, heatmap = task_func(df1, df2, column1="feature1", column2="feature2")
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0433.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df1 =    id  feature1
+0   1         1
+1   2         2
+2   3         3
+df2 =    id  feature2
+0   1         1
+1   2         2
+2   3         3
+column1 = 'feature1', column2 = 'feature2'
+
+    def task_func(df1, df2, column1="feature1", column2="feature2"):
+>       df = pd.merge(df1, df2, on="id")
+             ^^
+E       NameError: name 'pd' is not defined
+
+../../../src/src_0433.py:4: NameError
+=========================== short test summary info ============================
+FAILED test_0433.py::test_task_func - NameError: name 'pd' is not defined
+FAILED test_0433.py::test_task_func_with_custom_column_names - NameError: nam...
+FAILED test_0433.py::test_task_func_with_invalid_column_names - NameError: na...
+FAILED test_0433.py::test_task_func_with_invalid_dataframe - NameError: name ...
+4 failed in 3.58s

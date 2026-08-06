@@ -1,0 +1,27 @@
+....F                                                                    [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_mixed_key_types ______________________
+
+    def test_task_func_with_mixed_key_types():
+        my_dict = {1: 'one', 'two': 2, 3.0: 'three'}
+        expected_output = PrettyTable(['Key', 'Value'])
+        expected_output.add_row([1, 'one'])
+        expected_output.add_row([3.0, 'three'])
+        expected_output.add_row(['two', 2])
+>       assert str(task_func(my_dict)) == str(expected_output)
+                   ^^^^^^^^^^^^^^^^^^
+
+test_0547.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+my_dict = {1: 'one', 'two': 2, 3.0: 'three'}
+
+    def task_func(my_dict):
+>       ordered_dict = OrderedDict(sorted(my_dict.items(), key=lambda t: t[0]))
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: '<' not supported between instances of 'str' and 'int'
+
+../../../src/src_0547.py:4: TypeError
+=========================== short test summary info ============================
+FAILED test_0547.py::test_task_func_with_mixed_key_types - TypeError: '<' not...
+1 failed, 4 passed in 0.51s

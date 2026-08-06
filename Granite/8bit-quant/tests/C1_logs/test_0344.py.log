@@ -1,0 +1,41 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_show = <MagicMock name='show' id='131411999651264'>
+
+    @patch('matplotlib.pyplot.show')
+    def test_task_func(mock_show):
+        # Test case 1: Empty DataFrame
+        df = pd.DataFrame()
+        col = 'column'
+        with pytest.raises(ValueError) as excinfo:
+            task_func(df, col)
+        assert "The DataFrame is empty or the specified column does not exist." in str(excinfo.value)
+    
+        # Test case 2: Non-empty DataFrame, valid column
+        df = pd.DataFrame({'column': [1, 2, 3, 4, 5]})
+        col = 'column'
+        ax = task_func(df, col)
+>       mock_show.assert_called_once()
+
+test_0344.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='show' id='131411999651264'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'show' to have been called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:923: AssertionError
+=========================== short test summary info ============================
+FAILED test_0344.py::test_task_func - AssertionError: Expected 'show' to have...
+1 failed in 2.17s

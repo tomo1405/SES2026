@@ -1,0 +1,32 @@
+..F.F.                                                                   [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_output _____________________________
+
+    def test_task_func_output():
+        image = np.array([[1, 2], [3, 4]])
+        ax, filtered_image = task_func(image)
+    
+>       assert isinstance(ax, plt.AxesSubplot)
+                              ^^^^^^^^^^^^^^^
+E       AttributeError: module 'matplotlib.pyplot' has no attribute 'AxesSubplot'
+
+test_0170.py:22: AttributeError
+__________________________ test_task_func_plot_images __________________________
+
+    def test_task_func_plot_images():
+        image = np.array([[1, 2], [3, 4]])
+        ax, _ = task_func(image)
+    
+        original_image = ax[0].images[0].get_array()
+        filtered_image = ax[1].images[0].get_array()
+    
+        assert np.array_equal(original_image, image)
+>       assert np.array_equal(filtered_image, gaussian_filter(image, sigma=2))
+                                              ^^^^^^^^^^^^^^^
+E       NameError: name 'gaussian_filter' is not defined
+
+test_0170.py:41: NameError
+=========================== short test summary info ============================
+FAILED test_0170.py::test_task_func_output - AttributeError: module 'matplotl...
+FAILED test_0170.py::test_task_func_plot_images - NameError: name 'gaussian_f...
+2 failed, 4 passed in 2.42s

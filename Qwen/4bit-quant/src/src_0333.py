@@ -1,0 +1,9 @@
+import re
+from collections import Counter
+from nltk.corpus import stopwords
+def task_func(text: str) -> dict:
+    words = re.findall(r'\b\w+\b', text)
+    non_stopwords = [word for word in words if word.lower() not in set(stopwords.words('english'))]
+    count = dict(Counter(non_stopwords))
+
+    return count

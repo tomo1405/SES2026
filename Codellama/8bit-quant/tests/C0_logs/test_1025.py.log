@@ -1,0 +1,108 @@
+.FFFFF                                                                   [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_single_value __________________________
+
+    def test_task_func_single_value():
+        data_dict = {'a': 1}
+>       df, plot = task_func(data_dict)
+                   ^^^^^^^^^^^^^^^^^^^^
+
+test_1025.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1025.py:7: in task_func
+    df = pd.DataFrame(data_dict).dropna()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:769: in __init__
+    mgr = dict_to_mgr(data, index, columns, dtype=dtype, copy=copy)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:460: in dict_to_mgr
+    return arrays_to_mgr(arrays, columns, index, dtype=dtype, consolidate=copy)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:113: in arrays_to_mgr
+    index = _extract_index(arrays)
+            ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = [1]
+
+    def _extract_index(data) -> Index:
+        """
+        Try to infer an Index from the passed data, raise ValueError on failure.
+        """
+        index: Index
+        if len(data) == 0:
+            return default_index(0)
+    
+        raw_lengths = set()
+        indexes: list[list[Hashable] | Index] = []
+    
+        have_raw_arrays = False
+        have_series = False
+        have_dicts = False
+    
+        for val in data:
+            if isinstance(val, ABCSeries):
+                have_series = True
+                indexes.append(val.index)
+            elif isinstance(val, dict):
+                have_dicts = True
+                indexes.append(list(val.keys()))
+            elif is_list_like(val) and getattr(val, "ndim", 1) == 1:
+                have_raw_arrays = True
+                raw_lengths.add(len(val))
+            elif isinstance(val, np.ndarray) and val.ndim > 1:
+                raise ValueError("Per-column arrays must each be 1-dimensional")
+    
+        if not indexes and not raw_lengths:
+>           raise ValueError("If using all scalar values, you must pass an index")
+E           ValueError: If using all scalar values, you must pass an index
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:634: ValueError
+________________________ test_task_func_multiple_values ________________________
+
+    def test_task_func_multiple_values():
+        data_dict = {'a': [1, 2, 3], 'b': [4, 5, 6]}
+        df, plot = task_func(data_dict)
+        assert df.shape == (3, 2)
+>       assert isinstance(plot, sns.histplot)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: isinstance() arg 2 must be a type, a tuple of types, or a union
+
+test_1025.py:23: TypeError
+_________________________ test_task_func_invalid_data __________________________
+
+    def test_task_func_invalid_data():
+        data_dict = {'a': [1, 2, 3], 'b': [4, 5, 6], 'c': 'invalid'}
+        df, plot = task_func(data_dict)
+>       assert df.shape == (3, 2)
+E       assert (3, 3) == (3, 2)
+E         
+E         At index 1 diff: 3 != 2
+E         Use -v to get more diff
+
+test_1025.py:29: AssertionError
+_______________________ test_task_func_invalid_num_bins ________________________
+
+    def test_task_func_invalid_num_bins():
+        data_dict = {'a': [1, 2, 3], 'b': [4, 5, 6]}
+>       df, plot = task_func(data_dict, num_bins=0)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: task_func() got an unexpected keyword argument 'num_bins'
+
+test_1025.py:34: TypeError
+_______________________ test_task_func_invalid_bin_edges _______________________
+
+    def test_task_func_invalid_bin_edges():
+        data_dict = {'a': [1, 2, 3], 'b': [4, 5, 6]}
+>       df, plot = task_func(data_dict, bin_edges=[])
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: task_func() got an unexpected keyword argument 'bin_edges'
+
+test_1025.py:40: TypeError
+=========================== short test summary info ============================
+FAILED test_1025.py::test_task_func_single_value - ValueError: If using all s...
+FAILED test_1025.py::test_task_func_multiple_values - TypeError: isinstance()...
+FAILED test_1025.py::test_task_func_invalid_data - assert (3, 3) == (3, 2)
+FAILED test_1025.py::test_task_func_invalid_num_bins - TypeError: task_func()...
+FAILED test_1025.py::test_task_func_invalid_bin_edges - TypeError: task_func(...
+5 failed, 1 passed in 3.69s

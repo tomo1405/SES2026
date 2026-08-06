@@ -1,0 +1,45 @@
+FF...F                                                                   [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_default_days __________________________
+
+    def test_task_func_default_days():
+        # Test with default value of days_in_past (7)
+>       expected_weekday = (datetime.now(pytz.UTC) - timedelta(days=7)).strftime('%A')
+                                                     ^^^^^^^^^
+E       NameError: name 'timedelta' is not defined
+
+test_0498.py:10: NameError
+__________________________ test_task_func_custom_days __________________________
+
+    def test_task_func_custom_days():
+        # Test with a custom number of days in the past
+        days_in_past = 10
+>       expected_weekday = (datetime.now(pytz.UTC) - timedelta(days=days_in_past)).strftime('%A')
+                                                     ^^^^^^^^^
+E       NameError: name 'timedelta' is not defined
+
+test_0498.py:16: NameError
+_______________________ test_task_func_edge_case_min_int _______________________
+
+    def test_task_func_edge_case_min_int():
+        # Test with minimum possible integer value for days_in_past
+        # This is more of a theoretical test since it's unlikely to be practical
+        with pytest.raises(OverflowError):
+>           task_func(-(2**31 - 1))
+
+test_0498.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+days_in_past = -2147483647
+
+    def task_func(days_in_past=7):
+        if days_in_past < 0:
+>           raise ValueError("Days in the past cannot be negative")
+E           ValueError: Days in the past cannot be negative
+
+../../../src/src_0498.py:6: ValueError
+=========================== short test summary info ============================
+FAILED test_0498.py::test_task_func_default_days - NameError: name 'timedelta...
+FAILED test_0498.py::test_task_func_custom_days - NameError: name 'timedelta'...
+FAILED test_0498.py::test_task_func_edge_case_min_int - ValueError: Days in t...
+3 failed, 3 passed in 0.44s

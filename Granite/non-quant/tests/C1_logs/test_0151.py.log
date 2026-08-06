@@ -1,0 +1,50 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        product_dict = {'A': (10, 10), 'B': (20, 20), 'C': (30, 30)}
+        product_keys = list(product_dict.keys())
+        expected_columns = ['Product', 'Quantity', 'Price', 'Profit', 'Average Price', 'Average Profit']
+        expected_data = [
+            ['A', 10, 10, 100, None, None],
+            ['B', 20, 20, 400, None, None],
+            ['C', 30, 30, 900, None, None]
+        ]
+        expected_df = pd.DataFrame(expected_data, columns=expected_columns)
+        expected_ax = None
+    
+        df, ax = task_func(product_dict, product_keys)
+    
+        assert isinstance(df, pd.DataFrame)
+        assert df.columns.tolist() == expected_columns
+>       assert df.equals(expected_df)
+E       assert False
+E        +  where False = equals(  Product  Quantity  Price  Profit Average Price Average Profit\n0       A        10     10     100          None      ...B        20     20     400          None           None\n2       C        30     30     900          None           None)
+E        +    where equals =   Product  Quantity  Price  Profit  Average Price  Average Profit\n0       A        10     10     100           20.0   ...     20     20     400           20.0      466.666667\n2       C        30     30     900           20.0      466.666667.equals
+
+test_0151.py:21: AssertionError
+________________________ test_task_func_with_empty_dict ________________________
+
+    def test_task_func_with_empty_dict():
+        product_dict = {}
+        product_keys = list(product_dict.keys())
+        expected_columns = ['Product', 'Quantity', 'Price', 'Profit', 'Average Price', 'Average Profit']
+        expected_data = []
+        expected_df = pd.DataFrame(expected_data, columns=expected_columns)
+        expected_ax = None
+    
+        df, ax = task_func(product_dict, product_keys)
+    
+        assert isinstance(df, pd.DataFrame)
+>       assert df.columns.tolist() == expected_columns
+E       AssertionError: assert ['Product', '...ce', 'Profit'] == ['Product', '...erage Profit']
+E         
+E         Right contains 2 more items, first extra item: 'Average Price'
+E         Use -v to get more diff
+
+test_0151.py:35: AssertionError
+=========================== short test summary info ============================
+FAILED test_0151.py::test_task_func - assert False
+FAILED test_0151.py::test_task_func_with_empty_dict - AssertionError: assert ...
+2 failed in 2.15s

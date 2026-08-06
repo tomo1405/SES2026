@@ -1,0 +1,74 @@
+.FFF                                                                     [100%]
+=================================== FAILURES ===================================
+_____________________________ test_replace_values ______________________________
+
+df =    A
+0  0
+1  1
+2  2
+3  3
+4  4
+5  5
+6  6
+7  7
+8  8
+9  9, dct = {'A': 10}
+
+    def test_replace_values(df, dct):
+        expected = df.copy()
+        expected['A'] = 10
+>       assert task_func(df, dct).equals(expected)
+E       AssertionError: assert False
+E        +  where False = equals(    A\n0  10\n1  10\n2  10\n3  10\n4  10\n5  10\n6  10\n7  10\n8  10\n9  10)
+E        +    where equals =    A\n0  0\n1  1\n2  2\n3  3\n4  4\n5  5\n6  6\n7  7\n8  8\n9  9.equals
+E        +      where    A\n0  0\n1  1\n2  2\n3  3\n4  4\n5  5\n6  6\n7  7\n8  8\n9  9 = task_func(   A\n0  0\n1  1\n2  2\n3  3\n4  4\n5  5\n6  6\n7  7\n8  8\n9  9, {'A': 10})
+
+test_0226.py:22: AssertionError
+_____________________________ test_plot_histograms _____________________________
+
+df =    A
+0  0
+1  1
+2  2
+3  3
+4  4
+5  5
+6  6
+7  7
+8  8
+9  9, dct = {'A': 10}
+
+    def test_plot_histograms(df, dct):
+        columns = ['A']
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0226.py:26: Failed
+______________________ test_plot_histograms_with_columns _______________________
+
+df =    A
+0  0
+1  1
+2  2
+3  3
+4  4
+5  5
+6  6
+7  7
+8  8
+9  9, dct = {'A': 10}
+
+    def test_plot_histograms_with_columns(df, dct):
+        columns = ['A']
+        df_replaced = task_func(df, dct, columns=columns, plot_histograms=True)
+        assert isinstance(df_replaced, pd.DataFrame)
+>       assert plt.NuD.NuD.gcf()
+               ^^^^^^^
+E       AttributeError: module 'matplotlib.pyplot' has no attribute 'NuD'
+
+test_0226.py:33: AttributeError
+=========================== short test summary info ============================
+FAILED test_0226.py::test_replace_values - AssertionError: assert False
+FAILED test_0226.py::test_plot_histograms - Failed: DID NOT RAISE ValueError
+FAILED test_0226.py::test_plot_histograms_with_columns - AttributeError: modu...
+3 failed, 1 passed in 2.38s

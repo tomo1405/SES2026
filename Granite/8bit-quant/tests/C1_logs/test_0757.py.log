@@ -1,0 +1,24 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        source_dir = "source_directory"
+        target_dir = "target_directory"
+        extensions = [".txt", ".csv"]
+    
+        with pytest.raises(ValueError) as exc_info:
+            task_func(source_dir, target_dir, extensions)
+        assert "source_dir does not exist." in str(exc_info.value)
+    
+        with pytest.raises(ValueError) as exc_info:
+            task_func("source_directory", target_dir, extensions)
+>       assert "target_dir does not exist." in str(exc_info.value)
+E       AssertionError: assert 'target_dir does not exist.' in 'source_dir does not exist.'
+E        +  where 'source_dir does not exist.' = str(ValueError('source_dir does not exist.'))
+E        +    where ValueError('source_dir does not exist.') = <ExceptionInfo ValueError('source_dir does not exist.') tblen=2>.value
+
+test_0757.py:17: AssertionError
+=========================== short test summary info ============================
+FAILED test_0757.py::test_task_func - AssertionError: assert 'target_dir does...
+1 failed in 0.46s

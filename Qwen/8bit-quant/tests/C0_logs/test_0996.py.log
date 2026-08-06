@@ -1,0 +1,30 @@
+...F                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_non_numeric_data ________________________
+
+    def test_task_func_non_numeric_data():
+        data = StringIO("a\nb\nc")
+        with pytest.MonkeyPatch.context() as mp:
+            mp.setattr(pd, 'read_csv', lambda *args, **kwargs: pd.read_csv(data))
+>           result = task_func("non_numeric_file.csv", "plot.png")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0996.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0996.py:12: in task_func
+    data = pd.read_csv(file_path)
+           ^^^^^^^^^^^^^^^^^^^^^^
+test_0996.py:62: in <lambda>
+    mp.setattr(pd, 'read_csv', lambda *args, **kwargs: pd.read_csv(data))
+                                                       ^^^^^^^^^^^^^^^^^
+test_0996.py:62: in <lambda>
+    mp.setattr(pd, 'read_csv', lambda *args, **kwargs: pd.read_csv(data))
+                                                       ^^^^^^^^^^^^^^^^^
+test_0996.py:62: in <lambda>
+    mp.setattr(pd, 'read_csv', lambda *args, **kwargs: pd.read_csv(data))
+                                                       ^^^^^^^^^^^^^^^^^
+E   RecursionError: maximum recursion depth exceeded
+!!! Recursion detected (same locals & position)
+=========================== short test summary info ============================
+FAILED test_0996.py::test_task_func_non_numeric_data - RecursionError: maximu...
+1 failed, 3 passed in 3.10s

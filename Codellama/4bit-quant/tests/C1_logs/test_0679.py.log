@@ -1,0 +1,280 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        path = 'path/to/files'
+>       df = task_func(path)
+             ^^^^^^^^^^^^^^^
+
+test_0679.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0679.py:17: in task_func
+    data = json.load(file)
+           ^^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/__init__.py:293: in load
+    return loads(fp.read(),
+/usr/lib/python3.12/json/__init__.py:346: in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/decoder.py:337: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <json.decoder.JSONDecoder object at 0x752cd3f7b980>, s = 'invalid data'
+idx = 0
+
+    def raw_decode(self, s, idx=0):
+        """Decode a JSON document from ``s`` (a ``str`` beginning with
+        a JSON document) and return a 2-tuple of the Python
+        representation and the index in ``s`` where the document ended.
+    
+        This can be used to decode a JSON document from a string that may
+        have extraneous data at the end.
+    
+        """
+        try:
+            obj, end = self.scan_once(s, idx)
+        except StopIteration as err:
+>           raise JSONDecodeError("Expecting value", s, err.value) from None
+E           json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+/usr/lib/python3.12/json/decoder.py:355: JSONDecodeError
+_______________________ test_task_func_with_scalar_data ________________________
+
+    def test_task_func_with_scalar_data():
+        path = 'path/to/files'
+        data = {'key': 'value'}
+        with open(os.path.join(path, 'scalar.json'), 'w') as file:
+            json.dump(data, file)
+>       df = task_func(path)
+             ^^^^^^^^^^^^^^^
+
+test_0679.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0679.py:17: in task_func
+    data = json.load(file)
+           ^^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/__init__.py:293: in load
+    return loads(fp.read(),
+/usr/lib/python3.12/json/__init__.py:346: in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/decoder.py:337: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <json.decoder.JSONDecoder object at 0x752cd3f7b980>, s = 'invalid data'
+idx = 0
+
+    def raw_decode(self, s, idx=0):
+        """Decode a JSON document from ``s`` (a ``str`` beginning with
+        a JSON document) and return a 2-tuple of the Python
+        representation and the index in ``s`` where the document ended.
+    
+        This can be used to decode a JSON document from a string that may
+        have extraneous data at the end.
+    
+        """
+        try:
+            obj, end = self.scan_once(s, idx)
+        except StopIteration as err:
+>           raise JSONDecodeError("Expecting value", s, err.value) from None
+E           json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+/usr/lib/python3.12/json/decoder.py:355: JSONDecodeError
+______________________ test_task_func_with_multiple_files ______________________
+
+    def test_task_func_with_multiple_files():
+        path = 'path/to/files'
+        data = {'key': 'value'}
+        for i in range(10):
+            with open(os.path.join(path, f'file{i}.json'), 'w') as file:
+                json.dump(data, file)
+>       df = task_func(path)
+             ^^^^^^^^^^^^^^^
+
+test_0679.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0679.py:24: in task_func
+    shutil.move(file_path, processed_path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+src = 'path/to/files/file3.json', dst = 'path/to/files/processed'
+copy_function = <function copy2 at 0x752cd39b1da0>
+
+    def move(src, dst, copy_function=copy2):
+        """Recursively move a file or directory to another location. This is
+        similar to the Unix "mv" command. Return the file or directory's
+        destination.
+    
+        If dst is an existing directory or a symlink to a directory, then src is
+        moved inside that directory. The destination path in that directory must
+        not already exist.
+    
+        If dst already exists but is not a directory, it may be overwritten
+        depending on os.rename() semantics.
+    
+        If the destination is on our current filesystem, then rename() is used.
+        Otherwise, src is copied to the destination and then removed. Symlinks are
+        recreated under the new name if os.rename() fails because of cross
+        filesystem renames.
+    
+        The optional `copy_function` argument is a callable that will be used
+        to copy the source or it will be delegated to `copytree`.
+        By default, copy2() is used, but any function that supports the same
+        signature (like copy()) can be used.
+    
+        A lot more could be done here...  A look at a mv.c shows a lot of
+        the issues this implementation glosses over.
+    
+        """
+        sys.audit("shutil.move", src, dst)
+        real_dst = dst
+        if os.path.isdir(dst):
+            if _samefile(src, dst) and not os.path.islink(src):
+                # We might be on a case insensitive filesystem,
+                # perform the rename anyway.
+                os.rename(src, dst)
+                return
+    
+            # Using _basename instead of os.path.basename is important, as we must
+            # ignore any trailing slash to avoid the basename returning ''
+            real_dst = os.path.join(dst, _basename(src))
+    
+            if os.path.exists(real_dst):
+>               raise Error("Destination path '%s' already exists" % real_dst)
+E               shutil.Error: Destination path 'path/to/files/processed/file3.json' already exists
+
+/usr/lib/python3.12/shutil.py:884: Error
+_______________________ test_task_func_with_invalid_file _______________________
+
+    def test_task_func_with_invalid_file():
+        path = 'path/to/files'
+        with open(os.path.join(path, 'invalid.json'), 'w') as file:
+            file.write('invalid data')
+>       df = task_func(path)
+             ^^^^^^^^^^^^^^^
+
+test_0679.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0679.py:24: in task_func
+    shutil.move(file_path, processed_path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+src = 'path/to/files/file3.json', dst = 'path/to/files/processed'
+copy_function = <function copy2 at 0x752cd39b1da0>
+
+    def move(src, dst, copy_function=copy2):
+        """Recursively move a file or directory to another location. This is
+        similar to the Unix "mv" command. Return the file or directory's
+        destination.
+    
+        If dst is an existing directory or a symlink to a directory, then src is
+        moved inside that directory. The destination path in that directory must
+        not already exist.
+    
+        If dst already exists but is not a directory, it may be overwritten
+        depending on os.rename() semantics.
+    
+        If the destination is on our current filesystem, then rename() is used.
+        Otherwise, src is copied to the destination and then removed. Symlinks are
+        recreated under the new name if os.rename() fails because of cross
+        filesystem renames.
+    
+        The optional `copy_function` argument is a callable that will be used
+        to copy the source or it will be delegated to `copytree`.
+        By default, copy2() is used, but any function that supports the same
+        signature (like copy()) can be used.
+    
+        A lot more could be done here...  A look at a mv.c shows a lot of
+        the issues this implementation glosses over.
+    
+        """
+        sys.audit("shutil.move", src, dst)
+        real_dst = dst
+        if os.path.isdir(dst):
+            if _samefile(src, dst) and not os.path.islink(src):
+                # We might be on a case insensitive filesystem,
+                # perform the rename anyway.
+                os.rename(src, dst)
+                return
+    
+            # Using _basename instead of os.path.basename is important, as we must
+            # ignore any trailing slash to avoid the basename returning ''
+            real_dst = os.path.join(dst, _basename(src))
+    
+            if os.path.exists(real_dst):
+>               raise Error("Destination path '%s' already exists" % real_dst)
+E               shutil.Error: Destination path 'path/to/files/processed/file3.json' already exists
+
+/usr/lib/python3.12/shutil.py:884: Error
+_______________________ test_task_func_with_missing_file _______________________
+
+    def test_task_func_with_missing_file():
+        path = 'path/to/files'
+>       df = task_func(path)
+             ^^^^^^^^^^^^^^^
+
+test_0679.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0679.py:24: in task_func
+    shutil.move(file_path, processed_path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+src = 'path/to/files/file3.json', dst = 'path/to/files/processed'
+copy_function = <function copy2 at 0x752cd39b1da0>
+
+    def move(src, dst, copy_function=copy2):
+        """Recursively move a file or directory to another location. This is
+        similar to the Unix "mv" command. Return the file or directory's
+        destination.
+    
+        If dst is an existing directory or a symlink to a directory, then src is
+        moved inside that directory. The destination path in that directory must
+        not already exist.
+    
+        If dst already exists but is not a directory, it may be overwritten
+        depending on os.rename() semantics.
+    
+        If the destination is on our current filesystem, then rename() is used.
+        Otherwise, src is copied to the destination and then removed. Symlinks are
+        recreated under the new name if os.rename() fails because of cross
+        filesystem renames.
+    
+        The optional `copy_function` argument is a callable that will be used
+        to copy the source or it will be delegated to `copytree`.
+        By default, copy2() is used, but any function that supports the same
+        signature (like copy()) can be used.
+    
+        A lot more could be done here...  A look at a mv.c shows a lot of
+        the issues this implementation glosses over.
+    
+        """
+        sys.audit("shutil.move", src, dst)
+        real_dst = dst
+        if os.path.isdir(dst):
+            if _samefile(src, dst) and not os.path.islink(src):
+                # We might be on a case insensitive filesystem,
+                # perform the rename anyway.
+                os.rename(src, dst)
+                return
+    
+            # Using _basename instead of os.path.basename is important, as we must
+            # ignore any trailing slash to avoid the basename returning ''
+            real_dst = os.path.join(dst, _basename(src))
+    
+            if os.path.exists(real_dst):
+>               raise Error("Destination path '%s' already exists" % real_dst)
+E               shutil.Error: Destination path 'path/to/files/processed/file3.json' already exists
+
+/usr/lib/python3.12/shutil.py:884: Error
+=========================== short test summary info ============================
+FAILED test_0679.py::test_task_func - json.decoder.JSONDecodeError: Expecting...
+FAILED test_0679.py::test_task_func_with_scalar_data - json.decoder.JSONDecod...
+FAILED test_0679.py::test_task_func_with_multiple_files - shutil.Error: Desti...
+FAILED test_0679.py::test_task_func_with_invalid_file - shutil.Error: Destina...
+FAILED test_0679.py::test_task_func_with_missing_file - shutil.Error: Destina...
+5 failed in 1.40s

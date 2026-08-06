@@ -1,0 +1,28 @@
+.F.                                                                      [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_with_csv_file _________________________
+
+    def test_task_func_with_csv_file():
+        goals = {'Team A': 2, 'Team B': 1, 'Team C': 3}
+        penalties = {'Team A': 1, 'Team B': 2, 'Team C': 0}
+        expected_counts = Counter({'goals': 8, 'penalties': 5})
+        content = [
+            ['team', 'goals', 'penalties'],
+            ['Team A', '2', '1'],
+            ['Team B', '1', '2'],
+            ['Team C', '3', '0']
+        ]
+        create_test_csv(CSV_FILE_PATH, content)
+        actual_counts = task_func(goals, penalties)
+>       assert actual_counts == expected_counts
+E       AssertionError: assert Counter({'goa...enalties': 6}) == Counter({'goa...enalties': 5})
+E         
+E         Differing items:
+E         {'goals': 12} != {'goals': 8}
+E         {'penalties': 6} != {'penalties': 5}
+E         Use -v to get more diff
+
+test_0801.py:33: AssertionError
+=========================== short test summary info ============================
+FAILED test_0801.py::test_task_func_with_csv_file - AssertionError: assert Co...
+1 failed, 2 passed in 0.54s

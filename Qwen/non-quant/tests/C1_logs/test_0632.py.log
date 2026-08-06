@@ -1,0 +1,28 @@
+...F                                                                     [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_quoting_nonnumeric _______________________
+
+sample_df =     Name  Age
+0  Alice   25
+1    Bob   30
+temp_output_dir = local('/tmp/pytest-of-tomohiro-w/pytest-1616/test_task_func_quoting_nonnume0/output')
+
+    def test_task_func_quoting_nonnumeric(sample_df, temp_output_dir):
+        filename = "test_file.csv"
+        result_path = task_func(sample_df, filename, str(temp_output_dir))
+    
+        with open(result_path, newline='') as csvfile:
+            reader = csv.reader(csvfile)
+            rows = list(reader)
+    
+>       assert rows[1][1] == '"25"'  # Age should be quoted as it's non-numeric
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert '25' == '"25"'
+E         
+E         - "25"
+E         + 25
+
+test_0632.py:66: AssertionError
+=========================== short test summary info ============================
+FAILED test_0632.py::test_task_func_quoting_nonnumeric - assert '25' == '"25"'
+1 failed, 3 passed in 1.16s

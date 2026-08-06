@@ -1,0 +1,9 @@
+import string
+import wordninja
+def task_func(word):
+    ALPHABET = list(string.ascii_lowercase)
+    # Map each letter in the word to its corresponding alphabetical number
+    word_numbers = [ALPHABET.index(letter) + 1 for letter in word]
+    
+    # Combine each letter with its alphabetical number in a tuple
+    return [(word[i], word_numbers[i]) for i in range(len(word))],  wordninja.split(word)

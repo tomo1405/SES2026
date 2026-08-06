@@ -1,0 +1,112 @@
+FFF.                                                                     [100%]
+=================================== FAILURES ===================================
+________________ test_task_func[utc_datetime0-expected_output0] ________________
+
+utc_datetime = datetime.datetime(2023, 1, 1, 0, 0, tzinfo=<UTC>)
+expected_output =        City                Local Time Weather Condition
+0  New York   2023-01-01 00:00:00 UTC             Sunny
+1    L...  Rainy
+3     Tokyo   2023-01-01 15:00:00 JST             Snowy
+4    Sydney  2023-01-01 10:00:00 AEDT            Stormy
+
+    @pytest.mark.parametrize(
+        "utc_datetime, expected_output",
+        [
+            (
+                datetime(2023, 1, 1, 0, 0, 0, tzinfo=pytz.utc),
+                pd.DataFrame(
+                    [
+                        ['New York', '2023-01-01 00:00:00 UTC', 'Sunny'],
+                        ['London', '2023-01-01 01:00:00 BST', 'Cloudy'],
+                        ['Beijing', '2023-01-01 08:00:00 CST', 'Rainy'],
+                        ['Tokyo', '2023-01-01 15:00:00 JST', 'Snowy'],
+                        ['Sydney', '2023-01-01 10:00:00 AEDT', 'Stormy']
+                    ],
+                    columns=['City', 'Local Time', 'Weather Condition']
+                )
+            ),
+            (
+                datetime(2023, 1, 1, 12, 0, 0, tzinfo=pytz.utc),
+                pd.DataFrame(
+                    [
+                        ['New York', '2023-01-01 12:00:00 UTC', 'Sunny'],
+                        ['London', '2023-01-01 13:00:00 BST', 'Cloudy'],
+                        ['Beijing', '2023-01-01 20:00:00 CST', 'Rainy'],
+                        ['Tokyo', '2023-01-01 21:00:00 JST', 'Snowy'],
+                        ['Sydney', '2023-01-01 16:00:00 AEDT', 'Stormy']
+                    ],
+                    columns=['City', 'Local Time', 'Weather Condition']
+                )
+            )
+        ]
+    )
+    def test_task_func(utc_datetime, expected_output):
+        set_seed(42)
+        report_df = task_func(utc_datetime)
+>       assert report_df.equals(expected_output)
+E       assert False
+E        +  where False = equals(       City                Local Time Weather Condition\n0  New York   2023-01-01 00:00:00 UTC             Sunny\n1    L...  Rainy\n3     Tokyo   2023-01-01 15:00:00 JST             Snowy\n4    Sydney  2023-01-01 10:00:00 AEDT            Stormy)
+E        +    where equals =        City                Local Time Weather Condition\n0  New York   2022-12-31 19:00:00 EST             Sunny\n1    L...  Rainy\n3     Tokyo   2023-01-01 09:00:00 JST            Cloudy\n4    Sydney  2023-01-01 11:00:00 AEDT            Cloudy.equals
+
+test_0200.py:42: AssertionError
+________________ test_task_func[utc_datetime1-expected_output1] ________________
+
+utc_datetime = datetime.datetime(2023, 1, 1, 12, 0, tzinfo=<UTC>)
+expected_output =        City                Local Time Weather Condition
+0  New York   2023-01-01 12:00:00 UTC             Sunny
+1    L...  Rainy
+3     Tokyo   2023-01-01 21:00:00 JST             Snowy
+4    Sydney  2023-01-01 16:00:00 AEDT            Stormy
+
+    @pytest.mark.parametrize(
+        "utc_datetime, expected_output",
+        [
+            (
+                datetime(2023, 1, 1, 0, 0, 0, tzinfo=pytz.utc),
+                pd.DataFrame(
+                    [
+                        ['New York', '2023-01-01 00:00:00 UTC', 'Sunny'],
+                        ['London', '2023-01-01 01:00:00 BST', 'Cloudy'],
+                        ['Beijing', '2023-01-01 08:00:00 CST', 'Rainy'],
+                        ['Tokyo', '2023-01-01 15:00:00 JST', 'Snowy'],
+                        ['Sydney', '2023-01-01 10:00:00 AEDT', 'Stormy']
+                    ],
+                    columns=['City', 'Local Time', 'Weather Condition']
+                )
+            ),
+            (
+                datetime(2023, 1, 1, 12, 0, 0, tzinfo=pytz.utc),
+                pd.DataFrame(
+                    [
+                        ['New York', '2023-01-01 12:00:00 UTC', 'Sunny'],
+                        ['London', '2023-01-01 13:00:00 BST', 'Cloudy'],
+                        ['Beijing', '2023-01-01 20:00:00 CST', 'Rainy'],
+                        ['Tokyo', '2023-01-01 21:00:00 JST', 'Snowy'],
+                        ['Sydney', '2023-01-01 16:00:00 AEDT', 'Stormy']
+                    ],
+                    columns=['City', 'Local Time', 'Weather Condition']
+                )
+            )
+        ]
+    )
+    def test_task_func(utc_datetime, expected_output):
+        set_seed(42)
+        report_df = task_func(utc_datetime)
+>       assert report_df.equals(expected_output)
+E       assert False
+E        +  where False = equals(       City                Local Time Weather Condition\n0  New York   2023-01-01 12:00:00 UTC             Sunny\n1    L...  Rainy\n3     Tokyo   2023-01-01 21:00:00 JST             Snowy\n4    Sydney  2023-01-01 16:00:00 AEDT            Stormy)
+E        +    where equals =        City                Local Time Weather Condition\n0  New York   2023-01-01 07:00:00 EST             Sunny\n1    L...  Rainy\n3     Tokyo   2023-01-01 21:00:00 JST            Cloudy\n4    Sydney  2023-01-01 23:00:00 AEDT            Cloudy.equals
+
+test_0200.py:42: AssertionError
+_____________________ test_task_func_invalid_utc_datetime ______________________
+
+    def test_task_func_invalid_utc_datetime():
+>       with pytest.raises(ValueError) as exc_info:
+E       Failed: DID NOT RAISE ValueError
+
+test_0200.py:45: Failed
+=========================== short test summary info ============================
+FAILED test_0200.py::test_task_func[utc_datetime0-expected_output0] - assert ...
+FAILED test_0200.py::test_task_func[utc_datetime1-expected_output1] - assert ...
+FAILED test_0200.py::test_task_func_invalid_utc_datetime - Failed: DID NOT RA...
+3 failed, 1 passed in 1.48s

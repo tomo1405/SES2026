@@ -1,0 +1,26 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        students_data = []
+    
+        for student in STUDENTS:
+            grades = [randint(0, 100) for _ in COURSES]
+            average_grade = np.mean(grades)
+            students_data.append([student] + grades + [average_grade])
+    
+        columns = ['Name'] + COURSES + ['Average Grade']
+        expected_df = pd.DataFrame(students_data, columns=columns)
+    
+        actual_df = task_func()
+    
+>       assert actual_df.equals(expected_df)
+E       assert False
+E        +  where False = equals(    Name  Math  Physics  ...  Geography  Computer Science  Average Grade\n0    Joe    23       33  ...         69      ...      76         60.375\n7   Matt    90       68  ...         87                65         62.500\n\n[8 rows x 10 columns])
+E        +    where equals =     Name  Math  Physics  ...  Geography  Computer Science  Average Grade\n0    Joe    18       25  ...         21      ...      16         67.875\n7   Matt    46        7  ...         24                93         38.000\n\n[8 rows x 10 columns].equals
+
+test_0153.py:23: AssertionError
+=========================== short test summary info ============================
+FAILED test_0153.py::test_task_func - assert False
+1 failed in 1.06s

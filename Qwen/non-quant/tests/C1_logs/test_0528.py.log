@@ -1,0 +1,43 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sample_data_file = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1603/test_task_func0/sample_data.json')
+
+    def test_task_func(sample_data_file):
+        results, ax = task_func(str(sample_data_file))
+    
+        # Check if the results dictionary is correct
+        expected_results = {
+            "key1": {"mean": 3.0, "median": 3.0},
+            "key2": {"mean": 4.0, "median": 4.0}
+        }
+        assert results == expected_results
+    
+        # Check if the Axes object is a matplotlib Axes instance
+        assert isinstance(ax, plt.Axes)
+    
+        # Check if the plot title is set correctly
+        assert ax.get_title() == "Boxplot of Values for Each Key"
+    
+        # Check if the plot contains the correct number of boxes
+        lines = ax.get_lines()
+        assert len(lines) == 2 * 6  # 2 keys, 6 whiskers and caps per box
+    
+        # Check if the plot contains the correct number of boxes
+        boxes = ax.artists
+>       assert len(boxes) == 2  # 2 keys
+        ^^^^^^^^^^^^^^^^^^^^^^
+E       assert 0 == 2
+E        +  where 0 = len(<Axes.ArtistList of 0 artists>)
+
+test_0528.py:43: AssertionError
+=============================== warnings summary ===============================
+Qwen/non-quant/tests/test_0528.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/categorical.py:700: MatplotlibDeprecationWarning: vert: bool was deprecated in Matplotlib 3.11 and will be removed in 3.13. Use orientation: {'vertical', 'horizontal'} instead.
+    artists = ax.bxp(**boxplot_kws)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0528.py::test_task_func - assert 0 == 2
+1 failed, 1 warning in 3.60s

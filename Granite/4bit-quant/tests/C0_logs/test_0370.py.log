@@ -1,0 +1,84 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Test with a list of numbers
+        l = [1, 2, 3, 4, 5]
+        ax = task_func(l)
+        assert ax is not None
+        # Add more assertions to test the output of the function
+    
+        # Test case 2: Test with an empty list
+        l = []
+        ax = task_func(l)
+        assert ax is not None
+        # Add more assertions to test the output of the function
+    
+        # Test case 3: Test with a list of strings
+        l = ['a', 'b', 'c', 'd', 'e']
+>       ax = task_func(l)
+             ^^^^^^^^^^^^
+
+test_0370.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0370.py:8: in task_func
+    mu, std = stats.norm.fit(l)
+              ^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/scipy/stats/_continuous_distns.py:76: in wrapper
+    return fun(self, data, *args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <scipy.stats._continuous_distns.norm_gen object at 0x7ed2f18d97c0>
+data = array(['a', 'b', 'c', 'd', 'e'], dtype='<U1'), kwds = {}
+
+    @_call_super_mom
+    @replace_notes_in_docstring(rv_continuous, notes="""\
+        For the normal distribution, method of moments and maximum likelihood
+        estimation give identical fits, and explicit formulas for the estimates
+        are available.
+        This function uses these explicit formulas for the maximum likelihood
+        estimation of the normal distribution parameters, so the
+        `optimizer` and `method` arguments are ignored.\n\n""")
+    def fit(self, data, **kwds):
+        floc = kwds.pop('floc', None)
+        fscale = kwds.pop('fscale', None)
+    
+        _remove_optimizer_parameters(kwds)
+    
+        if floc is not None and fscale is not None:
+            # This check is for consistency with `rv_continuous.fit`.
+            # Without this check, this function would just return the
+            # parameters that were given.
+            raise ValueError("All parameters fixed. There is nothing to "
+                             "optimize.")
+    
+        data = np.asarray(data)
+    
+>       if not np.isfinite(data).all():
+               ^^^^^^^^^^^^^^^^^
+E       TypeError: ufunc 'isfinite' not supported for the input types, and the inputs could not be safely coerced to any supported types according to the casting rule ''safe''
+
+../../../.venv/lib/python3.12/site-packages/scipy/stats/_continuous_distns.py:477: TypeError
+=============================== warnings summary ===============================
+Granite/4bit-quant/tests/test_0370.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/lib/_histograms_impl.py:897: RuntimeWarning: invalid value encountered in divide
+    return n / db / n.sum(), bin_edges
+
+Granite/4bit-quant/tests/test_0370.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/scipy/stats/_continuous_distns.py:481: RuntimeWarning: Mean of empty slice
+    loc = data.mean()
+
+Granite/4bit-quant/tests/test_0370.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/_methods.py:142: RuntimeWarning: invalid value encountered in scalar divide
+    ret = ret.dtype.type(ret / rcount)
+
+Granite/4bit-quant/tests/test_0370.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/scipy/stats/_continuous_distns.py:486: RuntimeWarning: Mean of empty slice
+    scale = np.sqrt(((data - loc)**2).mean())
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0370.py::test_task_func - TypeError: ufunc 'isfinite' not support...
+1 failed, 4 warnings in 3.54s

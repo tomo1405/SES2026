@@ -1,0 +1,121 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_valid_directory ______________________
+
+    def test_task_func_with_valid_directory():
+        with patch('os.path.exists') as mock_exists, \
+             patch('glob.glob') as mock_glob, \
+             patch('os.makedirs') as mock_makedirs, \
+             patch('subprocess.call') as mock_call, \
+             patch('os.remove') as mock_remove:
+            mock_exists.side_effect = [True, False]
+            mock_glob.return_value = ['/path/to/log1.log', '/path/to/log2.log']
+            backup_file = task_func('/path/to/directory')
+            mock_exists.assert_has_calls([
+                call('/path/to/directory'),
+                call('/path/to/backup')
+            ])
+            mock_glob.assert_called_with(os.path.join('/path/to/directory', '*.log'))
+            mock_makedirs.assert_called_with('/path/to/backup')
+>           mock_call.assert_has_calls([
+                call(['tar', '-czvf', '/path/to/backup/logs_backup.tar.gz', '/path/to/log1.log', '/path/to/log2.log']),
+                call(['rm', '/path/to/log1.log']),
+                call(['rm', '/path/to/log2.log'])
+            ])
+
+test_0017.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='call' id='128035402157472'>
+calls = [call(['tar', '-czvf', '/path/to/backup/logs_backup.tar.gz', '/path/to/log1.log', '/path/to/log2.log']), call(['rm', '/path/to/log1.log']), call(['rm', '/path/to/log2.log'])]
+any_order = False
+
+    def assert_has_calls(self, calls, any_order=False):
+        """assert the mock has been called with the specified calls.
+        The `mock_calls` list is checked for the calls.
+    
+        If `any_order` is False (the default) then the calls must be
+        sequential. There can be extra calls before or after the
+        specified calls.
+    
+        If `any_order` is True then the calls can be in any order, but
+        they must all appear in `mock_calls`."""
+        expected = [self._call_matcher(c) for c in calls]
+        cause = next((e for e in expected if isinstance(e, Exception)), None)
+        all_calls = _CallList(self._call_matcher(c) for c in self.mock_calls)
+        if not any_order:
+            if expected not in all_calls:
+                if cause is None:
+                    problem = 'Calls not found.'
+                else:
+                    problem = ('Error processing expected calls.\n'
+                               'Errors: {}').format(
+                                   [e if isinstance(e, Exception) else None
+                                    for e in expected])
+>               raise AssertionError(
+                    f'{problem}\n'
+                    f'Expected: {_CallList(calls)}'
+                    f'{self._calls_repr(prefix="  Actual").rstrip(".")}'
+                ) from cause
+E               AssertionError: Calls not found.
+E               Expected: [call(['tar', '-czvf', '/path/to/backup/logs_backup.tar.gz', '/path/to/log1.log', '/path/to/log2.log']),
+E                call(['rm', '/path/to/log1.log']),
+E                call(['rm', '/path/to/log2.log'])]
+E                 Actual: [call(['tar', '-czvf', '/path/to/backup/logs_backup.tar.gz', '/path/to/log1.log', '/path/to/log2.log'])]
+
+/usr/lib/python3.12/unittest/mock.py:981: AssertionError
+_______________________ test_task_func_with_no_log_files _______________________
+
+    def test_task_func_with_no_log_files():
+        with patch('os.path.exists') as mock_exists, \
+             patch('glob.glob') as mock_glob:
+            mock_exists.side_effect = [True, False]
+            mock_glob.return_value = []
+            result = task_func('/path/to/directory')
+>           mock_exists.assert_has_calls([
+                call('/path/to/directory'),
+                call('/path/to/backup')
+            ])
+
+test_0017.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='exists' id='128035402201616'>
+calls = [call('/path/to/directory'), call('/path/to/backup')], any_order = False
+
+    def assert_has_calls(self, calls, any_order=False):
+        """assert the mock has been called with the specified calls.
+        The `mock_calls` list is checked for the calls.
+    
+        If `any_order` is False (the default) then the calls must be
+        sequential. There can be extra calls before or after the
+        specified calls.
+    
+        If `any_order` is True then the calls can be in any order, but
+        they must all appear in `mock_calls`."""
+        expected = [self._call_matcher(c) for c in calls]
+        cause = next((e for e in expected if isinstance(e, Exception)), None)
+        all_calls = _CallList(self._call_matcher(c) for c in self.mock_calls)
+        if not any_order:
+            if expected not in all_calls:
+                if cause is None:
+                    problem = 'Calls not found.'
+                else:
+                    problem = ('Error processing expected calls.\n'
+                               'Errors: {}').format(
+                                   [e if isinstance(e, Exception) else None
+                                    for e in expected])
+>               raise AssertionError(
+                    f'{problem}\n'
+                    f'Expected: {_CallList(calls)}'
+                    f'{self._calls_repr(prefix="  Actual").rstrip(".")}'
+                ) from cause
+E               AssertionError: Calls not found.
+E               Expected: [call('/path/to/directory'), call('/path/to/backup')]
+E                 Actual: [call('/path/to/directory')]
+
+/usr/lib/python3.12/unittest/mock.py:981: AssertionError
+=========================== short test summary info ============================
+FAILED test_0017.py::test_task_func_with_valid_directory - AssertionError: Ca...
+FAILED test_0017.py::test_task_func_with_no_log_files - AssertionError: Calls...
+2 failed, 1 passed in 0.47s

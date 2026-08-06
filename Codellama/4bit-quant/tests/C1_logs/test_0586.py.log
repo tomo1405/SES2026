@@ -1,0 +1,27 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        directory = 'path/to/directory'
+>       pub_key, zipfile_name = task_func(directory)
+                                ^^^^^^^^^^^^^^^^^^^^
+
+test_0586.py:6: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = 'path/to/directory'
+
+    def task_func(directory):
+        (pub_key, priv_key) = rsa.newkeys(512)
+        zipfile_name = 'encrypted_files.zip'
+    
+        with zipfile.ZipFile(zipfile_name, 'w') as zipf:
+>           for filename in os.listdir(directory):
+                            ^^^^^^^^^^^^^^^^^^^^^
+E           FileNotFoundError: [Errno 2] No such file or directory: 'path/to/directory'
+
+../../../src/src_0586.py:10: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0586.py::test_task_func - FileNotFoundError: [Errno 2] No such fi...
+1 failed in 0.46s

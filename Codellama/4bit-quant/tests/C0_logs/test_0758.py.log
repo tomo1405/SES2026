@@ -1,0 +1,26 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_invalid_input _______________________
+
+    def test_task_func_with_invalid_input():
+        arr = np.array(['1.2.3', '4.5.6', '7.8.9'])
+        with pytest.raises(ValueError):
+>           task_func(arr, invalid_input=True)
+E           TypeError: task_func() got an unexpected keyword argument 'invalid_input'
+
+test_0758.py:14: TypeError
+____________________ test_task_func_with_different_datetime ____________________
+
+    def test_task_func_with_different_datetime():
+        arr = np.array(['1.2.3', '4.5.6', '7.8.9'])
+        expected = np.array(['3.2.1', '6.5.4', '9.8.7'])
+        now = datetime.datetime(2022, 1, 1)
+>       assert np.array_equal(task_func(arr, now), expected)
+                              ^^^^^^^^^^^^^^^^^^^
+E       TypeError: task_func() takes 1 positional argument but 2 were given
+
+test_0758.py:20: TypeError
+=========================== short test summary info ============================
+FAILED test_0758.py::test_task_func_with_invalid_input - TypeError: task_func...
+FAILED test_0758.py::test_task_func_with_different_datetime - TypeError: task...
+2 failed, 1 passed in 0.57s

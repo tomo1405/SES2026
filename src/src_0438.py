@@ -1,0 +1,12 @@
+import pickle
+import os
+def task_func(df, file_name="save.pkl"):
+    with open(file_name, "wb") as file:
+        pickle.dump(df, file)
+
+    with open(file_name, "rb") as file:
+        loaded_df = pickle.load(file)
+
+    os.remove(file_name)
+
+    return loaded_df

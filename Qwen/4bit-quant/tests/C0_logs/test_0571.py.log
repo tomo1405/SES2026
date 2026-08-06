@@ -1,0 +1,98 @@
+FFF.F                                                                    [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_with_no_args __________________________
+
+    def test_task_func_with_no_args():
+        def example_function():
+            pass
+    
+        expected_info = {
+            'function_name': 'example_function',
+            'args': [],
+            'defaults': None,
+            'annotations': {},
+            'is_lambda': False
+        }
+>       assert json.loads(task_func(example_function)) == expected_info
+E       AssertionError: assert {'function_na...ons': {}, ...} == {'function_na...ons': {}, ...}
+E         
+E         Omitting 4 identical items, use -vv to show
+E         Differing items:
+E         {'is_lambda': True} != {'is_lambda': False}
+E         Use -v to get more diff
+
+test_0571.py:17: AssertionError
+____________________ test_task_func_with_args_and_defaults _____________________
+
+    def test_task_func_with_args_and_defaults():
+        def example_function(a, b=2, c='hello'):
+            pass
+    
+        expected_info = {
+            'function_name': 'example_function',
+            'args': ['a', 'b', 'c'],
+            'defaults': (2, 'hello'),
+            'annotations': {},
+            'is_lambda': False
+        }
+>       assert json.loads(task_func(example_function)) == expected_info
+E       AssertionError: assert {'function_na...ons': {}, ...} == {'function_na...ons': {}, ...}
+E         
+E         Omitting 3 identical items, use -vv to show
+E         Differing items:
+E         {'defaults': [2, 'hello']} != {'defaults': (2, 'hello')}
+E         {'is_lambda': True} != {'is_lambda': False}
+E         Use -v to get more diff
+
+test_0571.py:30: AssertionError
+_______________________ test_task_func_with_annotations ________________________
+
+    def test_task_func_with_annotations():
+        def example_function(a: int, b: float, c: str) -> bool:
+            pass
+    
+        expected_info = {
+            'function_name': 'example_function',
+            'args': ['a', 'b', 'c'],
+            'defaults': None,
+            'annotations': {'a': 'int', 'b': 'float', 'c': 'str', 'return': 'bool'},
+            'is_lambda': False
+        }
+>       assert json.loads(task_func(example_function)) == expected_info
+E       AssertionError: assert {'function_na...: 'str'}, ...} == {'function_na... 'bool'}, ...}
+E         
+E         Omitting 4 identical items, use -vv to show
+E         Differing items:
+E         {'is_lambda': True} != {'is_lambda': False}
+E         Use -v to get more diff
+
+test_0571.py:43: AssertionError
+_________________________ test_task_func_with_varargs __________________________
+
+    def test_task_func_with_varargs():
+        def example_function(*args, **kwargs):
+            pass
+    
+        expected_info = {
+            'function_name': 'example_function',
+            'args': ['args', 'kwargs'],
+            'defaults': None,
+            'annotations': {},
+            'is_lambda': False
+        }
+>       assert json.loads(task_func(example_function)) == expected_info
+E       AssertionError: assert {'function_na...ons': {}, ...} == {'function_na...ons': {}, ...}
+E         
+E         Omitting 3 identical items, use -vv to show
+E         Differing items:
+E         {'args': []} != {'args': ['args', 'kwargs']}
+E         {'is_lambda': True} != {'is_lambda': False}
+E         Use -v to get more diff
+
+test_0571.py:68: AssertionError
+=========================== short test summary info ============================
+FAILED test_0571.py::test_task_func_with_no_args - AssertionError: assert {'f...
+FAILED test_0571.py::test_task_func_with_args_and_defaults - AssertionError: ...
+FAILED test_0571.py::test_task_func_with_annotations - AssertionError: assert...
+FAILED test_0571.py::test_task_func_with_varargs - AssertionError: assert {'f...
+4 failed, 1 passed in 0.45s

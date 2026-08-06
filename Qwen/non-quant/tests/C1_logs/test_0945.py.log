@@ -1,0 +1,45 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_output _____________________________
+
+setup_test = ('2016-01-01', 13, 'WOM-2FRI', 0)
+
+    def test_task_func_output(setup_test):
+        start_date, periods, freq, seed = setup_test
+        prices_df, ax = task_func(start_date, periods, freq, seed)
+    
+        # Check DataFrame shape
+        assert prices_df.shape == (periods, 1), "DataFrame shape is incorrect"
+    
+        # Check DataFrame index
+        expected_index = pd.date_range(start=start_date, periods=periods, freq=freq)
+        assert all(prices_df.index == expected_index), "DataFrame index is incorrect"
+    
+        # Check DataFrame values
+        expected_values = np.random.uniform(low=100, high=500, size=periods)
+>       assert np.allclose(prices_df['Price'].values, expected_values), "DataFrame values are incorrect"
+E       AssertionError: DataFrame values are incorrect
+E       assert False
+E        +  where False = <function allclose at 0x7b333e11ea70>(array([319.52540157, 386.07574655, 341.10535043, 317.9532732 ,\n       269.46191974, 358.35764523, 275.03488451, 456.70920031,\n       485.4651042 , 253.37660753, 416.69001523, 311.5579679 ,\n       327.21782444]), array([470.23865532, 128.41442328, 134.85171988, 108.08735898,\n       433.04793822, 411.26270038, 448.0048593 , 491.44733689,\n       419.66342569, 284.5917449 , 412.21167051, 147.30977035,\n       355.96840853]))
+E        +    where <function allclose at 0x7b333e11ea70> = np.allclose
+E        +    and   array([319.52540157, 386.07574655, 341.10535043, 317.9532732 ,\n       269.46191974, 358.35764523, 275.03488451, 456.70920031,\n       485.4651042 , 253.37660753, 416.69001523, 311.5579679 ,\n       327.21782444]) = Date\n2016-01-08    319.525402\n2016-02-12    386.075747\n2016-03-11    341.105350\n2016-04-08    317.953273\n2016-05-13   ...14    253.376608\n2016-11-11    416.690015\n2016-12-09    311.557968\n2017-01-13    327.217824\nName: Price, dtype: float64.values
+
+test_0945.py:29: AssertionError
+______________________ test_task_func_default_parameters _______________________
+
+    def test_task_func_default_parameters():
+        prices_df, ax = task_func()
+    
+        # Check default parameters
+        assert prices_df.shape == (13, 1), "Default DataFrame shape is incorrect"
+>       assert prices_df.index[0] == pd.Timestamp('2016-01-01'), "Default DataFrame index is incorrect"
+E       AssertionError: Default DataFrame index is incorrect
+E       assert Timestamp('2016-01-08 00:00:00') == Timestamp('2016-01-01 00:00:00')
+E        +  where Timestamp('2016-01-01 00:00:00') = <class 'pandas.Timestamp'>('2016-01-01')
+E        +    where <class 'pandas.Timestamp'> = pd.Timestamp
+
+test_0945.py:43: AssertionError
+=========================== short test summary info ============================
+FAILED test_0945.py::test_task_func_output - AssertionError: DataFrame values...
+FAILED test_0945.py::test_task_func_default_parameters - AssertionError: Defa...
+2 failed, 1 passed in 2.29s

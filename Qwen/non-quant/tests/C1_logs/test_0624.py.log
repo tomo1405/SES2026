@@ -1,0 +1,182 @@
+F.FFFF                                                                   [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_input_type ___________________________
+
+    def test_task_func_input_type():
+        with pytest.raises(TypeError):
+>           task_func("not a list of lists")
+
+test_0624.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0624.py:11: in task_func
+    kmeans = KMeans(n_clusters=N_CLUSTERS).fit(data)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/base.py:1403: in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/cluster/_kmeans.py:1463: in fit
+    X = validate_data(
+../../../.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:3038: in validate_data
+    out = check_array(X, input_name="X", **check_params)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:1035: in check_array
+    array = _asarray_with_order(array, order=order, dtype=dtype, xp=xp)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+array = array([['n'],
+       ['o'],
+       ['t'],
+       [' '],
+       ['a'],
+       [' '],
+       ['l'],
+       ['i'],
+      ... ['o'],
+       ['f'],
+       [' '],
+       ['l'],
+       ['i'],
+       ['s'],
+       ['t'],
+       ['s']], dtype='<U1')
+dtype = dtype('float64'), order = 'C', copy = None
+xp = <module 'sklearn.externals.array_api_compat.numpy' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/sklearn/externals/array_api_compat/numpy/__init__.py'>
+device = None
+
+    def _asarray_with_order(
+        array, dtype=None, order=None, copy=None, *, xp=None, device=None
+    ):
+        """Helper to support the order kwarg only for NumPy-backed arrays
+    
+        Memory layout parameter `order` is not exposed in the Array API standard,
+        however some input validation code in scikit-learn needs to work both
+        for classes and functions that will leverage Array API only operations
+        and for code that inherently relies on NumPy backed data containers with
+        specific memory layout constraints (e.g. our own Cython code). The
+        purpose of this helper is to make it possible to share code for data
+        container validation without memory copies for both downstream use cases:
+        the `order` parameter is only enforced if the input array implementation
+        is NumPy based, otherwise `order` is just silently ignored.
+        """
+        xp, _ = get_namespace(array, xp=xp)
+        if _is_numpy_namespace(xp):
+            # Use NumPy API to support order
+            if copy is True:
+                array = numpy.array(array, order=order, dtype=dtype)
+            else:
+>               array = numpy.asarray(array, order=order, dtype=dtype)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               ValueError: could not convert string to float: np.str_('n')
+
+../../../.venv/lib/python3.12/site-packages/sklearn/utils/_array_api.py:976: ValueError
+__________________________ test_task_func_output_type __________________________
+
+    def test_task_func_output_type():
+>       ax = task_func([[1, 2], [3, 4]])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0624.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+L = [[1, 2], [3, 4]]
+
+    def task_func(L):
+        # Constants
+        N_CLUSTERS = 3
+    
+        data = list(chain(*L))
+        data = np.array(data).reshape(-1, 1)
+    
+        kmeans = KMeans(n_clusters=N_CLUSTERS).fit(data)
+    
+>       fig, ax = plt.subplots()
+                  ^^^
+E       NameError: name 'plt' is not defined
+
+../../../src/src_0624.py:13: NameError
+__________________________ test_task_func_kmeans_fit ___________________________
+
+    def test_task_func_kmeans_fit():
+        data = [[1, 2], [3, 4]]
+>       ax = task_func(data)
+             ^^^^^^^^^^^^^^^
+
+test_0624.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+L = [[1, 2], [3, 4]]
+
+    def task_func(L):
+        # Constants
+        N_CLUSTERS = 3
+    
+        data = list(chain(*L))
+        data = np.array(data).reshape(-1, 1)
+    
+        kmeans = KMeans(n_clusters=N_CLUSTERS).fit(data)
+    
+>       fig, ax = plt.subplots()
+                  ^^^
+E       NameError: name 'plt' is not defined
+
+../../../src/src_0624.py:13: NameError
+_________________________ test_task_func_scatter_plot __________________________
+
+    def test_task_func_scatter_plot():
+        data = [[1, 2], [3, 4]]
+>       ax = task_func(data)
+             ^^^^^^^^^^^^^^^
+
+test_0624.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+L = [[1, 2], [3, 4]]
+
+    def task_func(L):
+        # Constants
+        N_CLUSTERS = 3
+    
+        data = list(chain(*L))
+        data = np.array(data).reshape(-1, 1)
+    
+        kmeans = KMeans(n_clusters=N_CLUSTERS).fit(data)
+    
+>       fig, ax = plt.subplots()
+                  ^^^
+E       NameError: name 'plt' is not defined
+
+../../../src/src_0624.py:13: NameError
+________________________ test_task_func_cluster_labels _________________________
+
+    def test_task_func_cluster_labels():
+        data = [[1, 2], [3, 4]]
+>       ax = task_func(data)
+             ^^^^^^^^^^^^^^^
+
+test_0624.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+L = [[1, 2], [3, 4]]
+
+    def task_func(L):
+        # Constants
+        N_CLUSTERS = 3
+    
+        data = list(chain(*L))
+        data = np.array(data).reshape(-1, 1)
+    
+        kmeans = KMeans(n_clusters=N_CLUSTERS).fit(data)
+    
+>       fig, ax = plt.subplots()
+                  ^^^
+E       NameError: name 'plt' is not defined
+
+../../../src/src_0624.py:13: NameError
+=========================== short test summary info ============================
+FAILED test_0624.py::test_task_func_input_type - ValueError: could not conver...
+FAILED test_0624.py::test_task_func_output_type - NameError: name 'plt' is no...
+FAILED test_0624.py::test_task_func_kmeans_fit - NameError: name 'plt' is not...
+FAILED test_0624.py::test_task_func_scatter_plot - NameError: name 'plt' is n...
+FAILED test_0624.py::test_task_func_cluster_labels - NameError: name 'plt' is...
+5 failed, 1 passed in 4.13s

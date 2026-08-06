@@ -1,0 +1,26 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        directory = "/path/to/directory"
+        backup_directory = "/path/to/backup_directory"
+        expected_copied_files = ["/path/to/backup_directory/file1.json", "/path/to/backup_directory/file2.json"]
+    
+        # Mock the os.listdir() and os.makedirs() functions
+        def mock_listdir(path):
+            return ["file1.json", "file2.json"]
+    
+        def mock_makedirs(path):
+            pass
+    
+>       with mock_patch("os.listdir", side_effect=mock_listdir), mock_patch("os.makedirs", side_effect=mock_makedirs):
+             ^^^^^^^^^^
+E       NameError: name 'mock_patch' is not defined
+
+test_0119.py:32: NameError
+=========================== short test summary info ============================
+FAILED test_0119.py::test_task_func - NameError: name 'mock_patch' is not def...
+1 failed in 0.45s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

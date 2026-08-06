@@ -1,0 +1,25 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        colors = ["Red", "Blue", "Green"]
+        states = ["CA", "NY", "FL"]
+        expected_data = {
+            "Color:State 1": ["Red:CA", "Blue:NY", "Green:FL"],
+            "Color:State 2": ["Red:NY", "Blue:CA", "Green:FL"],
+            "Color:State 3": ["Red:FL", "Blue:NY", "Green:CA"]
+        }
+        expected_df = pd.DataFrame(expected_data)
+    
+        df = task_func(colors, states)
+    
+>       assert df.equals(expected_df)
+E       assert False
+E        +  where False = equals(  Color:State 1 Color:State 2 Color:State 3\n0        Red:CA        Red:NY        Red:FL\n1       Blue:NY       Blue:CA       Blue:NY\n2      Green:FL      Green:FL      Green:CA)
+E        +    where equals =   Color:State 1 Color:State 2 Color:State 3\n0       Blue:CA      Green:CA      Green:NY\n1       Blue:NY      Green:FL        Red:FL\n2       Blue:FL        Red:CA        Red:NY.equals
+
+test_1056.py:17: AssertionError
+=========================== short test summary info ============================
+FAILED test_1056.py::test_task_func - assert False
+1 failed in 1.12s

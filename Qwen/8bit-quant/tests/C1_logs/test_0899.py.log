@@ -1,0 +1,70 @@
+FF.FF                                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_default_seed _______________________
+
+    def test_task_func_with_default_seed():
+        count = 10
+        expected_output = Counter({('a', 'a'): 2, ('b', 'b'): 2, ('c', 'c'): 2, ('d', 'd'): 2, ('e', 'e'): 2})
+>       assert task_func(count) == expected_output
+E       AssertionError: assert Counter({('c'...'b', 'd'): 1}) == Counter({('a'...'e', 'e'): 2})
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Left contains 5 more items:
+E         {('b', 'd'): 1, ('c', 'b'): 1, ('d', 'b'): 2, ('e', 'c'): 1, ('e', 'd'): 1}
+E         Right contains 3 more items:
+E         {('a', 'a'): 2, ('b', 'b'): 2, ('d', 'd'): 2}
+E         Use -v to get more diff
+
+test_0899.py:9: AssertionError
+_______________________ test_task_func_with_custom_seed ________________________
+
+    def test_task_func_with_custom_seed():
+        count = 5
+        seed = 42
+        expected_output = Counter({('a', 'a'): 2, ('b', 'b'): 1, ('c', 'c'): 1, ('d', 'd'): 1})
+>       assert task_func(count, seed) == expected_output
+E       AssertionError: assert Counter({('d'...'c', 'a'): 1}) == Counter({('a'...'d', 'd'): 1})
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Left contains 3 more items:
+E         {('c', 'a'): 1, ('d', 'a'): 1, ('e', 'a'): 1}
+E         Right contains 2 more items:
+E         {('a', 'a'): 2, ('c', 'c'): 1}
+E         Use -v to get more diff
+
+test_0899.py:15: AssertionError
+_______________________ test_task_func_with_large_count ________________________
+
+    def test_task_func_with_large_count():
+        count = 100
+        seed = 123
+        result = task_func(count, seed)
+>       assert len(result) <= len(LETTERS) ** 2
+                                  ^^^^^^^
+E       NameError: name 'LETTERS' is not defined
+
+test_0899.py:26: NameError
+___________________ test_task_func_with_single_letter_pairs ____________________
+
+    def test_task_func_with_single_letter_pairs():
+        count = 5
+        seed = 0
+        expected_output = Counter({('a', 'a'): 2, ('b', 'b'): 1, ('c', 'c'): 1, ('d', 'd'): 1})
+>       assert task_func(count, seed) == expected_output
+E       AssertionError: assert Counter({('c'...'d', 'b'): 1}) == Counter({('a'...'d', 'd'): 1})
+E         
+E         Differing items:
+E         {('c', 'c'): 2} != {('c', 'c'): 1}
+E         Left contains 3 more items:
+E         {('c', 'b'): 1, ('d', 'b'): 1, ('e', 'd'): 1}
+E         Right contains 3 more items:
+E         {('a', 'a'): 2, ('b', 'b'): 1, ('d', 'd'): 1}
+E         Use -v to get more diff
+
+test_0899.py:32: AssertionError
+=========================== short test summary info ============================
+FAILED test_0899.py::test_task_func_with_default_seed - AssertionError: asser...
+FAILED test_0899.py::test_task_func_with_custom_seed - AssertionError: assert...
+FAILED test_0899.py::test_task_func_with_large_count - NameError: name 'LETTE...
+FAILED test_0899.py::test_task_func_with_single_letter_pairs - AssertionError...
+4 failed, 1 passed in 0.54s

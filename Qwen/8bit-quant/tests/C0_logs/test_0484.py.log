@@ -1,0 +1,46 @@
+..FFF                                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_single_word_match _______________________
+
+    def test_task_func_single_word_match():
+        df = pd.DataFrame({'text': ['hello 123 world', 'foo 456 bar']})
+        pattern = r'\d+'
+        expected_df = pd.DataFrame({'text': ['hello 456 world', 'foo 123 bar']})
+        result = task_func(df, 'text', pattern)
+>       assert result.equals(expected_df)
+E       assert False
+E        +  where False = equals(              text\n0  hello 456 world\n1      foo 123 bar)
+E        +    where equals =               text\n0  hello 123 world\n1      foo 456 bar.equals
+
+test_0484.py:21: AssertionError
+_______________________ test_task_func_multiple_matches ________________________
+
+    def test_task_func_multiple_matches():
+        df = pd.DataFrame({'text': ['hello 123 world 456', 'foo 789 bar 012']})
+        pattern = r'\d+'
+        expected_df = pd.DataFrame({'text': ['hello 012 world 789', 'foo 456 bar 123']})
+        result = task_func(df, 'text', pattern)
+>       assert result.equals(expected_df)
+E       assert False
+E        +  where False = equals(                  text\n0  hello 012 world 789\n1      foo 456 bar 123)
+E        +    where equals =                   text\n0  hello 456 world 123\n1      foo 012 bar 789.equals
+
+test_0484.py:28: AssertionError
+_______________________ test_task_func_case_insensitive ________________________
+
+    def test_task_func_case_insensitive():
+        df = pd.DataFrame({'text': ['Hello 123 World', 'Foo 456 Bar']})
+        pattern = r'\b\w{3}\b'
+        expected_df = pd.DataFrame({'text': ['Hello Bar World', 'Foo World Bar']})
+        result = task_func(df, 'text', pattern)
+>       assert result.equals(expected_df)
+E       assert False
+E        +  where False = equals(              text\n0  Hello Bar World\n1    Foo World Bar)
+E        +    where equals =               text\n0  Hello 123 World\n1      Bar 456 Foo.equals
+
+test_0484.py:35: AssertionError
+=========================== short test summary info ============================
+FAILED test_0484.py::test_task_func_single_word_match - assert False
+FAILED test_0484.py::test_task_func_multiple_matches - assert False
+FAILED test_0484.py::test_task_func_case_insensitive - assert False
+3 failed, 2 passed in 1.43s

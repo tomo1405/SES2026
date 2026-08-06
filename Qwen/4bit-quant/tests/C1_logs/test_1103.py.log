@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Mocking the subprocess.Popen behavior
+        class MockPopen:
+            def __init__(self, args, stdout, stderr):
+                self.args = args
+                self.stdout = stdout
+                self.stderr = stderr
+    
+            def communicate(self):
+                return self.stdout, self.stderr
+    
+        # Mocking the datetime.now behavior
+        class MockDatetime:
+            @staticmethod
+            def now():
+                return datetime(2023, 1, 1, 12, 0, 0)
+    
+        # Patching subprocess.Popen and datetime.now
+>       with pytest.mock.patch('subprocess.Popen', return_value=MockPopen([], b'stdout', b'stderr')) as mock_popen, \
+             ^^^^^^^^^^^
+             pytest.mock.patch('datetime.datetime', MockDatetime):
+E            AttributeError: module 'pytest' has no attribute 'mock'
+
+test_1103.py:22: AttributeError
+=========================== short test summary info ============================
+FAILED test_1103.py::test_task_func - AttributeError: module 'pytest' has no ...
+1 failed in 0.50s

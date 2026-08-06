@@ -1,0 +1,71 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        elements = [1, 2, 3, 4, 5]
+        subset_size = 3
+        expected_result = {
+            'mean': 6.0,
+            'median': 5.0,
+            'mode': 6.0
+        }
+        result = task_func(elements, subset_size)
+>       assert result == expected_result
+E       AssertionError: assert {'mean': 9, '....0, 'mode': 8} == {'mean': 6.0,..., 'mode': 6.0}
+E         
+E         Differing items:
+E         {'mean': 9} != {'mean': 6.0}
+E         {'mode': 8} != {'mode': 6.0}
+E         {'median': 9.0} != {'median': 5.0}
+E         Use -v to get more diff
+
+test_0296.py:13: AssertionError
+______________________ test_task_func_with_empty_elements ______________________
+
+    def test_task_func_with_empty_elements():
+        elements = []
+        subset_size = 3
+        expected_result = {
+            'mean': None,
+            'median': None,
+            'mode': None
+        }
+>       result = task_func(elements, subset_size)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0296.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0296.py:8: in task_func
+    'mean': statistics.mean(sums),
+            ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = []
+
+    def mean(data):
+        """Return the sample arithmetic mean of data.
+    
+        >>> mean([1, 2, 3, 4, 4])
+        2.8
+    
+        >>> from fractions import Fraction as F
+        >>> mean([F(3, 7), F(1, 21), F(5, 3), F(1, 3)])
+        Fraction(13, 21)
+    
+        >>> from decimal import Decimal as D
+        >>> mean([D("0.5"), D("0.75"), D("0.625"), D("0.375")])
+        Decimal('0.5625')
+    
+        If ``data`` is empty, StatisticsError will be raised.
+        """
+        T, total, n = _sum(data)
+        if n < 1:
+>           raise StatisticsError('mean requires at least one data point')
+E           statistics.StatisticsError: mean requires at least one data point
+
+/usr/lib/python3.12/statistics.py:486: StatisticsError
+=========================== short test summary info ============================
+FAILED test_0296.py::test_task_func - AssertionError: assert {'mean': 9, '......
+FAILED test_0296.py::test_task_func_with_empty_elements - statistics.Statisti...
+2 failed, 1 passed in 0.45s

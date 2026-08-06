@@ -1,0 +1,17 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        db_file = "test_db.db"
+        query = "SELECT * FROM test_table"
+        expected_result = pd.DataFrame({"id": [1, 2, 3], "name": ["Alice", "Bob", "Charlie"]})
+    
+        with sqlite3.connect(db_file) as conn:
+>           conn.execute("CREATE TABLE test_table (id INTEGER, name TEXT)")
+E           sqlite3.OperationalError: table test_table already exists
+
+test_0409.py:13: OperationalError
+=========================== short test summary info ============================
+FAILED test_0409.py::test_task_func - sqlite3.OperationalError: table test_ta...
+1 failed in 1.15s

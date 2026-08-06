@@ -1,0 +1,50 @@
+FF...                                                                    [100%]
+=================================== FAILURES ===================================
+___________________________ test_identical_csv_files ___________________________
+
+    def test_identical_csv_files():
+        content = [['name', 'age'], ['Alice', '30'], ['Bob', '25']]
+        file_path1 = 'temp_file1.csv'
+        file_path2 = 'temp_file2.csv'
+        create_temp_csv(content, file_path1)
+        create_temp_csv(content, file_path2)
+    
+        result_df = task_func(file_path1, file_path2)
+        expected_df = pd.DataFrame(columns=['Line Number', 'Status', 'Content'])
+    
+>       assert result_df.equals(expected_df)
+E       AssertionError: assert False
+E        +  where False = equals(Empty DataFrame\nColumns: [Line Number, Status, Content]\nIndex: [])
+E        +    where equals =    Line Number Status          Content\n0            1         ('name', 'age')\n1            2         ('Alice', '30')\n2            3           ('Bob', '25').equals
+
+test_0510.py:26: AssertionError
+___________________________ test_different_csv_files ___________________________
+
+    def test_different_csv_files():
+        content1 = [['name', 'age'], ['Alice', '30'], ['Bob', '25']]
+        content2 = [['name', 'age'], ['Alice', '31'], ['Charlie', '30']]
+        file_path1 = 'temp_file1.csv'
+        file_path2 = 'temp_file2.csv'
+        create_temp_csv(content1, file_path1)
+        create_temp_csv(content2, file_path2)
+    
+        result_df = task_func(file_path1, file_path2)
+        expected_data = [
+            [1, ' ', 'name,age'],
+            [2, '-', 'Alice,30'],
+            [2, '+', 'Alice,31'],
+            [3, '-', 'Bob,25'],
+            [4, '+', 'Charlie,30']
+        ]
+        expected_df = pd.DataFrame(expected_data, columns=['Line Number', 'Status', 'Content'])
+    
+>       assert result_df.equals(expected_df)
+E       AssertionError: assert False
+E        +  where False = equals(   Line Number Status     Content\n0            1           name,age\n1            2      -    Alice,30\n2            2      +    Alice,31\n3            3      -      Bob,25\n4            4      +  Charlie,30)
+E        +    where equals =    Line Number Status            Content\n0            1           ('name', 'age')\n1            2      -    ('Alice', '...          3      -      ('Bob', '25')\n3            4      +    ('Alice', '31')\n4            5      +  ('Charlie', '30').equals
+
+test_0510.py:51: AssertionError
+=========================== short test summary info ============================
+FAILED test_0510.py::test_identical_csv_files - AssertionError: assert False
+FAILED test_0510.py::test_different_csv_files - AssertionError: assert False
+2 failed, 3 passed in 1.20s

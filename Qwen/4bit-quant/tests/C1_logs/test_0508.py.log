@@ -1,0 +1,76 @@
+F..FF                                                                    [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_valid_column __________________________
+
+    def test_task_func_valid_column():
+        column = "Open"
+        data = [
+            [1, 2, 3, 4, 5, 6],
+            [7, 8, 9, 10, 11, 12]
+        ]
+        result = task_func(column, data)
+>       assert result == {
+            "sum": 16,
+            "mean": 8.0,
+            "min": 1,
+            "max": 8
+        }
+E       AssertionError: assert {'sum': np.in...: np.int64(8)} == {'sum': 16, '...: 1, 'max': 8}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'sum': np.int64(10)} != {'sum': 16}
+E         {'mean': np.float64(5.0)} != {'mean': 8.0}
+E         {'min': np.int64(2)} != {'min': 1}
+E         Use -v to get more diff
+
+test_0508.py:11: AssertionError
+__________________________ test_task_func_empty_data ___________________________
+
+    def test_task_func_empty_data():
+        column = "Open"
+        data = []
+        result = task_func(column, data)
+>       assert result == {
+            "sum": 0,
+            "mean": float("nan"),
+            "min": float("nan"),
+            "max": float("nan")
+        }
+E       AssertionError: assert {'sum': 0, 'm...n, 'max': nan} == {'sum': 0, 'm...n, 'max': nan}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'max': nan} != {'max': nan}
+E         {'mean': nan} != {'mean': nan}
+E         {'min': nan} != {'min': nan}
+E         Use -v to get more diff
+
+test_0508.py:44: AssertionError
+________________________ test_task_func_single_row_data ________________________
+
+    def test_task_func_single_row_data():
+        column = "Open"
+        data = [[1, 2, 3, 4, 5, 6]]
+        result = task_func(column, data)
+>       assert result == {
+            "sum": 1,
+            "mean": 1.0,
+            "min": 1,
+            "max": 1
+        }
+E       AssertionError: assert {'sum': np.in...: np.int64(2)} == {'sum': 1, 'm...: 1, 'max': 1}
+E         
+E         Differing items:
+E         {'max': np.int64(2)} != {'max': 1}
+E         {'sum': np.int64(2)} != {'sum': 1}
+E         {'mean': np.float64(2.0)} != {'mean': 1.0}
+E         {'min': np.int64(2)} != {'min': 1}
+E         Use -v to get more diff
+
+test_0508.py:55: AssertionError
+=========================== short test summary info ============================
+FAILED test_0508.py::test_task_func_valid_column - AssertionError: assert {'s...
+FAILED test_0508.py::test_task_func_empty_data - AssertionError: assert {'sum...
+FAILED test_0508.py::test_task_func_single_row_data - AssertionError: assert ...
+3 failed, 2 passed in 1.20s

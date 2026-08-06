@@ -1,0 +1,35 @@
+F...                                                                     [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_output _____________________________
+
+expected_data =             Sales
+Date             
+2023-01-01    272
+2023-01-02    147
+2023-01-03    217
+2023-01-04    292
+2023-01-05    423
+
+    def test_task_func_output(expected_data):
+        start_date = '2023-01-01'
+        periods = 5
+        freq = 'D'
+        random_seed = 0
+        forecast_df, ax = task_func(start_date, periods, freq, random_seed)
+    
+        # Check if the DataFrame is correct
+        pd.testing.assert_frame_equal(forecast_df, expected_data)
+    
+        # Check if the plot is created correctly
+        assert isinstance(ax, plt.Axes)
+        assert ax.get_title() == 'Sales Forecast'
+        assert ax.get_xlabel() == 'Date'
+        assert ax.get_ylabel() == 'Sales'
+>       assert ax.gridOn
+               ^^^^^^^^^
+E       AttributeError: 'Axes' object has no attribute 'gridOn'. Did you mean: '_gridOn'?
+
+test_0942.py:34: AttributeError
+=========================== short test summary info ============================
+FAILED test_0942.py::test_task_func_output - AttributeError: 'Axes' object ha...
+1 failed, 3 passed in 2.24s

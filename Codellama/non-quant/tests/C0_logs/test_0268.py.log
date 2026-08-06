@@ -1,0 +1,26 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Test that the function returns a tuple with two elements
+        data = {'a': 1, 'b': 2, 'c': 3}
+        fft, ax = task_func(data)
+        assert isinstance(fft, np.ndarray)
+        assert isinstance(ax, plt.Axes)
+    
+        # Test case 2: Test that the function generates a signal based on the values in `data`
+        data = {'a': 1, 'b': 2, 'c': 3}
+        signal = np.array(list(data.values()))
+        time = np.linspace(0, 2, 2 * 8000, False)
+        expected_signal = np.sin(np.outer(time, signal) * np.pi)
+        fft, ax = task_func(data)
+>       assert np.allclose(fft, expected_signal)
+E       assert False
+E        +  where False = <function allclose at 0x7c32039efab0>(array([[ 0.        -0.j        ,  0.        +0.j        ,\n         0.        -0.j        ],\n       [ 0.00235619-0.j   ...68017j],\n       [-0.00235619-0.j        ,  0.00058905-0.00034009j,\n         0.00058905+0.00034009j]], shape=(16000, 3)), array([[ 0.        ,  0.        ,  0.        ],\n       [ 0.0003927 ,  0.0007854 ,  0.0011781 ],\n       [ 0.0007854 ,  ...28],\n       [-0.0007854 , -0.0015708 , -0.00235619],\n       [-0.0003927 , -0.0007854 , -0.0011781 ]], shape=(16000, 3)))
+E        +    where <function allclose at 0x7c32039efab0> = np.allclose
+
+test_0268.py:20: AssertionError
+=========================== short test summary info ============================
+FAILED test_0268.py::test_task_func - assert False
+1 failed in 2.11s

@@ -1,0 +1,55 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sales_df =          Date        Category  Sales
+0  2016-01-08     Electronics    272
+1  2016-01-08         Fashion    147
+2  2016... Home & Kitchen    435
+63 2017-01-13      Automotive    488
+64 2017-01-13          Sports    205
+
+[65 rows x 3 columns]
+
+    def test_task_func(sales_df):
+        sales_df, ax = task_func()
+        assert isinstance(sales_df, pd.DataFrame)
+        assert isinstance(ax, plt.Axes)
+>       assert sales_df.shape == (13, 6)
+E       assert (65, 3) == (13, 6)
+E         
+E         At index 0 diff: 65 != 13
+E         Use -v to get more diff
+
+test_0943.py:24: AssertionError
+_______________________ test_task_func_with_custom_args ________________________
+
+sales_df =           Date Category  Sales
+0   2022-01-21    Books    272
+1   2022-01-21     Toys    147
+2   2022-01-21  Grocery  ...41
+101 2024-02-16     Toys    148
+102 2024-02-16  Grocery    405
+103 2024-02-16  Jewelry    169
+
+[104 rows x 3 columns]
+
+    def test_task_func_with_custom_args(sales_df):
+        custom_start_date = '2022-01-01'
+        custom_periods = 26
+        custom_freq = 'WOM-3FRI'
+        custom_categories = ['Books', 'Toys', 'Grocery', 'Jewelry']
+        sales_df, ax = task_func(custom_start_date, custom_periods, custom_freq, custom_categories)
+        assert isinstance(sales_df, pd.DataFrame)
+        assert isinstance(ax, plt.Axes)
+>       assert sales_df.shape == (26, 5)
+E       assert (104, 3) == (26, 5)
+E         
+E         At index 0 diff: 104 != 26
+E         Use -v to get more diff
+
+test_0943.py:36: AssertionError
+=========================== short test summary info ============================
+FAILED test_0943.py::test_task_func - assert (65, 3) == (13, 6)
+FAILED test_0943.py::test_task_func_with_custom_args - assert (104, 3) == (26...
+2 failed in 2.60s

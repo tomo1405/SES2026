@@ -1,0 +1,142 @@
+FFFFFFF                                                                  [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_positive_sentiment _______________________
+
+sia = <nltk.sentiment.vader.SentimentIntensityAnalyzer object at 0x7e3278b8b320>
+
+    def test_task_func_positive_sentiment(sia):
+        text = "I love this product!"
+        expected = {'neg': 0.0, 'neu': 0.253, 'pos': 0.747, 'compound': 0.6881}
+        result = task_func(text, sia)
+>       assert result == expected
+E       AssertionError: assert {'neg': 0.0, ...ound': 0.6369} == {'neg': 0.0, ...ound': 0.6881}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'compound': 0.6369} != {'compound': 0.6881}
+E         {'pos': 0.677} != {'pos': 0.747}
+E         {'neu': 0.323} != {'neu': 0.253}
+E         Use -v to get more diff
+
+test_0657.py:13: AssertionError
+______________________ test_task_func_negative_sentiment _______________________
+
+sia = <nltk.sentiment.vader.SentimentIntensityAnalyzer object at 0x7e3273e523c0>
+
+    def test_task_func_negative_sentiment(sia):
+        text = "This is the worst experience ever."
+        expected = {'neg': 0.747, 'neu': 0.253, 'pos': 0.0, 'compound': -0.6881}
+        result = task_func(text, sia)
+>       assert result == expected
+E       AssertionError: assert {'neg': 0.451...und': -0.6249} == {'neg': 0.747...und': -0.6881}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'neg': 0.451} != {'neg': 0.747}
+E         {'neu': 0.549} != {'neu': 0.253}
+E         {'compound': -0.6249} != {'compound': -0.6881}
+E         Use -v to get more diff
+
+test_0657.py:19: AssertionError
+_______________________ test_task_func_neutral_sentiment _______________________
+
+sia = <nltk.sentiment.vader.SentimentIntensityAnalyzer object at 0x7e3273d62f00>
+
+    def test_task_func_neutral_sentiment(sia):
+        text = "It's okay."
+        expected = {'neg': 0.0, 'neu': 1.0, 'pos': 0.0, 'compound': 0.0}
+        result = task_func(text, sia)
+>       assert result == expected
+E       AssertionError: assert {'neg': 0.0, ...ound': 0.2263} == {'neg': 0.0, ...ompound': 0.0}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'compound': 0.2263} != {'compound': 0.0}
+E         {'pos': 0.655} != {'pos': 0.0}
+E         {'neu': 0.345} != {'neu': 1.0}
+E         Use -v to get more diff
+
+test_0657.py:25: AssertionError
+_________________________ test_task_func_empty_string __________________________
+
+sia = <nltk.sentiment.vader.SentimentIntensityAnalyzer object at 0x7e3273d60da0>
+
+    def test_task_func_empty_string(sia):
+        text = ""
+        expected = {'neg': 0.0, 'neu': 1.0, 'pos': 0.0, 'compound': 0.0}
+        result = task_func(text, sia)
+>       assert result == expected
+E       AssertionError: assert {'neg': 0.0, ...ompound': 0.0} == {'neg': 0.0, ...ompound': 0.0}
+E         
+E         Omitting 3 identical items, use -vv to show
+E         Differing items:
+E         {'neu': 0.0} != {'neu': 1.0}
+E         Use -v to get more diff
+
+test_0657.py:31: AssertionError
+__________________________ test_task_func_punctuation __________________________
+
+sia = <nltk.sentiment.vader.SentimentIntensityAnalyzer object at 0x7e3273c0f560>
+
+    def test_task_func_punctuation(sia):
+        text = "Hello, world!!!"
+        expected = {'neg': 0.0, 'neu': 0.75, 'pos': 0.25, 'compound': 0.25}
+        result = task_func(text, sia)
+>       assert result == expected
+E       AssertionError: assert {'neg': 0.0, ...ompound': 0.0} == {'neg': 0.0, ...mpound': 0.25}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'compound': 0.0} != {'compound': 0.25}
+E         {'pos': 0.0} != {'pos': 0.25}
+E         {'neu': 1.0} != {'neu': 0.75}
+E         Use -v to get more diff
+
+test_0657.py:37: AssertionError
+______________________ test_task_func_case_insensitivity _______________________
+
+sia = <nltk.sentiment.vader.SentimentIntensityAnalyzer object at 0x7e3273c0d6d0>
+
+    def test_task_func_case_insensitivity(sia):
+        text = "THIS IS A TEST."
+        expected = {'neg': 0.0, 'neu': 0.75, 'pos': 0.25, 'compound': 0.25}
+        result = task_func(text, sia)
+>       assert result == expected
+E       AssertionError: assert {'neg': 0.0, ...ompound': 0.0} == {'neg': 0.0, ...mpound': 0.25}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'compound': 0.0} != {'compound': 0.25}
+E         {'pos': 0.0} != {'pos': 0.25}
+E         {'neu': 1.0} != {'neu': 0.75}
+E         Use -v to get more diff
+
+test_0657.py:43: AssertionError
+_____________________ test_task_func_alphanumeric_removal ______________________
+
+sia = <nltk.sentiment.vader.SentimentIntensityAnalyzer object at 0x7e3273f2bfb0>
+
+    def test_task_func_alphanumeric_removal(sia):
+        text = "Hello123! @world$%^&*()"
+        expected = {'neg': 0.0, 'neu': 0.75, 'pos': 0.25, 'compound': 0.25}
+        result = task_func(text, sia)
+>       assert result == expected
+E       AssertionError: assert {'neg': 0.0, ...ompound': 0.0} == {'neg': 0.0, ...mpound': 0.25}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'compound': 0.0} != {'compound': 0.25}
+E         {'pos': 0.0} != {'pos': 0.25}
+E         {'neu': 1.0} != {'neu': 0.75}
+E         Use -v to get more diff
+
+test_0657.py:49: AssertionError
+=========================== short test summary info ============================
+FAILED test_0657.py::test_task_func_positive_sentiment - AssertionError: asse...
+FAILED test_0657.py::test_task_func_negative_sentiment - AssertionError: asse...
+FAILED test_0657.py::test_task_func_neutral_sentiment - AssertionError: asser...
+FAILED test_0657.py::test_task_func_empty_string - AssertionError: assert {'n...
+FAILED test_0657.py::test_task_func_punctuation - AssertionError: assert {'ne...
+FAILED test_0657.py::test_task_func_case_insensitivity - AssertionError: asse...
+FAILED test_0657.py::test_task_func_alphanumeric_removal - AssertionError: as...
+7 failed in 4.08s

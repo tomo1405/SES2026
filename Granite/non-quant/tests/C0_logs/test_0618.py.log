@@ -1,0 +1,30 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        goals = 5
+        penalties = 3
+        rng_seed = 42
+        teams = ['Team A', 'Team B', 'Team C', 'Team D', 'Team E']
+        expected_results_df = pd.DataFrame([
+            ['Team A', '(3 goals, $3000)'],
+            ['Team B', '(2 goals, $2000)'],
+            ['Team C', '(4 goals, $4000)'],
+            ['Team D', '(1 goals, $1000)'],
+            ['Team E', '(5 goals, $5000)']
+        ], columns=['Team', 'Match Result'])
+        expected_results_df['Goals'] = expected_results_df['Match Result'].apply(lambda x: int(re.search(r'\((\d+) goals', x).group(1)))
+        expected_results_df['Penalty Cost'] = expected_results_df['Match Result'].apply(lambda x: int(re.search(r'\$(\d+)', x).group(1)))
+    
+        results_df = task_func(goals, penalties, rng_seed, teams)
+    
+>       assert results_df.equals(expected_results_df)
+E       assert False
+E        +  where False = equals(     Team      Match Result  Goals  Penalty Cost\n0  Team A  (3 goals, $3000)      3          3000\n1  Team B  (2 goals,...      4          4000\n3  Team D  (1 goals, $1000)      1          1000\n4  Team E  (5 goals, $5000)      5          5000)
+E        +    where equals =      Team      Match Result  Goals  Penalty Cost\n0  Team A     (5 goals, $0)      5             0\n1  Team B  (0 goals,...      1          1000\n3  Team D     (1 goals, $0)      1             0\n4  Team E     (5 goals, $0)      5             0.equals
+
+test_0618.py:25: AssertionError
+=========================== short test summary info ============================
+FAILED test_0618.py::test_task_func - assert False
+1 failed in 2.14s

@@ -1,0 +1,52 @@
+FFF.                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+dictionary = {'a': 1, 'b': 2, 'c': 3, 'd': 4}
+
+    def test_task_func(dictionary):
+        new_key = "d"
+        new_value = 4
+        expected_dictionary = {**dictionary, **{new_key: new_value}}
+        expected_ax = None  # TODO: Find a way to mock the Seaborn barplot function
+    
+        returned_dictionary, returned_ax = task_func(dictionary, new_key, new_value)
+    
+        assert returned_dictionary == expected_dictionary
+>       assert returned_ax == expected_ax
+E       AssertionError: assert <Axes: title={'center': 'Distribution of Dictionary Values'}, xlabel='Values', ylabel='Counts'> == None
+
+test_0263.py:20: AssertionError
+_______________________ test_task_func_with_existing_key _______________________
+
+dictionary = {'a': 1, 'b': 5, 'c': 3}
+
+    def test_task_func_with_existing_key(dictionary):
+        new_key = "b"
+        new_value = 5
+        expected_dictionary = {**dictionary, **{new_key: new_value}}
+        expected_ax = None  # TODO: Find a way to mock the Seaborn barplot function
+    
+        returned_dictionary, returned_ax = task_func(dictionary, new_key, new_value)
+    
+        assert returned_dictionary == expected_dictionary
+>       assert returned_ax == expected_ax
+E       AssertionError: assert <Axes: title={'center': 'Distribution of Dictionary Values'}, xlabel='Values', ylabel='Counts'> == None
+
+test_0263.py:31: AssertionError
+_______________________ test_task_func_with_invalid_key ________________________
+
+dictionary = {'a': 1, 'b': 2, 'c': 3, 6: 7}
+
+    def test_task_func_with_invalid_key(dictionary):
+        new_key = 6
+        new_value = 7
+>       with pytest.raises(TypeError):
+E       Failed: DID NOT RAISE TypeError
+
+test_0263.py:36: Failed
+=========================== short test summary info ============================
+FAILED test_0263.py::test_task_func - AssertionError: assert <Axes: title={'c...
+FAILED test_0263.py::test_task_func_with_existing_key - AssertionError: asser...
+FAILED test_0263.py::test_task_func_with_invalid_key - Failed: DID NOT RAISE ...
+3 failed, 1 passed in 3.68s

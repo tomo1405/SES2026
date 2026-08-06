@@ -1,0 +1,83 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a sample dataframe with a 'closing_price' column
+        df = pd.DataFrame({'closing_price': [100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260, 270, 280, 290, 300]})
+    
+        # Call the task function with the sample dataframe
+        outliers, ax = task_func(df)
+    
+        # Assert that the function returns the expected outputs
+        assert isinstance(outliers, pd.DataFrame)
+        assert isinstance(ax, plt.Axes)
+    
+        # Assert that the outliers dataframe contains the expected values
+>       expected_outliers = df.loc[[4, 13, 22]]  # Index of outliers in the sample dataframe
+                            ^^^^^^^^^^^^^^^^^^^
+
+test_0916.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexing.py:1207: in __getitem__
+    return self._getitem_axis(maybe_callable, axis=axis)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexing.py:1438: in _getitem_axis
+    return self._getitem_iterable(key, axis=axis)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexing.py:1378: in _getitem_iterable
+    keyarr, indexer = self._get_listlike_indexer(key, axis)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexing.py:1576: in _get_listlike_indexer
+    keyarr, indexer = ax._get_indexer_strict(key, axis_name)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py:6302: in _get_indexer_strict
+    self._raise_if_missing(keyarr, indexer, axis_name)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = RangeIndex(start=0, stop=21, step=1)
+key = RangeIndex(start=4, stop=31, step=9), indexer = array([ 4, 13, -1])
+axis_name = 'index'
+
+    def _raise_if_missing(self, key, indexer, axis_name: str_t) -> None:
+        """
+        Check that indexer can be used to return a result.
+    
+        e.g. at least one element was found,
+        unless the list of keys was actually empty.
+    
+        Parameters
+        ----------
+        key : list-like
+            Targeted labels (only used to show correct error message).
+        indexer: array-like of booleans
+            Indices corresponding to the key,
+            (with -1 indicating not found).
+        axis_name : str
+    
+        Raises
+        ------
+        KeyError
+            If at least one key was requested but none was found.
+        """
+        if len(key) == 0:
+            return
+    
+        # Count missing values
+        missing_mask = indexer < 0
+        nmissing = missing_mask.sum()
+    
+        if nmissing:
+            if nmissing == len(indexer):
+                raise KeyError(f"None of [{key}] are in the [{axis_name}]")
+    
+            not_found = list(ensure_index(key)[missing_mask.nonzero()[0]].unique())
+>           raise KeyError(f"{not_found} not in index")
+E           KeyError: '[22] not in index'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py:6355: KeyError
+=========================== short test summary info ============================
+FAILED test_0916.py::test_task_func - KeyError: '[22] not in index'
+1 failed in 3.43s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

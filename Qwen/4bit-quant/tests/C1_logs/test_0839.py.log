@@ -1,0 +1,110 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sample_series = 0       Hello, World!
+1     This is a test.
+2    Python is great!
+dtype: str
+
+    def test_task_func(sample_series):
+        # Expected output after stemming and removing non-alphanumeric characters
+        expected_output = pd.Series(["hello world", "this is a test", "python is great"])
+    
+        # Call the function with the sample series
+        result = task_func(sample_series)
+    
+        # Assert that the result matches the expected output
+>       assert result.equals(expected_output)
+E       assert False
+E        +  where False = equals(0        hello world\n1     this is a test\n2    python is great\ndtype: str)
+E        +    where equals = 0        hello world\n1      thi is a test\n2    python is great\ndtype: str.equals
+
+test_0839.py:17: AssertionError
+_________________________ test_task_func_empty_string __________________________
+
+sample_series = 0       Hello, World!
+1     This is a test.
+2    Python is great!
+dtype: str
+
+    def test_task_func_empty_string(sample_series):
+        # Add an empty string to the series
+>       sample_series = sample_series.append(pd.Series([""]))
+                        ^^^^^^^^^^^^^^^^^^^^
+
+test_0839.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = 0       Hello, World!
+1     This is a test.
+2    Python is great!
+dtype: str
+name = 'append'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Series' object has no attribute 'append'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+_______________________ test_task_func_single_character ________________________
+
+sample_series = 0       Hello, World!
+1     This is a test.
+2    Python is great!
+dtype: str
+
+    def test_task_func_single_character(sample_series):
+        # Add a single character to the series
+>       sample_series = sample_series.append(pd.Series(["a"]))
+                        ^^^^^^^^^^^^^^^^^^^^
+
+test_0839.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = 0       Hello, World!
+1     This is a test.
+2    Python is great!
+dtype: str
+name = 'append'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Series' object has no attribute 'append'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+=========================== short test summary info ============================
+FAILED test_0839.py::test_task_func - assert False
+FAILED test_0839.py::test_task_func_empty_string - AttributeError: 'Series' o...
+FAILED test_0839.py::test_task_func_single_character - AttributeError: 'Serie...
+3 failed in 3.75s

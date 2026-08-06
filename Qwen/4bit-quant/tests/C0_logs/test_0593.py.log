@@ -1,0 +1,29 @@
+.F..                                                                     [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_output_file_content ______________________
+
+    def test_task_func_output_file_content():
+        hours = 1
+        output_dir = './test_output'
+        file_path = task_func(hours, output_dir)
+    
+        with open(file_path, newline='') as csvfile:
+            reader = csv.reader(csvfile)
+            rows = list(reader)
+    
+        assert len(rows) == hours + 1, "Number of rows in the CSV file is incorrect"
+        assert rows[0] == ['Time'] + ['Temperature', 'Humidity', 'Pressure'], "Header row is incorrect"
+    
+        for row in rows[1:]:
+            assert len(row) == 4, "Each data row should have 4 elements"
+            assert isinstance(row[0], str), "Time should be a string"
+            for value in row[1:]:
+>               assert isinstance(value, int), "Sensor values should be integers"
+E               AssertionError: Sensor values should be integers
+E               assert False
+E                +  where False = isinstance('100', int)
+
+test_0593.py:28: AssertionError
+=========================== short test summary info ============================
+FAILED test_0593.py::test_task_func_output_file_content - AssertionError: Sen...
+1 failed, 3 passed in 0.46s

@@ -1,0 +1,79 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_with_empty_df _________________________
+
+df =    Likes  Views                     Title
+0    100   1000  How to Train Your Dragon
+1    200   2000            What is...00   3000    How to Eat an Elephant
+3    400   4000  What is Machine Learning
+4    500   5000  How to Code a Video Game
+
+    def test_task_func_with_empty_df(df):
+        df_empty = pd.DataFrame()
+        ax = task_func(df_empty)
+>       assert ax.get_title() == 'Empty DataFrame'
+E       AssertionError: assert '' == 'Empty DataFrame'
+E         
+E         - Empty DataFrame
+
+test_0176.py:16: AssertionError
+_____________________ test_task_func_with_missing_columns ______________________
+
+df =    Likes  Views                     Title
+0    100   1000  How to Train Your Dragon
+1    200   2000            What is...00   3000    How to Eat an Elephant
+3    400   4000  What is Machine Learning
+4    500   5000  How to Code a Video Game
+
+    def test_task_func_with_missing_columns(df):
+        df_missing_columns = df.drop(columns=['Likes', 'Views', 'Title'])
+        ax = task_func(df_missing_columns)
+>       assert ax.get_title() == 'Missing required columns'
+E       AssertionError: assert '' == 'Missing required columns'
+E         
+E         - Missing required columns
+
+test_0176.py:21: AssertionError
+__________________ test_task_func_with_no_interesting_videos ___________________
+
+df =    Likes  Views                     Title
+0    100   1000  How to Train Your Dragon
+1    200   2000            What is...00   3000    How to Eat an Elephant
+3    400   4000  What is Machine Learning
+4    500   5000  How to Code a Video Game
+
+    def test_task_func_with_no_interesting_videos(df):
+        df_no_interesting_videos = df.copy()
+        df_no_interesting_videos['Title'] = 'No Interesting Videos'
+        ax = task_func(df_no_interesting_videos)
+>       assert ax.get_title() == 'No interesting videos found'
+E       AssertionError: assert '' == 'No interesting videos found'
+E         
+E         - No interesting videos found
+
+test_0176.py:27: AssertionError
+____________________ test_task_func_with_interesting_videos ____________________
+
+df =    Likes  Views                     Title
+0    100   1000  How to Train Your Dragon
+1    200   2000            What is...00   3000    How to Eat an Elephant
+3    400   4000  What is Machine Learning
+4    500   5000  How to Code a Video Game
+
+    def test_task_func_with_interesting_videos(df):
+        ax = task_func(df)
+        expected_title = 'Like Ratio'
+        expected_xlabel = 'Title'
+        expected_ylabel = 'Like Ratio'
+>       assert ax.get_title() == expected_title
+E       AssertionError: assert '' == 'Like Ratio'
+E         
+E         - Like Ratio
+
+test_0176.py:34: AssertionError
+=========================== short test summary info ============================
+FAILED test_0176.py::test_task_func_with_empty_df - AssertionError: assert ''...
+FAILED test_0176.py::test_task_func_with_missing_columns - AssertionError: as...
+FAILED test_0176.py::test_task_func_with_no_interesting_videos - AssertionErr...
+FAILED test_0176.py::test_task_func_with_interesting_videos - AssertionError:...
+4 failed in 2.44s

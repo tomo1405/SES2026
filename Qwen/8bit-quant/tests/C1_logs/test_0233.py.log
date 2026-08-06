@@ -1,0 +1,71 @@
+FFF..                                                                    [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_valid_data ________________________
+
+    def test_task_func_with_valid_data():
+        data = {
+            'Customer': ['A', 'B', 'A', 'C'],
+            'Sales': [100, 200, 150, 300],
+            'Category': ['X', 'Y', 'X', 'Z']
+        }
+        df = pd.DataFrame(data)
+        result = task_func(df)
+>       assert result == {'Total Sales': 750, 'Most Popular Category': 'X'}
+E       AssertionError: assert {'Total Sales...ategory': 'X'} == {'Total Sales...ategory': 'X'}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'Total Sales': np.int64(600)} != {'Total Sales': 750}
+E         Use -v to get more diff
+
+test_0233.py:13: AssertionError
+_________________________ test_task_func_with_no_data __________________________
+
+    def test_task_func_with_no_data():
+        df = pd.DataFrame(columns=['Customer', 'Sales', 'Category'])
+>       result = task_func(df)
+                 ^^^^^^^^^^^^^
+
+test_0233.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df = Empty DataFrame
+Columns: [Customer, Sales, Category]
+Index: []
+
+    def task_func(df):
+    
+        if not isinstance(df, pd.DataFrame):
+            raise ValueError("The input df is not a DataFrame")
+    
+        df = df.drop_duplicates(subset='Customer')
+        total_sales = df['Sales'].sum()
+>       popular_category = collections.Counter(df['Category']).most_common(1)[0][0]
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       IndexError: list index out of range
+
+../../../src/src_0233.py:10: IndexError
+___________________ test_task_func_with_one_unique_customer ____________________
+
+    def test_task_func_with_one_unique_customer():
+        data = {
+            'Customer': ['A', 'A', 'A'],
+            'Sales': [100, 150, 200],
+            'Category': ['X', 'Y', 'X']
+        }
+        df = pd.DataFrame(data)
+        result = task_func(df)
+>       assert result == {'Total Sales': 450, 'Most Popular Category': 'X'}
+E       AssertionError: assert {'Total Sales...ategory': 'X'} == {'Total Sales...ategory': 'X'}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'Total Sales': np.int64(100)} != {'Total Sales': 450}
+E         Use -v to get more diff
+
+test_0233.py:28: AssertionError
+=========================== short test summary info ============================
+FAILED test_0233.py::test_task_func_with_valid_data - AssertionError: assert ...
+FAILED test_0233.py::test_task_func_with_no_data - IndexError: list index out...
+FAILED test_0233.py::test_task_func_with_one_unique_customer - AssertionError...
+3 failed, 2 passed in 1.35s

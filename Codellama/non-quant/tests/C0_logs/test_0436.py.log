@@ -1,0 +1,76 @@
+F.FFFF                                                                   [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        name = "John"
+        age = 30
+        code = "12345"
+        salary = 50000.0
+        bio = "I am a software engineer."
+        expected_df = pd.DataFrame(
+            [[name, age, code, salary, bio, "Engineer"]],
+            columns=["Name", "Age", "Code", "Salary", "Bio", "Job Title"],
+        )
+>       assert task_func(name, age, code, salary, bio).equals(expected_df)
+E       AssertionError: assert False
+E        +  where False = equals(   Name  Age   Code   Salary                        Bio Job Title\n0  John   30  12345  50000.0  I am a software engineer.  Engineer)
+E        +    where equals =    Name  Age   Code   Salary                        Bio Job Title\n0  John   30  12345  50000.0  I am a software engineer.   Analyst.equals
+E        +      where    Name  Age   Code   Salary                        Bio Job Title\n0  John   30  12345  50000.0  I am a software engineer.   Analyst = task_func('John', 30, '12345', 50000.0, 'I am a software engineer.')
+
+test_0436.py:16: AssertionError
+__________________________ test_task_func_invalid_age __________________________
+
+    def test_task_func_invalid_age():
+        name = "John"
+        age = 0
+        code = "12345"
+        salary = 50000.0
+        bio = "I am a software engineer."
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0436.py:33: Failed
+_________________________ test_task_func_invalid_code __________________________
+
+    def test_task_func_invalid_code():
+        name = "John"
+        age = 30
+        code = "1234"
+        salary = 50000.0
+        bio = "I am a software engineer."
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0436.py:42: Failed
+________________________ test_task_func_invalid_salary _________________________
+
+    def test_task_func_invalid_salary():
+        name = "John"
+        age = 30
+        code = "12345"
+        salary = 0.0
+        bio = "I am a software engineer."
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0436.py:51: Failed
+__________________________ test_task_func_invalid_bio __________________________
+
+    def test_task_func_invalid_bio():
+        name = "John"
+        age = 30
+        code = "12345"
+        salary = 50000.0
+        bio = ""
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0436.py:60: Failed
+=========================== short test summary info ============================
+FAILED test_0436.py::test_task_func_valid_input - AssertionError: assert False
+FAILED test_0436.py::test_task_func_invalid_age - Failed: DID NOT RAISE Value...
+FAILED test_0436.py::test_task_func_invalid_code - Failed: DID NOT RAISE Valu...
+FAILED test_0436.py::test_task_func_invalid_salary - Failed: DID NOT RAISE Va...
+FAILED test_0436.py::test_task_func_invalid_bio - Failed: DID NOT RAISE Value...
+5 failed, 1 passed in 1.14s

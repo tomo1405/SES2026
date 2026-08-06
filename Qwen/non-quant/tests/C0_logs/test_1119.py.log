@@ -1,0 +1,29 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_open = <MagicMock name='open' id='127601983754256'>
+mock_get = <MagicMock name='get' id='127601981427920'>
+mock_response = <MagicMock name='get()' id='127601979516320'>
+
+    @patch('requests.get')
+    @patch('builtins.open', new_callable=MagicMock)
+    def test_task_func(mock_open, mock_get, mock_response):
+        mock_get.return_value = mock_response
+        expected_json_data = [
+            {"name": "Alice", "age": "30", "city": "New York"},
+            {"name": "Bob", "age": "25", "city": "Los Angeles"}
+        ]
+        expected_json_file_path = 'data.json'
+    
+        result = task_func()
+    
+        assert result == expected_json_file_path
+>       mock_get.assert_called_once_with(CSV_URL)
+                                         ^^^^^^^
+E       NameError: name 'CSV_URL' is not defined
+
+test_1119.py:30: NameError
+=========================== short test summary info ============================
+FAILED test_1119.py::test_task_func - NameError: name 'CSV_URL' is not defined
+1 failed in 0.75s

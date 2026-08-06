@@ -1,0 +1,27 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that the function returns a matplotlib figure
+        fig = task_func()
+        assert isinstance(fig, plt.Figure)
+    
+        # Test that the figure has the correct number of axes
+        assert len(fig.axes) == 1
+    
+        # Test that the figure has the correct number of labels
+        assert len(fig.axes[0].get_xticklabels()) == 5
+    
+        # Test that the figure has the correct data range
+>       assert np.allclose(fig.axes[0].get_xlim(), (0, 1))
+E       assert False
+E        +  where False = <function allclose at 0x7fd6fb361670>((np.float64(-0.5), np.float64(4.5)), (0, 1))
+E        +    where <function allclose at 0x7fd6fb361670> = np.allclose
+E        +    and   (np.float64(-0.5), np.float64(4.5)) = get_xlim()
+E        +      where get_xlim = <Axes: >.get_xlim
+
+test_0165.py:18: AssertionError
+=========================== short test summary info ============================
+FAILED test_0165.py::test_task_func - assert False
+1 failed in 2.02s

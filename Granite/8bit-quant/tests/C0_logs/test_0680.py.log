@@ -1,0 +1,58 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+input_df =    A  B combination
+0  1  2      (1, 2)
+1  2  3      (2, 3)
+2  2  4      (2, 4)
+3  3  4      (3, 4)
+
+    def test_task_func(input_df):
+        result = task_func(input_df)
+        assert isinstance(result, dict)
+>       assert len(result) == 3
+E       assert 4 == 3
+E        +  where 4 = len({(1, 2): 1, (2, 3): 1, (2, 4): 1, (3, 4): 1})
+
+test_0680.py:13: AssertionError
+_________________________ test_task_func_with_empty_df _________________________
+
+input_df = Empty DataFrame
+Columns: [combination]
+Index: []
+
+    def test_task_func_with_empty_df(input_df):
+        input_df = pd.DataFrame()
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0680.py:17: Failed
+_______________________ test_task_func_with_non_df_input _______________________
+
+input_df =    A  B
+0  1  2
+1  2  3
+2  2  4
+3  3  4
+
+    def test_task_func_with_non_df_input(input_df):
+        with pytest.raises(TypeError):
+>           task_func([1, 2, 3])
+
+test_0680.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df = [1, 2, 3]
+
+    def task_func(df):
+>       df['combination'] = pd.Series(df.apply(lambda row: tuple(sorted(row)), axis=1))
+                                      ^^^^^^^^
+E       AttributeError: 'list' object has no attribute 'apply'
+
+../../../src/src_0680.py:4: AttributeError
+=========================== short test summary info ============================
+FAILED test_0680.py::test_task_func - assert 4 == 3
+FAILED test_0680.py::test_task_func_with_empty_df - Failed: DID NOT RAISE Val...
+FAILED test_0680.py::test_task_func_with_non_df_input - AttributeError: 'list...
+3 failed in 1.12s

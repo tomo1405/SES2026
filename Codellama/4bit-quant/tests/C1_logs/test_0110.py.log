@@ -1,0 +1,37 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        df = pd.DataFrame({'Item': ['apple', 'banana', 'grape', 'orange', 'pineapple'],
+                           'Location': ['store1', 'store2', 'store3', 'store4', 'store5']})
+        items = ['apple', 'banana', 'grape', 'orange', 'pineapple']
+        locations = ['store1', 'store2', 'store3', 'store4', 'store5']
+        ax = task_func(df, items, locations)
+        assert isinstance(ax, plt.Axes)
+        assert ax.get_title() == 'Item Distribution by Location'
+        assert ax.get_ylabel() == 'Count'
+        assert ax.get_xlabel() == 'Location'
+        assert ax.get_ylabel() == 'Count'
+>       assert ax.get_xlabel() == 'Item'
+E       AssertionError: assert 'Location' == 'Item'
+E         
+E         - Item
+E         + Location
+
+test_0110.py:18: AssertionError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        df = pd.DataFrame({'Item': ['apple', 'banana', 'grape', 'orange', 'pineapple'],
+                           'Location': ['store1', 'store2', 'store3', 'store4', 'store5']})
+        items = ['apple', 'banana', 'grape', 'orange', 'pineapple']
+        locations = ['store1', 'store2', 'store3', 'store4', 'store5']
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0110.py:25: Failed
+=========================== short test summary info ============================
+FAILED test_0110.py::test_task_func_valid_input - AssertionError: assert 'Loc...
+FAILED test_0110.py::test_task_func_invalid_input - Failed: DID NOT RAISE Val...
+2 failed in 2.02s

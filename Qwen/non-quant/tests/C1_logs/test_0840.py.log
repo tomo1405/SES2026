@@ -1,0 +1,48 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1635/test_task_func0')
+
+    def test_task_func(tmpdir):
+        # Create a temporary directory and file path
+        temp_dir = tmpdir.mkdir("temp")
+        file_path = temp_dir.join("test_output.csv")
+    
+        # Define test parameters
+        num_rows = 10
+        gender = ['Male', 'Female', 'Non-Binary']
+        countries = ['USA', 'UK', 'Canada', 'Australia', 'India']
+        seed = 42
+    
+        # Call the function
+        result_path = task_func(str(file_path), num_rows, gender, countries, seed)
+    
+        # Check if the file was created
+        assert os.path.exists(result_path)
+    
+        # Read the CSV file and check its contents
+        with open(result_path, newline='') as csvfile:
+            reader = csv.DictReader(csvfile)
+            rows = list(reader)
+    
+        # Check the number of rows
+        assert len(rows) == num_rows
+    
+        # Check the fields
+        for row in rows:
+            assert set(row.keys()) == {'Name', 'Age', 'Gender', 'Country'}
+    
+        # Check the data types and values
+        for row in rows:
+            assert isinstance(row['Name'], str)
+            assert len(row['Name']) == 5
+            assert all(c.isalpha() for c in row['Name'])
+>           assert isinstance(row['Age'], int)
+E           AssertionError: assert False
+E            +  where False = isinstance('54', int)
+
+test_0840.py:40: AssertionError
+=========================== short test summary info ============================
+FAILED test_0840.py::test_task_func - AssertionError: assert False
+1 failed, 1 passed in 0.48s

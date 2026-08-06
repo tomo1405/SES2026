@@ -1,0 +1,36 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        with mock.patch('src_0267.os.walk') as mock_walk:
+            mock_walk.return_value = [
+                ('/path/to/my_path', [], ['file1.txt', 'file2.txt', 'file3.txt']),
+                ('/path/to/my_path/subdir', [], ['file4.txt', 'file5.txt'])
+            ]
+            with mock.patch('src_0267.os.path.getsize') as mock_getsize:
+                mock_getsize.side_effect = [100, 200, 150, 250, 300]
+>               result = task_func('/path/to/my_path')
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0267.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+my_path = '/path/to/my_path'
+
+    def task_func(my_path):
+        file_sizes = collections.defaultdict(int)
+    
+        for dirpath, dirnames, filenames in os.walk(my_path):
+            for f in filenames:
+                fp = os.path.join(dirpath, f)
+                file_sizes[f] += os.path.getsize(fp)
+    
+>       with open(os.path.join(my_path, FILE_NAME), 'w', newline='') as csvfile:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/path/to/my_path/file_sizes.csv'
+
+test_0267.py:18: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0267.py::test_task_func - FileNotFoundError: [Errno 2] No such fi...
+1 failed in 0.42s

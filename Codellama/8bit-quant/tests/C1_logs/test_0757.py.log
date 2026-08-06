@@ -1,0 +1,132 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        source_dir = "source_dir"
+        target_dir = "target_dir"
+        extensions = ["txt", "pdf"]
+    
+>       count = task_func(source_dir, target_dir, extensions)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0757.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0757.py:16: in task_func
+    shutil.move(str(file_name), target_dir)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+src = 'source_dir/file3.txt', dst = 'target_dir'
+copy_function = <function copy2 at 0x73b713eadda0>
+
+    def move(src, dst, copy_function=copy2):
+        """Recursively move a file or directory to another location. This is
+        similar to the Unix "mv" command. Return the file or directory's
+        destination.
+    
+        If dst is an existing directory or a symlink to a directory, then src is
+        moved inside that directory. The destination path in that directory must
+        not already exist.
+    
+        If dst already exists but is not a directory, it may be overwritten
+        depending on os.rename() semantics.
+    
+        If the destination is on our current filesystem, then rename() is used.
+        Otherwise, src is copied to the destination and then removed. Symlinks are
+        recreated under the new name if os.rename() fails because of cross
+        filesystem renames.
+    
+        The optional `copy_function` argument is a callable that will be used
+        to copy the source or it will be delegated to `copytree`.
+        By default, copy2() is used, but any function that supports the same
+        signature (like copy()) can be used.
+    
+        A lot more could be done here...  A look at a mv.c shows a lot of
+        the issues this implementation glosses over.
+    
+        """
+        sys.audit("shutil.move", src, dst)
+        real_dst = dst
+        if os.path.isdir(dst):
+            if _samefile(src, dst) and not os.path.islink(src):
+                # We might be on a case insensitive filesystem,
+                # perform the rename anyway.
+                os.rename(src, dst)
+                return
+    
+            # Using _basename instead of os.path.basename is important, as we must
+            # ignore any trailing slash to avoid the basename returning ''
+            real_dst = os.path.join(dst, _basename(src))
+    
+            if os.path.exists(real_dst):
+>               raise Error("Destination path '%s' already exists" % real_dst)
+E               shutil.Error: Destination path 'target_dir/file3.txt' already exists
+
+/usr/lib/python3.12/shutil.py:884: Error
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        source_dir = "source_dir"
+        target_dir = "target_dir"
+        extensions = ["txt", "pdf"]
+    
+        with pytest.raises(ValueError):
+>           task_func(source_dir, target_dir, extensions)
+
+test_0757.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0757.py:16: in task_func
+    shutil.move(str(file_name), target_dir)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+src = 'source_dir/file3.txt', dst = 'target_dir'
+copy_function = <function copy2 at 0x73b713eadda0>
+
+    def move(src, dst, copy_function=copy2):
+        """Recursively move a file or directory to another location. This is
+        similar to the Unix "mv" command. Return the file or directory's
+        destination.
+    
+        If dst is an existing directory or a symlink to a directory, then src is
+        moved inside that directory. The destination path in that directory must
+        not already exist.
+    
+        If dst already exists but is not a directory, it may be overwritten
+        depending on os.rename() semantics.
+    
+        If the destination is on our current filesystem, then rename() is used.
+        Otherwise, src is copied to the destination and then removed. Symlinks are
+        recreated under the new name if os.rename() fails because of cross
+        filesystem renames.
+    
+        The optional `copy_function` argument is a callable that will be used
+        to copy the source or it will be delegated to `copytree`.
+        By default, copy2() is used, but any function that supports the same
+        signature (like copy()) can be used.
+    
+        A lot more could be done here...  A look at a mv.c shows a lot of
+        the issues this implementation glosses over.
+    
+        """
+        sys.audit("shutil.move", src, dst)
+        real_dst = dst
+        if os.path.isdir(dst):
+            if _samefile(src, dst) and not os.path.islink(src):
+                # We might be on a case insensitive filesystem,
+                # perform the rename anyway.
+                os.rename(src, dst)
+                return
+    
+            # Using _basename instead of os.path.basename is important, as we must
+            # ignore any trailing slash to avoid the basename returning ''
+            real_dst = os.path.join(dst, _basename(src))
+    
+            if os.path.exists(real_dst):
+>               raise Error("Destination path '%s' already exists" % real_dst)
+E               shutil.Error: Destination path 'target_dir/file3.txt' already exists
+
+/usr/lib/python3.12/shutil.py:884: Error
+=========================== short test summary info ============================
+FAILED test_0757.py::test_task_func_valid_input - shutil.Error: Destination p...
+FAILED test_0757.py::test_task_func_invalid_input - shutil.Error: Destination...
+2 failed in 0.49s

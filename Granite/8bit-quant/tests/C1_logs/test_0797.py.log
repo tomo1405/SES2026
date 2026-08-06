@@ -1,0 +1,42 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+_____________ test_task_func[/path/to/directory-expected_output0] ______________
+
+directory = '/path/to/directory'
+expected_output = ['path/to/directory/file1.txt', 'path/to/directory/file2.txt']
+
+    @pytest.mark.parametrize("directory, expected_output", [
+        ("/path/to/directory", ["path/to/directory/file1.txt", "path/to/directory/file2.txt"]),
+        ("/another/path/to/directory", ["another/path/to/directory/file3.txt"]),
+        ("/empty/directory", [])
+    ])
+    def test_task_func(directory, expected_output):
+>       assert task_func(directory) == expected_output
+E       AssertionError: assert [] == ['path/to/dir...ry/file2.txt']
+E         
+E         Right contains 2 more items, first extra item: 'path/to/directory/file1.txt'
+E         Use -v to get more diff
+
+test_0797.py:12: AssertionError
+_________ test_task_func[/another/path/to/directory-expected_output1] __________
+
+directory = '/another/path/to/directory'
+expected_output = ['another/path/to/directory/file3.txt']
+
+    @pytest.mark.parametrize("directory, expected_output", [
+        ("/path/to/directory", ["path/to/directory/file1.txt", "path/to/directory/file2.txt"]),
+        ("/another/path/to/directory", ["another/path/to/directory/file3.txt"]),
+        ("/empty/directory", [])
+    ])
+    def test_task_func(directory, expected_output):
+>       assert task_func(directory) == expected_output
+E       AssertionError: assert [] == ['another/pat...ry/file3.txt']
+E         
+E         Right contains one more item: 'another/path/to/directory/file3.txt'
+E         Use -v to get more diff
+
+test_0797.py:12: AssertionError
+=========================== short test summary info ============================
+FAILED test_0797.py::test_task_func[/path/to/directory-expected_output0] - As...
+FAILED test_0797.py::test_task_func[/another/path/to/directory-expected_output1]
+2 failed, 1 passed in 0.47s

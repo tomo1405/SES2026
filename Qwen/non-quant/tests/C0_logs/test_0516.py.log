@@ -1,0 +1,41 @@
+F..F                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_valid_input ________________________
+
+    def test_task_func_with_valid_input():
+        array = [
+            [1, 2, 3, 4, 5],
+            [5, 4, 3, 2, 1],
+            [2, 3, 4, 5, 6]
+        ]
+        df, heatmap = task_func(array)
+    
+        # Check if DataFrame is created correctly
+        expected_columns = ["A", "B", "C", "D", "E"]
+        assert list(df.columns) == expected_columns
+        assert df.shape == (3, 5)
+    
+        # Check if heatmap is created
+>       assert isinstance(heatmap, plt.AxesImage)
+                                   ^^^^^^^^^^^^^
+E       AttributeError: module 'matplotlib.pyplot' has no attribute 'AxesImage'
+
+test_0516.py:21: AttributeError
+_____________________ test_task_func_with_non_numeric_data _____________________
+
+    def test_task_func_with_non_numeric_data():
+        array = [
+            [1, 'a', 3, 4, 5],
+            [5, 4, 3, 2, 1],
+            [2, 3, 4, 5, 6]
+        ]
+>       with pytest.raises(ValueError, match="array must be non-empty and all sublists must have a length of 5."):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'array must be non-empty and all sublists must have a length of 5.'
+E         Actual message: "could not convert string to float: 'a'"
+
+test_0516.py:42: AssertionError
+=========================== short test summary info ============================
+FAILED test_0516.py::test_task_func_with_valid_input - AttributeError: module...
+FAILED test_0516.py::test_task_func_with_non_numeric_data - AssertionError: R...
+2 failed, 2 passed in 3.73s

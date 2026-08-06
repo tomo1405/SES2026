@@ -1,0 +1,46 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+________________ test_task_func[input_df1-expected_output_df1] _________________
+
+input_df =   UnicodeString
+0        Ã©Ã¨Ã§
+expected_output_df =   UnicodeString
+0           éèç
+
+    @pytest.mark.parametrize("input_df, expected_output_df", [
+        (pd.DataFrame({'UnicodeString': ['\u0041\u0042\u0043']}), pd.DataFrame({'UnicodeString': ['ABC']})),
+        (pd.DataFrame({'UnicodeString': ['\u00E9\u00E8\u00E7']}), pd.DataFrame({'UnicodeString': ['éèç']})),
+        (pd.DataFrame({'UnicodeString': ['\u00FF']}), pd.DataFrame({'UnicodeString': ['ÿ']}))
+    ])
+    def test_task_func(input_df, expected_output_df):
+        output_df = task_func(input_df)
+>       assert output_df.equals(expected_output_df)
+E       assert False
+E        +  where False = equals(  UnicodeString\n0           éèç)
+E        +    where equals =   UnicodeString\n0        Ã©Ã¨Ã§.equals
+
+test_0416.py:13: AssertionError
+________________ test_task_func[input_df2-expected_output_df2] _________________
+
+input_df =   UnicodeString
+0            Ã¿
+expected_output_df =   UnicodeString
+0             ÿ
+
+    @pytest.mark.parametrize("input_df, expected_output_df", [
+        (pd.DataFrame({'UnicodeString': ['\u0041\u0042\u0043']}), pd.DataFrame({'UnicodeString': ['ABC']})),
+        (pd.DataFrame({'UnicodeString': ['\u00E9\u00E8\u00E7']}), pd.DataFrame({'UnicodeString': ['éèç']})),
+        (pd.DataFrame({'UnicodeString': ['\u00FF']}), pd.DataFrame({'UnicodeString': ['ÿ']}))
+    ])
+    def test_task_func(input_df, expected_output_df):
+        output_df = task_func(input_df)
+>       assert output_df.equals(expected_output_df)
+E       assert False
+E        +  where False = equals(  UnicodeString\n0             ÿ)
+E        +    where equals =   UnicodeString\n0            Ã¿.equals
+
+test_0416.py:13: AssertionError
+=========================== short test summary info ============================
+FAILED test_0416.py::test_task_func[input_df1-expected_output_df1] - assert F...
+FAILED test_0416.py::test_task_func[input_df2-expected_output_df2] - assert F...
+2 failed, 1 passed in 1.31s

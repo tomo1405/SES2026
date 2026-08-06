@@ -1,0 +1,41 @@
+.FEE                                                                     [100%]
+==================================== ERRORS ====================================
+_______________ ERROR at setup of test_task_func_with_csv_files ________________
+file /work/tomohiro-w/utg/Qwen/non-quant/tests/test_0379.py, line 43
+  def test_task_func_with_csv_files(mocker):
+E       fixture 'mocker' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, cov, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, no_cover, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/work/tomohiro-w/utg/Qwen/non-quant/tests/test_0379.py:43
+_____________ ERROR at setup of test_task_func_with_empty_csv_file _____________
+file /work/tomohiro-w/utg/Qwen/non-quant/tests/test_0379.py, line 61
+  def test_task_func_with_empty_csv_file(mocker):
+E       fixture 'mocker' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, cov, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, no_cover, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/work/tomohiro-w/utg/Qwen/non-quant/tests/test_0379.py:61
+=================================== FAILURES ===================================
+_________________________ test_task_func_no_csv_files __________________________
+
+    def test_task_func_no_csv_files():
+        with pytest.raises(ValueError) as excinfo:
+>           task_func(data_dir='./empty_dir/')
+
+test_0379.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data_dir = './empty_dir/'
+
+    def task_func(data_dir='./data/'):
+        if not os.path.exists(data_dir):
+>           raise FileNotFoundError(f"The directory '{data_dir}' does not exist.")
+E           FileNotFoundError: The directory './empty_dir/' does not exist.
+
+../../../src/src_0379.py:7: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0379.py::test_task_func_no_csv_files - FileNotFoundError: The dir...
+ERROR test_0379.py::test_task_func_with_csv_files
+ERROR test_0379.py::test_task_func_with_empty_csv_file
+1 failed, 1 passed, 2 errors in 1.08s

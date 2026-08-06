@@ -1,0 +1,56 @@
+F.FF.F..                                                                 [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_default ____________________________
+
+mock_csv_file = '/tmp/pytest-of-tomohiro-w/pytest-1312/test_task_func_default0/test.csv'
+
+    def test_task_func_default(mock_csv_file):
+        result = task_func(mock_csv_file)
+        expected_data = pd.DataFrame({'index': [0, 1, 2, 3, 4], 'data': ['a1', 'b2', 'c3', 'd4', 'e5']})
+>       pd.testing.assert_frame_equal(result.reset_index(drop=True), expected_data)
+E       AssertionError: DataFrame are different
+E       
+E       DataFrame shape mismatch
+E       [left]:  (0, 2)
+E       [right]: (5, 2)
+
+test_0882.py:24: AssertionError
+_______________________ test_task_func_with_sample_size ________________________
+
+mock_csv_file = '/tmp/pytest-of-tomohiro-w/pytest-1312/test_task_func_with_sample_siz0/test.csv'
+
+    def test_task_func_with_sample_size(mock_csv_file):
+        result = task_func(mock_csv_file, sample_size=3)
+>       assert len(result) == 3
+E       assert 0 == 3
+E        +  where 0 = len(Empty DataFrame\nColumns: [index, data]\nIndex: [])
+
+test_0882.py:33: AssertionError
+_____________ test_task_func_with_sample_size_larger_than_matches ______________
+
+mock_csv_file = '/tmp/pytest-of-tomohiro-w/pytest-1312/test_task_func_with_sample_siz1/test.csv'
+
+    def test_task_func_with_sample_size_larger_than_matches(mock_csv_file):
+        result = task_func(mock_csv_file, sample_size=10)
+>       assert len(result) == 5
+E       assert 0 == 5
+E        +  where 0 = len(Empty DataFrame\nColumns: [index, data]\nIndex: [])
+
+test_0882.py:37: AssertionError
+________________________ test_task_func_with_no_matches ________________________
+
+mock_csv_file = '/tmp/pytest-of-tomohiro-w/pytest-1312/test_task_func_with_no_matches0/test.csv'
+
+    def test_task_func_with_no_matches(mock_csv_file):
+        result = task_func(mock_csv_file, pattern='[0-9]')
+>       assert result.empty
+E       assert False
+E        +  where False =    index data\n0      0   a1\n1      1   b2\n2      2   c3\n3      3   d4\n4      4   e5.empty
+
+test_0882.py:46: AssertionError
+=========================== short test summary info ============================
+FAILED test_0882.py::test_task_func_default - AssertionError: DataFrame are d...
+FAILED test_0882.py::test_task_func_with_sample_size - assert 0 == 3
+FAILED test_0882.py::test_task_func_with_sample_size_larger_than_matches - as...
+FAILED test_0882.py::test_task_func_with_no_matches - assert False
+4 failed, 4 passed in 1.19s

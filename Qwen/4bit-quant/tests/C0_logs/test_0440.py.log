@@ -1,0 +1,627 @@
+.FFFF.                                                                   [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_result_shape __________________________
+
+    def test_task_func_result_shape():
+        P = np.array([[1, 2], [3, 4]])
+        T = np.array([[5, 6], [7, 8]])
+>       result, _ = task_func(P, T)
+                    ^^^^^^^^^^^^^^^
+
+test_0440.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0440.py:10: in task_func
+    heatmap = sns.heatmap(result_2D)
+              ^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/seaborn/matrix.py:446: in heatmap
+    plotter = _HeatMapper(data, vmin, vmax, cmap, center, robust, annot, fmt,
+../../../.venv/lib/python3.12/site-packages/seaborn/matrix.py:115: in __init__
+    plot_data = np.ma.masked_where(np.asarray(mask), plot_data)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = array([[False],
+       [False]]), a = array([41, 93]), copy = True
+
+    def masked_where(condition, a, copy=True):
+        """
+        Mask an array where a condition is met.
+    
+        Return `a` as an array masked where `condition` is True.
+        Any masked values of `a` or `condition` are also masked in the output.
+    
+        Parameters
+        ----------
+        condition : array_like
+            Masking condition.  When `condition` tests floating point values for
+            equality, consider using ``masked_values`` instead.
+        a : array_like
+            Array to mask.
+        copy : bool
+            If True (default) make a copy of `a` in the result.  If False modify
+            `a` in place and return a view.
+    
+        Returns
+        -------
+        result : MaskedArray
+            The result of masking `a` where `condition` is True.
+    
+        See Also
+        --------
+        masked_values : Mask using floating point equality.
+        masked_equal : Mask where equal to a given value.
+        masked_not_equal : Mask where *not* equal to a given value.
+        masked_less_equal : Mask where less than or equal to a given value.
+        masked_greater_equal : Mask where greater than or equal to a given value.
+        masked_less : Mask where less than a given value.
+        masked_greater : Mask where greater than a given value.
+        masked_inside : Mask inside a given interval.
+        masked_outside : Mask outside a given interval.
+        masked_invalid : Mask invalid values (NaNs or infs).
+    
+        Examples
+        --------
+        >>> import numpy as np
+        >>> import numpy.ma as ma
+        >>> a = np.arange(4)
+        >>> a
+        array([0, 1, 2, 3])
+        >>> ma.masked_where(a <= 2, a)
+        masked_array(data=[--, --, --, 3],
+                     mask=[ True,  True,  True, False],
+               fill_value=999999)
+    
+        Mask array `b` conditional on `a`.
+    
+        >>> b = ['a', 'b', 'c', 'd']
+        >>> ma.masked_where(a == 2, b)
+        masked_array(data=['a', 'b', --, 'd'],
+                     mask=[False, False,  True, False],
+               fill_value='N/A',
+                    dtype='<U1')
+    
+        Effect of the `copy` argument.
+    
+        >>> c = ma.masked_where(a <= 2, a)
+        >>> c
+        masked_array(data=[--, --, --, 3],
+                     mask=[ True,  True,  True, False],
+               fill_value=999999)
+        >>> c[0] = 99
+        >>> c
+        masked_array(data=[99, --, --, 3],
+                     mask=[False,  True,  True, False],
+               fill_value=999999)
+        >>> a
+        array([0, 1, 2, 3])
+        >>> c = ma.masked_where(a <= 2, a, copy=False)
+        >>> c[0] = 99
+        >>> c
+        masked_array(data=[99, --, --, 3],
+                     mask=[False,  True,  True, False],
+               fill_value=999999)
+        >>> a
+        array([99,  1,  2,  3])
+    
+        When `condition` or `a` contain masked values.
+    
+        >>> a = np.arange(4)
+        >>> a = ma.masked_where(a == 2, a)
+        >>> a
+        masked_array(data=[0, 1, --, 3],
+                     mask=[False, False,  True, False],
+               fill_value=999999)
+        >>> b = np.arange(4)
+        >>> b = ma.masked_where(b == 0, b)
+        >>> b
+        masked_array(data=[--, 1, 2, 3],
+                     mask=[ True, False, False, False],
+               fill_value=999999)
+        >>> ma.masked_where(a == 3, b)
+        masked_array(data=[--, 1, --, --],
+                     mask=[ True, False,  True,  True],
+               fill_value=999999)
+    
+        """
+        # Make sure that condition is a valid standard-type mask.
+        cond = make_mask(condition, shrink=False)
+        a = np.array(a, copy=copy, subok=True)
+    
+        (cshape, ashape) = (cond.shape, a.shape)
+        if cshape and cshape != ashape:
+>           raise IndexError("Inconsistent shape between the condition and the input"
+                             f" (got {cshape} and {ashape})")
+E           IndexError: Inconsistent shape between the condition and the input (got (2, 1) and (2,))
+
+../../../.venv/lib/python3.12/site-packages/numpy/ma/core.py:1991: IndexError
+_________________________ test_task_func_result_values _________________________
+
+    def test_task_func_result_values():
+        P = np.array([[1, 2], [3, 4]])
+        T = np.array([[5, 6], [7, 8]])
+>       result, _ = task_func(P, T)
+                    ^^^^^^^^^^^^^^^
+
+test_0440.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0440.py:10: in task_func
+    heatmap = sns.heatmap(result_2D)
+              ^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/seaborn/matrix.py:446: in heatmap
+    plotter = _HeatMapper(data, vmin, vmax, cmap, center, robust, annot, fmt,
+../../../.venv/lib/python3.12/site-packages/seaborn/matrix.py:115: in __init__
+    plot_data = np.ma.masked_where(np.asarray(mask), plot_data)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = array([[False],
+       [False]]), a = array([41, 93]), copy = True
+
+    def masked_where(condition, a, copy=True):
+        """
+        Mask an array where a condition is met.
+    
+        Return `a` as an array masked where `condition` is True.
+        Any masked values of `a` or `condition` are also masked in the output.
+    
+        Parameters
+        ----------
+        condition : array_like
+            Masking condition.  When `condition` tests floating point values for
+            equality, consider using ``masked_values`` instead.
+        a : array_like
+            Array to mask.
+        copy : bool
+            If True (default) make a copy of `a` in the result.  If False modify
+            `a` in place and return a view.
+    
+        Returns
+        -------
+        result : MaskedArray
+            The result of masking `a` where `condition` is True.
+    
+        See Also
+        --------
+        masked_values : Mask using floating point equality.
+        masked_equal : Mask where equal to a given value.
+        masked_not_equal : Mask where *not* equal to a given value.
+        masked_less_equal : Mask where less than or equal to a given value.
+        masked_greater_equal : Mask where greater than or equal to a given value.
+        masked_less : Mask where less than a given value.
+        masked_greater : Mask where greater than a given value.
+        masked_inside : Mask inside a given interval.
+        masked_outside : Mask outside a given interval.
+        masked_invalid : Mask invalid values (NaNs or infs).
+    
+        Examples
+        --------
+        >>> import numpy as np
+        >>> import numpy.ma as ma
+        >>> a = np.arange(4)
+        >>> a
+        array([0, 1, 2, 3])
+        >>> ma.masked_where(a <= 2, a)
+        masked_array(data=[--, --, --, 3],
+                     mask=[ True,  True,  True, False],
+               fill_value=999999)
+    
+        Mask array `b` conditional on `a`.
+    
+        >>> b = ['a', 'b', 'c', 'd']
+        >>> ma.masked_where(a == 2, b)
+        masked_array(data=['a', 'b', --, 'd'],
+                     mask=[False, False,  True, False],
+               fill_value='N/A',
+                    dtype='<U1')
+    
+        Effect of the `copy` argument.
+    
+        >>> c = ma.masked_where(a <= 2, a)
+        >>> c
+        masked_array(data=[--, --, --, 3],
+                     mask=[ True,  True,  True, False],
+               fill_value=999999)
+        >>> c[0] = 99
+        >>> c
+        masked_array(data=[99, --, --, 3],
+                     mask=[False,  True,  True, False],
+               fill_value=999999)
+        >>> a
+        array([0, 1, 2, 3])
+        >>> c = ma.masked_where(a <= 2, a, copy=False)
+        >>> c[0] = 99
+        >>> c
+        masked_array(data=[99, --, --, 3],
+                     mask=[False,  True,  True, False],
+               fill_value=999999)
+        >>> a
+        array([99,  1,  2,  3])
+    
+        When `condition` or `a` contain masked values.
+    
+        >>> a = np.arange(4)
+        >>> a = ma.masked_where(a == 2, a)
+        >>> a
+        masked_array(data=[0, 1, --, 3],
+                     mask=[False, False,  True, False],
+               fill_value=999999)
+        >>> b = np.arange(4)
+        >>> b = ma.masked_where(b == 0, b)
+        >>> b
+        masked_array(data=[--, 1, 2, 3],
+                     mask=[ True, False, False, False],
+               fill_value=999999)
+        >>> ma.masked_where(a == 3, b)
+        masked_array(data=[--, 1, --, --],
+                     mask=[ True, False,  True,  True],
+               fill_value=999999)
+    
+        """
+        # Make sure that condition is a valid standard-type mask.
+        cond = make_mask(condition, shrink=False)
+        a = np.array(a, copy=copy, subok=True)
+    
+        (cshape, ashape) = (cond.shape, a.shape)
+        if cshape and cshape != ashape:
+>           raise IndexError("Inconsistent shape between the condition and the input"
+                             f" (got {cshape} and {ashape})")
+E           IndexError: Inconsistent shape between the condition and the input (got (2, 1) and (2,))
+
+../../../.venv/lib/python3.12/site-packages/numpy/ma/core.py:1991: IndexError
+______________________ test_task_func_heatmap_return_type ______________________
+
+    def test_task_func_heatmap_return_type():
+        P = np.array([[1, 2], [3, 4]])
+        T = np.array([[5, 6], [7, 8]])
+>       _, heatmap = task_func(P, T)
+                     ^^^^^^^^^^^^^^^
+
+test_0440.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0440.py:10: in task_func
+    heatmap = sns.heatmap(result_2D)
+              ^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/seaborn/matrix.py:446: in heatmap
+    plotter = _HeatMapper(data, vmin, vmax, cmap, center, robust, annot, fmt,
+../../../.venv/lib/python3.12/site-packages/seaborn/matrix.py:115: in __init__
+    plot_data = np.ma.masked_where(np.asarray(mask), plot_data)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = array([[False],
+       [False]]), a = array([41, 93]), copy = True
+
+    def masked_where(condition, a, copy=True):
+        """
+        Mask an array where a condition is met.
+    
+        Return `a` as an array masked where `condition` is True.
+        Any masked values of `a` or `condition` are also masked in the output.
+    
+        Parameters
+        ----------
+        condition : array_like
+            Masking condition.  When `condition` tests floating point values for
+            equality, consider using ``masked_values`` instead.
+        a : array_like
+            Array to mask.
+        copy : bool
+            If True (default) make a copy of `a` in the result.  If False modify
+            `a` in place and return a view.
+    
+        Returns
+        -------
+        result : MaskedArray
+            The result of masking `a` where `condition` is True.
+    
+        See Also
+        --------
+        masked_values : Mask using floating point equality.
+        masked_equal : Mask where equal to a given value.
+        masked_not_equal : Mask where *not* equal to a given value.
+        masked_less_equal : Mask where less than or equal to a given value.
+        masked_greater_equal : Mask where greater than or equal to a given value.
+        masked_less : Mask where less than a given value.
+        masked_greater : Mask where greater than a given value.
+        masked_inside : Mask inside a given interval.
+        masked_outside : Mask outside a given interval.
+        masked_invalid : Mask invalid values (NaNs or infs).
+    
+        Examples
+        --------
+        >>> import numpy as np
+        >>> import numpy.ma as ma
+        >>> a = np.arange(4)
+        >>> a
+        array([0, 1, 2, 3])
+        >>> ma.masked_where(a <= 2, a)
+        masked_array(data=[--, --, --, 3],
+                     mask=[ True,  True,  True, False],
+               fill_value=999999)
+    
+        Mask array `b` conditional on `a`.
+    
+        >>> b = ['a', 'b', 'c', 'd']
+        >>> ma.masked_where(a == 2, b)
+        masked_array(data=['a', 'b', --, 'd'],
+                     mask=[False, False,  True, False],
+               fill_value='N/A',
+                    dtype='<U1')
+    
+        Effect of the `copy` argument.
+    
+        >>> c = ma.masked_where(a <= 2, a)
+        >>> c
+        masked_array(data=[--, --, --, 3],
+                     mask=[ True,  True,  True, False],
+               fill_value=999999)
+        >>> c[0] = 99
+        >>> c
+        masked_array(data=[99, --, --, 3],
+                     mask=[False,  True,  True, False],
+               fill_value=999999)
+        >>> a
+        array([0, 1, 2, 3])
+        >>> c = ma.masked_where(a <= 2, a, copy=False)
+        >>> c[0] = 99
+        >>> c
+        masked_array(data=[99, --, --, 3],
+                     mask=[False,  True,  True, False],
+               fill_value=999999)
+        >>> a
+        array([99,  1,  2,  3])
+    
+        When `condition` or `a` contain masked values.
+    
+        >>> a = np.arange(4)
+        >>> a = ma.masked_where(a == 2, a)
+        >>> a
+        masked_array(data=[0, 1, --, 3],
+                     mask=[False, False,  True, False],
+               fill_value=999999)
+        >>> b = np.arange(4)
+        >>> b = ma.masked_where(b == 0, b)
+        >>> b
+        masked_array(data=[--, 1, 2, 3],
+                     mask=[ True, False, False, False],
+               fill_value=999999)
+        >>> ma.masked_where(a == 3, b)
+        masked_array(data=[--, 1, --, --],
+                     mask=[ True, False,  True,  True],
+               fill_value=999999)
+    
+        """
+        # Make sure that condition is a valid standard-type mask.
+        cond = make_mask(condition, shrink=False)
+        a = np.array(a, copy=copy, subok=True)
+    
+        (cshape, ashape) = (cond.shape, a.shape)
+        if cshape and cshape != ashape:
+>           raise IndexError("Inconsistent shape between the condition and the input"
+                             f" (got {cshape} and {ashape})")
+E           IndexError: Inconsistent shape between the condition and the input (got (2, 1) and (2,))
+
+../../../.venv/lib/python3.12/site-packages/numpy/ma/core.py:1991: IndexError
+_______________________ test_task_func_with_empty_arrays _______________________
+
+    def test_task_func_with_empty_arrays():
+        P = np.array([])
+        T = np.array([])
+        with pytest.raises(ValueError):
+>           task_func(P, T)
+
+test_0440.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0440.py:7: in task_func
+    result = np.tensordot(P, T, axes=[1, 0])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = array([], dtype=float64), b = array([], dtype=float64), axes = [1, 0]
+
+    @array_function_dispatch(_tensordot_dispatcher)
+    def tensordot(a, b, axes=2):
+        """
+        Compute tensor dot product along specified axes.
+    
+        Given two tensors, `a` and `b`, and an array_like object containing
+        two array_like objects, ``(a_axes, b_axes)``, sum the products of
+        `a`'s and `b`'s elements (components) over the axes specified by
+        ``a_axes`` and ``b_axes``. The third argument can be a single non-negative
+        integer_like scalar, ``N``; if it is such, then the last ``N`` dimensions
+        of `a` and the first ``N`` dimensions of `b` are summed over.
+    
+        Parameters
+        ----------
+        a, b : array_like
+            Tensors to "dot".
+    
+        axes : int or (2,) array_like
+            * integer_like
+              If an int N, sum over the last N axes of `a` and the first N axes
+              of `b` in order. The sizes of the corresponding axes must match.
+            * (2,) array_like
+              Or, a list of axes to be summed over, first sequence applying to `a`,
+              second to `b`. Both elements array_like must be of the same length.
+              Each axis may appear at most once; repeated axes are not allowed.
+              For example, ``axes=([1, 1], [0, 0])`` is invalid.
+        Returns
+        -------
+        output : ndarray
+            The tensor dot product of the input.
+    
+        See Also
+        --------
+        dot, einsum
+    
+        Notes
+        -----
+        Three common use cases are:
+            * ``axes = 0`` : tensor product :math:`a\\otimes b`
+            * ``axes = 1`` : tensor dot product :math:`a\\cdot b`
+            * ``axes = 2`` : (default) tensor double contraction :math:`a:b`
+    
+        When `axes` is integer_like, the sequence of axes for evaluation
+        will be: from the -Nth axis to the -1th axis in `a`,
+        and from the 0th axis to (N-1)th axis in `b`.
+        For example, ``axes = 2`` is the equal to
+        ``axes = [[-2, -1], [0, 1]]``.
+        When N-1 is smaller than 0, or when -N is larger than -1,
+        the element of `a` and `b` are defined as the `axes`.
+    
+        When there is more than one axis to sum over - and they are not the last
+        (first) axes of `a` (`b`) - the argument `axes` should consist of
+        two sequences of the same length, with the first axis to sum over given
+        first in both sequences, the second axis second, and so forth.
+        The calculation can be referred to ``numpy.einsum``.
+    
+        For example, if ``a.shape == (2, 3, 4)`` and ``b.shape == (3, 4, 5)``,
+        then ``axes=([1, 2], [0, 1])`` sums over the ``(3, 4)`` dimensions of
+        both arrays and produces an output of shape ``(2, 5)``.
+    
+        Each summation axis corresponds to a distinct contraction index; repeating
+        an axis (for example ``axes=([1, 1], [0, 0])``) is invalid.
+    
+        The shape of the result consists of the non-contracted axes of the
+        first tensor, followed by the non-contracted axes of the second.
+    
+        Examples
+        --------
+        An example on integer_like:
+    
+        >>> a_0 = np.array([[1, 2], [3, 4]])
+        >>> b_0 = np.array([[5, 6], [7, 8]])
+        >>> c_0 = np.tensordot(a_0, b_0, axes=0)
+        >>> c_0.shape
+        (2, 2, 2, 2)
+        >>> c_0
+        array([[[[ 5,  6],
+                 [ 7,  8]],
+                [[10, 12],
+                 [14, 16]]],
+               [[[15, 18],
+                 [21, 24]],
+                [[20, 24],
+                 [28, 32]]]])
+    
+        An example on array_like:
+    
+        >>> a = np.arange(60.).reshape(3,4,5)
+        >>> b = np.arange(24.).reshape(4,3,2)
+        >>> c = np.tensordot(a,b, axes=([1,0],[0,1]))
+        >>> c.shape
+        (5, 2)
+        >>> c
+        array([[4400., 4730.],
+               [4532., 4874.],
+               [4664., 5018.],
+               [4796., 5162.],
+               [4928., 5306.]])
+    
+        A slower but equivalent way of computing the same...
+    
+        >>> d = np.zeros((5,2))
+        >>> for i in range(5):
+        ...   for j in range(2):
+        ...     for k in range(3):
+        ...       for n in range(4):
+        ...         d[i,j] += a[k,n,i] * b[n,k,j]
+        >>> c == d
+        array([[ True,  True],
+               [ True,  True],
+               [ True,  True],
+               [ True,  True],
+               [ True,  True]])
+    
+        An extended example taking advantage of the overloading of + and \\*:
+    
+        >>> a = np.array(range(1, 9)).reshape((2, 2, 2))
+        >>> A = np.array(('a', 'b', 'c', 'd'), dtype=np.object_)
+        >>> A = A.reshape((2, 2))
+        >>> a; A
+        array([[[1, 2],
+                [3, 4]],
+               [[5, 6],
+                [7, 8]]])
+        array([['a', 'b'],
+               ['c', 'd']], dtype=object)
+    
+        >>> np.tensordot(a, A) # third argument default is 2 for double-contraction
+        array(['abbcccdddd', 'aaaaabbbbbbcccccccdddddddd'], dtype=object)
+    
+        >>> np.tensordot(a, A, 1)
+        array([[['acc', 'bdd'],
+                ['aaacccc', 'bbbdddd']],
+               [['aaaaacccccc', 'bbbbbdddddd'],
+                ['aaaaaaacccccccc', 'bbbbbbbdddddddd']]], dtype=object)
+    
+        >>> np.tensordot(a, A, 0) # tensor product (result too long to incl.)
+        array([[[[['a', 'b'],
+                  ['c', 'd']],
+                  ...
+    
+        >>> np.tensordot(a, A, (0, 1))
+        array([[['abbbbb', 'cddddd'],
+                ['aabbbbbb', 'ccdddddd']],
+               [['aaabbbbbbb', 'cccddddddd'],
+                ['aaaabbbbbbbb', 'ccccdddddddd']]], dtype=object)
+    
+        >>> np.tensordot(a, A, (2, 1))
+        array([[['abb', 'cdd'],
+                ['aaabbbb', 'cccdddd']],
+               [['aaaaabbbbbb', 'cccccdddddd'],
+                ['aaaaaaabbbbbbbb', 'cccccccdddddddd']]], dtype=object)
+    
+        >>> np.tensordot(a, A, ((0, 1), (0, 1)))
+        array(['abbbcccccddddddd', 'aabbbbccccccdddddddd'], dtype=object)
+    
+        >>> np.tensordot(a, A, ((2, 1), (1, 0)))
+        array(['acccbbdddd', 'aaaaacccccccbbbbbbdddddddd'], dtype=object)
+    
+        """
+        try:
+            iter(axes)
+        except Exception:
+            axes_a = list(range(-axes, 0))
+            axes_b = list(range(axes))
+        else:
+            axes_a, axes_b = axes
+        try:
+            na = len(axes_a)
+            axes_a = list(axes_a)
+        except TypeError:
+            axes_a = [axes_a]
+            na = 1
+        try:
+            nb = len(axes_b)
+            axes_b = list(axes_b)
+        except TypeError:
+            axes_b = [axes_b]
+            nb = 1
+    
+        if len(set(axes_a)) != len(axes_a):
+            raise ValueError("duplicate axes are not allowed in tensordot")
+        if len(set(axes_b)) != len(axes_b):
+            raise ValueError("duplicate axes are not allowed in tensordot")
+    
+        a, b = asarray(a), asarray(b)
+        as_ = a.shape
+        nda = a.ndim
+        bs = b.shape
+        ndb = b.ndim
+        equal = True
+        if na != nb:
+            equal = False
+        else:
+            for k in range(na):
+>               if as_[axes_a[k]] != bs[axes_b[k]]:
+                   ^^^^^^^^^^^^^^
+E               IndexError: tuple index out of range
+
+../../../.venv/lib/python3.12/site-packages/numpy/_core/numeric.py:1191: IndexError
+=========================== short test summary info ============================
+FAILED test_0440.py::test_task_func_result_shape - IndexError: Inconsistent s...
+FAILED test_0440.py::test_task_func_result_values - IndexError: Inconsistent ...
+FAILED test_0440.py::test_task_func_heatmap_return_type - IndexError: Inconsi...
+FAILED test_0440.py::test_task_func_with_empty_arrays - IndexError: tuple ind...
+4 failed, 2 passed in 3.81s

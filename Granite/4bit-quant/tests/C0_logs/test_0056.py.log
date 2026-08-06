@@ -1,0 +1,30 @@
+F.F.                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        text = "This is a sample text. It contains multiple sentences. Those are the words to ignore."
+        expected_output = pd.Series({"Sentence 1": 5, "Sentence 2": 4})
+        actual_output = task_func(text)
+>       assert actual_output.equals(expected_output)
+E       assert False
+E        +  where False = equals(Sentence 1    5\nSentence 2    4\ndtype: int64)
+E        +    where equals = Sentence 1    5\nSentence 2    4\nSentence 3    1\ndtype: int64.equals
+
+test_0056.py:9: AssertionError
+________________________ test_task_func_single_sentence ________________________
+
+    def test_task_func_single_sentence():
+        text = "This is a single sentence."
+        expected_output = pd.Series({"Sentence 1": 4})
+        actual_output = task_func(text)
+>       assert actual_output.equals(expected_output)
+E       assert False
+E        +  where False = equals(Sentence 1    4\ndtype: int64)
+E        +    where equals = Sentence 1    5\ndtype: int64.equals
+
+test_0056.py:21: AssertionError
+=========================== short test summary info ============================
+FAILED test_0056.py::test_task_func - assert False
+FAILED test_0056.py::test_task_func_single_sentence - assert False
+2 failed, 2 passed in 1.13s

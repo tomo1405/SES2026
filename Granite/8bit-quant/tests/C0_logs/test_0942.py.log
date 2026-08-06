@@ -1,0 +1,89 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+______________ test_task_func[2023-01-01-12-M-0-expected_shape0] _______________
+
+>   ???
+
+pandas/_libs/tslibs/offsets.pyx:6313: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   ValueError: 'M' is no longer supported for offsets. Please use 'ME' instead.
+
+pandas/_libs/tslibs/offsets.pyx:6180: ValueError
+
+During handling of the above exception, another exception occurred:
+
+start_date = '2023-01-01', periods = 12, freq = 'M', random_seed = 0
+expected_shape = (12, 2)
+
+    @pytest.mark.parametrize("start_date, periods, freq, random_seed, expected_shape", [
+        ("2023-01-01", 12, "M", 0, (12, 2)),
+        ("2023-01-01", 24, "W", 1, (24, 2)),
+        ("2023-01-01", 36, "D", 2, (36, 2)),
+    ])
+    def test_task_func(start_date, periods, freq, random_seed, expected_shape):
+>       forecast_df, ax = task_func(start_date, periods, freq, random_seed)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0942.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0942.py:6: in task_func
+    date_range = pd.date_range(start_date, periods=periods, freq=freq)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/datetimes.py:1442: in date_range
+    freq = to_offset(freq)
+           ^^^^^^^^^^^^^^^
+pandas/_libs/tslibs/offsets.pyx:6229: in pandas._libs.tslibs.offsets.to_offset
+    ???
+pandas/_libs/tslibs/offsets.pyx:6352: in pandas._libs.tslibs.offsets.to_offset
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   ValueError: Invalid frequency: M. Failed to parse with error message: ValueError("'M' is no longer supported for offsets. Please use 'ME' instead.")
+
+pandas/_libs/tslibs/offsets.pyx:6137: ValueError
+______________ test_task_func[2023-01-01-24-W-1-expected_shape1] _______________
+
+start_date = '2023-01-01', periods = 24, freq = 'W', random_seed = 1
+expected_shape = (24, 2)
+
+    @pytest.mark.parametrize("start_date, periods, freq, random_seed, expected_shape", [
+        ("2023-01-01", 12, "M", 0, (12, 2)),
+        ("2023-01-01", 24, "W", 1, (24, 2)),
+        ("2023-01-01", 36, "D", 2, (36, 2)),
+    ])
+    def test_task_func(start_date, periods, freq, random_seed, expected_shape):
+        forecast_df, ax = task_func(start_date, periods, freq, random_seed)
+>       assert forecast_df.shape == expected_shape
+E       assert (24, 1) == (24, 2)
+E         
+E         At index 1 diff: 1 != 2
+E         Use -v to get more diff
+
+test_0942.py:15: AssertionError
+______________ test_task_func[2023-01-01-36-D-2-expected_shape2] _______________
+
+start_date = '2023-01-01', periods = 36, freq = 'D', random_seed = 2
+expected_shape = (36, 2)
+
+    @pytest.mark.parametrize("start_date, periods, freq, random_seed, expected_shape", [
+        ("2023-01-01", 12, "M", 0, (12, 2)),
+        ("2023-01-01", 24, "W", 1, (24, 2)),
+        ("2023-01-01", 36, "D", 2, (36, 2)),
+    ])
+    def test_task_func(start_date, periods, freq, random_seed, expected_shape):
+        forecast_df, ax = task_func(start_date, periods, freq, random_seed)
+>       assert forecast_df.shape == expected_shape
+E       assert (36, 1) == (36, 2)
+E         
+E         At index 1 diff: 1 != 2
+E         Use -v to get more diff
+
+test_0942.py:15: AssertionError
+=========================== short test summary info ============================
+FAILED test_0942.py::test_task_func[2023-01-01-12-M-0-expected_shape0] - Valu...
+FAILED test_0942.py::test_task_func[2023-01-01-24-W-1-expected_shape1] - asse...
+FAILED test_0942.py::test_task_func[2023-01-01-36-D-2-expected_shape2] - asse...
+3 failed in 2.41s

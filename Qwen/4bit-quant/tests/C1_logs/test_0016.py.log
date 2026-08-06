@@ -1,0 +1,55 @@
+F.F.                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_valid_input ________________________
+
+    def test_task_func_with_valid_input():
+        # Create a temporary CSV file with some commands
+        commands = ['echo "Hello, World!"', 'ls -l']
+        commands_file_path = create_temp_csv_file(commands)
+    
+        # Create a temporary directory for output files
+        with tempfile.TemporaryDirectory() as output_dir_path:
+            # Call the function
+            output_files = task_func(commands_file_path, output_dir_path)
+    
+            # Check if the output files exist and contain the expected content
+            assert len(output_files) == len(commands)
+            for output_file in output_files:
+                assert os.path.exists(output_file)
+                with open(output_file, 'r') as f:
+                    content = f.read()
+                    assert 'Hello, World!' in content
+>                   assert 'total' in content  # This line is part of the 'ls -l' output
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+E                   AssertionError: assert 'total' in 'Hello, World!\n'
+
+test_0016.py:40: AssertionError
+_________________ test_task_func_with_non_existent_output_dir __________________
+
+    def test_task_func_with_non_existent_output_dir():
+        commands = ['echo "Hello, World!"']
+        commands_file_path = create_temp_csv_file(commands)
+    
+        # Create a non-existent directory path
+        output_dir_path = '/non_existent_dir'
+    
+        # Call the function
+>       output_files = task_func(commands_file_path, output_dir_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0016.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0016.py:11: in task_func
+    os.makedirs(output_dir_path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = '/non_existent_dir', mode = 511, exist_ok = False
+
+>   ???
+E   PermissionError: [Errno 13] Permission denied: '/non_existent_dir'
+
+<frozen os>:225: PermissionError
+=========================== short test summary info ============================
+FAILED test_0016.py::test_task_func_with_valid_input - AssertionError: assert...
+FAILED test_0016.py::test_task_func_with_non_existent_output_dir - Permission...
+2 failed, 2 passed in 0.53s

@@ -1,0 +1,75 @@
+F...F.F                                                                  [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_path ___________________________
+
+    def test_task_func_valid_path():
+        path = "/home/user"
+        expected_result = [
+            ("home", {"total": 6*1024, "used": 6*512, "free": 6*512}),
+            ("user", {"total": 11*1024, "used": 11*512, "free": 11*512})
+        ]
+>       assert task_func(path) == expected_result
+               ^^^^^^^^^^^^^^^
+
+test_0974.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = '/home/user', delimiter = '/'
+
+    def task_func(path, delimiter="/"):
+        if not path or not isinstance(path, str):
+            raise ValueError("Path must be a non-empty string")
+        if not os.path.exists(path):
+>           raise FileNotFoundError(f"Path '{path}' does not exist")
+E           FileNotFoundError: Path '/home/user' does not exist
+
+../../../src/src_0974.py:7: FileNotFoundError
+_________________ test_task_func_path_with_invalid_components __________________
+
+    def test_task_func_path_with_invalid_components():
+        with pytest.raises(ValueError):
+>           task_func("/home//user")
+
+test_0974.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = '/home//user', delimiter = '/'
+
+    def task_func(path, delimiter="/"):
+        if not path or not isinstance(path, str):
+            raise ValueError("Path must be a non-empty string")
+        if not os.path.exists(path):
+>           raise FileNotFoundError(f"Path '{path}' does not exist")
+E           FileNotFoundError: Path '/home//user' does not exist
+
+../../../src/src_0974.py:7: FileNotFoundError
+_______________________ test_task_func_custom_delimiter ________________________
+
+    def test_task_func_custom_delimiter():
+        path = "C:\\Users\\Admin"
+        expected_result = [
+            ("C:", {"total": 3*1024, "used": 3*512, "free": 3*512}),
+            ("Users", {"total": 8*1024, "used": 8*512, "free": 8*512}),
+            ("Admin", {"total": 11*1024, "used": 11*512, "free": 11*512})
+        ]
+>       assert task_func(path, delimiter="\\") == expected_result
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0974.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = 'C:\\Users\\Admin', delimiter = '\\'
+
+    def task_func(path, delimiter="/"):
+        if not path or not isinstance(path, str):
+            raise ValueError("Path must be a non-empty string")
+        if not os.path.exists(path):
+>           raise FileNotFoundError(f"Path '{path}' does not exist")
+E           FileNotFoundError: Path 'C:\Users\Admin' does not exist
+
+../../../src/src_0974.py:7: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0974.py::test_task_func_valid_path - FileNotFoundError: Path '/ho...
+FAILED test_0974.py::test_task_func_path_with_invalid_components - FileNotFou...
+FAILED test_0974.py::test_task_func_custom_delimiter - FileNotFoundError: Pat...
+3 failed, 4 passed in 0.49s

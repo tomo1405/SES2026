@@ -1,0 +1,35 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        source_path = "/path/to/source"
+        destination_path = "/path/to/destination"
+        expected_output = ("source", ["file1.txt", "file2.txt"])
+    
+        with pytest.raises(ValueError):
+            task_func(source_path, "not_a_directory")
+    
+>       output = task_func(source_path, destination_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0975.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+source_path = PosixPath('/path/to/source')
+destination_path = PosixPath('/path/to/destination')
+
+    def task_func(source_path, destination_path):
+        source_path = pathlib.Path(source_path).resolve()
+        destination_path = pathlib.Path(destination_path).resolve()
+    
+        if not (source_path.exists() and source_path.is_dir()):
+>           raise ValueError("source_path must be an existing directory.")
+E           ValueError: source_path must be an existing directory.
+
+test_0975.py:10: ValueError
+=========================== short test summary info ============================
+FAILED test_0975.py::test_task_func - ValueError: source_path must be an exis...
+1 failed in 0.54s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

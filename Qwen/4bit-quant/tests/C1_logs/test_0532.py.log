@@ -1,0 +1,55 @@
+FF..                                                                     [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_no_duplicates _______________________
+
+sample_data =    x  y
+0  1  1
+1  2  2
+2  2  2
+3  3  3
+4  4  4
+5  4  4
+6  5  5
+
+    def test_task_func_with_no_duplicates(sample_data):
+        duplicates_counter, unique_df, ax = task_func(sample_data, n_clusters=3)
+>       assert duplicates_counter == Counter(), "There should be no duplicates"
+E       AssertionError: There should be no duplicates
+E       assert Counter({(np....int64(4)): 2}) == Counter()
+E         
+E         Left contains 2 more items:
+E         {(np.int64(2), np.int64(2)): 2, (np.int64(4), np.int64(4)): 2}
+E         Use -v to get more diff
+
+test_0532.py:19: AssertionError
+________________________ test_task_func_with_duplicates ________________________
+
+sample_data =    x  y
+0  1  1
+1  2  2
+2  2  2
+3  3  3
+4  4  4
+5  4  4
+6  5  5
+7  2  2
+
+    def test_task_func_with_duplicates(sample_data):
+        # Introduce duplicates
+        sample_data.loc[len(sample_data)] = [2, 2]  # Adding a duplicate point (2, 2)
+        duplicates_counter, unique_df, ax = task_func(sample_data, n_clusters=3)
+>       assert duplicates_counter == Counter({(2, 2): 2}), "There should be one duplicate point (2, 2)"
+E       AssertionError: There should be one duplicate point (2, 2)
+E       assert Counter({(np....int64(4)): 2}) == Counter({(2, 2): 2})
+E         
+E         Differing items:
+E         {(2, 2): 3} != {(2, 2): 2}
+E         Left contains 1 more item:
+E         {(np.int64(4), np.int64(4)): 2}
+E         Use -v to get more diff
+
+test_0532.py:27: AssertionError
+=========================== short test summary info ============================
+FAILED test_0532.py::test_task_func_with_no_duplicates - AssertionError: Ther...
+FAILED test_0532.py::test_task_func_with_duplicates - AssertionError: There s...
+2 failed, 2 passed in 4.08s

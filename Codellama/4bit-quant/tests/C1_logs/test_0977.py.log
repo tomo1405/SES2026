@@ -1,0 +1,83 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        records = np.array([[1, 2, 3], [4, 5, 6]])
+        random_seed = 0
+        df = task_func(records, random_seed)
+        assert isinstance(df, pd.DataFrame)
+        assert df.shape == (2, 3)
+>       assert np.allclose(df.values, np.array([[1, 2, 3], [4, 5, 6]]))
+E       assert False
+E        +  where False = <function allclose at 0x7e4a977e24f0>(array([[-1., -1., -1.],\n       [ 1.,  1.,  1.]]), array([[1, 2, 3],\n       [4, 5, 6]]))
+E        +    where <function allclose at 0x7e4a977e24f0> = np.allclose
+E        +    and   array([[-1., -1., -1.],\n       [ 1.,  1.,  1.]]) =     f3   f1   f2\n0 -1.0 -1.0 -1.0\n1  1.0  1.0  1.0.values
+E        +    and   array([[1, 2, 3],\n       [4, 5, 6]]) = <built-in function array>([[1, 2, 3], [4, 5, 6]])
+E        +      where <built-in function array> = np.array
+
+test_0977.py:13: AssertionError
+__________________________ test_task_func_random_seed __________________________
+
+    def test_task_func_random_seed():
+        records = np.array([[1, 2, 3], [4, 5, 6]])
+        random_seed = 1
+        df = task_func(records, random_seed)
+        assert isinstance(df, pd.DataFrame)
+        assert df.shape == (2, 3)
+>       assert np.allclose(df.values, np.array([[1, 2, 3], [4, 5, 6]]))
+E       assert False
+E        +  where False = <function allclose at 0x7e4a977e24f0>(array([[-1., -1., -1.],\n       [ 1.,  1.,  1.]]), array([[1, 2, 3],\n       [4, 5, 6]]))
+E        +    where <function allclose at 0x7e4a977e24f0> = np.allclose
+E        +    and   array([[-1., -1., -1.],\n       [ 1.,  1.,  1.]]) =     f2   f3   f1\n0 -1.0 -1.0 -1.0\n1  1.0  1.0  1.0.values
+E        +    and   array([[1, 2, 3],\n       [4, 5, 6]]) = <built-in function array>([[1, 2, 3], [4, 5, 6]])
+E        +      where <built-in function array> = np.array
+
+test_0977.py:21: AssertionError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        records = np.array([[1, 2, 3], [4, 5, 6]])
+        random_seed = 0
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0977.py:26: Failed
+______________________ test_task_func_invalid_input_type _______________________
+
+    def test_task_func_invalid_input_type():
+        records = "invalid"
+        random_seed = 0
+        with pytest.raises(TypeError):
+>           task_func(records, random_seed)
+
+test_0977.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+records = 'invalid', random_seed = 0
+
+    def task_func(records: np.ndarray, random_seed: int = 0) -> pd.DataFrame:
+        if random_seed is not None:
+            np.random.seed(random_seed)
+    
+>       if not (records.ndim == 2):
+                ^^^^^^^^^^^^
+E       AttributeError: 'str' object has no attribute 'ndim'
+
+../../../src/src_0977.py:8: AttributeError
+______________________ test_task_func_invalid_input_shape ______________________
+
+    def test_task_func_invalid_input_shape():
+        records = np.array([[1, 2, 3], [4, 5, 6]])
+        random_seed = 0
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0977.py:38: Failed
+=========================== short test summary info ============================
+FAILED test_0977.py::test_task_func - assert False
+FAILED test_0977.py::test_task_func_random_seed - assert False
+FAILED test_0977.py::test_task_func_invalid_input - Failed: DID NOT RAISE Val...
+FAILED test_0977.py::test_task_func_invalid_input_type - AttributeError: 'str...
+FAILED test_0977.py::test_task_func_invalid_input_shape - Failed: DID NOT RAI...
+5 failed in 2.87s

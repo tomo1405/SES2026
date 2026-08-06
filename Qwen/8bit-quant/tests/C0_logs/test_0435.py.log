@@ -1,0 +1,97 @@
+F..FF                                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_valid_input ________________________
+
+    def test_task_func_with_valid_input():
+        input_data = """1 10 A1 100 Apple
+    2 20 B2 200 Banana"""
+        expected_output = pd.DataFrame({
+            "ID": [1, 2],
+            "Quantity": [10, 20],
+            "Code": ["A1", "B2"],
+            "Price": [100, 200],
+            "Product": ["Apple", "Banana"],
+            "Description": ["Apple", "Banana"]
+        })
+        result = task_func(input_data, seed=0)
+>       pd.testing.assert_frame_equal(result, expected_output)
+E       AssertionError: Attributes of DataFrame.iloc[:, 0] (column name="ID") are different
+E       
+E       Attribute "dtype" are different
+E       [left]:  <StringDtype(na_value=nan)>
+E       [right]: int64
+
+test_0435.py:20: AssertionError
+_________________ test_task_func_with_random_product_selection _________________
+
+    def test_task_func_with_random_product_selection():
+        input_data = """1 10 A1 100
+    2 20 B2 200"""
+        random.seed(0)
+        expected_products = ["Apple", "Orange"]  # Based on random.seed(0) and products list
+        expected_output = pd.DataFrame({
+            "ID": [1, 2],
+            "Quantity": [10, 20],
+            "Code": ["A1", "B2"],
+            "Price": [100, 200],
+            "Product": expected_products,
+            "Description": ["Apple", "Orange"]
+        })
+>       result = task_func(input_data, seed=0)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0435.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+s = '1 10 A1 100\n2 20 B2 200', seed = 0
+
+    def task_func(s: str, seed: int = 0) -> pd.DataFrame:
+    
+        if not s:
+            raise ValueError("Incomplete data provided.")
+    
+        random.seed(seed)
+    
+        products = ["Apple", "Banana", "Orange", "Pear", "Grape"]
+        code_to_product = dict()
+    
+        data_list = []
+        segments = [segment.strip() for segment in s.split("\n")]
+        for segment in segments:
+            if segment:
+                elements = re.split(r"\s+", segment.strip(), 4)
+                if len(elements) < 5:
+>                   raise ValueError("Incomplete data provided.")
+E                   ValueError: Incomplete data provided.
+
+../../../src/src_0435.py:20: ValueError
+_________________ test_task_func_with_whitespace_only_segments _________________
+
+    def test_task_func_with_whitespace_only_segments():
+        input_data = """
+    
+        1 10 A1 100 Apple
+    
+        """
+        expected_output = pd.DataFrame({
+            "ID": [1],
+            "Quantity": [10],
+            "Code": ["A1"],
+            "Price": [100],
+            "Product": ["Apple"],
+            "Description": ["Apple"]
+        })
+        result = task_func(input_data, seed=0)
+>       pd.testing.assert_frame_equal(result, expected_output)
+E       AssertionError: Attributes of DataFrame.iloc[:, 0] (column name="ID") are different
+E       
+E       Attribute "dtype" are different
+E       [left]:  <StringDtype(na_value=nan)>
+E       [right]: int64
+
+test_0435.py:62: AssertionError
+=========================== short test summary info ============================
+FAILED test_0435.py::test_task_func_with_valid_input - AssertionError: Attrib...
+FAILED test_0435.py::test_task_func_with_random_product_selection - ValueErro...
+FAILED test_0435.py::test_task_func_with_whitespace_only_segments - Assertion...
+3 failed, 2 passed in 1.42s

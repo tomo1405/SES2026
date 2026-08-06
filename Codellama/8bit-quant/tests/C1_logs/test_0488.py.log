@@ -1,0 +1,38 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_file ___________________________
+
+    def test_task_func_valid_file():
+        file_path = "test_data.txt"
+        df = task_func(file_path)
+>       assert df.shape == (3, 3)
+E       assert (0, 3) == (3, 3)
+E         
+E         At index 0 diff: 0 != 3
+E         Use -v to get more diff
+
+test_0488.py:7: AssertionError
+__________________________ test_task_func_empty_file ___________________________
+
+    def test_task_func_empty_file():
+        file_path = "empty_file.txt"
+>       df = task_func(file_path)
+             ^^^^^^^^^^^^^^^^^^^^
+
+test_0488.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = 'empty_file.txt'
+
+    def task_func(file_path: str) -> pd.DataFrame:
+        LOG_REGEX = r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d{6}) - (\w+) - (.+)$"
+    
+        if not os.path.exists(file_path):
+>           raise FileNotFoundError(f"The file {file_path} does not exist.")
+E           FileNotFoundError: The file empty_file.txt does not exist.
+
+../../../src/src_0488.py:8: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0488.py::test_task_func_valid_file - assert (0, 3) == (3, 3)
+FAILED test_0488.py::test_task_func_empty_file - FileNotFoundError: The file ...
+2 failed, 1 passed in 1.08s

@@ -1,0 +1,174 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+repo_url = 'https://api.github.com/repos/org/repo'
+
+    def task_func(repo_url: str) -> dict:
+        try:
+            response = requests.get(repo_url, timeout=2)
+>           response.raise_for_status()  # Raises HTTPError for bad requests
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../../../src/src_1068.py:6: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Response [404]>
+
+    def raise_for_status(self) -> None:
+        """Raises :class:`HTTPError`, if one occurred."""
+    
+        http_error_msg = ""
+        if isinstance(self.reason, bytes):
+            # We attempt to decode utf-8 first because some servers
+            # choose to localize their reason strings. If the string
+            # isn't utf-8, we fall back to iso-8859-1 for all other
+            # encodings. (See PR #3538)
+            try:
+                reason = self.reason.decode("utf-8")
+            except UnicodeDecodeError:
+                reason = self.reason.decode("iso-8859-1")
+        else:
+            reason = self.reason
+    
+        if 400 <= self.status_code < 500:
+            http_error_msg = (
+                f"{self.status_code} Client Error: {reason} for url: {self.url}"
+            )
+    
+        elif 500 <= self.status_code < 600:
+            http_error_msg = (
+                f"{self.status_code} Server Error: {reason} for url: {self.url}"
+            )
+    
+        if http_error_msg:
+>           raise HTTPError(http_error_msg, response=self)
+E           requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://api.github.com/repos/org/repo
+
+../../../.venv/lib/python3.12/site-packages/requests/models.py:1167: HTTPError
+
+The above exception was the direct cause of the following exception:
+
+    def test_task_func():
+        repo_url = "https://api.github.com/repos/org/repo"
+        expected_result = {"key": "value"}  # Replace with the expected result
+    
+        with pytest.raises(requests.exceptions.HTTPError) as exc_info:
+>           task_func(repo_url)
+
+test_1068.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+repo_url = 'https://api.github.com/repos/org/repo'
+
+    def task_func(repo_url: str) -> dict:
+        try:
+            response = requests.get(repo_url, timeout=2)
+            response.raise_for_status()  # Raises HTTPError for bad requests
+            repo_info = response.json()
+            if (
+                response.status_code == 403
+                and repo_info.get("message") == "API rate limit exceeded"
+            ):
+                raise requests.exceptions.HTTPError("API rate limit exceeded")
+    
+            if repo_info.get("open_issues_count", 0) > 10000:
+                logging.warning("The repository has more than 10000 open issues.")
+    
+            return repo_info
+    
+        except requests.exceptions.RequestException as e:
+>           raise requests.exceptions.RequestException(
+                f"Error fetching repo info: {e}"
+            ) from e
+E           requests.exceptions.RequestException: Error fetching repo info: 404 Client Error: Not Found for url: https://api.github.com/repos/org/repo
+
+../../../src/src_1068.py:20: RequestException
+_______________________________ test_task_func_2 _______________________________
+
+repo_url = 'https://api.github.com/repos/org/repo'
+
+    def task_func(repo_url: str) -> dict:
+        try:
+            response = requests.get(repo_url, timeout=2)
+>           response.raise_for_status()  # Raises HTTPError for bad requests
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../../../src/src_1068.py:6: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Response [404]>
+
+    def raise_for_status(self) -> None:
+        """Raises :class:`HTTPError`, if one occurred."""
+    
+        http_error_msg = ""
+        if isinstance(self.reason, bytes):
+            # We attempt to decode utf-8 first because some servers
+            # choose to localize their reason strings. If the string
+            # isn't utf-8, we fall back to iso-8859-1 for all other
+            # encodings. (See PR #3538)
+            try:
+                reason = self.reason.decode("utf-8")
+            except UnicodeDecodeError:
+                reason = self.reason.decode("iso-8859-1")
+        else:
+            reason = self.reason
+    
+        if 400 <= self.status_code < 500:
+            http_error_msg = (
+                f"{self.status_code} Client Error: {reason} for url: {self.url}"
+            )
+    
+        elif 500 <= self.status_code < 600:
+            http_error_msg = (
+                f"{self.status_code} Server Error: {reason} for url: {self.url}"
+            )
+    
+        if http_error_msg:
+>           raise HTTPError(http_error_msg, response=self)
+E           requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://api.github.com/repos/org/repo
+
+../../../.venv/lib/python3.12/site-packages/requests/models.py:1167: HTTPError
+
+The above exception was the direct cause of the following exception:
+
+    def test_task_func_2():
+        repo_url = "https://api.github.com/repos/org/repo"
+        expected_result = {"key": "value"}  # Replace with the expected result
+    
+>       result = task_func(repo_url)
+                 ^^^^^^^^^^^^^^^^^^^
+
+test_1068.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+repo_url = 'https://api.github.com/repos/org/repo'
+
+    def task_func(repo_url: str) -> dict:
+        try:
+            response = requests.get(repo_url, timeout=2)
+            response.raise_for_status()  # Raises HTTPError for bad requests
+            repo_info = response.json()
+            if (
+                response.status_code == 403
+                and repo_info.get("message") == "API rate limit exceeded"
+            ):
+                raise requests.exceptions.HTTPError("API rate limit exceeded")
+    
+            if repo_info.get("open_issues_count", 0) > 10000:
+                logging.warning("The repository has more than 10000 open issues.")
+    
+            return repo_info
+    
+        except requests.exceptions.RequestException as e:
+>           raise requests.exceptions.RequestException(
+                f"Error fetching repo info: {e}"
+            ) from e
+E           requests.exceptions.RequestException: Error fetching repo info: 404 Client Error: Not Found for url: https://api.github.com/repos/org/repo
+
+../../../src/src_1068.py:20: RequestException
+=========================== short test summary info ============================
+FAILED test_1068.py::test_task_func - requests.exceptions.RequestException: E...
+FAILED test_1068.py::test_task_func_2 - requests.exceptions.RequestException:...
+2 failed in 1.06s

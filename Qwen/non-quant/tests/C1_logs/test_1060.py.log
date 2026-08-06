@@ -1,0 +1,51 @@
+FFF.F                                                                    [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_output_shape __________________________
+
+    def test_task_func_output_shape():
+        df = task_func()
+>       assert df.shape == (len(PLANETS), len(ELEMENTS)), "DataFrame shape is incorrect"
+                                ^^^^^^^
+E       NameError: name 'PLANETS' is not defined
+
+test_1060.py:7: NameError
+____________________________ test_task_func_columns ____________________________
+
+    def test_task_func_columns():
+        df = task_func()
+>       assert list(df.columns) == ELEMENTS, "Column headers do not match ELEMENTS"
+                                   ^^^^^^^^
+E       NameError: name 'ELEMENTS' is not defined
+
+test_1060.py:11: NameError
+_________________________ test_task_func_unique_pairs __________________________
+
+    def test_task_func_unique_pairs():
+        df = task_func()
+        unique_pairs = set(df.values.flatten())
+>       expected_pairs = {f"{planet}:{element}" for planet in PLANETS for element in ELEMENTS}
+                                                              ^^^^^^^
+E       NameError: name 'PLANETS' is not defined
+
+test_1060.py:16: NameError
+__________________________ test_task_func_data_types ___________________________
+
+    def test_task_func_data_types():
+        df = task_func()
+        assert isinstance(df, pd.DataFrame), "Return type is not a DataFrame"
+>       assert df.dtypes.apply(lambda x: x == object).all(), "All elements in the DataFrame should be strings"
+E       AssertionError: All elements in the DataFrame should be strings
+E       assert np.False_
+E        +  where np.False_ = all()
+E        +    where all = Hydrogen     False\nHelium       False\nOxygen       False\nCarbon       False\nNitrogen     False\nMagnesium    False\nSilicon      False\nIron         False\nNickel       False\ndtype: bool.all
+E        +      where Hydrogen     False\nHelium       False\nOxygen       False\nCarbon       False\nNitrogen     False\nMagnesium    False\nSilicon      False\nIron         False\nNickel       False\ndtype: bool = apply(<function test_task_func_data_types.<locals>.<lambda> at 0x71c814836f20>)
+E        +        where apply = Hydrogen     str\nHelium       str\nOxygen       str\nCarbon       str\nNitrogen     str\nMagnesium    str\nSilicon      str\nIron         str\nNickel       str\ndtype: object.apply
+E        +          where Hydrogen     str\nHelium       str\nOxygen       str\nCarbon       str\nNitrogen     str\nMagnesium    str\nSilicon      str\nIron         str\nNickel       str\ndtype: object =            Hydrogen             Helium  ...              Iron           Nickel\n0   Uranus:Hydrogen        Uranus:Iron ...m    Saturn:Helium\n7    Jupiter:Nickel      Uranus:Oxygen  ...  Jupiter:Nitrogen   Uranus:Silicon\n\n[8 rows x 9 columns].dtypes
+
+test_1060.py:27: AssertionError
+=========================== short test summary info ============================
+FAILED test_1060.py::test_task_func_output_shape - NameError: name 'PLANETS' ...
+FAILED test_1060.py::test_task_func_columns - NameError: name 'ELEMENTS' is n...
+FAILED test_1060.py::test_task_func_unique_pairs - NameError: name 'PLANETS' ...
+FAILED test_1060.py::test_task_func_data_types - AssertionError: All elements...
+4 failed, 1 passed in 1.14s

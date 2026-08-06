@@ -1,0 +1,21 @@
+python
+import numpy as np
+import pytest
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from src_0771 import task_func
+
+def test_task_func():
+    # Test case 1: Test with default values
+    r_squared, model = task_func()
+    assert isinstance(r_squared, float)
+    assert isinstance(model, LinearRegression)
+
+    # Test case 2: Test with custom values
+    r_squared, model = task_func(num_samples=1000, noise_strength=0.5, random_seed=42, test_size=0.3)
+    assert isinstance(r_squared, float)
+    assert isinstance(model, LinearRegression)
+
+    # Test case 3: Test with invalid values
+    with pytest.raises(ValueError):
+        task_func(num_samples=1000, noise_strength=0.5, random_seed=42, test_size=0.1)

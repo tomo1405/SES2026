@@ -1,0 +1,76 @@
+FF..FF                                                                   [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_valid_urls ________________________
+
+    def test_task_func_with_valid_urls():
+        result = [
+            {"url1": "http://example.com", "data": "value1"},
+            {"url2": "https://example.com", "data": "value2"},
+            {"url3": "http://example.com", "data": "value3"}
+        ]
+        expected_output = {"value1": 2}
+>       assert task_func(result) == expected_output
+E       AssertionError: assert {} == {'value1': 2}
+E         
+E         Right contains 1 more item:
+E         {'value1': 2}
+E         Use -v to get more diff
+
+test_1109.py:11: AssertionError
+_______________________ test_task_func_with_invalid_urls _______________________
+
+    def test_task_func_with_invalid_urls():
+        result = [
+            {"url1": "ftp://example.com", "data": "value1"},
+            {"url2": "invalid-url", "data": "value2"},
+            {"url3": "http://example.com", "data": "value3"}
+        ]
+        expected_output = {"value1": 1}
+>       assert task_func(result) == expected_output
+E       AssertionError: assert {} == {'value1': 1}
+E         
+E         Right contains 1 more item:
+E         {'value1': 1}
+E         Use -v to get more diff
+
+test_1109.py:20: AssertionError
+_____________________ test_task_func_with_mixed_data_types _____________________
+
+    def test_task_func_with_mixed_data_types():
+        result = [
+            {"url1": "http://example.com", "data": 123},
+            {"url2": "https://example.com", "data": 456},
+            {"url3": "http://example.com", "data": 123}
+        ]
+        expected_output = {123: 2}
+>       assert task_func(result) == expected_output
+E       assert {} == {123: 2}
+E         
+E         Right contains 1 more item:
+E         {123: 2}
+E         Use -v to get more diff
+
+test_1109.py:43: AssertionError
+__________________ test_task_func_with_case_insensitive_urls ___________________
+
+    def test_task_func_with_case_insensitive_urls():
+        result = [
+            {"url1": "HTTP://example.com", "data": "value1"},
+            {"url2": "https://example.com", "data": "value2"},
+            {"url3": "http://EXAMPLE.COM", "data": "value3"}
+        ]
+        expected_output = {"value1": 3}
+>       assert task_func(result) == expected_output
+E       AssertionError: assert {} == {'value1': 3}
+E         
+E         Right contains 1 more item:
+E         {'value1': 3}
+E         Use -v to get more diff
+
+test_1109.py:52: AssertionError
+=========================== short test summary info ============================
+FAILED test_1109.py::test_task_func_with_valid_urls - AssertionError: assert ...
+FAILED test_1109.py::test_task_func_with_invalid_urls - AssertionError: asser...
+FAILED test_1109.py::test_task_func_with_mixed_data_types - assert {} == {123...
+FAILED test_1109.py::test_task_func_with_case_insensitive_urls - AssertionErr...
+4 failed, 2 passed in 0.52s

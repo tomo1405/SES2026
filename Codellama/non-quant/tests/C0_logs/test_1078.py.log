@@ -1,0 +1,85 @@
+.F...                                                                    [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_invalid_timezone _____________________
+
+    def test_task_func_with_invalid_timezone():
+        time_strings = ["10/10/10 10:10:10.100", "10/10/10 10:10:10.200"]
+        timezone = "InvalidTimezone"
+    
+        with pytest.raises(ValueError):
+>           task_func(time_strings, timezone)
+
+test_1078.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1078.py:8: in task_func
+    time_zone = pytz.timezone(timezone)
+                ^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+zone = 'InvalidTimezone'
+
+    def timezone(zone):
+        r''' Return a datetime.tzinfo implementation for the given timezone
+    
+        >>> from datetime import datetime, timedelta
+        >>> utc = timezone('UTC')
+        >>> eastern = timezone('US/Eastern')
+        >>> eastern.zone
+        'US/Eastern'
+        >>> timezone(unicode('US/Eastern')) is eastern
+        True
+        >>> utc_dt = datetime(2002, 10, 27, 6, 0, 0, tzinfo=utc)
+        >>> loc_dt = utc_dt.astimezone(eastern)
+        >>> fmt = '%Y-%m-%d %H:%M:%S %Z (%z)'
+        >>> loc_dt.strftime(fmt)
+        '2002-10-27 01:00:00 EST (-0500)'
+        >>> (loc_dt - timedelta(minutes=10)).strftime(fmt)
+        '2002-10-27 00:50:00 EST (-0500)'
+        >>> eastern.normalize(loc_dt - timedelta(minutes=10)).strftime(fmt)
+        '2002-10-27 01:50:00 EDT (-0400)'
+        >>> (loc_dt + timedelta(minutes=10)).strftime(fmt)
+        '2002-10-27 01:10:00 EST (-0500)'
+    
+        Raises UnknownTimeZoneError if passed an unknown zone.
+    
+        >>> try:
+        ...     timezone('Asia/Shangri-La')
+        ... except UnknownTimeZoneError:
+        ...     print('Unknown')
+        Unknown
+    
+        >>> try:
+        ...     timezone(unicode('\N{TRADE MARK SIGN}'))
+        ... except UnknownTimeZoneError:
+        ...     print('Unknown')
+        Unknown
+    
+        '''
+        if zone is None:
+            raise UnknownTimeZoneError(None)
+    
+        if zone.upper() == 'UTC':
+            return utc
+    
+        try:
+            zone = ascii(zone)
+        except UnicodeEncodeError:
+            # All valid timezones are ASCII
+            raise UnknownTimeZoneError(zone)
+    
+        zone = _case_insensitive_zone_lookup(_unmunge_zone(zone))
+        if zone not in _tzinfo_cache:
+            if zone in all_timezones_set:  # noqa
+                fp = open_resource(zone)
+                try:
+                    _tzinfo_cache[zone] = build_tzinfo(zone, fp)
+                finally:
+                    fp.close()
+            else:
+>               raise UnknownTimeZoneError(zone)
+E               pytz.exceptions.UnknownTimeZoneError: 'InvalidTimezone'
+
+../../../.venv/lib/python3.12/site-packages/pytz/__init__.py:198: UnknownTimeZoneError
+=========================== short test summary info ============================
+FAILED test_1078.py::test_task_func_with_invalid_timezone - pytz.exceptions.U...
+1 failed, 4 passed in 0.87s

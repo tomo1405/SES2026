@@ -1,0 +1,61 @@
+FFFFF.                                                                   [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_length _____________________________
+
+    def test_task_func_length():
+        length = 10
+        df = task_func(length)
+>       assert len(df) == length, "The DataFrame length should match the input length."
+E       AssertionError: The DataFrame length should match the input length.
+E       assert 41 == 10
+E        +  where 41 = len(    Column1  Column2  Column3  Column4  Column5\n0       NaN      NaN      1.0      NaN      NaN\n2       NaN      NaN  ...  NaN      NaN     10.0\n93     10.0      NaN     10.0      NaN      NaN\n94      NaN     10.0      NaN      NaN      NaN)
+
+test_0387.py:8: AssertionError
+____________________________ test_task_func_columns ____________________________
+
+    def test_task_func_columns():
+        df = task_func(10)
+>       assert list(df.columns) == COLUMNS, "The DataFrame columns should match the predefined COLUMNS."
+                                   ^^^^^^^
+E       NameError: name 'COLUMNS' is not defined
+
+test_0387.py:12: NameError
+________________________ test_task_func_min_max_values _________________________
+
+    def test_task_func_min_max_values():
+        min_value = 10
+        max_value = 20
+        df = task_func(10, min_value=min_value, max_value=max_value)
+>       assert df.min().min() >= min_value, "The minimum value in the DataFrame should be greater than or equal to the min_value."
+E       AssertionError: The minimum value in the DataFrame should be greater than or equal to the min_value.
+E       assert np.float64(1.0) >= 10
+E        +  where np.float64(1.0) = min()
+E        +    where min = Column1    2.0\nColumn2    1.0\nColumn3    1.0\nColumn4    3.0\nColumn5    1.0\ndtype: float64.min
+E        +      where Column1    2.0\nColumn2    1.0\nColumn3    1.0\nColumn4    3.0\nColumn5    1.0\ndtype: float64 = min()
+E        +        where min =     Column1  Column2  Column3  Column4  Column5\n10      2.0      NaN      1.0      NaN      1.0\n11      4.0      NaN  ... 10.0      6.0      9.0\n18      NaN      8.0      NaN      NaN      NaN\n19     10.0     10.0      NaN     10.0     10.0.min
+
+test_0387.py:18: AssertionError
+__________________________ test_task_func_cdf_values ___________________________
+
+    def test_task_func_cdf_values():
+        df = task_func(10)
+>       assert all(df.iloc[-1] == 1), "The last row of the DataFrame should be all ones since it represents the CDF."
+E       AssertionError: The last row of the DataFrame should be all ones since it represents the CDF.
+E       assert False
+E        +  where False = all(Column1     NaN\nColumn2    10.0\nColumn3     NaN\nColumn4     NaN\nColumn5     NaN\nName: 98, dtype: float64 == 1)
+
+test_0387.py:23: AssertionError
+___________________________ test_task_func_empty_df ____________________________
+
+    def test_task_func_empty_df():
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0387.py:26: Failed
+=========================== short test summary info ============================
+FAILED test_0387.py::test_task_func_length - AssertionError: The DataFrame le...
+FAILED test_0387.py::test_task_func_columns - NameError: name 'COLUMNS' is no...
+FAILED test_0387.py::test_task_func_min_max_values - AssertionError: The mini...
+FAILED test_0387.py::test_task_func_cdf_values - AssertionError: The last row...
+FAILED test_0387.py::test_task_func_empty_df - Failed: DID NOT RAISE ValueError
+5 failed, 1 passed in 1.19s

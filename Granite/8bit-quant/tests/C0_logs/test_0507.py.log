@@ -1,0 +1,58 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data = [
+            ["2023-01-01", 25, 60, 10, 0.2],
+            ["2023-01-02", 28, 65, 15, 0.3],
+            ["2023-01-03", 22, 55, 5, 0.1],
+            ["2023-01-04", 30, 70, 12, 0.4],
+        ]
+        column = "Temperature"
+        expected_result = {
+            "sum": 125.0,
+            "mean": 31.25,
+            "min": 22.0,
+            "max": 30.0,
+        }
+        result = task_func(column, data)
+>       assert result == expected_result
+E       AssertionError: assert {'sum': np.in...nt64(30), ...} == {'sum': 125.0..., 'max': 30.0}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Differing items:
+E         {'sum': np.int64(105)} != {'sum': 125.0}
+E         {'mean': np.float64(26.25)} != {'mean': 31.25}
+E         Left contains 1 more item:
+E         {'plot': <BarContainer object of 10 artists>}
+E         Use -v to get more diff
+
+test_0507.py:20: AssertionError
+__________________________ test_task_func_empty_data ___________________________
+
+    def test_task_func_empty_data():
+        data = []
+        column = "Temperature"
+        expected_result = {
+            "sum": 0.0,
+            "mean": np.nan,
+            "min": np.inf,
+            "max": -np.inf,
+        }
+        result = task_func(column, data)
+>       assert result == expected_result
+E       AssertionError: assert {'sum': 0, 'm...x': -inf, ...} == {'sum': 0.0, ..., 'max': -inf}
+E         
+E         Omitting 3 identical items, use -vv to show
+E         Differing items:
+E         {'mean': nan} != {'mean': nan}
+E         Left contains 1 more item:
+E         {'plot': <BarContainer object of 10 artists>}
+E         Use -v to get more diff
+
+test_0507.py:32: AssertionError
+=========================== short test summary info ============================
+FAILED test_0507.py::test_task_func - AssertionError: assert {'sum': np.in......
+FAILED test_0507.py::test_task_func_empty_data - AssertionError: assert {'sum...
+2 failed in 2.07s

@@ -1,0 +1,58 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_valid_directory ________________________
+
+    def test_task_func_valid_directory():
+        directory = "/tmp/test_dir"
+        os.makedirs(directory)
+        backup_dir, errors = task_func(directory)
+        assert backup_dir == "/fake/backup/path"
+>       assert not errors
+E       assert not ["[Errno 13] Permission denied: '/fake'"]
+
+test_0780.py:12: AssertionError
+_______________________ test_task_func_invalid_directory _______________________
+
+    def test_task_func_invalid_directory():
+        directory = "/tmp/test_dir"
+        backup_dir, errors = task_func(directory)
+>       assert backup_dir is None
+E       AssertionError: assert '/fake/backup/path' is None
+
+test_0780.py:19: AssertionError
+_______________________ test_task_func_permission_denied _______________________
+
+    def test_task_func_permission_denied():
+        directory = "/tmp/test_dir"
+>       os.makedirs(directory)
+
+test_0780.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = '/tmp/test_dir', mode = 511, exist_ok = False
+
+>   ???
+E   FileExistsError: [Errno 17] File exists: '/tmp/test_dir'
+
+<frozen os>:225: FileExistsError
+___________________________ test_task_func_exception ___________________________
+
+    def test_task_func_exception():
+        directory = "/tmp/test_dir"
+>       os.makedirs(directory)
+
+test_0780.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = '/tmp/test_dir', mode = 511, exist_ok = False
+
+>   ???
+E   FileExistsError: [Errno 17] File exists: '/tmp/test_dir'
+
+<frozen os>:225: FileExistsError
+=========================== short test summary info ============================
+FAILED test_0780.py::test_task_func_valid_directory - assert not ["[Errno 13]...
+FAILED test_0780.py::test_task_func_invalid_directory - AssertionError: asser...
+FAILED test_0780.py::test_task_func_permission_denied - FileExistsError: [Err...
+FAILED test_0780.py::test_task_func_exception - FileExistsError: [Errno 17] F...
+4 failed in 0.46s

@@ -1,0 +1,39 @@
+F....                                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_valid_input ________________________
+
+setup_nltk = None
+
+    def test_task_func_with_valid_input(setup_nltk):
+        text = "This is a test $example with $multiple $words and $punctuation."
+        expected_output = pd.DataFrame({
+            "Word": ["$example", "$multiple", "$words", "$punctuation"],
+            "Frequency": [1, 1, 1, 1]
+        })
+        result = task_func(text)
+>       pd.testing.assert_frame_equal(result.sort_values(by="Word").reset_index(drop=True), expected_output)
+
+test_0745.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/_testing/asserters.py:846: in assert_extension_array_equal
+    _testing.assert_almost_equal(
+pandas/_libs/testing.pyx:53: in pandas._libs.testing.assert_almost_equal
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   AssertionError: DataFrame.iloc[:, 0] (column name="Word") are different
+E   
+E   DataFrame.iloc[:, 0] (column name="Word") values are different (50.0 %)
+E   [index]: [0, 1, 2, 3]
+E   [left]:  [$example, $multiple, $punctuation., $words]
+E   [right]: [$example, $multiple, $words, $punctuation]
+E   At positional index 2, first diff: $punctuation. != $words
+
+pandas/_libs/testing.pyx:171: AssertionError
+---------------------------- Captured stderr setup -----------------------------
+[nltk_data] Downloading package punkt to /work/tomohiro-w/nltk_data...
+[nltk_data]   Package punkt is already up-to-date!
+=========================== short test summary info ============================
+FAILED test_0745.py::test_task_func_with_valid_input - AssertionError: DataFr...
+1 failed, 4 passed in 3.98s

@@ -1,0 +1,35 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        df = ...  # Provide a sample DataFrame for testing
+        col1 = ...  # Provide a sample column name for testing
+        col2 = ...  # Provide a sample column name for testing
+        N = ...  # Provide a sample value for N
+    
+        with pytest.raises(ValueError) as exc_info:
+            task_func(df, col1, col2, N=1)
+        assert "N should be greater than 1. Received N=1." in str(exc_info.value)
+    
+        with pytest.raises(ValueError) as exc_info:
+>           task_func(df, col1, "nonexistent_column", N=10)
+
+test_0789.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df = Ellipsis, col1 = Ellipsis, col2 = 'nonexistent_column', N = 10
+
+    def task_func(df, col1, col2, N=10):
+        if N <= 1:
+            raise ValueError(f"N should be greater than 1. Received N={N}.")
+    
+        # Ensure provided columns exist in the dataframe
+>       if col1 not in df.columns or col2 not in df.columns:
+                       ^^^^^^^^^^
+E       AttributeError: 'ellipsis' object has no attribute 'columns'
+
+../../../src/src_0789.py:8: AttributeError
+=========================== short test summary info ============================
+FAILED test_0789.py::test_task_func - AttributeError: 'ellipsis' object has n...
+1 failed in 2.76s

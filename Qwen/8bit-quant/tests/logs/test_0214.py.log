@@ -1,0 +1,50 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Mock the time.sleep function to avoid actual sleeping
+        original_sleep = time.sleep
+        def mock_sleep(seconds):
+            pass
+        time.sleep = mock_sleep
+    
+        # Mock the random.random function to return predictable values
+        original_random = random.random
+        def mock_random():
+            return 0.5
+        random.random = mock_random
+    
+        # Capture stdout to check for the 'Interrupted by user' message
+        import sys
+        from io import StringIO
+        captured_output = StringIO()
+        sys.stdout = captured_output
+    
+        # Call the function with a small number of intervals
+        ax, kurtosis_value = task_func(intervals=3, seed=0)
+    
+        # Restore the original functions and stdout
+        time.sleep = original_sleep
+        random.random = original_random
+        sys.stdout = sys.__stdout__
+    
+        # Check the kurtosis value
+>       assert kurtosis_value == kurtosis([0.5, 0.5, 0.5], nan_policy='omit')
+E       AssertionError: assert np.float64(nan) == np.float64(nan)
+E        +  where np.float64(nan) = kurtosis([0.5, 0.5, 0.5], nan_policy='omit')
+
+test_0214.py:36: AssertionError
+=============================== warnings summary ===============================
+Qwen/8bit-quant/tests/test_0214.py::test_task_func
+  /work/tomohiro-w/utg/src/src_0214.py:18: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+    kurtosis_value = kurtosis(numbers, nan_policy='omit')
+
+Qwen/8bit-quant/tests/test_0214.py::test_task_func
+  /work/tomohiro-w/utg/Qwen/8bit-quant/tests/test_0214.py:36: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+    assert kurtosis_value == kurtosis([0.5, 0.5, 0.5], nan_policy='omit')
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0214.py::test_task_func - AssertionError: assert np.float64(nan) ...
+1 failed, 2 warnings in 2.96s

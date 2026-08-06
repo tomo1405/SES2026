@@ -1,0 +1,119 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+____________________ test_task_func_with_default_parameters ____________________
+
+    def test_task_func_with_default_parameters():
+        data = [
+            (1, 1.0, 2.0),
+            (2, 1.5, 1.8),
+            (3, 5.0, 8.0),
+            (4, 8.0, 8.0),
+            (5, 1.0, 0.6),
+            (6, 9.0, 11.0)
+        ]
+        expected_labels = [0, 0, 1, 1, 0, 1]
+        labels = task_func(data)
+>       assert np.array_equal(labels, expected_labels)
+E       assert False
+E        +  where False = <function array_equal at 0x774477d17e70>(array([1, 1, 0, 0, 1, 0], dtype=int32), [0, 0, 1, 1, 0, 1])
+E        +    where <function array_equal at 0x774477d17e70> = np.array_equal
+
+test_0867.py:17: AssertionError
+____________________ test_task_func_with_custom_n_clusters _____________________
+
+    def test_task_func_with_custom_n_clusters():
+        data = [
+            (1, 1.0, 2.0),
+            (2, 1.5, 1.8),
+            (3, 5.0, 8.0),
+            (4, 8.0, 8.0),
+            (5, 1.0, 0.6),
+            (6, 9.0, 11.0)
+        ]
+        expected_labels = [0, 0, 1, 1, 0, 1]  # Assuming 2 clusters is optimal for this dataset
+        labels = task_func(data, n_clusters=2)
+>       assert np.array_equal(labels, expected_labels)
+E       assert False
+E        +  where False = <function array_equal at 0x774477d17e70>(array([1, 1, 0, 0, 1, 0], dtype=int32), [0, 0, 1, 1, 0, 1])
+E        +    where <function array_equal at 0x774477d17e70> = np.array_equal
+
+test_0867.py:30: AssertionError
+_______________________ test_task_func_with_random_state _______________________
+
+    def test_task_func_with_random_state():
+        data = [
+            (1, 1.0, 2.0),
+            (2, 1.5, 1.8),
+            (3, 5.0, 8.0),
+            (4, 8.0, 8.0),
+            (5, 1.0, 0.6),
+            (6, 9.0, 11.0)
+        ]
+        expected_labels = [0, 0, 1, 1, 0, 1]
+        labels = task_func(data, random_state=0)
+>       assert np.array_equal(labels, expected_labels)
+E       assert False
+E        +  where False = <function array_equal at 0x774477d17e70>(array([1, 1, 0, 0, 1, 0], dtype=int32), [0, 0, 1, 1, 0, 1])
+E        +    where <function array_equal at 0x774477d17e70> = np.array_equal
+
+test_0867.py:43: AssertionError
+_______________________ test_task_func_with_single_point _______________________
+
+    def test_task_func_with_single_point():
+        data = [(1, 1.0, 2.0)]
+        expected_labels = [0]
+>       labels = task_func(data)
+                 ^^^^^^^^^^^^^^^
+
+test_0867.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0867.py:7: in task_func
+    kmeans = KMeans(n_clusters=n_clusters, random_state=random_state).fit(coordinates)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/base.py:1403: in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/cluster/_kmeans.py:1473: in fit
+    self._check_params_vs_input(X)
+../../../.venv/lib/python3.12/site-packages/sklearn/cluster/_kmeans.py:1413: in _check_params_vs_input
+    super()._check_params_vs_input(X, default_n_init=10)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = KMeans(n_clusters=2, random_state=0), X = array([[1., 2.]])
+default_n_init = 10
+
+    def _check_params_vs_input(self, X, default_n_init=None):
+        # n_clusters
+        if X.shape[0] < self.n_clusters:
+>           raise ValueError(
+                f"n_samples={X.shape[0]} should be >= n_clusters={self.n_clusters}."
+            )
+E           ValueError: n_samples=1 should be >= n_clusters=2.
+
+../../../.venv/lib/python3.12/site-packages/sklearn/cluster/_kmeans.py:877: ValueError
+________________________ test_task_func_with_empty_data ________________________
+
+    def test_task_func_with_empty_data():
+        data = []
+        expected_labels = []
+>       labels = task_func(data)
+                 ^^^^^^^^^^^^^^^
+
+test_0867.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = [], n_clusters = 2, random_state = 0
+
+    def task_func(data, n_clusters=2, random_state=0):
+>       items, x_values, y_values = zip(*data)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: not enough values to unpack (expected 3, got 0)
+
+../../../src/src_0867.py:4: ValueError
+=========================== short test summary info ============================
+FAILED test_0867.py::test_task_func_with_default_parameters - assert False
+FAILED test_0867.py::test_task_func_with_custom_n_clusters - assert False
+FAILED test_0867.py::test_task_func_with_random_state - assert False
+FAILED test_0867.py::test_task_func_with_single_point - ValueError: n_samples...
+FAILED test_0867.py::test_task_func_with_empty_data - ValueError: not enough ...
+5 failed in 3.03s

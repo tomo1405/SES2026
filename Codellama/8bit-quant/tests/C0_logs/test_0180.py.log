@@ -1,0 +1,46 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_valid_data ________________________
+
+    def test_task_func_with_valid_data():
+        df = pd.DataFrame({'Title': ['How to make a pie', 'What is the meaning of life'], 'Content': ['This is a recipe for a delicious pie', 'The meaning of life is to find your purpose']})
+        ax = task_func(df)
+        assert ax.get_ylabel() == 'TF-IDF Score'
+>       assert ax.get_xticks() == ['how', 'what']
+E       AssertionError: assert [0, 1, 2, 3, 4, 5, ...] == ['how', 'what']
+E         
+E         At index 0 diff: 0 != 'how'
+E         Left contains 12 more items, first extra item: 2
+E         Use -v to get more diff
+
+test_0180.py:9: AssertionError
+_______________________ test_task_func_with_invalid_data _______________________
+
+    def test_task_func_with_invalid_data():
+        df = pd.DataFrame({'Title': ['How to make a pie', 'What is the meaning of life'], 'Content': ['This is a recipe for a delicious pie', 'The meaning of life is to find your purpose']})
+        ax = task_func(df)
+        assert ax.get_ylabel() == 'TF-IDF Score'
+>       assert ax.get_xticks() == ['how', 'what']
+E       AssertionError: assert [0, 1, 2, 3, 4, 5, ...] == ['how', 'what']
+E         
+E         At index 0 diff: 0 != 'how'
+E         Left contains 12 more items, first extra item: 2
+E         Use -v to get more diff
+
+test_0180.py:16: AssertionError
+________________________ test_task_func_with_empty_data ________________________
+
+    def test_task_func_with_empty_data():
+        df = pd.DataFrame({'Title': [], 'Content': []})
+        ax = task_func(df)
+>       assert ax.get_ylabel() == 'TF-IDF Score'
+E       AssertionError: assert '' == 'TF-IDF Score'
+E         
+E         - TF-IDF Score
+
+test_0180.py:22: AssertionError
+=========================== short test summary info ============================
+FAILED test_0180.py::test_task_func_with_valid_data - AssertionError: assert ...
+FAILED test_0180.py::test_task_func_with_invalid_data - AssertionError: asser...
+FAILED test_0180.py::test_task_func_with_empty_data - AssertionError: assert ...
+3 failed in 3.69s

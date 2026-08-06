@@ -1,0 +1,95 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+temp_file = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1285/test_task_func0/test_file.txt')
+
+    def test_task_func(temp_file):
+        pub_key, encrypted_file, encrypted_key_file = task_func(str(temp_file))
+    
+        # Check if the encrypted file exists
+        assert os.path.exists(encrypted_file)
+    
+        # Check if the encrypted key file exists
+        assert os.path.exists(encrypted_key_file)
+    
+        # Read the encrypted file
+        with open(encrypted_file, 'rb') as f:
+            encrypted_data = f.read()
+    
+        # Read the encrypted key file
+        with open(encrypted_key_file, 'rb') as f:
+            encrypted_fernet_key_b64 = f.read()
+            encrypted_fernet_key = b64decode(encrypted_fernet_key_b64)
+    
+        # Decrypt the fernet key using the public key
+>       fernet_key = rsa.decrypt(encrypted_fernet_key, pub_key)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0587.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+crypto = b'D2\xcd\x97\xcd\xea\xad3\x0f\xe1F\x0b0\xdc\xaf7\xf2\x14\x14\xa5TUY2\xd4VM\x98\xf5\x00\xfb\xa8\xa35\x1c\x80\xb1\xab\xa1\xfe\xbe\xe2\x84A\x05u\xc4ry\x90U\x11\x14I\xd8\xd5\xa0Q$p\xa8\xb6\xdfg'
+priv_key = PublicKey(7043979497548576100278019971462493318735656793587726758695573545839455715113517271672821510152583453333245193604127687029314511968259039799963342971366199, 65537)
+
+    def decrypt(crypto: bytes, priv_key: key.PrivateKey) -> bytes:
+        r"""Decrypts the given message using PKCS#1 v1.5
+    
+        The decryption is considered 'failed' when the resulting cleartext doesn't
+        start with the bytes 00 02, or when the 00 byte between the padding and
+        the message cannot be found.
+    
+        :param crypto: the crypto text as returned by :py:func:`rsa.encrypt`
+        :param priv_key: the :py:class:`rsa.PrivateKey` to decrypt with.
+        :raise DecryptionError: when the decryption fails. No details are given as
+            to why the code thinks the decryption fails, as this would leak
+            information about the private key.
+    
+    
+        >>> import rsa
+        >>> (pub_key, priv_key) = rsa.newkeys(256)
+    
+        It works with strings:
+    
+        >>> crypto = encrypt(b'hello', pub_key)
+        >>> decrypt(crypto, priv_key)
+        b'hello'
+    
+        And with binary data:
+    
+        >>> crypto = encrypt(b'\x00\x00\x00\x00\x01', pub_key)
+        >>> decrypt(crypto, priv_key)
+        b'\x00\x00\x00\x00\x01'
+    
+        Altering the encrypted information will *likely* cause a
+        :py:class:`rsa.pkcs1.DecryptionError`. If you want to be *sure*, use
+        :py:func:`rsa.sign`.
+    
+    
+        .. warning::
+    
+            Never display the stack trace of a
+            :py:class:`rsa.pkcs1.DecryptionError` exception. It shows where in the
+            code the exception occurred, and thus leaks information about the key.
+            It's only a tiny bit of information, but every bit makes cracking the
+            keys easier.
+    
+        >>> crypto = encrypt(b'hello', pub_key)
+        >>> crypto = crypto[0:5] + b'X' + crypto[6:] # change a byte
+        >>> decrypt(crypto, priv_key)
+        Traceback (most recent call last):
+        ...
+        rsa.pkcs1.DecryptionError: Decryption failed
+    
+        """
+    
+        blocksize = common.byte_size(priv_key.n)
+        encrypted = transform.bytes2int(crypto)
+>       decrypted = priv_key.blinded_decrypt(encrypted)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'PublicKey' object has no attribute 'blinded_decrypt'
+
+../../../.venv/lib/python3.12/site-packages/rsa/pkcs1.py:257: AttributeError
+=========================== short test summary info ============================
+FAILED test_0587.py::test_task_func - AttributeError: 'PublicKey' object has ...
+1 failed, 1 passed in 0.63s

@@ -1,0 +1,70 @@
+..F..FF                                                                  [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_source_with_files _______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1644/test_task_func_source_with_fil0')
+
+    def test_task_func_source_with_files(tmp_path):
+        source_path = tmp_path / "source"
+        source_path.mkdir()
+        file1 = source_path / "file1.txt"
+        file2 = source_path / "file2.txt"
+        file1.touch()
+        file2.touch()
+        destination_path = tmp_path / "destination"
+    
+        result = task_func(source_path, destination_path)
+>       assert result == ("source", ["file1.txt", "file2.txt"])
+E       AssertionError: assert ('source', ['... 'file1.txt']) == ('source', ['... 'file2.txt'])
+E         
+E         At index 1 diff: ['file2.txt', 'file1.txt'] != ['file1.txt', 'file2.txt']
+E         Use -v to get more diff
+
+test_0975.py:33: AssertionError
+______________________ test_task_func_nested_directories _______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1644/test_task_func_nested_director0')
+
+    def test_task_func_nested_directories(tmp_path):
+        source_path = tmp_path / "source"
+        source_path.mkdir()
+        nested_dir = source_path / "nested"
+        nested_dir.mkdir()
+        file1 = nested_dir / "file1.txt"
+        file1.touch()
+        destination_path = tmp_path / "destination"
+    
+        result = task_func(source_path, destination_path)
+>       assert result == ("source", ["nested/file1.txt"])
+E       AssertionError: assert ('source', []) == ('source', ['...d/file1.txt'])
+E         
+E         At index 1 diff: [] != ['nested/file1.txt']
+E         Use -v to get more diff
+
+test_0975.py:70: AssertionError
+___________________________ test_task_func_symlinks ____________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1644/test_task_func_symlinks0')
+
+    def test_task_func_symlinks(tmp_path):
+        source_path = tmp_path / "source"
+        source_path.mkdir()
+        file1 = source_path / "file1.txt"
+        file1.touch()
+        symlink = source_path / "symlink_to_file1"
+        symlink.symlink_to(file1)
+        destination_path = tmp_path / "destination"
+    
+        result = task_func(source_path, destination_path)
+>       assert result == ("source", ["file1.txt", "symlink_to_file1"])
+E       AssertionError: assert ('source', ['... 'file1.txt']) == ('source', ['...nk_to_file1'])
+E         
+E         At index 1 diff: ['symlink_to_file1', 'file1.txt'] != ['file1.txt', 'symlink_to_file1']
+E         Use -v to get more diff
+
+test_0975.py:83: AssertionError
+=========================== short test summary info ============================
+FAILED test_0975.py::test_task_func_source_with_files - AssertionError: asser...
+FAILED test_0975.py::test_task_func_nested_directories - AssertionError: asse...
+FAILED test_0975.py::test_task_func_symlinks - AssertionError: assert ('sourc...
+3 failed, 4 passed in 0.50s

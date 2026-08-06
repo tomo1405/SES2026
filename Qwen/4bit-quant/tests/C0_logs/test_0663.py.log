@@ -1,0 +1,91 @@
+.F.F..                                                                   [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_single_point _______________________
+
+    def test_task_func_with_single_point():
+        x = [[1], [4]]
+        y = [[7], [10]]
+        labels = ['A']
+    
+>       fig = task_func(x, y, labels)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0663.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0663.py:11: in task_func
+    xy_transformed = pca.fit_transform(xy)
+                     ^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/utils/_set_output.py:319: in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/base.py:1403: in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/decomposition/_pca.py:466: in fit_transform
+    U, S, _, X, x_is_centered, xp = self._fit(X)
+                                    ^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/decomposition/_pca.py:540: in _fit
+    return self._fit_full(X, n_components, xp, is_array_api_compliant)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PCA(n_components=2), X = array([[1., 7.]]), n_components = 2
+xp = <module 'sklearn.externals.array_api_compat.numpy' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/sklearn/externals/array_api_compat/numpy/__init__.py'>
+is_array_api_compliant = False
+
+    def _fit_full(self, X, n_components, xp, is_array_api_compliant):
+        """Fit the model by computing full SVD on X."""
+        n_samples, n_features = X.shape
+    
+        if n_components == "mle":
+            if n_samples < n_features:
+                raise ValueError(
+                    "n_components='mle' is only supported if n_samples >= n_features"
+                )
+        elif not 0 <= n_components <= min(n_samples, n_features):
+>           raise ValueError(
+                f"n_components={n_components} must be between 0 and "
+                f"min(n_samples, n_features)={min(n_samples, n_features)} with "
+                f"svd_solver={self._fit_svd_solver!r}"
+            )
+E           ValueError: n_components=2 must be between 0 and min(n_samples, n_features)=1 with svd_solver='full'
+
+../../../.venv/lib/python3.12/site-packages/sklearn/decomposition/_pca.py:554: ValueError
+_______________________ test_task_func_with_single_label _______________________
+
+    def test_task_func_with_single_label():
+        x = [[1, 2], [3, 4]]
+        y = [[5, 6], [7, 8]]
+        labels = ['A']
+    
+>       fig = task_func(x, y, labels)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0663.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+x = [[1, 2], [3, 4]], y = [[5, 6], [7, 8]], labels = ['A']
+
+    def task_func(x, y, labels):
+        pca = PCA(n_components=2)
+    
+        fig, ax = plt.subplots()
+    
+        for i in range(len(x)):
+            xy = np.vstack((x[i], y[i])).T
+            xy_transformed = pca.fit_transform(xy)
+>           ax.plot(xy_transformed[:, 0], xy_transformed[:, 1], label=labels[i])
+                                                                      ^^^^^^^^^
+E           IndexError: list index out of range
+
+../../../src/src_0663.py:12: IndexError
+=============================== warnings summary ===============================
+Qwen/4bit-quant/tests/test_0663.py::test_task_func_with_empty_data
+  /work/tomohiro-w/utg/src/src_0663.py:14: UserWarning: No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+    ax.legend()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0663.py::test_task_func_with_single_point - ValueError: n_compone...
+FAILED test_0663.py::test_task_func_with_single_label - IndexError: list inde...
+2 failed, 4 passed, 1 warning in 4.07s

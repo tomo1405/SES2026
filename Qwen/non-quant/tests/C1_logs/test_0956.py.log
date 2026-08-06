@@ -1,0 +1,47 @@
+.FFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_no_replacement _________________________
+
+    def test_task_func_no_replacement():
+        ax = task_func(["not_in_text"], "This is a test text.")
+        words, frequencies = zip(*Counter("This is a test text.".split()).items())
+        indices = np.arange(len(Counter("This is a test text.".split())))
+        assert list(ax.get_xticks()) == list(indices)
+>       assert list(ax.get_xticklabels()) == list(words)
+E       AssertionError: assert [Text(0, 0, '..., 0, 'text.')] == ['This', 'is'...est', 'text.']
+E         
+E         At index 0 diff: Text(0, 0, 'This') != 'This'
+E         Use -v to get more diff
+
+test_0956.py:16: AssertionError
+_______________________ test_task_func_with_replacement ________________________
+
+    def test_task_func_with_replacement():
+        ax = task_func(["is"], "This is a test text.")
+        words, frequencies = zip(*Counter("This_is a test text.".split()).items())
+        indices = np.arange(len(Counter("This_is a test text.".split())))
+>       assert list(ax.get_xticks()) == list(indices)
+E       assert [np.int64(0),..., np.int64(4)] == [np.int64(0),..., np.int64(3)]
+E         
+E         Left contains one more item: np.int64(4)
+E         Use -v to get more diff
+
+test_0956.py:23: AssertionError
+_______________________ test_task_func_case_insensitive ________________________
+
+    def test_task_func_case_insensitive():
+        ax = task_func(["TEST"], "This is a TEST text.")
+        words, frequencies = zip(*Counter("This is a TEST_text.".split()).items())
+        indices = np.arange(len(Counter("This is a TEST_text.".split())))
+>       assert list(ax.get_xticks()) == list(indices)
+E       assert [np.int64(0),..., np.int64(4)] == [np.int64(0),..., np.int64(3)]
+E         
+E         Left contains one more item: np.int64(4)
+E         Use -v to get more diff
+
+test_0956.py:31: AssertionError
+=========================== short test summary info ============================
+FAILED test_0956.py::test_task_func_no_replacement - AssertionError: assert [...
+FAILED test_0956.py::test_task_func_with_replacement - assert [np.int64(0),.....
+FAILED test_0956.py::test_task_func_case_insensitive - assert [np.int64(0),.....
+3 failed, 1 passed in 1.59s

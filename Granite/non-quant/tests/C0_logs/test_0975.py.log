@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        source_path = pathlib.Path("/path/to/source")
+        destination_path = pathlib.Path("/path/to/destination")
+    
+        with pytest.raises(ValueError):
+            task_func("/not/a/directory", destination_path)
+    
+>       task_func(source_path, destination_path)
+
+test_0975.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+source_path = PosixPath('/path/to/source')
+destination_path = PosixPath('/path/to/destination')
+
+    def task_func(source_path, destination_path):
+        source_path = pathlib.Path(source_path).resolve()
+        destination_path = pathlib.Path(destination_path).resolve()
+    
+        if not (source_path.exists() and source_path.is_dir()):
+>           raise ValueError("source_path must be an existing directory.")
+E           ValueError: source_path must be an existing directory.
+
+../../../src/src_0975.py:8: ValueError
+=========================== short test summary info ============================
+FAILED test_0975.py::test_task_func - ValueError: source_path must be an exis...
+1 failed in 0.49s

@@ -1,0 +1,42 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a simple input
+        input_data = [[2, 3], [4, 5]]
+        df = task_func(input_data)
+    
+        # Check if the DataFrame has the correct shape
+        expected_rows = input_data[0][0] * input_data[0][1]
+        expected_columns = input_data[1][0] * input_data[1][1]
+        assert df.shape == (expected_rows, expected_columns), f"Expected shape {expected_rows}, {expected_columns}, but got {df.shape}"
+    
+        # Check if all values in the DataFrame are within the specified range
+>       assert df.values.min() >= RANGE[0], f"Minimum value {df.values.min()} is less than {RANGE[0]}"
+                                  ^^^^^
+E       NameError: name 'RANGE' is not defined
+
+test_0621.py:15: NameError
+______________________ test_task_func_with_single_element ______________________
+
+    def test_task_func_with_single_element():
+        # Test with single element dimensions
+        input_data = [[1, 1], [1, 1]]
+        df = task_func(input_data)
+    
+        # Check if the DataFrame has the correct shape
+        expected_rows = input_data[0][0] * input_data[0][1]
+        expected_columns = input_data[1][0] * input_data[1][1]
+        assert df.shape == (expected_rows, expected_columns), f"Expected shape {expected_rows}, {expected_columns}, but got {df.shape}"
+    
+        # Check if the value is within the specified range
+>       assert df.values.min() >= RANGE[0], f"Minimum value {df.values.min()} is less than {RANGE[0]}"
+                                  ^^^^^
+E       NameError: name 'RANGE' is not defined
+
+test_0621.py:38: NameError
+=========================== short test summary info ============================
+FAILED test_0621.py::test_task_func - NameError: name 'RANGE' is not defined
+FAILED test_0621.py::test_task_func_with_single_element - NameError: name 'RA...
+2 failed, 1 passed in 1.21s

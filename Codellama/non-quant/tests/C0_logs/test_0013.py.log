@@ -1,0 +1,48 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_valid_script __________________________
+
+    def test_task_func_valid_script():
+        script_name = 'backup.sh'
+        log_file = '/home/user/backup_log.json'
+>       log_data = task_func(script_name, log_file)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0013.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+script_name = 'backup.sh', log_file = '/home/user/backup_log.json'
+
+    def task_func(script_name='backup.sh', log_file='/home/user/backup_log.json'):
+        log_data = {}
+    
+        if not os.path.isfile(script_name):
+>           raise FileNotFoundError(f"Script {script_name} does not exist.")
+E           FileNotFoundError: Script backup.sh does not exist.
+
+../../../src/src_0013.py:9: FileNotFoundError
+___________________________ test_task_func_exception ___________________________
+
+    def test_task_func_exception():
+        script_name = 'backup.sh'
+        log_file = '/home/user/backup_log.json'
+        with pytest.raises(RuntimeError):
+>           task_func(script_name, log_file)
+
+test_0013.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+script_name = 'backup.sh', log_file = '/home/user/backup_log.json'
+
+    def task_func(script_name='backup.sh', log_file='/home/user/backup_log.json'):
+        log_data = {}
+    
+        if not os.path.isfile(script_name):
+>           raise FileNotFoundError(f"Script {script_name} does not exist.")
+E           FileNotFoundError: Script backup.sh does not exist.
+
+../../../src/src_0013.py:9: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0013.py::test_task_func_valid_script - FileNotFoundError: Script ...
+FAILED test_0013.py::test_task_func_exception - FileNotFoundError: Script bac...
+2 failed, 1 passed in 0.41s

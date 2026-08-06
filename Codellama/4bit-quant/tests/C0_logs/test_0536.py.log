@@ -1,0 +1,63 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: num_entries = 0
+        db_path = "test.db"
+        table_name = "test_table"
+        num_entries = 0
+        random_seed = None
+        inserted_rows = task_func(db_path, table_name, num_entries, random_seed)
+        assert inserted_rows == 0
+    
+        # Test case 2: num_entries = 1
+        db_path = "test.db"
+        table_name = "test_table"
+        num_entries = 1
+        random_seed = None
+>       inserted_rows = task_func(db_path, table_name, num_entries, random_seed)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0536.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+db_path = 'test.db', table_name = 'test_table', num_entries = 1
+random_seed = None
+
+    def task_func(db_path, table_name, num_entries, random_seed=None):
+        # Setting the random seed if provided
+        if random_seed is not None:
+            seed(random_seed)
+            np.random.seed(random_seed)
+    
+        if num_entries < 0:
+            raise ValueError("num_entries cannot be negative.")
+    
+        NAMES = ["John", "Jane", "Steve", "Emma", "Liam", "Olivia"]
+        AGES = list(range(18, 65))
+        HEIGHTS = list(range(150, 200))
+    
+        conn = sqlite3.connect(db_path)
+        cur = conn.cursor()
+    
+        table_creation_sql = (
+            "CREATE TABLE IF NOT EXISTS {} (name TEXT, age INTEGER, height INTEGER)".format(
+                table_name
+            )
+        )
+        cur.execute(table_creation_sql)
+    
+        inserted_rows = 0
+        for _ in range(num_entries):
+            name = choice(NAMES)
+            age = choice(AGES)
+            height = choice(HEIGHTS)
+            insertion_sql = "INSERT INTO {} VALUES (?, ?, ?)".format(table_name)
+>           cur.execute(insertion_sql, (name, age, height))
+E           sqlite3.OperationalError: table test_table has 2 columns but 3 values were supplied
+
+../../../src/src_0536.py:33: OperationalError
+=========================== short test summary info ============================
+FAILED test_0536.py::test_task_func - sqlite3.OperationalError: table test_ta...
+1 failed in 0.58s

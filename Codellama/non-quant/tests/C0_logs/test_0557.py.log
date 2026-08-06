@@ -1,0 +1,62 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: s is a string, min_length and max_length are integers, letters is a list of strings
+        s = "hello"
+        min_length = 5
+        max_length = 10
+        letters = ["a", "b", "c"]
+        generated_s, is_similar = task_func(s, min_length, max_length, letters)
+        assert isinstance(generated_s, str)
+        assert len(generated_s) >= min_length
+        assert len(generated_s) <= max_length
+        assert all(letter in generated_s for letter in letters)
+        assert isinstance(is_similar, bool)
+    
+        # Test case 2: s is an empty string, min_length and max_length are integers, letters is a list of strings
+        s = ""
+        min_length = 5
+        max_length = 10
+        letters = ["a", "b", "c"]
+        generated_s, is_similar = task_func(s, min_length, max_length, letters)
+        assert isinstance(generated_s, str)
+        assert len(generated_s) >= min_length
+        assert len(generated_s) <= max_length
+        assert all(letter in generated_s for letter in letters)
+        assert isinstance(is_similar, bool)
+    
+        # Test case 3: s is a string, min_length and max_length are integers, letters is an empty list
+        s = "hello"
+        min_length = 5
+        max_length = 10
+        letters = []
+>       generated_s, is_similar = task_func(s, min_length, max_length, letters)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0557.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0557.py:6: in task_func
+    generated_s = ''.join(random.choice(letters) for _ in range(string_length))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../src/src_0557.py:6: in <genexpr>
+    generated_s = ''.join(random.choice(letters) for _ in range(string_length))
+                          ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <random.Random object at 0x246a7330>, seq = []
+
+    def choice(self, seq):
+        """Choose a random element from a non-empty sequence."""
+    
+        # As an accommodation for NumPy, we don't use "if not seq"
+        # because bool(numpy.array()) raises a ValueError.
+        if not len(seq):
+>           raise IndexError('Cannot choose from an empty sequence')
+E           IndexError: Cannot choose from an empty sequence
+
+/usr/lib/python3.12/random.py:347: IndexError
+=========================== short test summary info ============================
+FAILED test_0557.py::test_task_func - IndexError: Cannot choose from an empty...
+1 failed in 0.59s

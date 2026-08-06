@@ -1,0 +1,75 @@
+.FFFF                                                                    [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_single_list __________________________
+
+    def test_task_func_single_list():
+        input_data = [['X', 'Y']]
+        result = task_func(input_data)
+        assert len(result) == 1, "Expected one DataFrame for one list"
+        df = result[0]
+        assert isinstance(df, pd.DataFrame), "Expected a DataFrame"
+        assert list(df.columns) == ['X', 'Y'], "Expected columns 'X' and 'Y'"
+>       assert all(len(df[col]) == len(POSSIBLE_VALUES) for col in df.columns), "Expected each column to have the same number of rows as POSSIBLE_VALUES"
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1071.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <generator object ArrowExtensionArray.__iter__ at 0x75676eaeb140>
+
+>   assert all(len(df[col]) == len(POSSIBLE_VALUES) for col in df.columns), "Expected each column to have the same number of rows as POSSIBLE_VALUES"
+                                   ^^^^^^^^^^^^^^^
+E   NameError: name 'POSSIBLE_VALUES' is not defined
+
+test_1071.py:16: NameError
+________________________ test_task_func_multiple_lists _________________________
+
+    def test_task_func_multiple_lists():
+        input_data = [['X', 'Y'], ['A', 'B', 'C']]
+        result = task_func(input_data)
+        assert len(result) == 2, "Expected two DataFrames for two lists"
+        df1, df2 = result
+        assert isinstance(df1, pd.DataFrame) and isinstance(df2, pd.DataFrame), "Expected DataFrames"
+        assert list(df1.columns) == ['X', 'Y'] and list(df2.columns) == ['A', 'B', 'C'], "Expected correct columns for each DataFrame"
+>       assert all(len(df[col]) == len(POSSIBLE_VALUES) for df in [df1, df2] for col in df.columns), "Expected each column to have the same number of rows as POSSIBLE_VALUES"
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1071.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <tuple_iterator object at 0x75676eb8cb80>
+
+>   assert all(len(df[col]) == len(POSSIBLE_VALUES) for df in [df1, df2] for col in df.columns), "Expected each column to have the same number of rows as POSSIBLE_VALUES"
+                                   ^^^^^^^^^^^^^^^
+E   NameError: name 'POSSIBLE_VALUES' is not defined
+
+test_1071.py:25: NameError
+___________________ test_task_func_unique_values_per_column ____________________
+
+    def test_task_func_unique_values_per_column():
+        input_data = [['X', 'Y']]
+        result = task_func(input_data)
+        df = result[0]
+        for col in df.columns:
+>           assert len(set(df[col])) == len(POSSIBLE_VALUES), "Expected unique values in each column"
+                                            ^^^^^^^^^^^^^^^
+E           NameError: name 'POSSIBLE_VALUES' is not defined
+
+test_1071.py:32: NameError
+____________________________ test_task_func_shuffle ____________________________
+
+    def test_task_func_shuffle():
+        input_data = [['X', 'Y']]
+        result = task_func(input_data)
+        df = result[0]
+>       original_values = POSSIBLE_VALUES.copy()
+                          ^^^^^^^^^^^^^^^
+E       NameError: name 'POSSIBLE_VALUES' is not defined
+
+test_1071.py:38: NameError
+=========================== short test summary info ============================
+FAILED test_1071.py::test_task_func_single_list - NameError: name 'POSSIBLE_V...
+FAILED test_1071.py::test_task_func_multiple_lists - NameError: name 'POSSIBL...
+FAILED test_1071.py::test_task_func_unique_values_per_column - NameError: nam...
+FAILED test_1071.py::test_task_func_shuffle - NameError: name 'POSSIBLE_VALUE...
+4 failed, 1 passed in 1.50s

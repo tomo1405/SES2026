@@ -1,0 +1,16 @@
+import matplotlib.pyplot as plt
+import numpy as np
+import seaborn as sns
+def task_func(mu, sigma, seed=0):
+    # Set the random seed
+    np.random.seed(seed)
+    # Generate samples from the normal distribution
+    samples = np.random.normal(mu, sigma, 1000)
+
+    # Generate a KDE plot
+    mappable = sns.kdeplot(samples, fill=True)
+
+    # Add a colorbar to the plot
+    plt.colorbar(mappable=mappable.collections[0])
+
+    return mappable

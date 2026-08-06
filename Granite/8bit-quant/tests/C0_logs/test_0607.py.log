@@ -1,0 +1,38 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        expected_result = [[-1.22474487, -1.15470054, -1.08465621],
+                           [0.8660254, 0.95105652, 1.03608764],
+                           [1.95105652, 2.03608764, 2.12111876]]
+        result = task_func(matrix)
+>       assert result.values.tolist() == expected_result
+E       assert [[-1.22474487...448713915892]] == [[-1.22474487..., 2.12111876]]
+E         
+E         At index 0 diff: [-1.2247448713915892, -1.2247448713915892, -1.2247448713915892] != [-1.22474487, -1.15470054, -1.08465621]
+E         Use -v to get more diff
+
+test_0607.py:18: AssertionError
+___________________________ test_task_func_with_nan ____________________________
+
+    def test_task_func_with_nan():
+        matrix = [[1, 2, 3], [4, 5, 6], [7, 8, np.nan]]
+        expected_result = [[-1.22474487, -1.15470054, -1.08465621],
+                           [0.8660254, 0.95105652, 1.03608764],
+                           [1.95105652, 2.03608764, 0.0]]
+        result = task_func(matrix)
+>       assert result.values.tolist() == expected_result
+E       assert [[-1.22474487...3915892, 0.0]] == [[-1.22474487...3608764, 0.0]]
+E         
+E         At index 0 diff: [-1.2247448713915892, -1.2247448713915892, 0.0] != [-1.22474487, -1.15470054, -1.08465621]
+E         Use -v to get more diff
+
+test_0607.py:26: AssertionError
+=========================== short test summary info ============================
+FAILED test_0607.py::test_task_func - assert [[-1.22474487...448713915892]] =...
+FAILED test_0607.py::test_task_func_with_nan - assert [[-1.22474487...3915892...
+2 failed in 2.19s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

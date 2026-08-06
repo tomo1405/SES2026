@@ -1,0 +1,67 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_default ____________________________
+
+    def test_task_func_default():
+        ax = task_func()
+        assert isinstance(ax, plt.Axes)
+>       assert len(ax.patches) == 100  # 10 shapes * 10 colors
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 10 == 100
+E        +  where 10 = len(<Axes.ArtistList of 10 patches>)
+E        +    where <Axes.ArtistList of 10 patches> = <Axes: ylabel='count'>.patches
+
+test_1059.py:8: AssertionError
+_________________________ test_task_func_custom_pairs __________________________
+
+    def test_task_func_custom_pairs():
+        ax = task_func(num_pairs=50)
+        assert isinstance(ax, plt.Axes)
+>       assert len(ax.patches) == 50
+E       AssertionError: assert 60 == 50
+E        +  where 60 = len(<Axes.ArtistList of 60 patches>)
+E        +    where <Axes.ArtistList of 60 patches> = <Axes: ylabel='count'>.patches
+
+test_1059.py:13: AssertionError
+__________________________ test_task_func_zero_pairs ___________________________
+
+    def test_task_func_zero_pairs():
+        ax = task_func(num_pairs=0)
+        assert isinstance(ax, plt.Axes)
+>       assert len(ax.patches) == 0
+E       AssertionError: assert 60 == 0
+E        +  where 60 = len(<Axes.ArtistList of 60 patches>)
+E        +    where <Axes.ArtistList of 60 patches> = <Axes: ylabel='count'>.patches
+
+test_1059.py:18: AssertionError
+______________________ test_task_func_more_than_max_pairs ______________________
+
+    def test_task_func_more_than_max_pairs():
+        ax = task_func(num_pairs=1000)
+        assert isinstance(ax, plt.Axes)
+>       assert len(ax.patches) == 100  # Max pairs is 100
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 160 == 100
+E        +  where 160 = len(<Axes.ArtistList of 160 patches>)
+E        +    where <Axes.ArtistList of 160 patches> = <Axes: ylabel='count'>.patches
+
+test_1059.py:23: AssertionError
+________________________ test_task_func_negative_pairs _________________________
+
+    def test_task_func_negative_pairs():
+        ax = task_func(num_pairs=-10)
+        assert isinstance(ax, plt.Axes)
+>       assert len(ax.patches) == 0  # Negative pairs should result in no pairs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 250 == 0
+E        +  where 250 = len(<Axes.ArtistList of 250 patches>)
+E        +    where <Axes.ArtistList of 250 patches> = <Axes: ylabel='count'>.patches
+
+test_1059.py:28: AssertionError
+=========================== short test summary info ============================
+FAILED test_1059.py::test_task_func_default - AssertionError: assert 10 == 100
+FAILED test_1059.py::test_task_func_custom_pairs - AssertionError: assert 60 ...
+FAILED test_1059.py::test_task_func_zero_pairs - AssertionError: assert 60 == 0
+FAILED test_1059.py::test_task_func_more_than_max_pairs - AssertionError: ass...
+FAILED test_1059.py::test_task_func_negative_pairs - AssertionError: assert 2...
+5 failed in 5.01s

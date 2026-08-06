@@ -1,0 +1,47 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        source_dir = "source_directory"
+        target_dir = "target_directory"
+        extensions = [".txt", ".csv"]
+        expected_count = 5
+    
+>       count = task_func(source_dir, target_dir, extensions)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0757.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+source_dir = 'source_directory', target_dir = 'target_directory'
+extensions = ['.txt', '.csv']
+
+    def task_func(source_dir: str, target_dir: str, extensions: List[str]) -> int:
+    
+        if Path(source_dir).is_dir() == False:
+>           raise ValueError("source_dir does not exist.")
+E           ValueError: source_dir does not exist.
+
+../../../src/src_0757.py:7: ValueError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        source_dir = "source_directory"
+        target_dir = "target_directory"
+        extensions = [".txt", ".csv"]
+        expected_count = 5
+    
+        with pytest.raises(ValueError) as excinfo:
+            task_func(source_dir, target_dir, extensions)
+    
+>       assert "target_dir does not exist." in str(excinfo.value)
+E       AssertionError: assert 'target_dir does not exist.' in 'source_dir does not exist.'
+E        +  where 'source_dir does not exist.' = str(ValueError('source_dir does not exist.'))
+E        +    where ValueError('source_dir does not exist.') = <ExceptionInfo ValueError('source_dir does not exist.') tblen=2>.value
+
+test_0757.py:26: AssertionError
+=========================== short test summary info ============================
+FAILED test_0757.py::test_task_func_valid_input - ValueError: source_dir does...
+FAILED test_0757.py::test_task_func_invalid_input - AssertionError: assert 't...
+2 failed in 0.47s

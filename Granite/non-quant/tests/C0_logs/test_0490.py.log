@@ -1,0 +1,24 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: valid input, no seed
+        epoch_milliseconds = int(datetime.now().timestamp() * 1000)
+        log_df = task_func(epoch_milliseconds)
+        assert isinstance(log_df, pd.DataFrame)
+        assert log_df.shape[0] > 0
+>       assert set(log_df["User"].unique()) == set(["user1", "user2", "user3", "user4", "user5"])
+E       AssertionError: assert {'user4'} == {'user1', 'us...er4', 'user5'}
+E         
+E         Extra items in the right set:
+E         'user5'
+E         'user1'
+E         'user2'
+E         'user3'
+E         Use -v to get more diff
+
+test_0490.py:13: AssertionError
+=========================== short test summary info ============================
+FAILED test_0490.py::test_task_func - AssertionError: assert {'user4'} == {'u...
+1 failed in 1.15s

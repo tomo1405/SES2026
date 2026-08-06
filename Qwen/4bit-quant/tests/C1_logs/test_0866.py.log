@@ -1,0 +1,47 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_empty_input __________________________
+
+    def test_task_func_empty_input():
+>       result_df = task_func([])
+                    ^^^^^^^^^^^^^
+
+test_0866.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = []
+
+    def task_func(data):
+        # Extracting items, counts, and weights from the input data
+>       items, counts, weights = zip(*data)
+        ^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: not enough values to unpack (expected 3, got 0)
+
+../../../src/src_0866.py:7: ValueError
+__________________________ test_task_func_single_item __________________________
+
+    def test_task_func_single_item():
+        sample_data = [('item1', 10, 5)]
+        result_df = task_func(sample_data)
+    
+        # Check if the DataFrame has the correct columns
+        expected_columns = ['Item', 'Normalized Count', 'Normalized Weight']
+        assert list(result_df.columns) == expected_columns
+    
+        # Check if the DataFrame has the correct number of rows
+        assert len(result_df) == len(sample_data)
+    
+        # Check if the 'Item' column contains the correct value
+        assert result_df['Item'].iloc[0] == sample_data[0][0]
+    
+        # Check if the 'Normalized Count' and 'Normalized Weight' are numeric
+>       assert np.isfinite(result_df['Normalized Count'].iloc[0])
+E       AssertionError: assert np.False_
+E        +  where np.False_ = <ufunc 'isfinite'>(np.float64(nan))
+E        +    where <ufunc 'isfinite'> = np.isfinite
+
+test_0866.py:56: AssertionError
+=========================== short test summary info ============================
+FAILED test_0866.py::test_task_func_empty_input - ValueError: not enough valu...
+FAILED test_0866.py::test_task_func_single_item - AssertionError: assert np.F...
+2 failed, 1 passed in 2.79s

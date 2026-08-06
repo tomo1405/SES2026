@@ -1,0 +1,75 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_output _____________________________
+
+    def test_task_func_output():
+        start_date = '2023-01-01'
+        periods = 10
+        freq = 'D'
+        random_seed = 42
+    
+        forecast_df, ax = task_func(start_date, periods, freq, random_seed)
+    
+        # Check if the DataFrame is correctly structured
+        assert isinstance(forecast_df, pd.DataFrame)
+        assert 'Sales' in forecast_df.columns
+        assert len(forecast_df) == periods
+    
+        # Check if the DataFrame values are within the expected range
+        assert (forecast_df['Sales'] >= 100).all() and (forecast_df['Sales'] <= 500).all()
+    
+        # Check if the plot is correctly created
+        assert isinstance(ax, plt.Axes)
+        assert ax.get_title() == 'Sales Forecast'
+        assert ax.get_xlabel() == 'Date'
+        assert ax.get_ylabel() == 'Sales'
+>       assert ax.gridOn
+               ^^^^^^^^^
+E       AttributeError: 'Axes' object has no attribute 'gridOn'. Did you mean: '_gridOn'?
+
+test_0942.py:28: AttributeError
+___________________ test_task_func_with_different_frequency ____________________
+
+>   ???
+
+pandas/_libs/tslibs/offsets.pyx:6313: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   ValueError: 'M' is no longer supported for offsets. Please use 'ME' instead.
+
+pandas/_libs/tslibs/offsets.pyx:6180: ValueError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func_with_different_frequency():
+        start_date = '2023-01-01'
+        periods = 12
+        freq = 'M'
+        random_seed = 42
+    
+>       forecast_df, ax = task_func(start_date, periods, freq, random_seed)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0942.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0942.py:6: in task_func
+    date_range = pd.date_range(start_date, periods=periods, freq=freq)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/datetimes.py:1442: in date_range
+    freq = to_offset(freq)
+           ^^^^^^^^^^^^^^^
+pandas/_libs/tslibs/offsets.pyx:6229: in pandas._libs.tslibs.offsets.to_offset
+    ???
+pandas/_libs/tslibs/offsets.pyx:6352: in pandas._libs.tslibs.offsets.to_offset
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   ValueError: Invalid frequency: M. Failed to parse with error message: ValueError("'M' is no longer supported for offsets. Please use 'ME' instead.")
+
+pandas/_libs/tslibs/offsets.pyx:6137: ValueError
+=========================== short test summary info ============================
+FAILED test_0942.py::test_task_func_output - AttributeError: 'Axes' object ha...
+FAILED test_0942.py::test_task_func_with_different_frequency - ValueError: In...
+2 failed in 3.48s

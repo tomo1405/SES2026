@@ -1,0 +1,200 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_get = <MagicMock name='get' id='137954182579744'>
+mock_response = <MagicMock name='get()' id='137954182199008'>
+
+    @patch('src_1014.requests.get')
+    def test_task_func(mock_get, mock_response):
+        mock_get.return_value = mock_response
+        base_url = "https://www.example.com"
+        url = "/test"
+        csv_file = StringIO()
+    
+>       result = task_func(url, base_url, csv_file)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1014.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = '/test', base_url = 'https://www.example.com'
+csv_file = <_io.StringIO object at 0x7d77f60f3040>
+
+    def task_func(
+        url: str,
+        base_url: str = "https://www.example.com",
+        csv_file: str = "scraped_data.csv",
+    ) -> int:
+        full_url = urljoin(base_url, url)
+        response = requests.get(full_url)
+        soup = BeautifulSoup(response.text, "html.parser")
+    
+        # Extract and convert all found links to absolute URLs
+        links = {urljoin(base_url, a["href"]) for a in soup.find_all("a", href=True)}
+    
+>       with open(csv_file, "w", newline="", encoding="utf-8") as csvfile:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: expected str, bytes or os.PathLike object, not StringIO
+
+../../../src/src_1014.py:17: TypeError
+___________________________ test_task_func_no_links ____________________________
+
+mock_get = <MagicMock name='get' id='137954182585072'>
+mock_response = <MagicMock name='get()' id='137954182585168'>
+
+    @patch('src_1014.requests.get')
+    def test_task_func_no_links(mock_get, mock_response):
+        mock_response.text = "<html><body>No links here</body></html>"
+        mock_get.return_value = mock_response
+        base_url = "https://www.example.com"
+        url = "/test"
+        csv_file = StringIO()
+    
+>       result = task_func(url, base_url, csv_file)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1014.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = '/test', base_url = 'https://www.example.com'
+csv_file = <_io.StringIO object at 0x7d77f60f3f40>
+
+    def task_func(
+        url: str,
+        base_url: str = "https://www.example.com",
+        csv_file: str = "scraped_data.csv",
+    ) -> int:
+        full_url = urljoin(base_url, url)
+        response = requests.get(full_url)
+        soup = BeautifulSoup(response.text, "html.parser")
+    
+        # Extract and convert all found links to absolute URLs
+        links = {urljoin(base_url, a["href"]) for a in soup.find_all("a", href=True)}
+    
+>       with open(csv_file, "w", newline="", encoding="utf-8") as csvfile:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: expected str, bytes or os.PathLike object, not StringIO
+
+../../../src/src_1014.py:17: TypeError
+_______________________ test_task_func_relative_base_url _______________________
+
+mock_get = <MagicMock name='get' id='137954175074624'>
+mock_response = <MagicMock name='get()' id='137954175074384'>
+
+    @patch('src_1014.requests.get')
+    def test_task_func_relative_base_url(mock_get, mock_response):
+        mock_get.return_value = mock_response
+        base_url = "/relative"
+        url = "/test"
+        csv_file = StringIO()
+    
+>       result = task_func(url, base_url, csv_file)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1014.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = '/test', base_url = '/relative'
+csv_file = <_io.StringIO object at 0x7d77f59ac340>
+
+    def task_func(
+        url: str,
+        base_url: str = "https://www.example.com",
+        csv_file: str = "scraped_data.csv",
+    ) -> int:
+        full_url = urljoin(base_url, url)
+        response = requests.get(full_url)
+        soup = BeautifulSoup(response.text, "html.parser")
+    
+        # Extract and convert all found links to absolute URLs
+        links = {urljoin(base_url, a["href"]) for a in soup.find_all("a", href=True)}
+    
+>       with open(csv_file, "w", newline="", encoding="utf-8") as csvfile:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: expected str, bytes or os.PathLike object, not StringIO
+
+../../../src/src_1014.py:17: TypeError
+__________________________ test_task_func_http_error ___________________________
+
+mock_get = <MagicMock name='get' id='137954175085088'>
+
+    @patch('src_1014.requests.get')
+    def test_task_func_http_error(mock_get):
+        mock_get.return_value.status_code = 404
+        base_url = "https://www.example.com"
+        url = "/test"
+        csv_file = StringIO()
+    
+        with pytest.raises(requests.exceptions.HTTPError):
+>           task_func(url, base_url, csv_file)
+
+test_1014.py:87: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1014.py:12: in task_func
+    soup = BeautifulSoup(response.text, "html.parser")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/bs4/__init__.py:465: in __init__
+    for (
+../../../.venv/lib/python3.12/site-packages/bs4/builder/_htmlparser.py:462: in prepare_markup
+    dammit = UnicodeDammit(
+../../../.venv/lib/python3.12/site-packages/bs4/dammit.py:820: in __init__
+    for encoding in self.detector.encodings:
+../../../.venv/lib/python3.12/site-packages/bs4/dammit.py:632: in encodings
+    self.declared_encoding = self.find_declared_encoding(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cls = <class 'bs4.dammit.EncodingDetector'>
+markup = <MagicMock name='get().text.read()' id='137954175280832'>
+is_html = True, search_entire_document = False
+
+    @classmethod
+    def find_declared_encoding(
+        cls,
+        markup: Union[bytes, str],
+        is_html: bool = False,
+        search_entire_document: bool = False,
+    ) -> Optional[_Encoding]:
+        """Given a document, tries to find an encoding declared within the
+        text of the document itself.
+    
+        An XML encoding is declared at the beginning of the document.
+    
+        An HTML encoding is declared in a <meta> tag, hopefully near the
+        beginning of the document.
+    
+        :param markup: Some markup.
+        :param is_html: If True, this markup is considered to be HTML. Otherwise
+            it's assumed to be XML.
+        :param search_entire_document: Since an encoding is supposed
+            to declared near the beginning of the document, most of
+            the time it's only necessary to search a few kilobytes of
+            data.  Set this to True to force this method to search the
+            entire document.
+        :return: The declared encoding, if one is found.
+        """
+        if search_entire_document:
+            xml_endpos = html_endpos = len(markup)
+        else:
+            xml_endpos = 1024
+            html_endpos = max(2048, int(len(markup) * 0.05))
+    
+        if isinstance(markup, bytes):
+            res = encoding_res[bytes]
+        else:
+            res = encoding_res[str]
+    
+        xml_re = res["xml"]
+        html_re = res["html"]
+        declared_encoding: Optional[_Encoding] = None
+>       declared_encoding_match = xml_re.search(markup, endpos=xml_endpos)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: expected string or bytes-like object, got 'MagicMock'
+
+../../../.venv/lib/python3.12/site-packages/bs4/dammit.py:731: TypeError
+=========================== short test summary info ============================
+FAILED test_1014.py::test_task_func - TypeError: expected str, bytes or os.Pa...
+FAILED test_1014.py::test_task_func_no_links - TypeError: expected str, bytes...
+FAILED test_1014.py::test_task_func_relative_base_url - TypeError: expected s...
+FAILED test_1014.py::test_task_func_http_error - TypeError: expected string o...
+4 failed in 1.27s

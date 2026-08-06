@@ -1,0 +1,37 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        directory = "/path/to/directory"
+        with patch("os.walk") as mock_walk, patch("pathlib.Path.open") as mock_open, patch("json.dump") as mock_json_dump:
+            mock_walk.return_value = [
+                ("/path/to/directory", ["dir1", "dir2"], ["file1.txt", "file2.txt"]),
+                ("/path/to/directory/dir1", [], ["file3.txt"]),
+                ("/path/to/directory/dir2", [], ["file4.txt", "file5.txt"])
+            ]
+            mock_open.return_value.__enter__.return_value = mock_open.return_value
+            mock_json_dump.return_value = None
+    
+>           result = task_func(directory)
+                     ^^^^^^^^^^^^^^^^^^^^
+
+test_1131.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = '/path/to/directory'
+
+    def task_func(directory: str) -> str:
+        hash_dict = {}
+    
+        for root, dirs, files in os.walk(directory):
+            for file in files:
+                file_path = Path(root) / file
+>               with open(file_path, 'rb') as f:
+                     ^^^^^^^^^^^^^^^^^^^^^
+E               FileNotFoundError: [Errno 2] No such file or directory: '/path/to/directory/file1.txt'
+
+../../../src/src_1131.py:11: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_1131.py::test_task_func - FileNotFoundError: [Errno 2] No such fi...
+1 failed in 0.51s

@@ -1,0 +1,127 @@
+FFFFFFFFF                                                                [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_empty_string __________________________
+
+    def test_task_func_empty_string():
+>       assert task_func("") == {}
+E       AssertionError: assert {'': 1} == {}
+E         
+E         Left contains 1 more item:
+E         {'': 1}
+E         Use -v to get more diff
+
+test_0733.py:10: AssertionError
+__________________________ test_task_func_single_word __________________________
+
+    def test_task_func_single_word():
+>       assert task_func("hello") == {'hello': 1}
+E       AssertionError: assert {'': 1} == {'hello': 1}
+E         
+E         Left contains 1 more item:
+E         {'': 1}
+E         Right contains 1 more item:
+E         {'hello': 1}
+E         Use -v to get more diff
+
+test_0733.py:13: AssertionError
+________________________ test_task_func_multiple_words _________________________
+
+    def test_task_func_multiple_words():
+>       assert task_func("hello world hello") == {'hello': 2, 'world': 1}
+E       AssertionError: assert {'hello': 1, 'world': 1} == {'hello': 2, 'world': 1}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'hello': 1} != {'hello': 2}
+E         Use -v to get more diff
+
+test_0733.py:16: AssertionError
+__________________________ test_task_func_punctuation __________________________
+
+    def test_task_func_punctuation():
+>       assert task_func("hello, world!") == {'hello': 1, 'world': 1}
+E       AssertionError: assert {'hello': 1, '': 1} == {'hello': 1, 'world': 1}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Left contains 1 more item:
+E         {'': 1}
+E         Right contains 1 more item:
+E         {'world': 1}
+E         Use -v to get more diff
+
+test_0733.py:19: AssertionError
+___________________________ test_task_func_stemming ____________________________
+
+    def test_task_func_stemming():
+>       assert task_func("running runs run") == {'run': 3}
+E       AssertionError: assert {'run': 2} == {'run': 3}
+E         
+E         Differing items:
+E         {'run': 2} != {'run': 3}
+E         Use -v to get more diff
+
+test_0733.py:22: AssertionError
+______________________ test_task_func_case_insensitivity _______________________
+
+    def test_task_func_case_insensitivity():
+>       assert task_func("Hello hello HELLO") == {'hello': 3}
+E       AssertionError: assert {'hello': 2} == {'hello': 3}
+E         
+E         Differing items:
+E         {'hello': 2} != {'hello': 3}
+E         Use -v to get more diff
+
+test_0733.py:25: AssertionError
+______________________ test_task_func_special_characters _______________________
+
+    def test_task_func_special_characters():
+>       assert task_func("$$$hello!!!") == {'hello': 1}
+E       AssertionError: assert {'': 1} == {'hello': 1}
+E         
+E         Left contains 1 more item:
+E         {'': 1}
+E         Right contains 1 more item:
+E         {'hello': 1}
+E         Use -v to get more diff
+
+test_0733.py:28: AssertionError
+__________________________ test_task_func_large_input __________________________
+
+    def test_task_func_large_input():
+        input_text = " ".join(["word"] * 1000)
+        expected_output = {'word': 1000}
+>       assert task_func(input_text) == expected_output
+E       AssertionError: assert {'word': 999} == {'word': 1000}
+E         
+E         Differing items:
+E         {'word': 999} != {'word': 1000}
+E         Use -v to get more diff
+
+test_0733.py:33: AssertionError
+_________________________ test_task_func_mixed_content _________________________
+
+    def test_task_func_mixed_content():
+        input_text = "Hello, world! This is a test. Testing, one, two, three."
+        expected_output = {'hello': 1, 'world': 1, 'this': 1, 'is': 1, 'a': 1, 'test': 2, 'testing': 1, 'one': 1, 'two': 1, 'three': 1}
+>       assert task_func(input_text) == expected_output
+E       AssertionError: assert {'hello': 1, ... 'is': 1, ...} == {'hello': 1, ... 'is': 1, ...}
+E         
+E         Omitting 7 identical items, use -vv to show
+E         Left contains 2 more items:
+E         {'': 1, 'thi': 1}
+E         Right contains 3 more items:
+E         {'testing': 1, 'this': 1, 'three': 1}
+E         Use -v to get more diff
+
+test_0733.py:38: AssertionError
+=========================== short test summary info ============================
+FAILED test_0733.py::test_task_func_empty_string - AssertionError: assert {''...
+FAILED test_0733.py::test_task_func_single_word - AssertionError: assert {'':...
+FAILED test_0733.py::test_task_func_multiple_words - AssertionError: assert {...
+FAILED test_0733.py::test_task_func_punctuation - AssertionError: assert {'he...
+FAILED test_0733.py::test_task_func_stemming - AssertionError: assert {'run':...
+FAILED test_0733.py::test_task_func_case_insensitivity - AssertionError: asse...
+FAILED test_0733.py::test_task_func_special_characters - AssertionError: asse...
+FAILED test_0733.py::test_task_func_large_input - AssertionError: assert {'wo...
+FAILED test_0733.py::test_task_func_mixed_content - AssertionError: assert {'...
+9 failed in 3.40s

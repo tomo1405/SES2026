@@ -1,0 +1,39 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        file_path = 'path/to/test/file.json'
+        key = 'column_to_drop'
+        expected_result = pd.DataFrame({
+            'column1': [1, 2, 3],
+            'column2': ['a', 'b', 'c']
+        })
+    
+        # Mock the open() function to read the JSON data
+        def mock_open(file, mode):
+            if file == file_path and mode == 'r':
+                return mock_file
+            else:
+                return mock_file_write
+    
+>       mock_file = mock_file_write = unittest.mock.mock_open()
+                                      ^^^^^^^^^^^^^
+
+test_0682.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'mock'
+
+    def __getattr__(name):
+        if name == 'IsolatedAsyncioTestCase':
+            global IsolatedAsyncioTestCase
+            from .async_case import IsolatedAsyncioTestCase
+            return IsolatedAsyncioTestCase
+>       raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+E       AttributeError: module 'unittest' has no attribute 'mock'
+
+/usr/lib/python3.12/unittest/__init__.py:85: AttributeError
+=========================== short test summary info ============================
+FAILED test_0682.py::test_task_func - AttributeError: module 'unittest' has n...
+1 failed in 1.35s

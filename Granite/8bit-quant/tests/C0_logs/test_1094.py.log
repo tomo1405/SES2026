@@ -1,0 +1,86 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        text_file = "example.txt"
+        with open(text_file, "w") as file:
+            file.write("{a: 1, b: 2}")
+            file.write("{c: {d: 3, e: 4}}")
+>       results = task_func(text_file)
+                  ^^^^^^^^^^^^^^^^^^^^
+
+test_1094.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1094.py:11: in task_func
+    results = [ast.literal_eval(match) for match in matches]
+               ^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/ast.py:112: in literal_eval
+    return _convert(node_or_string)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/ast.py:101: in _convert
+    return dict(zip(map(_convert, node.keys),
+/usr/lib/python3.12/ast.py:111: in _convert
+    return _convert_signed_num(node)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/ast.py:85: in _convert_signed_num
+    return _convert_num(node)
+           ^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/ast.py:76: in _convert_num
+    _raise_malformed_node(node)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+node = <ast.Name object at 0x74bab7aa4290>
+
+    def _raise_malformed_node(node):
+        msg = "malformed node or string"
+        if lno := getattr(node, 'lineno', None):
+            msg += f' on line {lno}'
+>       raise ValueError(msg + f': {node!r}')
+E       ValueError: malformed node or string on line 1: <ast.Name object at 0x74bab7aa4290>
+
+/usr/lib/python3.12/ast.py:73: ValueError
+___________________ test_task_func_with_nested_dictionaries ____________________
+
+    def test_task_func_with_nested_dictionaries():
+        text_file = "example.txt"
+        with open(text_file, "w") as file:
+            file.write("{a: {b: 1, c: 2}}")
+            file.write("{d: {e: {f: 3}, g: 4}}")
+>       results = task_func(text_file)
+                  ^^^^^^^^^^^^^^^^^^^^
+
+test_1094.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1094.py:11: in task_func
+    results = [ast.literal_eval(match) for match in matches]
+               ^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/ast.py:112: in literal_eval
+    return _convert(node_or_string)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/ast.py:101: in _convert
+    return dict(zip(map(_convert, node.keys),
+/usr/lib/python3.12/ast.py:111: in _convert
+    return _convert_signed_num(node)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/ast.py:85: in _convert_signed_num
+    return _convert_num(node)
+           ^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/ast.py:76: in _convert_num
+    _raise_malformed_node(node)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+node = <ast.Name object at 0x74bab78af550>
+
+    def _raise_malformed_node(node):
+        msg = "malformed node or string"
+        if lno := getattr(node, 'lineno', None):
+            msg += f' on line {lno}'
+>       raise ValueError(msg + f': {node!r}')
+E       ValueError: malformed node or string on line 1: <ast.Name object at 0x74bab78af550>
+
+/usr/lib/python3.12/ast.py:73: ValueError
+=========================== short test summary info ============================
+FAILED test_1094.py::test_task_func - ValueError: malformed node or string on...
+FAILED test_1094.py::test_task_func_with_nested_dictionaries - ValueError: ma...
+2 failed, 1 passed in 0.84s

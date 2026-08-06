@@ -1,0 +1,54 @@
+FF.F.F                                                                   [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_default_length _________________________
+
+    def test_task_func_default_length():
+        df, ax = task_func()
+        assert isinstance(df, pd.DataFrame)
+>       assert isinstance(ax, type(None))  # Assuming no return value is expected for the plot
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert False
+E        +  where False = isinstance(<Axes: >, <class 'NoneType'>)
+E        +    where <class 'NoneType'> = type(None)
+
+test_0574.py:9: AssertionError
+_________________________ test_task_func_custom_length _________________________
+
+    def test_task_func_custom_length():
+        length = 50
+        df, ax = task_func(length)
+        assert isinstance(df, pd.DataFrame)
+>       assert isinstance(ax, type(None))
+E       AssertionError: assert False
+E        +  where False = isinstance(<Axes: >, <class 'NoneType'>)
+E        +    where <class 'NoneType'> = type(None)
+
+test_0574.py:17: AssertionError
+__________________________ test_task_func_mean_values __________________________
+
+    def test_task_func_mean_values():
+        df, ax = task_func(10)
+        mean_array1 = np.mean(np.random.rand(10))
+        mean_array2 = np.mean(np.random.rand(10))
+>       assert abs(df.loc['Mean', 'Array1'] - mean_array1) < 0.1
+E       assert np.float64(0.10078298521506751) < 0.1
+E        +  where np.float64(0.10078298521506751) = abs((np.float64(0.5938540545046859) - np.float64(0.49307106928961836)))
+
+test_0574.py:32: AssertionError
+__________________________ test_task_func_std_values ___________________________
+
+    def test_task_func_std_values():
+        df, ax = task_func(10)
+        std_array1 = np.std(np.random.rand(10))
+        std_array2 = np.std(np.random.rand(10))
+>       assert abs(df.loc['Standard Deviation', 'Array1'] - std_array1) < 0.1
+E       assert np.float64(0.120393260625794) < 0.1
+E        +  where np.float64(0.120393260625794) = abs((np.float64(0.30134361695204787) - np.float64(0.18095035632625386)))
+
+test_0574.py:46: AssertionError
+=========================== short test summary info ============================
+FAILED test_0574.py::test_task_func_default_length - AssertionError: assert F...
+FAILED test_0574.py::test_task_func_custom_length - AssertionError: assert False
+FAILED test_0574.py::test_task_func_mean_values - assert np.float64(0.1007829...
+FAILED test_0574.py::test_task_func_std_values - assert np.float64(0.12039326...
+4 failed, 2 passed in 2.21s

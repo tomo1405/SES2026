@@ -1,0 +1,142 @@
+FF..FF                                                                   [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_valid_input ________________________
+
+    def test_task_func_with_valid_input():
+        input_data = """1 10 A1 100 Apple
+    2 20 B2 200 Banana
+    3 30 C3 300 Orange"""
+        expected_output = pd.DataFrame({
+            "ID": [1, 2, 3],
+            "Quantity": [10, 20, 30],
+            "Code": ["A1", "B2", "C3"],
+            "Price": [100, 200, 300],
+            "Product": ["Apple", "Banana", "Orange"],
+            "Description": [None, None, None]
+        })
+        result = task_func(input_data)
+>       pd.testing.assert_frame_equal(result, expected_output)
+E       AssertionError: Attributes of DataFrame.iloc[:, 0] (column name="ID") are different
+E       
+E       Attribute "dtype" are different
+E       [left]:  <StringDtype(na_value=nan)>
+E       [right]: int64
+
+test_0435.py:19: AssertionError
+___________________ test_task_func_with_missing_product_code ___________________
+
+    def test_task_func_with_missing_product_code():
+        input_data = """1 10 A1 100
+    2 20 B2 200 Banana
+    3 30 C3 300 Orange"""
+        expected_output = pd.DataFrame({
+            "ID": [1, 2, 3],
+            "Quantity": [10, 20, 30],
+            "Code": ["A1", "B2", "C3"],
+            "Price": [100, 200, 300],
+            "Product": ["Apple", "Banana", "Orange"],
+            "Description": [None, None, None]
+        })
+>       result = task_func(input_data, seed=42)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0435.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+s = '1 10 A1 100\n2 20 B2 200 Banana\n3 30 C3 300 Orange', seed = 42
+
+    def task_func(s: str, seed: int = 0) -> pd.DataFrame:
+    
+        if not s:
+            raise ValueError("Incomplete data provided.")
+    
+        random.seed(seed)
+    
+        products = ["Apple", "Banana", "Orange", "Pear", "Grape"]
+        code_to_product = dict()
+    
+        data_list = []
+        segments = [segment.strip() for segment in s.split("\n")]
+        for segment in segments:
+            if segment:
+                elements = re.split(r"\s+", segment.strip(), 4)
+                if len(elements) < 5:
+>                   raise ValueError("Incomplete data provided.")
+E                   ValueError: Incomplete data provided.
+
+../../../src/src_0435.py:20: ValueError
+________________ test_task_func_with_random_product_assignment _________________
+
+    def test_task_func_with_random_product_assignment():
+        input_data = """1 10 X1 100
+    2 20 Y2 200
+    3 30 Z3 300"""
+        expected_products = ["Apple", "Banana", "Orange", "Pear", "Grape"]
+>       result = task_func(input_data, seed=42)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0435.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+s = '1 10 X1 100\n2 20 Y2 200\n3 30 Z3 300', seed = 42
+
+    def task_func(s: str, seed: int = 0) -> pd.DataFrame:
+    
+        if not s:
+            raise ValueError("Incomplete data provided.")
+    
+        random.seed(seed)
+    
+        products = ["Apple", "Banana", "Orange", "Pear", "Grape"]
+        code_to_product = dict()
+    
+        data_list = []
+        segments = [segment.strip() for segment in s.split("\n")]
+        for segment in segments:
+            if segment:
+                elements = re.split(r"\s+", segment.strip(), 4)
+                if len(elements) < 5:
+>                   raise ValueError("Incomplete data provided.")
+E                   ValueError: Incomplete data provided.
+
+../../../src/src_0435.py:20: ValueError
+_________________ test_task_func_with_random_seed_consistency __________________
+
+    def test_task_func_with_random_seed_consistency():
+        input_data = """1 10 X1 100
+    2 20 Y2 200
+    3 30 Z3 300"""
+>       result1 = task_func(input_data, seed=42)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0435.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+s = '1 10 X1 100\n2 20 Y2 200\n3 30 Z3 300', seed = 42
+
+    def task_func(s: str, seed: int = 0) -> pd.DataFrame:
+    
+        if not s:
+            raise ValueError("Incomplete data provided.")
+    
+        random.seed(seed)
+    
+        products = ["Apple", "Banana", "Orange", "Pear", "Grape"]
+        code_to_product = dict()
+    
+        data_list = []
+        segments = [segment.strip() for segment in s.split("\n")]
+        for segment in segments:
+            if segment:
+                elements = re.split(r"\s+", segment.strip(), 4)
+                if len(elements) < 5:
+>                   raise ValueError("Incomplete data provided.")
+E                   ValueError: Incomplete data provided.
+
+../../../src/src_0435.py:20: ValueError
+=========================== short test summary info ============================
+FAILED test_0435.py::test_task_func_with_valid_input - AssertionError: Attrib...
+FAILED test_0435.py::test_task_func_with_missing_product_code - ValueError: I...
+FAILED test_0435.py::test_task_func_with_random_product_assignment - ValueErr...
+FAILED test_0435.py::test_task_func_with_random_seed_consistency - ValueError...
+4 failed, 2 passed in 1.39s

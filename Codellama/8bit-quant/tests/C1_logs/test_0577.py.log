@@ -1,0 +1,179 @@
+FFFFFFF                                                                  [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_empty_list ___________________________
+
+    def test_task_func_empty_list():
+>       assert task_func([]) == pd.Series()
+
+test_0577.py:6: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Series([], dtype: bool)
+
+    @final
+    def __bool__(self) -> NoReturn:
+>       raise ValueError(
+            f"The truth value of a {type(self).__name__} is ambiguous. "
+            "Use a.empty, a.bool(), a.item(), a.any() or a.all()."
+        )
+E       ValueError: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:1513: ValueError
+______________________ test_task_func_single_element_list ______________________
+
+    def test_task_func_single_element_list():
+>       assert task_func([1]) == pd.Series([1])
+               ^^^^^^^^^^^^^^
+
+test_0577.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+l = [1], n_groups = 5
+
+    def task_func(l, n_groups = 5):
+        if not l:
+            return pd.Series()
+    
+        # Shuffle list once
+        shuffle(l)
+        # Precompute random indices for each element to avoid calling randint excessively
+>       random_shifts = [(randint(1, max(1, len(x) - 1)), randint(1, max(1, len(x) - 1))) for x in l]
+                                            ^^^^^^
+E       TypeError: object of type 'int' has no len()
+
+../../../src/src_0577.py:10: TypeError
+_____________________ test_task_func_multiple_element_list _____________________
+
+    def test_task_func_multiple_element_list():
+        l = [1, 2, 3, 4, 5]
+        n_groups = 3
+        expected_result = pd.Series([1, 2, 3, 4, 5])
+>       assert task_func(l, n_groups) == expected_result
+               ^^^^^^^^^^^^^^^^^^^^^^
+
+test_0577.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+l = [3, 2, 4, 5, 1], n_groups = 3
+
+    def task_func(l, n_groups = 5):
+        if not l:
+            return pd.Series()
+    
+        # Shuffle list once
+        shuffle(l)
+        # Precompute random indices for each element to avoid calling randint excessively
+>       random_shifts = [(randint(1, max(1, len(x) - 1)), randint(1, max(1, len(x) - 1))) for x in l]
+                                            ^^^^^^
+E       TypeError: object of type 'int' has no len()
+
+../../../src/src_0577.py:10: TypeError
+_________________________ test_task_func_random_shifts _________________________
+
+    def test_task_func_random_shifts():
+        l = [1, 2, 3, 4, 5]
+        n_groups = 3
+        expected_result = pd.Series([1, 2, 3, 4, 5])
+>       assert task_func(l, n_groups) == expected_result
+               ^^^^^^^^^^^^^^^^^^^^^^
+
+test_0577.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+l = [4, 1, 5, 2, 3], n_groups = 3
+
+    def task_func(l, n_groups = 5):
+        if not l:
+            return pd.Series()
+    
+        # Shuffle list once
+        shuffle(l)
+        # Precompute random indices for each element to avoid calling randint excessively
+>       random_shifts = [(randint(1, max(1, len(x) - 1)), randint(1, max(1, len(x) - 1))) for x in l]
+                                            ^^^^^^
+E       TypeError: object of type 'int' has no len()
+
+../../../src/src_0577.py:10: TypeError
+_________________ test_task_func_random_shifts_with_empty_list _________________
+
+    def test_task_func_random_shifts_with_empty_list():
+        l = []
+        n_groups = 3
+        expected_result = pd.Series()
+>       assert task_func(l, n_groups) == expected_result
+
+test_0577.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Series([], dtype: bool)
+
+    @final
+    def __bool__(self) -> NoReturn:
+>       raise ValueError(
+            f"The truth value of a {type(self).__name__} is ambiguous. "
+            "Use a.empty, a.bool(), a.item(), a.any() or a.all()."
+        )
+E       ValueError: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:1513: ValueError
+____________ test_task_func_random_shifts_with_single_element_list _____________
+
+    def test_task_func_random_shifts_with_single_element_list():
+        l = [1]
+        n_groups = 3
+        expected_result = pd.Series([1])
+>       assert task_func(l, n_groups) == expected_result
+               ^^^^^^^^^^^^^^^^^^^^^^
+
+test_0577.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+l = [1], n_groups = 3
+
+    def task_func(l, n_groups = 5):
+        if not l:
+            return pd.Series()
+    
+        # Shuffle list once
+        shuffle(l)
+        # Precompute random indices for each element to avoid calling randint excessively
+>       random_shifts = [(randint(1, max(1, len(x) - 1)), randint(1, max(1, len(x) - 1))) for x in l]
+                                            ^^^^^^
+E       TypeError: object of type 'int' has no len()
+
+../../../src/src_0577.py:10: TypeError
+___________ test_task_func_random_shifts_with_multiple_element_list ____________
+
+    def test_task_func_random_shifts_with_multiple_element_list():
+        l = [1, 2, 3, 4, 5]
+        n_groups = 3
+        expected_result = pd.Series([1, 2, 3, 4, 5])
+>       assert task_func(l, n_groups) == expected_result
+               ^^^^^^^^^^^^^^^^^^^^^^
+
+test_0577.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+l = [2, 1, 5, 4, 3], n_groups = 3
+
+    def task_func(l, n_groups = 5):
+        if not l:
+            return pd.Series()
+    
+        # Shuffle list once
+        shuffle(l)
+        # Precompute random indices for each element to avoid calling randint excessively
+>       random_shifts = [(randint(1, max(1, len(x) - 1)), randint(1, max(1, len(x) - 1))) for x in l]
+                                            ^^^^^^
+E       TypeError: object of type 'int' has no len()
+
+../../../src/src_0577.py:10: TypeError
+=========================== short test summary info ============================
+FAILED test_0577.py::test_task_func_empty_list - ValueError: The truth value ...
+FAILED test_0577.py::test_task_func_single_element_list - TypeError: object o...
+FAILED test_0577.py::test_task_func_multiple_element_list - TypeError: object...
+FAILED test_0577.py::test_task_func_random_shifts - TypeError: object of type...
+FAILED test_0577.py::test_task_func_random_shifts_with_empty_list - ValueErro...
+FAILED test_0577.py::test_task_func_random_shifts_with_single_element_list - ...
+FAILED test_0577.py::test_task_func_random_shifts_with_multiple_element_list
+7 failed in 1.31s

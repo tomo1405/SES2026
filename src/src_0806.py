@@ -1,0 +1,8 @@
+import pandas as pd
+import random
+def task_func(dictionary, item, seed):
+    random.seed(seed)
+    random_int = random.randint(0, 9)
+    df = pd.DataFrame(dictionary)
+    positions = [(index, col) for col in df for index, val in enumerate(df[col]) if val == item]
+    return positions, len(positions) + random_int , df

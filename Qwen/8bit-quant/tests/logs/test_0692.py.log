@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a sample DataFrame
+        data = {
+            'feature1': [1.0, 2.0, 3.0, 4.0],
+            'feature2': [5.0, 6.0, 7.0, 8.0]
+        }
+        df = pd.DataFrame(data)
+    
+        # Call the function
+        labels = task_func(df)
+    
+        # Check that the output is a numpy array
+        assert isinstance(labels, np.ndarray), "The output should be a numpy array"
+    
+        # Check that the length of the labels matches the number of rows in the input DataFrame
+        assert len(labels) == df.shape[0], "The number of labels should match the number of rows in the input DataFrame"
+    
+        # Check that the labels are integers
+>       assert all(isinstance(label, int) for label in labels), "All labels should be integers"
+E       AssertionError: All labels should be integers
+E       assert False
+E        +  where False = all(<generator object test_task_func.<locals>.<genexpr> at 0x750ea48be960>)
+
+test_0692.py:24: AssertionError
+=========================== short test summary info ============================
+FAILED test_0692.py::test_task_func - AssertionError: All labels should be in...
+1 failed in 3.45s

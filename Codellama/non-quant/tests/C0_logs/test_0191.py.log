@@ -1,0 +1,46 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_with_stringio _________________________
+
+    def test_task_func_with_stringio():
+        csv_input = StringIO('col1,col2,col3\n1,2,3\n4,5,6')
+        dataframe = task_func(csv_input)
+        assert isinstance(dataframe, pd.DataFrame)
+        assert dataframe.shape == (2, 3)
+        assert dataframe.columns.tolist() == ['col1', 'col2', 'col3']
+>       assert dataframe.iloc[0].tolist() == [1, 2, 3]
+E       AssertionError: assert ['1', '2', '3'] == [1, 2, 3]
+E         
+E         At index 0 diff: '1' != 1
+E         Use -v to get more diff
+
+test_0191.py:13: AssertionError
+________________________ test_task_func_with_file_path _________________________
+
+    def test_task_func_with_file_path():
+        csv_input = 'test_data.csv'
+>       dataframe = task_func(csv_input)
+                    ^^^^^^^^^^^^^^^^^^^^
+
+test_0191.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0191.py:20: in task_func
+    cols = dr.fieldnames
+           ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <csv.DictReader object at 0x7a4c4e363050>
+
+    @property
+    def fieldnames(self):
+        if self._fieldnames is None:
+            try:
+>               self._fieldnames = next(self.reader)
+                                   ^^^^^^^^^^^^^^^^^
+E               ValueError: I/O operation on closed file.
+
+/usr/lib/python3.12/csv.py:102: ValueError
+=========================== short test summary info ============================
+FAILED test_0191.py::test_task_func_with_stringio - AssertionError: assert ['...
+FAILED test_0191.py::test_task_func_with_file_path - ValueError: I/O operatio...
+2 failed in 1.10s

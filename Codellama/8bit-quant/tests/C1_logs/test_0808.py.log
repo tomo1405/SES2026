@@ -1,0 +1,68 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_no_outliers __________________________
+
+    def test_task_func_no_outliers():
+        data = np.array([1, 2, 3, 4, 5])
+        outliers, mean, std_dev = task_func(data)
+        assert outliers == []
+        assert mean == 3
+>       assert std_dev == 1
+E       assert np.float64(2.0000000000000004) == 1
+
+test_0808.py:10: AssertionError
+_________________________ test_task_func_with_outliers _________________________
+
+    def test_task_func_with_outliers():
+        data = np.array([1, 2, 3, 4, 5, 100])
+        outliers, mean, std_dev = task_func(data)
+        assert outliers == [5]
+>       assert mean == 3
+E       assert np.float64(19.166666666666668) == 3
+
+test_0808.py:16: AssertionError
+____________________ test_task_func_with_multiple_outliers _____________________
+
+    def test_task_func_with_multiple_outliers():
+        data = np.array([1, 2, 3, 4, 5, 100, 200, 300])
+        outliers, mean, std_dev = task_func(data)
+>       assert outliers == [5, 6, 7]
+E       assert [np.int64(7)] == [5, 6, 7]
+E         
+E         At index 0 diff: np.int64(7) != 5
+E         Right contains 2 more items, first extra item: 6
+E         Use -v to get more diff
+
+test_0808.py:22: AssertionError
+________________________ test_task_func_with_threshold _________________________
+
+    def test_task_func_with_threshold():
+        data = np.array([1, 2, 3, 4, 5, 100, 200, 300])
+        outliers, mean, std_dev = task_func(data, threshold=3.0)
+>       assert outliers == [5, 6, 7]
+E       assert [] == [5, 6, 7]
+E         
+E         Right contains 3 more items, first extra item: 5
+E         Use -v to get more diff
+
+test_0808.py:29: AssertionError
+__________________ test_task_func_with_threshold_and_outliers __________________
+
+    def test_task_func_with_threshold_and_outliers():
+        data = np.array([1, 2, 3, 4, 5, 100, 200, 300])
+        outliers, mean, std_dev = task_func(data, threshold=2.0)
+>       assert outliers == [5, 6, 7]
+E       assert [np.int64(7)] == [5, 6, 7]
+E         
+E         At index 0 diff: np.int64(7) != 5
+E         Right contains 2 more items, first extra item: 6
+E         Use -v to get more diff
+
+test_0808.py:36: AssertionError
+=========================== short test summary info ============================
+FAILED test_0808.py::test_task_func_no_outliers - assert np.float64(2.0000000...
+FAILED test_0808.py::test_task_func_with_outliers - assert np.float64(19.1666...
+FAILED test_0808.py::test_task_func_with_multiple_outliers - assert [np.int64...
+FAILED test_0808.py::test_task_func_with_threshold - assert [] == [5, 6, 7]
+FAILED test_0808.py::test_task_func_with_threshold_and_outliers - assert [np....
+5 failed in 1.89s

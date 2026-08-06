@@ -1,0 +1,29 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        length = 10
+        range_limit = 50
+        seed = 42
+    
+        axes, random_numbers = task_func(length, range_limit, seed)
+    
+        # Check that the random numbers are within the specified range and sorted
+        assert all(1 <= num <= range_limit for num in random_numbers), "Random numbers are out of range"
+        assert random_numbers == sorted(random_numbers), "Random numbers are not sorted"
+    
+        # Check that the plot is created correctly
+        assert isinstance(axes, plt.Axes), "The returned object is not a matplotlib Axes instance"
+    
+        # Check that the plot contains the correct number of bars
+        bars = axes.patches
+>       assert len(bars) == range_limit, "The number of bars in the histogram does not match the range limit"
+E       AssertionError: The number of bars in the histogram does not match the range limit
+E       assert 5 == 50
+E        +  where 5 = len(<Axes.ArtistList of 5 patches>)
+
+test_0197.py:22: AssertionError
+=========================== short test summary info ============================
+FAILED test_0197.py::test_task_func - AssertionError: The number of bars in t...
+1 failed in 3.65s

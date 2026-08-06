@@ -1,0 +1,23 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with valid inputs
+        goals = 10
+        penalties = 5
+        rng_seed = 1234
+        results_df = task_func(goals, penalties, rng_seed)
+        assert results_df.shape == (5, 2)
+        assert results_df.columns.tolist() == ['Team', 'Match Result']
+        assert results_df['Team'].tolist() == ['Team A', 'Team B', 'Team C', 'Team D', 'Team E']
+>       assert results_df['Match Result'].tolist() == ['(10 goals, $5000)', '(10 goals, $5000)', '(10 goals, $5000)', '(10 goals, $5000)', '(10 goals, $5000)']
+E       AssertionError: assert ['(7 goals, $...1 goals, $0)'] == ['(10 goals, ...oals, $5000)']
+E         
+E         At index 0 diff: '(7 goals, $0)' != '(10 goals, $5000)'
+E         Use -v to get more diff
+
+test_0616.py:13: AssertionError
+=========================== short test summary info ============================
+FAILED test_0616.py::test_task_func - AssertionError: assert ['(7 goals, $......
+1 failed in 1.21s

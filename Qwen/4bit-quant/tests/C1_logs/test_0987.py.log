@@ -1,0 +1,40 @@
+....FF                                                                   [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_non_numeric_data ________________________
+
+    def test_task_func_non_numeric_data():
+        json_data = '{"data": "a,b,c,d,e"}'
+        key_path = ["data"]
+        with pytest.raises(ValueError) as excinfo:
+            task_func(json_data, key_path)
+>       assert "could not convert string to float" in str(excinfo.value)
+E       AssertionError: assert 'could not convert string to float' in 'Value error occurred: string or file could not be read to its end due to unmatched data'
+E        +  where 'Value error occurred: string or file could not be read to its end due to unmatched data' = str(ValueError('Value error occurred: string or file could not be read to its end due to unmatched data'))
+E        +    where ValueError('Value error occurred: string or file could not be read to its end due to unmatched data') = <ExceptionInfo ValueError('Value error occurred: string or file could not be read to its end due to unmatched data') tblen=2>.value
+
+test_0987.py:42: AssertionError
+________________________ test_task_func_correct_values _________________________
+
+    def test_task_func_correct_values():
+        json_data = '{"data": "1,2,3,4,5"}'
+        key_path = ["data"]
+        fig = task_func(json_data, key_path)
+        expected_values = np.array([1, 2, 3, 4, 5])
+        df = pd.read_csv(io.StringIO(json_data.split('"')[1]), header=None, names=["Values"])
+>       assert np.array_equal(df["Values"], expected_values)
+E       assert False
+E        +  where False = <function array_equal at 0x75bd82f01bf0>(0    data\nName: Values, dtype: str, array([1, 2, 3, 4, 5]))
+E        +    where <function array_equal at 0x75bd82f01bf0> = np.array_equal
+
+test_0987.py:50: AssertionError
+=============================== warnings summary ===============================
+Qwen/4bit-quant/tests/test_0987.py::test_task_func_valid_json
+Qwen/4bit-quant/tests/test_0987.py::test_task_func_correct_values
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/categorical.py:700: MatplotlibDeprecationWarning: vert: bool was deprecated in Matplotlib 3.11 and will be removed in 3.13. Use orientation: {'vertical', 'horizontal'} instead.
+    artists = ax.bxp(**boxplot_kws)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0987.py::test_task_func_non_numeric_data - AssertionError: assert...
+FAILED test_0987.py::test_task_func_correct_values - assert False
+2 failed, 4 passed, 2 warnings in 3.81s

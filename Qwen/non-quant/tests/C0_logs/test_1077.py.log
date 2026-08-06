@@ -1,0 +1,22 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a single time string
+        time_strings = ["01/01/22 12:00:00.000000"]
+        target_tz = "America/New_York"
+        result_df = task_func(time_strings, target_tz)
+        expected_data = [
+            ["01/01/22 12:00:00.000000", "31/12/21 19:00:00.000000"]  # Example conversion
+        ]
+        expected_df = pd.DataFrame(expected_data, columns=["Original Time", "Converted Time"])
+>       assert result_df.equals(expected_df)
+E       assert False
+E        +  where False = equals(              Original Time            Converted Time\n0  01/01/22 12:00:00.000000  31/12/21 19:00:00.000000)
+E        +    where equals =               Original Time            Converted Time\n0  01/01/22 12:00:00.000000  01/01/22 07:00:00.000000.equals
+
+test_1077.py:16: AssertionError
+=========================== short test summary info ============================
+FAILED test_1077.py::test_task_func - assert False
+1 failed in 2.46s

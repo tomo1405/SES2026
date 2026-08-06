@@ -1,0 +1,53 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        l1 = [1, 2, 3, 4, 5]
+        l2 = [2, 3, 4, 5, 6]
+        N = 3
+    
+        largest_diff_indices = heapq.nlargest(N, range(len(l1)), key=lambda i: abs(l1[i] - l2[i]))
+        largest_diffs = [math.sqrt((l1[i] - l2[i])**2) for i in largest_diff_indices]
+    
+        ax = task_func(l1, l2, N)
+    
+        assert ax is not None
+>       assert ax.get_lines() == [largest_diffs]
+E       assert <a list of 1 Line2D objects> == [[1.0, 1.0, 1.0]]
+E         
+E         At index 0 diff: <matplotlib.lines.Line2D object at 0x7e1c7c495490> != [1.0, 1.0, 1.0]
+E         Use -v to get more diff
+
+test_0198.py:19: AssertionError
+________________________ test_task_func_with_default_N _________________________
+
+    def test_task_func_with_default_N():
+        l1 = [1, 2, 3, 4, 5]
+        l2 = [2, 3, 4, 5, 6]
+    
+        largest_diff_indices = heapq.nlargest(10, range(len(l1)), key=lambda i: abs(l1[i] - l2[i]))
+        largest_diffs = [math.sqrt((l1[i] - l2[i])**2) for i in largest_diff_indices]
+    
+        ax = task_func(l1, l2)
+    
+        assert ax is not None
+>       assert ax.get_lines() == [largest_diffs]
+E       assert <a list of 1 Line2D objects> == [[1.0, 1.0, 1.0, 1.0, 1.0]]
+E         
+E         At index 0 diff: <matplotlib.lines.Line2D object at 0x7e1c7c502f90> != [1.0, 1.0, 1.0, 1.0, 1.0]
+E         Use -v to get more diff
+
+test_0198.py:31: AssertionError
+______________________ test_task_func_with_invalid_input _______________________
+
+    def test_task_func_with_invalid_input():
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0198.py:34: Failed
+=========================== short test summary info ============================
+FAILED test_0198.py::test_task_func - assert <a list of 1 Line2D objects> == ...
+FAILED test_0198.py::test_task_func_with_default_N - assert <a list of 1 Line...
+FAILED test_0198.py::test_task_func_with_invalid_input - Failed: DID NOT RAIS...
+3 failed in 1.59s

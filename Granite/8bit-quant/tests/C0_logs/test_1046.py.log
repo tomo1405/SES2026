@@ -1,0 +1,39 @@
+FF.F                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        given_date_str = "2022-01-01"
+        given_date = parse(given_date_str)
+        current_date = datetime.now()
+        total_seconds = (current_date - given_date).total_seconds()
+>       leap_seconds = np.sum(LEAP_SECONDS >= given_date.year)
+                              ^^^^^^^^^^^^
+E       NameError: name 'LEAP_SECONDS' is not defined
+
+test_1046.py:14: NameError
+_______________________ test_task_func_with_leap_seconds _______________________
+
+    def test_task_func_with_leap_seconds():
+        given_date_str = "2022-06-30"
+        given_date = parse(given_date_str)
+        current_date = datetime.now()
+        total_seconds = (current_date - given_date).total_seconds()
+>       leap_seconds = np.sum(LEAP_SECONDS >= given_date.year)
+                              ^^^^^^^^^^^^
+E       NameError: name 'LEAP_SECONDS' is not defined
+
+test_1046.py:25: NameError
+_______________________ test_task_func_with_future_date ________________________
+
+    def test_task_func_with_future_date():
+        given_date_str = "2023-01-01"
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_1046.py:42: Failed
+=========================== short test summary info ============================
+FAILED test_1046.py::test_task_func - NameError: name 'LEAP_SECONDS' is not d...
+FAILED test_1046.py::test_task_func_with_leap_seconds - NameError: name 'LEAP...
+FAILED test_1046.py::test_task_func_with_future_date - Failed: DID NOT RAISE ...
+3 failed, 1 passed in 0.73s

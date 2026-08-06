@@ -1,0 +1,46 @@
+F....F                                                                   [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_numeric_data _______________________
+
+    def test_task_func_with_numeric_data():
+        data = {
+            'A': [1, 2, 3],
+            'B': [4, 5, 6]
+        }
+        df = pd.DataFrame(data)
+        result = task_func(df)
+        assert isinstance(result, pd.DataFrame)
+>       assert result.equals(pd.DataFrame({
+            'A': [0.0, 0.5, 1.0],
+            'B': [0.0, 0.5, 1.0]
+        }))
+E       AssertionError: assert False
+E        +  where False = equals(     A    B\n0  0.0  0.0\n1  0.5  0.5\n2  1.0  1.0)
+E        +    where equals =      A         B\n0  0.0  0.000000\n1  0.4  0.454545\n2  1.0  1.000000.equals
+E        +    and        A    B\n0  0.0  0.0\n1  0.5  0.5\n2  1.0  1.0 = <class 'pandas.DataFrame'>({'A': [0.0, 0.5, 1.0], 'B': [0.0, 0.5, 1.0]})
+E        +      where <class 'pandas.DataFrame'> = pd.DataFrame
+
+test_0970.py:14: AssertionError
+______________________ test_task_func_with_single_column _______________________
+
+    def test_task_func_with_single_column():
+        data = {
+            'A': [1, 2, 3]
+        }
+        df = pd.DataFrame(data)
+        result = task_func(df)
+        assert isinstance(result, pd.DataFrame)
+>       assert result.equals(pd.DataFrame({
+            'A': [0.0, 0.5, 1.0]
+        }))
+E       AssertionError: assert False
+E        +  where False = equals(     A\n0  0.0\n1  0.5\n2  1.0)
+E        +    where equals =      A\n0  0.0\n1  0.4\n2  1.0.equals
+E        +    and        A\n0  0.0\n1  0.5\n2  1.0 = <class 'pandas.DataFrame'>({'A': [0.0, 0.5, 1.0]})
+E        +      where <class 'pandas.DataFrame'> = pd.DataFrame
+
+test_0970.py:62: AssertionError
+=========================== short test summary info ============================
+FAILED test_0970.py::test_task_func_with_numeric_data - AssertionError: asser...
+FAILED test_0970.py::test_task_func_with_single_column - AssertionError: asse...
+2 failed, 4 passed in 3.11s

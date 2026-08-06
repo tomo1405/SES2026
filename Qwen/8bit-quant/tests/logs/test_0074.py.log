@@ -1,0 +1,46 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_db_file = None
+
+    def test_task_func(mock_db_file):
+        db_file = "mock_db.db"
+>       df, ax = task_func(db_file)
+                 ^^^^^^^^^^^^^^^^^^
+
+test_0074.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0074.py:8: in task_func
+    df = pd.read_sql_query("SELECT * FROM EmailData", conn)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:497: in read_sql_query
+    return pandas_sql.read_query(
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:2766: in read_query
+    cursor = self.execute(sql, params)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.io.sql.SQLiteDatabase object at 0x7dc999bbc6b0>
+sql = 'SELECT * FROM EmailData', params = None
+
+    def execute(self, sql: str | Select | TextClause, params=None):
+        from sqlite3 import Error
+    
+        if not isinstance(sql, str):
+            raise TypeError("Query must be a string unless using sqlalchemy.")
+        args = [] if params is None else [params]
+>       cur = self.con.cursor()
+              ^^^^^^^^^^^^^^^^^
+E       TypeError: 'MockCursor' object is not callable
+
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:2700: TypeError
+=============================== warnings summary ===============================
+Qwen/8bit-quant/tests/test_0074.py::test_task_func
+  /work/tomohiro-w/utg/src/src_0074.py:8: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+    df = pd.read_sql_query("SELECT * FROM EmailData", conn)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0074.py::test_task_func - TypeError: 'MockCursor' object is not c...
+1 failed, 1 warning in 2.17s

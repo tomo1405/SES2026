@@ -1,0 +1,50 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        json_file = 'test_data.json'
+        data = {
+            "key1": "SGVsbG8gV29ybGQ=",
+            "key2": "QSBjb3VudCBpbiBiYXNlNjQgY29kZS4gQSBzZWN1cmUgdmFsdWUu",
+            "key3": "SGVsbG8gV29ybGQ="
+        }
+    
+        with open(json_file, 'w') as f:
+            json.dump(data, f)
+    
+        decoded_data = task_func(json_file)
+    
+>       assert decoded_data == {
+            "key1": "Hello World",
+            "key2": "A customer in base64 code. A secret value.",
+            "key3": "Hello World"
+        }
+E       AssertionError: assert {'key1': 'Hel...'Hello World'} == {'key1': 'Hel...'Hello World'}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Differing items:
+E         {'key2': 'A count in base64 code. A secure value.'} != {'key2': 'A customer in base64 code. A secret value.'}
+E         Use -v to get more diff
+
+test_0413.py:20: AssertionError
+_________________________ test_task_func_invalid_json __________________________
+
+    def test_task_func_invalid_json():
+        json_file = 'invalid_json.json'
+        with open(json_file, 'w') as f:
+            f.write("Invalid JSON data")
+    
+        with pytest.raises(ValueError) as excinfo:
+            task_func(json_file)
+    
+>       assert "Invalid JSON" in str(excinfo.value)
+E       AssertionError: assert 'Invalid JSON' in 'Expecting value: line 1 column 1 (char 0)'
+E        +  where 'Expecting value: line 1 column 1 (char 0)' = str(JSONDecodeError('Expecting value: line 1 column 1 (char 0)'))
+E        +    where JSONDecodeError('Expecting value: line 1 column 1 (char 0)') = <ExceptionInfo JSONDecodeError('Expecting value: line 1 column 1 (char 0)') tblen=6>.value
+
+test_0413.py:34: AssertionError
+=========================== short test summary info ============================
+FAILED test_0413.py::test_task_func - AssertionError: assert {'key1': 'Hel......
+FAILED test_0413.py::test_task_func_invalid_json - AssertionError: assert 'In...
+2 failed in 0.45s

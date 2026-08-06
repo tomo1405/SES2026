@@ -1,0 +1,22 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        db_file = 'test.db'
+        query = 'SELECT * FROM table'
+        expected_output = pd.DataFrame({'col1': [1, 2, 3], 'col2': ['a', 'b', 'c']})
+    
+        with sqlite3.connect(db_file) as conn:
+>           conn.execute('''
+                CREATE TABLE table (
+                    col1 INTEGER,
+                    col2 TEXT
+                )
+            ''')
+E           sqlite3.OperationalError: near "table": syntax error
+
+test_0409.py:12: OperationalError
+=========================== short test summary info ============================
+FAILED test_0409.py::test_task_func - sqlite3.OperationalError: near "table":...
+1 failed in 1.10s

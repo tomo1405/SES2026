@@ -1,0 +1,32 @@
+..F.F                                                                    [100%]
+=================================== FAILURES ===================================
+____________________ test_task_func_with_negative_intervals ____________________
+
+    def test_task_func_with_negative_intervals():
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0214.py:21: Failed
+____________________ test_task_func_with_keyboard_interrupt ____________________
+
+    def test_task_func_with_keyboard_interrupt():
+        def mock_sleep(seconds):
+            raise KeyboardInterrupt
+    
+        with pytest.raises(KeyboardInterrupt):
+>           with pytest.monkeypatch.context() as mp:
+                 ^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'pytest' has no attribute 'monkeypatch'. Did you mean: 'MonkeyPatch'?
+
+test_0214.py:36: AttributeError
+=============================== warnings summary ===============================
+Qwen/4bit-quant/tests/test_0214.py::test_task_func_with_zero_intervals
+Qwen/4bit-quant/tests/test_0214.py::test_task_func_with_negative_intervals
+  /work/tomohiro-w/utg/src/src_0214.py:18: SmallSampleWarning: One or more sample arguments is too small; all returned values will be NaN. See documentation for sample size requirements.
+    kurtosis_value = kurtosis(numbers, nan_policy='omit')
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0214.py::test_task_func_with_negative_intervals - Failed: DID NOT...
+FAILED test_0214.py::test_task_func_with_keyboard_interrupt - AttributeError:...
+2 failed, 3 passed, 2 warnings in 17.66s

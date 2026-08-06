@@ -1,0 +1,44 @@
+..FFF.                                                                   [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_value_replacement _______________________
+
+    def test_task_func_value_replacement():
+        df = create_mock_df()
+        dict_mapping = {'feature1': {1: 0}}
+        result_df, _ = task_func(df, dict_mapping)
+>       assert result_df['feature1'].equals(pd.Series([0, 2, 3]))
+E       AssertionError: assert False
+E        +  where False = equals(0    0\n1    2\n2    3\ndtype: int64)
+E        +    where equals = 0   -1.336306\n1    0.267261\n2    1.069045\nName: feature1, dtype: float64.equals
+E        +    and   0    0\n1    2\n2    3\ndtype: int64 = <class 'pandas.Series'>([0, 2, 3])
+E        +      where <class 'pandas.Series'> = pd.Series
+
+test_0219.py:36: AssertionError
+____________________ test_task_func_feature_standardization ____________________
+
+    def test_task_func_feature_standardization():
+        df = create_mock_df()
+        dict_mapping = {}
+        result_df, _ = task_func(df, dict_mapping)
+>       assert np.allclose(result_df[FEATURES].mean(), 0, atol=1e-7)
+                                     ^^^^^^^^
+E       NameError: name 'FEATURES' is not defined
+
+test_0219.py:42: NameError
+________________________ test_task_func_plot_histogram _________________________
+
+    def test_task_func_plot_histogram():
+        df = create_mock_df()
+        dict_mapping = {}
+        result_df, ax = task_func(df, dict_mapping, plot_histogram=True)
+>       assert isinstance(ax, pd.Series)
+E       AssertionError: assert False
+E        +  where False = isinstance(<Axes: ylabel='Frequency'>, <class 'pandas.Series'>)
+E        +    where <class 'pandas.Series'> = pd.Series
+
+test_0219.py:49: AssertionError
+=========================== short test summary info ============================
+FAILED test_0219.py::test_task_func_value_replacement - AssertionError: asser...
+FAILED test_0219.py::test_task_func_feature_standardization - NameError: name...
+FAILED test_0219.py::test_task_func_plot_histogram - AssertionError: assert F...
+3 failed, 3 passed in 3.75s

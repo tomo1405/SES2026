@@ -1,0 +1,43 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a simple hex string
+        hex_string = "48656c6c6f20576f726c64"
+        expected_output = {
+            "hex": "48656c6c6f20576f726c64",
+            "base64": "SGVsbG8gV29ybGQ=",
+            "utf-8": "Hello World",
+            "utf-16": "Hello World",
+            "utf-32": "Hello World",
+            "ASCII": "Hello World",
+            "URL": "Hello%20World",
+            "ROT13": "Uryyb Jbeyq"
+        }
+        assert task_func(hex_string) == expected_output
+    
+        # Test with a hex string that includes non-ASCII characters
+        hex_string_with_non_ascii = "c3a9206c612074657374"
+        expected_output_non_ascii = {
+            "hex": "c3a9206c612074657374",
+            "base64": "w6kgbGEgdGVzdA==",
+            "utf-8": "é la test",
+            "utf-16": "é la test",
+            "utf-32": "é la test",
+            "ASCII": "Not representable in ASCII",
+            "URL": "%C3%A9%20la%20test",
+            "ROT13": "rq ol gbeq"
+        }
+>       assert task_func(hex_string_with_non_ascii) == expected_output_non_ascii
+E       AssertionError: assert {'hex': 'c3a9...la test', ...} == {'hex': 'c3a9...la test', ...}
+E         
+E         Omitting 7 identical items, use -vv to show
+E         Differing items:
+E         {'ROT13': 'é yn grfg'} != {'ROT13': 'rq ol gbeq'}
+E         Use -v to get more diff
+
+test_0991.py:31: AssertionError
+=========================== short test summary info ============================
+FAILED test_0991.py::test_task_func - AssertionError: assert {'hex': 'c3a9......
+1 failed in 0.47s

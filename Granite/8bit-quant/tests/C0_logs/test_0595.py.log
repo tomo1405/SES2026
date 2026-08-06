@@ -1,0 +1,49 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        hours = 5
+        file_path = os.path.join(OUTPUT_DIR, 'weather_data.csv')
+        backup_path = os.path.join(OUTPUT_DIR, 'backup/')
+    
+        with patch('csv.writer') as mock_writer, patch('os.makedirs') as mock_makedirs, patch('shutil.copy') as mock_copy:
+            task_func(hours)
+    
+        mock_writer.assert_called()
+>       mock_makedirs.assert_called_with(backup_path, exist_ok=True)
+
+test_0595.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='makedirs' id='126979435683264'>
+args = ('./output/backup/',), kwargs = {'exist_ok': True}
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\n  Actual: %s'
+                    % (expected, actual))
+            raise AssertionError(error_message)
+    
+        def _error_message():
+            msg = self._format_mock_failure_message(args, kwargs)
+            return msg
+        expected = self._call_matcher(_Call((args, kwargs), two=True))
+        actual = self._call_matcher(self.call_args)
+        if actual != expected:
+            cause = expected if isinstance(expected, Exception) else None
+>           raise AssertionError(_error_message()) from cause
+E           AssertionError: expected call not found.
+E           Expected: makedirs('./output/backup/', exist_ok=True)
+E             Actual: makedirs('./output/backup/')
+
+/usr/lib/python3.12/unittest/mock.py:944: AssertionError
+=========================== short test summary info ============================
+FAILED test_0595.py::test_task_func - AssertionError: expected call not found.
+1 failed in 0.49s

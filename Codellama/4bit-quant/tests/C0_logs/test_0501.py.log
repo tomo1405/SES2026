@@ -1,0 +1,26 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        values = [
+            {'ID': 1, 'Name': 'John Doe', 'Age': 30},
+            {'ID': 2, 'Name': 'Jane Doe', 'Age': 25},
+            {'ID': 3, 'Name': 'John Smith', 'Age': 40}
+        ]
+        filename = 'test_data.xls'
+        result = task_func(values, filename)
+        assert result == os.path.abspath(filename)
+    
+        # Check that the file was created and has the correct data
+        assert os.path.exists(filename)
+        book = xlwt.Workbook()
+        sheet1 = book.add_sheet("persons")
+>       for col_index, col in enumerate(FIELDS):
+                                        ^^^^^^
+E       NameError: name 'FIELDS' is not defined
+
+test_0501.py:21: NameError
+=========================== short test summary info ============================
+FAILED test_0501.py::test_task_func - NameError: name 'FIELDS' is not defined
+1 failed in 0.48s

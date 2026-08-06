@@ -1,0 +1,92 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+_________________ TestEmailRequestHandler.test_do_POST_success _________________
+
+self = <test_0275.TestEmailRequestHandler object at 0x7b247a303650>
+mock_parse_header = <MagicMock name='parse_header' id='135396599021344'>
+mock_json_loads = <MagicMock name='loads' id='135396597222192'>
+mock_smtp = <MagicMock name='SMTP' id='135396597226128'>
+
+    @patch('src_0275.smtplib.SMTP')
+    @patch('src_0275.json.loads')
+    @patch('src_0275.cgi.parse_header')
+    def test_do_POST_success(self, mock_parse_header, mock_json_loads, mock_smtp):
+        # Arrange
+>       handler = task_func("smtp.example.com", 587, "user@example.com", "password")()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: BaseRequestHandler.__init__() missing 3 required positional arguments: 'request', 'client_address', and 'server'
+
+test_0275.py:11: TypeError
+__________ TestEmailRequestHandler.test_do_POST_invalid_content_type ___________
+
+self = <test_0275.TestEmailRequestHandler object at 0x7b247a303a70>
+mock_parse_header = <MagicMock name='parse_header' id='135396597232224'>
+
+    @patch('src_0275.cgi.parse_header')
+    def test_do_POST_invalid_content_type(self, mock_parse_header):
+        # Arrange
+>       handler = task_func("smtp.example.com", 587, "user@example.com", "password")()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: BaseRequestHandler.__init__() missing 3 required positional arguments: 'request', 'client_address', and 'server'
+
+test_0275.py:44: TypeError
+____________ TestEmailRequestHandler.test_do_POST_json_decode_error ____________
+
+self = <test_0275.TestEmailRequestHandler object at 0x7b247a303cb0>
+mock_parse_header = <MagicMock name='parse_header' id='135396597416592'>
+mock_json_loads = <MagicMock name='loads' id='135396597422016'>
+
+    @patch('src_0275.json.loads')
+    @patch('src_0275.cgi.parse_header')
+    def test_do_POST_json_decode_error(self, mock_parse_header, mock_json_loads):
+        # Arrange
+>       handler = task_func("smtp.example.com", 587, "user@example.com", "password")()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: BaseRequestHandler.__init__() missing 3 required positional arguments: 'request', 'client_address', and 'server'
+
+test_0275.py:63: TypeError
+_____________ TestEmailRequestHandler.test_do_POST_missing_fields ______________
+
+self = <test_0275.TestEmailRequestHandler object at 0x7b247a303ef0>
+mock_parse_header = <MagicMock name='parse_header' id='135396599020576'>
+mock_json_loads = <MagicMock name='loads' id='135396597232416'>
+
+    @patch('src_0275.json.loads')
+    @patch('src_0275.cgi.parse_header')
+    def test_do_POST_missing_fields(self, mock_parse_header, mock_json_loads):
+        # Arrange
+>       handler = task_func("smtp.example.com", 587, "user@example.com", "password")()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: BaseRequestHandler.__init__() missing 3 required positional arguments: 'request', 'client_address', and 'server'
+
+test_0275.py:84: TypeError
+________ TestEmailRequestHandler.test_do_POST_smtp_authentication_error ________
+
+self = <test_0275.TestEmailRequestHandler object at 0x7b247a14c170>
+mock_parse_header = <MagicMock name='parse_header' id='135396599642112'>
+mock_json_loads = <MagicMock name='loads' id='135396598423984'>
+mock_smtp = <MagicMock name='SMTP' id='135396599631120'>
+
+    @patch('src_0275.smtplib.SMTP')
+    @patch('src_0275.json.loads')
+    @patch('src_0275.cgi.parse_header')
+    def test_do_POST_smtp_authentication_error(self, mock_parse_header, mock_json_loads, mock_smtp):
+        # Arrange
+>       handler = task_func("smtp.example.com", 587, "user@example.com", "password")()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: BaseRequestHandler.__init__() missing 3 required positional arguments: 'request', 'client_address', and 'server'
+
+test_0275.py:109: TypeError
+=============================== warnings summary ===============================
+../../../src/src_0275.py:1
+  /work/tomohiro-w/utg/src/src_0275.py:1: DeprecationWarning: 'cgi' is deprecated and slated for removal in Python 3.13
+    import cgi
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0275.py::TestEmailRequestHandler::test_do_POST_success - TypeErro...
+FAILED test_0275.py::TestEmailRequestHandler::test_do_POST_invalid_content_type
+FAILED test_0275.py::TestEmailRequestHandler::test_do_POST_json_decode_error
+FAILED test_0275.py::TestEmailRequestHandler::test_do_POST_missing_fields - T...
+FAILED test_0275.py::TestEmailRequestHandler::test_do_POST_smtp_authentication_error
+5 failed, 1 warning in 0.58s

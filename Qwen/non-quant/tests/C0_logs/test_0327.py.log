@@ -1,0 +1,86 @@
+.FFF.F                                                                   [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_one_bat_file __________________________
+
+    def test_task_func_one_bat_file():
+        with tempfile.TemporaryDirectory() as temp_dir:
+            bat_file_path = os.path.join(temp_dir, 'test.bat')
+            with open(bat_file_path, 'w') as f:
+                f.write('@echo off\nexit /b 0')
+    
+            result = task_func(temp_dir)
+>           assert result == [('test.bat', 0)]
+E           AssertionError: assert [('test.bat', 126)] == [('test.bat', 0)]
+E             
+E             At index 0 diff: ('test.bat', 126) != ('test.bat', 0)
+E             Use -v to get more diff
+
+test_0327.py:19: AssertionError
+----------------------------- Captured stderr call -----------------------------
+/bin/sh: 1: /tmp/tmpf67fs_83/test.bat: Permission denied
+______________________ test_task_func_multiple_bat_files _______________________
+
+    def test_task_func_multiple_bat_files():
+        with tempfile.TemporaryDirectory() as temp_dir:
+            bat_file_paths = [os.path.join(temp_dir, f'test{i}.bat') for i in range(3)]
+            for bat_file_path in bat_file_paths:
+                with open(bat_file_path, 'w') as f:
+                    f.write('@echo off\nexit /b 0')
+    
+            result = task_func(temp_dir)
+            expected_results = [(os.path.basename(path), 0) for path in bat_file_paths]
+>           assert result == expected_results
+E           AssertionError: assert [('test2.bat'...t0.bat', 126)] == [('test0.bat'...est2.bat', 0)]
+E             
+E             At index 0 diff: ('test2.bat', 126) != ('test0.bat', 0)
+E             Use -v to get more diff
+
+test_0327.py:30: AssertionError
+----------------------------- Captured stderr call -----------------------------
+/bin/sh: 1: /tmp/tmp7ymvk7sb/test2.bat: Permission denied
+/bin/sh: 1: /tmp/tmp7ymvk7sb/test1.bat: Permission denied
+/bin/sh: 1: /tmp/tmp7ymvk7sb/test0.bat: Permission denied
+______________________ test_task_func_bat_file_with_error ______________________
+
+    def test_task_func_bat_file_with_error():
+        with tempfile.TemporaryDirectory() as temp_dir:
+            bat_file_path = os.path.join(temp_dir, 'test.bat')
+            with open(bat_file_path, 'w') as f:
+                f.write('@echo off\nexit /b 1')
+    
+            result = task_func(temp_dir)
+>           assert result == [('test.bat', 1)]
+E           AssertionError: assert [('test.bat', 126)] == [('test.bat', 1)]
+E             
+E             At index 0 diff: ('test.bat', 126) != ('test.bat', 1)
+E             Use -v to get more diff
+
+test_0327.py:39: AssertionError
+----------------------------- Captured stderr call -----------------------------
+/bin/sh: 1: /tmp/tmpxtoelm4l/test.bat: Permission denied
+_______________________ test_task_func_permission_denied _______________________
+
+    def test_task_func_permission_denied():
+        with tempfile.TemporaryDirectory() as temp_dir:
+            bat_file_path = os.path.join(temp_dir, 'test.bat')
+            with open(bat_file_path, 'w') as f:
+                f.write('@echo off\nexit /b 0')
+    
+            # Change permissions to make the file non-executable
+            os.chmod(bat_file_path, 0o444)
+    
+            result = task_func(temp_dir)
+            assert len(result) == 1
+            assert result[0][0] == 'test.bat'
+>           assert result[0][1] is None
+E           assert 126 is None
+
+test_0327.py:62: AssertionError
+----------------------------- Captured stderr call -----------------------------
+/bin/sh: 1: /tmp/tmp0yemefih/test.bat: Permission denied
+=========================== short test summary info ============================
+FAILED test_0327.py::test_task_func_one_bat_file - AssertionError: assert [('...
+FAILED test_0327.py::test_task_func_multiple_bat_files - AssertionError: asse...
+FAILED test_0327.py::test_task_func_bat_file_with_error - AssertionError: ass...
+FAILED test_0327.py::test_task_func_permission_denied - assert 126 is None
+4 failed, 2 passed in 0.48s

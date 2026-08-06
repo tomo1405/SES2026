@@ -1,0 +1,59 @@
+..F                                                                      [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_empty_content _________________________
+
+mock_wikipedia_page = <MagicMock name='page' id='126870985070768'>
+
+    @patch('wikipedia.page')
+    def test_task_func_empty_content(mock_wikipedia_page):
+        # Mocking the Wikipedia page with empty content
+        mock_page = MagicMock()
+        mock_page.content = ""
+        mock_wikipedia_page.return_value = mock_page
+    
+        # Call the function with a mock page title
+>       result = task_func("Empty Page")
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0060.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0060.py:10: in task_func
+    wordcloud = WordCloud().generate(text)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/wordcloud/wordcloud.py:643: in generate
+    return self.generate_from_text(text)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/wordcloud/wordcloud.py:625: in generate_from_text
+    self.generate_from_frequencies(words)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <wordcloud.wordcloud.WordCloud object at 0x736373ff7680>
+frequencies = [], max_font_size = None
+
+    def generate_from_frequencies(self, frequencies, max_font_size=None):  # noqa: C901
+        """Create a word_cloud from words and frequencies.
+    
+        Parameters
+        ----------
+        frequencies : dict from string to float
+            A contains words and associated frequency.
+    
+        max_font_size : int
+            Use this font-size instead of self.max_font_size
+    
+        Returns
+        -------
+        self
+    
+        """
+        # make sure frequencies are sorted and normalized
+        frequencies = sorted(frequencies.items(), key=itemgetter(1), reverse=True)
+        if len(frequencies) <= 0:
+>           raise ValueError("We need at least 1 word to plot a word cloud, "
+                             "got %d." % len(frequencies))
+E           ValueError: We need at least 1 word to plot a word cloud, got 0.
+
+../../../.venv/lib/python3.12/site-packages/wordcloud/wordcloud.py:411: ValueError
+=========================== short test summary info ============================
+FAILED test_0060.py::test_task_func_empty_content - ValueError: We need at le...
+1 failed, 2 passed in 2.22s

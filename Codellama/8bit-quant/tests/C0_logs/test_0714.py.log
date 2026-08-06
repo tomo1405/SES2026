@@ -1,0 +1,39 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        log_file_path = "path/to/log/file"
+        keywords = ["keyword1", "keyword2"]
+        expected_output = [
+            "keyword1                   : value1                   : value2",
+            "keyword2                   : value3                   : value4"
+        ]
+>       assert task_func(log_file_path, keywords) == expected_output
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0714.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+log_file_path = 'path/to/log/file', keywords = ['keyword1', 'keyword2']
+
+    def task_func(log_file_path: str, keywords: list):
+        if not os.path.exists(log_file_path):
+>           raise FileNotFoundError(f"Log file {log_file_path} does not exist.")
+E           FileNotFoundError: Log file path/to/log/file does not exist.
+
+../../../src/src_0714.py:5: FileNotFoundError
+____________________ test_task_func_invalid_log_file_format ____________________
+
+    def test_task_func_invalid_log_file_format():
+        log_file_path = "path/to/log/file"
+        keywords = ["keyword1", "keyword2"]
+>       with open(log_file_path, 'w') as log:
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'path/to/log/file'
+
+test_0714.py:22: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0714.py::test_task_func_valid_input - FileNotFoundError: Log file...
+FAILED test_0714.py::test_task_func_invalid_log_file_format - FileNotFoundErr...
+2 failed, 1 passed in 0.46s

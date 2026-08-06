@@ -1,0 +1,41 @@
+..FFF                                                                    [100%]
+=================================== FAILURES ===================================
+___________________ test_task_func_value_error_not_2d_points ___________________
+
+    def test_task_func_value_error_not_2d_points():
+>       with pytest.raises(ValueError, match="Expected array of 2D points"):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'Expected array of 2D points'
+E         Actual message: 'Voronoi diagram needs at least 3 points'
+
+test_0446.py:15: AssertionError
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        points = np.array([[0, 0], [1, 4], [2, 3], [4, 1], [1, 1], [2, 2], [5, 3]])
+        vor, ax = task_func(points)
+>       assert isinstance(vor, Voronoi)
+                               ^^^^^^^
+E       NameError: name 'Voronoi' is not defined
+
+test_0446.py:21: NameError
+__________________________ test_task_func_random_seed __________________________
+
+    def test_task_func_random_seed():
+        points = np.array([[0, 0], [1, 4], [2, 3], [4, 1], [1, 1], [2, 2], [5, 3]])
+        vor1, _ = task_func(points, seed=0)
+        vor2, _ = task_func(points, seed=0)
+        assert np.array_equal(vor1.points, vor2.points)
+>       assert np.array_equal(vor1.regions, vor2.regions)
+E       assert False
+E        +  where False = <function array_equal at 0x726c9d7c8270>([[], [3, 1, 0, 2], [2, -1, 0], [7, 5, 4, 6], [5, 3, 2, -1, 4], [6, -1, 4], ...], [[], [3, 1, 0, 2], [2, -1, 0], [7, 5, 4, 6], [5, 3, 2, -1, 4], [6, -1, 4], ...])
+E        +    where <function array_equal at 0x726c9d7c8270> = np.array_equal
+E        +    and   [[], [3, 1, 0, 2], [2, -1, 0], [7, 5, 4, 6], [5, 3, 2, -1, 4], [6, -1, 4], ...] = <scipy.spatial._qhull.Voronoi object at 0x726b7fe25b20>.regions
+E        +    and   [[], [3, 1, 0, 2], [2, -1, 0], [7, 5, 4, 6], [5, 3, 2, -1, 4], [6, -1, 4], ...] = <scipy.spatial._qhull.Voronoi object at 0x726b7fc7fd70>.regions
+
+test_0446.py:29: AssertionError
+=========================== short test summary info ============================
+FAILED test_0446.py::test_task_func_value_error_not_2d_points - AssertionErro...
+FAILED test_0446.py::test_task_func_valid_input - NameError: name 'Voronoi' i...
+FAILED test_0446.py::test_task_func_random_seed - assert False
+3 failed, 2 passed in 2.14s

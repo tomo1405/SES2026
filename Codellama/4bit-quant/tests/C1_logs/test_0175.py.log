@@ -1,0 +1,32 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]})
+        key = 'C'
+        min_value = 10
+        max_value = 20
+        expected_result = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [10, 11, 12]})
+        result = task_func(data, key, min_value, max_value)
+>       assert result.equals(expected_result)
+E       assert False
+E        +  where False = equals(   A  B   C\n0  1  4  10\n1  2  5  11\n2  3  6  12)
+E        +    where equals =    A  B   C\n0  1  4  18\n1  2  5  12\n2  3  6  14.equals
+
+test_0175.py:13: AssertionError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        data = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]})
+        key = 'C'
+        min_value = 10
+        max_value = 20
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0175.py:20: Failed
+=========================== short test summary info ============================
+FAILED test_0175.py::test_task_func - assert False
+FAILED test_0175.py::test_task_func_invalid_input - Failed: DID NOT RAISE Val...
+2 failed in 1.06s

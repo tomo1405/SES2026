@@ -1,0 +1,43 @@
+..F..                                                                    [100%]
+=================================== FAILURES ===================================
+__________________ test_task_func_single_interesting_article ___________________
+
+    def test_task_func_single_interesting_article():
+        data = {
+            'Title': ['How to learn Python'],
+            'Content': ['Python is a great language']
+        }
+        df = pd.DataFrame(data)
+>       result = task_func(df)
+                 ^^^^^^^^^^^^^
+
+test_0183.py:30: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0183.py:14: in task_func
+    kmeans.fit(X)
+../../../.venv/lib/python3.12/site-packages/sklearn/base.py:1403: in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/cluster/_kmeans.py:1473: in fit
+    self._check_params_vs_input(X)
+../../../.venv/lib/python3.12/site-packages/sklearn/cluster/_kmeans.py:1413: in _check_params_vs_input
+    super()._check_params_vs_input(X, default_n_init=10)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = KMeans(n_clusters=2, n_init=10, random_state=42)
+X = <Compressed Sparse Row sparse matrix of dtype 'float64'
+	with 4 stored elements and shape (1, 4)>
+default_n_init = 10
+
+    def _check_params_vs_input(self, X, default_n_init=None):
+        # n_clusters
+        if X.shape[0] < self.n_clusters:
+>           raise ValueError(
+                f"n_samples={X.shape[0]} should be >= n_clusters={self.n_clusters}."
+            )
+E           ValueError: n_samples=1 should be >= n_clusters=2.
+
+../../../.venv/lib/python3.12/site-packages/sklearn/cluster/_kmeans.py:877: ValueError
+=========================== short test summary info ============================
+FAILED test_0183.py::test_task_func_single_interesting_article - ValueError: ...
+1 failed, 4 passed in 3.62s

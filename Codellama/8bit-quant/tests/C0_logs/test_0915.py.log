@@ -1,0 +1,28 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a sample dataframe
+        df = pd.DataFrame({'date': ['2022-01-01', '2022-01-02', '2022-01-03', '2022-01-04', '2022-01-05'],
+                       'closing_price': [100, 110, 120, 130, 140]})
+    
+        # Convert date to timestamp
+        df['date'] = pd.to_datetime(df['date'])
+        df['date'] = df['date'].map(pd.Timestamp.timestamp)
+    
+        # Prepare data
+        X = df['date'].values.reshape(-1, 1)
+        y = df['closing_price'].values
+    
+        # Fit model
+>       model = LinearRegression()
+                ^^^^^^^^^^^^^^^^
+E       NameError: name 'LinearRegression' is not defined
+
+test_0915.py:19: NameError
+=========================== short test summary info ============================
+FAILED test_0915.py::test_task_func - NameError: name 'LinearRegression' is n...
+1 failed in 1.20s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

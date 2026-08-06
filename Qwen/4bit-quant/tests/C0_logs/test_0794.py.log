@@ -1,0 +1,65 @@
+F.FFFF                                                                   [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_default_list __________________________
+
+    def test_task_func_default_list():
+        result = task_func()
+        assert len(result) == 10
+>       assert set(result) == set(ELEMENTS)
+                                  ^^^^^^^^
+E       NameError: name 'ELEMENTS' is not defined
+
+test_0794.py:7: NameError
+____________________________ test_task_func_shuffle ____________________________
+
+    def test_task_func_shuffle():
+        result = task_func()
+>       assert list(result) != ELEMENTS
+                               ^^^^^^^^
+E       NameError: name 'ELEMENTS' is not defined
+
+test_0794.py:17: NameError
+_________________________ test_task_func_concatenation _________________________
+
+    def test_task_func_concatenation():
+        result = task_func()
+>       assert list(result)[3:] + list(result)[:3] == list(result)
+E       AssertionError: assert [np.str_('J')...tr_('D'), ...] == [np.str_('F')...tr_('G'), ...]
+E         
+E         At index 0 diff: np.str_('J') != np.str_('F')
+E         Use -v to get more diff
+
+test_0794.py:21: AssertionError
+______________________ test_task_func_preserves_elements _______________________
+
+    def test_task_func_preserves_elements():
+        result = task_func()
+>       assert all(elem in ELEMENTS for elem in result)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0794.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <iterator object at 0x7bb248185360>
+
+>   assert all(elem in ELEMENTS for elem in result)
+                       ^^^^^^^^
+E   NameError: name 'ELEMENTS' is not defined
+
+test_0794.py:25: NameError
+__________________________ test_task_func_randomness ___________________________
+
+    def test_task_func_randomness():
+        result1 = task_func()
+        result2 = task_func()
+>       assert result1 != result2
+E       ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+test_0794.py:30: ValueError
+=========================== short test summary info ============================
+FAILED test_0794.py::test_task_func_default_list - NameError: name 'ELEMENTS'...
+FAILED test_0794.py::test_task_func_shuffle - NameError: name 'ELEMENTS' is n...
+FAILED test_0794.py::test_task_func_concatenation - AssertionError: assert [n...
+FAILED test_0794.py::test_task_func_preserves_elements - NameError: name 'ELE...
+FAILED test_0794.py::test_task_func_randomness - ValueError: The truth value ...
+5 failed, 1 passed in 0.66s

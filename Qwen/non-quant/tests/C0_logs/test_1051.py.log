@@ -1,0 +1,102 @@
+.EFEFE.EFE                                                               [100%]
+==================================== ERRORS ====================================
+_____________ ERROR at teardown of test_task_func_with_empty_input _____________
+
+    @pytest.fixture(autouse=True)
+    def cleanup():
+        """Cleanup the directory after each test."""
+        yield
+>       if os.path.exists(DIRECTORY):
+                          ^^^^^^^^^
+E       NameError: name 'DIRECTORY' is not defined
+
+test_1051.py:12: NameError
+_____________ ERROR at teardown of test_task_func_with_single_line _____________
+
+    @pytest.fixture(autouse=True)
+    def cleanup():
+        """Cleanup the directory after each test."""
+        yield
+>       if os.path.exists(DIRECTORY):
+                          ^^^^^^^^^
+E       NameError: name 'DIRECTORY' is not defined
+
+test_1051.py:12: NameError
+___________ ERROR at teardown of test_task_func_with_multiple_lines ____________
+
+    @pytest.fixture(autouse=True)
+    def cleanup():
+        """Cleanup the directory after each test."""
+        yield
+>       if os.path.exists(DIRECTORY):
+                          ^^^^^^^^^
+E       NameError: name 'DIRECTORY' is not defined
+
+test_1051.py:12: NameError
+_____________ ERROR at teardown of test_task_func_with_empty_lines _____________
+
+    @pytest.fixture(autouse=True)
+    def cleanup():
+        """Cleanup the directory after each test."""
+        yield
+>       if os.path.exists(DIRECTORY):
+                          ^^^^^^^^^
+E       NameError: name 'DIRECTORY' is not defined
+
+test_1051.py:12: NameError
+_________ ERROR at teardown of test_task_func_with_directory_creation __________
+
+    @pytest.fixture(autouse=True)
+    def cleanup():
+        """Cleanup the directory after each test."""
+        yield
+>       if os.path.exists(DIRECTORY):
+                          ^^^^^^^^^
+E       NameError: name 'DIRECTORY' is not defined
+
+test_1051.py:12: NameError
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_single_line ________________________
+
+    def test_task_func_with_single_line():
+        input_string = "hello"
+        expected_hash = hashlib.sha256(input_string.encode()).hexdigest()
+        expected_filename = expected_hash[:10] + ".txt"
+>       expected_filepath = os.path.join(DIRECTORY, expected_filename)
+                                         ^^^^^^^^^
+E       NameError: name 'DIRECTORY' is not defined
+
+test_1051.py:25: NameError
+______________________ test_task_func_with_multiple_lines ______________________
+
+    def test_task_func_with_multiple_lines():
+        input_string = "hello\nworld"
+        lines = input_string.split("\n")
+        expected_filepaths = []
+    
+        for line in lines:
+            line_hash = hashlib.sha256(line.encode()).hexdigest()
+            filename = line_hash[:10] + ".txt"
+>           expected_filepath = os.path.join(DIRECTORY, filename)
+                                             ^^^^^^^^^
+E           NameError: name 'DIRECTORY' is not defined
+
+test_1051.py:42: NameError
+____________________ test_task_func_with_directory_creation ____________________
+
+    def test_task_func_with_directory_creation():
+>       if os.path.exists(DIRECTORY):
+                          ^^^^^^^^^
+E       NameError: name 'DIRECTORY' is not defined
+
+test_1051.py:59: NameError
+=========================== short test summary info ============================
+FAILED test_1051.py::test_task_func_with_single_line - NameError: name 'DIREC...
+FAILED test_1051.py::test_task_func_with_multiple_lines - NameError: name 'DI...
+FAILED test_1051.py::test_task_func_with_directory_creation - NameError: name...
+ERROR test_1051.py::test_task_func_with_empty_input - NameError: name 'DIRECT...
+ERROR test_1051.py::test_task_func_with_single_line - NameError: name 'DIRECT...
+ERROR test_1051.py::test_task_func_with_multiple_lines - NameError: name 'DIR...
+ERROR test_1051.py::test_task_func_with_empty_lines - NameError: name 'DIRECT...
+ERROR test_1051.py::test_task_func_with_directory_creation - NameError: name ...
+3 failed, 2 passed, 5 errors in 0.52s

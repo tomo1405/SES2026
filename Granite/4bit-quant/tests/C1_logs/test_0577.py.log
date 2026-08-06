@@ -1,0 +1,56 @@
+F.FFF                                                                    [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        l = ["abc", "def", "ghi", "jkl"]
+        expected_output = pd.Series(["bcj", "efk", "igh", "ljk"])
+        output = task_func(l)
+>       assert output.equals(expected_output)
+E       assert False
+E        +  where False = equals(0    bcj\n1    efk\n2    igh\n3    ljk\ndtype: str)
+E        +    where equals = 0     klj\n1     cab\n2     efd\n3     hig\n4     klj\n5     cab\n6     efd\n7     hig\n8     klj\n9     cab\n10    efd\n11    hig\n12    klj\n13    cab\n14    efd\n15    hig\n16    klj\n17    cab\n18    efd\n19    hig\ndtype: str.equals
+
+test_0577.py:9: AssertionError
+_____________________ test_task_func_with_one_element_list _____________________
+
+    def test_task_func_with_one_element_list():
+        l = ["a"]
+        expected_output = pd.Series(["a"])
+        output = task_func(l)
+>       assert output.equals(expected_output)
+E       assert False
+E        +  where False = equals(0    a\ndtype: str)
+E        +    where equals = 0    a\n1    a\n2    a\n3    a\n4    a\ndtype: str.equals
+
+test_0577.py:21: AssertionError
+__________________ test_task_func_with_n_groups_equal_to_zero __________________
+
+    def test_task_func_with_n_groups_equal_to_zero():
+        l = ["abc", "def", "ghi", "jkl"]
+        expected_output = pd.Series(["abc", "def", "ghi", "jkl"])
+        output = task_func(l, n_groups=0)
+>       assert output.equals(expected_output)
+E       assert False
+E        +  where False = equals(0    abc\n1    def\n2    ghi\n3    jkl\ndtype: str)
+E        +    where equals = Series([], dtype: object).equals
+
+test_0577.py:27: AssertionError
+___________ test_task_func_with_n_groups_greater_than_length_of_list ___________
+
+    def test_task_func_with_n_groups_greater_than_length_of_list():
+        l = ["abc", "def", "ghi", "jkl"]
+        expected_output = pd.Series(["abc", "def", "ghi", "jkl"])
+        output = task_func(l, n_groups=len(l) + 1)
+>       assert output.equals(expected_output)
+E       assert False
+E        +  where False = equals(0    abc\n1    def\n2    ghi\n3    jkl\ndtype: str)
+E        +    where equals = 0       lj\n1      bca\n2     high\n3      efd\n4       lj\n5      bca\n6     high\n7      efd\n8       lj\n9      bca\n10    high\n11     efd\n12      lj\n13     bca\n14    high\n15     efd\n16      lj\n17     bca\n18    high\n19     efd\ndtype: str.equals
+
+test_0577.py:33: AssertionError
+=========================== short test summary info ============================
+FAILED test_0577.py::test_task_func - assert False
+FAILED test_0577.py::test_task_func_with_one_element_list - assert False
+FAILED test_0577.py::test_task_func_with_n_groups_equal_to_zero - assert False
+FAILED test_0577.py::test_task_func_with_n_groups_greater_than_length_of_list
+4 failed, 1 passed in 1.16s

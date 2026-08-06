@@ -1,0 +1,29 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        df = ... # provide a sample DataFrame
+        col1 = ... # provide a sample column name
+        col2 = ... # provide a sample column name
+        N = 10 # set a sample value for N
+    
+        # Test if the function raises a ValueError when the provided columns are not found in the DataFrame
+        with pytest.raises(ValueError):
+>           task_func(df, "invalid_col1", "invalid_col2", N)
+
+test_0791.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df = Ellipsis, col1 = 'invalid_col1', col2 = 'invalid_col2', N = 10
+
+    def task_func(df, col1, col2, N=10):
+        # Ensure provided columns exist in the dataframe
+>       if col1 not in df.columns or col2 not in df.columns:
+                       ^^^^^^^^^^
+E       AttributeError: 'ellipsis' object has no attribute 'columns'
+
+../../../src/src_0791.py:5: AttributeError
+=========================== short test summary info ============================
+FAILED test_0791.py::test_task_func - AttributeError: 'ellipsis' object has n...
+1 failed in 3.14s

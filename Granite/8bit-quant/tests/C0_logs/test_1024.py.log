@@ -1,0 +1,46 @@
+.F..                                                                     [100%]
+=================================== FAILURES ===================================
+_____________________ test_type_error_non_numeric_columns ______________________
+
+dataframe =            A         B         C         D
+0   0.561909  0.228928  0.210237  0.794200
+1   0.847653  0.873059  0.950318... 0.357341
+98  0.449475  0.152647  0.622108  0.413178
+99  0.250098  0.381651  0.544622  0.413776
+
+[100 rows x 4 columns]
+
+    def test_type_error_non_numeric_columns(dataframe):
+>       dataframe['E'] = ['foo', 'bar', 'baz']
+        ^^^^^^^^^^^^^^
+
+test_1024.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:4672: in __setitem__
+    self._set_item(key, value)
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:4872: in _set_item
+    value, refs = self._sanitize_column(value)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:5754: in _sanitize_column
+    com.require_length_match(value, self.index)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = ['foo', 'bar', 'baz'], index = RangeIndex(start=0, stop=100, step=1)
+
+    def require_length_match(data, index: Index) -> None:
+        """
+        Check the length of data matches the length of the index.
+        """
+        if len(data) != len(index):
+>           raise ValueError(
+                "Length of values "
+                f"({len(data)}) "
+                "does not match length of index "
+                f"({len(index)})"
+            )
+E           ValueError: Length of values (3) does not match length of index (100)
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/common.py:601: ValueError
+=========================== short test summary info ============================
+FAILED test_1024.py::test_type_error_non_numeric_columns - ValueError: Length...
+1 failed, 3 passed in 2.55s

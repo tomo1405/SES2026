@@ -1,0 +1,29 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that the function returns a tuple with two elements
+        result = task_func()
+        assert isinstance(result, tuple)
+        assert len(result) == 2
+    
+        # Test that the first element of the tuple is a matplotlib.axes.Axes object
+        ax, df = result
+        assert isinstance(ax, matplotlib.axes.Axes)
+    
+        # Test that the second element of the tuple is a pandas.DataFrame object
+        assert isinstance(df, pandas.DataFrame)
+    
+        # Test that the DataFrame has the correct columns
+        assert set(df.columns) == {"Date", "Activity", "Duration"}
+    
+        # Test that the DataFrame has the correct data types
+>       assert df["Date"].dtype == "datetime64[ns]"
+E       AssertionError: assert dtype('O') == 'datetime64[ns]'
+E        +  where dtype('O') = 0     2026-07-28\n1     2026-07-28\n2     2026-07-28\n3     2026-07-28\n4     2026-07-28\n5     2026-07-27\n6     2026-07-27...26-07-23\n30    2026-07-22\n31    2026-07-22\n32    2026-07-22\n33    2026-07-22\n34    2026-07-22\nName: Date, dtype: object.dtype
+
+test_0503.py:23: AssertionError
+=========================== short test summary info ============================
+FAILED test_0503.py::test_task_func - AssertionError: assert dtype('O') == 'd...
+1 failed in 3.51s

@@ -1,0 +1,46 @@
+..FF                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_with_files ___________________________
+
+    def test_task_func_with_files():
+        with tempfile.TemporaryDirectory() as temp_dir:
+            file1_path = Path(temp_dir) / "file1.txt"
+            file2_path = Path(temp_dir) / "file2.txt"
+            with open(file1_path, "w") as f:
+                f.write("Hello, World!")
+            with open(file2_path, "w") as f:
+                f.write("Another file.")
+    
+            result = task_func(temp_dir)
+            assert len(result) == 2
+    
+            # Check file1 details
+>           assert result[0][0] == "file1.txt"
+E           AssertionError: assert 'file2.txt' == 'file1.txt'
+E             
+E             - file1.txt
+E             ?     ^
+E             + file2.txt
+E             ?     ^
+
+test_0972.py:31: AssertionError
+______________________ test_task_func_with_subdirectories ______________________
+
+    def test_task_func_with_subdirectories():
+        with tempfile.TemporaryDirectory() as temp_dir:
+            sub_dir = Path(temp_dir) / "subdir"
+            sub_dir.mkdir()
+            file_path = sub_dir / "file.txt"
+            with open(file_path, "w") as f:
+                f.write("File in subdir.")
+    
+            result = task_func(temp_dir)
+>           assert len(result) == 1
+E           assert 0 == 1
+E            +  where 0 = len([])
+
+test_0972.py:51: AssertionError
+=========================== short test summary info ============================
+FAILED test_0972.py::test_task_func_with_files - AssertionError: assert 'file...
+FAILED test_0972.py::test_task_func_with_subdirectories - assert 0 == 1
+2 failed, 2 passed in 0.50s

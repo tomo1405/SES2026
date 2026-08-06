@@ -1,0 +1,70 @@
+.F..F.FFF                                                                [100%]
+=================================== FAILURES ===================================
+____________________ test_task_func_with_single_empty_list _____________________
+
+    def test_task_func_with_single_empty_list():
+>       assert task_func([[]]) == {}
+E       AssertionError: assert {'u': 1} == {}
+E         
+E         Left contains 1 more item:
+E         {'u': 1}
+E         Use -v to get more diff
+
+test_0768.py:13: AssertionError
+____________________ test_task_func_with_identical_elements ____________________
+
+    def test_task_func_with_identical_elements():
+        result = task_func([[1, 1, 1]])
+        assert all(key in LETTERS for key in result.keys())
+>       assert sum(result.values()) == 3
+E       AssertionError: assert 1 == 3
+E        +  where 1 = sum(dict_values([1]))
+E        +    where dict_values([1]) = <built-in method values of dict object at 0x77a66c55a1c0>()
+E        +      where <built-in method values of dict object at 0x77a66c55a1c0> = {'n': 1}.values
+
+test_0768.py:28: AssertionError
+_______________________ test_task_func_with_large_input ________________________
+
+    def test_task_func_with_large_input():
+        result = task_func([[1] * 1000])
+        assert all(key in LETTERS for key in result.keys())
+>       assert sum(result.values()) == 1000
+E       AssertionError: assert 1 == 1000
+E        +  where 1 = sum(dict_values([1]))
+E        +    where dict_values([1]) = <built-in method values of dict object at 0x77a66c55a900>()
+E        +      where <built-in method values of dict object at 0x77a66c55a900> = {'g': 1}.values
+
+test_0768.py:38: AssertionError
+___________________ test_task_func_with_random_length_lists ____________________
+
+    def test_task_func_with_random_length_lists():
+        random_lengths = [random.randint(0, 10) for _ in range(10)]
+        result = task_func([[1] * length for length in random_lengths])
+        assert all(key in LETTERS for key in result.keys())
+>       assert sum(result.values()) == sum(random_lengths)
+E       AssertionError: assert 10 == 54
+E        +  where 10 = sum(dict_values([1, 2, 1, 1, 1, 1, 1, 1, 1]))
+E        +    where dict_values([1, 2, 1, 1, 1, 1, 1, 1, 1]) = <built-in method values of dict object at 0x77a66c34be80>()
+E        +      where <built-in method values of dict object at 0x77a66c34be80> = {'C': 1, 'Y': 2, 'c': 1, 'E': 1, ...}.values
+E        +  and   54 = sum([0, 7, 7, 8, 8, 8, ...])
+
+test_0768.py:44: AssertionError
+___________________ test_task_func_with_repeated_characters ____________________
+
+    def test_task_func_with_repeated_characters():
+        result = task_func([[1, 1, 1], [1, 1]])
+        assert all(key in LETTERS for key in result.keys())
+>       assert sum(result.values()) == 5
+E       AssertionError: assert 2 == 5
+E        +  where 2 = sum(dict_values([2]))
+E        +    where dict_values([2]) = <built-in method values of dict object at 0x77a66c56fd80>()
+E        +      where <built-in method values of dict object at 0x77a66c56fd80> = {'t': 2}.values
+
+test_0768.py:49: AssertionError
+=========================== short test summary info ============================
+FAILED test_0768.py::test_task_func_with_single_empty_list - AssertionError: ...
+FAILED test_0768.py::test_task_func_with_identical_elements - AssertionError:...
+FAILED test_0768.py::test_task_func_with_large_input - AssertionError: assert...
+FAILED test_0768.py::test_task_func_with_random_length_lists - AssertionError...
+FAILED test_0768.py::test_task_func_with_repeated_characters - AssertionError...
+5 failed, 4 passed in 0.46s

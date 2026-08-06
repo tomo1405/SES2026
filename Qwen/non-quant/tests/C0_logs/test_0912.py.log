@@ -1,0 +1,45 @@
+.F.FF.                                                                   [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_multiple_letters ________________________
+
+    def test_task_func_multiple_letters():
+        assert task_func('AB') == 2
+>       assert task_func('AZ') == 52
+E       AssertionError: assert 26 == 52
+E        +  where 26 = task_func('AZ')
+
+test_0912.py:11: AssertionError
+______________________ test_task_func_case_insensitivity _______________________
+
+    def test_task_func_case_insensitivity():
+>       assert task_func('a') == 1
+               ^^^^^^^^^^^^^^
+
+test_0912.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+letters = 'a'
+
+    def task_func(letters):
+        # Creating a dictionary to map each letter to its corresponding number
+        letter_to_number = {letter: i+1 for i, letter in enumerate(string.ascii_uppercase)}
+    
+        # Convert the letters to numbers
+>       numbers = [letter_to_number[letter] for letter in letters]
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'a'
+
+../../../src/src_0912.py:9: KeyError
+__________________________ test_task_func_long_string __________________________
+
+    def test_task_func_long_string():
+>       assert task_func('ABCDEFGHIJKLMNOPQRSTUVWXYZ') == 26 ** 26
+E       AssertionError: assert 403291461126605635584000000 == (26 ** 26)
+E        +  where 403291461126605635584000000 = task_func('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+
+test_0912.py:22: AssertionError
+=========================== short test summary info ============================
+FAILED test_0912.py::test_task_func_multiple_letters - AssertionError: assert...
+FAILED test_0912.py::test_task_func_case_insensitivity - KeyError: 'a'
+FAILED test_0912.py::test_task_func_long_string - AssertionError: assert 4032...
+3 failed, 3 passed in 0.49s

@@ -1,0 +1,49 @@
+.FF.FF                                                                   [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_plot_data ___________________________
+
+    def test_task_func_plot_data():
+        ax = task_func()
+        lines = ax.get_lines()
+        assert len(lines) == 1, "There should be exactly one line plotted"
+        xdata, ydata = lines[0].get_data()
+>       assert len(xdata) == SIZE, f"The length of xdata should be {SIZE}"
+                             ^^^^
+E       NameError: name 'SIZE' is not defined
+
+test_0582.py:18: NameError
+______________________ test_task_func_default_parameters _______________________
+
+    def test_task_func_default_parameters():
+        ax = task_func()
+        xdata, _ = ax.get_lines()[0].get_data()
+>       assert np.array_equal(xdata, np.arange(0, SIZE)), "x_values should be np.arange(0, SIZE)"
+                                                  ^^^^
+E       NameError: name 'SIZE' is not defined
+
+test_0582.py:24: NameError
+_______________________ test_task_func_custom_frequency ________________________
+
+    def test_task_func_custom_frequency():
+        custom_frequency = 3
+        ax = task_func(frequency=custom_frequency)
+        _, ydata = ax.get_lines()[0].get_data()
+        # Check that ydata contains values with the expected frequency
+>       expected_ydata = [np.sin((2 * np.pi / RANGE) * (x + int(RANGE * random.random()) * custom_frequency)) for x in range(SIZE)]
+                                                                                                                             ^^^^
+E       NameError: name 'SIZE' is not defined
+
+test_0582.py:37: NameError
+_________________________ test_task_func_no_plot_show __________________________
+
+    def test_task_func_no_plot_show():
+>       with pytest.raises(AssertionError):
+E       Failed: DID NOT RAISE AssertionError
+
+test_0582.py:41: Failed
+=========================== short test summary info ============================
+FAILED test_0582.py::test_task_func_plot_data - NameError: name 'SIZE' is not...
+FAILED test_0582.py::test_task_func_default_parameters - NameError: name 'SIZ...
+FAILED test_0582.py::test_task_func_custom_frequency - NameError: name 'SIZE'...
+FAILED test_0582.py::test_task_func_no_plot_show - Failed: DID NOT RAISE Asse...
+4 failed, 2 passed in 1.73s

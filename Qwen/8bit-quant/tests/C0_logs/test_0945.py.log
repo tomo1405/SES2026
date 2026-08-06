@@ -1,0 +1,25 @@
+..FF                                                                     [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_seed_reproducibility ______________________
+
+    def test_task_func_seed_reproducibility():
+        seed = 123
+        _, ax1 = task_func(seed=seed)
+        _, ax2 = task_func(seed=seed)
+>       assert ax1.get_lines()[0].get_ydata() == ax2.get_lines()[0].get_ydata()
+E       ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+test_0945.py:33: ValueError
+____________________________ test_task_func_no_seed ____________________________
+
+    def test_task_func_no_seed():
+        _, ax1 = task_func(seed=None)
+        _, ax2 = task_func(seed=None)
+>       assert ax1.get_lines()[0].get_ydata() != ax2.get_lines()[0].get_ydata()
+E       ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+test_0945.py:38: ValueError
+=========================== short test summary info ============================
+FAILED test_0945.py::test_task_func_seed_reproducibility - ValueError: The tr...
+FAILED test_0945.py::test_task_func_no_seed - ValueError: The truth value of ...
+2 failed, 2 passed in 2.62s

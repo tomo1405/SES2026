@@ -1,0 +1,63 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a sample DataFrame
+        data = {'name': ['Alice', 'Bob'], 'age': [25, 30]}
+        df = pd.DataFrame(data)
+    
+        # Define a filename
+        filename = 'test_output.jsonl'
+    
+        # Call the function
+>       result_path = task_func(df, filename)
+                      ^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0633.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df =     name  age
+0  Alice   25
+1    Bob   30, filename = 'test_output.jsonl'
+
+    def task_func(df: pd.DataFrame, filename: str) -> str:
+        start_time = time.time()
+        # Ensure the data directory exists
+>       if not os.path.exists(OUTPUT_DIR):
+               ^^
+E       NameError: name 'os' is not defined. Did you forget to import 'os'
+
+../../../src/src_0633.py:7: NameError
+___________________________ test_task_func_empty_df ____________________________
+
+    def test_task_func_empty_df():
+        # Create an empty DataFrame
+        df = pd.DataFrame()
+    
+        # Define a filename
+        filename = 'empty_output.jsonl'
+    
+        # Call the function
+>       result_path = task_func(df, filename)
+                      ^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0633.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df = Empty DataFrame
+Columns: []
+Index: [], filename = 'empty_output.jsonl'
+
+    def task_func(df: pd.DataFrame, filename: str) -> str:
+        start_time = time.time()
+        # Ensure the data directory exists
+>       if not os.path.exists(OUTPUT_DIR):
+               ^^
+E       NameError: name 'os' is not defined. Did you forget to import 'os'
+
+../../../src/src_0633.py:7: NameError
+=========================== short test summary info ============================
+FAILED test_0633.py::test_task_func - NameError: name 'os' is not defined. Di...
+FAILED test_0633.py::test_task_func_empty_df - NameError: name 'os' is not de...
+2 failed in 1.11s

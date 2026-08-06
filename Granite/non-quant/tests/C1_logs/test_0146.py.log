@@ -1,0 +1,68 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        ip_range = '192.168.1.0/24'
+        csv_path = 'output.csv'
+    
+        with patch('src_0146.open', mock_open()) as mock_file:
+            task_func(ip_range, csv_path)
+    
+>       mock_file.assert_has_calls([
+            call(csv_path, 'w', newline=''),
+            call().__enter__(),
+            call().writeheader(),
+            call().writerow({'IP Address': '192.168.1.1'}),
+            call().writerow({'IP Address': '192.168.1.2'}),
+            call().writerow({'IP Address': '192.168.1.3'}),
+            call().__exit__(None, None, None),
+        ])
+
+test_0146.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='open' id='135970616071936'>
+calls = [call('output.csv', 'w', newline=''), call().__enter__(), call().writeheader(), call().writerow({'IP Address': '192.168.1.1'}), call().writerow({'IP Address': '192.168.1.2'}), call().writerow({'IP Address': '192.168.1.3'}), ...]
+any_order = False
+
+    def assert_has_calls(self, calls, any_order=False):
+        """assert the mock has been called with the specified calls.
+        The `mock_calls` list is checked for the calls.
+    
+        If `any_order` is False (the default) then the calls must be
+        sequential. There can be extra calls before or after the
+        specified calls.
+    
+        If `any_order` is True then the calls can be in any order, but
+        they must all appear in `mock_calls`."""
+        expected = [self._call_matcher(c) for c in calls]
+        cause = next((e for e in expected if isinstance(e, Exception)), None)
+        all_calls = _CallList(self._call_matcher(c) for c in self.mock_calls)
+        if not any_order:
+            if expected not in all_calls:
+                if cause is None:
+                    problem = 'Calls not found.'
+                else:
+                    problem = ('Error processing expected calls.\n'
+                               'Errors: {}').format(
+                                   [e if isinstance(e, Exception) else None
+                                    for e in expected])
+>               raise AssertionError(
+                    f'{problem}\n'
+                    f'Expected: {_CallList(calls)}'
+                    f'{self._calls_repr(prefix="  Actual").rstrip(".")}'
+                ) from cause
+E               AssertionError: Calls not found.
+E               Expected: [call('output.csv', 'w', newline=''),
+E                call().__enter__(),
+E                call().writeheader(),
+E                call().writerow({'IP Address': '192.168.1.1'}),
+E                call().writerow({'IP Address': '192.168.1.2'}),
+E                call().writerow({'IP Address': '192.168.1.3'}),
+E                call().__exit__(None, None, None)]
+
+/usr/lib/python3.12/unittest/mock.py:981: AssertionError
+=========================== short test summary info ============================
+FAILED test_0146.py::test_task_func - AssertionError: Calls not found.
+1 failed in 0.47s

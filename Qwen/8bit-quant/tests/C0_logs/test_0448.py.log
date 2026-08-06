@@ -1,0 +1,41 @@
+....FF                                                                   [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_plotting ____________________________
+
+sample_data = array([[1, 2],
+       [3, 4],
+       [5, 6]])
+
+    def test_task_func_plotting(sample_data):
+        result = task_func(sample_data)
+        ax = result["ax"]
+        assert isinstance(ax, plt.Axes)
+        lines = ax.get_lines()
+>       assert len(lines) == 1
+E       assert 0 == 1
+E        +  where 0 = len(<a list of 0 Line2D objects>)
+
+test_0448.py:38: AssertionError
+_____________________ test_task_func_one_dimensional_data ______________________
+
+sample_data = array([[1, 2],
+       [3, 4],
+       [5, 6]])
+
+    def test_task_func_one_dimensional_data(sample_data):
+        pca = PCA(n_components=1)
+        transformed_data = pca.fit_transform(sample_data)
+        result = task_func(sample_data, n_components=1)
+        assert np.array_equal(result["transformed_data"], transformed_data)
+        ax = result["ax"]
+        assert isinstance(ax, plt.Axes)
+        lines = ax.get_lines()
+>       assert len(lines) == 1
+E       assert 0 == 1
+E        +  where 0 = len(<a list of 0 Line2D objects>)
+
+test_0448.py:51: AssertionError
+=========================== short test summary info ============================
+FAILED test_0448.py::test_task_func_plotting - assert 0 == 1
+FAILED test_0448.py::test_task_func_one_dimensional_data - assert 0 == 1
+2 failed, 4 passed in 4.44s

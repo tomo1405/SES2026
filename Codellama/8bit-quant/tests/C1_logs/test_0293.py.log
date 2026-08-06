@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a sample dataframe
+        df = pd.DataFrame({'id': [1, 1, 2, 2, 3, 3],
+                          'age': [20, 25, 30, 35, 40, 45],
+                          'income': [50000, 60000, 70000, 80000, 90000, 100000]})
+    
+        # Test the function with the sample dataframe
+        df_grouped, (hist, bins) = task_func(df)
+    
+        # Check that the output is a dataframe
+        assert isinstance(df_grouped, pd.DataFrame)
+    
+        # Check that the output has the correct columns
+        assert set(df_grouped.columns) == {'age', 'income'}
+    
+        # Check that the output has the correct index
+>       assert df_grouped.index.equals(df.index)
+E       AssertionError: assert False
+E        +  where False = equals(RangeIndex(start=0, stop=6, step=1))
+E        +    where equals = MultiIndex([(1, 0),\n            (1, 1),\n            (2, 2),\n            (2, 3),\n            (3, 4),\n            (3, 5)],\n           names=['id', None]).equals
+E        +      where MultiIndex([(1, 0),\n            (1, 1),\n            (2, 2),\n            (2, 3),\n            (3, 4),\n            (3, 5)],\n           names=['id', None]) =       age  income\nid               \n1  0  0.0     0.0\n   1  1.0     1.0\n2  2  0.0     0.0\n   3  1.0     1.0\n3  4  0.0     0.0\n   5  1.0     1.0.index
+E        +    and   RangeIndex(start=0, stop=6, step=1) =    id  age  income\n0   1   20   50000\n1   1   25   60000\n2   2   30   70000\n3   2   35   80000\n4   3   40   90000\n5   3   45  100000.index
+
+test_0293.py:23: AssertionError
+=========================== short test summary info ============================
+FAILED test_0293.py::test_task_func - AssertionError: assert False
+1 failed in 2.62s

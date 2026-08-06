@@ -1,0 +1,28 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Source folder does not exist
+        with pytest.raises(ValueError):
+            task_func("src_folder", "backup_dir")
+    
+        # Test case 2: Source folder exists, but backup folder already exists
+        with pytest.raises(FileExistsError):
+>           task_func("src_folder", "backup_dir")
+
+test_0345.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+src_folder = 'src_folder', backup_dir = 'backup_dir'
+
+    def task_func(src_folder, backup_dir):
+        # Check if source folder exists
+        if not os.path.isdir(src_folder):
+>           raise ValueError(f"Source folder '{src_folder}' does not exist.")
+E           ValueError: Source folder 'src_folder' does not exist.
+
+../../../src/src_0345.py:6: ValueError
+=========================== short test summary info ============================
+FAILED test_0345.py::test_task_func - ValueError: Source folder 'src_folder' ...
+1 failed in 0.41s

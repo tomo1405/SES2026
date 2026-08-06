@@ -1,0 +1,28 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a temporary directory
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Define CSV content and expected file path
+            csv_content = "name,age\nAlice,30\nBob,25"
+            filename = os.path.join(temp_dir, "test_output.xls")
+    
+            # Call the function
+            result_path = task_func(csv_content, filename)
+    
+            # Check if the file exists
+            assert os.path.exists(result_path)
+    
+            # Check if the returned path is absolute
+            assert os.path.isabs(result_path)
+    
+            # Verify the content of the generated Excel file
+>           import xlrd
+E           ModuleNotFoundError: No module named 'xlrd'
+
+test_0500.py:23: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED test_0500.py::test_task_func - ModuleNotFoundError: No module named 'x...
+1 failed in 0.49s

@@ -1,0 +1,44 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: empty list
+        list_of_lists = []
+        seed = 0
+        expected_result = Counter()
+        assert task_func(list_of_lists, seed) == expected_result
+    
+        # Test case 2: single list with no duplicates
+        list_of_lists = [['a', 'b', 'c']]
+        seed = 0
+        expected_result = Counter({'a': 1, 'b': 1, 'c': 1})
+        assert task_func(list_of_lists, seed) == expected_result
+    
+        # Test case 3: multiple lists with duplicates
+        list_of_lists = [['a', 'b', 'c'], ['a', 'b', 'c']]
+        seed = 0
+        expected_result = Counter({'a': 2, 'b': 2, 'c': 2})
+        assert task_func(list_of_lists, seed) == expected_result
+    
+        # Test case 4: empty list with random sample
+        list_of_lists = []
+        seed = 1
+        expected_result = Counter()
+        assert task_func(list_of_lists, seed) == expected_result
+    
+        # Test case 5: single list with random sample
+        list_of_lists = [[]]
+        seed = 1
+        expected_result = Counter()
+>       assert task_func(list_of_lists, seed) == expected_result
+E       AssertionError: assert Counter({'e':...': 1, 'g': 1}) == Counter()
+E         
+E         Left contains 10 more items:
+E         {'c': 1, 'd': 1, 'e': 1, 'g': 1, 'i': 1, 'm': 1, 'o': 1, 'p': 1, 's': 1, 'u': 1}
+E         Use -v to get more diff
+
+test_0306.py:35: AssertionError
+=========================== short test summary info ============================
+FAILED test_0306.py::test_task_func - AssertionError: assert Counter({'e':......
+1 failed in 0.42s

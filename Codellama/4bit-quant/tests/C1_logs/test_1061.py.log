@@ -1,0 +1,41 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: DataFrame is empty
+        df = pd.DataFrame()
+        column_name = "column_name"
+        message, ax = task_func(df, column_name)
+        assert message == "The DataFrame is empty or the specified column has no data."
+        assert ax.get_title() == f"Distribution of values in {column_name} (No Data)"
+    
+        # Test case 2: DataFrame has data, but column name is not in DataFrame
+        df = pd.DataFrame({"column_name": [1, 2, 3]})
+        column_name = "column_name_2"
+        message, ax = task_func(df, column_name)
+        assert message == "The DataFrame is empty or the specified column has no data."
+        assert ax.get_title() == f"Distribution of values in {column_name} (No Data)"
+    
+        # Test case 3: DataFrame has data, column name is in DataFrame, but all values are null
+        df = pd.DataFrame({"column_name": [None, None, None]})
+        column_name = "column_name"
+        message, ax = task_func(df, column_name)
+        assert message == "The DataFrame is empty or the specified column has no data."
+        assert ax.get_title() == f"Distribution of values in {column_name} (No Data)"
+    
+        # Test case 4: DataFrame has data, column name is in DataFrame, and all values are not null
+        df = pd.DataFrame({"column_name": [1, 2, 3]})
+        column_name = "column_name"
+        message, ax = task_func(df, column_name)
+        assert message == "The distribution of values is uniform."
+        assert ax.get_title() == f"Distribution of values in {column_name}"
+        assert ax.get_xlabel() == "Values"
+        assert ax.get_ylabel() == "Frequency"
+>       assert ax.get_xticks() == range(3)
+E       ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+test_1061.py:36: ValueError
+=========================== short test summary info ============================
+FAILED test_1061.py::test_task_func - ValueError: The truth value of an array...
+1 failed in 2.21s

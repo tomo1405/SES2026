@@ -1,0 +1,51 @@
+FF...F                                                                   [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_default_parameters _______________________
+
+    def test_task_func_default_parameters():
+        csv_file_path = task_func()
+        assert os.path.exists(csv_file_path)
+        with open(csv_file_path, 'r', encoding='latin-1') as csvfile:
+            reader = csv.DictReader(csvfile)
+            rows = list(reader)
+>           assert len(rows) == 50
+E           AssertionError: assert 100 == 50
+E            +  where 100 = len([{'Name': 'Sopetón', 'Age': '38'}, {'Name': 'Brown', 'Age': '33'}, {'Name': 'Méndez', 'Age': '49'}, {'Name': 'Brown', 'Age': '39'}, {'Name': 'Méndez', 'Age': '24'}, {'Name': 'Williams', 'Age': '25'}, ...])
+
+test_0765.py:14: AssertionError
+_______________________ test_task_func_custom_parameters _______________________
+
+    def test_task_func_custom_parameters():
+        custom_csv_file_path = 'custom_names.csv'
+        custom_latin_names = ['Doe', 'Lee', 'Kim']
+        custom_names = ['Davis', 'Miller', 'Wilson']
+        csv_file_path = task_func(custom_csv_file_path, custom_latin_names, custom_names)
+        assert os.path.exists(csv_file_path)
+        with open(csv_file_path, 'r', encoding='latin-1') as csvfile:
+            reader = csv.DictReader(csvfile)
+            rows = list(reader)
+>           assert len(rows) == 50
+E           AssertionError: assert 100 == 50
+E            +  where 100 = len([{'Name': 'Lee', 'Age': '39'}, {'Name': 'Miller', 'Age': '26'}, {'Name': 'Lee', 'Age': '22'}, {'Name': 'Miller', 'Age': '24'}, {'Name': 'Doe', 'Age': '28'}, {'Name': 'Miller', 'Age': '43'}, ...])
+
+test_0765.py:29: AssertionError
+_________________________ test_task_func_with_rng_seed _________________________
+
+    def test_task_func_with_rng_seed():
+        csv_file_path_1 = task_func(rng_seed=42)
+        csv_file_path_2 = task_func(rng_seed=42)
+        with open(csv_file_path_1, 'r', encoding='latin-1') as csvfile1:
+            rows1 = list(csv.DictReader(csvfile1))
+        with open(csv_file_path_2, 'r', encoding='latin-1') as csvfile2:
+            rows2 = list(csv.DictReader(csvfile2))
+        assert rows1 == rows2
+        os.remove(csv_file_path_1)
+>       os.remove(csv_file_path_2)
+E       FileNotFoundError: [Errno 2] No such file or directory: 'names.csv'
+
+test_0765.py:56: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0765.py::test_task_func_default_parameters - AssertionError: asse...
+FAILED test_0765.py::test_task_func_custom_parameters - AssertionError: asser...
+FAILED test_0765.py::test_task_func_with_rng_seed - FileNotFoundError: [Errno...
+3 failed, 3 passed in 0.48s

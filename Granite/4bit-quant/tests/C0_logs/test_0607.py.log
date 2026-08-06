@@ -1,0 +1,30 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        expected_output = pd.DataFrame([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0]])
+        actual_output = task_func(matrix)
+>       assert actual_output.equals(expected_output)
+E       assert False
+E        +  where False = equals(     0    1    2\n0  1.0  2.0  3.0\n1  4.0  5.0  6.0\n2  7.0  8.0  9.0)
+E        +    where equals =           0         1         2\n0 -1.224745 -1.224745 -1.224745\n1  0.000000  0.000000  0.000000\n2  1.224745  1.224745  1.224745.equals
+
+test_0607.py:10: AssertionError
+___________________________ test_task_func_with_nan ____________________________
+
+    def test_task_func_with_nan():
+        matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [np.nan, np.nan, np.nan]]
+        expected_output = pd.DataFrame([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0], [0.0, 0.0, 0.0]])
+        actual_output = task_func(matrix)
+>       assert actual_output.equals(expected_output)
+E       assert False
+E        +  where False = equals(     0    1    2\n0  1.0  2.0  3.0\n1  4.0  5.0  6.0\n2  7.0  8.0  9.0\n3  0.0  0.0  0.0)
+E        +    where equals =      0    1    2\n0  0.0  0.0  0.0\n1  0.0  0.0  0.0\n2  0.0  0.0  0.0\n3  0.0  0.0  0.0.equals
+
+test_0607.py:16: AssertionError
+=========================== short test summary info ============================
+FAILED test_0607.py::test_task_func - assert False
+FAILED test_0607.py::test_task_func_with_nan - assert False
+2 failed in 2.90s

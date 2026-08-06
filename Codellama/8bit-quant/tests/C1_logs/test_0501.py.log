@@ -1,0 +1,37 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        values = [
+            {'ID': 1, 'Name': 'John', 'Age': 25},
+            {'ID': 2, 'Name': 'Jane', 'Age': 30},
+            {'ID': 3, 'Name': 'Bob', 'Age': 35},
+        ]
+        filename = 'test_data.xls'
+    
+        result = task_func(values, filename)
+    
+        assert os.path.exists(result)
+        assert os.path.isfile(result)
+    
+        with open(result, 'rb') as f:
+            book = xlwt.Workbook(f)
+>           sheet1 = book.get_sheet(0)
+                     ^^^^^^^^^^^^^^^^^
+
+test_0501.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <xlwt.Workbook.Workbook object at 0x71f80b24d670>, sheet = 0
+
+    def get_sheet(self, sheet):
+        if isinstance(sheet, int_types):
+>           return self.__worksheets[sheet]
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+E           IndexError: list index out of range
+
+../../../.venv/lib/python3.12/site-packages/xlwt/Workbook.py:378: IndexError
+=========================== short test summary info ============================
+FAILED test_0501.py::test_task_func - IndexError: list index out of range
+1 failed in 0.49s

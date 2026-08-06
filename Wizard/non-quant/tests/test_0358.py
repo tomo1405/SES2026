@@ -1,0 +1,29 @@
+python
+import numpy as np
+import pytest
+from scipy.stats import norm
+import matplotlib.pyplot as plt
+
+def task_func(x):
+
+    # Type check for x and y
+    if not isinstance(x, np.ndarray):
+        raise TypeError("x must be numpy.ndarray")
+
+    real_part = norm.pdf(x, 0, 1)
+    imag_part = norm.pdf(x, 2, 2)
+    complex_dist = real_part + 1j * imag_part
+
+    plt.plot(x, complex_dist.real, label='Real part')
+    plt.plot(x, complex_dist.imag, label='Imaginary part')
+    plt.legend()
+    plt.grid()
+    plt.show()
+    return complex_dist
+
+def test_task_func():
+    x = np.linspace(-5, 5, 100)
+    complex_dist = task_func(x)
+    assert isinstance(complex_dist, np.ndarray)
+    assert complex_dist.shape == (100,)
+    assert complex_dist.dtype == np.complex128

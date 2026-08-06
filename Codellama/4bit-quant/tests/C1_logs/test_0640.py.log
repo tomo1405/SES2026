@@ -1,0 +1,33 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that the function returns a tuple with two elements
+        result = task_func()
+        assert len(result) == 2
+    
+        # Test that the first element is a pandas DataFrame
+        df, ax = result
+        assert isinstance(df, pd.DataFrame)
+    
+        # Test that the second element is a matplotlib Axes object
+        assert isinstance(ax, matplotlib.axes.Axes)
+    
+        # Test that the DataFrame has the correct shape
+        assert df.shape == (100, 5)
+    
+        # Test that the DataFrame has the correct column names
+        assert list(df.columns) == ['Feature1', 'Feature2', 'Feature3', 'Feature4', 'Feature5']
+    
+        # Test that the DataFrame has the correct index names
+>       assert list(df.index) == ['Sample1', 'Sample2', 'Sample3', 'Sample4', 'Sample5']
+E       AssertionError: assert ['Sample1', '...Sample6', ...] == ['Sample1', '...4', 'Sample5']
+E         
+E         Left contains 95 more items, first extra item: 'Sample6'
+E         Use -v to get more diff
+
+test_0640.py:25: AssertionError
+=========================== short test summary info ============================
+FAILED test_0640.py::test_task_func - AssertionError: assert ['Sample1', '......
+1 failed in 5.01s

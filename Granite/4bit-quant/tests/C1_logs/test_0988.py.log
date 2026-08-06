@@ -1,0 +1,75 @@
+FF..                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        json_data = '{"a": 1, "b": 2, "c": 3}'
+        data_key = "a"
+        expected_values = pd.Series([1], dtype=pd.Float64Dtype)
+        expected_normalized_values = pd.Series([0.0], dtype=pd.Float64Dtype)
+        expected_ax = None
+        values, normalized_values, ax = task_func(json_data, data_key)
+        assert values.equals(expected_values)
+        assert normalized_values.equals(expected_normalized_values)
+>       assert ax is expected_ax
+E       AssertionError: assert <Axes: title={'center': 'Comparison of Original and Normalized Data'}, xlabel='Index', ylabel='Value'> is None
+
+test_0988.py:45: AssertionError
+_______________________ test_task_func_with_empty_values _______________________
+
+    def test_task_func_with_empty_values():
+        json_data = '[{"a": 1}, {"a": 2}, {"a": 3}]'
+        data_key = "a"
+        expected_values = pd.Series([], dtype=pd.Float64Dtype)
+        expected_normalized_values = pd.Series([], dtype=pd.Float64Dtype)
+        expected_ax = None
+>       values, normalized_values, ax = task_func(json_data, data_key)
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0988.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+json_data = '[{"a": 1}, {"a": 2}, {"a": 3}]', data_key = 'a'
+
+    def task_func(json_data: str, data_key: str):
+        data = json.loads(json_data)
+        try:
+            data = json.loads(json_data)
+            for key in data_key.split("."):
+>               data = data[key]
+                       ^^^^^^^^^
+E               TypeError: list indices must be integers or slices, not str
+
+test_0988.py:12: TypeError
+=============================== warnings summary ===============================
+Granite/4bit-quant/tests/test_0988.py::test_task_func
+  /work/tomohiro-w/utg/Granite/4bit-quant/tests/test_0988.py:39: UserWarning: Instantiating Float64Dtype without any arguments.Pass a Float64Dtype instance to silence this warning.
+    expected_values = pd.Series([1], dtype=pd.Float64Dtype)
+
+Granite/4bit-quant/tests/test_0988.py::test_task_func
+  /work/tomohiro-w/utg/Granite/4bit-quant/tests/test_0988.py:40: UserWarning: Instantiating Float64Dtype without any arguments.Pass a Float64Dtype instance to silence this warning.
+    expected_normalized_values = pd.Series([0.0], dtype=pd.Float64Dtype)
+
+Granite/4bit-quant/tests/test_0988.py::test_task_func
+  /work/tomohiro-w/utg/Granite/4bit-quant/tests/test_0988.py:13: UserWarning: Instantiating Float64Dtype without any arguments.Pass a Float64Dtype instance to silence this warning.
+    values = pd.Series(data, dtype=pd.Float64Dtype)
+
+Granite/4bit-quant/tests/test_0988.py::test_task_func
+  /work/tomohiro-w/utg/Granite/4bit-quant/tests/test_0988.py:21: UserWarning: Instantiating Float64Dtype without any arguments.Pass a Float64Dtype instance to silence this warning.
+    normalized_values = pd.Series(
+
+Granite/4bit-quant/tests/test_0988.py::test_task_func_with_empty_values
+  /work/tomohiro-w/utg/Granite/4bit-quant/tests/test_0988.py:50: UserWarning: Instantiating Float64Dtype without any arguments.Pass a Float64Dtype instance to silence this warning.
+    expected_values = pd.Series([], dtype=pd.Float64Dtype)
+
+Granite/4bit-quant/tests/test_0988.py::test_task_func_with_empty_values
+  /work/tomohiro-w/utg/Granite/4bit-quant/tests/test_0988.py:51: UserWarning: Instantiating Float64Dtype without any arguments.Pass a Float64Dtype instance to silence this warning.
+    expected_normalized_values = pd.Series([], dtype=pd.Float64Dtype)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0988.py::test_task_func - AssertionError: assert <Axes: title={'c...
+FAILED test_0988.py::test_task_func_with_empty_values - TypeError: list indic...
+2 failed, 2 passed, 6 warnings in 4.21s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

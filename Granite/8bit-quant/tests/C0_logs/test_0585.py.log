@@ -1,0 +1,36 @@
+...F                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_sign_error ___________________________
+
+    def test_task_func_sign_error():
+        url = "https://example.com"
+        pub_key, signed_hash, hash_value = task_func(url)
+    
+        with pytest.raises(rsa.pkcs1.VerificationError) as exc_info:
+>           rsa.verify(hash_value, rsa.transform.bytes2int(signed_hash), pub_key)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0585.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+raw_bytes = '7b38b02f91ccae36a9130ae2d7d5685b5e7c8ff592f76168b57b2cd55381d624beca19ebfc0cb17fb2372f578ae2ad29d055ff1fdd96d008f386e44c223acd88'
+
+    def bytes2int(raw_bytes: bytes) -> int:
+        r"""Converts a list of bytes or an 8-bit string to an integer.
+    
+        When using unicode strings, encode it to some encoding like UTF8 first.
+    
+        >>> (((128 * 256) + 64) * 256) + 15
+        8405007
+        >>> bytes2int(b'\x80@\x0f')
+        8405007
+    
+        """
+>       return int.from_bytes(raw_bytes, "big", signed=False)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: cannot convert 'str' object to bytes
+
+../../../.venv/lib/python3.12/site-packages/rsa/transform.py:34: TypeError
+=========================== short test summary info ============================
+FAILED test_0585.py::test_task_func_sign_error - TypeError: cannot convert 's...
+1 failed, 3 passed in 0.74s

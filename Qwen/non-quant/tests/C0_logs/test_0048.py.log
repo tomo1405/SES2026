@@ -1,0 +1,68 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sample_df =      A    B   C
+0  1.0  5.0   9
+1  2.0  NaN  10
+2  NaN  7.0  11
+3  4.0  8.0  12
+
+    def test_task_func(sample_df):
+        df, heatmap = task_func(sample_df)
+    
+        # Check if NaN values are filled with mean
+        assert df.isnull().sum().sum() == 0
+    
+        # Check if the DataFrame is standardized
+        assert np.allclose(df.mean(), 0)
+>       assert np.allclose(df.std(), 1)
+E       assert False
+E        +  where False = <function allclose at 0x7fc9b9de6eb0>(A    1.154701\nB    1.154701\nC    1.154701\ndtype: float64, 1)
+E        +    where <function allclose at 0x7fc9b9de6eb0> = np.allclose
+E        +    and   A    1.154701\nB    1.154701\nC    1.154701\ndtype: float64 = std()
+E        +      where std =           A         B         C\n0 -1.234427 -1.543033 -1.341641\n1 -0.308607  0.000000 -0.447214\n2  0.000000  0.308607  0.447214\n3  1.543033  1.234427  1.341641.std
+
+test_0048.py:25: AssertionError
+__________________________ test_task_func_with_no_nan __________________________
+
+sample_df =      A    B   C
+0  1.0  5.0   9
+1  2.0  NaN  10
+2  NaN  7.0  11
+3  4.0  8.0  12
+
+    def test_task_func_with_no_nan(sample_df):
+        df = sample_df.dropna()
+        df, heatmap = task_func(df)
+    
+        # Check if NaN values are filled with mean (no change expected in this case)
+        assert df.isnull().sum().sum() == 0
+    
+        # Check if the DataFrame is standardized
+        assert np.allclose(df.mean(), 0)
+>       assert np.allclose(df.std(), 1)
+E       assert False
+E        +  where False = <function allclose at 0x7fc9b9de6eb0>(A    1.414214\nB    1.414214\nC    1.414214\ndtype: float64, 1)
+E        +    where <function allclose at 0x7fc9b9de6eb0> = np.allclose
+E        +    and   A    1.414214\nB    1.414214\nC    1.414214\ndtype: float64 = std()
+E        +      where std =      A    B    C\n0 -1.0 -1.0 -1.0\n3  1.0  1.0  1.0.std
+
+test_0048.py:39: AssertionError
+_________________________ test_task_func_with_empty_df _________________________
+
+    def test_task_func_with_empty_df():
+        df = pd.DataFrame()
+        with pytest.raises(ValueError) as excinfo:
+            task_func(df)
+>       assert "No data is present in the DataFrame" in str(excinfo.value)
+E       AssertionError: assert 'No data is present in the DataFrame' in 'at least one array or dtype is required'
+E        +  where 'at least one array or dtype is required' = str(ValueError('at least one array or dtype is required'))
+E        +    where ValueError('at least one array or dtype is required') = <ExceptionInfo ValueError('at least one array or dtype is required') tblen=9>.value
+
+test_0048.py:48: AssertionError
+=========================== short test summary info ============================
+FAILED test_0048.py::test_task_func - assert False
+FAILED test_0048.py::test_task_func_with_no_nan - assert False
+FAILED test_0048.py::test_task_func_with_empty_df - AssertionError: assert 'N...
+3 failed in 3.93s

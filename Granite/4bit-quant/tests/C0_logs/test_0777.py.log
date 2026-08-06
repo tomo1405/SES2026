@@ -1,0 +1,136 @@
+F..F                                                                     [100%]
+=================================== FAILURES ===================================
+____________________ test_task_func_with_linear_regression _____________________
+
+file_path = 'test_data.csv', output_path = None, sort_key = 'title'
+linear_regression = True, x_column = 'x', y_column = 'y'
+
+    def task_func(file_path, output_path=None, sort_key='title', linear_regression=False, x_column=None, y_column=None):
+        try:
+            df = pd.read_csv(file_path)
+>           df.sort_values(by=[sort_key], inplace=True)
+
+../../../src/src_0777.py:6: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:8359: in sort_values
+    k = self._get_label_or_level_values(by[0], axis=axis)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =    x  y
+0  1  2
+1  2  3
+2  3  4, key = 'title', axis = 0
+
+    @final
+    def _get_label_or_level_values(self, key: Level, axis: AxisInt = 0) -> ArrayLike:
+        """
+        Return a 1-D array of values associated with `key`, a label or level
+        from the given `axis`.
+    
+        Retrieval logic:
+          - (axis=0): Return column values if `key` matches a column label.
+            Otherwise return index level values if `key` matches an index
+            level.
+          - (axis=1): Return row values if `key` matches an index label.
+            Otherwise return column level values if 'key' matches a column
+            level
+    
+        Parameters
+        ----------
+        key : Hashable
+            Label or level name.
+        axis : int, default 0
+            Axis that levels are associated with (0 for index, 1 for columns)
+    
+        Returns
+        -------
+        np.ndarray or ExtensionArray
+    
+        Raises
+        ------
+        KeyError
+            if `key` matches neither a label nor a level
+        ValueError
+            if `key` matches multiple labels
+        """
+        axis = self._get_axis_number(axis)
+        first_other_axes = next(
+            (ax for ax in range(self._AXIS_LEN) if ax != axis), None
+        )
+    
+        if self._is_label_reference(key, axis=axis):
+            self._check_label_or_level_ambiguity(key, axis=axis)
+            if first_other_axes is None:
+                raise ValueError("axis matched all axes")
+            values = self.xs(key, axis=first_other_axes)._values
+        elif self._is_level_reference(key, axis=axis):
+            values = self.axes[axis].get_level_values(key)._values
+        else:
+>           raise KeyError(key)
+E           KeyError: 'title'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:1776: KeyError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func_with_linear_regression():
+        file_path = "test_data.csv"
+        x_column = "x"
+        y_column = "y"
+        df = pd.DataFrame({x_column: [1, 2, 3], y_column: [2, 3, 4]})
+        df.to_csv(file_path, index=False)
+    
+>       output = task_func(file_path, linear_regression=True, x_column=x_column, y_column=y_column)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0777.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = 'test_data.csv', output_path = None, sort_key = 'title'
+linear_regression = True, x_column = 'x', y_column = 'y'
+
+    def task_func(file_path, output_path=None, sort_key='title', linear_regression=False, x_column=None, y_column=None):
+        try:
+            df = pd.read_csv(file_path)
+            df.sort_values(by=[sort_key], inplace=True)
+    
+            if linear_regression:
+                if x_column not in df.columns or y_column not in df.columns:
+                    raise ValueError("Specified columns for linear regression do not exist in the dataframe")
+    
+                X = df[[x_column]]
+                y = df[y_column]
+                model = LinearRegression().fit(X, y)
+                return model
+    
+            if output_path:
+                df.to_csv(output_path, index=False)
+                return output_path
+            else:
+                return df
+        except Exception as e:
+>           raise Exception(f"Error while processing the file: {str(e)}")
+E           Exception: Error while processing the file: 'title'
+
+../../../src/src_0777.py:23: Exception
+_____________________ test_task_func_with_invalid_x_column _____________________
+
+    def test_task_func_with_invalid_x_column():
+        file_path = "test_data.csv"
+        x_column = "invalid_x_column"
+        df = pd.DataFrame({"x": [1, 2, 3], "y": [2, 3, 4]})
+        df.to_csv(file_path, index=False)
+    
+        with pytest.raises(Exception) as e:
+            task_func(file_path, linear_regression=True, x_column=x_column, y_column="y")
+>       assert "Specified columns for linear regression do not exist in the dataframe" in str(e.value)
+E       assert 'Specified columns for linear regression do not exist in the dataframe' in "Error while processing the file: 'title'"
+E        +  where "Error while processing the file: 'title'" = str(Exception("Error while processing the file: 'title'"))
+E        +    where Exception("Error while processing the file: 'title'") = <ExceptionInfo Exception("Error while processing the file: 'title'") tblen=2>.value
+
+test_0777.py:41: AssertionError
+=========================== short test summary info ============================
+FAILED test_0777.py::test_task_func_with_linear_regression - Exception: Error...
+FAILED test_0777.py::test_task_func_with_invalid_x_column - assert 'Specified...
+2 failed, 2 passed in 3.76s

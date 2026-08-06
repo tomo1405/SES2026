@@ -1,0 +1,92 @@
+FFFFFF                                                                   [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_no_errors ___________________________
+
+    def test_task_func_no_errors():
+        logs = [
+            "INFO 12:34:56 Some info message",
+            "DEBUG 07:23:45 Debugging info",
+            "WARNING 15:45:30 Warning message"
+        ]
+        result = task_func(logs)
+>       assert result == ([], time(0, 0))
+                              ^^^^^^^^^^
+E       TypeError: 'module' object is not callable. Did you mean: 'time.time(...)'?
+
+test_0894.py:13: TypeError
+_________________________ test_task_func_single_error __________________________
+
+    def test_task_func_single_error():
+        logs = [
+            "ERROR 09:15:30 Something went wrong",
+            "INFO 12:34:56 Some info message"
+        ]
+        result = task_func(logs)
+>       assert result == ([time(9, 15)], time(9, 15))
+                           ^^^^^^^^^^^
+E       TypeError: 'module' object is not callable. Did you mean: 'time.time(...)'?
+
+test_0894.py:21: TypeError
+________________________ test_task_func_multiple_errors ________________________
+
+    def test_task_func_multiple_errors():
+        logs = [
+            "ERROR 08:30:20 Error one",
+            "ERROR 10:45:10 Error two",
+            "INFO 12:34:56 Some info message"
+        ]
+        result = task_func(logs)
+>       assert result == ([time(8, 30), time(10, 45)], time(9, 37))
+                           ^^^^^^^^^^^
+E       TypeError: 'module' object is not callable. Did you mean: 'time.time(...)'?
+
+test_0894.py:30: TypeError
+______________________ test_task_func_same_minute_errors _______________________
+
+    def test_task_func_same_minute_errors():
+        logs = [
+            "ERROR 09:15:30 Error one",
+            "ERROR 09:15:45 Error two",
+            "INFO 12:34:56 Some info message"
+        ]
+        result = task_func(logs)
+>       assert result == ([time(9, 15), time(9, 15)], time(9, 15))
+                           ^^^^^^^^^^^
+E       TypeError: 'module' object is not callable. Did you mean: 'time.time(...)'?
+
+test_0894.py:39: TypeError
+________________________ test_task_func_no_time_in_logs ________________________
+
+    def test_task_func_no_time_in_logs():
+        logs = [
+            "ERROR Something went wrong",
+            "INFO 12:34:56 Some info message"
+        ]
+        result = task_func(logs)
+>       assert result == ([], time(0, 0))
+                              ^^^^^^^^^^
+E       TypeError: 'module' object is not callable. Did you mean: 'time.time(...)'?
+
+test_0894.py:47: TypeError
+______________________ test_task_func_invalid_time_format ______________________
+
+    def test_task_func_invalid_time_format():
+        logs = [
+            "ERROR 09-15-30 Error one",
+            "ERROR 10:45:10 Error two",
+            "INFO 12:34:56 Some info message"
+        ]
+        result = task_func(logs)
+>       assert result == ([], time(0, 0))
+                              ^^^^^^^^^^
+E       TypeError: 'module' object is not callable. Did you mean: 'time.time(...)'?
+
+test_0894.py:56: TypeError
+=========================== short test summary info ============================
+FAILED test_0894.py::test_task_func_no_errors - TypeError: 'module' object is...
+FAILED test_0894.py::test_task_func_single_error - TypeError: 'module' object...
+FAILED test_0894.py::test_task_func_multiple_errors - TypeError: 'module' obj...
+FAILED test_0894.py::test_task_func_same_minute_errors - TypeError: 'module' ...
+FAILED test_0894.py::test_task_func_no_time_in_logs - TypeError: 'module' obj...
+FAILED test_0894.py::test_task_func_invalid_time_format - TypeError: 'module'...
+6 failed in 0.49s

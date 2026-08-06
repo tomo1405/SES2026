@@ -1,0 +1,84 @@
+python
+import string
+import random
+import re
+import pytest
+
+def task_func(elements, pattern, seed=100):
+    # Set the seed for reproducibility
+    random.seed(seed)
+    replaced_elements = []
+    
+    for element in elements:
+        replaced = ''.join([random.choice(string.ascii_letters) for _ in element])
+        formatted = '%{}%'.format(replaced)
+        replaced_elements.append(formatted)
+        
+    # Concatenate all the formatted elements into a single string
+    concatenated_elements = ''.join(replaced_elements)
+    # Search for the regex pattern in the concatenated string
+    search_result = re.search(pattern, concatenated_elements)
+    # Return the search result
+    return replaced_elements, bool(search_result)
+
+def test_task_func():
+    # Test case 1: Valid input
+    elements = ['hello', 'world']
+    pattern = r'\d+'
+    replaced_elements, search_result = task_func(elements, pattern)
+    assert replaced_elements == ['%h%l%l%o%', '%w%o%r%l%d%']
+    assert search_result == False
+    
+    # Test case 2: Invalid input
+    elements = ['hello', 'world']
+    pattern = r'^\d+'
+    replaced_elements, search_result = task_func(elements, pattern)
+    assert replaced_elements == ['%h%l%l%o%', '%w%o%r%l%d%']
+    assert search_result == True
+    
+    # Test case 3: Empty input
+    elements = []
+    pattern = r'^\d+'
+    replaced_elements, search_result = task_func(elements, pattern)
+    assert replaced_elements == []
+    assert search_result == False
+    
+    # Test case 4: Single element input
+    elements = ['hello']
+    pattern = r'^\d+'
+    replaced_elements, search_result = task_func(elements, pattern)
+    assert replaced_elements == ['%h%l%l%o%']
+    assert search_result == True
+    
+    # Test case 5: Multiple element input
+    elements = ['hello', 'world', '1234']
+    pattern = r'^\d+'
+    replaced_elements, search_result = task_func(elements, pattern)
+    assert replaced_elements == ['%h%l%l%o%', '%w%o%r%l%d%', '%1%2%3%4%']
+    assert search_result == True
+    
+    # Test case 6: Seed input
+    elements = ['hello', 'world']
+    pattern = r'^\d+'
+    replaced_elements, search_result = task_func(elements, pattern, seed=10)
+    assert replaced_elements == ['%h%l%l%o%', '%w%o%r%l%d%']
+    assert search_result == True
+    
+    # Test case 7: Invalid seed input
+    elements = ['hello', 'world']
+    pattern = r'^\d+'
+    replaced_elements, search_result = task_func(elements, pattern, seed='10')
+    assert replaced_elements == ['%h%l%l%o%', '%w%o%r%l%d%']
+    assert search_result == True
+    
+    # Test case 8: Invalid input type
+    elements = 'hello'
+    pattern = r'^\d+'
+    with pytest.raises(TypeError):
+        replaced_elements, search_result = task_func(elements, pattern)
+    
+    # Test case 9: Invalid pattern type
+    elements = ['hello', 'world']
+    pattern = 1234
+    with pytest.raises(TypeError):
+        replaced_elements, search_result = task_func(elements, pattern)

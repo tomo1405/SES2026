@@ -1,0 +1,108 @@
+..FFFFFF                                                                 [100%]
+=================================== FAILURES ===================================
+_______________ test_task_func_returns_correct_number_of_columns _______________
+
+    def test_task_func_returns_correct_number_of_columns():
+        results_df = task_func(goals=10, penalties=5, rng_seed=123)
+>       assert len(results_df.columns) == 3
+E       AssertionError: assert 4 == 3
+E        +  where 4 = len(Index(['Team', 'Match Result', 'Goals', 'Penalty Cost'], dtype='str'))
+E        +    where Index(['Team', 'Match Result', 'Goals', 'Penalty Cost'], dtype='str') =      Team      Match Result  Goals  Penalty Cost\n0  Team A  (0 goals, $2000)      0          2000\n1  Team B  (1 goals,...      4             0\n3  Team D  (0 goals, $3000)      0          3000\n4  Team E  (8 goals, $4000)      8          4000.columns
+
+test_0618.py:15: AssertionError
+_____________________ test_task_func_returns_correct_data ______________________
+
+    def test_task_func_returns_correct_data():
+        results_df = task_func(goals=10, penalties=5, rng_seed=123)
+        expected_results = [
+            ['Team A', '(3 goals, $500)'],
+            ['Team B', '(4 goals, $500)'],
+            ['Team C', '(5 goals, $500)'],
+            ['Team D', '(6 goals, $500)'],
+            ['Team E', '(7 goals, $500)']
+        ]
+>       assert results_df.values.tolist() == expected_results
+E       AssertionError: assert [['Team A', '...0)', 8, 4000]] == [['Team A', '...oals, $500)']]
+E         
+E         At index 0 diff: ['Team A', '(0 goals, $2000)', 0, 2000] != ['Team A', '(3 goals, $500)']
+E         Use -v to get more diff
+
+test_0618.py:26: AssertionError
+___________ test_task_func_returns_correct_data_with_different_seed ____________
+
+    def test_task_func_returns_correct_data_with_different_seed():
+        results_df = task_func(goals=10, penalties=5, rng_seed=456)
+        expected_results = [
+            ['Team A', '(3 goals, $500)'],
+            ['Team B', '(4 goals, $500)'],
+            ['Team C', '(5 goals, $500)'],
+            ['Team D', '(6 goals, $500)'],
+            ['Team E', '(7 goals, $500)']
+        ]
+>       assert results_df.values.tolist() == expected_results
+E       AssertionError: assert [['Team A', '..., $0)', 8, 0]] == [['Team A', '...oals, $500)']]
+E         
+E         At index 0 diff: ['Team A', '(7 goals, $3000)', 7, 3000] != ['Team A', '(3 goals, $500)']
+E         Use -v to get more diff
+
+test_0618.py:37: AssertionError
+___________ test_task_func_returns_correct_data_with_different_teams ___________
+
+    def test_task_func_returns_correct_data_with_different_teams():
+        results_df = task_func(goals=10, penalties=5, rng_seed=123, teams=['Team A', 'Team B', 'Team C'])
+        expected_results = [
+            ['Team A', '(3 goals, $500)'],
+            ['Team B', '(4 goals, $500)'],
+            ['Team C', '(5 goals, $500)']
+        ]
+>       assert results_df.values.tolist() == expected_results
+E       AssertionError: assert [['Team A', '..., $0)', 4, 0]] == [['Team A', '...oals, $500)']]
+E         
+E         At index 0 diff: ['Team A', '(0 goals, $2000)', 0, 2000] != ['Team A', '(3 goals, $500)']
+E         Use -v to get more diff
+
+test_0618.py:46: AssertionError
+___________ test_task_func_returns_correct_data_with_different_goals ___________
+
+    def test_task_func_returns_correct_data_with_different_goals():
+        results_df = task_func(goals=15, penalties=5, rng_seed=123)
+        expected_results = [
+            ['Team A', '(3 goals, $500)'],
+            ['Team B', '(4 goals, $500)'],
+            ['Team C', '(5 goals, $500)'],
+            ['Team D', '(6 goals, $500)'],
+            ['Team E', '(7 goals, $500)']
+        ]
+>       assert results_df.values.tolist() == expected_results
+E       AssertionError: assert [['Team A', '...)', 10, 2000]] == [['Team A', '...oals, $500)']]
+E         
+E         At index 0 diff: ['Team A', '(1 goals, $2000)', 1, 2000] != ['Team A', '(3 goals, $500)']
+E         Use -v to get more diff
+
+test_0618.py:57: AssertionError
+_________ test_task_func_returns_correct_data_with_different_penalties _________
+
+    def test_task_func_returns_correct_data_with_different_penalties():
+        results_df = task_func(goals=10, penalties=10, rng_seed=123)
+        expected_results = [
+            ['Team A', '(3 goals, $500)'],
+            ['Team B', '(4 goals, $500)'],
+            ['Team C', '(5 goals, $500)'],
+            ['Team D', '(6 goals, $500)'],
+            ['Team E', '(7 goals, $500)']
+        ]
+>       assert results_df.values.tolist() == expected_results
+E       AssertionError: assert [['Team A', '...0)', 8, 8000]] == [['Team A', '...oals, $500)']]
+E         
+E         At index 0 diff: ['Team A', '(0 goals, $4000)', 0, 4000] != ['Team A', '(3 goals, $500)']
+E         Use -v to get more diff
+
+test_0618.py:68: AssertionError
+=========================== short test summary info ============================
+FAILED test_0618.py::test_task_func_returns_correct_number_of_columns - Asser...
+FAILED test_0618.py::test_task_func_returns_correct_data - AssertionError: as...
+FAILED test_0618.py::test_task_func_returns_correct_data_with_different_seed
+FAILED test_0618.py::test_task_func_returns_correct_data_with_different_teams
+FAILED test_0618.py::test_task_func_returns_correct_data_with_different_goals
+FAILED test_0618.py::test_task_func_returns_correct_data_with_different_penalties
+6 failed, 2 passed in 2.57s

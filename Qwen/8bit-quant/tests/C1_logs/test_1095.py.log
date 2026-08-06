@@ -1,0 +1,43 @@
+...F..FF                                                                 [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_mixed_case ___________________________
+
+    def test_task_func_mixed_case():
+        text = "This is a test with mixed $$Words and $$words."
+        expected_output = [('words', 2), ('Words', 1)]
+>       assert task_func(text) == expected_output
+E       AssertionError: assert [('Words', 1), ('words', 1)] == [('words', 2), ('Words', 1)]
+E         
+E         At index 0 diff: ('Words', 1) != ('words', 2)
+E         Use -v to get more diff
+
+test_1095.py:24: AssertionError
+_______________________ test_task_func_only_dollar_signs _______________________
+
+    def test_task_func_only_dollar_signs():
+        text = "$$$"
+        expected_output = []
+>       assert task_func(text) == expected_output
+E       AssertionError: assert [('$$$', 1)] == []
+E         
+E         Left contains one more item: ('$$$', 1)
+E         Use -v to get more diff
+
+test_1095.py:39: AssertionError
+______________________ test_task_func_special_characters _______________________
+
+    def test_task_func_special_characters():
+        text = "This is a test with special characters $$@# and $$%^&*."
+        expected_output = []
+>       assert task_func(text) == expected_output
+E       AssertionError: assert [('$$', 2)] == []
+E         
+E         Left contains one more item: ('$$', 2)
+E         Use -v to get more diff
+
+test_1095.py:44: AssertionError
+=========================== short test summary info ============================
+FAILED test_1095.py::test_task_func_mixed_case - AssertionError: assert [('Wo...
+FAILED test_1095.py::test_task_func_only_dollar_signs - AssertionError: asser...
+FAILED test_1095.py::test_task_func_special_characters - AssertionError: asse...
+3 failed, 5 passed in 4.10s

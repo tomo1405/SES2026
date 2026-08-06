@@ -1,0 +1,60 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        def sample_function(arg1: int, arg2: str, arg3: list = [1, 2, 3]):
+            pass
+    
+        expected_output = json.dumps({
+            'function_name': 'sample_function',
+            'args': ['arg1', 'arg2', 'arg3'],
+            'defaults': [1, 2, 3],
+            'annotations': {
+                'arg1': 'int',
+                'arg2': 'str',
+                'arg3': 'list'
+            },
+            'is_lambda': False
+        })
+    
+        actual_output = task_func(sample_function)
+>       assert actual_output == expected_output, "Output does not match the expected output"
+E       AssertionError: Output does not match the expected output
+E       assert '{"function_n...ambda": true}' == '{"function_n...mbda": false}'
+E         
+E         Skipping 74 identical leading characters in diff, use -v to show
+E         - faults": [1, 2, 3], "annotations": {"arg1": "int", "arg2": "str", "arg3": "list"}, "is_lambda": false}
+E         ?                                                                                                 ^^^^
+E         + faults": [[1, 2, 3]], "annotations": {"arg1": "int", "arg2": "str", "arg3": "list"}, "is_lambda": true}
+E         ?          +         +                                                                              ^^^
+
+test_0571.py:24: AssertionError
+__________________________ test_task_func_with_lambda __________________________
+
+    def test_task_func_with_lambda():
+        lambda_func = lambda x: x + 1
+    
+        expected_output = json.dumps({
+            'function_name': '<lambda>',
+            'args': ['x'],
+            'defaults': None,
+            'annotations': {'x': 'int'},
+            'is_lambda': True
+        })
+    
+        actual_output = task_func(lambda_func)
+>       assert actual_output == expected_output, "Output does not match the expected output"
+E       AssertionError: Output does not match the expected output
+E       assert '{"function_n...ambda": true}' == '{"function_n...ambda": true}'
+E         
+E         Skipping 69 identical leading characters in diff, use -v to show
+E         - ations": {"x": "int"}, "is_lambda": true}
+E         ?           ----------
+E         + ations": {}, "is_lambda": true}
+
+test_0571.py:38: AssertionError
+=========================== short test summary info ============================
+FAILED test_0571.py::test_task_func - AssertionError: Output does not match t...
+FAILED test_0571.py::test_task_func_with_lambda - AssertionError: Output does...
+2 failed in 0.46s

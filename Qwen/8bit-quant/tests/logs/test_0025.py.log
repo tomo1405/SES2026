@@ -1,0 +1,32 @@
+..FF.                                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_salt_length ________________________
+
+    def test_task_func_with_salt_length():
+        password = "secure_password"
+        salt, hashed_password = task_func(password, SALT_LENGTH=16)
+        assert len(base64.b64decode(salt)) == 16
+>       assert len(base64.b64decode(hashed_password)) == 64
+E       AssertionError: assert 32 == 64
+E        +  where 32 = len(b'\x8e\xb0;\x84\xed\x0b\x84`{\xfa\x9e\xa2\r\x1a\x12\x04\x07\x1cp\x9bQm\xab\xd3\xf8\xdb\xb1\xb5??\x02\xc9')
+E        +    where b'\x8e\xb0;\x84\xed\x0b\x84`{\xfa\x9e\xa2\r\x1a\x12\x04\x07\x1cp\x9bQm\xab\xd3\xf8\xdb\xb1\xb5??\x02\xc9' = <function b64decode at 0x729115968e00>(b'jrA7hO0LhGB7+p6iDRoSBAcccJtRbavT+NuxtT8/Ask=')
+E        +      where <function b64decode at 0x729115968e00> = base64.b64decode
+
+test_0025.py:21: AssertionError
+___________________ test_task_func_with_default_salt_length ____________________
+
+    def test_task_func_with_default_salt_length():
+        password = "secure_password"
+        salt, hashed_password = task_func(password)
+        assert len(base64.b64decode(salt)) == 32
+>       assert len(base64.b64decode(hashed_password)) == 64
+E       assert 32 == 64
+E        +  where 32 = len(b'\xb8\x9c\xf2\xc1"\x05\xa8\xda\x19>K\xbe\x08h\xc5\xe5\xbe\xc0\xe7\x87\xe0\xce\xbc#\x154\x06E$\xbe\'\x1c')
+E        +    where b'\xb8\x9c\xf2\xc1"\x05\xa8\xda\x19>K\xbe\x08h\xc5\xe5\xbe\xc0\xe7\x87\xe0\xce\xbc#\x154\x06E$\xbe\'\x1c' = <function b64decode at 0x729115968e00>(b'uJzywSIFqNoZPku+CGjF5b7A54fgzrwjFTQGRSS+Jxw=')
+E        +      where <function b64decode at 0x729115968e00> = base64.b64decode
+
+test_0025.py:27: AssertionError
+=========================== short test summary info ============================
+FAILED test_0025.py::test_task_func_with_salt_length - AssertionError: assert...
+FAILED test_0025.py::test_task_func_with_default_salt_length - assert 32 == 64
+2 failed, 3 passed in 0.49s

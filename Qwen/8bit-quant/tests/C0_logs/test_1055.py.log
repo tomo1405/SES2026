@@ -1,0 +1,59 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_valid_file ________________________
+
+mock_file = <_io.StringIO object at 0x74de7d1d8d00>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x74de7d1c9b20>
+
+    def test_task_func_with_valid_file(mock_file, monkeypatch):
+        def mock_open(file_path, mode, encoding):
+            return mock_file
+    
+        monkeypatch.setattr('builtins.open', mock_open)
+    
+>       mean, std_dev, ax = task_func("mock_file.csv")
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1055.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1055.py:15: in task_func
+    sample = np.random.choice(population, 30, replace=False)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   ValueError: Cannot take a larger sample than population when 'replace=False'
+
+numpy/random/mtrand.pyx:1025: ValueError
+________________________ test_task_func_with_empty_file ________________________
+
+mock_file = <_io.StringIO object at 0x74de7d1d9cc0>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x74de7d1ca4b0>
+
+    def test_task_func_with_empty_file(mock_file, monkeypatch):
+        mock_file.seek(0)
+        mock_file.truncate(0)
+    
+        def mock_open(file_path, mode, encoding):
+            return mock_file
+    
+        monkeypatch.setattr('builtins.open', mock_open)
+    
+        with pytest.raises(IOError) as excinfo:
+>           task_func("empty_file.csv")
+
+test_1055.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1055.py:15: in task_func
+    sample = np.random.choice(population, 30, replace=False)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   ValueError: 'a' cannot be empty unless no samples are taken
+
+numpy/random/mtrand.pyx:975: ValueError
+=========================== short test summary info ============================
+FAILED test_1055.py::test_task_func_with_valid_file - ValueError: Cannot take...
+FAILED test_1055.py::test_task_func_with_empty_file - ValueError: 'a' cannot ...
+2 failed, 1 passed in 3.32s

@@ -1,0 +1,25 @@
+.......F                                                                 [100%]
+=================================== FAILURES ===================================
+__________________ test_task_func_list_tuple_dict_set_columns __________________
+
+    def test_task_func_list_tuple_dict_set_columns():
+        df = task_func(5, 3)
+        for col in df.columns:
+            data_type = df[col].apply(type).iloc[0]
+            if data_type in [list, tuple, dict, set]:
+                for item in df[col]:
+                    assert isinstance(item, data_type), f"Column {col} contains invalid item type {type(item)}"
+                    if data_type == list:
+                        assert all(isinstance(x, int) for x in item), f"Column {col} contains non-integer items"
+                    elif data_type == tuple:
+                        assert all(isinstance(x, int) for x in item), f"Column {col} contains non-integer items"
+                    elif data_type == dict:
+>                       assert all(isinstance(k, int) and isinstance(v, int) for k, v in item.items()), f"Column {col} contains non-integer keys/values"
+E                       AssertionError: Column col0 contains non-integer keys/values
+E                       assert False
+E                        +  where False = all(<generator object test_task_func_list_tuple_dict_set_columns.<locals>.<genexpr> at 0x757d43afd0e0>)
+
+test_0194.py:54: AssertionError
+=========================== short test summary info ============================
+FAILED test_0194.py::test_task_func_list_tuple_dict_set_columns - AssertionEr...
+1 failed, 7 passed in 1.17s

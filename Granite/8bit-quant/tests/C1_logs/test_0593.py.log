@@ -1,0 +1,29 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        hours = 10
+        file_path = task_func(hours)
+        assert file_path == os.path.join('./output', 'sensor_data.csv')
+        with open(file_path, 'r', newline='') as f:
+            reader = csv.reader(f)
+            data = list(reader)
+        assert len(data) == hours + 1  # +1 for the header row
+        for row in data[1:]:  # Skip the header row
+>           assert len(row) == len(SENSORS) + 1  # +1 for the 'Time' column
+                                   ^^^^^^^
+E           NameError: name 'SENSORS' is not defined
+
+test_0593.py:18: NameError
+______________________ test_task_func_with_invalid_hours _______________________
+
+    def test_task_func_with_invalid_hours():
+>       with pytest.raises(ValueError) as exc_info:
+E       Failed: DID NOT RAISE ValueError
+
+test_0593.py:31: Failed
+=========================== short test summary info ============================
+FAILED test_0593.py::test_task_func - NameError: name 'SENSORS' is not defined
+FAILED test_0593.py::test_task_func_with_invalid_hours - Failed: DID NOT RAIS...
+2 failed, 1 passed in 0.46s

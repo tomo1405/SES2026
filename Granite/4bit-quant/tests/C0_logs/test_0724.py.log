@@ -1,0 +1,42 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        url = "https://example.com"
+        expected_output = "scraped_data.csv"
+>       actual_output = task_func(url)
+                        ^^^^^^^^^^^^^^
+
+test_0724.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'https://example.com'
+
+    def task_func(url):
+        html = urllib.request.urlopen(url).read()
+        soup = BeautifulSoup(html, 'html.parser')
+    
+        data = []
+        table = soup.find('table', attrs={'class':'data-table'})
+>       table_rows = table.find_all('tr')
+                     ^^^^^^^^^^^^^^
+E       AttributeError: 'NoneType' object has no attribute 'find_all'
+
+../../../src/src_0724.py:13: AttributeError
+_______________________ test_task_func_with_invalid_url ________________________
+
+    def test_task_func_with_invalid_url():
+        url = "https://invalid-url"
+        with pytest.raises(Exception) as e:
+            task_func(url)
+>       assert "urllib.error.URLError" in str(e), "Expected exception type not raised"
+E       AssertionError: Expected exception type not raised
+E       assert 'urllib.error.URLError' in "<ExceptionInfo URLError(gaierror(-3, 'Temporary failure in name resolution')) tblen=8>"
+E        +  where "<ExceptionInfo URLError(gaierror(-3, 'Temporary failure in name resolution')) tblen=8>" = str(<ExceptionInfo URLError(gaierror(-3, 'Temporary failure in name resolution')) tblen=8>)
+
+test_0724.py:14: AssertionError
+=========================== short test summary info ============================
+FAILED test_0724.py::test_task_func - AttributeError: 'NoneType' object has n...
+FAILED test_0724.py::test_task_func_with_invalid_url - AssertionError: Expect...
+2 failed in 1.21s

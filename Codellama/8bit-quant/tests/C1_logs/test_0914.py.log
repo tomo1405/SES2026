@@ -1,0 +1,109 @@
+FFFFFF                                                                   [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_empty_data ___________________________
+
+    def test_task_func_empty_data():
+        data = []
+        repetitions = 1
+        result = task_func(data, repetitions)
+>       assert result == {'mode': np.array([], dtype='object'), 'count': np.array([], dtype=int), 'fft': np.array([])}
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: The truth value of an empty array is ambiguous. Use `array.size > 0` to check that an array is not empty.
+
+test_0914.py:9: ValueError
+________________________ test_task_func_no_repetitions _________________________
+
+    def test_task_func_no_repetitions():
+        data = [1, 2, 3]
+        repetitions = 0
+        result = task_func(data, repetitions)
+>       assert result == {'mode': np.array([], dtype='object'), 'count': np.array([], dtype=int), 'fft': np.array([])}
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: The truth value of an empty array is ambiguous. Use `array.size > 0` to check that an array is not empty.
+
+test_0914.py:16: ValueError
+_______________________ test_task_func_single_repetition _______________________
+
+    def test_task_func_single_repetition():
+        data = [1, 2, 3]
+        repetitions = 1
+        result = task_func(data, repetitions)
+>       assert result == {'mode': np.array([1, 2, 3], dtype='object'), 'count': np.array([1, 1, 1], dtype=int), 'fft': np.array([])}
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+test_0914.py:23: ValueError
+_____________________ test_task_func_multiple_repetitions ______________________
+
+    def test_task_func_multiple_repetitions():
+        data = [1, 2, 3]
+        repetitions = 3
+        result = task_func(data, repetitions)
+>       assert result == {'mode': np.array([1, 2, 3], dtype='object'), 'count': np.array([3, 3, 3], dtype=int), 'fft': np.array([])}
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+test_0914.py:30: ValueError
+__________________________ test_task_func_mixed_data ___________________________
+
+    def test_task_func_mixed_data():
+        data = [1, 'a', 2, 'b', 3]
+        repetitions = 2
+>       result = task_func(data, repetitions)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0914.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0914.py:28: in task_func
+    return {'mode': np.sort(mode), 'count': count, 'fft': scipy.fft.fft(data)}
+                                                          ^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/scipy/fft/_backend.py:29: in __ua_function__
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/scipy/fft/_basic_backend.py:79: in fft
+    return _execute_1D('fft', _duccfft.fft, x, n=n, axis=axis, norm=norm,
+../../../.venv/lib/python3.12/site-packages/scipy/fft/_basic_backend.py:32: in _execute_1D
+    return duccfft_func(x, n=n, axis=axis, norm=norm,
+../../../.venv/lib/python3.12/site-packages/scipy/fft/_duccfft/basic.py:17: in c2c
+    tmp = _asfarray(x)
+          ^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+x = array(['1', 'a', '2', 'b', '3'], dtype='<U21')
+
+    def _asfarray(x):
+        """
+        Convert to array with floating or complex dtype.
+    
+        float16 values are also promoted to float32.
+        """
+        if not hasattr(x, "dtype"):
+            x = np.asarray(x)
+    
+        if x.dtype == np.float16:
+            return np.asarray(x, np.float32)
+        elif x.dtype.kind not in 'fc':
+>           return np.asarray(x, np.float64)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+E           ValueError: could not convert string to float: np.str_('a')
+
+../../../.venv/lib/python3.12/site-packages/scipy/fft/_duccfft/helper.py:126: ValueError
+______________________________ test_task_func_fft ______________________________
+
+    def test_task_func_fft():
+        data = [1, 2, 3]
+        repetitions = 1
+        result = task_func(data, repetitions)
+>       assert result == {'mode': np.array([1, 2, 3], dtype='object'), 'count': np.array([1, 1, 1], dtype=int), 'fft': np.array([])}
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+test_0914.py:44: ValueError
+=========================== short test summary info ============================
+FAILED test_0914.py::test_task_func_empty_data - ValueError: The truth value ...
+FAILED test_0914.py::test_task_func_no_repetitions - ValueError: The truth va...
+FAILED test_0914.py::test_task_func_single_repetition - ValueError: The truth...
+FAILED test_0914.py::test_task_func_multiple_repetitions - ValueError: The tr...
+FAILED test_0914.py::test_task_func_mixed_data - ValueError: could not conver...
+FAILED test_0914.py::test_task_func_fft - ValueError: The truth value of an a...
+6 failed in 1.64s

@@ -1,0 +1,23 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a sample dataframe
+        df = pd.DataFrame({'var1': [1, 2, 3, 4, 5], 'var2': [2, 4, 6, 8, 10]})
+    
+        # Run the function and check the output
+        output = task_func(df)
+        assert isinstance(output, pd.DataFrame)
+        assert 'predicted' in output.columns
+        assert len(output) == len(df)
+    
+        # Check the regression results
+        regression = linregress(df['var1'], df['var2'])
+>       assert regression.slope == output['predicted'].values
+E       ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+test_0678.py:19: ValueError
+=========================== short test summary info ============================
+FAILED test_0678.py::test_task_func - ValueError: The truth value of an array...
+1 failed in 2.40s

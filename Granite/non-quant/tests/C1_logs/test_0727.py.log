@@ -1,0 +1,71 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        s = "This is a sample sentence with some English words like apple and orange."
+        n = 3
+        expected_output = ['apple', 'orange', 'sample']
+        random.seed(0)  # Set random seed for reproducibility
+        actual_output = task_func(s, n)
+>       assert actual_output == expected_output, "Output does not match expected output"
+E       AssertionError: Output does not match expected output
+E       assert ['some', 'orange', 'this'] == ['apple', 'orange', 'sample']
+E         
+E         At index 0 diff: 'some' != 'apple'
+E         Use -v to get more diff
+
+test_0727.py:19: AssertionError
+____________________ test_task_func_with_less_english_words ____________________
+
+    def test_task_func_with_less_english_words():
+        s = "This sentence has only two English words: cat and dog."
+        n = 3
+        expected_output = ['cat', 'dog']
+        random.seed(0)  # Set random seed for reproducibility
+        actual_output = task_func(s, n)
+>       assert actual_output == expected_output, "Output does not match expected output"
+E       AssertionError: Output does not match expected output
+E       assert ['dog', 'two', 'and'] == ['cat', 'dog']
+E         
+E         At index 0 diff: 'dog' != 'cat'
+E         Left contains one more item: 'and'
+E         Use -v to get more diff
+
+test_0727.py:27: AssertionError
+_____________________ test_task_func_with_no_english_words _____________________
+
+    def test_task_func_with_no_english_words():
+        s = "This sentence has no English words."
+        n = 3
+        expected_output = []
+        random.seed(0)  # Set random seed for reproducibility
+        actual_output = task_func(s, n)
+>       assert actual_output == expected_output, "Output does not match expected output"
+E       AssertionError: Output does not match expected output
+E       assert ['sentence', 'no', 'this'] == []
+E         
+E         Left contains 3 more items, first extra item: 'sentence'
+E         Use -v to get more diff
+
+test_0727.py:35: AssertionError
+________________________ test_task_func_with_negative_n ________________________
+
+    def test_task_func_with_negative_n():
+        s = "This sentence has some English words like apple and orange."
+        n = -1
+        with pytest.raises(ValueError) as excinfo:
+            task_func(s, n)
+>       assert "n must be a positive integer" in str(excinfo.value), "Expected ValueError not raised"
+E       AssertionError: Expected ValueError not raised
+E       assert 'n must be a positive integer' in 'Sample larger than population or is negative'
+E        +  where 'Sample larger than population or is negative' = str(ValueError('Sample larger than population or is negative'))
+E        +    where ValueError('Sample larger than population or is negative') = <ExceptionInfo ValueError('Sample larger than population or is negative') tblen=3>.value
+
+test_0727.py:42: AssertionError
+=========================== short test summary info ============================
+FAILED test_0727.py::test_task_func - AssertionError: Output does not match e...
+FAILED test_0727.py::test_task_func_with_less_english_words - AssertionError:...
+FAILED test_0727.py::test_task_func_with_no_english_words - AssertionError: O...
+FAILED test_0727.py::test_task_func_with_negative_n - AssertionError: Expecte...
+4 failed in 3.78s

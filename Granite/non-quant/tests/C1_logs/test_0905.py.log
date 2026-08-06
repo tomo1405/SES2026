@@ -1,0 +1,22 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        d = [{'x': 1, 'y': 2, 'z': 3}, {'x': 4, 'y': 5, 'z': 6}, {'x': 7, 'y': 8, 'z': 9}]
+        ax = task_func(d)
+        assert isinstance(ax, plt.Axes)  # Check if the returned object is an Axes instance
+        lines = ax.get_lines()
+        assert len(lines) == 3  # Check if the correct number of lines are plotted
+        x_values = [line.get_xdata() for line in lines]
+        y_values = [line.get_ydata() for line in lines]
+>       assert x_values == [1, 4, 7]  # Check if the x-values are correct
+               ^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+test_0905.py:34: ValueError
+=========================== short test summary info ============================
+FAILED test_0905.py::test_task_func - ValueError: The truth value of an array...
+1 failed in 2.10s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

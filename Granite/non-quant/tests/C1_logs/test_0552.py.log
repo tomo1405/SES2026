@@ -1,0 +1,41 @@
+.F.F                                                                     [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_empty_list ________________________
+
+list_of_menuitems = [['Item1', 'Item2', 'Item3'], ['Item2', 'Item3', 'Item4'], ['Item1', 'Item4'], []]
+
+    def test_task_func_with_empty_list(list_of_menuitems):
+        list_of_menuitems.append([])
+        ax = task_func(list_of_menuitems)
+>       assert ax is None
+E       AssertionError: assert <Axes: xlabel='Count', ylabel='Item'> is None
+
+test_0552.py:19: AssertionError
+_________________________ test_task_func_with_no_data __________________________
+
+list_of_menuitems = [['Item1', 'Item2', 'Item3'], ['Item2', 'Item3', 'Item4'], ['Item1', 'Item4']]
+
+    def test_task_func_with_no_data(list_of_menuitems):
+        flat_list = [item for sublist in list_of_menuitems for item in sublist]
+        counter = Counter(flat_list)
+        df = pd.DataFrame(counter.items(), columns=['Item', 'Count'])
+        ax = task_func(list_of_menuitems)
+>       assert ax is None
+E       AssertionError: assert <Axes: xlabel='Count', ylabel='Item'> is None
+
+test_0552.py:31: AssertionError
+=============================== warnings summary ===============================
+Granite/non-quant/tests/test_0552.py::test_task_func
+Granite/non-quant/tests/test_0552.py::test_task_func_with_empty_list
+Granite/non-quant/tests/test_0552.py::test_task_func_with_no_data
+  /work/tomohiro-w/utg/src/src_0552.py:29: FutureWarning: 
+  
+  Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `y` variable to `hue` and set `legend=False` for the same effect.
+  
+    ax = sns.barplot(x="Count", y="Item", data=df, palette="viridis")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0552.py::test_task_func_with_empty_list - AssertionError: assert ...
+FAILED test_0552.py::test_task_func_with_no_data - AssertionError: assert <Ax...
+2 failed, 2 passed, 3 warnings in 3.80s

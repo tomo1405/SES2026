@@ -1,0 +1,38 @@
+F..F                                                                     [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_file_not_found _________________________
+
+mock_os_path_exists = None
+
+    def test_task_func_file_not_found(mock_os_path_exists):
+        with pytest.raises(FileNotFoundError) as excinfo:
+            task_func('/nonexistent/path', 'file.xlsx', 'date_column', '2023-01-01', '2023-01-31')
+>       assert str(excinfo.value) == "The file /nonexistent/path/file.xlsx does not exist."
+E       assert "[Errno 2] No...th/file.xlsx'" == 'The file /no...es not exist.'
+E         
+E         - The file /nonexistent/path/file.xlsx does not exist.
+E         + [Errno 2] No such file or directory: '/nonexistent/path/file.xlsx'
+
+test_0411.py:38: AssertionError
+____________________________ test_task_func_success ____________________________
+
+mock_os_path_exists = None, mock_pd_read_excel = None
+
+    def test_task_func_success(mock_os_path_exists, mock_pd_read_excel):
+        result_df = task_func('/valid/path', 'file.xlsx', 'date_column', '2023-01-01', '2023-01-31')
+        expected_df = pd.DataFrame({
+            'date_column': ['2023-01-01', '2023-01-15'],
+            'value_column': [10, 20]
+        })
+>       pd.testing.assert_frame_equal(result_df.reset_index(drop=True), expected_df.reset_index(drop=True))
+E       AssertionError: Attributes of DataFrame.iloc[:, 0] (column name="date_column") are different
+E       
+E       Attribute "dtype" are different
+E       [left]:  datetime64[us]
+E       [right]: <StringDtype(na_value=nan)>
+
+test_0411.py:56: AssertionError
+=========================== short test summary info ============================
+FAILED test_0411.py::test_task_func_file_not_found - assert "[Errno 2] No...t...
+FAILED test_0411.py::test_task_func_success - AssertionError: Attributes of D...
+2 failed, 2 passed in 2.19s

@@ -1,0 +1,41 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a simple word
+        word = "hello"
+        expected_pairs = ['he', 'el', 'll', 'lo']
+        pairs_count = dict(Counter(expected_pairs))
+        expected_hash = hashlib.md5(str(pairs_count).encode()).hexdigest()
+        assert task_func(word) == expected_hash
+    
+        # Test with a single character word
+        word = "a"
+        expected_pairs = []
+        pairs_count = dict(Counter(expected_pairs))
+        expected_hash = hashlib.md5(str(pairs_count).encode()).hexdigest()
+        assert task_func(word) == expected_hash
+    
+        # Test with an empty string
+        word = ""
+        expected_pairs = []
+        pairs_count = dict(Counter(expected_pairs))
+        expected_hash = hashlib.md5(str(pairs_count).encode()).hexdigest()
+        assert task_func(word) == expected_hash
+    
+        # Test with a word that has repeating characters
+        word = "bookkeeper"
+        expected_pairs = ['bo', 'oo', 'ok', 'ke', 'ee', 'ep', 'pe', 'er']
+        pairs_count = dict(Counter(expected_pairs))
+        expected_hash = hashlib.md5(str(pairs_count).encode()).hexdigest()
+>       assert task_func(word) == expected_hash
+E       AssertionError: assert '062e1ebe1944...b4eaf7a50a529' == '14b07e0904d5...f50496dcf787c'
+E         
+E         - 14b07e0904d5be8ff9df50496dcf787c
+E         + 062e1ebe1944d70a615b4eaf7a50a529
+
+test_0935.py:33: AssertionError
+=========================== short test summary info ============================
+FAILED test_0935.py::test_task_func - AssertionError: assert '062e1ebe1944......
+1 failed in 0.54s

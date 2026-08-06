@@ -1,0 +1,36 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sample_df =    A  B   C   D   E
+0  1  5   9  13  17
+1  2  6  10  14  18
+2  3  7  11  15  19
+3  4  8  12  16  20
+
+    def test_task_func(sample_df):
+        tuples = [(1, 5), (3, 11)]
+        n_plots = 2
+    
+        # Mocking plt.show to prevent actual plotting
+        plt.show = lambda: None
+    
+        result_df, plot_details = task_func(sample_df, tuples, n_plots)
+    
+        # Check if the correct rows are removed
+        expected_df = sample_df[(sample_df['A'] != 1) | (sample_df['B'] != 5) | (sample_df['A'] != 3) | (sample_df['C'] != 11)]
+        pd.testing.assert_frame_equal(result_df, expected_df)
+    
+        # Check if the number of plots is correct
+        assert len(plot_details) == min(n_plots, len(result_df))
+    
+        # Check if the columns in plot_details are valid
+        for col1, col2 in plot_details:
+>           assert col1 in COLUMNS
+                           ^^^^^^^
+E           NameError: name 'COLUMNS' is not defined
+
+test_0612.py:36: NameError
+=========================== short test summary info ============================
+FAILED test_0612.py::test_task_func - NameError: name 'COLUMNS' is not defined
+1 failed in 2.08s

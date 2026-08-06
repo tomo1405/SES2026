@@ -1,0 +1,77 @@
+.E...                                                                    [100%]
+==================================== ERRORS ====================================
+_____________ ERROR at setup of test_task_func_categorical_column ______________
+
+    @pytest.fixture
+    def categorical_df():
+>       return pd.DataFrame({
+            'C': ['foo', 'bar', 'baz'] * 33 + ['qux'],
+            'D': ['alpha', 'beta', 'gamma'] * 34
+        })
+
+test_0342.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:769: in __init__
+    mgr = dict_to_mgr(data, index, columns, dtype=dtype, copy=copy)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:460: in dict_to_mgr
+    return arrays_to_mgr(arrays, columns, index, dtype=dtype, consolidate=copy)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:113: in arrays_to_mgr
+    index = _extract_index(arrays)
+            ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = [['foo', 'bar', 'baz', 'foo', 'bar', 'baz', ...], ['alpha', 'beta', 'gamma', 'alpha', 'beta', 'gamma', ...]]
+
+    def _extract_index(data) -> Index:
+        """
+        Try to infer an Index from the passed data, raise ValueError on failure.
+        """
+        index: Index
+        if len(data) == 0:
+            return default_index(0)
+    
+        raw_lengths = set()
+        indexes: list[list[Hashable] | Index] = []
+    
+        have_raw_arrays = False
+        have_series = False
+        have_dicts = False
+    
+        for val in data:
+            if isinstance(val, ABCSeries):
+                have_series = True
+                indexes.append(val.index)
+            elif isinstance(val, dict):
+                have_dicts = True
+                indexes.append(list(val.keys()))
+            elif is_list_like(val) and getattr(val, "ndim", 1) == 1:
+                have_raw_arrays = True
+                raw_lengths.add(len(val))
+            elif isinstance(val, np.ndarray) and val.ndim > 1:
+                raise ValueError("Per-column arrays must each be 1-dimensional")
+    
+        if not indexes and not raw_lengths:
+            raise ValueError("If using all scalar values, you must pass an index")
+    
+        if have_series:
+            index = union_indexes(indexes)
+        elif have_dicts:
+            index = union_indexes(indexes, sort=False)
+    
+        if have_raw_arrays:
+            if len(raw_lengths) > 1:
+>               raise ValueError("All arrays must be of the same length")
+E               ValueError: All arrays must be of the same length
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:643: ValueError
+=============================== warnings summary ===============================
+Qwen/non-quant/tests/test_0342.py::test_task_func_numeric_column
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/categorical.py:700: MatplotlibDeprecationWarning: vert: bool was deprecated in Matplotlib 3.11 and will be removed in 3.13. Use orientation: {'vertical', 'horizontal'} instead.
+    artists = ax.bxp(**boxplot_kws)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+ERROR test_0342.py::test_task_func_categorical_column - ValueError: All array...
+4 passed, 1 warning, 1 error in 3.81s

@@ -1,0 +1,48 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        random_seed = 42
+        list_length = 1000
+        range_start = 1
+        range_end = 10
+        random.seed(random_seed)
+        expected_mode = mode([random.randint(range_start, range_end) for _ in range(list_length)])
+        expected_counter = Counter([random.randint(range_start, range_end) for _ in range(list_length)])
+        actual_mode, actual_numbers = task_func(list_length, range_start, range_end, random_seed)
+        assert actual_mode == expected_mode
+>       assert Counter(actual_numbers) == expected_counter
+E       AssertionError: assert Counter({(2, ..., (6, 82): 1}) == Counter({6: 1...1: 84, 4: 76})
+E         
+E         Left contains 10 more items:
+E         {(1, 91): 1,
+E          (2, 108): 1,
+E          (3, 85): 1,
+E          (4, 116): 1,
+E          (5, 113): 1,...
+E         
+E         ...Full output truncated (8 lines hidden), use '-vv' to show
+
+test_0834.py:23: AssertionError
+_______________________ test_task_func_with_default_args _______________________
+
+    def test_task_func_with_default_args():
+        random_seed = None
+        list_length = 1000
+        range_start = 1
+        range_end = 10
+        random.seed()
+        expected_mode = mode([random.randint(range_start, range_end) for _ in range(list_length)])
+        expected_counter = Counter([random.randint(range_start, range_end) for _ in range(list_length)])
+        actual_mode, actual_numbers = task_func(list_length, range_start, range_end, random_seed)
+>       assert actual_mode == expected_mode
+E       assert 1 == 8
+
+test_0834.py:34: AssertionError
+=========================== short test summary info ============================
+FAILED test_0834.py::test_task_func - AssertionError: assert Counter({(2, ......
+FAILED test_0834.py::test_task_func_with_default_args - assert 1 == 8
+2 failed in 0.49s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

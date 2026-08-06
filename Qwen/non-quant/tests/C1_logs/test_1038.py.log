@@ -1,0 +1,158 @@
+..FF                                                                     [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_output _____________________________
+
+    def test_task_func_output():
+        s1 = pd.Series([1, 2, 3])
+        s2 = pd.Series([4, 5, 6])
+>       labels, ax = task_func(s1, s2, n_clusters=2)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1038.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1038.py:20: in task_func
+    scatter = ax.scatter(df[s1.name], df[s2.name], c=labels)
+                         ^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:4378: in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = RangeIndex(start=0, stop=2, step=1), key = None
+
+    def get_loc(self, key) -> int:
+        """
+        Get integer location for requested label.
+    
+        Parameters
+        ----------
+        key : int or float
+            Label to locate. Integer-like floats (e.g. 3.0) are accepted and
+            treated as the corresponding integer. Non-integer floats and other
+            non-integer labels are not valid and will raise KeyError or
+            InvalidIndexError.
+    
+        Returns
+        -------
+        int
+            Integer location of the label within the RangeIndex.
+    
+        Raises
+        ------
+        KeyError
+            If the label is not present in the RangeIndex or the label is a
+            non-integer value.
+        InvalidIndexError
+            If the label is of an invalid type for the RangeIndex.
+    
+        See Also
+        --------
+        RangeIndex.get_slice_bound : Calculate slice bound that corresponds to
+            given label.
+        RangeIndex.get_indexer : Computes indexer and mask for new index given
+            the current index.
+        RangeIndex.get_non_unique : Returns indexer and masks for new index given
+            the current index.
+        RangeIndex.get_indexer_for : Returns an indexer even when non-unique.
+    
+        Examples
+        --------
+        >>> idx = pd.RangeIndex(5)
+        >>> idx.get_loc(3)
+        3
+    
+        >>> idx = pd.RangeIndex(2, 10, 2)  # values [2, 4, 6, 8]
+        >>> idx.get_loc(6)
+        2
+        """
+        if is_integer(key) or (is_float(key) and key.is_integer()):
+            new_key = int(key)
+            try:
+                return self._range.index(new_key)
+            except ValueError as err:
+                raise KeyError(key) from err
+        if isinstance(key, Hashable):
+>           raise KeyError(key)
+E           KeyError: None
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/range.py:525: KeyError
+_____________________________ test_task_func_plot ______________________________
+
+    def test_task_func_plot():
+        s1 = pd.Series([1, 2, 3])
+        s2 = pd.Series([4, 5, 6])
+>       _, ax = task_func(s1, s2, n_clusters=2)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1038.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1038.py:20: in task_func
+    scatter = ax.scatter(df[s1.name], df[s2.name], c=labels)
+                         ^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:4378: in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = RangeIndex(start=0, stop=2, step=1), key = None
+
+    def get_loc(self, key) -> int:
+        """
+        Get integer location for requested label.
+    
+        Parameters
+        ----------
+        key : int or float
+            Label to locate. Integer-like floats (e.g. 3.0) are accepted and
+            treated as the corresponding integer. Non-integer floats and other
+            non-integer labels are not valid and will raise KeyError or
+            InvalidIndexError.
+    
+        Returns
+        -------
+        int
+            Integer location of the label within the RangeIndex.
+    
+        Raises
+        ------
+        KeyError
+            If the label is not present in the RangeIndex or the label is a
+            non-integer value.
+        InvalidIndexError
+            If the label is of an invalid type for the RangeIndex.
+    
+        See Also
+        --------
+        RangeIndex.get_slice_bound : Calculate slice bound that corresponds to
+            given label.
+        RangeIndex.get_indexer : Computes indexer and mask for new index given
+            the current index.
+        RangeIndex.get_non_unique : Returns indexer and masks for new index given
+            the current index.
+        RangeIndex.get_indexer_for : Returns an indexer even when non-unique.
+    
+        Examples
+        --------
+        >>> idx = pd.RangeIndex(5)
+        >>> idx.get_loc(3)
+        3
+    
+        >>> idx = pd.RangeIndex(2, 10, 2)  # values [2, 4, 6, 8]
+        >>> idx.get_loc(6)
+        2
+        """
+        if is_integer(key) or (is_float(key) and key.is_integer()):
+            new_key = int(key)
+            try:
+                return self._range.index(new_key)
+            except ValueError as err:
+                raise KeyError(key) from err
+        if isinstance(key, Hashable):
+>           raise KeyError(key)
+E           KeyError: None
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/range.py:525: KeyError
+=========================== short test summary info ============================
+FAILED test_1038.py::test_task_func_output - KeyError: None
+FAILED test_1038.py::test_task_func_plot - KeyError: None
+2 failed, 2 passed in 4.32s

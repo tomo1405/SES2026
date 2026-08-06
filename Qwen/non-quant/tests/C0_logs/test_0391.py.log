@@ -1,0 +1,76 @@
+FF..                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_get = <MagicMock name='get' id='138143862336752'>
+
+    @patch('requests.get')
+    def test_task_func(mock_get):
+        # Setup mock response
+        mock_response = mock_get.return_value
+        mock_response.status_code = 200
+        mock_response.text = mock_csv_data
+    
+        # Test with default parameters
+        result_df = task_func({"URL": "http://example.com/movies.csv"})
+        expected_df = pd.DataFrame({
+            'title': ['Movie B', 'Movie A', 'Movie C'],
+            'year': [2019, 2020, 2021]
+        })
+>       pd.testing.assert_frame_equal(result_df.reset_index(drop=True), expected_df)
+
+test_0391.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/_testing/asserters.py:846: in assert_extension_array_equal
+    _testing.assert_almost_equal(
+pandas/_libs/testing.pyx:53: in pandas._libs.testing.assert_almost_equal
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   AssertionError: DataFrame.iloc[:, 0] (column name="title") are different
+E   
+E   DataFrame.iloc[:, 0] (column name="title") values are different (66.66667 %)
+E   [index]: [0, 1, 2]
+E   [left]:  [Movie A, Movie B, Movie C]
+E   [right]: [Movie B, Movie A, Movie C]
+E   At positional index 0, first diff: Movie A != Movie B
+
+pandas/_libs/testing.pyx:171: AssertionError
+__________________________ test_task_func_invalid_url __________________________
+
+mock_get = <MagicMock name='get' id='138143851084208'>
+
+    @patch('requests.get')
+    def test_task_func_invalid_url(mock_get):
+        # Setup mock response for invalid URL
+        mock_response = mock_get.return_value
+        mock_response.status_code = 404
+    
+        # Test with invalid URL
+        with pytest.raises(requests.exceptions.HTTPError):
+>           task_func({"URL": "http://example.com/invalid.csv"})
+
+test_0391.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+csv_url_dict = {'URL': 'http://example.com/invalid.csv'}
+sort_by_column = 'title'
+
+    def task_func(csv_url_dict, sort_by_column="title"):
+    
+        if "URL" not in csv_url_dict or not csv_url_dict:
+            raise ValueError("The dictionary must contain a 'URL' key.")
+    
+        response = requests.get(csv_url_dict["URL"])
+        response.raise_for_status()  # Raise an exception for invalid responses
+        csv_data = response.text
+>       df = pd.read_csv(StringIO(csv_data))
+                         ^^^^^^^^^^^^^^^^^^
+E       TypeError: initial_value must be str or None, not MagicMock
+
+../../../src/src_0391.py:12: TypeError
+=========================== short test summary info ============================
+FAILED test_0391.py::test_task_func - AssertionError: DataFrame.iloc[:, 0] (c...
+FAILED test_0391.py::test_task_func_invalid_url - TypeError: initial_value mu...
+2 failed, 2 passed in 1.46s

@@ -1,0 +1,37 @@
+FF......                                                                 [100%]
+=================================== FAILURES ===================================
+_____________________________ test_task_func_basic _____________________________
+
+    def test_task_func_basic():
+        target_words = ["hello", "world"]
+        n_sentences = 2
+        vocabulary = ["hello", "world", "foo", "bar", "baz"]
+    
+        result = task_func(target_words, n_sentences, vocabulary)
+        assert len(result) == n_sentences
+        for sentence in result:
+            assert all(word.lower() in sentence for word in target_words)
+>           assert all(word.lower() not in sentence for word in vocabulary if word.lower() not in target_words)
+E           assert False
+E            +  where False = all(<generator object test_task_func_basic.<locals>.<genexpr> at 0x70b4ae79ace0>)
+
+test_0955.py:13: AssertionError
+______________________ test_task_func_empty_target_words _______________________
+
+    def test_task_func_empty_target_words():
+        target_words = []
+        n_sentences = 2
+        vocabulary = ["hello", "world", "foo", "bar", "baz"]
+    
+        result = task_func(target_words, n_sentences, vocabulary)
+        assert len(result) == n_sentences
+        for sentence in result:
+>           assert all(word.lower() not in sentence for word in vocabulary)
+E           assert False
+E            +  where False = all(<generator object test_task_func_empty_target_words.<locals>.<genexpr> at 0x70b4ae925be0>)
+
+test_0955.py:23: AssertionError
+=========================== short test summary info ============================
+FAILED test_0955.py::test_task_func_basic - assert False
+FAILED test_0955.py::test_task_func_empty_target_words - assert False
+2 failed, 6 passed in 0.50s

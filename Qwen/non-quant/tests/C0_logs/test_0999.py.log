@@ -1,0 +1,99 @@
+..FF                                                                     [100%]
+=================================== FAILURES ===================================
+___________________ test_task_func_md5_match_and_extraction ____________________
+
+    def test_task_func_md5_match_and_extraction():
+        url = "http://example.com/success"
+        expected_content = b'test data'
+        expected_md5 = hashlib.md5(expected_content).hexdigest()
+        assert expected_md5 != EXPECTED_MD5_CHECKSUM  # Ensure this is different for the test
+    
+        with patch('urllib.request.urlretrieve') as mock_retrieve:
+            mock_retrieve.return_value = None
+            with open(TARGET_TAR_FILE, 'wb') as f:
+                f.write(expected_content)
+            assert not task_func(url)
+            assert not os.path.exists(TARGET_TAR_FILE)
+    
+        # Now test with correct checksum
+        with patch('urllib.request.urlretrieve') as mock_retrieve:
+            mock_retrieve.return_value = None
+            with open(TARGET_TAR_FILE, 'wb') as f:
+                f.write(expected_content)
+>           with patch('hashlib.md5().hexdigest', return_value=EXPECTED_MD5_CHECKSUM):
+
+test_0999.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/unittest/mock.py:1442: in __enter__
+    self.target = self.getter()
+                  ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'hashlib.md5()'
+
+    def resolve_name(name):
+        """
+        Resolve a name to an object.
+    
+        It is expected that `name` will be a string in one of the following
+        formats, where W is shorthand for a valid Python identifier and dot stands
+        for a literal period in these pseudo-regexes:
+    
+        W(.W)*
+        W(.W)*:(W(.W)*)?
+    
+        The first form is intended for backward compatibility only. It assumes that
+        some part of the dotted name is a package, and the rest is an object
+        somewhere within that package, possibly nested inside other objects.
+        Because the place where the package stops and the object hierarchy starts
+        can't be inferred by inspection, repeated attempts to import must be done
+        with this form.
+    
+        In the second form, the caller makes the division point clear through the
+        provision of a single colon: the dotted name to the left of the colon is a
+        package to be imported, and the dotted name to the right is the object
+        hierarchy within that package. Only one import is needed in this form. If
+        it ends with the colon, then a module object is returned.
+    
+        The function will return an object (which might be a module), or raise one
+        of the following exceptions:
+    
+        ValueError - if `name` isn't in a recognised format
+        ImportError - if an import failed when it shouldn't have
+        AttributeError - if a failure occurred when traversing the object hierarchy
+                         within the imported package to get to the desired object.
+        """
+        global _NAME_PATTERN
+        if _NAME_PATTERN is None:
+            # Lazy import to speedup Python startup time
+            import re
+            dotted_words = r'(?!\d)(\w+)(\.(?!\d)(\w+))*'
+            _NAME_PATTERN = re.compile(f'^(?P<pkg>{dotted_words})'
+                                       f'(?P<cln>:(?P<obj>{dotted_words})?)?$',
+                                       re.UNICODE)
+    
+        m = _NAME_PATTERN.match(name)
+        if not m:
+>           raise ValueError(f'invalid format: {name!r}')
+E           ValueError: invalid format: 'hashlib.md5()'
+
+/usr/lib/python3.12/pkgutil.py:501: ValueError
+____________________ test_task_func_file_cleanup_on_failure ____________________
+
+    def test_task_func_file_cleanup_on_failure():
+        url = "http://example.com/cleanup"
+        with patch('urllib.request.urlretrieve', side_effect=Exception("Network error")):
+            task_func(url)
+>           assert not os.path.exists(TARGET_TAR_FILE)
+E           AssertionError: assert not True
+E            +  where True = <function exists at 0x78c6df393600>('downloaded_files.tar.gz')
+E            +    where <function exists at 0x78c6df393600> = <module 'posixpath' (frozen)>.exists
+E            +      where <module 'posixpath' (frozen)> = os.path
+
+test_0999.py:57: AssertionError
+----------------------------- Captured stdout call -----------------------------
+Network error
+=========================== short test summary info ============================
+FAILED test_0999.py::test_task_func_md5_match_and_extraction - ValueError: in...
+FAILED test_0999.py::test_task_func_file_cleanup_on_failure - AssertionError:...
+2 failed, 2 passed in 0.61s

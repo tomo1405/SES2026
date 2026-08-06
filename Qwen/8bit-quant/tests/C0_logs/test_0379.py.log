@@ -1,0 +1,35 @@
+..F.                                                                     [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_csv_files _________________________
+
+    def test_task_func_with_csv_files():
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Create some CSV files
+            csv_file1 = os.path.join(temp_dir, 'file1.csv')
+            csv_file2 = os.path.join(temp_dir, 'file2.csv')
+            pd.DataFrame({'A': [1, 2], 'B': [3, 4]}).to_csv(csv_file1, index=False)
+            pd.DataFrame({'C': [5, 6], 'D': [7, 8], 'E': [9, 10]}).to_csv(csv_file2, index=False)
+    
+            result = task_func(temp_dir)
+            expected_table = Texttable()
+            expected_table.add_rows([
+                ['File', 'Rows', 'Columns'],
+                ['file1.csv', 2, 2],
+                ['file2.csv', 2, 3]
+            ])
+>           assert result == expected_table.draw()
+E           AssertionError: assert '+-----------...--+---------+' == '+-----------...--+---------+'
+E             
+E             Skipping 151 identical leading characters in diff, use -v to show
+E               --+
+E             + | file1.csv | 2    | 2       |
+E             + +-----------+------+---------+
+E             + | file2.csv | 2    | 3       |
+E             + +-----------+------+---------+
+E               | file2.csv | 2    | 3       |
+E               +-----------+------+---------+
+
+test_0379.py:37: AssertionError
+=========================== short test summary info ============================
+FAILED test_0379.py::test_task_func_with_csv_files - AssertionError: assert '...
+1 failed, 3 passed in 1.27s

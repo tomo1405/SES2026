@@ -1,0 +1,66 @@
+F..F                                                                     [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_valid_csv _________________________
+
+    def test_task_func_with_valid_csv():
+        # Create a temporary CSV file with some content
+        with tempfile.NamedTemporaryFile(delete=False, mode='w+', newline='') as temp_file:
+            temp_file.write("Name,Age\nAlice,30\nBob,25")
+            temp_file.flush()
+            temp_filename = temp_file.name
+    
+        # Call the function with the temporary file
+        result = task_func(temp_filename)
+    
+        # Check if the function returns the correct filename
+        assert result == temp_filename
+    
+        # Read the contents of the file after the function call
+        with open(temp_filename, 'r') as file:
+            content = file.read()
+    
+        # Check if the contents have been reversed
+        expected_content = "Name,Age\nBob,25\nAlice,30"
+>       assert content == expected_content
+E       AssertionError: assert 'Bob,25\nAlice,30\nName,Age\n' == 'Name,Age\nBob,25\nAlice,30'
+E         
+E         + Bob,25
+E         + Alice,30
+E           Name,Age
+E         - Bob,25
+E         - Alice,30
+
+test_0673.py:25: AssertionError
+______________________ test_task_func_with_single_row_csv ______________________
+
+    def test_task_func_with_single_row_csv():
+        # Create a temporary CSV file with a single row
+        with tempfile.NamedTemporaryFile(delete=False, mode='w+', newline='') as temp_file:
+            temp_file.write("Name,Age\nAlice,30")
+            temp_file.flush()
+            temp_filename = temp_file.name
+    
+        # Call the function with the single row file
+        result = task_func(temp_filename)
+    
+        # Check if the function returns the correct filename
+        assert result == temp_filename
+    
+        # Read the contents of the file after the function call
+        with open(temp_filename, 'r') as file:
+            content = file.read()
+    
+        # Check if the contents are still the same
+        expected_content = "Name,Age\nAlice,30"
+>       assert content == expected_content
+E       AssertionError: assert 'Alice,30\nName,Age\n' == 'Name,Age\nAlice,30'
+E         
+E         + Alice,30
+E           Name,Age
+E         - Alice,30
+
+test_0673.py:83: AssertionError
+=========================== short test summary info ============================
+FAILED test_0673.py::test_task_func_with_valid_csv - AssertionError: assert '...
+FAILED test_0673.py::test_task_func_with_single_row_csv - AssertionError: ass...
+2 failed, 2 passed in 0.44s

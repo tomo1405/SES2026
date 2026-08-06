@@ -1,0 +1,46 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that the function raises an error when the DataFrame is empty
+        df = pd.DataFrame()
+        with pytest.raises(ValueError):
+            task_func(df)
+    
+        # Test that the function raises an error when the DataFrame does not contain the required columns
+        df = pd.DataFrame({'group': [1, 2, 3], 'date': [1, 2, 3], 'value': [1, 2, 3]})
+        with pytest.raises(ValueError):
+            task_func(df)
+    
+        # Test that the function raises an error when the 'date' column is not in datetime format
+        df = pd.DataFrame({'group': [1, 2, 3], 'date': [1, 2, 3], 'value': [1, 2, 3]})
+        with pytest.raises(ValueError):
+            task_func(df)
+    
+        # Test that the function returns a valid plot when the DataFrame is valid
+        df = pd.DataFrame({'group': [1, 2, 3], 'date': [1, 2, 3], 'value': [1, 2, 3]})
+>       ax = task_func(df)
+             ^^^^^^^^^^^^^
+
+test_0108.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df =    group  date  value
+0      1     1      1
+1      2     2      2
+2      3     3      3
+n_clusters = 3, random_state = 0
+
+    def task_func(df, n_clusters=3, random_state=0):
+        if df.empty or not all(col in df.columns for col in ['group', 'date', 'value']):
+            raise ValueError("DataFrame must be non-empty and contain 'group', 'date', and 'value' columns.")
+    
+        if not pd.api.types.is_datetime64_any_dtype(df['date']):
+>           raise ValueError("'date' column must be in datetime format.")
+E           ValueError: 'date' column must be in datetime format.
+
+../../../src/src_0108.py:9: ValueError
+=========================== short test summary info ============================
+FAILED test_0108.py::test_task_func - ValueError: 'date' column must be in da...
+1 failed in 5.26s

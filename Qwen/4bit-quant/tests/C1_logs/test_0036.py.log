@@ -1,0 +1,228 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+__________________ test_task_func_with_default_target_values ___________________
+
+sample_df =    A  B  C
+0  1  4  2
+1  2  3  2
+2  3  2  2
+3  4  1  2
+
+    def test_task_func_with_default_target_values(sample_df):
+>       result_df, ax = task_func(sample_df)
+                        ^^^^^^^^^^^^^^^^^^^^
+
+test_0036.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0036.py:4: in task_func
+    df = df.applymap(lambda x: x if x in target_values else 0)
+         ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =    A  B  C
+0  1  4  2
+1  2  3  2
+2  3  2  2
+3  4  1  2, name = 'applymap'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute 'applymap'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+___________________ test_task_func_with_custom_target_values ___________________
+
+sample_df =    A  B  C
+0  1  4  2
+1  2  3  2
+2  3  2  2
+3  4  1  2
+
+    def test_task_func_with_custom_target_values(sample_df):
+>       result_df, ax = task_func(sample_df, target_values=[2, 3])
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0036.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0036.py:4: in task_func
+    df = df.applymap(lambda x: x if x in target_values else 0)
+         ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =    A  B  C
+0  1  4  2
+1  2  3  2
+2  3  2  2
+3  4  1  2, name = 'applymap'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute 'applymap'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+________________________ test_task_func_empty_dataframe ________________________
+
+    def test_task_func_empty_dataframe():
+        empty_df = pd.DataFrame()
+>       result_df, ax = task_func(empty_df)
+                        ^^^^^^^^^^^^^^^^^^^
+
+test_0036.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0036.py:4: in task_func
+    df = df.applymap(lambda x: x if x in target_values else 0)
+         ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Empty DataFrame
+Columns: []
+Index: [], name = 'applymap'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute 'applymap'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+___________________ test_task_func_all_values_not_in_target ____________________
+
+sample_df =    A  B  C
+0  1  4  2
+1  2  3  2
+2  3  2  2
+3  4  1  2
+
+    def test_task_func_all_values_not_in_target(sample_df):
+>       result_df, ax = task_func(sample_df, target_values=[5, 6])
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0036.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0036.py:4: in task_func
+    df = df.applymap(lambda x: x if x in target_values else 0)
+         ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =    A  B  C
+0  1  4  2
+1  2  3  2
+2  3  2  2
+3  4  1  2, name = 'applymap'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute 'applymap'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+_________________________ test_task_func_single_column _________________________
+
+sample_df =    A  B  C
+0  1  4  2
+1  2  3  2
+2  3  2  2
+3  4  1  2
+
+    def test_task_func_single_column(sample_df):
+        single_column_df = sample_df[['A']]
+>       result_df, ax = task_func(single_column_df)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0036.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0036.py:4: in task_func
+    df = df.applymap(lambda x: x if x in target_values else 0)
+         ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =    A
+0  1
+1  2
+2  3
+3  4, name = 'applymap'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute 'applymap'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+=========================== short test summary info ============================
+FAILED test_0036.py::test_task_func_with_default_target_values - AttributeErr...
+FAILED test_0036.py::test_task_func_with_custom_target_values - AttributeErro...
+FAILED test_0036.py::test_task_func_empty_dataframe - AttributeError: 'DataFr...
+FAILED test_0036.py::test_task_func_all_values_not_in_target - AttributeError...
+FAILED test_0036.py::test_task_func_single_column - AttributeError: 'DataFram...
+5 failed in 3.95s

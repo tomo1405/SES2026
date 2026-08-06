@@ -1,0 +1,68 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+______ test_task_func[/path/to/directory-example_string-expected_output0] ______
+
+directory = '/path/to/directory', string = 'example_string'
+expected_output = ['path/to/directory/file1.json', 'path/to/directory/subdirectory/file2.json']
+
+    @pytest.mark.parametrize(
+        "directory, string, expected_output",
+        [
+            (
+                "/path/to/directory",
+                "example_string",
+                ["path/to/directory/file1.json", "path/to/directory/subdirectory/file2.json"],
+            ),
+            (
+                "/another/path/to/directory",
+                "another_example_string",
+                ["another/path/to/directory/file3.json"],
+            ),
+        ],
+    )
+    def test_task_func(directory, string, expected_output):
+        json_files = glob(f"{directory}/**/*.json", recursive=True)
+    
+        with patch("pathlib.Path.rglob", return_value=json_files):
+>           assert task_func(directory, string) == expected_output
+E           AssertionError: assert [] == ['path/to/dir...y/file2.json']
+E             
+E             Right contains 2 more items, first extra item: 'path/to/directory/file1.json'
+E             Use -v to get more diff
+
+test_0401.py:27: AssertionError
+_ test_task_func[/another/path/to/directory-another_example_string-expected_output1] _
+
+directory = '/another/path/to/directory', string = 'another_example_string'
+expected_output = ['another/path/to/directory/file3.json']
+
+    @pytest.mark.parametrize(
+        "directory, string, expected_output",
+        [
+            (
+                "/path/to/directory",
+                "example_string",
+                ["path/to/directory/file1.json", "path/to/directory/subdirectory/file2.json"],
+            ),
+            (
+                "/another/path/to/directory",
+                "another_example_string",
+                ["another/path/to/directory/file3.json"],
+            ),
+        ],
+    )
+    def test_task_func(directory, string, expected_output):
+        json_files = glob(f"{directory}/**/*.json", recursive=True)
+    
+        with patch("pathlib.Path.rglob", return_value=json_files):
+>           assert task_func(directory, string) == expected_output
+E           AssertionError: assert [] == ['another/pat...y/file3.json']
+E             
+E             Right contains one more item: 'another/path/to/directory/file3.json'
+E             Use -v to get more diff
+
+test_0401.py:27: AssertionError
+=========================== short test summary info ============================
+FAILED test_0401.py::test_task_func[/path/to/directory-example_string-expected_output0]
+FAILED test_0401.py::test_task_func[/another/path/to/directory-another_example_string-expected_output1]
+2 failed in 0.44s

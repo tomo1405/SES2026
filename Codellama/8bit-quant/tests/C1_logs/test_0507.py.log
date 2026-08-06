@@ -1,0 +1,54 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_valid_input ________________________
+
+    def test_task_func_with_valid_input():
+        column = "Temperature"
+        data = [
+            ["2022-01-01", 20, 0.5, 5, 0],
+            ["2022-01-02", 22, 0.6, 6, 0],
+            ["2022-01-03", 18, 0.7, 7, 0],
+        ]
+        result = task_func(column, data)
+    
+        assert result["sum"] == 60
+        assert result["mean"] == 20
+>       assert result["min"] == 5
+E       assert np.int64(18) == 5
+
+test_0507.py:19: AssertionError
+______________________ test_task_func_with_invalid_input _______________________
+
+    def test_task_func_with_invalid_input():
+        column = "Temperature"
+        data = [
+            ["2022-01-01", 20, 0.5, 5, 0],
+            ["2022-01-02", 22, 0.6, 6, 0],
+            ["2022-01-03", 18, 0.7, 7, 0],
+        ]
+        result = task_func(column, data)
+    
+        assert result["sum"] == 60
+        assert result["mean"] == 20
+>       assert result["min"] == 5
+E       assert np.int64(18) == 5
+
+test_0507.py:35: AssertionError
+________________________ test_task_func_with_empty_data ________________________
+
+    def test_task_func_with_empty_data():
+        column = "Temperature"
+        data = []
+        result = task_func(column, data)
+    
+        assert result["sum"] == 0
+>       assert result["mean"] == np.nan
+E       assert nan == nan
+E        +  where nan = np.nan
+
+test_0507.py:46: AssertionError
+=========================== short test summary info ============================
+FAILED test_0507.py::test_task_func_with_valid_input - assert np.int64(18) == 5
+FAILED test_0507.py::test_task_func_with_invalid_input - assert np.int64(18) ...
+FAILED test_0507.py::test_task_func_with_empty_data - assert nan == nan
+3 failed in 2.03s

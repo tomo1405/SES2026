@@ -1,0 +1,39 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        r_script_path = 'path/to/r_script.R'
+        output_path = 'path/to/output'
+        duration = 10  # in seconds
+    
+        # Test case 1: File generated successfully within the specified duration
+        with patch('subprocess.call') as mock_call, patch('time.time') as mock_time:
+            mock_time.return_value = 10  # Set the start time to be 10 seconds ago
+            mock_call.return_value = 0  # Simulate successful execution of the R script
+            mock_glob = Mock()
+            mock_glob.glob.return_value = ['path/to/output/output.csv']  # Simulate the output file being generated
+            with patch('glob.glob', mock_glob):
+                result = task_func(r_script_path, output_path, duration)
+                assert result == (True, 'File generated successfully within the specified duration.')
+    
+        # Test case 2: File not generated within the specified duration
+        with patch('subprocess.call') as mock_call, patch('time.time') as mock_time:
+            mock_time.return_value = 10  # Set the start time to be 10 seconds ago
+            mock_call.return_value = 0  # Simulate successful execution of the R script
+            mock_glob = Mock()
+            mock_glob.glob.return_value = []  # Simulate the output file not being generated
+            with patch('glob.glob', mock_glob):
+                result = task_func(r_script_path, output_path, duration)
+>               assert result == (False, 'File not generated within the specified duration.')
+E               AssertionError: assert (True, 'File ...ed duration.') == (False, 'File...ed duration.')
+E                 
+E                 At index 0 diff: True != False
+E                 Use -v to get more diff
+
+test_1106.py:55: AssertionError
+=========================== short test summary info ============================
+FAILED test_1106.py::test_task_func - AssertionError: assert (True, 'File ......
+1 failed in 1.06s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

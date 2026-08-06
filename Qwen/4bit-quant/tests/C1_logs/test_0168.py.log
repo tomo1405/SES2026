@@ -1,0 +1,53 @@
+.FFFF                                                                    [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_dataframe_shape ________________________
+
+    def test_task_func_dataframe_shape():
+        num_types = 5
+        fig, ax = task_func(num_types=num_types)
+>       data = pd.DataFrame({label: [randint(*integer_range) for _ in range(num_types)] for label in [f'Type{i + 1}' for i in range(num_types)]})
+                                     ^^^^^^^
+E       NameError: name 'randint' is not defined
+
+test_0168.py:14: NameError
+____________________________ test_task_func_labels _____________________________
+
+    def test_task_func_labels():
+        num_types = 5
+        fig, ax = task_func(num_types=num_types)
+        labels = [f'Type{i + 1}' for i in range(num_types)]
+        for label in labels:
+>           assert label in ax.get_legend().get_texts()
+E           AssertionError: assert 'Type1' in <a list of 5 Text objects>
+E            +  where <a list of 5 Text objects> = get_texts()
+E            +    where get_texts = <matplotlib.legend.Legend object at 0x78942dadcda0>.get_texts
+E            +      where <matplotlib.legend.Legend object at 0x78942dadcda0> = get_legend()
+E            +        where get_legend = <Axes: >.get_legend
+
+test_0168.py:22: AssertionError
+_________________________ test_task_func_integer_range _________________________
+
+    def test_task_func_integer_range():
+        integer_range = (0, 100)
+        fig, ax = task_func(integer_range=integer_range)
+>       data = pd.DataFrame({label: [randint(*integer_range) for _ in range(5)] for label in [f'Type{i + 1}' for i in range(5)]})
+                                     ^^^^^^^
+E       NameError: name 'randint' is not defined
+
+test_0168.py:27: NameError
+___________________________ test_task_func_plot_type ___________________________
+
+    def test_task_func_plot_type():
+        fig, ax = task_func()
+>       assert ax.get_xlabel() == 'Type'
+E       AssertionError: assert '' == 'Type'
+E         
+E         - Type
+
+test_0168.py:32: AssertionError
+=========================== short test summary info ============================
+FAILED test_0168.py::test_task_func_dataframe_shape - NameError: name 'randin...
+FAILED test_0168.py::test_task_func_labels - AssertionError: assert 'Type1' i...
+FAILED test_0168.py::test_task_func_integer_range - NameError: name 'randint'...
+FAILED test_0168.py::test_task_func_plot_type - AssertionError: assert '' == ...
+4 failed, 1 passed in 2.28s

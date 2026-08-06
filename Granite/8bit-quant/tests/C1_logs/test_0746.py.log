@@ -1,0 +1,32 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+>       script_name = random.choice(SCRIPTS)
+                                    ^^^^^^^
+E       NameError: name 'SCRIPTS' is not defined
+
+test_0746.py:9: NameError
+_________________________ test_task_func_random_script _________________________
+
+    def test_task_func_random_script():
+        with patch('random.choice') as mock_choice:
+            mock_choice.return_value = 'script2.sh'
+>           script_path = task_func()
+                          ^^^^^^^^^^^
+
+test_0746.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def task_func():
+        script_name = random.choice(SCRIPTS)
+>       script_path = os.path.join(SCRIPTS_DIR, script_name)  # Generate the full path
+                      ^^
+E       NameError: name 'os' is not defined. Did you forget to import 'os'
+
+../../../src/src_0746.py:8: NameError
+=========================== short test summary info ============================
+FAILED test_0746.py::test_task_func - NameError: name 'SCRIPTS' is not defined
+FAILED test_0746.py::test_task_func_random_script - NameError: name 'os' is n...
+2 failed in 0.46s

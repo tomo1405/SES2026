@@ -1,0 +1,15 @@
+import collections
+import seaborn as sns
+import matplotlib.pyplot as plt
+def task_func(dictionary, new_key, new_value):
+    # Add new key-value pair to the dictionary
+    dictionary[new_key] = new_value
+    
+    # Plot the distribution of its values
+    values_counts = collections.Counter(dictionary.values())
+    ax = sns.barplot(y=list(values_counts.keys()), x=list(values_counts.values()))
+    plt.title("Distribution of Dictionary Values")
+    plt.xlabel("Values")
+    plt.ylabel("Counts")
+    
+    return dictionary, ax

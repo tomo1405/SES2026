@@ -1,0 +1,43 @@
+F..F                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_numeric_data _______________________
+
+    def test_task_func_with_numeric_data():
+        data = {
+            'A': [1, 2, 3],
+            'B': [4, 5, 6],
+            'C': ['a', 'b', 'c']
+        }
+        ax = task_func(data)
+>       assert isinstance(ax, sns.axisgrid.FacetGrid)
+E       AssertionError: assert False
+E        +  where False = isinstance(<Axes: >, <class 'seaborn.axisgrid.FacetGrid'>)
+E        +    where <class 'seaborn.axisgrid.FacetGrid'> = <module 'seaborn.axisgrid' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/axisgrid.py'>.FacetGrid
+E        +      where <module 'seaborn.axisgrid' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/axisgrid.py'> = sns.axisgrid
+
+test_0969.py:14: AssertionError
+_____________________ test_task_func_with_all_null_values ______________________
+
+    def test_task_func_with_all_null_values():
+        data = {
+            'A': [np.nan, np.nan, np.nan],
+            'B': [np.nan, np.nan, np.nan]
+        }
+>       with pytest.raises(ValueError) as excinfo:
+E       Failed: DID NOT RAISE ValueError
+
+test_0969.py:36: Failed
+=============================== warnings summary ===============================
+Qwen/4bit-quant/tests/test_0969.py::test_task_func_with_all_null_values
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/matrix.py:202: RuntimeWarning: All-NaN slice encountered
+    vmin = np.nanmin(calc_data)
+
+Qwen/4bit-quant/tests/test_0969.py::test_task_func_with_all_null_values
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/matrix.py:207: RuntimeWarning: All-NaN slice encountered
+    vmax = np.nanmax(calc_data)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0969.py::test_task_func_with_numeric_data - AssertionError: asser...
+FAILED test_0969.py::test_task_func_with_all_null_values - Failed: DID NOT RA...
+2 failed, 2 passed, 2 warnings in 3.88s

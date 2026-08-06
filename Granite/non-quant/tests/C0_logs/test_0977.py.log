@@ -1,0 +1,54 @@
+F..FF                                                                    [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_input_type ___________________________
+
+    def test_task_func_input_type():
+        with pytest.raises(ValueError) as excinfo:
+>           task_func("not an array")
+
+test_0977.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+records = 'not an array', random_seed = 0
+
+    def task_func(records: np.ndarray, random_seed: int = 0) -> pd.DataFrame:
+        if random_seed is not None:
+            np.random.seed(random_seed)
+    
+>       if not (records.ndim == 2):
+                ^^^^^^^^^^^^
+E       AttributeError: 'str' object has no attribute 'ndim'
+
+../../../src/src_0977.py:8: AttributeError
+________________________ test_task_func_output_columns _________________________
+
+    def test_task_func_output_columns():
+        records = np.array([[1, 2, 3], [4, 5, 6]])
+        result = task_func(records)
+        expected_columns = [f"f{i+1}" for i in range(records[0].shape[0])]
+>       assert result.columns.tolist() == expected_columns
+E       AssertionError: assert ['f3', 'f1', 'f2'] == ['f1', 'f2', 'f3']
+E         
+E         At index 0 diff: 'f3' != 'f1'
+E         Use -v to get more diff
+
+test_0977.py:26: AssertionError
+_________________________ test_task_func_output_values _________________________
+
+    def test_task_func_output_values():
+        records = np.array([[1, 2, 3], [4, 5, 6]])
+        result = task_func(records)
+        scaler = StandardScaler()
+        expected_values = scaler.fit_transform(records.copy()).T
+>       assert np.array_equal(result.values, expected_values)
+E       assert False
+E        +  where False = <function array_equal at 0x7968248a9130>(array([[-1., -1., -1.],\n       [ 1.,  1.,  1.]]), array([[-1.,  1.],\n       [-1.,  1.],\n       [-1.,  1.]]))
+E        +    where <function array_equal at 0x7968248a9130> = np.array_equal
+E        +    and   array([[-1., -1., -1.],\n       [ 1.,  1.,  1.]]) =     f3   f1   f2\n0 -1.0 -1.0 -1.0\n1  1.0  1.0  1.0.values
+
+test_0977.py:33: AssertionError
+=========================== short test summary info ============================
+FAILED test_0977.py::test_task_func_input_type - AttributeError: 'str' object...
+FAILED test_0977.py::test_task_func_output_columns - AssertionError: assert [...
+FAILED test_0977.py::test_task_func_output_values - assert False
+3 failed, 2 passed in 3.17s

@@ -1,0 +1,19 @@
+import numpy as np
+from sklearn.model_selection import cross_val_score
+from sklearn.ensemble import RandomForestRegressor
+def task_func(num_samples=100, n_estimators=100, random_seed=None, cv=5):
+    
+    if num_samples / cv < 2:
+        raise ValueError("num_samples / cv should be greater than or equal to 2.")
+
+    np.random.seed(random_seed)
+    X = np.random.randn(num_samples, 5)
+    y = np.sum(X, axis=1) + np.random.randn(num_samples)
+    
+    model = RandomForestRegressor(n_estimators=n_estimators,
+                                  random_state=random_seed
+                                  )
+    
+    cv_scores = cross_val_score(model, X, y, cv=cv)
+    
+    return np.mean(cv_scores), model

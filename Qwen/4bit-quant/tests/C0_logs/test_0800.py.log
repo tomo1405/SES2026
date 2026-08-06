@@ -1,0 +1,36 @@
+.F.F.F.                                                                  [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_single_element_list ______________________
+
+    def test_task_func_single_element_list():
+        result_df, result_dfs = task_func([['a', 'b', 'c']])
+>       assert result_df.empty
+E       assert False
+E        +  where False =    b  k  d\n0  a  b  c.empty
+
+test_0800.py:12: AssertionError
+_______________________ test_task_func_with_random_seed ________________________
+
+    def test_task_func_with_random_seed():
+        df1, dfs1 = task_func([['a', 'b', 'c'], ['d', 'e', 'f'], ['g', 'h', 'i']], random_seed=42)
+        df2, dfs2 = task_func([['a', 'b', 'c'], ['d', 'e', 'f'], ['g', 'h', 'i']], random_seed=42)
+        assert df1.equals(df2)
+>       assert all(df1.equals(df) for df in dfs1)
+E       assert False
+E        +  where False = all(<generator object test_task_func_with_random_seed.<locals>.<genexpr> at 0x7e7b3d5b7ae0>)
+
+test_0800.py:24: AssertionError
+___________________ test_task_func_with_insufficient_letters ___________________
+
+    def test_task_func_with_insufficient_letters():
+        result_df, result_dfs = task_func([['a', 'b']])
+>       assert result_df.empty
+E       assert False
+E        +  where False =    u  s\n0  a  b.empty
+
+test_0800.py:32: AssertionError
+=========================== short test summary info ============================
+FAILED test_0800.py::test_task_func_single_element_list - assert False
+FAILED test_0800.py::test_task_func_with_random_seed - assert False
+FAILED test_0800.py::test_task_func_with_insufficient_letters - assert False
+3 failed, 4 passed in 1.16s

@@ -1,0 +1,64 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+package_name = 'my_package'
+
+    def task_func(package_name):
+        added_modules = []
+        try:
+>           package = importlib.import_module(package_name)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../../../src/src_0542.py:8: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'my_package', package = None
+
+    def import_module(name, package=None):
+        """Import a module.
+    
+        The 'package' argument is required when performing a relative import. It
+        specifies the package to use as the anchor point from which to resolve the
+        relative import to an absolute import.
+    
+        """
+        level = 0
+        if name.startswith('.'):
+            if not package:
+                raise TypeError("the 'package' argument is required to perform a "
+                                f"relative import for {name!r}")
+            for character in name:
+                if character != '.':
+                    break
+                level += 1
+>       return _bootstrap._gcd_import(name[level:], package, level)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ModuleNotFoundError: No module named 'my_package'
+
+/usr/lib/python3.12/importlib/__init__.py:90: ModuleNotFoundError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func():
+        package_name = "my_package"
+>       added_modules = task_func(package_name)
+                        ^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0542.py:6: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+package_name = 'my_package'
+
+    def task_func(package_name):
+        added_modules = []
+        try:
+            package = importlib.import_module(package_name)
+        except ImportError:
+>           raise ImportError(f"The package '{package_name}' is not installed! Please install the package first using 'pip install {package_name}'")
+E           ImportError: The package 'my_package' is not installed! Please install the package first using 'pip install my_package'
+
+../../../src/src_0542.py:10: ImportError
+=========================== short test summary info ============================
+FAILED test_0542.py::test_task_func - ImportError: The package 'my_package' i...
+1 failed, 1 passed in 0.44s

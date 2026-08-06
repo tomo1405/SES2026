@@ -1,0 +1,39 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a sample DataFrame for testing
+        df = pd.DataFrame({
+            'A': [1, 2, 3],
+            'B': [4, 5, 6],
+            'C': [7, 8, 9]
+        })
+    
+        # Call the function and store the returned values
+        cumsum_df, fig = task_func(df)
+    
+        # Assert that the returned values are of the expected type
+        assert isinstance(cumsum_df, pd.DataFrame)
+        assert isinstance(fig, plt.Figure)
+    
+        # Assert that the plot has the expected title, x-label, and y-label
+        assert fig.axes[0].get_title() == "Cumulative Sum per Column"
+        assert fig.axes[0].get_xlabel() == "Index"
+        assert fig.axes[0].get_ylabel() == "Cumulative Sum"
+    
+        # Assert that the legend is displayed
+>       assert len(fig.axes[0].legend().get_lines()) == 3
+E       AssertionError: assert 0 == 3
+E        +  where 0 = len([])
+E        +    where [] = get_lines()
+E        +      where get_lines = <matplotlib.legend.Legend object at 0x7e9579650500>.get_lines
+E        +        where <matplotlib.legend.Legend object at 0x7e9579650500> = legend()
+E        +          where legend = <Axes: title={'center': 'Cumulative Sum per Column'}, xlabel='Index', ylabel='Cumulative Sum'>.legend
+
+test_0967.py:38: AssertionError
+=========================== short test summary info ============================
+FAILED test_0967.py::test_task_func - AssertionError: assert 0 == 3
+1 failed in 2.21s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

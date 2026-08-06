@@ -1,0 +1,37 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        goals = 5
+        penalties = 3
+        rng_seed = 42
+        results_df, model = task_func(goals, penalties, rng_seed)
+        assert results_df.shape == (5, 3)
+>       assert model.coef_ == pytest.approx(1000)
+E       assert array([-267.24137931]) == 1000 ± 0.001
+E         
+E         comparison failed
+E         Obtained: [-267.24137931]
+E         Expected: 1000 ± 0.001
+
+test_0620.py:10: AssertionError
+_________________________ test_task_func_default_args __________________________
+
+    def test_task_func_default_args():
+        goals = 2
+        penalties = 1
+        results_df, model = task_func(goals, penalties)
+        assert results_df.shape == (5, 3)
+>       assert model.coef_ == pytest.approx(1000)
+E       assert array([250.]) == 1000 ± 0.001
+E         
+E         comparison failed
+E         Obtained: [250.]
+E         Expected: 1000 ± 0.001
+
+test_0620.py:17: AssertionError
+=========================== short test summary info ============================
+FAILED test_0620.py::test_task_func - assert array([-267.24137931]) == 1000 ±...
+FAILED test_0620.py::test_task_func_default_args - assert array([250.]) == 10...
+2 failed, 1 passed in 3.23s

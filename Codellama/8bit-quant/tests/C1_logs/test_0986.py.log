@@ -1,0 +1,42 @@
+..FFF                                                                    [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_invalid_country_name ______________________
+
+    def test_task_func_invalid_country_name():
+        json_data = '{"Countries": {"USA": 331002651, "China": 1439323776, "Japan": 1264134374}}'
+        output_dir = "."
+        file_name = "country_population_report.csv"
+    
+        with pytest.raises(ValueError):
+>           task_func(json_data, output_dir, file_name, country_name="USA")
+E           TypeError: task_func() got an unexpected keyword argument 'country_name'
+
+test_0986.py:34: TypeError
+______________________ test_task_func_invalid_population _______________________
+
+    def test_task_func_invalid_population():
+        json_data = '{"Countries": {"USA": 331002651, "China": 1439323776, "Japan": 1264134374}}'
+        output_dir = "."
+        file_name = "country_population_report.csv"
+    
+        with pytest.raises(ValueError):
+>           task_func(json_data, output_dir, file_name, population=-1)
+E           TypeError: task_func() got an unexpected keyword argument 'population'
+
+test_0986.py:42: TypeError
+______________________ test_task_func_invalid_output_dir _______________________
+
+    def test_task_func_invalid_output_dir():
+        json_data = '{"Countries": {"USA": 331002651, "China": 1439323776, "Japan": 1264134374}}'
+        output_dir = "invalid_dir"
+        file_name = "country_population_report.csv"
+    
+>       with pytest.raises(IOError):
+E       Failed: DID NOT RAISE OSError
+
+test_0986.py:49: Failed
+=========================== short test summary info ============================
+FAILED test_0986.py::test_task_func_invalid_country_name - TypeError: task_fu...
+FAILED test_0986.py::test_task_func_invalid_population - TypeError: task_func...
+FAILED test_0986.py::test_task_func_invalid_output_dir - Failed: DID NOT RAIS...
+3 failed, 2 passed in 1.22s

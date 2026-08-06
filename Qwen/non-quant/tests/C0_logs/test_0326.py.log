@@ -1,0 +1,65 @@
+..FFF..                                                                  [100%]
+=================================== FAILURES ===================================
+___________________ test_task_func_single_file_with_matches ____________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1255/test_task_func_single_file_wit0')
+
+    def test_task_func_single_file_with_matches(tmpdir):
+        # Create a temporary directory with a single file containing matches
+        dir_path = tmpdir.mkdir("single_file_with_matches")
+        file_path = dir_path.join("test.txt")
+        file_path.write("This file has some matches: \\example\\ and \\another\\")
+    
+        # Call the function
+        result = task_func(str(dir_path))
+    
+        # Assert that the result contains the file with the correct matches
+>       assert result == {"test.txt": ["\\example\\", "\\another\\"]}
+E       AssertionError: assert {'test.txt': ... 'another\\']} == {'test.txt': ...\\another\\']}
+E         
+E         Differing items:
+E         {'test.txt': ['example\\', 'another\\']} != {'test.txt': ['\\example\\', '\\another\\']}
+E         Use -v to get more diff
+
+test_0326.py:39: AssertionError
+________________________ test_task_func_multiple_files _________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1255/test_task_func_multiple_files0')
+
+    def test_task_func_multiple_files(tmpdir):
+        # Create a temporary directory with multiple files
+        dir_path = tmpdir.mkdir("multiple_files")
+        file1_path = dir_path.join("file1.txt")
+        file1_path.write("File 1 has \\match1\\")
+        file2_path = dir_path.join("file2.txt")
+        file2_path.write("File 2 has \\match2\\ and \\match3\\")
+    
+        # Call the function
+        result = task_func(str(dir_path))
+    
+        # Assert that the result contains both files with their respective matches
+>       assert result == {
+            "file1.txt": ["\\match1\\"],
+            "file2.txt": ["\\match2\\", "\\match3\\"]
+        }
+E       AssertionError: assert {'file2.txt':... ['match1\\']} == {'file1.txt':...'\\match3\\']}
+E         
+E         Differing items:
+E         {'file2.txt': ['match2\\', 'match3\\']} != {'file2.txt': ['\\match2\\', '\\match3\\']}
+E         {'file1.txt': ['match1\\']} != {'file1.txt': ['\\match1\\']}
+E         Use -v to get more diff
+
+test_0326.py:53: AssertionError
+_____________________ test_task_func_nonexistent_directory _____________________
+
+    def test_task_func_nonexistent_directory():
+        # Call the function with a non-existent directory
+>       with pytest.raises(FileNotFoundError):
+E       Failed: DID NOT RAISE FileNotFoundError
+
+test_0326.py:60: Failed
+=========================== short test summary info ============================
+FAILED test_0326.py::test_task_func_single_file_with_matches - AssertionError...
+FAILED test_0326.py::test_task_func_multiple_files - AssertionError: assert {...
+FAILED test_0326.py::test_task_func_nonexistent_directory - Failed: DID NOT R...
+3 failed, 4 passed in 0.48s

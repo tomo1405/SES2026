@@ -1,0 +1,45 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+seed = 42
+dates = DatetimeIndex(['2026-06-29 16:14:07.513767', '2026-06-30 16:14:07.513767',
+               '2026-07-01 16:14:07.513767'...           '2026-07-27 16:14:07.513767', '2026-07-28 16:14:07.513767'],
+              dtype='datetime64[us]', freq='D')
+values = [68, 77, 75, 19, 31, 27, ...]
+ax = <Axes: title={'center': 'Random Time Series Data'}, xlabel='Date', ylabel='Value'>
+
+    def test_task_func(seed, dates, values, ax):
+        with patch('random.seed', return_value=None) as mock_seed, \
+             patch('random.randint', side_effect=values) as mock_randint, \
+             patch('matplotlib.pyplot.subplots', return_value=(None, ax)) as mock_subplots, \
+             patch('datetime.datetime') as mock_datetime:
+    
+            mock_datetime.now.return_value = datetime(2023, 1, 1)
+    
+            result = task_func(seed=seed)
+    
+            mock_seed.assert_called_once_with(seed)
+            mock_randint.assert_has_calls([call(0, 100) for _ in range(30)])
+>           mock_datetime.now.assert_called_once()
+
+test_0101.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='datetime.now' id='129430393150480'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'now' to have been called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:923: AssertionError
+=========================== short test summary info ============================
+FAILED test_0101.py::test_task_func - AssertionError: Expected 'now' to have ...
+1 failed, 1 passed in 2.01s

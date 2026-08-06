@@ -1,0 +1,38 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        s = """1 10 APPLE 100 Apple
+    2 20 BANANA 200 Banana
+    3 30 ORANGE 300 Orange
+    4 40 PEAR 400 Pear
+    5 50 GRAPE 500 Grape"""
+        df = task_func(s)
+        assert isinstance(df, pd.DataFrame)
+        assert df.shape == (5, 6)
+        assert df.columns.tolist() == ["ID", "Quantity", "Code", "Price", "Product", "Description"]
+>       assert df["ID"].tolist() == [1, 2, 3, 4, 5]
+E       AssertionError: assert ['1', '2', '3', '4', '5'] == [1, 2, 3, 4, 5]
+E         
+E         At index 0 diff: '1' != 1
+E         Use -v to get more diff
+
+test_0435.py:15: AssertionError
+_______________________ test_task_func_with_invalid_data _______________________
+
+    def test_task_func_with_invalid_data():
+        s = """1 10 APPLE 100 Apple
+    2 20 BANANA 200 Banana
+    3 30 ORANGE 300 Orange
+    4 40 PEAR 400 Pear
+    5 50 GRAPE 500 Grape
+    6 60 watermelon 600 Watermelon"""
+>       with pytest.raises(ValueError) as excinfo:
+E       Failed: DID NOT RAISE ValueError
+
+test_0435.py:39: Failed
+=========================== short test summary info ============================
+FAILED test_0435.py::test_task_func - AssertionError: assert ['1', '2', '3', ...
+FAILED test_0435.py::test_task_func_with_invalid_data - Failed: DID NOT RAISE...
+2 failed, 1 passed in 1.08s

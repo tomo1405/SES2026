@@ -1,0 +1,86 @@
+FFFF.F.                                                                  [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_positive_values ______________________
+
+    def test_task_func_with_positive_values():
+        tuples_list = [(1, 2), (3, 4), (5, 6)]
+        columns = ['A', 'B']
+        result = task_func(tuples_list, columns)
+        expected_mean = np.zeros(2)
+        expected_std = np.ones(2)
+        assert np.allclose(result.mean(), expected_mean)
+>       assert np.allclose(result.std(), expected_std)
+E       assert False
+E        +  where False = <function allclose at 0x7eb09a5ba270>(A    1.224745\nB    1.224745\ndtype: float64, array([1., 1.]))
+E        +    where <function allclose at 0x7eb09a5ba270> = np.allclose
+E        +    and   A    1.224745\nB    1.224745\ndtype: float64 = std()
+E        +      where std =           A         B\n0 -1.224745 -1.224745\n1  0.000000  0.000000\n2  1.224745  1.224745.std
+
+test_0694.py:12: AssertionError
+_____________________ test_task_func_with_negative_values ______________________
+
+    def test_task_func_with_negative_values():
+        tuples_list = [(-1, -2), (-3, -4), (-5, -6)]
+        columns = ['A', 'B']
+        result = task_func(tuples_list, columns)
+        expected_mean = np.zeros(2)
+        expected_std = np.ones(2)
+        assert np.allclose(result.mean(), expected_mean)
+>       assert np.allclose(result.std(), expected_std)
+E       assert False
+E        +  where False = <function allclose at 0x7eb09a5ba270>(A    1.224745\nB    1.224745\ndtype: float64, array([1., 1.]))
+E        +    where <function allclose at 0x7eb09a5ba270> = np.allclose
+E        +    and   A    1.224745\nB    1.224745\ndtype: float64 = std()
+E        +      where std =           A         B\n0  1.224745  1.224745\n1  0.000000  0.000000\n2 -1.224745 -1.224745.std
+
+test_0694.py:21: AssertionError
+_______________________ test_task_func_with_mixed_values _______________________
+
+    def test_task_func_with_mixed_values():
+        tuples_list = [(1, -2), (3, 4), (-5, 6)]
+        columns = ['A', 'B']
+        result = task_func(tuples_list, columns)
+        expected_mean = np.zeros(2)
+        expected_std = np.ones(2)
+        assert np.allclose(result.mean(), expected_mean)
+>       assert np.allclose(result.std(), expected_std)
+E       assert False
+E        +  where False = <function allclose at 0x7eb09a5ba270>(A    1.224745\nB    1.224745\ndtype: float64, array([1., 1.]))
+E        +    where <function allclose at 0x7eb09a5ba270> = np.allclose
+E        +    and   A    1.224745\nB    1.224745\ndtype: float64 = std()
+E        +      where std =           A         B\n0  0.392232 -1.372813\n1  0.980581  0.392232\n2 -1.372813  0.980581.std
+
+test_0694.py:30: AssertionError
+______________________ test_task_func_with_single_element ______________________
+
+    def test_task_func_with_single_element():
+        tuples_list = [(1,)]
+        columns = ['A']
+        result = task_func(tuples_list, columns)
+        expected_mean = np.array([0])
+        expected_std = np.array([1])
+        assert np.allclose(result.mean(), expected_mean)
+>       assert np.allclose(result.std(), expected_std)
+E       assert False
+E        +  where False = <function allclose at 0x7eb09a5ba270>(A   NaN\ndtype: float64, array([1]))
+E        +    where <function allclose at 0x7eb09a5ba270> = np.allclose
+E        +    and   A   NaN\ndtype: float64 = std()
+E        +      where std =      A\n0  0.0.std
+
+test_0694.py:39: AssertionError
+_________________ test_task_func_with_different_length_tuples __________________
+
+    def test_task_func_with_different_length_tuples():
+        tuples_list = [(1, 2), (3, 4), (5,)]
+        columns = ['A', 'B']
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0694.py:50: Failed
+=========================== short test summary info ============================
+FAILED test_0694.py::test_task_func_with_positive_values - assert False
+FAILED test_0694.py::test_task_func_with_negative_values - assert False
+FAILED test_0694.py::test_task_func_with_mixed_values - assert False
+FAILED test_0694.py::test_task_func_with_single_element - assert False
+FAILED test_0694.py::test_task_func_with_different_length_tuples - Failed: DI...
+5 failed, 2 passed in 2.84s

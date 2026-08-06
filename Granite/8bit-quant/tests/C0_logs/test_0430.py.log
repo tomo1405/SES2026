@@ -1,0 +1,83 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create sample dataframes
+        df1 = pd.DataFrame({
+            'id': [1, 2, 3],
+            'feature1': [4, 5, 6],
+            'feature2': [7, 8, 9],
+            'target': [0, 1, 0]
+        })
+        df2 = pd.DataFrame({
+            'id': [1, 2, 3],
+            'feature3': [10, 11, 12],
+            'feature4': [13, 14, 15],
+            'target': [1, 0, 1]
+        })
+    
+        # Call the function and store the returned values
+>       selected_features, heatmap = task_func(df1, df2)
+                                     ^^^^^^^^^^^^^^^^^^^
+
+test_0430.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test_0430.py:12: in task_func
+    X = df[features]
+        ^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:4384: in __getitem__
+    indexer = self.columns._get_indexer_strict(key, "columns")[1]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py:6302: in _get_indexer_strict
+    self._raise_if_missing(keyarr, indexer, axis_name)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Index(['id', 'feature1', 'feature2', 'target_x', 'feature3', 'feature4',
+       'target_y'],
+      dtype='str')
+key = Index(['feature1', 'feature2', 'target'], dtype='str')
+indexer = array([ 1,  2, -1]), axis_name = 'columns'
+
+    def _raise_if_missing(self, key, indexer, axis_name: str_t) -> None:
+        """
+        Check that indexer can be used to return a result.
+    
+        e.g. at least one element was found,
+        unless the list of keys was actually empty.
+    
+        Parameters
+        ----------
+        key : list-like
+            Targeted labels (only used to show correct error message).
+        indexer: array-like of booleans
+            Indices corresponding to the key,
+            (with -1 indicating not found).
+        axis_name : str
+    
+        Raises
+        ------
+        KeyError
+            If at least one key was requested but none was found.
+        """
+        if len(key) == 0:
+            return
+    
+        # Count missing values
+        missing_mask = indexer < 0
+        nmissing = missing_mask.sum()
+    
+        if nmissing:
+            if nmissing == len(indexer):
+                raise KeyError(f"None of [{key}] are in the [{axis_name}]")
+    
+            not_found = list(ensure_index(key)[missing_mask.nonzero()[0]].unique())
+>           raise KeyError(f"{not_found} not in index")
+E           KeyError: "['target'] not in index"
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py:6355: KeyError
+=========================== short test summary info ============================
+FAILED test_0430.py::test_task_func - KeyError: "['target'] not in index"
+1 failed in 4.09s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

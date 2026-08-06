@@ -1,0 +1,48 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        df = task_func()
+        assert isinstance(df, pd.DataFrame)
+        assert df.shape == (1000, 5)
+        assert df.columns.tolist() == ['A', 'B', 'C', 'D', 'E']
+        assert df.isnull().sum().sum() == 0
+>       assert (df < -1).sum().sum() == 400
+E       assert np.int64(0) == 400
+E        +  where np.int64(0) = sum()
+E        +    where sum = A    0\nB    0\nC    0\nD    0\nE    0\ndtype: int64.sum
+E        +      where A    0\nB    0\nC    0\nD    0\nE    0\ndtype: int64 = sum()
+E        +        where sum =       A   B   C   D   E\n0    45  48  65  68  68\n1    10  84  22  37  88\n2    71  89  89  13  59\n3    66  40  88  47  8...96  60  65  62  99  65\n997  58  17  -1  -1  -1\n998  95  51  43  85  49\n999  46  16  93  92  56\n\n[1000 rows x 5 columns] < -1.sum
+
+test_0926.py:12: AssertionError
+_______________________ test_task_func_with_custom_args ________________________
+
+    def test_task_func_with_custom_args():
+        df = task_func(data_size=500, column_names=['X', 'Y', 'Z'], seed=42)
+        assert isinstance(df, pd.DataFrame)
+        assert df.shape == (500, 3)
+        assert df.columns.tolist() == ['X', 'Y', 'Z']
+        assert df.isnull().sum().sum() == 0
+>       assert (df < -1).sum().sum() == 150
+E       assert np.int64(0) == 150
+E        +  where np.int64(0) = sum()
+E        +    where sum = X    0\nY    0\nZ    0\ndtype: int64.sum
+E        +      where X    0\nY    0\nZ    0\ndtype: int64 = sum()
+E        +        where sum =       X   Y    Z\n0    52  93   15\n1    72  61   21\n2    83  87   75\n3    75  88  100\n4    24  -1   22\n..   ..  ..  ...\n495  46  64   -1\n496  54  65   51\n497  53  36   26\n498  29  21   11\n499  40  11   36\n\n[500 rows x 3 columns] < -1.sum
+
+test_0926.py:20: AssertionError
+_______________________ test_task_func_with_invalid_args _______________________
+
+    def test_task_func_with_invalid_args():
+        with pytest.raises(ValueError):
+            df = task_func(data_size=-100)
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0926.py:25: Failed
+=========================== short test summary info ============================
+FAILED test_0926.py::test_task_func - assert np.int64(0) == 400
+FAILED test_0926.py::test_task_func_with_custom_args - assert np.int64(0) == 150
+FAILED test_0926.py::test_task_func_with_invalid_args - Failed: DID NOT RAISE...
+3 failed in 1.26s

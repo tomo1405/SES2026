@@ -1,0 +1,33 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: df is empty
+        df = pd.DataFrame()
+        tuples = [(1, 2), (3, 4)]
+        n_plots = 2
+        expected_df = pd.DataFrame()
+        expected_plots = []
+        actual_df, actual_plots = task_func(df, tuples, n_plots)
+        assert actual_df.equals(expected_df)
+        assert actual_plots == expected_plots
+    
+        # Test case 2: df is not empty, but no tuples found
+        df = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})
+        tuples = [(1, 2), (3, 4)]
+        n_plots = 2
+        expected_df = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})
+        expected_plots = []
+        actual_df, actual_plots = task_func(df, tuples, n_plots)
+        assert actual_df.equals(expected_df)
+>       assert actual_plots == expected_plots
+E       assert [<seaborn.axi...7812bff52150>] == []
+E         
+E         Left contains one more item: <seaborn.axisgrid.PairGrid object at 0x7812bff52150>
+E         Use -v to get more diff
+
+test_0609.py:24: AssertionError
+=========================== short test summary info ============================
+FAILED test_0609.py::test_task_func - assert [<seaborn.axi...7812bff52150>] =...
+1 failed in 5.38s

@@ -1,0 +1,145 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_no_files ____________________________
+
+    def test_task_func_no_files():
+        # Create a temporary directory and ensure it's empty
+        with pytest.MonkeyPatch().context() as mp:
+            mp.setattr(os, 'path', '/tmp/nonexistent_directory')
+>           assert task_func('/tmp/nonexistent_directory') == []
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1092.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = '/tmp/nonexistent_directory'
+
+    def task_func(directory):
+>       path = os.path.join(directory, '*.txt')
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: str.join() takes exactly one argument (2 given)
+
+../../../src/src_1092.py:7: TypeError
+_______________________ test_task_func_with_valid_files ________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-2220/test_task_func_with_valid_file0')
+
+    def test_task_func_with_valid_files(tmp_path):
+        # Create some temporary files with valid content
+        (tmp_path / 'file1.txt').write_text("{'key': 'value1'}\n")
+        (tmp_path / 'file2.txt').write_text("{'key': 'value2'}\n")
+    
+        expected_result = [{'key': 'value1'}, {'key': 'value2'}]
+>       assert task_func(str(tmp_path)) == expected_result
+E       AssertionError: assert [{'key': 'val...y': 'value1'}] == [{'key': 'val...y': 'value2'}]
+E         
+E         At index 0 diff: {'key': 'value2'} != {'key': 'value1'}
+E         Use -v to get more diff
+
+test_1092.py:19: AssertionError
+_____________________ test_task_func_with_invalid_content ______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-2220/test_task_func_with_invalid_co0')
+
+    def test_task_func_with_invalid_content(tmp_path):
+        # Create a temporary file with invalid content
+        (tmp_path / 'file1.txt').write_text("invalid content\n")
+    
+        with pytest.raises(ValueError):
+>           task_func(str(tmp_path))
+
+test_1092.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1092.py:14: in task_func
+    results.append(ast.literal_eval(line.strip()))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/ast.py:66: in literal_eval
+    node_or_string = parse(node_or_string.lstrip(" \t"), mode='eval')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+source = 'invalid content', filename = '<unknown>', mode = 'eval'
+type_comments = False, feature_version = -1
+
+    def parse(source, filename='<unknown>', mode='exec', *,
+              type_comments=False, feature_version=None):
+        """
+        Parse the source into an AST node.
+        Equivalent to compile(source, filename, mode, PyCF_ONLY_AST).
+        Pass type_comments=True to get back type comments where the syntax allows.
+        """
+        flags = PyCF_ONLY_AST
+        if type_comments:
+            flags |= PyCF_TYPE_COMMENTS
+        if feature_version is None:
+            feature_version = -1
+        elif isinstance(feature_version, tuple):
+            major, minor = feature_version  # Should be a 2-tuple.
+            if major != 3:
+                raise ValueError(f"Unsupported major version: {major}")
+            feature_version = minor
+        # Else it should be an int giving the minor version for 3.x.
+>       return compile(source, filename, mode, flags,
+                       _feature_version=feature_version)
+E         File "<unknown>", line 1
+E           invalid content
+E                   ^^^^^^^
+E       SyntaxError: invalid syntax
+
+/usr/lib/python3.12/ast.py:52: SyntaxError
+______________________ test_task_func_with_mixed_content _______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-2220/test_task_func_with_mixed_cont0')
+
+    def test_task_func_with_mixed_content(tmp_path):
+        # Create a temporary file with mixed valid and invalid content
+        (tmp_path / 'file1.txt').write_text("{'key': 'value1'}\ninvalid content\n")
+    
+        with pytest.raises(ValueError):
+>           task_func(str(tmp_path))
+
+test_1092.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1092.py:14: in task_func
+    results.append(ast.literal_eval(line.strip()))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/ast.py:66: in literal_eval
+    node_or_string = parse(node_or_string.lstrip(" \t"), mode='eval')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+source = 'invalid content', filename = '<unknown>', mode = 'eval'
+type_comments = False, feature_version = -1
+
+    def parse(source, filename='<unknown>', mode='exec', *,
+              type_comments=False, feature_version=None):
+        """
+        Parse the source into an AST node.
+        Equivalent to compile(source, filename, mode, PyCF_ONLY_AST).
+        Pass type_comments=True to get back type comments where the syntax allows.
+        """
+        flags = PyCF_ONLY_AST
+        if type_comments:
+            flags |= PyCF_TYPE_COMMENTS
+        if feature_version is None:
+            feature_version = -1
+        elif isinstance(feature_version, tuple):
+            major, minor = feature_version  # Should be a 2-tuple.
+            if major != 3:
+                raise ValueError(f"Unsupported major version: {major}")
+            feature_version = minor
+        # Else it should be an int giving the minor version for 3.x.
+>       return compile(source, filename, mode, flags,
+                       _feature_version=feature_version)
+E         File "<unknown>", line 1
+E           invalid content
+E                   ^^^^^^^
+E       SyntaxError: invalid syntax
+
+/usr/lib/python3.12/ast.py:52: SyntaxError
+=========================== short test summary info ============================
+FAILED test_1092.py::test_task_func_no_files - TypeError: str.join() takes ex...
+FAILED test_1092.py::test_task_func_with_valid_files - AssertionError: assert...
+FAILED test_1092.py::test_task_func_with_invalid_content -   File "<unknown>"...
+FAILED test_1092.py::test_task_func_with_mixed_content -   File "<unknown>", ...
+4 failed in 0.75s

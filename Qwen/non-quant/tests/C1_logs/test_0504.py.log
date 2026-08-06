@@ -1,0 +1,38 @@
+F.....F                                                                  [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_default_parameters _______________________
+
+    def test_task_func_default_parameters():
+        df = task_func()
+        assert isinstance(df, pd.DataFrame)
+        assert df.shape == (7, 5)
+        assert all(isinstance(col, str) for col in df.columns)
+>       assert all(isinstance(date, datetime.date) for date in df.index)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0504.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <generator object DatetimeArray.__iter__ at 0x7a5ae60e4ee0>
+
+>   assert all(isinstance(date, datetime.date) for date in df.index)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: isinstance() arg 2 must be a type, a tuple of types, or a union
+
+test_0504.py:12: TypeError
+__________________________ test_task_func_date_range ___________________________
+
+    def test_task_func_date_range():
+        df = task_func()
+>       assert df.index[-1] == datetime.now().date()
+E       AssertionError: assert Timestamp('2026-07-29 00:00:00') == datetime.date(2026, 7, 29)
+E        +  where datetime.date(2026, 7, 29) = <built-in method date of datetime.datetime object at 0x7a5ae60f89c0>()
+E        +    where <built-in method date of datetime.datetime object at 0x7a5ae60f89c0> = datetime.datetime(2026, 7, 29, 1, 24, 59, 417809).date
+E        +      where datetime.datetime(2026, 7, 29, 1, 24, 59, 417809) = <built-in method now of type object at 0xa4fd20>()
+E        +        where <built-in method now of type object at 0xa4fd20> = datetime.now
+
+test_0504.py:46: AssertionError
+=========================== short test summary info ============================
+FAILED test_0504.py::test_task_func_default_parameters - TypeError: isinstanc...
+FAILED test_0504.py::test_task_func_date_range - AssertionError: assert Times...
+2 failed, 5 passed in 1.08s

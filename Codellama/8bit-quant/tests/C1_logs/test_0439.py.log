@@ -1,0 +1,26 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        numbers = [1, 2, 3, 4, 5]
+        file_path = "save.pkl"
+        expected_fig = plt.figure()
+        plt.plot(numbers)
+    
+        with open(file_path, "wb") as file:
+            pickle.dump(expected_fig, file)
+    
+        with open(file_path, "rb") as file:
+            loaded_fig = pickle.load(file)
+    
+        os.remove(file_path)
+    
+>       assert task_func(numbers, file_path) == loaded_fig
+E       AssertionError: assert <Figure size 640x480 with 1 Axes> == <Figure size 640x480 with 1 Axes>
+E        +  where <Figure size 640x480 with 1 Axes> = task_func([1, 2, 3, 4, 5], 'save.pkl')
+
+test_0439.py:23: AssertionError
+=========================== short test summary info ============================
+FAILED test_0439.py::test_task_func_valid_input - AssertionError: assert <Fig...
+1 failed, 1 passed in 1.96s

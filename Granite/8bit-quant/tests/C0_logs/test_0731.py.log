@@ -1,0 +1,43 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        """
+        Test the task_func function.
+        """
+        # Create a sample data to test with
+        dt = {'name': 'John', 'age': 30, 'city': 'New York'}
+    
+        # Call the function and store the result
+        result = task_func(dt)
+    
+        # Assert that the result is equal to the input data
+        assert result == dt
+    
+        # Assert that a file named 'save.pkl' has been created
+>       assert os.path.exists(FILE_NAME)
+E       AssertionError: assert False
+E        +  where False = <function exists at 0x72a8dd57b600>('save.pkl')
+E        +    where <function exists at 0x72a8dd57b600> = <module 'posixpath' (frozen)>.exists
+E        +      where <module 'posixpath' (frozen)> = os.path
+
+test_0731.py:23: AssertionError
+_______________________ test_task_func_with_invalid_data _______________________
+
+    def test_task_func_with_invalid_data():
+        """
+        Test the task_func function with invalid data.
+        """
+        # Create an invalid data to test with
+        dt = 'not a dictionary'
+    
+        # Call the function and store the result
+>       with pytest.raises(TypeError):
+E       Failed: DID NOT RAISE TypeError
+
+test_0731.py:41: Failed
+=========================== short test summary info ============================
+FAILED test_0731.py::test_task_func - AssertionError: assert False
+FAILED test_0731.py::test_task_func_with_invalid_data - Failed: DID NOT RAISE...
+2 failed in 0.50s

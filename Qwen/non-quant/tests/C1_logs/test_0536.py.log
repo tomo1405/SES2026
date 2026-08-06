@@ -1,0 +1,45 @@
+...EF.                                                                   [100%]
+==================================== ERRORS ====================================
+__________ ERROR at teardown of test_task_func_with_negative_entries ___________
+
+    @pytest.fixture
+    def temp_db_path():
+        db_path = "temp_test.db"
+        yield db_path
+>       os.remove(db_path)
+E       FileNotFoundError: [Errno 2] No such file or directory: 'temp_test.db'
+
+test_0536.py:10: FileNotFoundError
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_random_seed ________________________
+
+temp_db_path = 'temp_test.db'
+
+    def test_task_func_with_random_seed(temp_db_path):
+        table_name = "test_table"
+        num_entries = 5
+        random_seed = 42
+    
+        task_func(temp_db_path, table_name, num_entries, random_seed=random_seed)
+    
+        conn = sqlite3.connect(temp_db_path)
+        cur = conn.cursor()
+        cur.execute(f"SELECT * FROM {table_name}")
+        rows = cur.fetchall()
+        conn.close()
+    
+        expected_names = ["Liam"] * num_entries  # Based on the random seed 42
+        expected_ages = [30] * num_entries      # Based on the random seed 42
+        expected_heights = [175] * num_entries   # Based on the random seed 42
+    
+>       assert [row[0] for row in rows] == expected_names
+E       AssertionError: assert ['Olivia', 'O...John', 'Liam'] == ['Liam', 'Lia...Liam', 'Liam']
+E         
+E         At index 0 diff: 'Olivia' != 'Liam'
+E         Use -v to get more diff
+
+test_0536.py:55: AssertionError
+=========================== short test summary info ============================
+FAILED test_0536.py::test_task_func_with_random_seed - AssertionError: assert...
+ERROR test_0536.py::test_task_func_with_negative_entries - FileNotFoundError:...
+1 failed, 4 passed, 1 error in 0.68s

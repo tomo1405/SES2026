@@ -1,0 +1,166 @@
+F..F                                                                     [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_valid_url ___________________________
+
+url = 'https://www.python.org/static/img/python-logo@2x.png'
+
+    def task_func(url: str) -> "matplotlib.axes._axes.Axes":
+        response = None  # Initialize response to None
+        # Validate the URL
+        if not isinstance(url, str) or not url:
+            raise ValueError("Invalid URL provided.")
+    
+        # Download the image with error handling
+        try:
+            response = requests.get(url, stream=True, timeout=10)
+>           response.raise_for_status()
+
+../../../src/src_1017.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Response [404]>
+
+    def raise_for_status(self) -> None:
+        """Raises :class:`HTTPError`, if one occurred."""
+    
+        http_error_msg = ""
+        if isinstance(self.reason, bytes):
+            # We attempt to decode utf-8 first because some servers
+            # choose to localize their reason strings. If the string
+            # isn't utf-8, we fall back to iso-8859-1 for all other
+            # encodings. (See PR #3538)
+            try:
+                reason = self.reason.decode("utf-8")
+            except UnicodeDecodeError:
+                reason = self.reason.decode("iso-8859-1")
+        else:
+            reason = self.reason
+    
+        if 400 <= self.status_code < 500:
+            http_error_msg = (
+                f"{self.status_code} Client Error: {reason} for url: {self.url}"
+            )
+    
+        elif 500 <= self.status_code < 600:
+            http_error_msg = (
+                f"{self.status_code} Server Error: {reason} for url: {self.url}"
+            )
+    
+        if http_error_msg:
+>           raise HTTPError(http_error_msg, response=self)
+E           requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.python.org/static/img/python-logo@2x.png
+
+../../../.venv/lib/python3.12/site-packages/requests/models.py:1167: HTTPError
+
+The above exception was the direct cause of the following exception:
+
+    def test_task_func_valid_url():
+        url = "https://www.python.org/static/img/python-logo@2x.png"
+>       ax = task_func(url)
+             ^^^^^^^^^^^^^^
+
+test_1017.py:6: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'https://www.python.org/static/img/python-logo@2x.png'
+
+    def task_func(url: str) -> "matplotlib.axes._axes.Axes":
+        response = None  # Initialize response to None
+        # Validate the URL
+        if not isinstance(url, str) or not url:
+            raise ValueError("Invalid URL provided.")
+    
+        # Download the image with error handling
+        try:
+            response = requests.get(url, stream=True, timeout=10)
+            response.raise_for_status()
+            img = Image.open(response.raw).convert("L")
+        except requests.RequestException as e:
+>           raise ValueError(f"Error downloading the image: {e}") from e
+E           ValueError: Error downloading the image: 404 Client Error: Not Found for url: https://www.python.org/static/img/python-logo@2x.png
+
+../../../src/src_1017.py:17: ValueError
+____________________ test_task_func_image_processing_error _____________________
+
+url = 'https://www.python.org/static/img/python-logo@2x.png'
+
+    def task_func(url: str) -> "matplotlib.axes._axes.Axes":
+        response = None  # Initialize response to None
+        # Validate the URL
+        if not isinstance(url, str) or not url:
+            raise ValueError("Invalid URL provided.")
+    
+        # Download the image with error handling
+        try:
+            response = requests.get(url, stream=True, timeout=10)
+>           response.raise_for_status()
+
+../../../src/src_1017.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Response [404]>
+
+    def raise_for_status(self) -> None:
+        """Raises :class:`HTTPError`, if one occurred."""
+    
+        http_error_msg = ""
+        if isinstance(self.reason, bytes):
+            # We attempt to decode utf-8 first because some servers
+            # choose to localize their reason strings. If the string
+            # isn't utf-8, we fall back to iso-8859-1 for all other
+            # encodings. (See PR #3538)
+            try:
+                reason = self.reason.decode("utf-8")
+            except UnicodeDecodeError:
+                reason = self.reason.decode("iso-8859-1")
+        else:
+            reason = self.reason
+    
+        if 400 <= self.status_code < 500:
+            http_error_msg = (
+                f"{self.status_code} Client Error: {reason} for url: {self.url}"
+            )
+    
+        elif 500 <= self.status_code < 600:
+            http_error_msg = (
+                f"{self.status_code} Server Error: {reason} for url: {self.url}"
+            )
+    
+        if http_error_msg:
+>           raise HTTPError(http_error_msg, response=self)
+E           requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.python.org/static/img/python-logo@2x.png
+
+../../../.venv/lib/python3.12/site-packages/requests/models.py:1167: HTTPError
+
+The above exception was the direct cause of the following exception:
+
+    def test_task_func_image_processing_error():
+        url = "https://www.python.org/static/img/python-logo@2x.png"
+        with pytest.raises(IOError):
+>           task_func(url)
+
+test_1017.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'https://www.python.org/static/img/python-logo@2x.png'
+
+    def task_func(url: str) -> "matplotlib.axes._axes.Axes":
+        response = None  # Initialize response to None
+        # Validate the URL
+        if not isinstance(url, str) or not url:
+            raise ValueError("Invalid URL provided.")
+    
+        # Download the image with error handling
+        try:
+            response = requests.get(url, stream=True, timeout=10)
+            response.raise_for_status()
+            img = Image.open(response.raw).convert("L")
+        except requests.RequestException as e:
+>           raise ValueError(f"Error downloading the image: {e}") from e
+E           ValueError: Error downloading the image: 404 Client Error: Not Found for url: https://www.python.org/static/img/python-logo@2x.png
+
+../../../src/src_1017.py:17: ValueError
+=========================== short test summary info ============================
+FAILED test_1017.py::test_task_func_valid_url - ValueError: Error downloading...
+FAILED test_1017.py::test_task_func_image_processing_error - ValueError: Erro...
+2 failed, 2 passed in 2.70s

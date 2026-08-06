@@ -1,0 +1,32 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        temperatures = pd.DataFrame({'temperature': [20, 22, 25, 20, 23, 19]}, index=pd.date_range('2022-01-01', periods=6))
+        ax = task_func(temperatures)
+        assert ax.get_xlabel() == 'Date'
+        assert ax.get_ylabel() == 'Temperature (°C)'
+        assert ax.get_title() == 'Daily Temperatures in New York'
+        assert len(ax.get_lines()) == 1
+>       assert ax.get_lines()[0].get_xdata() == temperatures.index
+E       ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+test_0104.py:12: ValueError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        with pytest.raises(ValueError):
+            task_func(pd.DataFrame())
+    
+        with pytest.raises(ValueError):
+            task_func(pd.Series())
+    
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0104.py:22: Failed
+=========================== short test summary info ============================
+FAILED test_0104.py::test_task_func_valid_input - ValueError: The truth value...
+FAILED test_0104.py::test_task_func_invalid_input - Failed: DID NOT RAISE Val...
+2 failed in 2.15s

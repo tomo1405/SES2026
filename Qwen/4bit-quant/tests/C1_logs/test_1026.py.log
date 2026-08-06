@@ -1,0 +1,31 @@
+.F.F                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_single_row ___________________________
+
+    def test_task_func_single_row():
+        data_dict = {'A': [1], 'B': [2]}
+        df, ax = task_func(data_dict)
+>       assert df.equals(pd.DataFrame({'A': [1], 'B': [2]}))
+E       AssertionError: assert False
+E        +  where False = equals(   A  B\n0  1  2)
+E        +    where equals =      A    B\n0  0.0  0.0.equals
+E        +    and      A  B\n0  1  2 = <class 'pandas.DataFrame'>({'A': [1], 'B': [2]})
+E        +      where <class 'pandas.DataFrame'> = pd.DataFrame
+
+test_1026.py:17: AssertionError
+___________________________ test_task_func_with_nan ____________________________
+
+    def test_task_func_with_nan():
+        data_dict = {'A': [1, np.nan, 3], 'B': [4, 5, np.nan]}
+        df, ax = task_func(data_dict)
+        expected_df = pd.DataFrame({'A': [0, 1], 'B': [0, 1]})
+>       assert df.equals(expected_df)
+E       assert False
+E        +  where False = equals(   A  B\n0  0  0\n1  1  1)
+E        +    where equals =      A    B\n0  0.0  0.0.equals
+
+test_1026.py:33: AssertionError
+=========================== short test summary info ============================
+FAILED test_1026.py::test_task_func_single_row - AssertionError: assert False
+FAILED test_1026.py::test_task_func_with_nan - assert False
+2 failed, 2 passed in 4.00s

@@ -1,0 +1,118 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        df = task_func()
+        assert isinstance(df, pd.DataFrame)
+        assert df.shape == (100, 4)
+        assert df.columns.tolist() == ['ID', 'Name', 'Date of Birth', 'Email']
+        assert df['ID'].dtype == np.int64
+>       assert df['Name'].dtype == np.object
+                                   ^^^^^^^^^
+
+test_0761.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+attr = 'object'
+
+    def __getattr__(attr):
+        # Warn for expired attributes
+        import warnings
+    
+        if attr == "linalg":
+            import numpy.linalg as linalg
+            return linalg
+        elif attr == "fft":
+            import numpy.fft as fft
+            return fft
+        elif attr == "dtypes":
+            import numpy.dtypes as dtypes
+            return dtypes
+        elif attr == "random":
+            import numpy.random as random
+            return random
+        elif attr == "polynomial":
+            import numpy.polynomial as polynomial
+            return polynomial
+        elif attr == "ma":
+            import numpy.ma as ma
+            return ma
+        elif attr == "ctypeslib":
+            import numpy.ctypeslib as ctypeslib
+            return ctypeslib
+        elif attr == "exceptions":
+            import numpy.exceptions as exceptions
+            return exceptions
+        elif attr == "testing":
+            import numpy.testing as testing
+            return testing
+        elif attr == "matlib":
+            import numpy.matlib as matlib
+            return matlib
+        elif attr == "f2py":
+            import numpy.f2py as f2py
+            return f2py
+        elif attr == "typing":
+            import numpy.typing as typing
+            return typing
+        elif attr == "rec":
+            import numpy.rec as rec
+            return rec
+        elif attr == "char":
+            import numpy.char as char
+            return char
+        elif attr == "core":
+            import numpy.core as core
+            return core
+        elif attr == "strings":
+            import numpy.strings as strings
+            return strings
+        if attr in __future_scalars__:
+            # And future warnings for those that will change, but also give
+            # the AttributeError
+            warnings.warn(
+                f"In the future `np.{attr}` will be defined as the "
+                "corresponding NumPy scalar.", FutureWarning, stacklevel=2)
+    
+        if attr in __former_attrs__:
+>           raise AttributeError(__former_attrs__[attr], name=None)
+E           AttributeError: module 'numpy' has no attribute 'object'.
+E           `np.object` was a deprecated alias for the builtin `object`. To avoid this error in existing code, use `object` by itself. Doing this will not modify any behavior and is safe. 
+E           The aliases was originally deprecated in NumPy 1.20; for more details and guidance see the original release note at:
+E               https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+
+../../../.venv/lib/python3.12/site-packages/numpy/__init__.py:760: AttributeError
+_______________________ test_task_func_with_custom_args ________________________
+
+    def test_task_func_with_custom_args():
+        df = task_func(start_year=1900, end_year=2000, email_domain='example.com',
+                       latin_names=['Foo', 'Bar'], other_names=['Baz', 'Qux'], rng_seed=42)
+        assert df['ID'].iloc[0] == 1
+>       assert df['Name'].iloc[0] == 'Foo'
+E       AssertionError: assert 'Bar' == 'Foo'
+E         
+E         - Foo
+E         + Bar
+
+test_0761.py:24: AssertionError
+_______________________ test_task_func_with_invalid_args _______________________
+
+    def test_task_func_with_invalid_args():
+        with pytest.raises(ValueError):
+            task_func(start_year=2000, end_year=1900)
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0761.py:33: Failed
+=============================== warnings summary ===============================
+Granite/4bit-quant/tests/test_0761.py::test_task_func
+  /work/tomohiro-w/utg/Granite/4bit-quant/tests/test_0761.py:16: FutureWarning: In the future `np.object` will be defined as the corresponding NumPy scalar.
+    assert df['Name'].dtype == np.object
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0761.py::test_task_func - AttributeError: module 'numpy' has no a...
+FAILED test_0761.py::test_task_func_with_custom_args - AssertionError: assert...
+FAILED test_0761.py::test_task_func_with_invalid_args - Failed: DID NOT RAISE...
+3 failed, 1 warning in 1.39s

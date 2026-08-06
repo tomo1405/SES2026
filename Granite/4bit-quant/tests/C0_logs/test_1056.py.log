@@ -1,0 +1,29 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+colors = ['red', 'green', 'blue'], states = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO']
+
+    def test_task_func(colors, states):
+        df = task_func(colors, states)
+        assert isinstance(df, pd.DataFrame)
+>       assert df.shape == (min(len(colors), len(states)), 1)
+E       assert (6, 3) == (3, 1)
+E         
+E         At index 0 diff: 6 != 3
+E         Use -v to get more diff
+
+test_1056.py:19: AssertionError
+______________________ test_task_func_with_invalid_inputs ______________________
+
+colors = ['red', 'green', 'blue'], states = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO']
+
+    def test_task_func_with_invalid_inputs(colors, states):
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_1056.py:25: Failed
+=========================== short test summary info ============================
+FAILED test_1056.py::test_task_func - assert (6, 3) == (3, 1)
+FAILED test_1056.py::test_task_func_with_invalid_inputs - Failed: DID NOT RAI...
+2 failed in 1.39s

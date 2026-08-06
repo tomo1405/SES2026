@@ -1,0 +1,39 @@
+.F                                                                       [100%]
+=================================== FAILURES ===================================
+_____________ test_task_func[http://testsite.com-expected_links1] ______________
+
+mock_browser = <MagicMock name='Browser' id='137357156262608'>
+url = 'http://testsite.com'
+expected_links = ['http://testsite.com/about', 'http://testsite.com/contact']
+
+    @pytest.mark.parametrize("url, expected_links", [
+        ("http://example.com", ["http://example.com/page1", "http://example.com/page2"]),
+        ("http://testsite.com", ["http://testsite.com/about", "http://testsite.com/contact"]),
+    ])
+    @patch('src_0285.mechanize.Browser')
+    def test_task_func(mock_browser, url, expected_links):
+        # Mock the response from the browser
+        mock_response = mock_browser.return_value.open.return_value
+        mock_response.read.return_value = b"""
+        <html>
+            <body>
+                <a href="page1">Page 1</a>
+                <a href="page2">Page 2</a>
+            </body>
+        </html>
+        """
+    
+        # Call the function
+        result = task_func(url)
+    
+        # Assert the result
+>       assert result == expected_links
+E       AssertionError: assert ['http://test...te.com/page2'] == ['http://test....com/contact']
+E         
+E         At index 0 diff: 'http://testsite.com/page1' != 'http://testsite.com/about'
+E         Use -v to get more diff
+
+test_0285.py:26: AssertionError
+=========================== short test summary info ============================
+FAILED test_0285.py::test_task_func[http://testsite.com-expected_links1] - As...
+1 failed, 1 passed in 1.18s

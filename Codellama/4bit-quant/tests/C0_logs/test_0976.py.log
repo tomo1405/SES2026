@@ -1,0 +1,23 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        rows = 5
+        columns = ["A", "B", "C", "D", "E"]
+        seed = 0
+        expected_columns = ["A", "B", "C", "D", "E"]
+        expected_data = np.random.rand(rows, len(expected_columns))
+        np.random.seed(seed)
+        np.random.shuffle(expected_columns)
+        expected_df = pd.DataFrame(expected_data, columns=expected_columns)
+        actual_df = task_func(rows, columns, seed)
+>       assert actual_df.equals(expected_df)
+E       assert False
+E        +  where False = equals(          C         A         B         D         E\n0  0.543178  0.979242  0.476134  0.198450  0.541770\n1  0.786044  0...38343  0.925128\n3  0.846835  0.512306  0.627553  0.373073  0.264010\n4  0.490684  0.407996  0.223653  0.717095  0.447014)
+E        +    where equals =           E         C         D         B         A\n0  0.548814  0.715189  0.602763  0.544883  0.423655\n1  0.645894  0...25597  0.071036\n3  0.087129  0.020218  0.832620  0.778157  0.870012\n4  0.978618  0.799159  0.461479  0.780529  0.118274.equals
+
+test_0976.py:16: AssertionError
+=========================== short test summary info ============================
+FAILED test_0976.py::test_task_func - assert False
+1 failed in 1.13s

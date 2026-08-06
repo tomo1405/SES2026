@@ -1,0 +1,44 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+input_data = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+
+    def test_task_func(input_data):
+        df, ax = task_func(input_data)
+        assert isinstance(df, pd.DataFrame)
+>       assert isinstance(ax, np.ndarray) or ax is None
+E       AssertionError: assert (False or <Axes: > is None)
+E        +  where False = isinstance(<Axes: >, <class 'numpy.ndarray'>)
+E        +    where <class 'numpy.ndarray'> = np.ndarray
+
+test_0415.py:13: AssertionError
+______________________ test_task_func_with_invalid_column ______________________
+
+input_data = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+
+    def test_task_func_with_invalid_column(input_data):
+        df, ax = task_func(input_data, column="invalid_column")
+        assert isinstance(df, pd.DataFrame)
+>       assert isinstance(ax, np.ndarray) or ax is None
+E       AssertionError: assert (False or <Axes: > is None)
+E        +  where False = isinstance(<Axes: >, <class 'numpy.ndarray'>)
+E        +    where <class 'numpy.ndarray'> = np.ndarray
+
+test_0415.py:18: AssertionError
+_____________________ test_task_func_with_no_numeric_data ______________________
+
+input_data = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+
+    def test_task_func_with_no_numeric_data(input_data):
+        df, ax = task_func(input_data, column="a")
+>       assert df.empty
+E       assert False
+E        +  where False =    0  1  2\n0  1  2  3\n1  4  5  6\n2  7  8  9.empty
+
+test_0415.py:22: AssertionError
+=========================== short test summary info ============================
+FAILED test_0415.py::test_task_func - AssertionError: assert (False or <Axes:...
+FAILED test_0415.py::test_task_func_with_invalid_column - AssertionError: ass...
+FAILED test_0415.py::test_task_func_with_no_numeric_data - assert False
+3 failed in 2.08s

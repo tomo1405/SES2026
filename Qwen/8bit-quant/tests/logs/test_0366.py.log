@@ -1,0 +1,55 @@
+..FF.F.                                                                  [100%]
+=================================== FAILURES ===================================
+_____________________________ test_task_func_max_n _____________________________
+
+temp_file_name = 'temp_test_file.json'
+
+    def test_task_func_max_n(temp_file_name):
+>       n = len(WORDS)
+                ^^^^^
+E       NameError: name 'WORDS' is not defined
+
+test_0366.py:31: NameError
+___________________________ test_task_func_invalid_n ___________________________
+
+temp_file_name = 'temp_test_file.json'
+
+    def test_task_func_invalid_n(temp_file_name):
+        with pytest.raises(ValueError):
+            task_func(0, temp_file_name)
+        with pytest.raises(ValueError):
+>           task_func(len(WORDS) + 1, temp_file_name)
+                          ^^^^^
+E           NameError: name 'WORDS' is not defined
+
+test_0366.py:43: NameError
+________________________ test_task_func_reproducibility ________________________
+
+temp_file_name = 'temp_test_file.json'
+
+    def test_task_func_reproducibility(temp_file_name):
+        n = 5
+        result1 = task_func(n, temp_file_name, seed=77)
+        with open(result1, 'r') as f:
+            data1 = json.load(f)
+    
+        result2 = task_func(n, temp_file_name, seed=77)
+        with open(result2, 'r') as f:
+            data2 = json.load(f)
+    
+>       assert data1 == data2
+E       AssertionError: assert {'apple': 1, ...erry': 1, ...} == {'date': 1, '...'fig': 1, ...}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Left contains 3 more items:
+E         {'banana': 1, 'grape': 1, 'honeydew': 1}
+E         Right contains 3 more items:
+E         {'date': 1, 'elderberry': 1, 'fig': 1}
+E         Use -v to get more diff
+
+test_0366.py:67: AssertionError
+=========================== short test summary info ============================
+FAILED test_0366.py::test_task_func_max_n - NameError: name 'WORDS' is not de...
+FAILED test_0366.py::test_task_func_invalid_n - NameError: name 'WORDS' is no...
+FAILED test_0366.py::test_task_func_reproducibility - AssertionError: assert ...
+3 failed, 4 passed in 0.46s

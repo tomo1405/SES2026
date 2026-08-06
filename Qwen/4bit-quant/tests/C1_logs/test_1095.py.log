@@ -1,0 +1,29 @@
+...F..F                                                                  [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_mixed_case ________________________
+
+    def test_task_func_with_mixed_case():
+        text = "$Example $example $EXAMPLE"
+>       assert task_func(text) == [("example", 3)]
+E       AssertionError: assert [('Example', ...'EXAMPLE', 1)] == [('example', 3)]
+E         
+E         At index 0 diff: ('Example', 1) != ('example', 3)
+E         Left contains 2 more items, first extra item: ('example', 1)
+E         Use -v to get more diff
+
+test_1095.py:18: AssertionError
+____________________ test_task_func_with_only_dollar_signs _____________________
+
+    def test_task_func_with_only_dollar_signs():
+        text = "$$$$$$$"
+>       assert task_func(text) == []
+E       AssertionError: assert [('$$$$$$$', 1)] == []
+E         
+E         Left contains one more item: ('$$$$$$$', 1)
+E         Use -v to get more diff
+
+test_1095.py:30: AssertionError
+=========================== short test summary info ============================
+FAILED test_1095.py::test_task_func_with_mixed_case - AssertionError: assert ...
+FAILED test_1095.py::test_task_func_with_only_dollar_signs - AssertionError: ...
+2 failed, 5 passed in 3.79s

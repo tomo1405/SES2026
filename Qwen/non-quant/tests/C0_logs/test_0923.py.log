@@ -1,0 +1,142 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Expected output after removing stopwords
+        expected_output = [
+            {"text": "test sentence with some"},
+            {"text": "Another example without any stopwords"},
+            {"text": "Punctuation should be removed as well as stopwords"}
+        ]
+    
+        # Convert expected output to DataFrame for comparison
+        expected_df = pd.DataFrame(expected_output)
+    
+        # Call the function with sample data and the column name
+        result_df = task_func(data, "text")
+    
+        # Check if the result matches the expected output
+>       assert result_df.equals(expected_df), "The function did not return the expected output."
+E       AssertionError: The function did not return the expected output.
+E       assert False
+E        +  where False = equals(                                                text\n0                            test sentence with some\n1              Another example without any stopwords\n2  Punctuation should be removed as well as stopw...)
+E        +    where equals =                                  text\n0             test sentence stopwords\n1   Another example without stopwords\n2  Punctuation removed well stopwords.equals
+
+test_0923.py:26: AssertionError
+__________________________ test_task_func_empty_data ___________________________
+
+    def test_task_func_empty_data():
+        # Test with empty data
+        data = []
+        expected_output = pd.DataFrame(columns=["text"])
+    
+>       result_df = task_func(data, "text")
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0923.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0923.py:19: in task_func
+    df[column] = df[column].apply(lambda x: ' '.join([word for word in re.findall(r'\b\w+\b', x) if word.lower() not in STOPWORDS]))
+                 ^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:4378: in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = RangeIndex(start=0, stop=0, step=1), key = 'text'
+
+    def get_loc(self, key) -> int:
+        """
+        Get integer location for requested label.
+    
+        Parameters
+        ----------
+        key : int or float
+            Label to locate. Integer-like floats (e.g. 3.0) are accepted and
+            treated as the corresponding integer. Non-integer floats and other
+            non-integer labels are not valid and will raise KeyError or
+            InvalidIndexError.
+    
+        Returns
+        -------
+        int
+            Integer location of the label within the RangeIndex.
+    
+        Raises
+        ------
+        KeyError
+            If the label is not present in the RangeIndex or the label is a
+            non-integer value.
+        InvalidIndexError
+            If the label is of an invalid type for the RangeIndex.
+    
+        See Also
+        --------
+        RangeIndex.get_slice_bound : Calculate slice bound that corresponds to
+            given label.
+        RangeIndex.get_indexer : Computes indexer and mask for new index given
+            the current index.
+        RangeIndex.get_non_unique : Returns indexer and masks for new index given
+            the current index.
+        RangeIndex.get_indexer_for : Returns an indexer even when non-unique.
+    
+        Examples
+        --------
+        >>> idx = pd.RangeIndex(5)
+        >>> idx.get_loc(3)
+        3
+    
+        >>> idx = pd.RangeIndex(2, 10, 2)  # values [2, 4, 6, 8]
+        >>> idx.get_loc(6)
+        2
+        """
+        if is_integer(key) or (is_float(key) and key.is_integer()):
+            new_key = int(key)
+            try:
+                return self._range.index(new_key)
+            except ValueError as err:
+                raise KeyError(key) from err
+        if isinstance(key, Hashable):
+>           raise KeyError(key)
+E           KeyError: 'text'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/range.py:525: KeyError
+_________________________ test_task_func_no_stopwords __________________________
+
+    def test_task_func_no_stopwords():
+        # Test with text that has no stopwords
+        data = [{"text": "Unique words only"}]
+        expected_output = pd.DataFrame({"text": ["Unique words only"]})
+    
+        result_df = task_func(data, "text")
+    
+>       assert result_df.equals(expected_output), "The function did not handle text with no stopwords correctly."
+E       AssertionError: The function did not handle text with no stopwords correctly.
+E       assert False
+E        +  where False = equals(                text\n0  Unique words only)
+E        +    where equals =            text\n0  Unique words.equals
+
+test_0923.py:44: AssertionError
+_________________________ test_task_func_all_stopwords _________________________
+
+    def test_task_func_all_stopwords():
+        # Test with text that contains only stopwords
+        data = [{"text": "is a the of and"}]
+        expected_output = pd.DataFrame({"text": [" "]})
+    
+        result_df = task_func(data, "text")
+    
+>       assert result_df.equals(expected_output), "The function did not handle text with only stopwords correctly."
+E       AssertionError: The function did not handle text with only stopwords correctly.
+E       assert False
+E        +  where False = equals(  text\n0     )
+E        +    where equals =   text\n0     .equals
+
+test_0923.py:53: AssertionError
+=========================== short test summary info ============================
+FAILED test_0923.py::test_task_func - AssertionError: The function did not re...
+FAILED test_0923.py::test_task_func_empty_data - KeyError: 'text'
+FAILED test_0923.py::test_task_func_no_stopwords - AssertionError: The functi...
+FAILED test_0923.py::test_task_func_all_stopwords - AssertionError: The funct...
+4 failed in 1.25s

@@ -1,0 +1,118 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+dataframe =                              text_column
+0                          test sentence
+1  another test sentence numbers symbols
+
+    def test_task_func(dataframe):
+        expected_result = pd.DataFrame({
+            'this': [1, 1],
+            'is': [1, 1],
+            'a': [1, 1],
+            'test': [1, 1],
+            'sentence': [1, 1],
+            'another': [1, 1],
+            'numbers': [1, 1],
+            'and': [1, 1],
+            'symbols': [1, 1]
+        })
+        result = task_func(dataframe, 'text_column')
+>       assert result.equals(expected_result)
+E       assert False
+E        +  where False = equals(   this  is  a  test  sentence  another  numbers  and  symbols\n0     1   1  1     1         1        1        1    1        1\n1     1   1  1     1         1        1        1    1        1)
+E        +    where equals =    another  numbers  sentence  symbols  test\n0        0        0         1        0     1\n1        1        1         1        1     1.equals
+
+test_0185.py:24: AssertionError
+________________________ test_task_func_with_empty_text ________________________
+
+dataframe =                              text_column
+0                                       
+1  another test sentence numbers symbols
+
+    def test_task_func_with_empty_text(dataframe):
+        dataframe.loc[0, 'text_column'] = ''
+        expected_result = pd.DataFrame({
+            'this': [0, 0],
+            'is': [0, 0],
+            'a': [0, 0],
+            'test': [0, 0],
+            'sentence': [0, 0],
+            'another': [0, 0],
+            'numbers': [0, 0],
+            'and': [0, 0],
+            'symbols': [0, 0]
+        })
+        result = task_func(dataframe, 'text_column')
+>       assert result.equals(expected_result)
+E       assert False
+E        +  where False = equals(   this  is  a  test  sentence  another  numbers  and  symbols\n0     0   0  0     0         0        0        0    0        0\n1     0   0  0     0         0        0        0    0        0)
+E        +    where equals =    another  numbers  sentence  symbols  test\n0        0        0         0        0     0\n1        1        1         1        1     1.equals
+
+test_0185.py:40: AssertionError
+________________________ test_task_func_with_null_text _________________________
+
+dataframe =                                          text_column
+0                                                NaN
+1  Another test sentence with numbers 123 and sym...
+
+    def test_task_func_with_null_text(dataframe):
+        dataframe.loc[0, 'text_column'] = None
+        expected_result = pd.DataFrame({
+            'this': [0, 0],
+            'is': [0, 0],
+            'a': [0, 0],
+            'test': [0, 0],
+            'sentence': [0, 0],
+            'another': [0, 0],
+            'numbers': [0, 0],
+            'and': [0, 0],
+            'symbols': [0, 0]
+        })
+>       result = task_func(dataframe, 'text_column')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0185.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0185.py:22: in task_func
+    dataframe[text_column] = dataframe[text_column].apply(preprocess_text)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/series.py:5084: in apply
+    ).apply()
+      ^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/apply.py:1520: in apply
+    return self.apply_standard()
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/apply.py:1578: in apply_standard
+    mapped = obj._map_values(mapper=curried)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/base.py:1020: in _map_values
+    return arr.map(mapper, na_action=na_action)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/arrow/array.py:1753: in map
+    return super().map(mapper, na_action)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/base.py:2745: in map
+    return map_array(self, mapper, na_action=na_action)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/algorithms.py:1715: in map_array
+    return lib.map_infer(values, mapper)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pandas/_libs/lib.pyx:3071: in pandas._libs.lib.map_infer
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = nan
+
+    def preprocess_text(text):
+>       text = text.lower()
+               ^^^^^^^^^^
+E       AttributeError: 'float' object has no attribute 'lower'
+
+../../../src/src_0185.py:16: AttributeError
+=========================== short test summary info ============================
+FAILED test_0185.py::test_task_func - assert False
+FAILED test_0185.py::test_task_func_with_empty_text - assert False
+FAILED test_0185.py::test_task_func_with_null_text - AttributeError: 'float' ...
+3 failed in 3.44s

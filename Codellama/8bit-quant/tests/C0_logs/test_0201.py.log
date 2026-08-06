@@ -1,0 +1,45 @@
+.FFF                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_n_greater_than_1 ________________________
+
+    def test_task_func_n_greater_than_1():
+        n = 10
+        value = 0.5
+        expected_greater_avg = [random.random() for _ in range(n)]
+        expected_num_greater_value = len(expected_greater_avg)
+    
+        greater_avg, num_greater_value = task_func(n, value)
+    
+>       assert greater_avg == expected_greater_avg
+E       assert [0.5820073637...2534581021677] == [0.4389820325...62752602, ...]
+E         
+E         At index 0 diff: 0.5820073637975401 != 0.4389820325318732
+E         Right contains 5 more items, first extra item: 0.8682816262752602
+E         Use -v to get more diff
+
+test_0201.py:26: AssertionError
+______________________ test_task_func_value_less_than_avg ______________________
+
+    def test_task_func_value_less_than_avg():
+        n = 10
+        value = 0.5
+>       expected_greater_avg = [x for x in [random.random() for _ in range(n)] if x > statistics.mean(expected_greater_avg)]
+                                                                                                      ^^^^^^^^^^^^^^^^^^^^
+E       UnboundLocalError: cannot access local variable 'expected_greater_avg' where it is not associated with a value
+
+test_0201.py:32: UnboundLocalError
+____________________ test_task_func_value_greater_than_avg _____________________
+
+    def test_task_func_value_greater_than_avg():
+        n = 10
+        value = 0.5
+>       expected_greater_avg = [x for x in [random.random() for _ in range(n)] if x > statistics.mean(expected_greater_avg)]
+                                                                                                      ^^^^^^^^^^^^^^^^^^^^
+E       UnboundLocalError: cannot access local variable 'expected_greater_avg' where it is not associated with a value
+
+test_0201.py:43: UnboundLocalError
+=========================== short test summary info ============================
+FAILED test_0201.py::test_task_func_n_greater_than_1 - assert [0.5820073637.....
+FAILED test_0201.py::test_task_func_value_less_than_avg - UnboundLocalError: ...
+FAILED test_0201.py::test_task_func_value_greater_than_avg - UnboundLocalErro...
+3 failed, 1 passed in 1.58s

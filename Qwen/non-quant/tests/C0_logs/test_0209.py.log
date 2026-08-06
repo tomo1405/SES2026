@@ -1,0 +1,49 @@
+...FF.                                                                   [100%]
+=================================== FAILURES ===================================
+___________________ test_task_func_descriptive_stats_values ____________________
+
+    def test_task_func_descriptive_stats_values():
+        stats, _ = task_func(10, seed=42)
+        expected_stats = {
+            'count': 10.0,
+            'mean': 0.0,
+            'std': 1.0,
+            'min': -1.0,
+            '5%': -1.0,
+            '25%': -1.0,
+            '50%': 0.0,
+            '75%': 1.0,
+            '95%': 1.0,
+            'max': 1.0
+        }
+>       assert stats == expected_stats
+E       AssertionError: assert {'count': 10....n': -5.0, ...} == {'count': 10....n': -1.0, ...}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'5%': -4.55} != {'5%': -1.0}
+E         {'max': 0.0} != {'max': 1.0}
+E         {'std': 1.5811388300841898} != {'std': 1.0}
+E         {'95%': -0.45000000000000107} != {'95%': 1.0}...
+E         
+E         ...Full output truncated (6 lines hidden), use '-vv' to show
+
+test_0209.py:39: AssertionError
+_____________________________ test_task_func_plot ______________________________
+
+    def test_task_func_plot():
+        _, ax = task_func(10)
+        assert ax.get_title() == 'Random Walk'
+        assert len(ax.lines) == 1
+        assert ax.lines[0].get_data()[0].size == 10
+>       assert ax.figure.canvas.get_width_height() == (800, 600)
+E       assert (1000, 600) == (800, 600)
+E         
+E         At index 0 diff: 1000 != 800
+E         Use -v to get more diff
+
+test_0209.py:46: AssertionError
+=========================== short test summary info ============================
+FAILED test_0209.py::test_task_func_descriptive_stats_values - AssertionError...
+FAILED test_0209.py::test_task_func_plot - assert (1000, 600) == (800, 600)
+2 failed, 4 passed in 2.31s

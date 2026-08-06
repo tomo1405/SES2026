@@ -1,0 +1,47 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a simple hex string
+        hex_string = "48656c6c6f20576f726c64"
+        expected_output = {
+            "hex": "48656c6c6f20576f726c64",
+            "base64": "SGVsbG8gV29ybGQ=",
+            "utf-8": "Hello World",
+            "utf-16": "Hello World",
+            "utf-32": "Hello World",
+            "ASCII": "Hello World",
+            "URL": "Hello%20World",
+            "ROT13": "Uryyb Jbeyq"
+        }
+        assert task_func(hex_string) == expected_output
+    
+        # Test with a string that includes non-ASCII characters
+        hex_string_with_non_ascii = "48656c6c6f20576f726c6420e298ba"  # "Hello World 😊"
+        expected_output_non_ascii = {
+            "hex": "48656c6c6f20576f726c6420e298ba",
+            "base64": "SGVsbG8gV29ybGQg8J+YkA==",
+            "utf-8": "Hello World 😊",
+            "utf-16": "Hello World 😊",
+            "utf-32": "Hello World 😊",
+            "ASCII": "Not representable in ASCII",
+            "URL": "Hello%20World%20%F0%9F%98%BA",
+            "ROT13": "Uryyb Jbeyq 😊"
+        }
+>       assert task_func(hex_string_with_non_ascii) == expected_output_non_ascii
+E       AssertionError: assert {'hex': '4865...World ☺', ...} == {'hex': '4865...World 😊', ...}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Differing items:
+E         {'utf-32': 'Hello World ☺'} != {'utf-32': 'Hello World 😊'}
+E         {'utf-16': 'Hello World ☺'} != {'utf-16': 'Hello World 😊'}
+E         {'URL': 'Hello%20World%20%E2%98%BA'} != {'URL': 'Hello%20World%20%F0%9F%98%BA'}
+E         {'base64': 'SGVsbG8gV29ybGQg4pi6'} != {'base64': 'SGVsbG8gV29ybGQg8J+YkA=='}...
+E         
+E         ...Full output truncated (3 lines hidden), use '-vv' to show
+
+test_0991.py:31: AssertionError
+=========================== short test summary info ============================
+FAILED test_0991.py::test_task_func - AssertionError: assert {'hex': '4865......
+1 failed in 0.48s

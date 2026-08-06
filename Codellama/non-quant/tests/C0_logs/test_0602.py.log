@@ -1,0 +1,65 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        df = pd.DataFrame({'Word': ['apple', 'banana', 'cherry']})
+        letter = 'a'
+        ax = task_func(df, letter)
+        assert ax is not None
+        assert ax.get_title() == f"Word Lengths Distribution for Words Starting with '{letter}'"
+>       assert ax.get_xlabel() == 'Word Length'
+E       AssertionError: assert 'Word' == 'Word Length'
+E         
+E         - Word Length
+E         + Word
+
+test_0602.py:11: AssertionError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        df = pd.DataFrame({'Word': ['apple', 'banana', 'cherry']})
+        letter = 'z'
+        ax = task_func(df, letter)
+        assert ax is None
+>       assert ax.get_title() == f"No words start with the letter '{letter}'."
+               ^^^^^^^^^^^^
+E       AttributeError: 'NoneType' object has no attribute 'get_title'
+
+test_0602.py:21: AttributeError
+----------------------------- Captured stdout call -----------------------------
+No words start with the letter 'z'.
+__________________________ test_task_func_empty_input __________________________
+
+    def test_task_func_empty_input():
+        df = pd.DataFrame()
+        letter = 'a'
+>       ax = task_func(df, letter)
+             ^^^^^^^^^^^^^^^^^^^^^
+
+test_0602.py:30: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df = Empty DataFrame
+Columns: []
+Index: [], letter = 'a'
+
+    def task_func(df, letter):
+        start_time = time.time()
+        # Validate if 'Word' column exists in df
+        if 'Word' not in df.columns:
+>           raise ValueError("The DataFrame should contain a 'Word' column.")
+E           ValueError: The DataFrame should contain a 'Word' column.
+
+../../../src/src_0602.py:7: ValueError
+=============================== warnings summary ===============================
+Codellama/non-quant/tests/test_0602.py::test_task_func_valid_input
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/categorical.py:700: MatplotlibDeprecationWarning: vert: bool was deprecated in Matplotlib 3.11 and will be removed in 3.13. Use orientation: {'vertical', 'horizontal'} instead.
+    artists = ax.bxp(**boxplot_kws)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0602.py::test_task_func_valid_input - AssertionError: assert 'Wor...
+FAILED test_0602.py::test_task_func_invalid_input - AttributeError: 'NoneType...
+FAILED test_0602.py::test_task_func_empty_input - ValueError: The DataFrame s...
+3 failed, 1 warning in 3.44s

@@ -1,0 +1,62 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        url = "https://www.example.com"
+        table_id = "example_table"
+>       df = task_func(url, table_id)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1009.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'https://www.example.com', table_id = 'example_table'
+
+    def task_func(url, table_id):
+        try:
+            response = requests.get(url, timeout=5)
+            response.raise_for_status()  # Raises an HTTPError if the HTTP request returned an unsuccessful status code
+        except requests.exceptions.HTTPError as e:
+            raise e
+    
+        soup = BeautifulSoup(response.text, "html.parser")
+        table = soup.find("table", {"id": table_id})
+    
+        if table is None:
+>           raise ValueError("Table with the specified ID not found.")
+E           ValueError: Table with the specified ID not found.
+
+../../../src/src_1009.py:16: ValueError
+__________________________ test_task_func_http_error ___________________________
+
+    def test_task_func_http_error():
+        url = "https://www.example.com"
+        table_id = "nonexistent_table"
+        with pytest.raises(requests.exceptions.HTTPError):
+>           task_func(url, table_id)
+
+test_1009.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'https://www.example.com', table_id = 'nonexistent_table'
+
+    def task_func(url, table_id):
+        try:
+            response = requests.get(url, timeout=5)
+            response.raise_for_status()  # Raises an HTTPError if the HTTP request returned an unsuccessful status code
+        except requests.exceptions.HTTPError as e:
+            raise e
+    
+        soup = BeautifulSoup(response.text, "html.parser")
+        table = soup.find("table", {"id": table_id})
+    
+        if table is None:
+>           raise ValueError("Table with the specified ID not found.")
+E           ValueError: Table with the specified ID not found.
+
+../../../src/src_1009.py:16: ValueError
+=========================== short test summary info ============================
+FAILED test_1009.py::test_task_func_valid_input - ValueError: Table with the ...
+FAILED test_1009.py::test_task_func_http_error - ValueError: Table with the s...
+2 failed, 1 passed in 1.92s

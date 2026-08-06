@@ -1,0 +1,79 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_randint = <MagicMock name='randint' id='136715799223360'>
+mock_time = <MagicMock name='time' id='136715798397632'>
+mock_plot = <MagicMock name='plot' id='136715798400416'>
+mock_clf = <MagicMock name='clf' id='136715798404256'>
+mock_draw = <MagicMock name='draw' id='136715798407952'>
+mock_pause = <MagicMock name='pause' id='136715798411648'>
+mock_show = <MagicMock name='show' id='136715798431888'>
+
+    @patch('matplotlib.pyplot.show')
+    @patch('matplotlib.pyplot.pause')
+    @patch('matplotlib.pyplot.draw')
+    @patch('matplotlib.pyplot.clf')
+    @patch('matplotlib.pyplot.plot')
+    @patch('time.time')
+    @patch('random.randint')
+    def test_task_func(mock_randint, mock_time, mock_plot, mock_clf, mock_draw, mock_pause, mock_show):
+        # Mocking the time.time() to control the loop duration
+        mock_time.side_effect = [0, 0.1, 0.2, 0.3, 0.4, 0.5]
+    
+        # Mocking the random.randint to return predictable values
+        mock_randint.return_value = 50
+    
+        # Expected output
+        expected_x_data = [
+            '00:00:00.000000', '00:00:00.100000',
+            '00:00:00.200000', '00:00:00.300000',
+            '00:00:00.400000'
+        ]
+        expected_y_data = [50, 50, 50, 50, 50]
+    
+        # Call the function
+        x_data, y_data = task_func(0.5)
+    
+        # Assertions
+>       assert x_data == expected_x_data
+E       AssertionError: assert ['13:41:33.33...41:33.334522'] == ['00:00:00.00...00:00.400000']
+E         
+E         At index 0 diff: '13:41:33.333317' != '00:00:00.000000'
+E         Right contains one more item: '00:00:00.400000'
+E         Use -v to get more diff
+
+test_0597.py:32: AssertionError
+_________________________ test_task_func_zero_duration _________________________
+
+mock_show = <MagicMock name='show' id='136715798489440'>
+
+    @patch('matplotlib.pyplot.show')
+    def test_task_func_zero_duration(mock_show):
+        x_data, y_data = task_func(0)
+        assert x_data == []
+        assert y_data == []
+>       mock_show.assert_not_called()
+
+test_0597.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='show' id='136715798489440'>
+
+    def assert_not_called(self):
+        """assert that the mock was never called.
+        """
+        if self.call_count != 0:
+            msg = ("Expected '%s' to not have been called. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'show' to not have been called. Called 1 times.
+E           Calls: [call()].
+
+/usr/lib/python3.12/unittest/mock.py:905: AssertionError
+=========================== short test summary info ============================
+FAILED test_0597.py::test_task_func - AssertionError: assert ['13:41:33.33......
+FAILED test_0597.py::test_task_func_zero_duration - AssertionError: Expected ...
+2 failed in 1.57s

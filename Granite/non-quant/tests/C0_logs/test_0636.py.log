@@ -1,0 +1,28 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_empty_text ___________________________
+
+    def test_task_func_empty_text():
+        text = "This is a sample text. This is another sample text. This is a stopword. This is another stopword."
+        matrix_df, ax = task_func(text)
+>       assert matrix_df.empty
+E       assert False
+E        +  where False =                   another sample  another stopword  ...  text another  text stopword\nanother sample                 0 ...           1\ntext stopword                  1                 1  ...             1              0\n\n[6 rows x 6 columns].empty
+
+test_0636.py:18: AssertionError
+_______________________________ test_task_func_n _______________________________
+
+    def test_task_func_n():
+        text = "This is a sample text. This is another sample text."
+        matrix_df_2, ax_2 = task_func(text, n=2)
+        matrix_df_3, ax_3 = task_func(text, n=3)
+>       assert matrix_df_2.shape != matrix_df_3.shape
+E       assert (3, 3) != (3, 3)
+E        +  where (3, 3) =                 another sample  sample text  text another\nanother sample               0            2             1\nsample text                  2            0             2\ntext another                 1            2             0.shape
+E        +  and   (3, 3) =                      another sample text  ...  text another sample\nanother sample text                    0  ...      ...   1  ...                    1\ntext another sample                    1  ...                    0\n\n[3 rows x 3 columns].shape
+
+test_0636.py:26: AssertionError
+=========================== short test summary info ============================
+FAILED test_0636.py::test_task_func_empty_text - assert False
+FAILED test_0636.py::test_task_func_n - assert (3, 3) != (3, 3)
+2 failed, 1 passed in 4.97s

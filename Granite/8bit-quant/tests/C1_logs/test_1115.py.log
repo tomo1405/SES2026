@@ -1,0 +1,36 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Test with an empty dictionary
+        dict1 = {}
+        expected_result = {}
+        actual_result = task_func(dict1)
+        assert actual_result == expected_result
+    
+        # Test case 2: Test with a dictionary containing valid data
+        dict1 = {
+            'EMP$$123': 5,
+            'EMP$$456': 3,
+            'EMP$$789': 2
+        }
+        expected_result = {
+            'EMP$$123': [randint(1, 100) for _ in range(5)],
+            'EMP$$456': [randint(1, 100) for _ in range(3)],
+            'EMP$$789': [randint(1, 100) for _ in range(2)]
+        }
+        actual_result = task_func(dict1)
+>       assert actual_result == expected_result
+E       AssertionError: assert {'EMP$$123': ...89': [23, 60]} == {'EMP$$123': ...89': [77, 48]}
+E         
+E         Differing items:
+E         {'EMP$$789': [23, 60]} != {'EMP$$789': [77, 48]}
+E         {'EMP$$123': [41, 65, 58, 79, 93]} != {'EMP$$123': [76, 91, 59, 53, 39]}
+E         {'EMP$$456': [59, 62, 77]} != {'EMP$$456': [48, 19, 68]}
+E         Use -v to get more diff
+
+test_1115.py:25: AssertionError
+=========================== short test summary info ============================
+FAILED test_1115.py::test_task_func - AssertionError: assert {'EMP$$123': ......
+1 failed in 0.51s

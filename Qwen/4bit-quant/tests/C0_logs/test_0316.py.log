@@ -1,0 +1,83 @@
+FEEE                                                                     [100%]
+==================================== ERRORS ====================================
+______________ ERROR at setup of test_task_func_sendgrid_success _______________
+file /work/tomohiro-w/utg/Qwen/4bit-quant/tests/test_0316.py, line 14
+  def test_task_func_sendgrid_success(mocker):
+E       fixture 'mocker' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, cov, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, no_cover, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/work/tomohiro-w/utg/Qwen/4bit-quant/tests/test_0316.py:14
+_____________ ERROR at setup of test_task_func_sendgrid_http_error _____________
+file /work/tomohiro-w/utg/Qwen/4bit-quant/tests/test_0316.py, line 21
+  def test_task_func_sendgrid_http_error(mocker):
+E       fixture 'mocker' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, cov, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, no_cover, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/work/tomohiro-w/utg/Qwen/4bit-quant/tests/test_0316.py:21
+_______________ ERROR at setup of test_task_func_other_exception _______________
+file /work/tomohiro-w/utg/Qwen/4bit-quant/tests/test_0316.py, line 29
+  def test_task_func_other_exception(mocker):
+E       fixture 'mocker' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, cov, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, no_cover, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/work/tomohiro-w/utg/Qwen/4bit-quant/tests/test_0316.py:29
+=================================== FAILURES ===================================
+_____________________ test_task_func_directory_not_exists ______________________
+
+    def test_task_func_directory_not_exists():
+        with pytest.raises(FileNotFoundError) as excinfo:
+>           task_func('non_existent_dir', 'fake_api_key', 'test@example.com')
+
+test_0316.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0316.py:21: in task_func
+    response = sg.send(message)
+               ^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sendgrid/base_interface.py:63: in send
+    return self.client.mail.send.post(request_body=message)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/python_http_client/client.py:277: in http_request
+    self._make_request(opener, request, timeout=timeout)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <python_http_client.client.Client object at 0x716593c3fd40>
+opener = <urllib.request.OpenerDirector object at 0x716593c3fdd0>
+request = <urllib.request.Request object at 0x716596188f50>, timeout = None
+
+    def _make_request(self, opener, request, timeout=None):
+        """Make the API call and return the response. This is separated into
+           it's own function, so we can mock it easily for testing.
+    
+        :param opener:
+        :type opener:
+        :param request: url payload to request
+        :type request: urllib.Request object
+        :param timeout: timeout value or None
+        :type timeout: float
+        :return: urllib response
+        """
+        timeout = timeout or self.timeout
+        try:
+            return opener.open(request, timeout=timeout)
+        except HTTPError as err:
+            exc = handle_error(err)
+            exc.__cause__ = None
+            _logger.debug('{method} Response: {status} {body}'.format(
+                method=request.get_method(),
+                status=exc.status_code,
+                body=exc.body))
+>           raise exc
+E           python_http_client.exceptions.UnauthorizedError: HTTP Error 401: Unauthorized
+
+../../../.venv/lib/python3.12/site-packages/python_http_client/client.py:184: UnauthorizedError
+----------------------------- Captured stdout call -----------------------------
+HTTP error occurred: HTTP Error 401: Unauthorized
+=========================== short test summary info ============================
+FAILED test_0316.py::test_task_func_directory_not_exists - python_http_client...
+ERROR test_0316.py::test_task_func_sendgrid_success
+ERROR test_0316.py::test_task_func_sendgrid_http_error
+ERROR test_0316.py::test_task_func_other_exception
+1 failed, 3 errors in 1.35s

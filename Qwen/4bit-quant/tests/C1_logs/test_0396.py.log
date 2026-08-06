@@ -1,0 +1,52 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        expected_df = pd.DataFrame({
+            'Filename': ['file1.txt', 'file2.txt'],
+            'Numeric Data': [['123', '456'], ['789', '101']]
+        })
+    
+>       result_df = task_func(directory='/', file_pattern='*.txt', regex=r'([0-9]+)')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0396.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = '/', file_pattern = '*.txt', regex = '([0-9]+)'
+
+    def task_func(directory='./', file_pattern='*.txt', regex=r'([0-9]+)'):
+        if not os.path.exists(directory):
+            raise FileNotFoundError(f"The directory '{directory}' does not exist.")
+    
+>       files = natsort.natsorted(glob.glob(os.path.join(directory, file_pattern)))
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: mock_glob() missing 1 required positional argument: 'pattern'
+
+../../../src/src_0396.py:10: TypeError
+___________________________ test_task_func_no_files ____________________________
+
+    def test_task_func_no_files():
+        mock_directory.files = []
+        with pytest.raises(ValueError) as excinfo:
+>           task_func(directory='/', file_pattern='*.txt', regex=r'([0-9]+)')
+
+test_0396.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = '/', file_pattern = '*.txt', regex = '([0-9]+)'
+
+    def task_func(directory='./', file_pattern='*.txt', regex=r'([0-9]+)'):
+        if not os.path.exists(directory):
+            raise FileNotFoundError(f"The directory '{directory}' does not exist.")
+    
+>       files = natsort.natsorted(glob.glob(os.path.join(directory, file_pattern)))
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: mock_glob() missing 1 required positional argument: 'pattern'
+
+../../../src/src_0396.py:10: TypeError
+=========================== short test summary info ============================
+FAILED test_0396.py::test_task_func - TypeError: mock_glob() missing 1 requir...
+FAILED test_0396.py::test_task_func_no_files - TypeError: mock_glob() missing...
+2 failed, 1 passed in 1.16s

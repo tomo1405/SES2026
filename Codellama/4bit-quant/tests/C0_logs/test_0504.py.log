@@ -1,0 +1,55 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test 1: days_in_past is not an integer
+        with pytest.raises(ValueError):
+            task_func(days_in_past="7")
+    
+        # Test 2: days_in_past is not positive
+        with pytest.raises(ValueError):
+            task_func(days_in_past=0)
+    
+        # Test 3: stock_names is not a list
+        with pytest.raises(ValueError):
+>           task_func(stock_names="AAPL")
+
+test_0504.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0504.py:16: in task_func
+    df = pd.DataFrame(prices, columns=stock_names, index=dates)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:814: in __init__
+    mgr = ndarray_to_mgr(
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:295: in ndarray_to_mgr
+    index, columns = _get_axes(
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:722: in _get_axes
+    columns = ensure_index(columns)
+              ^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py:7975: in ensure_index
+    return Index(index_like, copy=copy)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py:541: in __new__
+    raise cls._raise_scalar_data_error(data)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cls = <class 'pandas.Index'>, data = 'AAPL'
+
+    @final
+    @classmethod
+    def _raise_scalar_data_error(cls, data):
+        # We return the TypeError so that we can raise it from the constructor
+        #  in order to keep mypy happy
+>       raise TypeError(
+            f"{cls.__name__}(...) must be called with a collection of some "
+            f"kind, {repr(data) if not isinstance(data, np.generic) else str(data)} "
+            "was passed"
+        )
+E       TypeError: Index(...) must be called with a collection of some kind, 'AAPL' was passed
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py:5280: TypeError
+=========================== short test summary info ============================
+FAILED test_0504.py::test_task_func - TypeError: Index(...) must be called wi...
+1 failed in 1.35s

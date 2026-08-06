@@ -1,0 +1,83 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        start_date = datetime(2020, 1, 1)
+        end_date = datetime(2020, 12, 31)
+        seed = 42
+        expected_output = pd.Series([datetime(2020, 1, 1), datetime(2020, 12, 31)])
+>       assert task_func(start_date, end_date, seed) == expected_output
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0121.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/ops/common.py:85: in new_method
+    return method(self, other)
+           ^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/arraylike.py:42: in __eq__
+    return self._cmp_method(other, operator.eq)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = 0     2020-11-23
+1     2020-02-27
+2     2020-01-13
+3     2020-05-20
+4     2020-05-05
+         ...    
+360   2020-12-09
+361   2020-11-26
+362   2020-06-02
+363   2020-08-22
+364   2020-06-10
+Length: 365, dtype: datetime64[us]
+other = 0   2020-01-01
+1   2020-12-31
+dtype: datetime64[us]
+op = <built-in function eq>
+
+    def _cmp_method(self, other, op):
+        res_name = ops.get_op_result_name(self, other)
+    
+        if isinstance(other, Series) and not self._indexed_same(other):
+>           raise ValueError("Can only compare identically-labeled Series objects")
+E           ValueError: Can only compare identically-labeled Series objects
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/series.py:6730: ValueError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        start_date = datetime(2020, 1, 1)
+        end_date = datetime(2020, 12, 31)
+        seed = 42
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0121.py:19: Failed
+________________________ test_task_func_invalid_input_2 ________________________
+
+    def test_task_func_invalid_input_2():
+        start_date = datetime(2020, 1, 1)
+        end_date = datetime(2020, 12, 31)
+        seed = 42
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0121.py:26: Failed
+________________________ test_task_func_invalid_input_3 ________________________
+
+    def test_task_func_invalid_input_3():
+        start_date = datetime(2020, 1, 1)
+        end_date = datetime(2020, 12, 31)
+        seed = 42
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0121.py:33: Failed
+=========================== short test summary info ============================
+FAILED test_0121.py::test_task_func_valid_input - ValueError: Can only compar...
+FAILED test_0121.py::test_task_func_invalid_input - Failed: DID NOT RAISE Val...
+FAILED test_0121.py::test_task_func_invalid_input_2 - Failed: DID NOT RAISE V...
+FAILED test_0121.py::test_task_func_invalid_input_3 - Failed: DID NOT RAISE V...
+4 failed in 1.11s

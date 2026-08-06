@@ -1,0 +1,32 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that the function raises an error if the directory does not exist
+        with pytest.raises(FileNotFoundError):
+            task_func(directory='/path/to/nonexistent/directory')
+    
+        # Test that the function raises an error if no files are found matching the pattern
+        with pytest.raises(ValueError):
+            task_func(directory='./', file_pattern='*.nonexistent')
+    
+        # Test that the function returns a DataFrame with the correct columns
+        df = task_func(directory='./', file_pattern='*.txt')
+        assert isinstance(df, pd.DataFrame)
+        assert df.columns.tolist() == ['Filename', 'Numeric Data']
+    
+        # Test that the function extracts the correct numeric data from a file
+        with open('./test_file.txt', 'w') as file:
+            file.write('12345')
+        df = task_func(directory='./', file_pattern='*.txt')
+>       assert df.iloc[0]['Numeric Data'] == [12345]
+E       AssertionError: assert ['12345'] == [12345]
+E         
+E         At index 0 diff: '12345' != 12345
+E         Use -v to get more diff
+
+test_0396.py:24: AssertionError
+=========================== short test summary info ============================
+FAILED test_0396.py::test_task_func - AssertionError: assert ['12345'] == [12...
+1 failed in 1.17s

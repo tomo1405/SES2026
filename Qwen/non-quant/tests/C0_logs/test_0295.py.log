@@ -1,0 +1,145 @@
+FFF.                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+E   AssertionError: DataFrame.index level [1] are different
+    
+    DataFrame.index level [1] length are different
+    [left]:  4, RangeIndex(start=0, stop=4, step=1)
+    [right]: 2, Index([1, 2], dtype='int64', name='id')
+All traceback entries are hidden. Pass `--full-trace` to see hidden and internal frames.
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func():
+        # Create a sample DataFrame
+        data = {
+            'id': [1, 1, 2, 2],
+            'age': [25, 30, 40, 45],
+            'income': [50000, 60000, 70000, 80000]
+        }
+        df = pd.DataFrame(data)
+    
+        # Expected output after standardization
+        scaler = StandardScaler()
+        df_scaled = df.copy()
+        df_scaled['age'] = scaler.fit_transform(df_scaled[['age']])
+        df_scaled['income'] = scaler.fit_transform(df_scaled[['income']])
+        expected_output = df_scaled.set_index('id').groupby('id').apply(lambda x: pd.DataFrame(x[['age', 'income']], index=x.index))
+    
+        # Run the function
+        result = task_func(df)
+    
+        # Check if the result matches the expected output
+>       pd.testing.assert_frame_equal(result, expected_output)
+
+test_0295.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pandas/_libs/testing.pyx:53: in pandas._libs.testing.assert_almost_equal
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   AssertionError: DataFrame.index level [1] are different
+E   
+E   DataFrame.index level [1] values are different (50.0 %)
+E   [left]:  RangeIndex(start=0, stop=4, step=1)
+E   [right]: Index([1, 1, 2, 2], dtype='int64', name='id')
+E   At positional index 0, first diff: 0 != 1
+
+pandas/_libs/testing.pyx:171: AssertionError
+___________________________ test_task_func_empty_df ____________________________
+
+    def test_task_func_empty_df():
+        # Test with an empty DataFrame
+        df = pd.DataFrame(columns=['id', 'age', 'income'])
+    
+        # Expected output is an empty DataFrame
+        expected_output = pd.DataFrame(columns=['age', 'income'])
+    
+        # Run the function
+        result = task_func(df)
+    
+        # Check if the result matches the expected output
+>       pd.testing.assert_frame_equal(result, expected_output)
+
+test_0295.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+left = Index([], dtype='object', name='id')
+right = RangeIndex(start=0, stop=0, step=1), obj = 'DataFrame.index'
+
+    def _check_types(left, right, obj: str = "Index") -> None:
+        if not exact:
+            return
+    
+        assert_class_equal(left, right, exact=exact, obj=obj)
+>       assert_attr_equal("inferred_type", left, right, obj=obj)
+E       AssertionError: DataFrame.index are different
+E       
+E       Attribute "inferred_type" are different
+E       [left]:  empty
+E       [right]: integer
+
+../../../.venv/lib/python3.12/site-packages/pandas/_testing/asserters.py:253: AssertionError
+__________________________ test_task_func_single_row ___________________________
+
+>   ???
+
+pandas/_libs/testing.pyx:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   AssertionError: DataFrame.index level [1] are different
+E   
+E   DataFrame.index level [1] values are different (100.0 %)
+E   [left]:  RangeIndex(start=0, stop=2, step=1)
+E   [right]: RangeIndex(start=1, stop=3, step=1, name='id')
+E   At positional index 0, first diff: 0 != 1
+
+pandas/_libs/testing.pyx:171: AssertionError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func_single_row():
+        # Test with a single row per group
+        data = {
+            'id': [1, 2],
+            'age': [25, 40],
+            'income': [50000, 70000]
+        }
+        df = pd.DataFrame(data)
+    
+        # Expected output after standardization
+        scaler = StandardScaler()
+        df_scaled = df.copy()
+        df_scaled['age'] = scaler.fit_transform(df_scaled[['age']])
+        df_scaled['income'] = scaler.fit_transform(df_scaled[['income']])
+        expected_output = df_scaled.set_index('id').groupby('id').apply(lambda x: pd.DataFrame(x[['age', 'income']], index=x.index))
+    
+        # Run the function
+        result = task_func(df)
+    
+        # Check if the result matches the expected output
+>       pd.testing.assert_frame_equal(result, expected_output)
+
+test_0295.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pandas/_libs/testing.pyx:53: in pandas._libs.testing.assert_almost_equal
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   AssertionError: DataFrame.index level [1] are different
+E   
+E   DataFrame.index level [1] values are different (100.0 %)
+E   [left]:  RangeIndex(start=0, stop=2, step=1)
+E   [right]: RangeIndex(start=1, stop=3, step=1, name='id')
+E   At positional index 0, first diff: 0 != 1
+
+pandas/_libs/testing.pyx:171: AssertionError
+=========================== short test summary info ============================
+FAILED test_0295.py::test_task_func - AssertionError: DataFrame.index level [...
+FAILED test_0295.py::test_task_func_empty_df - AssertionError: DataFrame.inde...
+FAILED test_0295.py::test_task_func_single_row - AssertionError: DataFrame.in...
+3 failed, 1 passed in 2.65s

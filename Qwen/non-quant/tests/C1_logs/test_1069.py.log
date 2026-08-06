@@ -1,0 +1,143 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_success ____________________________
+
+self = <pandas.io.sql.SQLiteDatabase object at 0x704cf62cda60>
+sql = 'SELECT * FROM users', params = None
+
+    def execute(self, sql: str | Select | TextClause, params=None):
+        from sqlite3 import Error
+    
+        if not isinstance(sql, str):
+            raise TypeError("Query must be a string unless using sqlalchemy.")
+        args = [] if params is None else [params]
+        cur = self.con.cursor()
+        try:
+>           cur.execute(sql, *args)
+E           sqlite3.OperationalError: no such table: users
+
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:2702: OperationalError
+
+The above exception was the direct cause of the following exception:
+
+db_path = 'test.db', query = 'SELECT * FROM users', warn_large_dataset = False
+
+    def task_func(db_path, query, warn_large_dataset=True):
+        if warn_large_dataset:
+            warnings.simplefilter("always")
+    
+        try:
+            with sqlite3.connect(db_path) as conn:
+>               data = pd.read_sql_query(query, conn)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../../../src/src_1069.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:497: in read_sql_query
+    return pandas_sql.read_query(
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:2766: in read_query
+    cursor = self.execute(sql, params)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.io.sql.SQLiteDatabase object at 0x704cf62cda60>
+sql = 'SELECT * FROM users', params = None
+
+    def execute(self, sql: str | Select | TextClause, params=None):
+        from sqlite3 import Error
+    
+        if not isinstance(sql, str):
+            raise TypeError("Query must be a string unless using sqlalchemy.")
+        args = [] if params is None else [params]
+        cur = self.con.cursor()
+        try:
+            cur.execute(sql, *args)
+            return cur
+        except Error as exc:
+            try:
+                self.con.rollback()
+            except Error as inner_exc:  # pragma: no cover
+                ex = DatabaseError(
+                    f"Execution failed on sql: {sql}\n{exc}\nunable to rollback"
+                )
+                raise ex from inner_exc
+    
+            ex = DatabaseError(f"Execution failed on sql '{sql}': {exc}")
+>           raise ex from exc
+E           pandas.errors.DatabaseError: Execution failed on sql 'SELECT * FROM users': no such table: users
+
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:2714: DatabaseError
+
+The above exception was the direct cause of the following exception:
+
+mock_db = <function mock_db.<locals>.mock_connect at 0x704cf62e7880>
+
+    def test_task_func_success(mock_db):
+        db_path = "test.db"
+        query = "SELECT * FROM users"
+        expected_data = pd.DataFrame({
+            'id': [1, 2],
+            'name': ['Alice', 'Bob']
+        })
+    
+        with warnings.catch_warnings(record=True) as w:
+            warnings.simplefilter("always")
+>           result = task_func(db_path, query, warn_large_dataset=False)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1069.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+db_path = 'test.db', query = 'SELECT * FROM users', warn_large_dataset = False
+
+    def task_func(db_path, query, warn_large_dataset=True):
+        if warn_large_dataset:
+            warnings.simplefilter("always")
+    
+        try:
+            with sqlite3.connect(db_path) as conn:
+                data = pd.read_sql_query(query, conn)
+    
+            if warn_large_dataset and data.shape[0] > 10000:
+                warnings.warn("The data contains more than 10000 rows.")
+    
+            return data
+    
+        except Exception as e:
+>           raise Exception(f"Error fetching data from the database: {str(e)}") from e
+E           Exception: Error fetching data from the database: Execution failed on sql 'SELECT * FROM users': no such table: users
+
+../../../src/src_1069.py:18: Exception
+_____________________ test_task_func_large_dataset_warning _____________________
+
+mock_db = <function mock_db.<locals>.mock_connect at 0x704cf632af20>
+
+    def test_task_func_large_dataset_warning(mock_db):
+        db_path = "test.db"
+        query = "SELECT * FROM large_table"
+        large_data = [(i, f'User{i}') for i in range(10001)]
+        columns = ['id', 'name']
+        mock_conn = mock_db(db_path)
+>       monkeypatch.setattr(mock_conn, 'fetchall', lambda: large_data)
+        ^^^^^^^^^^^
+E       NameError: name 'monkeypatch' is not defined
+
+test_1069.py:62: NameError
+_____________________________ test_task_func_error _____________________________
+
+mock_db = <function mock_db.<locals>.mock_connect at 0x704cf632b380>
+
+    def test_task_func_error(mock_db):
+        db_path = "test.db"
+        query = "SELECT * FROM non_existent_table"
+        mock_conn = mock_db(db_path)
+>       monkeypatch.setattr(mock_conn, 'execute', lambda q: None)
+        ^^^^^^^^^^^
+E       NameError: name 'monkeypatch' is not defined
+
+test_1069.py:76: NameError
+=========================== short test summary info ============================
+FAILED test_1069.py::test_task_func_success - Exception: Error fetching data ...
+FAILED test_1069.py::test_task_func_large_dataset_warning - NameError: name '...
+FAILED test_1069.py::test_task_func_error - NameError: name 'monkeypatch' is ...
+3 failed in 1.24s

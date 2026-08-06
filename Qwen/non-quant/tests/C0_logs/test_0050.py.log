@@ -1,0 +1,40 @@
+F.F.                                                                     [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_valid_timestamps _____________________
+
+    def test_task_func_with_valid_timestamps():
+        timestamps = [1633072800, 1633159200, 1633245600]  # Example timestamps
+        df, ax = task_func(timestamps)
+    
+        assert isinstance(df, pd.DataFrame)
+        assert "Timestamp" in df.columns
+        assert "Datetime" in df.columns
+        assert len(df) == len(timestamps)
+    
+        assert isinstance(ax, tuple)
+>       assert len(ax) == 2
+E       assert 3 == 2
+E        +  where 3 = len((array([1., 0., 0., 0., 0., 1., 0., 0., 0., 1.]), array([18901.68055556, 18901.88055556, 18902.08055556, 18902.2805555...88055556, 18903.08055556,\n       18903.28055556, 18903.48055556, 18903.68055556]), <BarContainer object of 10 artists>))
+
+test_0050.py:16: AssertionError
+_____________________ test_task_func_with_single_timestamp _____________________
+
+    def test_task_func_with_single_timestamp():
+        timestamps = [1633072800]
+        df, ax = task_func(timestamps)
+    
+        assert isinstance(df, pd.DataFrame)
+        assert "Timestamp" in df.columns
+        assert "Datetime" in df.columns
+        assert len(df) == len(timestamps)
+    
+        assert isinstance(ax, tuple)
+>       assert len(ax) == 2
+E       assert 3 == 2
+E        +  where 3 = len((array([0., 0., 0., 0., 0., 1., 0., 0., 0., 0.]), array([18901.18055556, 18901.28055556, 18901.38055556, 18901.4805555...78055556, 18901.88055556,\n       18901.98055556, 18902.08055556, 18902.18055556]), <BarContainer object of 10 artists>))
+
+test_0050.py:36: AssertionError
+=========================== short test summary info ============================
+FAILED test_0050.py::test_task_func_with_valid_timestamps - assert 3 == 2
+FAILED test_0050.py::test_task_func_with_single_timestamp - assert 3 == 2
+2 failed, 2 passed in 2.29s

@@ -1,0 +1,45 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Test with no students
+        with raises(ValueError):
+            task_func(n_grades=10, students=[])
+    
+        # Test case 2: Test with one student
+        grade_df = task_func(n_grades=10, students=['Alice'])
+        assert grade_df['Student'].nunique() == 1
+    
+        # Test case 3: Test with multiple students
+        grade_df = task_func(n_grades=10, students=['Alice', 'Bob', 'Charlie'])
+        assert grade_df['Student'].nunique() == 3
+    
+        # Test case 4: Test with different number of grades
+        grade_df_1 = task_func(n_grades=10)
+        grade_df_2 = task_func(n_grades=20)
+        assert len(grade_df_1) < len(grade_df_2)
+    
+        # Test case 5: Test with different grade range
+        grade_df_1 = task_func(n_grades=10, grade_range=range(1, 11))
+        grade_df_2 = task_func(n_grades=10, grade_range=range(1, 21))
+        assert grade_df_1['Grade'].max() < grade_df_2['Grade'].max()
+    
+        # Test case 6: Test with different random seed
+        grade_df_1 = task_func(n_grades=10, rng_seed=123)
+        grade_df_2 = task_func(n_grades=10, rng_seed=123)
+        assert grade_df_1.equals(grade_df_2)
+    
+        grade_df_1 = task_func(n_grades=10, rng_seed=456)
+        grade_df_2 = task_func(n_grades=10, rng_seed=456)
+>       assert not grade_df_1.equals(grade_df_2)
+E       assert not True
+E        +  where True = equals(   Student  Grade\n0    Alice      8\n1      Bob      8\n2  Charlie      7\n3    David      7\n4      Eve      1\n5    Alice     10\n6      Bob      9\n7  Charlie      2\n8    David      6\n9      Eve      8)
+E        +    where equals =    Student  Grade\n0    Alice      8\n1      Bob      8\n2  Charlie      7\n3    David      7\n4      Eve      1\n5    Alice     10\n6      Bob      9\n7  Charlie      2\n8    David      6\n9      Eve      8.equals
+
+test_0870.py:60: AssertionError
+=========================== short test summary info ============================
+FAILED test_0870.py::test_task_func - assert not True
+1 failed in 1.12s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

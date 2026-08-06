@@ -1,0 +1,68 @@
+.FF..F                                                                   [100%]
+=================================== FAILURES ===================================
+____________________________ test_model_input_shape ____________________________
+
+sample_data = (array([[0.5488135 , 0.71518937, 0.60276338, 0.54488318, 0.4236548 ],
+       [0.64589411, 0.43758721, 0.891773  , 0.96...,
+       1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0,
+       1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0]))
+
+    def test_model_input_shape(sample_data):
+        X, Y = sample_data
+        model, _ = task_func(X, Y)
+        input_layer = model.layers[0]
+>       assert input_layer.input_shape == (None, X.shape[1]), "Input shape of the model does not match the input data"
+               ^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Dense' object has no attribute 'input_shape'. Did you mean: 'input_dtype'?
+
+test_0420.py:26: AttributeError
+___________________________ test_model_output_shape ____________________________
+
+sample_data = (array([[0.5488135 , 0.71518937, 0.60276338, 0.54488318, 0.4236548 ],
+       [0.64589411, 0.43758721, 0.891773  , 0.96...,
+       1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0,
+       1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0]))
+
+    def test_model_output_shape(sample_data):
+        X, Y = sample_data
+        model, _ = task_func(X, Y)
+        output_layer = model.layers[-1]
+>       assert output_layer.output_shape == (None, 1), "Output shape of the model should be (None, 1)"
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Dense' object has no attribute 'output_shape'
+
+test_0420.py:32: AttributeError
+_____________________________ test_legend_location _____________________________
+
+sample_data = (array([[0.5488135 , 0.71518937, 0.60276338, 0.54488318, 0.4236548 ],
+       [0.64589411, 0.43758721, 0.891773  , 0.96...,
+       1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0,
+       1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0]))
+
+    def test_legend_location(sample_data):
+        X, Y = sample_data
+        _, ax = task_func(X, Y)
+        legend = ax.get_legend()
+>       assert legend.get_loc() == 'best', "Legend location should be 'best'"
+               ^^^^^^^^^^^^^^
+E       AttributeError: 'Legend' object has no attribute 'get_loc'. Did you mean: '_get_loc'?
+
+test_0420.py:52: AttributeError
+------------------------------ Captured log call -------------------------------
+WARNING  tensorflow:polymorphic_function.py:157 6 out of the last 6 calls to <function TensorFlowTrainer.make_predict_function.<locals>.one_step_on_data_distributed at 0x77b14c45eb60> triggered tf.function retracing. Tracing is expensive and the excessive number of tracings could be due to (1) creating @tf.function repeatedly in a loop, (2) passing tensors with different shapes, (3) passing Python objects instead of tensors. For (1), please define your @tf.function outside of the loop. For (2), @tf.function has reduce_retracing=True option that can avoid unnecessary retracing. For (3), please refer to https://www.tensorflow.org/guide/function#controlling_retracing and https://www.tensorflow.org/api_docs/python/tf/function for  more details.
+=============================== warnings summary ===============================
+Qwen/4bit-quant/tests/test_0420.py::test_task_func_output
+Qwen/4bit-quant/tests/test_0420.py::test_model_input_shape
+Qwen/4bit-quant/tests/test_0420.py::test_model_output_shape
+Qwen/4bit-quant/tests/test_0420.py::test_precision_recall_curve
+Qwen/4bit-quant/tests/test_0420.py::test_plot_labels
+Qwen/4bit-quant/tests/test_0420.py::test_legend_location
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/keras/src/layers/core/dense.py:107: UserWarning: Do not pass an `input_shape`/`input_dim` argument to a layer. When using Sequential models, prefer using an `Input(shape)` object as the first layer in the model instead.
+    super().__init__(activity_regularizer=activity_regularizer, **kwargs)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0420.py::test_model_input_shape - AttributeError: 'Dense' object ...
+FAILED test_0420.py::test_model_output_shape - AttributeError: 'Dense' object...
+FAILED test_0420.py::test_legend_location - AttributeError: 'Legend' object h...
+3 failed, 3 passed, 6 warnings in 87.16s (0:01:27)

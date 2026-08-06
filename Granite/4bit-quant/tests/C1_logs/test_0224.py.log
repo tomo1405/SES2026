@@ -1,0 +1,85 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Test if ValueError is raised when df is not a DataFrame
+        with pytest.raises(ValueError):
+            task_func("not_a_df", {})
+    
+        # Test case 2: Test if the function returns the expected output for a given input
+        df = pd.DataFrame({'A': ['cat', 'dog', 'mouse'], 'B': [1, 2, 3]})
+        dct = {'cat': 'kitten', 'dog': 'pupper'}
+        expected_output = pd.DataFrame({'A': ['kitten', 'pupper', 'mouse'], 'B': [1, 2, 3]})
+>       output = task_func(df, dct)
+                 ^^^^^^^^^^^^^^^^^^
+
+test_0224.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test_0224.py:19: in task_func
+    df = (df - df.mean()) / df.std()
+               ^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/util/_decorators.py:336: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:14473: in mean
+    result = super().mean(
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:11831: in mean
+    return self._stat_function(
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:11785: in _stat_function
+    return self._reduce(
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:13633: in _reduce
+    res = df._mgr.reduce(blk_func)
+          ^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/managers.py:1681: in reduce
+    res_blocks = [blk.reduce(func) for blk in self.blocks]
+                  ^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/blocks.py:358: in reduce
+    result = func(self.values)
+             ^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:13561: in blk_func
+    return values._reduce(name, skipna=skipna, keepdims=True, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <ArrowStringArray>
+['kitten', 'pupper', 'mouse']
+Length: 3, dtype: str
+name = 'mean', skipna = True, keepdims = True, kwargs = {}
+
+    def _reduce(
+        self, name: str, *, skipna: bool = True, keepdims: bool = False, **kwargs
+    ):
+        if self.dtype.na_value is np.nan and name in ["any", "all"]:
+            if not skipna:
+                nas = pc.is_null(self._pa_array)
+                arr = pc.or_kleene(nas, pc.not_equal(self._pa_array, ""))
+            else:
+                arr = pc.not_equal(self._pa_array, "")
+            result = ArrowExtensionArray(arr)._reduce(
+                name, skipna=skipna, keepdims=keepdims, **kwargs
+            )
+            if keepdims:
+                # ArrowExtensionArray will return a length-1 bool[pyarrow] array
+                return result.astype(np.bool_)
+            return result
+    
+        if name in ("min", "max", "sum", "argmin", "argmax"):
+            result = self._reduce_calc(name, skipna=skipna, keepdims=keepdims, **kwargs)
+        else:
+>           raise TypeError(f"Cannot perform reduction '{name}' with string dtype")
+E           TypeError: Cannot perform reduction 'mean' with string dtype
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/string_arrow.py:563: TypeError
+=============================== warnings summary ===============================
+Granite/4bit-quant/tests/test_0224.py::test_task_func
+  /work/tomohiro-w/utg/Granite/4bit-quant/tests/test_0224.py:12: Pandas4Warning: For backward compatibility, 'str' dtypes are included by select_dtypes when 'object' dtype is specified. This behavior is deprecated and will be removed in a future version. Explicitly pass 'str' to `include` to select them, or to `exclude` to remove them and silence this warning.
+  See https://pandas.pydata.org/docs/user_guide/migration-3-strings.html#string-migration-select-dtypes for details on how to write code that works with pandas 2 and 3.
+    columns = df.select_dtypes(include=['object']).columns.tolist()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0224.py::test_task_func - TypeError: Cannot perform reduction 'me...
+1 failed, 1 warning in 3.60s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

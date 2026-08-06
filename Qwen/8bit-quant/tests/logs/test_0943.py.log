@@ -1,0 +1,52 @@
+FF.FF                                                                    [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_default_parameters _______________________
+
+    def test_task_func_default_parameters():
+        sales_df, ax = task_func()
+        assert isinstance(sales_df, pd.DataFrame)
+>       assert sales_df.shape == (PERIODS * len(CATEGORIES), 3)
+                                  ^^^^^^^
+E       NameError: name 'PERIODS' is not defined
+
+test_0943.py:8: NameError
+_______________________ test_task_func_custom_parameters _______________________
+
+    def test_task_func_custom_parameters():
+        custom_start_date = '2020-01-01'
+        custom_periods = 5
+        custom_freq = 'WOM-1FRI'
+        custom_categories = ['Books', 'Toys']
+        sales_df, ax = task_func(custom_start_date, custom_periods, custom_freq, custom_categories)
+        assert isinstance(sales_df, pd.DataFrame)
+        assert sales_df.shape == (custom_periods * len(custom_categories), 3)
+        assert all(col in sales_df.columns for col in ['Date', 'Category', 'Sales'])
+>       assert isinstance(ax, plt.Axes)
+                              ^^^
+E       NameError: name 'plt' is not defined
+
+test_0943.py:21: NameError
+__________________________ test_task_func_date_range ___________________________
+
+    def test_task_func_date_range():
+        sales_df, _ = task_func()
+>       date_range = pd.date_range(start=START_DATE, periods=PERIODS, freq=FREQ)
+                                         ^^^^^^^^^^
+E       NameError: name 'START_DATE' is not defined
+
+test_0943.py:30: NameError
+__________________________ test_task_func_categories ___________________________
+
+    def test_task_func_categories():
+        sales_df, _ = task_func()
+>       assert all(category in sales_df['Category'].values for category in CATEGORIES)
+                                                                           ^^^^^^^^^^
+E       NameError: name 'CATEGORIES' is not defined
+
+test_0943.py:35: NameError
+=========================== short test summary info ============================
+FAILED test_0943.py::test_task_func_default_parameters - NameError: name 'PER...
+FAILED test_0943.py::test_task_func_custom_parameters - NameError: name 'plt'...
+FAILED test_0943.py::test_task_func_date_range - NameError: name 'START_DATE'...
+FAILED test_0943.py::test_task_func_categories - NameError: name 'CATEGORIES'...
+4 failed, 1 passed in 2.48s

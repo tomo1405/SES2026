@@ -1,0 +1,153 @@
+.FFF                                                                     [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_no_numeric_columns _______________________
+
+    def test_task_func_no_numeric_columns():
+        data = {'C': ['x', 'y', 'z', 'w']}
+        df = pd.DataFrame(data)
+>       with pytest.raises(ValueError, match="No numeric data to perform PCA"):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'No numeric data to perform PCA'
+E         Actual message: 'at least one array or dtype is required'
+
+test_0046.py:32: AssertionError
+______________________ test_task_func_all_missing_values _______________________
+
+    def test_task_func_all_missing_values():
+        data = {'A': [np.nan, np.nan], 'B': [np.nan, np.nan]}
+        df = pd.DataFrame(data)
+>       principalDf, ax = task_func(df)
+                          ^^^^^^^^^^^^^
+
+test_0046.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0046.py:13: in task_func
+    principalComponents = pca.fit_transform(df_numeric)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/utils/_set_output.py:319: in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/base.py:1403: in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/decomposition/_pca.py:466: in fit_transform
+    U, S, _, X, x_is_centered, xp = self._fit(X)
+                                    ^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/decomposition/_pca.py:503: in _fit
+    X = validate_data(
+../../../.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:3038: in validate_data
+    out = check_array(X, input_name="X", **check_params)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:1087: in check_array
+    _assert_all_finite(
+../../../.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:137: in _assert_all_finite
+    _assert_all_finite_element_wise(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+X = array([[nan, nan],
+       [nan, nan]])
+xp = <module 'sklearn.externals.array_api_compat.numpy' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/sklearn/externals/array_api_compat/numpy/__init__.py'>
+allow_nan = False, msg_dtype = None, estimator_name = 'PCA', input_name = 'X'
+
+    def _assert_all_finite_element_wise(
+        X, *, xp, allow_nan, msg_dtype=None, estimator_name=None, input_name=""
+    ):
+        # Cython implementation doesn't support FP16 or complex numbers
+        use_cython = (
+            xp is np and X.data.contiguous and X.dtype.type in {np.float32, np.float64}
+        )
+        if use_cython:
+            out = cy_isfinite(X.reshape(-1), allow_nan=allow_nan)
+            has_nan_error = False if allow_nan else out == FiniteStatus.has_nan
+            has_inf = out == FiniteStatus.has_infinite
+        else:
+            has_inf = xp.any(xp.isinf(X))
+            has_nan_error = False if allow_nan else xp.any(xp.isnan(X))
+        if has_inf or has_nan_error:
+            if has_nan_error:
+                type_err = "NaN"
+            else:
+                msg_dtype = msg_dtype if msg_dtype is not None else X.dtype
+                type_err = f"infinity or a value too large for {msg_dtype!r}"
+            padded_input_name = input_name + " " if input_name else ""
+            msg_err = f"Input {padded_input_name}contains {type_err}."
+            if estimator_name and input_name == "X" and has_nan_error:
+                # Improve the error message on how to handle missing values in
+                # scikit-learn.
+                msg_err += (
+                    f"\n{estimator_name} does not accept missing values"
+                    " encoded as NaN natively. For supervised learning, you might want"
+                    " to consider sklearn.ensemble.HistGradientBoostingClassifier and"
+                    " Regressor which accept missing values encoded as NaNs natively."
+                    " Alternatively, it is possible to preprocess the data, for"
+                    " instance by using an imputer transformer in a pipeline or drop"
+                    " samples with missing values. See"
+                    " https://scikit-learn.org/stable/modules/impute.html"
+                    " You can find a list of all estimators that handle NaN values"
+                    " at the following page:"
+                    " https://scikit-learn.org/stable/modules/impute.html"
+                    "#estimators-that-handle-nan-values"
+                )
+>           raise ValueError(msg_err)
+E           ValueError: Input X contains NaN.
+E           PCA does not accept missing values encoded as NaN natively. For supervised learning, you might want to consider sklearn.ensemble.HistGradientBoostingClassifier and Regressor which accept missing values encoded as NaNs natively. Alternatively, it is possible to preprocess the data, for instance by using an imputer transformer in a pipeline or drop samples with missing values. See https://scikit-learn.org/stable/modules/impute.html You can find a list of all estimators that handle NaN values at the following page: https://scikit-learn.org/stable/modules/impute.html#estimators-that-handle-nan-values
+
+../../../.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:186: ValueError
+_________________________ test_task_func_single_column _________________________
+
+    def test_task_func_single_column():
+        data = {'A': [1, 2, 3, 4]}
+        df = pd.DataFrame(data)
+>       principalDf, ax = task_func(df)
+                          ^^^^^^^^^^^^^
+
+test_0046.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0046.py:13: in task_func
+    principalComponents = pca.fit_transform(df_numeric)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/utils/_set_output.py:319: in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/base.py:1403: in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/decomposition/_pca.py:466: in fit_transform
+    U, S, _, X, x_is_centered, xp = self._fit(X)
+                                    ^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/decomposition/_pca.py:540: in _fit
+    return self._fit_full(X, n_components, xp, is_array_api_compliant)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PCA(n_components=2)
+X = array([[1.],
+       [2.],
+       [3.],
+       [4.]]), n_components = 2
+xp = <module 'sklearn.externals.array_api_compat.numpy' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/sklearn/externals/array_api_compat/numpy/__init__.py'>
+is_array_api_compliant = False
+
+    def _fit_full(self, X, n_components, xp, is_array_api_compliant):
+        """Fit the model by computing full SVD on X."""
+        n_samples, n_features = X.shape
+    
+        if n_components == "mle":
+            if n_samples < n_features:
+                raise ValueError(
+                    "n_components='mle' is only supported if n_samples >= n_features"
+                )
+        elif not 0 <= n_components <= min(n_samples, n_features):
+>           raise ValueError(
+                f"n_components={n_components} must be between 0 and "
+                f"min(n_samples, n_features)={min(n_samples, n_features)} with "
+                f"svd_solver={self._fit_svd_solver!r}"
+            )
+E           ValueError: n_components=2 must be between 0 and min(n_samples, n_features)=1 with svd_solver='full'
+
+../../../.venv/lib/python3.12/site-packages/sklearn/decomposition/_pca.py:554: ValueError
+=========================== short test summary info ============================
+FAILED test_0046.py::test_task_func_no_numeric_columns - AssertionError: Rege...
+FAILED test_0046.py::test_task_func_all_missing_values - ValueError: Input X ...
+FAILED test_0046.py::test_task_func_single_column - ValueError: n_components=...
+3 failed, 1 passed in 4.88s

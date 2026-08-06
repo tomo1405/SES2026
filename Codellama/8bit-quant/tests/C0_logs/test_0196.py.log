@@ -1,0 +1,46 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_darwin _____________________________
+
+    def test_task_func_darwin():
+        url = 'https://www.example.com'
+        expected_cmd = 'open'
+        expected_returncode = 0
+    
+>       with pytest.raises(subprocess.CalledProcessError) as e:
+E       Failed: DID NOT RAISE CalledProcessError
+
+test_0196.py:12: Failed
+----------------------------- Captured stderr call -----------------------------
+https://www.example.com: 1: xdg-open: not found
+____________________________ test_task_func_windows ____________________________
+
+    def test_task_func_windows():
+        url = 'https://www.example.com'
+        expected_cmd = 'start'
+        expected_returncode = 0
+    
+>       with pytest.raises(subprocess.CalledProcessError) as e:
+E       Failed: DID NOT RAISE CalledProcessError
+
+test_0196.py:23: Failed
+----------------------------- Captured stderr call -----------------------------
+https://www.example.com: 1: xdg-open: not found
+_____________________________ test_task_func_linux _____________________________
+
+    def test_task_func_linux():
+        url = 'https://www.example.com'
+        expected_cmd = 'xdg-open'
+        expected_returncode = 0
+    
+>       with pytest.raises(subprocess.CalledProcessError) as e:
+E       Failed: DID NOT RAISE CalledProcessError
+
+test_0196.py:34: Failed
+----------------------------- Captured stderr call -----------------------------
+https://www.example.com: 1: xdg-open: not found
+=========================== short test summary info ============================
+FAILED test_0196.py::test_task_func_darwin - Failed: DID NOT RAISE CalledProc...
+FAILED test_0196.py::test_task_func_windows - Failed: DID NOT RAISE CalledPro...
+FAILED test_0196.py::test_task_func_linux - Failed: DID NOT RAISE CalledProce...
+3 failed in 3.42s

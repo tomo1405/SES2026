@@ -1,0 +1,88 @@
+.F.F                                                                     [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_column_names __________________________
+
+    def test_task_func_column_names():
+        data = {
+            'column1': [1, 2, 3],
+            'column2': [4, 5, 6],
+            'column3': [7, 8, 9],
+            'column4': [10, 11, 12],
+            'column5': [13, 14, 15]
+        }
+        df = pd.DataFrame(data)
+        dct = {'a': 1, 'b': 2}
+    
+        result = task_func(df, dct)
+>       assert list(result.columns) == COLUMNS
+                                       ^^^^^^^
+E       NameError: name 'COLUMNS' is not defined
+
+test_0229.py:26: NameError
+________________________ test_task_func_replace_values _________________________
+
+    def test_task_func_replace_values():
+        data = {
+            'column1': ['a', 'b', 'c'],
+            'column2': ['d', 'e', 'f'],
+            'column3': ['g', 'h', 'i'],
+            'column4': ['j', 'k', 'l'],
+            'column5': ['m', 'n', 'o']
+        }
+        df = pd.DataFrame(data)
+        dct = {'a': 1, 'b': 2, 'c': 3}
+    
+>       result = task_func(df, dct)
+                 ^^^^^^^^^^^^^^^^^^
+
+test_0229.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0229.py:12: in task_func
+    correlation_matrix = np.corrcoef(df.values, rowvar=False)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/numpy/lib/_function_base_impl.py:3028: in corrcoef
+    c = cov(x, y, rowvar, dtype=dtype)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/numpy/lib/_function_base_impl.py:2877: in cov
+    avg, w_sum = average(X, axis=1, weights=w, returned=True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/numpy/lib/_function_base_impl.py:587: in average
+    avg = a.mean(axis, **keepdims_kw)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = array([[1, 2, 3],
+       ['d', 'e', 'f'],
+       ['g', 'h', 'i'],
+       ['j', 'k', 'l'],
+       ['m', 'n', 'o']], dtype=object)
+axis = (1,), dtype = None, out = None, keepdims = False, where = True
+
+    def _mean(a, axis=None, dtype=None, out=None, keepdims=False, *, where=True):
+        arr = asanyarray(a)
+    
+        is_float16_result = False
+    
+        rcount = _count_reduce_items(arr, axis, keepdims=keepdims, where=where)
+        if rcount == 0 if where is True else umr_any(rcount == 0, axis=None):
+            warnings.warn("Mean of empty slice", RuntimeWarning, stacklevel=2)
+    
+        # Cast bool, unsigned int, and int to float64 by default
+        if dtype is None:
+            if issubclass(arr.dtype.type, (nt.integer, nt.bool)):
+                dtype = mu.dtype('f8')
+            elif issubclass(arr.dtype.type, nt.float16):
+                dtype = mu.dtype('f4')
+                is_float16_result = True
+    
+        ret = umr_sum(arr, axis, dtype, out, keepdims, where=where)
+        if isinstance(ret, mu.ndarray):
+>           ret = um.true_divide(
+                    ret, rcount, out=ret, casting='unsafe', subok=False)
+E           TypeError: unsupported operand type(s) for /: 'str' and 'int'
+
+../../../.venv/lib/python3.12/site-packages/numpy/_core/_methods.py:134: TypeError
+=========================== short test summary info ============================
+FAILED test_0229.py::test_task_func_column_names - NameError: name 'COLUMNS' ...
+FAILED test_0229.py::test_task_func_replace_values - TypeError: unsupported o...
+2 failed, 2 passed in 1.13s

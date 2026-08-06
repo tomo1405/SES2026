@@ -1,0 +1,52 @@
+..FF                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        input_data = [['A', 10], ['B', 20], ['C', 30]]
+        expected_output = pd.DataFrame({
+            'Category': ['A', 'B', 'C'],
+            'Value': [0.0, 0.5, 1.0]
+        })
+    
+        output_df = task_func(input_data)
+    
+        # Check if the output DataFrame has the correct columns
+        assert list(output_df.columns) == ['Category', 'Value']
+    
+        # Check if the 'Category' column is correct
+        assert output_df['Category'].tolist() == ['A', 'B', 'C']
+    
+        # Check if the 'Value' column is correctly scaled
+>       assert all(output_df['Value'].round(2).tolist() == expected_output['Value'].tolist())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: 'bool' object is not iterable
+
+test_0743.py:32: TypeError
+_________________________ test_task_func_single_value __________________________
+
+    def test_task_func_single_value():
+        input_data = [['A', 100]]
+        expected_output = pd.DataFrame({
+            'Category': ['A'],
+            'Value': [0.0]
+        })
+    
+        output_df = task_func(input_data)
+    
+        # Check if the output DataFrame has the correct columns
+        assert list(output_df.columns) == ['Category', 'Value']
+    
+        # Check if the 'Category' column is correct
+        assert output_df['Category'].tolist() == ['A']
+    
+        # Check if the 'Value' column is correctly scaled
+>       assert all(output_df['Value'].round(2).tolist() == expected_output['Value'].tolist())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: 'bool' object is not iterable
+
+test_0743.py:50: TypeError
+=========================== short test summary info ============================
+FAILED test_0743.py::test_task_func_valid_input - TypeError: 'bool' object is...
+FAILED test_0743.py::test_task_func_single_value - TypeError: 'bool' object i...
+2 failed, 2 passed in 2.65s

@@ -1,0 +1,150 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        source_directory = "tests/data/source"
+        target_directory = "tests/data/target"
+        expected_converted_files = 4
+    
+>       converted_files = task_func(source_directory, target_directory)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0965.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+source_directory = 'tests/data/source', target_directory = 'tests/data/target'
+
+    def task_func(source_directory: str, target_directory: str) -> int:
+        converted_files = 0
+        extensions = [".txt", ".docx", ".xlsx", ".csv"]
+    
+        if not os.path.exists(source_directory):
+>           raise FileNotFoundError("source_directory must exist.")
+E           FileNotFoundError: source_directory must exist.
+
+../../../src/src_0965.py:10: FileNotFoundError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        source_directory = "tests/data/source"
+        target_directory = "tests/data/target"
+        expected_error = FileNotFoundError("source_directory must exist.")
+    
+>       with pytest.raises(expected_error):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0965.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/_pytest/raises.py:624: in __init__
+    self.expected_exceptions = tuple(
+../../../.venv/lib/python3.12/site-packages/_pytest/raises.py:625: in <genexpr>
+    self._parse_exc(e, expected="a BaseException type")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <[AttributeError("'RaisesExc' object has no attribute 'expected_exceptions'") raised in repr()] RaisesExc object at 0x7cbc1c90ed50>
+exc = FileNotFoundError('source_directory must exist.')
+expected = 'a BaseException type'
+
+    def _parse_exc(
+        self, exc: type[BaseExcT_1] | types.GenericAlias, expected: str
+    ) -> type[BaseExcT_1]:
+        if isinstance(exc, type) and issubclass(exc, BaseException):
+            if not issubclass(exc, Exception):
+                self.is_baseexception = True
+            return exc
+        # because RaisesGroup does not support variable number of exceptions there's
+        # still a use for RaisesExc(ExceptionGroup[Exception]).
+        origin_exc: type[BaseException] | None = get_origin(exc)
+        if origin_exc and issubclass(origin_exc, BaseExceptionGroup):
+            exc_type = get_args(exc)[0]
+            if (
+                issubclass(origin_exc, ExceptionGroup) and exc_type in (Exception, Any)
+            ) or (
+                issubclass(origin_exc, BaseExceptionGroup)
+                and exc_type in (BaseException, Any)
+            ):
+                if not issubclass(origin_exc, ExceptionGroup):
+                    self.is_baseexception = True
+                return cast(type[BaseExcT_1], origin_exc)
+            else:
+                raise ValueError(
+                    f"Only `ExceptionGroup[Exception]` or `BaseExceptionGroup[BaseException]` "
+                    f"are accepted as generic types but got `{exc}`. "
+                    f"As `raises` will catch all instances of the specified group regardless of the "
+                    f"generic argument specific nested exceptions has to be checked "
+                    f"with `RaisesGroup`."
+                )
+        # unclear if the Type/ValueError distinction is even helpful here
+        msg = f"Expected {expected}, but got "
+        if isinstance(exc, type):  # type: ignore[unreachable]
+            raise ValueError(msg + f"{exc.__name__!r}")
+        if isinstance(exc, BaseException):  # type: ignore[unreachable]
+>           raise TypeError(msg + f"an exception instance: {type(exc).__name__}")
+E           TypeError: Expected a BaseException type, but got an exception instance: FileNotFoundError
+
+../../../.venv/lib/python3.12/site-packages/_pytest/raises.py:453: TypeError
+_______________________ test_task_func_invalid_extension _______________________
+
+    def test_task_func_invalid_extension():
+        source_directory = "tests/data/source"
+        target_directory = "tests/data/target"
+        expected_error = ValueError("Invalid file extension.")
+    
+>       with pytest.raises(expected_error):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0965.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/_pytest/raises.py:624: in __init__
+    self.expected_exceptions = tuple(
+../../../.venv/lib/python3.12/site-packages/_pytest/raises.py:625: in <genexpr>
+    self._parse_exc(e, expected="a BaseException type")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <[AttributeError("'RaisesExc' object has no attribute 'expected_exceptions'") raised in repr()] RaisesExc object at 0x7cbc1c90f200>
+exc = ValueError('Invalid file extension.'), expected = 'a BaseException type'
+
+    def _parse_exc(
+        self, exc: type[BaseExcT_1] | types.GenericAlias, expected: str
+    ) -> type[BaseExcT_1]:
+        if isinstance(exc, type) and issubclass(exc, BaseException):
+            if not issubclass(exc, Exception):
+                self.is_baseexception = True
+            return exc
+        # because RaisesGroup does not support variable number of exceptions there's
+        # still a use for RaisesExc(ExceptionGroup[Exception]).
+        origin_exc: type[BaseException] | None = get_origin(exc)
+        if origin_exc and issubclass(origin_exc, BaseExceptionGroup):
+            exc_type = get_args(exc)[0]
+            if (
+                issubclass(origin_exc, ExceptionGroup) and exc_type in (Exception, Any)
+            ) or (
+                issubclass(origin_exc, BaseExceptionGroup)
+                and exc_type in (BaseException, Any)
+            ):
+                if not issubclass(origin_exc, ExceptionGroup):
+                    self.is_baseexception = True
+                return cast(type[BaseExcT_1], origin_exc)
+            else:
+                raise ValueError(
+                    f"Only `ExceptionGroup[Exception]` or `BaseExceptionGroup[BaseException]` "
+                    f"are accepted as generic types but got `{exc}`. "
+                    f"As `raises` will catch all instances of the specified group regardless of the "
+                    f"generic argument specific nested exceptions has to be checked "
+                    f"with `RaisesGroup`."
+                )
+        # unclear if the Type/ValueError distinction is even helpful here
+        msg = f"Expected {expected}, but got "
+        if isinstance(exc, type):  # type: ignore[unreachable]
+            raise ValueError(msg + f"{exc.__name__!r}")
+        if isinstance(exc, BaseException):  # type: ignore[unreachable]
+>           raise TypeError(msg + f"an exception instance: {type(exc).__name__}")
+E           TypeError: Expected a BaseException type, but got an exception instance: ValueError
+
+../../../.venv/lib/python3.12/site-packages/_pytest/raises.py:453: TypeError
+=========================== short test summary info ============================
+FAILED test_0965.py::test_task_func_valid_input - FileNotFoundError: source_d...
+FAILED test_0965.py::test_task_func_invalid_input - TypeError: Expected a Bas...
+FAILED test_0965.py::test_task_func_invalid_extension - TypeError: Expected a...
+3 failed in 1.53s

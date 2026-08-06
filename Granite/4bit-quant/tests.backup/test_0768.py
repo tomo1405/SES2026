@@ -1,0 +1,25 @@
+import pytest
+from collections import Counter
+import random
+import string
+
+# Constants
+LETTERS = string.ascii_letters
+
+def task_func(list_of_lists):
+    flat_list = [random.choice(LETTERS) for _ in list_of_lists]
+    return dict(Counter(flat_list))
+
+def test_task_func():
+    test_cases = [
+        ([], {"a": 0, "b": 0, "c": 0, "d": 0, "e": 0, "f": 0, "g": 0, "h": 0, "i": 0, "j": 0, "k": 0, "l": 0, "m": 0, "n": 0, "o": 0, "p": 0, "q": 0, "r": 0, "s": 0, "t": 0, "u": 0, "v": 0, "w": 0, "x": 0, "y": 0, "z": 0}),
+        (["a", "b", "c"], {"a": 1, "b": 1, "c": 1, "d": 0, "e": 0, "f": 0, "g": 0, "h": 0, "i": 0, "j": 0, "k": 0, "l": 0, "m": 0, "n": 0, "o": 0, "p": 0, "q": 0, "r": 0, "s": 0, "t": 0, "u": 0, "v": 0, "w": 0, "x": 0, "y": 0, "z": 0}),
+        (["a", "b", "c", "a", "b", "c", "d", "e", "f"], {"a": 3, "b": 3, "c": 3, "d": 1, "e": 1, "f": 1, "g": 0, "h": 0, "i": 0, "j": 0, "k": 0, "l": 0, "m": 0, "n": 0, "o": 0, "p": 0, "q": 0, "r": 0, "s": 0, "t": 0, "u": 0, "v": 0, "w": 0, "x": 0, "y": 0, "z": 0}),
+    ]
+
+    for input_list, expected_output in test_cases:
+        actual_output = task_func(input_list)
+        assert actual_output == expected_output, f"Failed for input_list={input_list}"
+
+if __name__ == "__main__":
+    pytest.main()

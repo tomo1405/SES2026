@@ -1,0 +1,42 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        directory = 'path/to/directory'
+        expected_hash_dict = {
+            'path/to/directory/file1': 'hash1',
+            'path/to/directory/file2': 'hash2',
+            'path/to/directory/file3': 'hash3'
+        }
+        expected_json_file = 'path/to/directory/hashes.json'
+    
+        with pytest.raises(ValueError):
+>           task_func(directory)
+
+test_1131.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = 'path/to/directory'
+
+    def task_func(directory: str) -> str:
+        hash_dict = {}
+    
+        for root, dirs, files in os.walk(directory):
+            for file in files:
+                file_path = Path(root) / file
+                with open(file_path, 'rb') as f:
+                    bytes = f.read()  # read entire file as bytes
+                    readable_hash = hashlib.sha256(bytes).hexdigest()
+                    hash_dict[str(file_path)] = readable_hash
+    
+        # Save to JSON file
+        json_file = Path(directory) / 'hashes.json'
+>       with open(json_file, 'w') as f:
+             ^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'path/to/directory/hashes.json'
+
+../../../src/src_1131.py:18: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_1131.py::test_task_func - FileNotFoundError: [Errno 2] No such fi...
+1 failed in 0.49s

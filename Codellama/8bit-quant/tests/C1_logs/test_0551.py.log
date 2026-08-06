@@ -1,0 +1,38 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Empty list
+        list_of_menuitems = []
+        expected_output = pd.DataFrame(columns=['Count'])
+        assert task_func(list_of_menuitems).equals(expected_output)
+    
+        # Test case 2: Single list
+        list_of_menuitems = [['Item1', 'Item2', 'Item3']]
+        expected_output = pd.DataFrame({'Count': [1, 1, 1]}, index=['Item1', 'Item2', 'Item3'])
+        assert task_func(list_of_menuitems).equals(expected_output)
+    
+        # Test case 3: Multiple lists
+        list_of_menuitems = [['Item1', 'Item2', 'Item3'], ['Item1', 'Item2', 'Item3'], ['Item1', 'Item2', 'Item3']]
+        expected_output = pd.DataFrame({'Count': [3, 3, 3]}, index=['Item1', 'Item2', 'Item3'])
+        assert task_func(list_of_menuitems).equals(expected_output)
+    
+        # Test case 4: List with duplicates
+        list_of_menuitems = [['Item1', 'Item2', 'Item3'], ['Item1', 'Item2', 'Item3'], ['Item1', 'Item2', 'Item3'], ['Item1', 'Item2', 'Item3']]
+        expected_output = pd.DataFrame({'Count': [4, 4, 4]}, index=['Item1', 'Item2', 'Item3'])
+        assert task_func(list_of_menuitems).equals(expected_output)
+    
+        # Test case 5: List with different items
+        list_of_menuitems = [['Item1', 'Item2', 'Item3'], ['Item4', 'Item5', 'Item6'], ['Item7', 'Item8', 'Item9']]
+        expected_output = pd.DataFrame({'Count': [1, 1, 1, 1, 1, 1]}, index=['Item1', 'Item2', 'Item3', 'Item4', 'Item5', 'Item6'])
+>       assert task_func(list_of_menuitems).equals(expected_output)
+E       AssertionError: assert False
+E        +  where False = equals(       Count\nItem1      1\nItem2      1\nItem3      1\nItem4      1\nItem5      1\nItem6      1)
+E        +    where equals =           Count\nMenuItem       \nItem1         1\nItem2         1\nItem3         1\nItem4         1\nItem5         1\nItem6         1\nItem7         1\nItem8         1\nItem9         1.equals
+E        +      where           Count\nMenuItem       \nItem1         1\nItem2         1\nItem3         1\nItem4         1\nItem5         1\nItem6         1\nItem7         1\nItem8         1\nItem9         1 = task_func([['Item1', 'Item2', 'Item3'], ['Item4', 'Item5', 'Item6'], ['Item7', 'Item8', 'Item9']])
+
+test_0551.py:29: AssertionError
+=========================== short test summary info ============================
+FAILED test_0551.py::test_task_func - AssertionError: assert False
+1 failed in 1.10s

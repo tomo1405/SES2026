@@ -1,0 +1,15 @@
+import re
+from nltk.stem import PorterStemmer
+def task_func(text_series):
+    stemmer = PorterStemmer()
+
+    def process_text(text):
+        # Remove non-alphanumeric characters (except spaces)
+        text = re.sub('[^\sa-zA-Z0-9]', '', text).lower().strip()
+        # Stem each word in the text
+        text = " ".join([stemmer.stem(word) for word in text.split()])
+
+        return text
+
+    # Apply the processing to each entry in the Series
+    return text_series.apply(process_text)

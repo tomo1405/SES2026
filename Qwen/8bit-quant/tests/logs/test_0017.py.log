@@ -1,0 +1,41 @@
+..F.                                                                     [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_backup_creation ________________________
+
+    def test_task_func_backup_creation():
+        with tempfile.TemporaryDirectory() as temp_dir, tempfile.TemporaryDirectory() as backup_dir:
+            # Create some log files
+            log_files = [os.path.join(temp_dir, f'log_{i}.log') for i in range(3)]
+            for log_file in log_files:
+                with open(log_file, 'w') as f:
+                    f.write('Log content')
+    
+            backup_file = task_func(temp_dir, backup_dir)
+            expected_backup_file = os.path.join(backup_dir, 'logs_backup.tar.gz')
+    
+            assert backup_file == expected_backup_file
+            assert os.path.exists(expected_backup_file)
+    
+            # Check if the original log files are removed
+            for log_file in log_files:
+                assert not os.path.exists(log_file)
+    
+            # Check if the backup file contains the correct log files
+            with tarfile.open(expected_backup_file, 'r:gz') as tar:
+                members = tar.getnames()
+                for log_file in log_files:
+                    relative_path = os.path.relpath(log_file, temp_dir)
+>                   assert relative_path in members
+E                   AssertionError: assert 'log_0.log' in ['tmp/tmp1kq52hbp/log_2.log', 'tmp/tmp1kq52hbp/log_1.log', 'tmp/tmp1kq52hbp/log_0.log']
+
+test_0017.py:40: AssertionError
+----------------------------- Captured stdout call -----------------------------
+/tmp/tmp1kq52hbp/log_2.log
+/tmp/tmp1kq52hbp/log_1.log
+/tmp/tmp1kq52hbp/log_0.log
+----------------------------- Captured stderr call -----------------------------
+tar: Removing leading `/' from member names
+tar: Removing leading `/' from hard link targets
+=========================== short test summary info ============================
+FAILED test_0017.py::test_task_func_backup_creation - AssertionError: assert ...
+1 failed, 3 passed in 0.40s

@@ -1,0 +1,50 @@
+.FFF                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_single_data __________________________
+
+    def test_task_func_single_data():
+        data = [{"apple": 10, "banana": 20, "orange": 30}]
+        expected_total_sales = {"apple": 10, "banana": 20, "orange": 30}
+        expected_ax = None
+    
+        total_sales, ax = task_func(data)
+    
+        assert total_sales == expected_total_sales
+>       assert ax == expected_ax
+E       assert <BarContainer object of 3 artists> == None
+
+test_0521.py:24: AssertionError
+_________________________ test_task_func_multiple_data _________________________
+
+    def test_task_func_multiple_data():
+        data = [{"apple": 10, "banana": 20, "orange": 30}, {"apple": 5, "banana": 10, "orange": 15}]
+        expected_total_sales = {"apple": 15, "banana": 30, "orange": 45}
+        expected_ax = None
+    
+        total_sales, ax = task_func(data)
+    
+        assert total_sales == expected_total_sales
+>       assert ax == expected_ax
+E       assert <BarContainer object of 3 artists> == None
+
+test_0521.py:35: AssertionError
+________________________ test_task_func_negative_sales _________________________
+
+    def test_task_func_negative_sales():
+        data = [{"apple": 10, "banana": 20, "orange": -30}]
+        expected_total_sales = {}
+        expected_ax = None
+    
+        with pytest.raises(ValueError):
+            total_sales, ax = task_func(data)
+    
+>       assert total_sales == expected_total_sales
+               ^^^^^^^^^^^
+E       UnboundLocalError: cannot access local variable 'total_sales' where it is not associated with a value
+
+test_0521.py:46: UnboundLocalError
+=========================== short test summary info ============================
+FAILED test_0521.py::test_task_func_single_data - assert <BarContainer object...
+FAILED test_0521.py::test_task_func_multiple_data - assert <BarContainer obje...
+FAILED test_0521.py::test_task_func_negative_sales - UnboundLocalError: canno...
+3 failed, 1 passed in 1.72s

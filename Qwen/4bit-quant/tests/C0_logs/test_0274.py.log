@@ -1,0 +1,150 @@
+EEEE                                                                     [100%]
+==================================== ERRORS ====================================
+________ ERROR at setup of TestPostRequestHandler.test_do_POST_success _________
+
+self = <test_0274.TestPostRequestHandler object at 0x70f323055a90>
+
+    @pytest.fixture
+    def handler_instance(self):
+        class MockServer:
+            def __init__(self):
+                self.response = None
+    
+            def send_error(self, code, message):
+                self.response = {'code': code, 'message': message}
+    
+            def send_response(self, code):
+                self.response = {'code': code}
+    
+            def send_header(self, key, value):
+                if not hasattr(self, 'headers'):
+                    self.headers = {}
+                self.headers[key] = value
+    
+            def end_headers(self):
+                pass
+    
+            def wfile_write(self, data):
+                self.response_data = data.decode()
+    
+        mock_server = MockServer()
+        handler_class = task_func()
+>       handler_instance = handler_class(mock_server, None)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: BaseRequestHandler.__init__() missing 1 required positional argument: 'server'
+
+test_0274.py:33: TypeError
+__ ERROR at setup of TestPostRequestHandler.test_do_POST_invalid_content_type __
+
+self = <test_0274.TestPostRequestHandler object at 0x70f3227a4980>
+
+    @pytest.fixture
+    def handler_instance(self):
+        class MockServer:
+            def __init__(self):
+                self.response = None
+    
+            def send_error(self, code, message):
+                self.response = {'code': code, 'message': message}
+    
+            def send_response(self, code):
+                self.response = {'code': code}
+    
+            def send_header(self, key, value):
+                if not hasattr(self, 'headers'):
+                    self.headers = {}
+                self.headers[key] = value
+    
+            def end_headers(self):
+                pass
+    
+            def wfile_write(self, data):
+                self.response_data = data.decode()
+    
+        mock_server = MockServer()
+        handler_class = task_func()
+>       handler_instance = handler_class(mock_server, None)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: BaseRequestHandler.__init__() missing 1 required positional argument: 'server'
+
+test_0274.py:33: TypeError
+______ ERROR at setup of TestPostRequestHandler.test_do_POST_invalid_json ______
+
+self = <test_0274.TestPostRequestHandler object at 0x70f3227a4c20>
+
+    @pytest.fixture
+    def handler_instance(self):
+        class MockServer:
+            def __init__(self):
+                self.response = None
+    
+            def send_error(self, code, message):
+                self.response = {'code': code, 'message': message}
+    
+            def send_response(self, code):
+                self.response = {'code': code}
+    
+            def send_header(self, key, value):
+                if not hasattr(self, 'headers'):
+                    self.headers = {}
+                self.headers[key] = value
+    
+            def end_headers(self):
+                pass
+    
+            def wfile_write(self, data):
+                self.response_data = data.decode()
+    
+        mock_server = MockServer()
+        handler_class = task_func()
+>       handler_instance = handler_class(mock_server, None)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: BaseRequestHandler.__init__() missing 1 required positional argument: 'server'
+
+test_0274.py:33: TypeError
+______ ERROR at setup of TestPostRequestHandler.test_do_POST_no_data_key _______
+
+self = <test_0274.TestPostRequestHandler object at 0x70f3227a4ef0>
+
+    @pytest.fixture
+    def handler_instance(self):
+        class MockServer:
+            def __init__(self):
+                self.response = None
+    
+            def send_error(self, code, message):
+                self.response = {'code': code, 'message': message}
+    
+            def send_response(self, code):
+                self.response = {'code': code}
+    
+            def send_header(self, key, value):
+                if not hasattr(self, 'headers'):
+                    self.headers = {}
+                self.headers[key] = value
+    
+            def end_headers(self):
+                pass
+    
+            def wfile_write(self, data):
+                self.response_data = data.decode()
+    
+        mock_server = MockServer()
+        handler_class = task_func()
+>       handler_instance = handler_class(mock_server, None)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: BaseRequestHandler.__init__() missing 1 required positional argument: 'server'
+
+test_0274.py:33: TypeError
+=============================== warnings summary ===============================
+../../../src/src_0274.py:1
+  /work/tomohiro-w/utg/src/src_0274.py:1: DeprecationWarning: 'cgi' is deprecated and slated for removal in Python 3.13
+    import cgi
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+ERROR test_0274.py::TestPostRequestHandler::test_do_POST_success - TypeError:...
+ERROR test_0274.py::TestPostRequestHandler::test_do_POST_invalid_content_type
+ERROR test_0274.py::TestPostRequestHandler::test_do_POST_invalid_json - TypeE...
+ERROR test_0274.py::TestPostRequestHandler::test_do_POST_no_data_key - TypeEr...
+1 warning, 4 errors in 0.59s

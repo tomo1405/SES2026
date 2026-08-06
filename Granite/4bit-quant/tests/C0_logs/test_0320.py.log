@@ -1,0 +1,30 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        example_str = "This is an example string with some words and a frequency distribution[word1, word2, word3]"
+        ax, top_n_words = task_func(example_str)
+        assert isinstance(ax, plt.Axes)
+        assert isinstance(top_n_words, dict)
+>       assert len(top_n_words) == 30
+E       AssertionError: assert 12 == 30
+E        +  where 12 = len({'This': 1, 'is': 1, 'an': 1, 'example': 1, ...})
+
+test_0320.py:11: AssertionError
+__________________________ test_task_func_with_top_n ___________________________
+
+    def test_task_func_with_top_n():
+        example_str = "This is an example string with some words and a frequency distribution[word1, word2, word3]"
+        ax, top_n_words = task_func(example_str, top_n=2)
+        assert isinstance(ax, plt.Axes)
+        assert isinstance(top_n_words, dict)
+        assert len(top_n_words) == 2
+>       assert "word1" in top_n_words and "word2" in top_n_words
+E       AssertionError: assert ('word1' in {'This': 1, 'is': 1})
+
+test_0320.py:20: AssertionError
+=========================== short test summary info ============================
+FAILED test_0320.py::test_task_func - AssertionError: assert 12 == 30
+FAILED test_0320.py::test_task_func_with_top_n - AssertionError: assert ('wor...
+2 failed in 4.60s

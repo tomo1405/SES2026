@@ -1,0 +1,45 @@
+F.FF...                                                                  [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        list_of_lists = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        series_list = task_func(list_of_lists)
+        assert len(series_list) == 3
+        assert all(isinstance(s, pd.Series) for s in series_list)
+>       assert all(s.index.equals(sublist) for sublist, s in zip(list_of_lists, series_list))
+E       assert False
+E        +  where False = all(<generator object test_task_func.<locals>.<genexpr> at 0x7c75fc98aa40>)
+
+test_1073.py:11: AssertionError
+______________________ test_task_func_single_element_list ______________________
+
+    def test_task_func_single_element_list():
+        list_of_lists = [[1]]
+        series_list = task_func(list_of_lists)
+        assert len(series_list) == 1
+        assert isinstance(series_list[0], pd.Series)
+>       assert series_list[0].index.equals([1])
+E       AssertionError: assert False
+E        +  where False = equals([1])
+E        +    where equals = Index([1], dtype='int64').equals
+E        +      where Index([1], dtype='int64') = 1    1\ndtype: int64.index
+
+test_1073.py:24: AssertionError
+______________________ test_task_func_duplicate_elements _______________________
+
+    def test_task_func_duplicate_elements():
+        list_of_lists = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        series_list = task_func(list_of_lists)
+        assert len(series_list) == 3
+        assert all(isinstance(s, pd.Series) for s in series_list)
+>       assert all(s.index.equals(sublist) for sublist, s in zip(list_of_lists, series_list))
+E       assert False
+E        +  where False = all(<generator object test_task_func_duplicate_elements.<locals>.<genexpr> at 0x7c75fc9ec740>)
+
+test_1073.py:32: AssertionError
+=========================== short test summary info ============================
+FAILED test_1073.py::test_task_func - assert False
+FAILED test_1073.py::test_task_func_single_element_list - AssertionError: ass...
+FAILED test_1073.py::test_task_func_duplicate_elements - assert False
+3 failed, 4 passed in 1.24s

@@ -1,0 +1,24 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        my_list = [1, 2, 3, 4, 5]
+        seed = 42
+        sales_df, ax = task_func(my_list, seed)
+    
+        assert isinstance(sales_df, pd.DataFrame)
+        assert isinstance(ax, matplotlib.axes.Axes)
+        assert sales_df.shape == (5, 2)
+        assert sales_df.columns.tolist() == ['Category', 'Sales']
+        assert sales_df['Category'].tolist() == ['Electronics', 'Fashion', 'Home & Kitchen', 'Automotive', 'Sports']
+>       assert sales_df['Sales'].tolist() == [12, 24, 36, 48, 60]
+E       assert [3840, 513, 600, 1132, 1674] == [12, 24, 36, 48, 60]
+E         
+E         At index 0 diff: 3840 != 12
+E         Use -v to get more diff
+
+test_0122.py:16: AssertionError
+=========================== short test summary info ============================
+FAILED test_0122.py::test_task_func - assert [3840, 513, 600, 1132, 1674] == ...
+1 failed in 2.58s

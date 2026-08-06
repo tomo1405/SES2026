@@ -1,0 +1,54 @@
+F..F                                                                     [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_valid_data ________________________
+
+data = [[1, 2, 3], [4, 5, 6], [7, 8, 9]], target = 'target'
+
+    def test_task_func_with_valid_data(data, target):
+>       mse, model, data = task_func(data, target)
+                           ^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0879.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data =    0  1  2
+0  1  2  3
+1  4  5  6
+2  7  8  9, target = 'target'
+test_size = 0.2, random_state = None
+
+    def task_func(data, target, test_size=0.2, random_state=None):
+        data = pd.DataFrame(data)
+        if data.empty or target not in data.columns:
+>           raise ValueError("Data must not be empty and target column must exist in the DataFrame.")
+E           ValueError: Data must not be empty and target column must exist in the DataFrame.
+
+../../../src/src_0879.py:8: ValueError
+________________ test_task_func_with_test_size_and_random_state ________________
+
+data = [[1, 2, 3], [4, 5, 6], [7, 8, 9]], target = 'target'
+
+    def test_task_func_with_test_size_and_random_state(data, target):
+>       mse1, model1, data1 = task_func(data, target, test_size=0.2, random_state=42)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0879.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data =    0  1  2
+0  1  2  3
+1  4  5  6
+2  7  8  9, target = 'target'
+test_size = 0.2, random_state = 42
+
+    def task_func(data, target, test_size=0.2, random_state=None):
+        data = pd.DataFrame(data)
+        if data.empty or target not in data.columns:
+>           raise ValueError("Data must not be empty and target column must exist in the DataFrame.")
+E           ValueError: Data must not be empty and target column must exist in the DataFrame.
+
+../../../src/src_0879.py:8: ValueError
+=========================== short test summary info ============================
+FAILED test_0879.py::test_task_func_with_valid_data - ValueError: Data must n...
+FAILED test_0879.py::test_task_func_with_test_size_and_random_state - ValueEr...
+2 failed, 2 passed in 3.05s

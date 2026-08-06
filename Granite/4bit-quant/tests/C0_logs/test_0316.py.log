@@ -1,0 +1,48 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+dir = '/path/to/existing/directory', api_key = 'your_api_key'
+recipient_email = 'recipient@example.com'
+
+    def task_func(dir, api_key, recipient_email):
+        try:
+>           file_list = os.listdir(dir)
+                        ^^^^^^^^^^^^^^^
+E           FileNotFoundError: [Errno 2] No such file or directory: '/path/to/existing/directory'
+
+test_0316.py:7: FileNotFoundError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func():
+        dir = '/path/to/directory'
+        api_key = 'your_api_key'
+        recipient_email = 'recipient@example.com'
+        with pytest.raises(FileNotFoundError):
+            task_func(dir, api_key, recipient_email)
+        dir = '/path/to/existing/directory'
+        api_key = 'your_api_key'
+        recipient_email = 'recipient@example.com'
+>       assert task_func(dir, api_key, recipient_email) == True
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0316.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dir = '/path/to/existing/directory', api_key = 'your_api_key'
+recipient_email = 'recipient@example.com'
+
+    def task_func(dir, api_key, recipient_email):
+        try:
+            file_list = os.listdir(dir)
+        except:
+>           raise FileNotFoundError(f"Directory '{dir}' does not exist.")
+E           FileNotFoundError: Directory '/path/to/existing/directory' does not exist.
+
+test_0316.py:9: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0316.py::test_task_func - FileNotFoundError: Directory '/path/to/...
+1 failed in 0.78s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

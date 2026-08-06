@@ -1,0 +1,84 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_no_from_user __________________________
+
+    def test_task_func_no_from_user():
+        # Mocking random.choice to control the color selection
+        with patch('random.choice', return_value='g'):
+            # Mocking plt.figure and sns.histplot to avoid actual plotting
+            with patch('matplotlib.pyplot.figure') as mock_figure, \
+                 patch('seaborn.histplot') as mock_histplot, \
+                 patch('matplotlib.pyplot.show') as mock_show:
+                # Sample input data without 'from_user' key
+                result = [
+                    {'other_key': 10},
+                    {'other_key': 20},
+                    {'other_key': 30}
+                ]
+    
+                # Call the function
+                task_func(result)
+    
+                # Assertions
+                mock_figure.assert_called_once()
+>               mock_histplot.assert_not_called()
+
+test_0063.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='histplot' id='140491155280512'>
+
+    def assert_not_called(self):
+        """assert that the mock was never called.
+        """
+        if self.call_count != 0:
+            msg = ("Expected '%s' to not have been called. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'histplot' to not have been called. Called 1 times.
+E           Calls: [call([], color='g')].
+
+/usr/lib/python3.12/unittest/mock.py:905: AssertionError
+_________________________ test_task_func_empty_result __________________________
+
+    def test_task_func_empty_result():
+        # Mocking random.choice to control the color selection
+        with patch('random.choice', return_value='r'):
+            # Mocking plt.figure and sns.histplot to avoid actual plotting
+            with patch('matplotlib.pyplot.figure') as mock_figure, \
+                 patch('seaborn.histplot') as mock_histplot, \
+                 patch('matplotlib.pyplot.show') as mock_show:
+                # Empty input data
+                result = []
+    
+                # Call the function
+                task_func(result)
+    
+                # Assertions
+                mock_figure.assert_called_once()
+>               mock_histplot.assert_not_called()
+
+test_0063.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='histplot' id='140491155588112'>
+
+    def assert_not_called(self):
+        """assert that the mock was never called.
+        """
+        if self.call_count != 0:
+            msg = ("Expected '%s' to not have been called. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'histplot' to not have been called. Called 1 times.
+E           Calls: [call([], color='r')].
+
+/usr/lib/python3.12/unittest/mock.py:905: AssertionError
+=========================== short test summary info ============================
+FAILED test_0063.py::test_task_func_no_from_user - AssertionError: Expected '...
+FAILED test_0063.py::test_task_func_empty_result - AssertionError: Expected '...
+2 failed, 1 passed in 3.72s

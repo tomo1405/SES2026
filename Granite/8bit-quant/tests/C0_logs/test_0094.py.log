@@ -1,0 +1,24 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data = np.random.rand(100, 10)
+        n_components = 3
+        expected_columns = [f'PC{i+1}' for i in range(n_components)]
+        expected_data = np.random.rand(100, n_components)
+        expected_ax = None  # You can replace this with the expected value of the ax object
+    
+        df, ax = task_func(data, n_components)
+    
+        assert df.columns.tolist() == expected_columns
+>       assert df.values.tolist() == expected_data.tolist()
+E       assert [[0.416327605...6786551], ...] == [[0.103718645...7228705], ...]
+E         
+E         At index 0 diff: [0.41632760552144527, -0.34696511261282753, -0.042542639332116106] != [0.10371864577073042, 0.2275246935237235, 0.5388614924613359]
+E         Use -v to get more diff
+
+test_0094.py:15: AssertionError
+=========================== short test summary info ============================
+FAILED test_0094.py::test_task_func - assert [[0.416327605...6786551], ...] =...
+1 failed in 3.70s

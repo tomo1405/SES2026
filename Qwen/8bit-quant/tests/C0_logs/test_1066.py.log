@@ -1,0 +1,43 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____________________________ test_task_func[png] ______________________________
+
+ext = 'png', request = <FixtureRequest for <Function test_task_func[png]>>
+args = (), kwargs = {}
+
+    @pytest.mark.parametrize("ext", extensions)
+    def wrapper(*args, ext, request, **kwargs):
+        if 'ext' in old_sig.parameters:
+            kwargs['ext'] = ext
+        if 'request' in old_sig.parameters:
+            kwargs['request'] = request
+    
+        file_name = "".join(c for c in request.node.name
+                            if c in ALLOWED_CHARS)
+        fig_test = Figure()
+        fig_ref = Figure()
+>       func(*args, fig_test=fig_test, fig_ref=fig_ref, **kwargs)
+
+../../../.venv/lib/python3.12/site-packages/matplotlib/testing/decorators.py:427: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test_1066.py:24: in test_task_func
+    task_func(arr)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+arr = array([[1, 2, 3],
+       [4, 5, 6],
+       [7, 8, 9]])
+
+    def task_func(arr):
+        row_sums = arr.sum(axis=1)
+        fft_coefficients = fftpack.fft(row_sums)
+    
+        _, ax = plt.subplots()
+>       ax.plot(np.abs(fft_coefficients))
+                ^^
+E       NameError: name 'np' is not defined
+
+../../../src/src_1066.py:8: NameError
+=========================== short test summary info ============================
+FAILED test_1066.py::test_task_func[png] - NameError: name 'np' is not defined
+1 failed in 2.60s

@@ -1,0 +1,41 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Testing for negative input
+        with pytest.raises(ValueError):
+            task_func(-1, 10)
+    
+        # Testing for valid input
+        result = task_func(10, 10)
+        assert len(result) == 10
+        assert all(len(combination) <= 10 for combination in result)
+    
+        # Testing for reproducibility
+        result1 = task_func(10, 10, seed=123)
+        result2 = task_func(10, 10, seed=123)
+        assert result1 == result2
+    
+        # Testing for different lengths
+        result = task_func(10, 10)
+        assert len(result) == 10
+        result = task_func(20, 10)
+        assert len(result) == 10
+        result = task_func(5, 10)
+        assert len(result) == 10
+    
+        # Testing for different seeds
+        result1 = task_func(10, 10, seed=123)
+        result2 = task_func(10, 10, seed=456)
+        assert result1 != result2
+    
+        # Testing for different letters
+>       result = task_func(10, 10, letters="abc")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: task_func() got an unexpected keyword argument 'letters'
+
+test_0853.py:33: TypeError
+=========================== short test summary info ============================
+FAILED test_0853.py::test_task_func - TypeError: task_func() got an unexpecte...
+1 failed in 0.59s

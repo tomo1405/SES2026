@@ -1,0 +1,29 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        directory = "/tmp/test_directory"
+        n_files = 5
+        expected_output = n_files
+    
+        # Mock the os.path.exists function to make sure the directory doesn't exist before calling task_func
+        with patch("os.path.exists", return_value=False):
+>           actual_output = task_func(directory, n_files)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0674.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0674.py:5: in task_func
+    os.makedirs(directory)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = '/tmp/test_directory', mode = 511, exist_ok = False
+
+>   ???
+E   FileExistsError: [Errno 17] File exists: '/tmp/test_directory'
+
+<frozen os>:225: FileExistsError
+=========================== short test summary info ============================
+FAILED test_0674.py::test_task_func - FileExistsError: [Errno 17] File exists...
+1 failed, 1 passed in 0.52s

@@ -1,0 +1,92 @@
+...F..F                                                                  [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_multiple_words ______________________
+
+    def test_task_func_with_multiple_words():
+        data = {'Word': ['apple', 'apricot', 'banana', 'apex']}
+        df = pd.DataFrame(data)
+        letter = 'a'
+        result = task_func(df, letter)
+>       assert result == {5: 2, 7: 1}
+E       assert {5: 1, 7: 1, 4: 1} == {5: 2, 7: 1}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {5: 1} != {5: 2}
+E         Left contains 1 more item:
+E         {4: 1}
+E         Use -v to get more diff
+
+test_0599.py:30: AssertionError
+_____________________ test_task_func_with_non_string_data ______________________
+
+    def test_task_func_with_non_string_data():
+        data = {'Word': [123, 'abc', 'abcd']}
+        df = pd.DataFrame(data)
+        letter = 'a'
+>       result = task_func(df, letter)
+                 ^^^^^^^^^^^^^^^^^^^^^
+
+test_0599.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0599.py:7: in task_func
+    filtered_df = df[df['Word'].str.contains(regex, regex=True)]
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:4368: in __getitem__
+    if com.is_bool_indexer(key):
+       ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+key = 0     NaN
+1    True
+2    True
+Name: Word, dtype: object
+
+    def is_bool_indexer(key: Any) -> bool:
+        """
+        Check whether `key` is a valid boolean indexer.
+    
+        Parameters
+        ----------
+        key : Any
+            Only list-likes may be considered boolean indexers.
+            All other types are not considered a boolean indexer.
+            For array-like input, boolean ndarrays or ExtensionArrays
+            with ``_is_boolean`` set are considered boolean indexers.
+    
+        Returns
+        -------
+        bool
+            Whether `key` is a valid boolean indexer.
+    
+        Raises
+        ------
+        ValueError
+            When the array is an object-dtype ndarray or ExtensionArray
+            and contains missing values.
+    
+        See Also
+        --------
+        check_array_indexer : Check that `key` is a valid array to index,
+            and convert to an ndarray.
+        """
+        if isinstance(
+            key,
+            (ABCSeries, np.ndarray, ABCIndex, ABCExtensionArray, ABCNumpyExtensionArray),
+        ) and not isinstance(key, ABCMultiIndex):
+            if key.dtype == np.object_:
+                key_array = np.asarray(key)
+    
+                if not lib.is_bool_array(key_array):
+                    na_msg = "Cannot mask with non-boolean array containing NA / NaN values"
+                    if lib.is_bool_array(key_array, skipna=True):
+                        # Don't raise on e.g. ["A", "B", np.nan], see
+                        #  test_loc_getitem_list_of_labels_categoricalindex_with_na
+>                       raise ValueError(na_msg)
+E                       ValueError: Cannot mask with non-boolean array containing NA / NaN values
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/common.py:145: ValueError
+=========================== short test summary info ============================
+FAILED test_0599.py::test_task_func_with_multiple_words - assert {5: 1, 7: 1,...
+FAILED test_0599.py::test_task_func_with_non_string_data - ValueError: Cannot...
+2 failed, 5 passed in 1.21s

@@ -1,0 +1,37 @@
+F..                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Prepare test data
+        my_dict = {'a': 1, 'b': 2}
+        keys = ['x1', 'x2', 'x3', 'x4', 'x5', 'x6', 'x7', 'x8', 'x9', 'x10']
+    
+        # Call the function
+        result_dict, json_filename, txt_filename = task_func(my_dict, keys)
+    
+        # Check if the dictionary has been updated with 10 new keys
+        assert len(result_dict) == 12  # original 2 keys + 10 new keys
+        assert all(key in result_dict for key in keys)
+        assert all(isinstance(value, int) and 1 <= value <= 100 for value in result_dict.values())
+    
+        # Check if the JSON file has been created and contains the correct data
+        assert os.path.exists(json_filename)
+        with open(json_filename, 'r') as json_file:
+            loaded_dict = json.load(json_file)
+>       assert loaded_dict == result_dict
+E       AssertionError: assert {'a': 1, 'b':...'x2': 18, ...} == {'a': 1, 'b':...'x2': 33, ...}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Differing items:
+E         {'x3': 82} != {'x3': 2}
+E         {'x4': 30} != {'x4': 15}
+E         {'x5': 96} != {'x5': 20}
+E         {'x8': 21} != {'x8': 81}...
+E         
+E         ...Full output truncated (7 lines hidden), use '-vv' to show
+
+test_0114.py:26: AssertionError
+=========================== short test summary info ============================
+FAILED test_0114.py::test_task_func - AssertionError: assert {'a': 1, 'b':......
+1 failed, 2 passed in 0.46s

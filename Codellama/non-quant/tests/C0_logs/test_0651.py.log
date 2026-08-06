@@ -1,0 +1,99 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_valid_input ________________________
+
+    def test_task_func_with_valid_input():
+        date_str = "2022-01-01 00:00:00"
+        tz_str = "America/New_York"
+        expected_output = 82800
+    
+        output = task_func(date_str, tz_str)
+    
+>       assert output == expected_output
+E       assert 50400 == 82800
+
+test_0651.py:12: AssertionError
+______________________ test_task_func_with_invalid_input _______________________
+
+    def test_task_func_with_invalid_input():
+        date_str = "2022-01-01 00:00:00"
+        tz_str = "Invalid/Timezone"
+    
+        with pytest.raises(ValueError):
+>           task_func(date_str, tz_str)
+
+test_0651.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0651.py:5: in task_func
+    tz = pytz.timezone(tz_str)
+         ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+zone = 'Invalid/Timezone'
+
+    def timezone(zone):
+        r''' Return a datetime.tzinfo implementation for the given timezone
+    
+        >>> from datetime import datetime, timedelta
+        >>> utc = timezone('UTC')
+        >>> eastern = timezone('US/Eastern')
+        >>> eastern.zone
+        'US/Eastern'
+        >>> timezone(unicode('US/Eastern')) is eastern
+        True
+        >>> utc_dt = datetime(2002, 10, 27, 6, 0, 0, tzinfo=utc)
+        >>> loc_dt = utc_dt.astimezone(eastern)
+        >>> fmt = '%Y-%m-%d %H:%M:%S %Z (%z)'
+        >>> loc_dt.strftime(fmt)
+        '2002-10-27 01:00:00 EST (-0500)'
+        >>> (loc_dt - timedelta(minutes=10)).strftime(fmt)
+        '2002-10-27 00:50:00 EST (-0500)'
+        >>> eastern.normalize(loc_dt - timedelta(minutes=10)).strftime(fmt)
+        '2002-10-27 01:50:00 EDT (-0400)'
+        >>> (loc_dt + timedelta(minutes=10)).strftime(fmt)
+        '2002-10-27 01:10:00 EST (-0500)'
+    
+        Raises UnknownTimeZoneError if passed an unknown zone.
+    
+        >>> try:
+        ...     timezone('Asia/Shangri-La')
+        ... except UnknownTimeZoneError:
+        ...     print('Unknown')
+        Unknown
+    
+        >>> try:
+        ...     timezone(unicode('\N{TRADE MARK SIGN}'))
+        ... except UnknownTimeZoneError:
+        ...     print('Unknown')
+        Unknown
+    
+        '''
+        if zone is None:
+            raise UnknownTimeZoneError(None)
+    
+        if zone.upper() == 'UTC':
+            return utc
+    
+        try:
+            zone = ascii(zone)
+        except UnicodeEncodeError:
+            # All valid timezones are ASCII
+            raise UnknownTimeZoneError(zone)
+    
+        zone = _case_insensitive_zone_lookup(_unmunge_zone(zone))
+        if zone not in _tzinfo_cache:
+            if zone in all_timezones_set:  # noqa
+                fp = open_resource(zone)
+                try:
+                    _tzinfo_cache[zone] = build_tzinfo(zone, fp)
+                finally:
+                    fp.close()
+            else:
+>               raise UnknownTimeZoneError(zone)
+E               pytz.exceptions.UnknownTimeZoneError: 'Invalid/Timezone'
+
+../../../.venv/lib/python3.12/site-packages/pytz/__init__.py:198: UnknownTimeZoneError
+=========================== short test summary info ============================
+FAILED test_0651.py::test_task_func_with_valid_input - assert 50400 == 82800
+FAILED test_0651.py::test_task_func_with_invalid_input - pytz.exceptions.Unkn...
+2 failed in 0.63s

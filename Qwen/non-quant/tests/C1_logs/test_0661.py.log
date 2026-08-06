@@ -1,0 +1,43 @@
+..F.F                                                                    [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_scales_data_correctly _____________________
+
+sample_data = ([array([1, 2, 3]), array([4, 5, 6])], [array([7, 8, 9]), array([10, 11, 12])], ['Dataset 1', 'Dataset 2'])
+
+    def test_task_func_scales_data_correctly(sample_data):
+        x, y, labels = sample_data
+        fig = task_func(x, y, labels)
+        ax = fig.axes[0]
+    
+        for i, line in enumerate(ax.lines):
+            xy = np.vstack((x[i], y[i])).T
+>           scaler = StandardScaler()
+                     ^^^^^^^^^^^^^^
+E           NameError: name 'StandardScaler' is not defined
+
+test_0661.py:32: NameError
+______________________ test_task_func_handles_empty_input ______________________
+
+    def test_task_func_handles_empty_input():
+        x = []
+        y = []
+        labels = []
+        fig = task_func(x, y, labels)
+        ax = fig.axes[0]
+        assert len(ax.lines) == 0
+>       assert ax.get_legend() is None
+E       assert <matplotlib.legend.Legend object at 0x7c3667173e30> is None
+E        +  where <matplotlib.legend.Legend object at 0x7c3667173e30> = get_legend()
+E        +    where get_legend = <Axes: >.get_legend
+
+test_0661.py:51: AssertionError
+=============================== warnings summary ===============================
+Qwen/non-quant/tests/test_0661.py::test_task_func_handles_empty_input
+  /work/tomohiro-w/utg/src/src_0661.py:18: UserWarning: No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+    ax.legend()  # Add a legend to the plot
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0661.py::test_task_func_scales_data_correctly - NameError: name '...
+FAILED test_0661.py::test_task_func_handles_empty_input - assert <matplotlib....
+2 failed, 3 passed, 1 warning in 3.74s

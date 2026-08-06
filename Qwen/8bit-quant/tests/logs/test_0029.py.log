@@ -1,0 +1,45 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_success ____________________________
+
+mock_requests_post = None
+
+    def test_task_func_success(mock_requests_post):
+        data = {"key": "value"}
+        url = "http://your-api-url.com"
+>       response = task_func(data, url)
+                   ^^^^^^^^^^^^^^^^^^^^
+
+test_0029.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = {'key': 'value'}, url = 'http://your-api-url.com'
+
+    def task_func(data, url="http://your-api-url.com"):
+        json_data = json.dumps(data)
+        encoded_data = base64.b64encode(json_data.encode('ascii')).decode('ascii')
+>       response = requests.post(url, json={"payload": encoded_data})
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: mock_post() got an unexpected keyword argument 'json'
+
+../../../src/src_0029.py:7: TypeError
+____________________________ test_task_func_failure ____________________________
+
+mock_requests_post = None
+
+    def test_task_func_failure(mock_requests_post):
+        data = {"key": "value"}
+        url = "http://your-api-url.com"
+        # Modify the mock to simulate a failure
+        def mock_post_failure(url, json_data):
+            return MockResponse(500, {"status": "error"})
+    
+>       monkeypatch.setattr(requests, 'post', mock_post_failure)
+        ^^^^^^^^^^^
+E       NameError: name 'monkeypatch' is not defined
+
+test_0029.py:38: NameError
+=========================== short test summary info ============================
+FAILED test_0029.py::test_task_func_success - TypeError: mock_post() got an u...
+FAILED test_0029.py::test_task_func_failure - NameError: name 'monkeypatch' i...
+2 failed in 0.67s

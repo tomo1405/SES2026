@@ -1,0 +1,35 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_timestamp _________________________
+
+    def test_task_func_with_timestamp():
+        data = {'key': 'value', 'timestamp': '2023-01-01 12:00:00'}
+        encoded_data = task_func(data)
+        decoded_data = base64.b64decode(encoded_data).decode('ascii')
+        decoded_data = json.loads(decoded_data)
+        assert decoded_data['key'] == 'value'
+>       assert decoded_data['timestamp'] == '2023-01-01 12:00:00'
+E       AssertionError: assert '2026-07-28 14:06:53' == '2023-01-01 12:00:00'
+E         
+E         - 2023-01-01 12:00:00
+E         + 2026-07-28 14:06:53
+
+test_0028.py:20: AssertionError
+____________________ test_task_func_with_invalid_timestamp _____________________
+
+    def test_task_func_with_invalid_timestamp():
+        data = {'key': 'value', 'timestamp': 'invalid'}
+        try:
+            task_func(data)
+        except ValueError:
+            pass
+        else:
+>           assert False, "Expected ValueError not raised"
+E           AssertionError: Expected ValueError not raised
+E           assert False
+
+test_0028.py:29: AssertionError
+=========================== short test summary info ============================
+FAILED test_0028.py::test_task_func_with_timestamp - AssertionError: assert '...
+FAILED test_0028.py::test_task_func_with_invalid_timestamp - AssertionError: ...
+2 failed, 1 passed in 0.39s

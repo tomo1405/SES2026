@@ -1,0 +1,38 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_valid_ip ____________________________
+
+    def test_task_func_valid_ip():
+        API_URL = "https://api.ipify.org"
+        ip = task_func(API_URL)
+>       assert re.match(IP_REGEX, ip)
+E       AssertionError: assert None
+E        +  where None = <function match at 0x704441091800>('[0-9]+(?:\\.[0-9]+){3}', 'Extra data: line 1 column 8 (char 7)')
+E        +    where <function match at 0x704441091800> = re.match
+
+test_0398.py:13: AssertionError
+__________________________ test_task_func_invalid_ip ___________________________
+
+    def test_task_func_invalid_ip():
+        API_URL = "https://api.example.com"
+        ip = task_func(API_URL)
+>       assert ip == "Invalid IP address received"
+E       AssertionError: assert '<urlopen err...ith hostname>' == 'Invalid IP address received'
+E         
+E         - Invalid IP address received
+E         + <urlopen error [Errno -5] No address associated with hostname>
+
+test_0398.py:18: AssertionError
+___________________________ test_task_func_exception ___________________________
+
+    def test_task_func_exception():
+        API_URL = "https://api.example.com"
+>       with pytest.raises(Exception) as e:
+E       Failed: DID NOT RAISE Exception
+
+test_0398.py:22: Failed
+=========================== short test summary info ============================
+FAILED test_0398.py::test_task_func_valid_ip - AssertionError: assert None
+FAILED test_0398.py::test_task_func_invalid_ip - AssertionError: assert '<url...
+FAILED test_0398.py::test_task_func_exception - Failed: DID NOT RAISE Exception
+3 failed in 0.64s

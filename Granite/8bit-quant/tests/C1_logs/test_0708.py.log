@@ -1,0 +1,47 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a sample DataFrame with an 'IntCol' column
+        df = pd.DataFrame({'IntCol': [1, 10, 100, 1000]})
+    
+        # Call the function and store the result
+        result = task_func(df)
+    
+        # Check if the 'IntCol' column has been modified
+        expected_int_col = np.log10(df['IntCol'])
+>       assert np.array_equal(result['IntCol'], expected_int_col)
+E       assert False
+E        +  where False = <function array_equal at 0x7c0f31d07070>(0    0.0\n1    1.0\n2    2.0\n3    3.0\nName: IntCol, dtype: float64, 0        -inf\n1    0.000000\n2    0.301030\n3    0.477121\nName: IntCol, dtype: float64)
+E        +    where <function array_equal at 0x7c0f31d07070> = np.array_equal
+
+test_0708.py:16: AssertionError
+_______________________ test_task_func_with_null_values ________________________
+
+    def test_task_func_with_null_values():
+        # Create a sample DataFrame with an 'IntCol' column and null values
+        df = pd.DataFrame({'IntCol': [1, None, 10, np.nan]})
+    
+        # Call the function and store the result
+        result = task_func(df)
+    
+        # Check if the 'IntCol' column has been modified
+        expected_int_col = np.log10(df['IntCol'].dropna())
+>       assert np.array_equal(result['IntCol'], expected_int_col)
+E       assert False
+E        +  where False = <function array_equal at 0x7c0f31d07070>(0    0.0\n1    NaN\n2    1.0\n3    NaN\nName: IntCol, dtype: float64, 0   -inf\n2    0.0\nName: IntCol, dtype: float64)
+E        +    where <function array_equal at 0x7c0f31d07070> = np.array_equal
+
+test_0708.py:35: AssertionError
+=============================== warnings summary ===============================
+Granite/8bit-quant/tests/test_0708.py::test_task_func
+Granite/8bit-quant/tests/test_0708.py::test_task_func_with_null_values
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/pandas/core/arraylike.py:402: RuntimeWarning: divide by zero encountered in log10
+    result = getattr(ufunc, method)(*inputs, **kwargs)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0708.py::test_task_func - assert False
+FAILED test_0708.py::test_task_func_with_null_values - assert False
+2 failed, 2 warnings in 1.17s

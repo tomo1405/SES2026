@@ -1,0 +1,68 @@
+import pytest
+from src_0411 import task_func
+import os
+import pandas as pd
+from datetime import datetime
+
+# Mocking os.path.exists to simulate file existence
+class MockPath:
+    @staticmethod
+    def exists(path):
+        return path.endswith('existing_file.xlsx')
+
+os.path = MockPath()
+
+# Mocking pd.read_excel to simulate reading an Excel file
+def mock_read_excel(file_path, engine):
+    data = {
+        'Date': ['2023-01-01', '2023-01-15', '2023-02-01'],
+        'Value': [10, 20, 30]
+    }
+    return pd.DataFrame(data)
+
+pd.read_excel = mock_read_excel
+
+def test_task_func_valid_input():
+    excel_directory = '/path/to/directory'
+    file_name = 'existing_file.xlsx'
+    column_name = 'Date'
+    start_date = '2023-01-01'
+    end_date = '2023-01-31'
+
+    result_df = task_func(excel_directory, file_name, column_name, start_date, end_date)
+    expected_df = pd.DataFrame({
+        'Date': ['2023-01-01', '2023-01-15'],
+        'Value': [10, 20]
+    })
+    expected_df['Date'] = pd.to_datetime(expected_df['Date'])
+    pd.testing.assert_frame_equal(result_df, expected_df)
+
+def test_task_func_file_not_found():
+    excel_directory = '/path/to/directory'
+    file_name = 'non_existing_file.xlsx'
+    column_name = 'Date'
+    start_date = '2023-01-01'
+    end_date = '2023-01-31'
+
+    with pytest.raises(FileNotFoundError):
+        task_func(excel_directory, file_name, column_name, start_date, end_date)
+
+def test_task_func_column_not_found():
+    excel_directory = '/path/to/directory'
+    file_name = 'existing_file.xlsx'
+    column_name = 'NonExistentColumn'
+    start_date = '2023-01-01'
+    end_date = '2023-01-31'
+
+    with pytest.raises(ValueError):
+        task_func(excel_directory, file_name, column_name, start_date, end_date)
+
+def test_task_func_invalid_date_format():
+    excel_directory = '/path/to/directory'
+    file_name = 'existing_file.xlsx'
+    column_name = 'Date'
+    start_date = '2023-01-01'
+    end_date = '01-31-2023'
+
+    with pytest.raises(ValueError):
+        task_func(excel_directory, file_name, column_name, start_date, end_date)

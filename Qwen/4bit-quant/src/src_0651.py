@@ -1,0 +1,13 @@
+from datetime import datetime
+import pytz
+from dateutil.parser import parse
+def task_func(date_str, tz_str):
+    tz = pytz.timezone(tz_str)
+    given_date = parse(date_str).astimezone(tz)  # Correctly handle timezone conversion
+
+    next_year = given_date.year + 1
+    new_year = tz.localize(datetime(next_year, 1, 1, 0, 0, 0))  # Correctly create the New Year moment in the specified timezone
+
+    time_until_new_year = new_year - given_date
+
+    return int(time_until_new_year.total_seconds())

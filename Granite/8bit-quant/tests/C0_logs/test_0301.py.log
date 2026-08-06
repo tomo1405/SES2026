@@ -1,0 +1,363 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+self = <pandas.core.indexing._iLocIndexer object at 0x7778fee1b570>, loc = 1
+value = 0   -1.414214
+1   -0.707107
+2    0.000000
+3    0.707107
+4    1.414214
+Name: 0, dtype: float64
+plane_indexer = slice(None, None, None)
+
+    def _setitem_single_column(self, loc: int, value, plane_indexer) -> None:
+        """
+    
+        Parameters
+        ----------
+        loc : int
+            Indexer for column position
+        plane_indexer : int, slice, listlike[int]
+            The indexer we use for setitem along axis=0.
+        """
+        pi = plane_indexer
+    
+        is_full_setter = com.is_null_slice(pi) or com.is_full_slice(pi, len(self.obj))
+    
+        is_null_setter = com.is_empty_slice(pi) or (is_array_like(pi) and len(pi) == 0)
+    
+        if is_null_setter:
+            # no-op, don't cast dtype later
+            return
+    
+        elif is_full_setter:
+            try:
+>               self.obj._mgr.column_setitem(
+                    loc, plane_indexer, value, inplace_only=True
+                )
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexing.py:2144: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/managers.py:1526: in column_setitem
+    col_mgr.setitem_inplace(idx, value)
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/managers.py:2228: in setitem_inplace
+    value = np_can_hold_element(arr.dtype, value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dtype = dtype('int64')
+element = 0   -1.414214
+1   -0.707107
+2    0.000000
+3    0.707107
+4    1.414214
+Name: 0, dtype: float64
+
+    def np_can_hold_element(dtype: np.dtype, element: Any) -> Any:
+        """
+        Raise if we cannot losslessly set this element into an ndarray with this dtype.
+    
+        Specifically about places where we disagree with numpy.  i.e. there are
+        cases where numpy will raise in doing the setitem that we do not check
+        for here, e.g. setting str "X" into a numeric ndarray.
+    
+        Returns
+        -------
+        Any
+            The element, potentially cast to the dtype.
+    
+        Raises
+        ------
+        ValueError : If we cannot losslessly store this element with this dtype.
+        """
+        if dtype == _dtype_obj:
+            return element
+    
+        tipo = _maybe_infer_dtype_type(element)
+    
+        if dtype.kind in "iu":
+            if isinstance(element, range):
+                if _dtype_can_hold_range(element, dtype):
+                    return element
+                raise LossySetitemError
+    
+            if is_integer(element) or (is_float(element) and element.is_integer()):
+                # e.g. test_setitem_series_int8 if we have a python int 1
+                #  tipo may be np.int32, despite the fact that it will fit
+                #  in smaller int dtypes.
+                info = np.iinfo(dtype)
+                if info.min <= element <= info.max:
+                    return dtype.type(element)
+                raise LossySetitemError
+    
+            if tipo is not None:
+                if tipo.kind not in "iu":
+                    if isinstance(element, np.ndarray) and element.dtype.kind == "f":
+                        # If all can be losslessly cast to integers, then we can hold them
+                        with np.errstate(invalid="ignore"):
+                            # We check afterwards if cast was losslessly, so no need to show
+                            # the warning
+                            casted = element.astype(dtype)
+                        comp = casted == element
+                        if comp.all():
+                            # Return the casted values bc they can be passed to
+                            #  np.putmask, whereas the raw values cannot.
+                            #  see TestSetitemFloatNDarrayIntoIntegerSeries
+                            return casted
+                        raise LossySetitemError
+    
+                    elif isinstance(element, ABCExtensionArray) and isinstance(
+                        element.dtype, CategoricalDtype
+                    ):
+                        # GH#52927 setting Categorical value into non-EA frame
+                        # TODO: general-case for EAs?
+                        try:
+                            casted = element.astype(dtype)
+                        except (ValueError, TypeError) as err:
+                            raise LossySetitemError from err
+                        # Check for cases of either
+                        #  a) lossy overflow/rounding or
+                        #  b) semantic changes like dt64->int64
+                        comp = casted == element
+                        if not comp.all():
+                            raise LossySetitemError
+                        return casted
+    
+                    # Anything other than integer we cannot hold
+>                   raise LossySetitemError
+E                   pandas.errors.LossySetitemError
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/dtypes/cast.py:1725: LossySetitemError
+
+The above exception was the direct cause of the following exception:
+
+sample_df =         Date  Value
+0 2022-01-01     10
+1 2022-01-02     20
+2 2022-01-03     30
+3 2022-01-04     40
+4 2022-01-05     50
+
+    def test_task_func(sample_df):
+>       df, fig = task_func(sample_df)
+                  ^^^^^^^^^^^^^^^^^^^^
+
+test_0301.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0301.py:9: in task_func
+    df.iloc[:,1:] = df.iloc[:,1:].apply(zscore)
+    ^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexing.py:938: in __setitem__
+    iloc._setitem_with_indexer(indexer, value, self.name)
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexing.py:1953: in _setitem_with_indexer
+    self._setitem_with_indexer_split_path(indexer, value, name)
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexing.py:1988: in _setitem_with_indexer_split_path
+    self._setitem_with_indexer_frame_value(indexer, value, name)
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexing.py:2084: in _setitem_with_indexer_frame_value
+    self._setitem_single_column(loc, val, pi)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.indexing._iLocIndexer object at 0x7778fee1b570>, loc = 1
+value = 0   -1.414214
+1   -0.707107
+2    0.000000
+3    0.707107
+4    1.414214
+Name: 0, dtype: float64
+plane_indexer = slice(None, None, None)
+
+    def _setitem_single_column(self, loc: int, value, plane_indexer) -> None:
+        """
+    
+        Parameters
+        ----------
+        loc : int
+            Indexer for column position
+        plane_indexer : int, slice, listlike[int]
+            The indexer we use for setitem along axis=0.
+        """
+        pi = plane_indexer
+    
+        is_full_setter = com.is_null_slice(pi) or com.is_full_slice(pi, len(self.obj))
+    
+        is_null_setter = com.is_empty_slice(pi) or (is_array_like(pi) and len(pi) == 0)
+    
+        if is_null_setter:
+            # no-op, don't cast dtype later
+            return
+    
+        elif is_full_setter:
+            try:
+                self.obj._mgr.column_setitem(
+                    loc, plane_indexer, value, inplace_only=True
+                )
+            except (ValueError, TypeError, LossySetitemError) as exc:
+                # If we're setting an entire column and we can't do it inplace,
+                #  then we can use value's dtype (or inferred dtype)
+                #  instead of object
+                dtype = self.obj.dtypes.iloc[loc]
+                if dtype not in (np.void, object) and not self.obj.empty:
+                    # - Exclude np.void, as that is a special case for expansion.
+                    #   We want to raise for
+                    #       df = pd.DataFrame({'a': [1, 2]})
+                    #       df.loc[:, 'a'] = .3
+                    #   but not for
+                    #       df = pd.DataFrame({'a': [1, 2]})
+                    #       df.loc[:, 'b'] = .3
+                    # - Exclude `object`, as then no upcasting happens.
+                    # - Exclude empty initial object with enlargement,
+                    #   as then there's nothing to be inconsistent with.
+>                   raise TypeError(
+                        f"Invalid value '{value}' for dtype '{dtype}'"
+                    ) from exc
+E                   TypeError: Invalid value '0   -1.414214
+E                   1   -0.707107
+E                   2    0.000000
+E                   3    0.707107
+E                   4    1.414214
+E                   Name: 0, dtype: float64' for dtype 'int64'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexing.py:2163: TypeError
+_______________________ test_task_func_with_null_values ________________________
+
+self = Index(['Date', 0], dtype='object'), key = 'Value'
+
+    def get_loc(self, key):
+        """
+        Get integer location, slice or boolean mask for requested label.
+    
+        Parameters
+        ----------
+        key : label
+            The key to check its location if it is present in the index.
+    
+        Returns
+        -------
+        int if unique index, slice if monotonic index, else mask
+            Integer location, slice or boolean mask.
+    
+        See Also
+        --------
+        Index.get_slice_bound : Calculate slice bound that corresponds to
+            given label.
+        Index.get_indexer : Computes indexer and mask for new index given
+            the current index.
+        Index.get_non_unique : Returns indexer and masks for new index given
+            the current index.
+        Index.get_indexer_for : Returns an indexer even when non-unique.
+    
+        Examples
+        --------
+        >>> unique_index = pd.Index(list("abc"))
+        >>> unique_index.get_loc("b")
+        1
+    
+        >>> monotonic_index = pd.Index(list("abbc"))
+        >>> monotonic_index.get_loc("b")
+        slice(1, 3, None)
+    
+        >>> non_monotonic_index = pd.Index(list("abcb"))
+        >>> non_monotonic_index.get_loc("b")
+        array([False,  True, False,  True])
+        """
+        casted_key = self._maybe_cast_indexer(key)
+        try:
+>           return self._engine.get_loc(casted_key)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py:3641: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pandas/_libs/index.pyx:168: in pandas._libs.index.IndexEngine.get_loc
+    ???
+pandas/_libs/index.pyx:197: in pandas._libs.index.IndexEngine.get_loc
+    ???
+pandas/_libs/hashtable_class_helper.pxi:7668: in pandas._libs.hashtable.PyObjectHashTable.get_item
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   KeyError: 'Value'
+
+pandas/_libs/hashtable_class_helper.pxi:7676: KeyError
+
+The above exception was the direct cause of the following exception:
+
+sample_df =         Date  Value
+0 2022-01-01   10.0
+1 2022-01-02   20.0
+2 2022-01-03    NaN
+3 2022-01-04   40.0
+4 2022-01-05   50.0
+
+    def test_task_func_with_null_values(sample_df):
+        sample_df.loc[2, 'Value'] = None
+        df, fig = task_func(sample_df)
+        assert df.shape == (5, 2)
+>       assert df['Value'].isnull().sum() == 1
+               ^^^^^^^^^^^
+
+test_0301.py:30: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:4378: in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Index(['Date', 0], dtype='object'), key = 'Value'
+
+    def get_loc(self, key):
+        """
+        Get integer location, slice or boolean mask for requested label.
+    
+        Parameters
+        ----------
+        key : label
+            The key to check its location if it is present in the index.
+    
+        Returns
+        -------
+        int if unique index, slice if monotonic index, else mask
+            Integer location, slice or boolean mask.
+    
+        See Also
+        --------
+        Index.get_slice_bound : Calculate slice bound that corresponds to
+            given label.
+        Index.get_indexer : Computes indexer and mask for new index given
+            the current index.
+        Index.get_non_unique : Returns indexer and masks for new index given
+            the current index.
+        Index.get_indexer_for : Returns an indexer even when non-unique.
+    
+        Examples
+        --------
+        >>> unique_index = pd.Index(list("abc"))
+        >>> unique_index.get_loc("b")
+        1
+    
+        >>> monotonic_index = pd.Index(list("abbc"))
+        >>> monotonic_index.get_loc("b")
+        slice(1, 3, None)
+    
+        >>> non_monotonic_index = pd.Index(list("abcb"))
+        >>> non_monotonic_index.get_loc("b")
+        array([False,  True, False,  True])
+        """
+        casted_key = self._maybe_cast_indexer(key)
+        try:
+            return self._engine.get_loc(casted_key)
+        except KeyError as err:
+            if isinstance(casted_key, slice) or (
+                isinstance(casted_key, abc.Iterable)
+                and any(isinstance(x, slice) for x in casted_key)
+            ):
+                raise InvalidIndexError(key) from err
+>           raise KeyError(key) from err
+E           KeyError: 'Value'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py:3648: KeyError
+=========================== short test summary info ============================
+FAILED test_0301.py::test_task_func - TypeError: Invalid value '0   -1.414214
+FAILED test_0301.py::test_task_func_with_null_values - KeyError: 'Value'
+2 failed, 1 passed in 3.81s

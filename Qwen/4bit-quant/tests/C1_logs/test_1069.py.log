@@ -1,0 +1,87 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_success ____________________________
+
+db_path = 'test_db_path', query = 'SELECT * FROM test_table'
+warn_large_dataset = False
+
+    def task_func(db_path, query, warn_large_dataset=True):
+        if warn_large_dataset:
+            warnings.simplefilter("always")
+    
+        try:
+>           with sqlite3.connect(db_path) as conn:
+E           TypeError: 'MockConnection' object does not support the context manager protocol
+
+../../../src/src_1069.py:9: TypeError
+
+The above exception was the direct cause of the following exception:
+
+mock_db_path = 'test_db_path', mock_query = 'SELECT * FROM test_table'
+mock_db_data = [(1, 'Alice'), (2, 'Bob'), (3, 'Charlie')]
+
+    def test_task_func_success(mock_db_path, mock_query, mock_db_data):
+        expected_df = pd.DataFrame(mock_db_data, columns=['id', 'name'])
+>       result_df = task_func(mock_db_path, mock_query, warn_large_dataset=False)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1069.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+db_path = 'test_db_path', query = 'SELECT * FROM test_table'
+warn_large_dataset = False
+
+    def task_func(db_path, query, warn_large_dataset=True):
+        if warn_large_dataset:
+            warnings.simplefilter("always")
+    
+        try:
+            with sqlite3.connect(db_path) as conn:
+                data = pd.read_sql_query(query, conn)
+    
+            if warn_large_dataset and data.shape[0] > 10000:
+                warnings.warn("The data contains more than 10000 rows.")
+    
+            return data
+    
+        except Exception as e:
+>           raise Exception(f"Error fetching data from the database: {str(e)}") from e
+E           Exception: Error fetching data from the database: 'MockConnection' object does not support the context manager protocol
+
+../../../src/src_1069.py:18: Exception
+_____________________ test_task_func_large_dataset_warning _____________________
+
+caplog = <_pytest.logging.LogCaptureFixture object at 0x731b3cc515e0>
+mock_db_path = 'test_db_path', mock_query = 'SELECT * FROM test_table'
+mock_db_data = [(1, 'Alice'), (2, 'Bob'), (3, 'Charlie')]
+
+    def test_task_func_large_dataset_warning(caplog, mock_db_path, mock_query, mock_db_data):
+        large_data = [tuple(range(10001))] + mock_db_data
+>       monkeypatch.setattr(MockCursor, 'fetchall', lambda self: large_data)
+        ^^^^^^^^^^^
+E       NameError: name 'monkeypatch' is not defined
+
+test_1069.py:53: NameError
+___________________________ test_task_func_exception ___________________________
+
+mock_db_path = 'test_db_path', mock_query = 'SELECT * FROM test_table'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x731b3cc525a0>
+
+    def test_task_func_exception(mock_db_path, mock_query, monkeypatch):
+        monkeypatch.setattr(MockCursor, 'fetchall', lambda self: None)
+    
+        with pytest.raises(Exception) as excinfo:
+            task_func(mock_db_path, mock_query, warn_large_dataset=False)
+    
+>       assert str(excinfo.value) == "Error fetching data from the database: None"
+E       AssertionError: assert 'Error fetchi...ager protocol' == 'Error fetchi...atabase: None'
+E         
+E         - Error fetching data from the database: None
+E         + Error fetching data from the database: 'MockConnection' object does not support the context manager protocol
+
+test_1069.py:67: AssertionError
+=========================== short test summary info ============================
+FAILED test_1069.py::test_task_func_success - Exception: Error fetching data ...
+FAILED test_1069.py::test_task_func_large_dataset_warning - NameError: name '...
+FAILED test_1069.py::test_task_func_exception - AssertionError: assert 'Error...
+3 failed in 1.13s

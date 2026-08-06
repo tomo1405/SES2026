@@ -1,0 +1,42 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sample_df =    id  age  income
+0   1   25   50000
+1   1   30   60000
+2   2   35   70000
+3   2   40   80000
+4   3   45   90000
+5   3   50  100000
+
+    def test_task_func(sample_df):
+        df_grouped, (hist, bins) = task_func(sample_df)
+    
+        # Check if the DataFrame is grouped correctly
+        assert df_grouped.shape == (6, 2)
+        assert all(df_grouped.index.get_level_values('id').isin([1, 2, 3]))
+    
+        # Check if the scaling is correct
+>       assert df_grouped.loc[1, 'age'].between(0, 1)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0293.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = 0    True
+1    True
+Name: age, dtype: bool
+
+    @final
+    def __bool__(self) -> NoReturn:
+>       raise ValueError(
+            f"The truth value of a {type(self).__name__} is ambiguous. "
+            "Use a.empty, a.bool(), a.item(), a.any() or a.all()."
+        )
+E       ValueError: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:1513: ValueError
+=========================== short test summary info ============================
+FAILED test_0293.py::test_task_func - ValueError: The truth value of a Series...
+1 failed in 3.26s

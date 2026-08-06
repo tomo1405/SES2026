@@ -1,0 +1,12 @@
+import pandas as pd
+import time
+# Constants
+LETTERS = list('abcdefghijklmnopqrstuvwxyz')
+def task_func(data, letter):
+    df = pd.DataFrame(data)
+    start_time = time.time()
+    regex = f'^{letter}'
+    filtered_df = df[df['Name'].str.contains(regex, case=False, regex=True)]
+    end_time = time.time()  # End timing
+    cost = f"Operation completed in {end_time - start_time} seconds."
+    return filtered_df['Name'].value_counts()

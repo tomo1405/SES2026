@@ -1,0 +1,33 @@
+F..                                                                      [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_output _____________________________
+
+    def test_task_func_output():
+        goals = 5
+        penalties = 3
+        rng_seed = 42
+        results_df, model = task_func(goals, penalties, rng_seed)
+    
+        # Check if the DataFrame has the correct shape
+        assert results_df.shape == (5, 3), "DataFrame should have 5 rows and 3 columns"
+    
+        # Check if the DataFrame has the correct columns
+        assert list(results_df.columns) == ['Team', 'Goals', 'Penalty Cost'], "DataFrame columns are incorrect"
+    
+        # Check if the DataFrame contains the correct teams
+>       assert all(team in TEAMS for team in results_df['Team']), "DataFrame should contain only valid teams"
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0620.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <generator object ArrowExtensionArray.__iter__ at 0x7a4c6996e540>
+
+>   assert all(team in TEAMS for team in results_df['Team']), "DataFrame should contain only valid teams"
+                       ^^^^^
+E   NameError: name 'TEAMS' is not defined
+
+test_0620.py:18: NameError
+=========================== short test summary info ============================
+FAILED test_0620.py::test_task_func_output - NameError: name 'TEAMS' is not d...
+1 failed, 2 passed in 3.20s

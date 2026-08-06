@@ -1,0 +1,76 @@
+FFFF.F                                                                   [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_default_values _________________________
+
+    def test_task_func_default_values():
+        result_mode, result_numbers = task_func()
+        assert isinstance(result_mode, int)
+>       assert isinstance(result_numbers, Counter.items)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: isinstance() arg 2 must be a type, a tuple of types, or a union
+
+test_0834.py:9: TypeError
+_________________________ test_task_func_custom_values _________________________
+
+    def test_task_func_custom_values():
+        list_length = 50
+        range_start = 10
+        range_end = 20
+        random_seed = 42
+        expected_mode, expected_numbers = task_func(list_length, range_start, range_end, random_seed)
+    
+        # Verify mode
+        assert isinstance(expected_mode, int)
+        assert expected_mode in range(range_start, range_end + 1)
+    
+        # Verify numbers
+>       assert isinstance(expected_numbers, Counter.items)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: isinstance() arg 2 must be a type, a tuple of types, or a union
+
+test_0834.py:23: TypeError
+___________________________ test_task_func_with_seed ___________________________
+
+    def test_task_func_with_seed():
+        random_seed = 0
+        _, numbers = task_func(random_seed=random_seed)
+>       assert isinstance(numbers, Counter.items)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: isinstance() arg 2 must be a type, a tuple of types, or a union
+
+test_0834.py:33: TypeError
+_________________________ test_task_func_with_no_seed __________________________
+
+    def test_task_func_with_no_seed():
+        _, numbers = task_func()
+>       assert isinstance(numbers, Counter.items)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: isinstance() arg 2 must be a type, a tuple of types, or a union
+
+test_0834.py:37: TypeError
+_______________________ test_task_func_with_large_range ________________________
+
+    def test_task_func_with_large_range():
+        list_length = 100
+        range_start = 1
+        range_end = 100
+        random_seed = 42
+        expected_mode, expected_numbers = task_func(list_length, range_start, range_end, random_seed)
+    
+        # Verify mode
+        assert isinstance(expected_mode, int)
+        assert expected_mode in range(range_start, range_end + 1)
+    
+        # Verify numbers
+>       assert isinstance(expected_numbers, Counter.items)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: isinstance() arg 2 must be a type, a tuple of types, or a union
+
+test_0834.py:67: TypeError
+=========================== short test summary info ============================
+FAILED test_0834.py::test_task_func_default_values - TypeError: isinstance() ...
+FAILED test_0834.py::test_task_func_custom_values - TypeError: isinstance() a...
+FAILED test_0834.py::test_task_func_with_seed - TypeError: isinstance() arg 2...
+FAILED test_0834.py::test_task_func_with_no_seed - TypeError: isinstance() ar...
+FAILED test_0834.py::test_task_func_with_large_range - TypeError: isinstance(...
+5 failed, 1 passed in 0.56s

@@ -1,0 +1,28 @@
+..FF                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_none_strings _______________________
+
+    def test_task_func_with_none_strings():
+        strings = None
+>       with pytest.raises(TypeError):
+E       Failed: DID NOT RAISE TypeError
+
+test_0730.py:20: Failed
+_________________________ test_task_func_with_filename _________________________
+
+    def test_task_func_with_filename():
+        strings = ['date', 'fig', 'grape']
+        filename = 'test.pkl'
+        loaded_strings = task_func(strings, filename)
+        assert loaded_strings == strings
+>       assert os.path.exists(filename)
+E       AssertionError: assert False
+E        +  where False = <function exists at 0x7e53043f3600>('test.pkl')
+E        +    where <function exists at 0x7e53043f3600> = <module 'posixpath' (frozen)>.exists
+E        +      where <module 'posixpath' (frozen)> = os.path
+
+test_0730.py:28: AssertionError
+=========================== short test summary info ============================
+FAILED test_0730.py::test_task_func_with_none_strings - Failed: DID NOT RAISE...
+FAILED test_0730.py::test_task_func_with_filename - AssertionError: assert False
+2 failed, 2 passed in 0.49s

@@ -1,0 +1,76 @@
+FFF.F                                                                    [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        text = "This is a sample text for testing the task function."
+        expected_result = [('sample', 1), ('text', 1), ('testing', 1), ('task', 1), ('function', 1)]
+>       assert task_func(text) == expected_result
+E       AssertionError: assert [('is', 1), (...), ('the', 1)] == [('sample', 1...function', 1)]
+E         
+E         At index 0 diff: ('is', 1) != ('sample', 1)
+E         Right contains one more item: ('function', 1)
+E         Use -v to get more diff
+
+test_1100.py:7: AssertionError
+________________________ test_task_func_with_stopwords _________________________
+
+    def test_task_func_with_stopwords():
+        text = "This is a sample text for testing the task function."
+        expected_result = [('sample', 1), ('text', 1), ('testing', 1), ('task', 1), ('function', 1)]
+>       assert task_func(text) == expected_result
+E       AssertionError: assert [('is', 1), (...), ('the', 1)] == [('sample', 1...function', 1)]
+E         
+E         At index 0 diff: ('is', 1) != ('sample', 1)
+E         Right contains one more item: ('function', 1)
+E         Use -v to get more diff
+
+test_1100.py:12: AssertionError
+_______________________ test_task_func_with_no_stopwords _______________________
+
+    def test_task_func_with_no_stopwords():
+        text = "This is a sample text for testing the task function."
+        expected_result = [('sample', 1), ('text', 1), ('testing', 1), ('task', 1), ('function', 1)]
+>       assert task_func(text) == expected_result
+E       AssertionError: assert [('is', 1), (...), ('the', 1)] == [('sample', 1...function', 1)]
+E         
+E         At index 0 diff: ('is', 1) != ('sample', 1)
+E         Right contains one more item: ('function', 1)
+E         Use -v to get more diff
+
+test_1100.py:17: AssertionError
+___________________________ test_task_func_with_none ___________________________
+
+    def test_task_func_with_none():
+        text = None
+        expected_result = []
+>       assert task_func(text) == expected_result
+               ^^^^^^^^^^^^^^^
+
+test_1100.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1100.py:17: in task_func
+    text = re.sub('http[s]?://\S+', '', text)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pattern = 'http[s]?://\\S+', repl = '', string = None, count = 0, flags = 0
+
+    def sub(pattern, repl, string, count=0, flags=0):
+        """Return the string obtained by replacing the leftmost
+        non-overlapping occurrences of the pattern in string by the
+        replacement repl.  repl can be either a string or a callable;
+        if a string, backslash escapes in it are processed.  If it is
+        a callable, it's passed the Match object and must return
+        a replacement string to be used."""
+>       return _compile(pattern, flags).sub(repl, string, count)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: expected string or bytes-like object, got 'NoneType'
+
+/usr/lib/python3.12/re/__init__.py:186: TypeError
+=========================== short test summary info ============================
+FAILED test_1100.py::test_task_func - AssertionError: assert [('is', 1), (......
+FAILED test_1100.py::test_task_func_with_stopwords - AssertionError: assert [...
+FAILED test_1100.py::test_task_func_with_no_stopwords - AssertionError: asser...
+FAILED test_1100.py::test_task_func_with_none - TypeError: expected string or...
+4 failed, 1 passed in 0.51s

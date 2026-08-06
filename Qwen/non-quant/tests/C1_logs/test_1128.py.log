@@ -1,0 +1,109 @@
+FF.FF.                                                                   [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_with_files ___________________________
+
+    def test_task_func_with_files():
+        # Create temporary files
+        with tempfile.TemporaryDirectory() as temp_dir:
+            file1_path = os.path.join(temp_dir, 'file1.txt')
+            file2_path = os.path.join(temp_dir, 'file2.txt')
+    
+            with open(file1_path, 'wb') as f:
+                f.write(b'content1')
+    
+            with open(file2_path, 'wb') as f:
+                f.write(b'content2')
+    
+            # Expected hashes
+            expected_hash1 = hashlib.sha256(b'content1').hexdigest()
+            expected_hash2 = hashlib.sha256(b'content2').hexdigest()
+    
+            # Test with '/'
+            result = task_func(os.path.join(file1_path, '/', file2_path), '/')
+            expected = [
+                (file1_path, expected_hash1),
+                ('/', None),
+                (file2_path, expected_hash2)
+            ]
+>           assert result == expected
+E           AssertionError: assert [('', None), ..., ('/', None)] == [('/tmp/tmpie...366c9f769a6')]
+E             
+E             At index 0 diff: ('', None) != ('/tmp/tmpiek5wx4q/file1.txt', 'd0b425e00e15a0d36b9b361f02bab63563aed6cb4665083905386c55d5b679fa')
+E             Left contains 3 more items, first extra item: ('/', None)
+E             Use -v to get more diff
+
+test_1128.py:31: AssertionError
+____________________ test_task_func_with_nonexistent_files _____________________
+
+    def test_task_func_with_nonexistent_files():
+        # Create temporary directory
+        with tempfile.TemporaryDirectory() as temp_dir:
+            file1_path = os.path.join(temp_dir, 'file1.txt')
+            file2_path = os.path.join(temp_dir, 'file2.txt')
+    
+            # Test with '/'
+            result = task_func(os.path.join(file1_path, '/', file2_path), '/')
+            expected = [
+                (file1_path, None),
+                ('/', None),
+                (file2_path, None)
+            ]
+>           assert result == expected
+E           AssertionError: assert [('', None), ..., ('/', None)] == [('/tmp/tmp81...2.txt', None)]
+E             
+E             At index 0 diff: ('', None) != ('/tmp/tmp81t2m28s/file1.txt', None)
+E             Left contains 3 more items, first extra item: ('/', None)
+E             Use -v to get more diff
+
+test_1128.py:55: AssertionError
+______________________ test_task_func_with_delimiter_only ______________________
+
+    def test_task_func_with_delimiter_only():
+        result = task_func('/', '/')
+        expected = [('/', None)]
+>       assert result == expected
+E       AssertionError: assert [('', None)] == [('/', None)]
+E         
+E         At index 0 diff: ('', None) != ('/', None)
+E         Use -v to get more diff
+
+test_1128.py:74: AssertionError
+___________________ test_task_func_with_multiple_delimiters ____________________
+
+    def test_task_func_with_multiple_delimiters():
+        with tempfile.TemporaryDirectory() as temp_dir:
+            file1_path = os.path.join(temp_dir, 'file1.txt')
+            file2_path = os.path.join(temp_dir, 'file2.txt')
+    
+            with open(file1_path, 'wb') as f:
+                f.write(b'content1')
+    
+            with open(file2_path, 'wb') as f:
+                f.write(b'content2')
+    
+            # Expected hashes
+            expected_hash1 = hashlib.sha256(b'content1').hexdigest()
+            expected_hash2 = hashlib.sha256(b'content2').hexdigest()
+    
+            # Test with '/'
+            result = task_func(os.path.join(file1_path, '//', file2_path), '/')
+            expected = [
+                (file1_path, expected_hash1),
+                ('/', None),
+                ('/', None),
+                (file2_path, expected_hash2)
+            ]
+>           assert result == expected
+E           AssertionError: assert [('', None), ..., ('/', None)] == [('/tmp/tmpko...366c9f769a6')]
+E             
+E             At index 0 diff: ('', None) != ('/tmp/tmpko843i_4/file1.txt', 'd0b425e00e15a0d36b9b361f02bab63563aed6cb4665083905386c55d5b679fa')
+E             Left contains 2 more items, first extra item: ('tmpko843i_4', None)
+E             Use -v to get more diff
+
+test_1128.py:99: AssertionError
+=========================== short test summary info ============================
+FAILED test_1128.py::test_task_func_with_files - AssertionError: assert [('',...
+FAILED test_1128.py::test_task_func_with_nonexistent_files - AssertionError: ...
+FAILED test_1128.py::test_task_func_with_delimiter_only - AssertionError: ass...
+FAILED test_1128.py::test_task_func_with_multiple_delimiters - AssertionError...
+4 failed, 2 passed in 0.52s

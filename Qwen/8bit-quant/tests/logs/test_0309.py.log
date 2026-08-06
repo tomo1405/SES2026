@@ -1,0 +1,59 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_no_additional_fields ______________________
+
+    def test_task_func_no_additional_fields():
+        df = task_func()
+        assert isinstance(df, pd.DataFrame)
+>       assert all(field in df.columns for field in FIELDS)
+                                                    ^^^^^^
+E       NameError: name 'FIELDS' is not defined
+
+test_0309.py:10: NameError
+____________________ test_task_func_with_additional_fields _____________________
+
+    def test_task_func_with_additional_fields():
+        additional_fields = ['Art', 'Music']
+        df = task_func(additional_fields)
+        assert isinstance(df, pd.DataFrame)
+>       assert all(field in df.columns for field in FIELDS + additional_fields)
+                                                    ^^^^^^
+E       NameError: name 'FIELDS' is not defined
+
+test_0309.py:19: NameError
+________________________ test_average_grade_calculation ________________________
+
+    def test_average_grade_calculation():
+        df = task_func()
+>       for student in STUDENTS:
+                       ^^^^^^^^
+E       NameError: name 'STUDENTS' is not defined
+
+test_0309.py:26: NameError
+_______________________ test_subject_average_calculation _______________________
+
+    def test_subject_average_calculation():
+        df = task_func()
+>       for field in FIELDS:
+                     ^^^^^^
+E       NameError: name 'FIELDS' is not defined
+
+test_0309.py:32: NameError
+______________________________ test_random_grades ______________________________
+
+    def test_random_grades():
+        df1 = task_func()
+        df2 = task_func()
+        # Check that the grades are different for at least one student in one subject
+>       assert any(df1.loc[student][field] != df2.loc[student][field] for student in STUDENTS for field in FIELDS)
+                                                                                     ^^^^^^^^
+E       NameError: name 'STUDENTS' is not defined
+
+test_0309.py:40: NameError
+=========================== short test summary info ============================
+FAILED test_0309.py::test_task_func_no_additional_fields - NameError: name 'F...
+FAILED test_0309.py::test_task_func_with_additional_fields - NameError: name ...
+FAILED test_0309.py::test_average_grade_calculation - NameError: name 'STUDEN...
+FAILED test_0309.py::test_subject_average_calculation - NameError: name 'FIEL...
+FAILED test_0309.py::test_random_grades - NameError: name 'STUDENTS' is not d...
+5 failed in 1.11s

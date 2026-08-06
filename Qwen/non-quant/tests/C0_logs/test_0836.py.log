@@ -1,0 +1,30 @@
+F...F                                                                    [100%]
+=================================== FAILURES ===================================
+_____________________________ test_task_func_basic _____________________________
+
+    def test_task_func_basic():
+        df = task_func(5, [0, 2])
+        assert df.shape == (5, 3)
+>       assert list(df.columns) == ['B', 'C', 'E']
+E       AssertionError: assert ['B', 'D', 'E'] == ['B', 'C', 'E']
+E         
+E         At index 1 diff: 'D' != 'C'
+E         Use -v to get more diff
+
+test_0836.py:7: AssertionError
+________________________ test_task_func_custom_columns _________________________
+
+    def test_task_func_custom_columns():
+        df = task_func(7, [0, 2], columns=['X', 'Y', 'Z', 'W', 'V'])
+        assert df.shape == (7, 3)
+>       assert list(df.columns) == ['Y', 'Z', 'V']
+E       AssertionError: assert ['Y', 'W', 'V'] == ['Y', 'Z', 'V']
+E         
+E         At index 1 diff: 'W' != 'Z'
+E         Use -v to get more diff
+
+test_0836.py:27: AssertionError
+=========================== short test summary info ============================
+FAILED test_0836.py::test_task_func_basic - AssertionError: assert ['B', 'D',...
+FAILED test_0836.py::test_task_func_custom_columns - AssertionError: assert [...
+2 failed, 3 passed in 1.21s

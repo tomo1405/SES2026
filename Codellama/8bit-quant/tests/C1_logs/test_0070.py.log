@@ -1,0 +1,24 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Test that the function returns a valid matplotlib axis object
+        dict1 = {'EMPXX1': 10, 'EMPXX2': 20, 'EMPXX3': 30}
+        ax = task_func(dict1)
+        assert isinstance(ax, matplotlib.axes.Axes)
+    
+        # Test case 2: Test that the function plots the correct histogram
+        assert ax.get_title() == 'Salary Distribution in EMPXX Department'
+        assert ax.get_xlabel() == 'Salary'
+        assert ax.get_ylabel() == 'Number of Employees'
+>       assert ax.get_xlim() == (20000, 100000)
+E       assert (np.float64(1....65000000001)) == (20000, 100000)
+E         
+E         At index 0 diff: np.float64(17258.35) != 20000
+E         Use -v to get more diff
+
+test_0070.py:16: AssertionError
+=========================== short test summary info ============================
+FAILED test_0070.py::test_task_func - assert (np.float64(1....65000000001)) =...
+1 failed in 1.47s

@@ -1,0 +1,58 @@
+...FFF.                                                                  [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_single_dollar_word _______________________
+
+    def test_task_func_single_dollar_word():
+        result = task_func("$example $test $example")
+        expected_df = pd.DataFrame({"Word": ["$example"], "Frequency": [2]})
+>       pd.testing.assert_frame_equal(result.reset_index(drop=True), expected_df)
+E       AssertionError: DataFrame are different
+E       
+E       DataFrame shape mismatch
+E       [left]:  (2, 2)
+E       [right]: (1, 2)
+
+test_0745.py:20: AssertionError
+_____________________ test_task_func_multiple_dollar_words _____________________
+
+    def test_task_func_multiple_dollar_words():
+        result = task_func("$example $test $example $another $test $test")
+        expected_df = pd.DataFrame({"Word": ["$test", "$example", "$another"], "Frequency": [3, 2, 1]})
+>       pd.testing.assert_frame_equal(result.sort_values(by="Word").reset_index(drop=True), expected_df)
+
+test_0745.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/_testing/asserters.py:846: in assert_extension_array_equal
+    _testing.assert_almost_equal(
+pandas/_libs/testing.pyx:53: in pandas._libs.testing.assert_almost_equal
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   AssertionError: DataFrame.iloc[:, 0] (column name="Word") are different
+E   
+E   DataFrame.iloc[:, 0] (column name="Word") values are different (66.66667 %)
+E   [index]: [0, 1, 2]
+E   [left]:  [$another, $example, $test]
+E   [right]: [$test, $example, $another]
+E   At positional index 0, first diff: $another != $test
+
+pandas/_libs/testing.pyx:171: AssertionError
+__________________________ test_task_func_punctuation __________________________
+
+    def test_task_func_punctuation():
+        result = task_func("$example! $test? $example $another $test $test")
+        expected_df = pd.DataFrame({"Word": ["$example"], "Frequency": [2]})
+>       pd.testing.assert_frame_equal(result.reset_index(drop=True), expected_df)
+E       AssertionError: DataFrame are different
+E       
+E       DataFrame shape mismatch
+E       [left]:  (5, 2)
+E       [right]: (1, 2)
+
+test_0745.py:30: AssertionError
+=========================== short test summary info ============================
+FAILED test_0745.py::test_task_func_single_dollar_word - AssertionError: Data...
+FAILED test_0745.py::test_task_func_multiple_dollar_words - AssertionError: D...
+FAILED test_0745.py::test_task_func_punctuation - AssertionError: DataFrame a...
+3 failed, 4 passed in 3.58s

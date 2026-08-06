@@ -1,0 +1,20 @@
+from nltk.tokenize import RegexpTokenizer
+from string import punctuation
+import csv
+import os
+PUNCTUATION = set(punctuation)
+def task_func(text, filename):
+    
+
+    punctuation_set = set(punctuation)
+    tokenizer = RegexpTokenizer(r'\$\w+')
+    dollar_prefixed_words = tokenizer.tokenize(text)
+    dollar_words = [word for word in dollar_prefixed_words if
+                          not all(char in punctuation_set for char in word[1:])]
+
+    with open(filename, 'w', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(["Word"])
+        for word in dollar_words:
+            writer.writerow([word])
+    return os.path.abspath(filename)

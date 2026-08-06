@@ -1,0 +1,42 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        result, card_counts = task_func()
+>       assert len(result) == 5
+E       AssertionError: assert 1 == 5
+E        +  where 1 = len([['Q', 'K', '5', '2', '10']])
+
+test_0280.py:7: AssertionError
+____________________________ test_task_func_with_x _____________________________
+
+    def test_task_func_with_x():
+        result, card_counts = task_func(x=10)
+        assert len(result) == 10
+        assert all(len(hand) == 5 for hand in result)
+>       assert all(card in CARDS for hand in result for card in hand)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0280.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <list_iterator object at 0x75c07f698940>
+
+>   assert all(card in CARDS for hand in result for card in hand)
+                       ^^^^^
+E   NameError: name 'CARDS' is not defined
+
+test_0280.py:16: NameError
+________________________ test_task_func_with_invalid_x _________________________
+
+    def test_task_func_with_invalid_x():
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0280.py:20: Failed
+=========================== short test summary info ============================
+FAILED test_0280.py::test_task_func - AssertionError: assert 1 == 5
+FAILED test_0280.py::test_task_func_with_x - NameError: name 'CARDS' is not d...
+FAILED test_0280.py::test_task_func_with_invalid_x - Failed: DID NOT RAISE Va...
+3 failed in 0.42s

@@ -1,0 +1,37 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        dir_path = '/path/to/directory'
+        pattern = '^EMP'
+        file_sizes = []
+>       for file in sorted(os.listdir(dir_path)):
+                           ^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/path/to/directory'
+
+test_0068.py:11: FileNotFoundError
+_____________________ test_task_func_with_invalid_pattern ______________________
+
+    def test_task_func_with_invalid_pattern():
+        dir_path = '/path/to/directory'
+        pattern = '^invalid_pattern'
+        with pytest.raises(ValueError):
+>           task_func(dir_path, pattern)
+
+test_0068.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dir_path = '/path/to/directory', pattern = '^invalid_pattern'
+
+    def task_func(dir_path: str, pattern: str = '^EMP'):
+        file_sizes = []
+>       for file in sorted(os.listdir(dir_path)):
+                           ^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/path/to/directory'
+
+../../../src/src_0068.py:6: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0068.py::test_task_func - FileNotFoundError: [Errno 2] No such fi...
+FAILED test_0068.py::test_task_func_with_invalid_pattern - FileNotFoundError:...
+2 failed, 1 passed in 1.18s

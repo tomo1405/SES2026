@@ -1,0 +1,20 @@
+F...                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_no_matches ___________________________
+
+    def test_task_func_no_matches():
+        with tempfile.TemporaryDirectory() as temp_dir:
+            pattern = r"non_existent_pattern"
+            output_csv = os.path.join(temp_dir, "output.csv")
+            result_df = task_func(pattern, temp_dir, output_csv)
+            assert result_df.empty
+>           assert not os.path.exists(output_csv)
+E           AssertionError: assert not True
+E            +  where True = <function exists at 0x74c01e1f3600>('/tmp/tmp8vmj1j46/output.csv')
+E            +    where <function exists at 0x74c01e1f3600> = <module 'posixpath' (frozen)>.exists
+E            +      where <module 'posixpath' (frozen)> = os.path
+
+test_0642.py:13: AssertionError
+=========================== short test summary info ============================
+FAILED test_0642.py::test_task_func_no_matches - AssertionError: assert not True
+1 failed, 3 passed in 1.19s

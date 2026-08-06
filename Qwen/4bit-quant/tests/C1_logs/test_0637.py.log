@@ -1,0 +1,41 @@
+..FFF                                                                    [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_positive_rows _________________________
+
+    def test_task_func_positive_rows():
+        rows = 10
+        df, ax = task_func(rows)
+        assert isinstance(df, pd.DataFrame)
+>       assert df.shape == (rows, len(COLUMNS))
+                                      ^^^^^^^
+E       NameError: name 'COLUMNS' is not defined
+
+test_0637.py:24: NameError
+___________________________ test_task_func_plot_data ___________________________
+
+    def test_task_func_plot_data():
+        rows = 10
+        df, ax = task_func(rows)
+        counts = df.astype(bool).sum(axis=0)
+        bars = ax.patches
+>       assert len(bars) == len(COLUMNS)
+                                ^^^^^^^
+E       NameError: name 'COLUMNS' is not defined
+
+test_0637.py:34: NameError
+__________________________ test_task_func_plot_labels __________________________
+
+    def test_task_func_plot_labels():
+        rows = 10
+        _, ax = task_func(rows)
+>       assert ax.get_xlabel() == 'COLUMNS'
+E       AssertionError: assert '' == 'COLUMNS'
+E         
+E         - COLUMNS
+
+test_0637.py:41: AssertionError
+=========================== short test summary info ============================
+FAILED test_0637.py::test_task_func_positive_rows - NameError: name 'COLUMNS'...
+FAILED test_0637.py::test_task_func_plot_data - NameError: name 'COLUMNS' is ...
+FAILED test_0637.py::test_task_func_plot_labels - AssertionError: assert '' =...
+3 failed, 2 passed in 2.49s

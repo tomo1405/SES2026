@@ -1,0 +1,56 @@
+FF...F                                                                   [100%]
+=================================== FAILURES ===================================
+_____________________________ test_task_func_basic _____________________________
+
+    def test_task_func_basic():
+        s_list = ["apple", "banana", "cherry"]
+        expected_avg_scores = [
+>           (SequenceMatcher(None, "apple", "banana").ratio() + SequenceMatcher(None, "apple", "cherry").ratio()) / 2,
+             ^^^^^^^^^^^^^^^
+            (SequenceMatcher(None, "banana", "apple").ratio() + SequenceMatcher(None, "banana", "cherry").ratio()) / 2,
+            (SequenceMatcher(None, "cherry", "apple").ratio() + SequenceMatcher(None, "cherry", "banana").ratio()) / 2
+        ]
+E       NameError: name 'SequenceMatcher' is not defined
+
+test_0558.py:9: NameError
+_________________________ test_task_func_single_string _________________________
+
+    def test_task_func_single_string():
+        s_list = ["apple"]
+        expected_avg_scores = [1.0]  # A string compared to itself has a similarity of 1
+        avg_scores = task_func(s_list)
+>       assert np.allclose(avg_scores, expected_avg_scores, atol=1e-7)
+E       assert False
+E        +  where False = <function allclose at 0x7b52641fda70>([np.float64(nan)], [1.0], atol=1e-07)
+E        +    where <function allclose at 0x7b52641fda70> = np.allclose
+
+test_0558.py:20: AssertionError
+_______________________ test_task_func_identical_strings _______________________
+
+    def test_task_func_identical_strings():
+        s_list = ["apple", "apple", "apple"]
+        expected_avg_scores = [1.0, 1.0, 1.0]  # Identical strings have a similarity of 1
+        avg_scores = task_func(s_list)
+>       assert np.allclose(avg_scores, expected_avg_scores, atol=1e-7)
+E       assert False
+E        +  where False = <function allclose at 0x7b52641fda70>([np.float64(nan), np.float64(nan), np.float64(nan)], [1.0, 1.0, 1.0], atol=1e-07)
+E        +    where <function allclose at 0x7b52641fda70> = np.allclose
+
+test_0558.py:43: AssertionError
+=============================== warnings summary ===============================
+Qwen/8bit-quant/tests/test_0558.py::test_task_func_single_string
+Qwen/8bit-quant/tests/test_0558.py::test_task_func_identical_strings
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:3862: RuntimeWarning: Mean of empty slice
+    return _methods._mean(a, axis=axis, dtype=dtype,
+
+Qwen/8bit-quant/tests/test_0558.py::test_task_func_single_string
+Qwen/8bit-quant/tests/test_0558.py::test_task_func_identical_strings
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/_methods.py:142: RuntimeWarning: invalid value encountered in scalar divide
+    ret = ret.dtype.type(ret / rcount)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0558.py::test_task_func_basic - NameError: name 'SequenceMatcher'...
+FAILED test_0558.py::test_task_func_single_string - assert False
+FAILED test_0558.py::test_task_func_identical_strings - assert False
+3 failed, 3 passed, 4 warnings in 1.55s

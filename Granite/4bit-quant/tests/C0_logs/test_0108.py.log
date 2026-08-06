@@ -1,0 +1,35 @@
+F...                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        df = pd.DataFrame({
+            'group': ['A', 'B', 'C'],
+            'date': ['2022-01-01', '2022-01-02', '2022-01-03'],
+            'value': [10, 20, 30]
+        })
+        with patch('matplotlib.pyplot.show') as mock_show:
+>           ax = task_func(df)
+                 ^^^^^^^^^^^^^
+
+test_0108.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df =   group        date  value
+0     A  2022-01-01     10
+1     B  2022-01-02     20
+2     C  2022-01-03     30
+n_clusters = 3, random_state = 0
+
+    def task_func(df, n_clusters=3, random_state=0):
+        if df.empty or not all(col in df.columns for col in ['group', 'date', 'value']):
+            raise ValueError("DataFrame must be non-empty and contain 'group', 'date', and 'value' columns.")
+    
+        if not pd.api.types.is_datetime64_any_dtype(df['date']):
+>           raise ValueError("'date' column must be in datetime format.")
+E           ValueError: 'date' column must be in datetime format.
+
+test_0108.py:14: ValueError
+=========================== short test summary info ============================
+FAILED test_0108.py::test_task_func - ValueError: 'date' column must be in da...
+1 failed, 3 passed in 4.22s

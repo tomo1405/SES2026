@@ -1,0 +1,34 @@
+python
+import random
+import string
+import pandas as pd
+import pytest
+
+def task_func(n_rows=1000):
+    # Check if n_rows is positive
+    if n_rows <= 0:
+        raise ValueError("Number of rows must be greater than 0")
+
+    # Generate random strings
+    data = ["".join(random.choices(string.ascii_lowercase, k=3)) for _ in range(n_rows)]
+    df = pd.DataFrame(data, columns=["String"])
+
+    # Aggregate and plot the data
+    frequency = df["String"].value_counts()
+    ax = frequency.head(30).plot(
+        kind="bar"
+    )  # Limit to the top 30 frequencies for readability
+    ax.set_title("Top 30 Frequencies of Random 3-Letter Strings")
+    ax.set_xlabel("String")
+    ax.set_ylabel("Frequency")
+
+    return ax
+
+def test_task_func():
+    # Test if n_rows is positive
+    with pytest.raises(ValueError):
+        task_func(n_rows=-10)
+
+    # Test if the function returns a valid plot object
+    ax = task_func(n_rows=100)
+    assert isinstance(ax, type(None))

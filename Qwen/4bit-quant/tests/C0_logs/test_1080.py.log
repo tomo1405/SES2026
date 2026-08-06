@@ -1,0 +1,33 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sample_data = {'Price_String': ['1,000', '2,500', '3,750', '4,200', '5,000']}
+
+    def test_task_func(sample_data):
+        result, ax = task_func(sample_data)
+    
+        # Check if the result is a dictionary with correct keys
+        assert isinstance(result, dict)
+        assert set(result.keys()) == {"mean", "median", "std_dev"}
+    
+        # Check if the values are calculated correctly
+        expected_mean = np.mean([1000, 2500, 3750, 4200, 5000])
+        expected_median = np.median([1000, 2500, 3750, 4200, 5000])
+        expected_std_dev = np.std([1000, 2500, 3750, 4200, 5000], ddof=1)
+    
+        assert np.isclose(result["mean"], expected_mean)
+        assert np.isclose(result["median"], expected_median)
+        assert np.isclose(result["std_dev"], expected_std_dev)
+    
+        # Check if the histogram plot is created correctly
+        assert isinstance(ax, tuple)
+>       assert len(ax) == 2  # ax contains (n, bins, patches)
+        ^^^^^^^^^^^^^^^^^^^
+E       assert 3 == 2
+E        +  where 3 = len((array([1., 1., 1., 2.]), array([1000., 2000., 3000., 4000., 5000.]), <BarContainer object of 4 artists>))
+
+test_1080.py:31: AssertionError
+=========================== short test summary info ============================
+FAILED test_1080.py::test_task_func - assert 3 == 2
+1 failed in 2.16s

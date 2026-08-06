@@ -1,0 +1,40 @@
+.F.                                                                      [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_histogram_plot _________________________
+
+    def test_task_func_histogram_plot():
+        # Create a sample DataFrame
+        data = {'A': [1, 2, 3, 4, 5], 'B': [5, 4, 3, 2, 1]}
+        df = pd.DataFrame(data)
+    
+        # Capture the plot output
+        buf = BytesIO()
+        plt.savefig(buf, format='png')
+        buf.seek(0)
+        image_base64 = base64.b64encode(buf.getvalue()).decode('utf-8')
+    
+        # Call the function
+        ax = task_func(df)
+    
+        # Check if the plot is created correctly
+        assert ax.get_title() == 'Histogram of B'
+        assert ax.get_xlabel() == 'Value'
+        assert ax.get_ylabel() == 'Frequency'
+    
+        # Save the plot to a buffer and compare with the captured one
+        buf = BytesIO()
+        plt.savefig(buf, format='png')
+        buf.seek(0)
+        new_image_base64 = base64.b64encode(buf.getvalue()).decode('utf-8')
+>       assert image_base64 == new_image_base64
+E       AssertionError: assert 'iVBORw0KGgoA...AAElFTkSuQmCC' == 'iVBORw0KGgoA...ASUVORK5CYII='
+E         
+E         Skipping 158 identical leading characters in diff, use -v to show
+E         - EBqD+naQAAPV1JREFUeJzt3Xl4Tef+//9XJGxDJGkSswiRmsXYFklrJrSliqqiKCrF6dF+qOhpS4ev4VCd26OKVtXUUoeKmtKiTg1xVDVmlYiqEiQhiAz37w+X/Tu7iQhNspO9no/r2tfVfa/7Xvt9ZxGvrrXutd2MMUYAAACwjBLOLgAAAACFiwAIAABgMQRAAAAAiyEAAgAAWAwBEAAAwGIIgAAAABZDAAQAALAYAiAAAIDFEAABAAAshgAIAABgMQRAAAAAiyEAAgAAWAwBEAAAwGIIgAAAABZDAAQAALAYAiAAAIDFEAABAAAshgAIAABgMQRAAAAAiyEAAgAAWAwBEAAAwGIIgAAAABZDAAQAALAYAiAAAIDFEAABAAAshgAIAABgMQRAAAAAiyEAAgAAWAwBEAAAwGIIgAAAABZDAAQAALAYAiAAAIDFEAABAAAshgAIAABgMQRAAAAAiyEAAigQ/fv314wZM5xdhmVs3bpVw4cPV9euXRU...
+E         
+E         ...Full output truncated (2 lines hidden), use '-vv' to show
+
+test_0135.py:39: AssertionError
+=========================== short test summary info ============================
+FAILED test_0135.py::test_task_func_histogram_plot - AssertionError: assert '...
+1 failed, 2 passed in 2.52s

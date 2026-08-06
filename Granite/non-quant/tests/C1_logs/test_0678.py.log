@@ -1,0 +1,101 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+input_df =         var1      var2  predicted
+0   0.408707  0.256490   0.483405
+1   0.684196  0.406513   0.440469
+2   0.898421  0....099689  0.023475   0.531566
+98  0.017527  0.786852   0.544372
+99  0.498747  0.557655   0.469372
+
+[100 rows x 3 columns]
+
+    def test_task_func(input_df):
+        output_df = task_func(input_df)
+        assert 'predicted' in output_df.columns
+        assert len(output_df) == len(input_df)
+>       assert all(output_df['predicted'] == pytest.approx(
+            input_df['var1'] * output_df['var1'].iloc[0] + output_df['var2'].iloc[0]))
+E       AssertionError: assert False
+E        +  where False = all(0     0.48340...dtype: float64 == approx([0.423...85 ± 4.6e-07])
+E           
+E           comparison failed. Mismatched elements: 100 / 100:
+E           Max absolute difference: 0.28895430171041947
+E           Max relative difference: 0.6744975020030847
+E           Index | Obtained            | Expected                     
+E           (0,)  | 0.4834046097184628  | 0.42353169036659183 ± 4.2e-07
+E           (1,)  | 0.4404685682644774  | 0.5361257982442947 ± 5.4e-07 ...
+E           
+E           ...Full output truncated (98 lines hidden), use '-vv' to show)
+
+test_0678.py:18: AssertionError
+______________________ test_task_func_with_zero_intercept ______________________
+
+input_df =         var1  var2  predicted
+0   0.975707     0        0.0
+1   0.778144     0        0.0
+2   0.695190     0        0....  0.0
+97  0.544609     0        0.0
+98  0.663494     0        0.0
+99  0.943260     0        0.0
+
+[100 rows x 3 columns]
+
+    def test_task_func_with_zero_intercept(input_df):
+        input_df['var2'] = 0
+        output_df = task_func(input_df)
+>       assert all(output_df['predicted'] == pytest.approx(input_df['var1'] * output_df['var1'].iloc[0]))
+E       AssertionError: assert False
+E        +  where False = all(0     0.0\n1  ...dtype: float64 == approx([0.952...71 ± 9.2e-07])
+E           
+E           comparison failed. Mismatched elements: 100 / 100:
+E           Max absolute difference: 0.97207092841653
+E           Max relative difference: inf
+E           Index | Obtained | Expected                       
+E           (0,)  | 0.0      | 0.952003505716067 ± 9.5e-07    
+E           (1,)  | 0.0      | 0.7592403200254835 ± 7.6e-07   ...
+E           
+E           ...Full output truncated (98 lines hidden), use '-vv' to show)
+
+test_0678.py:24: AssertionError
+________________________ test_task_func_with_zero_slope ________________________
+
+input_df =     var1      var2  predicted
+0      0  0.375195        NaN
+1      0  0.315459        NaN
+2      0  0.095254        Na...  NaN
+97     0  0.931819        NaN
+98     0  0.375473        NaN
+99     0  0.934242        NaN
+
+[100 rows x 3 columns]
+
+    def test_task_func_with_zero_slope(input_df):
+        input_df['var1'] = 0
+        output_df = task_func(input_df)
+>       assert all(output_df['predicted'] == pytest.approx(input_df['var2'] + output_df['var2'].iloc[0]))
+E       AssertionError: assert False
+E        +  where False = all(0    NaN\n1   ...dtype: float64 == approx([0.750...09 ± 1.3e-06])
+E           
+E           comparison failed. Mismatched elements: 100 / 100:
+E           Max absolute difference: -inf
+E           Max relative difference: -inf
+E           Index | Obtained | Expected                     
+E           (0,)  | nan      | 0.7503907380278776 ± 7.5e-07 
+E           (1,)  | nan      | 0.6906544154747104 ± 6.9e-07 ...
+E           
+E           ...Full output truncated (98 lines hidden), use '-vv' to show)
+
+test_0678.py:29: AssertionError
+=============================== warnings summary ===============================
+Granite/non-quant/tests/test_0678.py::test_task_func_with_zero_slope
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/scipy/stats/_stats_py.py:10940: RuntimeWarning: invalid value encountered in scalar divide
+    slope = ssxym / ssxm
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0678.py::test_task_func - AssertionError: assert False
+FAILED test_0678.py::test_task_func_with_zero_intercept - AssertionError: ass...
+FAILED test_0678.py::test_task_func_with_zero_slope - AssertionError: assert ...
+3 failed, 1 warning in 2.36s

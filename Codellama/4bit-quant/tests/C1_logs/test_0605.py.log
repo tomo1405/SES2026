@@ -1,0 +1,43 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_file ___________________________
+
+    def test_task_func_valid_file():
+        filepath = 'test_file.cpp'
+        with open(filepath, 'w') as f:
+            f.write('int main() { return 0; }')
+        task_func(filepath)
+>       assert 'Successfully compiled' in caplog.text
+                                          ^^^^^^
+E       NameError: name 'caplog' is not defined
+
+test_0605.py:9: NameError
+_________________________ test_task_func_invalid_file __________________________
+
+    def test_task_func_invalid_file():
+        filepath = 'test_file.cpp'
+        with open(filepath, 'w') as f:
+            f.write('int main() { return 1; }')
+        task_func(filepath)
+>       assert 'Failed to compile' in caplog.text
+                                      ^^^^^^
+E       NameError: name 'caplog' is not defined
+
+test_0605.py:16: NameError
+_______________________ test_task_func_invalid_compiler ________________________
+
+    def test_task_func_invalid_compiler():
+        filepath = 'test_file.cpp'
+        with open(filepath, 'w') as f:
+            f.write('int main() { return 0; }')
+        task_func(filepath)
+>       assert 'Compiler not found or file does not exist' in caplog.text
+                                                              ^^^^^^
+E       NameError: name 'caplog' is not defined
+
+test_0605.py:23: NameError
+=========================== short test summary info ============================
+FAILED test_0605.py::test_task_func_valid_file - NameError: name 'caplog' is ...
+FAILED test_0605.py::test_task_func_invalid_file - NameError: name 'caplog' i...
+FAILED test_0605.py::test_task_func_invalid_compiler - NameError: name 'caplo...
+3 failed in 0.60s

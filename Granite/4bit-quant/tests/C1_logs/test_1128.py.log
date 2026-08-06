@@ -1,0 +1,45 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        test_cases = [
+            (
+                "path/to/file1.txt",
+                ".",
+                [("path", None), ("to", None), ("file1.txt", "5e4b6365d102c64690361a2c059c2d5230619d5e021b599e7f4902092231e00e")]
+            ),
+            (
+                "path/to/file2.txt.gz",
+                ".",
+                [("path", None), ("to", None), ("file2.txt", "5e4b6365d102c64690361a2c059c2d5230619d5e021b599e7f4902092231e00e"), ("gz", None)]
+            ),
+            (
+                "path/to/dir1/",
+                "/",
+                [("path", None), ("to", None), ("dir1", None), ("", None)]
+            ),
+            (
+                "path/to/dir2/",
+                "/",
+                [("path", None), ("to", None), ("dir2", None), ("", None)]
+            ),
+        ]
+    
+        for test_case in test_cases:
+            path, delimiter, expected_output = test_case
+            actual_output = task_func(path, delimiter)
+>           assert actual_output == expected_output, f"Failed for input: {path}, {delimiter}"
+E           AssertionError: Failed for input: path/to/file1.txt, .
+E           assert [('', None), ...', None), ...] == [('path', Non...2092231e00e')]
+E             
+E             At index 0 diff: ('', None) != ('path', None)
+E             Left contains 14 more items, first extra item: ('a', None)
+E             Use -v to get more diff
+
+test_1128.py:48: AssertionError
+=========================== short test summary info ============================
+FAILED test_1128.py::test_task_func - AssertionError: Failed for input: path/...
+1 failed in 0.74s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

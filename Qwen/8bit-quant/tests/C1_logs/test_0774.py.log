@@ -1,0 +1,60 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_move = <MagicMock name='move' id='137248298606688'>
+mock_listdir = <MagicMock name='listdir' id='137248296769184'>
+setup_directories = (PosixPath('/tmp/pytest-of-tomohiro-w/pytest-2171/test_task_func0/source'), PosixPath('/tmp/pytest-of-tomohiro-w/pytest-2171/test_task_func0/target'))
+
+    @patch('os.listdir')
+    @patch('shutil.move')
+    def test_task_func(mock_move, mock_listdir, setup_directories):
+        source_dir, target_dir = setup_directories
+    
+        # Mock os.listdir to return the files in the source directory
+        mock_listdir.return_value = ['test-1.json', 'test-2.json', 'notmatching.txt']
+    
+        # Call the function
+        task_func()
+    
+        # Check that shutil.move was called correctly
+        mock_move.assert_has_calls([
+>           pytest.call(os.path.join(source_dir, 'test-1.json'), os.path.join(target_dir, 'test.json')),
+            ^^^^^^^^^^^
+            pytest.call(os.path.join(source_dir, 'test-2.json'), os.path.join(target_dir, 'test.json'))
+        ], any_order=True)
+E       AttributeError: module 'pytest' has no attribute 'call'
+
+test_0774.py:34: AttributeError
+_______________________ test_task_func_no_matching_files _______________________
+
+mock_move = <MagicMock name='move' id='137248296779360'>
+mock_listdir = <MagicMock name='listdir' id='137248294898960'>
+setup_directories = (PosixPath('/tmp/pytest-of-tomohiro-w/pytest-2171/test_task_func_no_matching_fil0/source'), PosixPath('/tmp/pytest-of-tomohiro-w/pytest-2171/test_task_func_no_matching_fil0/target'))
+
+    @patch('os.listdir')
+    @patch('shutil.move')
+    def test_task_func_no_matching_files(mock_move, mock_listdir, setup_directories):
+        source_dir, target_dir = setup_directories
+    
+        # Mock os.listdir to return no matching files
+        mock_listdir.return_value = ['notmatching1.txt', 'notmatching2.txt']
+    
+        # Call the function
+        task_func()
+    
+        # Check that shutil.move was not called
+        mock_move.assert_not_called()
+    
+        # Ensure that no files were moved
+        for file in ['notmatching1.txt', 'notmatching2.txt']:
+>           assert (source_dir / file).exists()
+E           AssertionError: assert False
+E            +  where False = exists()
+E            +    where exists = (PosixPath('/tmp/pytest-of-tomohiro-w/pytest-2171/test_task_func_no_matching_fil0/source') / 'notmatching1.txt').exists
+
+test_0774.py:60: AssertionError
+=========================== short test summary info ============================
+FAILED test_0774.py::test_task_func - AttributeError: module 'pytest' has no ...
+FAILED test_0774.py::test_task_func_no_matching_files - AssertionError: asser...
+2 failed, 1 passed in 0.57s

@@ -1,0 +1,64 @@
+.FFFF                                                                    [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_single_fruit __________________________
+
+    def test_task_func_single_fruit():
+        fruit_data = [('apple', 10)]
+        expected_df = pd.DataFrame({'Total Count': [10], 'Average Count': [10]}, index=['apple'])
+        result = task_func(fruit_data)
+>       pd.testing.assert_frame_equal(result, expected_df)
+E       AssertionError: Attributes of DataFrame.iloc[:, 1] (column name="Average Count") are different
+E       
+E       Attribute "dtype" are different
+E       [left]:  float64
+E       [right]: int64
+
+test_0865.py:13: AssertionError
+________________________ test_task_func_multiple_fruits ________________________
+
+    def test_task_func_multiple_fruits():
+        fruit_data = [('apple', 10), ('banana', 20), ('apple', 30)]
+        expected_df = pd.DataFrame({'Total Count': [40, 20], 'Average Count': [20, 20]}, index=['apple', 'banana'])
+        result = task_func(fruit_data)
+>       pd.testing.assert_frame_equal(result, expected_df)
+E       AssertionError: Attributes of DataFrame.iloc[:, 1] (column name="Average Count") are different
+E       
+E       Attribute "dtype" are different
+E       [left]:  float64
+E       [right]: int64
+
+test_0865.py:19: AssertionError
+_______________________ test_task_func_duplicate_fruits ________________________
+
+    def test_task_func_duplicate_fruits():
+        fruit_data = [('apple', 10), ('apple', 20), ('apple', 30)]
+        expected_df = pd.DataFrame({'Total Count': [60], 'Average Count': [20]}, index=['apple'])
+        result = task_func(fruit_data)
+>       pd.testing.assert_frame_equal(result, expected_df)
+E       AssertionError: Attributes of DataFrame.iloc[:, 1] (column name="Average Count") are different
+E       
+E       Attribute "dtype" are different
+E       [left]:  float64
+E       [right]: int64
+
+test_0865.py:25: AssertionError
+_________________________ test_task_func_mixed_fruits __________________________
+
+    def test_task_func_mixed_fruits():
+        fruit_data = [('apple', 10), ('banana', 20), ('cherry', 30), ('banana', 40)]
+        expected_df = pd.DataFrame({'Total Count': [10, 60, 30], 'Average Count': [10, 30, 30]}, index=['apple', 'banana', 'cherry'])
+        result = task_func(fruit_data)
+>       pd.testing.assert_frame_equal(result, expected_df)
+E       AssertionError: Attributes of DataFrame.iloc[:, 1] (column name="Average Count") are different
+E       
+E       Attribute "dtype" are different
+E       [left]:  float64
+E       [right]: int64
+
+test_0865.py:31: AssertionError
+=========================== short test summary info ============================
+FAILED test_0865.py::test_task_func_single_fruit - AssertionError: Attributes...
+FAILED test_0865.py::test_task_func_multiple_fruits - AssertionError: Attribu...
+FAILED test_0865.py::test_task_func_duplicate_fruits - AssertionError: Attrib...
+FAILED test_0865.py::test_task_func_mixed_fruits - AssertionError: Attributes...
+4 failed, 1 passed in 1.10s

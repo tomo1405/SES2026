@@ -1,0 +1,40 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        input_str = "Hello, World! 123"
+        cleaned_str = re.sub('[^A-Za-z0-9]+', '', input_str).lower()
+        freq_dict = Counter(cleaned_str)
+        expected_output = Counter(dict(zip(cleaned_str, [1] * len(cleaned_str))))
+>       assert task_func(input_str) == expected_output
+E       AssertionError: assert Counter({'l':...': 1, '3': 1}) == Counter({'h':...': 1, '3': 1})
+E         
+E         Omitting 8 identical items, use -vv to show
+E         Differing items:
+E         {'l': 3} != {'l': 1}
+E         {'o': 2} != {'o': 1}
+E         Use -v to get more diff
+
+test_0938.py:11: AssertionError
+____________________ test_task_func_with_special_characters ____________________
+
+    def test_task_func_with_special_characters():
+        input_str = "Hello!@# World$%&"
+        cleaned_str = re.sub('[^A-Za-z0-9]+', '', input_str).lower()
+        freq_dict = Counter(cleaned_str)
+        expected_output = Counter(dict(zip(cleaned_str, [1] * len(cleaned_str))))
+>       assert task_func(input_str) == expected_output
+E       AssertionError: assert Counter({'l':...': 1, 'd': 1}) == Counter({'h':...': 1, 'd': 1})
+E         
+E         Omitting 5 identical items, use -vv to show
+E         Differing items:
+E         {'l': 3} != {'l': 1}
+E         {'o': 2} != {'o': 1}
+E         Use -v to get more diff
+
+test_0938.py:25: AssertionError
+=========================== short test summary info ============================
+FAILED test_0938.py::test_task_func - AssertionError: assert Counter({'l':......
+FAILED test_0938.py::test_task_func_with_special_characters - AssertionError:...
+2 failed, 1 passed in 0.48s

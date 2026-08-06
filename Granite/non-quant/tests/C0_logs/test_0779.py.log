@@ -1,0 +1,48 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        news_articles = [
+            {'category': 'sports', 'id': 1, 'title': 'Football', 'title_url': 'https://www.sportsnews.com/football'},
+            {'category': 'sports', 'id': 2, 'title': 'Tennis', 'title_url': 'https://www.sportsnews.com/tennis'},
+            {'category': 'technology', 'id': 1, 'title': 'Tech Giants', 'title_url': 'https://www.technews.com/tech-giants'},
+            {'category': 'technology', 'id': 2, 'title': 'AI', 'title_url': 'https://www.technews.com/ai'},
+        ]
+        expected_output = {
+            'sports': [
+                {'category': 'sports', 'id': 1, 'title': 'Football', 'title_url': 'https://www.sportsnews.com/football'},
+                {'category': 'sports', 'id': 2, 'title': 'Tennis', 'title_url': 'https://www.sportsnews.com/tennis'},
+            ],
+            'technology': [
+                {'category': 'technology', 'id': 1, 'title': 'Tech Giants', 'title_url': 'https://www.technews.com/tech-giants'},
+                {'category': 'technology', 'id': 2, 'title': 'AI', 'title_url': 'https://www.technews.com/ai'},
+            ],
+        }
+>       assert task_func(news_articles) == expected_output
+E       AssertionError: assert defaultdict(<...ch-giants'}]}) == {'sports': [{...ews.com/ai'}]}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'technology': [{'category': 'technology', 'id': 2, 'title': 'AI', 'title_url': 'https://www.technews.com/ai'}, {'category': 'technology', 'id': 1, 'title': 'Tech Giants', 'title_url': 'https://www.technews.com/tech-giants'}]} != {'technology': [{'category': 'technology', 'id': 1, 'title': 'Tech Giants', 'title_url': 'https://www.technews.com/tech-giants'}, {'category': 'technology', 'id': 2, 'title': 'AI', 'title_url': 'https://www.technews.com/ai'}]}
+E         Use -v to get more diff
+
+test_0779.py:21: AssertionError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        news_articles = [
+            {'category': 'sports', 'id': 1, 'title': 'Football', 'title_url': 'https://www.sportsnews.com/football'},
+            {'category': 'sports', 'id': 2, 'title': 'Tennis', 'title_url': 'https://www.sportsnews.com/tennis'},
+            {'category': 'technology', 'id': 1, 'title': 'Tech Giants', 'title_url': 'https://www.technews.com/tech-giants'},
+            {'category': 'technology', 'id': 2, 'title': 'AI', 'title_url': 'https://www.technews.com/ai'},
+        ]
+        news_articles[0]['category'] = 'invalid'
+>       with pytest.raises(ValueError) as exc_info:
+E       Failed: DID NOT RAISE ValueError
+
+test_0779.py:31: Failed
+=========================== short test summary info ============================
+FAILED test_0779.py::test_task_func_valid_input - AssertionError: assert defa...
+FAILED test_0779.py::test_task_func_invalid_input - Failed: DID NOT RAISE Val...
+2 failed in 0.47s

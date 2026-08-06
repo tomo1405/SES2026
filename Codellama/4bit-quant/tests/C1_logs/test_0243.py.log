@@ -1,0 +1,37 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test 1: Invalid kernel size
+        with pytest.raises(ValueError):
+            task_func('image.jpg', -1)
+    
+        # Test 2: Valid kernel size
+>       image, ax1, ax2 = task_func('image.jpg', 3)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0243.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0243.py:12: in task_func
+    raise e
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+image_path = 'image.jpg', kernel_size = 3
+
+    def task_func(image_path, kernel_size):
+        if kernel_size <= 0 or not isinstance(kernel_size, int):
+            raise ValueError("kernel_size must be a positive integer")
+    
+        try:
+            image = cv2.imread(image_path)
+            if image is None:
+>               raise FileNotFoundError(f"No image found at {image_path}")
+E               FileNotFoundError: No image found at image.jpg
+
+../../../src/src_0243.py:10: FileNotFoundError
+----------------------------- Captured stderr call -----------------------------
+[ WARN:0@0.940] global loadsave.cpp:278 findDecoder imread_('image.jpg'): can't open/read file: check file path/integrity
+=========================== short test summary info ============================
+FAILED test_0243.py::test_task_func - FileNotFoundError: No image found at im...
+1 failed in 1.55s

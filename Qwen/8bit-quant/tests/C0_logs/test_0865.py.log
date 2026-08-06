@@ -1,0 +1,82 @@
+.FFFF                                                                    [100%]
+=================================== FAILURES ===================================
+______________________________ test_single_fruit _______________________________
+
+    def test_single_fruit():
+        data = [('apple', 10)]
+        expected_df = pd.DataFrame({'Total Count': [10], 'Average Count': [10]}, index=['apple'])
+        result = task_func(data)
+>       pd.testing.assert_frame_equal(result, expected_df)
+E       AssertionError: Attributes of DataFrame.iloc[:, 1] (column name="Average Count") are different
+E       
+E       Attribute "dtype" are different
+E       [left]:  float64
+E       [right]: int64
+
+test_0865.py:13: AssertionError
+_____________________________ test_multiple_fruits _____________________________
+
+    def test_multiple_fruits():
+        data = [('apple', 10), ('banana', 20), ('apple', 30)]
+        expected_df = pd.DataFrame({'Total Count': [40, 20], 'Average Count': [20, 20]}, index=['apple', 'banana'])
+        result = task_func(data)
+>       pd.testing.assert_frame_equal(result, expected_df)
+
+test_0865.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pandas/_libs/testing.pyx:53: in pandas._libs.testing.assert_almost_equal
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   AssertionError: DataFrame.index are different
+E   
+E   DataFrame.index values are different (100.0 %)
+E   [left]:  Index(['banana', 'apple'], dtype='str')
+E   [right]: Index(['apple', 'banana'], dtype='str')
+E   At positional index 0, first diff: banana != apple
+
+pandas/_libs/testing.pyx:171: AssertionError
+____________________________ test_duplicate_fruits _____________________________
+
+    def test_duplicate_fruits():
+        data = [('apple', 10), ('apple', 10), ('banana', 20)]
+        expected_df = pd.DataFrame({'Total Count': [20, 20], 'Average Count': [10, 20]}, index=['apple', 'banana'])
+        result = task_func(data)
+>       pd.testing.assert_frame_equal(result, expected_df)
+
+test_0865.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pandas/_libs/testing.pyx:53: in pandas._libs.testing.assert_almost_equal
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   AssertionError: DataFrame.index are different
+E   
+E   DataFrame.index values are different (100.0 %)
+E   [left]:  Index(['banana', 'apple'], dtype='str')
+E   [right]: Index(['apple', 'banana'], dtype='str')
+E   At positional index 0, first diff: banana != apple
+
+pandas/_libs/testing.pyx:171: AssertionError
+____________________________ test_mixed_case_fruits ____________________________
+
+    def test_mixed_case_fruits():
+        data = [('Apple', 10), ('apple', 10), ('Banana', 20)]
+        expected_df = pd.DataFrame({'Total Count': [20, 20], 'Average Count': [10, 20]}, index=['Apple', 'Banana'])
+        result = task_func(data)
+>       pd.testing.assert_frame_equal(result, expected_df)
+E       AssertionError: DataFrame are different
+E       
+E       DataFrame shape mismatch
+E       [left]:  (3, 2)
+E       [right]: (2, 2)
+
+test_0865.py:31: AssertionError
+=========================== short test summary info ============================
+FAILED test_0865.py::test_single_fruit - AssertionError: Attributes of DataFr...
+FAILED test_0865.py::test_multiple_fruits - AssertionError: DataFrame.index a...
+FAILED test_0865.py::test_duplicate_fruits - AssertionError: DataFrame.index ...
+FAILED test_0865.py::test_mixed_case_fruits - AssertionError: DataFrame are d...
+4 failed, 1 passed in 1.46s

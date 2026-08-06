@@ -1,0 +1,29 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        directory = "/path/to/directory"
+        with pytest.raises(FileNotFoundError):
+            task_func(directory)
+    
+        directory = "/path/to/existing/directory"
+>       zip_file_path = task_func(directory)
+                        ^^^^^^^^^^^^^^^^^^^^
+
+test_0020.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = '/path/to/existing/directory'
+
+    def task_func(directory):
+        if not os.path.exists(directory):
+>           raise FileNotFoundError(f"Directory '{directory}' not found.")
+E           FileNotFoundError: Directory '/path/to/existing/directory' not found.
+
+test_0020.py:8: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0020.py::test_task_func - FileNotFoundError: Directory '/path/to/...
+1 failed in 0.40s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

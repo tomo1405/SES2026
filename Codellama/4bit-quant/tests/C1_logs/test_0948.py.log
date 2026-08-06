@@ -1,0 +1,33 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with default arguments
+        matrix = task_func()
+        assert matrix.shape == (3, 2)
+        assert np.all(matrix >= np.datetime64(datetime(2021, 1, 1)))
+        assert np.all(matrix <= np.datetime64(datetime(2021, 12, 31)))
+    
+        # Test with custom arguments
+        matrix = task_func(rows=5, columns=3, start_date=datetime(2022, 1, 1), end_date=datetime(2022, 12, 31))
+        assert matrix.shape == (5, 3)
+        assert np.all(matrix >= np.datetime64(datetime(2022, 1, 1)))
+        assert np.all(matrix <= np.datetime64(datetime(2022, 12, 31)))
+    
+        # Test with seed
+        matrix1 = task_func(seed=0)
+        matrix2 = task_func(seed=0)
+        assert np.array_equal(matrix1, matrix2)
+    
+        matrix1 = task_func(seed=1)
+        matrix2 = task_func(seed=1)
+>       assert not np.array_equal(matrix1, matrix2)
+E       AssertionError: assert not True
+E        +  where True = <function array_equal at 0x739f0339eab0>(array([['2021-02-02T00:00:00.000000', '2021-03-02T00:00:00.000000'],\n       ['2021-03-10T00:00:00.000000', '2021-05-11T00:00:00.000000'],\n       ['2021-09-11T00:00:00.000000', '2021-10-19T00:00:00.000000']],\n      dtype='datetime64[us]'), array([['2021-02-02T00:00:00.000000', '2021-03-02T00:00:00.000000'],\n       ['2021-03-10T00:00:00.000000', '2021-05-11T00:00:00.000000'],\n       ['2021-09-11T00:00:00.000000', '2021-10-19T00:00:00.000000']],\n      dtype='datetime64[us]'))
+E        +    where <function array_equal at 0x739f0339eab0> = np.array_equal
+
+test_0948.py:27: AssertionError
+=========================== short test summary info ============================
+FAILED test_0948.py::test_task_func - AssertionError: assert not True
+1 failed in 0.58s

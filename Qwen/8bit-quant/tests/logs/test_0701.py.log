@@ -1,0 +1,44 @@
+..F.F                                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_mixed_values _______________________
+
+    def test_task_func_with_mixed_values():
+        # Test with mixed positive and negative values
+        data = [
+            [1, -2, 3],
+            [-4, 5, -6],
+            [7, -8, 9]
+        ]
+        cols = ['A', 'B', 'C']
+        expected_output = pd.DataFrame({
+            'A': [1.0, -0.866025, 0.866025],
+            'B': [-0.866025, 1.0, -0.866025],
+            'C': [0.866025, -0.866025, 1.0]
+        }, index=['A', 'B', 'C'])
+    
+        result = task_func(data, cols)
+>       pd.testing.assert_frame_equal(result, expected_output, check_less_precise=2)
+E       TypeError: assert_frame_equal() got an unexpected keyword argument 'check_less_precise'
+
+test_0701.py:54: TypeError
+________________________ test_task_func_with_empty_data ________________________
+
+    def test_task_func_with_empty_data():
+        # Test with empty data
+        data = []
+        cols = ['A', 'B', 'C']
+        expected_output = pd.DataFrame(columns=cols, index=cols)
+    
+        result = task_func(data, cols)
+>       pd.testing.assert_frame_equal(result, expected_output)
+E       AssertionError: Attributes of DataFrame.iloc[:, 0] (column name="A") are different
+E       
+E       Attribute "dtype" are different
+E       [left]:  float64
+E       [right]: object
+
+test_0701.py:78: AssertionError
+=========================== short test summary info ============================
+FAILED test_0701.py::test_task_func_with_mixed_values - TypeError: assert_fra...
+FAILED test_0701.py::test_task_func_with_empty_data - AssertionError: Attribu...
+2 failed, 3 passed in 1.31s

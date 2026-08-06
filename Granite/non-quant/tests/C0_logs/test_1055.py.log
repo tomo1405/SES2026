@@ -1,0 +1,78 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_valid_file_path ________________________
+
+file_path = 'path/to/valid/file.csv'
+
+    def task_func(file_path):
+        try:
+>           with open(file_path, "r", encoding="utf-8") as file:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           FileNotFoundError: [Errno 2] No such file or directory: 'path/to/valid/file.csv'
+
+../../../src/src_1055.py:7: FileNotFoundError
+
+The above exception was the direct cause of the following exception:
+
+    def test_task_func_valid_file_path():
+        file_path = "path/to/valid/file.csv"
+>       mean, std_dev, ax = task_func(file_path)
+                            ^^^^^^^^^^^^^^^^^^^^
+
+test_1055.py:6: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = 'path/to/valid/file.csv'
+
+    def task_func(file_path):
+        try:
+            with open(file_path, "r", encoding="utf-8") as file:
+                reader = csv.reader(file)
+                population = [int(row[0]) for row in reader]
+        except IOError as exc:
+>           raise IOError(
+                "Error reading the file. Please check the file path and permissions."
+            ) from exc
+E           OSError: Error reading the file. Please check the file path and permissions.
+
+../../../src/src_1055.py:11: OSError
+____________________ test_task_func_invalid_file_path_type _____________________
+
+file_path = 123
+
+    def task_func(file_path):
+        try:
+>           with open(file_path, "r", encoding="utf-8") as file:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           OSError: [Errno 9] Bad file descriptor
+
+../../../src/src_1055.py:7: OSError
+
+The above exception was the direct cause of the following exception:
+
+    def test_task_func_invalid_file_path_type():
+        file_path = 123
+        with pytest.raises(TypeError) as exc_info:
+>           task_func(file_path)
+
+test_1055.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = 123
+
+    def task_func(file_path):
+        try:
+            with open(file_path, "r", encoding="utf-8") as file:
+                reader = csv.reader(file)
+                population = [int(row[0]) for row in reader]
+        except IOError as exc:
+>           raise IOError(
+                "Error reading the file. Please check the file path and permissions."
+            ) from exc
+E           OSError: Error reading the file. Please check the file path and permissions.
+
+../../../src/src_1055.py:11: OSError
+=========================== short test summary info ============================
+FAILED test_1055.py::test_task_func_valid_file_path - OSError: Error reading ...
+FAILED test_1055.py::test_task_func_invalid_file_path_type - OSError: Error r...
+2 failed, 1 passed in 3.10s

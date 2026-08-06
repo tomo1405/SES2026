@@ -1,0 +1,106 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        array = [["A1", "B1", "C1", "D1", 1], ["A2", "B2", "C2", "D2", 2]]
+>       df, results = task_func(array)
+                      ^^^^^^^^^^^^^^^^
+
+test_0517.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0517.py:21: in task_func
+    model = sm.OLS(y, X)
+            ^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/statsmodels/regression/linear_model.py:921: in __init__
+    super().__init__(endog, exog, missing=missing,
+../../../.venv/lib/python3.12/site-packages/statsmodels/regression/linear_model.py:746: in __init__
+    super().__init__(endog, exog, missing=missing,
+../../../.venv/lib/python3.12/site-packages/statsmodels/regression/linear_model.py:200: in __init__
+    super().__init__(endog, exog, **kwargs)
+../../../.venv/lib/python3.12/site-packages/statsmodels/base/model.py:270: in __init__
+    super().__init__(endog, exog, **kwargs)
+../../../.venv/lib/python3.12/site-packages/statsmodels/base/model.py:95: in __init__
+    self.data = self._handle_data(endog, exog, missing, hasconst,
+../../../.venv/lib/python3.12/site-packages/statsmodels/base/model.py:135: in _handle_data
+    data = handle_data(endog, exog, missing, hasconst, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/statsmodels/base/data.py:694: in handle_data
+    return klass(endog, exog=exog, missing=missing, hasconst=hasconst, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/statsmodels/base/data.py:86: in __init__
+    self.endog, self.exog = self._convert_endog_exog(endog, exog)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <statsmodels.base.data.PandasData object at 0x79fc4d5996a0>
+endog = array([1, 2])
+exog = array([[1.0, 'A1', 'B1', 'C1', 'D1'],
+       [1.0, 'A2', 'B2', 'C2', 'D2']], dtype=object)
+
+    def _convert_endog_exog(self, endog, exog=None):
+        # TODO: remove this when we handle dtype systematically
+        endog = np.asarray(endog)
+        exog = exog if exog is None else np.asarray(exog)
+        if endog.dtype == object or exog is not None and exog.dtype == object:
+>           raise ValueError(
+                "Pandas data cast to numpy dtype of object. "
+                "Check input data with np.asarray(data)."
+            )
+E           ValueError: Pandas data cast to numpy dtype of object. Check input data with np.asarray(data).
+
+../../../.venv/lib/python3.12/site-packages/statsmodels/base/data.py:523: ValueError
+___________________________ test_task_func_with_seed ___________________________
+
+    def test_task_func_with_seed():
+        array = [["A1", "B1", "C1", "D1", 1], ["A2", "B2", "C2", "D2", 2]]
+>       df1, results1 = task_func(array, random_seed=0)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0517.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0517.py:21: in task_func
+    model = sm.OLS(y, X)
+            ^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/statsmodels/regression/linear_model.py:921: in __init__
+    super().__init__(endog, exog, missing=missing,
+../../../.venv/lib/python3.12/site-packages/statsmodels/regression/linear_model.py:746: in __init__
+    super().__init__(endog, exog, missing=missing,
+../../../.venv/lib/python3.12/site-packages/statsmodels/regression/linear_model.py:200: in __init__
+    super().__init__(endog, exog, **kwargs)
+../../../.venv/lib/python3.12/site-packages/statsmodels/base/model.py:270: in __init__
+    super().__init__(endog, exog, **kwargs)
+../../../.venv/lib/python3.12/site-packages/statsmodels/base/model.py:95: in __init__
+    self.data = self._handle_data(endog, exog, missing, hasconst,
+../../../.venv/lib/python3.12/site-packages/statsmodels/base/model.py:135: in _handle_data
+    data = handle_data(endog, exog, missing, hasconst, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/statsmodels/base/data.py:694: in handle_data
+    return klass(endog, exog=exog, missing=missing, hasconst=hasconst, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/statsmodels/base/data.py:86: in __init__
+    self.endog, self.exog = self._convert_endog_exog(endog, exog)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <statsmodels.base.data.PandasData object at 0x79fc4bc4fb60>
+endog = array([1, 2])
+exog = array([[1.0, 'A1', 'B1', 'C1', 'D1'],
+       [1.0, 'A2', 'B2', 'C2', 'D2']], dtype=object)
+
+    def _convert_endog_exog(self, endog, exog=None):
+        # TODO: remove this when we handle dtype systematically
+        endog = np.asarray(endog)
+        exog = exog if exog is None else np.asarray(exog)
+        if endog.dtype == object or exog is not None and exog.dtype == object:
+>           raise ValueError(
+                "Pandas data cast to numpy dtype of object. "
+                "Check input data with np.asarray(data)."
+            )
+E           ValueError: Pandas data cast to numpy dtype of object. Check input data with np.asarray(data).
+
+../../../.venv/lib/python3.12/site-packages/statsmodels/base/data.py:523: ValueError
+=========================== short test summary info ============================
+FAILED test_0517.py::test_task_func - ValueError: Pandas data cast to numpy d...
+FAILED test_0517.py::test_task_func_with_seed - ValueError: Pandas data cast ...
+2 failed, 1 passed in 3.41s

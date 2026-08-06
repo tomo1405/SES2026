@@ -1,0 +1,48 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        directory_path = "/path/to/directory"
+        expected_output = {"key1": 10, "key2": 5, "key3": 8}
+>       actual_output = task_func(directory_path)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0289.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory_path = '/path/to/directory'
+
+    def task_func(directory_path: str) -> dict:
+        key_counts = collections.defaultdict(int)
+    
+>       for filename in os.listdir(directory_path):
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/path/to/directory'
+
+../../../src/src_0289.py:7: FileNotFoundError
+_____________________ test_task_func_with_empty_directory ______________________
+
+    def test_task_func_with_empty_directory():
+        directory_path = "/path/to/empty/directory"
+        expected_output = {}
+>       actual_output = task_func(directory_path)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0289.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory_path = '/path/to/empty/directory'
+
+    def task_func(directory_path: str) -> dict:
+        key_counts = collections.defaultdict(int)
+    
+>       for filename in os.listdir(directory_path):
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/path/to/empty/directory'
+
+../../../src/src_0289.py:7: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0289.py::test_task_func - FileNotFoundError: [Errno 2] No such fi...
+FAILED test_0289.py::test_task_func_with_empty_directory - FileNotFoundError:...
+2 failed, 1 passed in 0.42s

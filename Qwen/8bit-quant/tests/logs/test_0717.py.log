@@ -1,0 +1,24 @@
+.F                                                                       [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_appends_path __________________________
+
+    def test_task_func_appends_path():
+        original_sys_path = list(sys.path)
+>       task_func()
+
+test_0717.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path_to_append = '/path/to/whatever', json_file = '/path/to/json_file.json'
+
+    def task_func(path_to_append=PATH_TO_APPEND, json_file=JSON_FILE):
+        sys.path.append(path_to_append)
+    
+>       with open(json_file, 'r+') as file:
+             ^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/path/to/json_file.json'
+
+../../../src/src_0717.py:10: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0717.py::test_task_func_appends_path - FileNotFoundError: [Errno ...
+1 failed, 1 passed in 0.45s

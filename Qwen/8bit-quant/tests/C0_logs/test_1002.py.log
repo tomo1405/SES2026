@@ -1,0 +1,55 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sample_csv = <_io.StringIO object at 0x7e5581c36080>
+
+    def test_task_func(sample_csv):
+        ax = task_func(sample_csv)
+    
+        # Check if the axes object is returned
+        assert isinstance(ax, plt.Axes)
+    
+        # Check if the plot has the correct number of lines
+        lines = ax.get_lines()
+        assert len(lines) == 1
+    
+        # Check if the plot has the correct title
+        assert ax.get_title() == "%*s : %*s" % (20, "Plot Title", 20, "Normalized Column 1")
+    
+        # Check if the plot has the correct x label
+        assert ax.get_xlabel() == "%*s : %*s" % (20, "Index", 20, "Normalized Value")
+    
+        # Check if the plot has the correct y label
+        assert ax.get_ylabel() == "%*s : %*s" % (20, "Frequency", 20, "Normalized Value")
+    
+        # Check if the normalization is done correctly
+>       df = pd.read_csv(sample_csv)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1002.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:873: in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:300: in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:1645: in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:1922: in _make_engine
+    return mapping[engine](f, **self.options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/c_parser_wrapper.py:95: in __init__
+    self._reader = parsers.TextReader(src, **kwds)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   pandas.errors.EmptyDataError: No columns to parse from file
+
+pandas/_libs/parsers.pyx:575: EmptyDataError
+=========================== short test summary info ============================
+FAILED test_1002.py::test_task_func - pandas.errors.EmptyDataError: No column...
+1 failed in 2.62s

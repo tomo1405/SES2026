@@ -1,0 +1,71 @@
+..FF                                                                     [100%]
+=================================== FAILURES ===================================
+___________________ test_task_func_with_non_dataframe_input ____________________
+
+    def test_task_func_with_non_dataframe_input():
+        with pytest.raises(ValueError) as excinfo:
+            task_func([1, 2, 3])
+>       assert "Input temperatures must be a non-empty pandas DataFrame." in str(excinfo.value)
+E       assert 'Input temperatures must be a non-empty pandas DataFrame.' in "An error occurred: 'list' object has no attribute 'empty'"
+E        +  where "An error occurred: 'list' object has no attribute 'empty'" = str(ValueError("An error occurred: 'list' object has no attribute 'empty'"))
+E        +    where ValueError("An error occurred: 'list' object has no attribute 'empty'") = <ExceptionInfo ValueError("An error occurred: 'list' object has no attribute 'empty'") tblen=2>.value
+
+test_0104.py:30: AssertionError
+______________________ test_task_func_with_missing_column ______________________
+
+temperatures = Empty DataFrame
+Columns: []
+Index: [2023-01-01 00:00:00, 2023-01-02 00:00:00, 2023-01-03 00:00:00, 2023-01-04 00:00:00, 2023-01-05 00:00:00]
+
+    def task_func(temperatures):
+        try:
+            if temperatures.empty or not isinstance(temperatures, pd.DataFrame):
+>               raise ValueError("Input temperatures must be a non-empty pandas DataFrame.")
+E               ValueError: Input temperatures must be a non-empty pandas DataFrame.
+
+../../../src/src_0104.py:6: ValueError
+
+During handling of the above exception, another exception occurred:
+
+sample_data = Empty DataFrame
+Columns: []
+Index: [2023-01-01 00:00:00, 2023-01-02 00:00:00, 2023-01-03 00:00:00, 2023-01-04 00:00:00, 2023-01-05 00:00:00]
+
+    def test_task_func_with_missing_column(sample_data):
+        sample_data = sample_data.drop(columns=['temperature'])
+        with pytest.raises(KeyError):
+>           task_func(sample_data)
+
+test_0104.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+temperatures = Empty DataFrame
+Columns: []
+Index: [2023-01-01 00:00:00, 2023-01-02 00:00:00, 2023-01-03 00:00:00, 2023-01-04 00:00:00, 2023-01-05 00:00:00]
+
+    def task_func(temperatures):
+        try:
+            if temperatures.empty or not isinstance(temperatures, pd.DataFrame):
+                raise ValueError("Input temperatures must be a non-empty pandas DataFrame.")
+    
+            # Setting the font to Arial
+            font = {'sans-serif': 'Arial', 'family': 'sans-serif'}
+            plt.rc('font', **font)
+    
+            fig, ax = plt.subplots(figsize=(10, 6))
+            ax.plot(temperatures.index, temperatures['temperature'])
+            ax.set_xlabel('Date')
+            ax.set_ylabel('Temperature (°C)')
+            ax.set_title('Daily Temperatures in New York')
+    
+            return ax
+    
+        except Exception as e:
+>           raise ValueError(f"An error occurred: {e}")
+E           ValueError: An error occurred: Input temperatures must be a non-empty pandas DataFrame.
+
+../../../src/src_0104.py:21: ValueError
+=========================== short test summary info ============================
+FAILED test_0104.py::test_task_func_with_non_dataframe_input - assert 'Input ...
+FAILED test_0104.py::test_task_func_with_missing_column - ValueError: An erro...
+2 failed, 2 passed in 2.33s

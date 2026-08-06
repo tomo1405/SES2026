@@ -1,0 +1,22 @@
+.F....                                                                   [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_none_values ________________________
+
+    def test_task_func_with_none_values():
+        input_json = '{"name": "John", "age": null, "email": "john@example.com"}'
+        expected_output = {
+            "data": {"name": "John"},
+            "value_counts": Counter({"John": 1})
+        }
+>       assert task_func(input_json) == expected_output
+E       AssertionError: assert {'data': {'na..., 'None': 1})} == {'data': {'na...({'John': 1})}
+E         
+E         Differing items:
+E         {'value_counts': Counter({'John': 1, 'None': 1})} != {'value_counts': Counter({'John': 1})}
+E         {'data': {'name': 'John', 'email': 'None'}} != {'data': {'name': 'John'}}
+E         Use -v to get more diff
+
+test_0762.py:20: AssertionError
+=========================== short test summary info ============================
+FAILED test_0762.py::test_task_func_with_none_values - AssertionError: assert...
+1 failed, 5 passed in 0.47s

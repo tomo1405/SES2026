@@ -1,0 +1,35 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_invalid_sheet_name _______________________
+
+mock_file_exists = None, mock_pandas_read_excel = None
+
+    def test_task_func_invalid_sheet_name(mock_file_exists, mock_pandas_read_excel):
+>       with pytest.raises(ValueError) as excinfo:
+E       Failed: DID NOT RAISE ValueError
+
+test_0361.py:62: Failed
+__________________________ test_task_func_valid_input __________________________
+
+mock_file_exists = None, mock_pandas_read_excel = None
+mock_matplotlib_plot = None
+
+    def test_task_func_valid_input(mock_file_exists, mock_pandas_read_excel, mock_matplotlib_plot):
+        result, fig = task_func("valid_file.xlsx", "Sheet1")
+        expected_result = {
+            'A': {'mean': 2.0, 'std': 1.0},
+            'B': {'mean': 5.0, 'std': 1.0}
+        }
+>       assert result == expected_result
+E       AssertionError: assert {'A': {'mean'...96580927726)}} == {'A': {'mean'..., 'std': 1.0}}
+E         
+E         Differing items:
+E         {'B': {'mean': np.float64(5.0), 'std': np.float64(0.816496580927726)}} != {'B': {'mean': 5.0, 'std': 1.0}}
+E         {'A': {'mean': np.float64(2.0), 'std': np.float64(0.816496580927726)}} != {'A': {'mean': 2.0, 'std': 1.0}}
+E         Use -v to get more diff
+
+test_0361.py:72: AssertionError
+=========================== short test summary info ============================
+FAILED test_0361.py::test_task_func_invalid_sheet_name - Failed: DID NOT RAIS...
+FAILED test_0361.py::test_task_func_valid_input - AssertionError: assert {'A'...
+2 failed, 1 passed in 1.99s

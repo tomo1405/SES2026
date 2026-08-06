@@ -1,0 +1,160 @@
+...FFFFFFFFF                                                             [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_N_categories[100-42] ______________________
+
+N = 100, seed = 42
+
+    @pytest.mark.parametrize("N, seed", [(100, 42), (50, 123), (20, 456)])
+    def test_task_func_N_categories(N, seed):
+        df, ax = task_func(N, seed=seed)
+>       assert len(df["category"].unique()) == N
+E       AssertionError: assert 5 == 100
+E        +  where 5 = len(<ArrowStringArray>\n['C', 'D', 'E', 'A', 'B']\nLength: 5, dtype: str)
+E        +    where <ArrowStringArray>\n['C', 'D', 'E', 'A', 'B']\nLength: 5, dtype: str = unique()
+E        +      where unique = 0     C\n1     D\n2     C\n3     E\n4     A\n     ..\n95    B\n96    E\n97    D\n98    E\n99    E\nName: category, Length: 100, dtype: str.unique
+
+test_0478.py:16: AssertionError
+_____________________ test_task_func_N_categories[50-123] ______________________
+
+N = 50, seed = 123
+
+    @pytest.mark.parametrize("N, seed", [(100, 42), (50, 123), (20, 456)])
+    def test_task_func_N_categories(N, seed):
+        df, ax = task_func(N, seed=seed)
+>       assert len(df["category"].unique()) == N
+E       AssertionError: assert 5 == 50
+E        +  where 5 = len(<ArrowStringArray>\n['E', 'C', 'A', 'B', 'D']\nLength: 5, dtype: str)
+E        +    where <ArrowStringArray>\n['E', 'C', 'A', 'B', 'D']\nLength: 5, dtype: str = unique()
+E        +      where unique = 0     E\n1     E\n2     C\n3     C\n4     C\n5     C\n6     A\n7     B\n8     D\n9     A\n10    C\n11    D\n12    D\n13    B\n14    ...   B\n39    D\n40    E\n41    E\n42    C\n43    A\n44    B\n45    E\n46    A\n47    B\n48    A\n49    C\nName: category, dtype: str.unique
+
+test_0478.py:16: AssertionError
+_____________________ test_task_func_N_categories[20-456] ______________________
+
+N = 20, seed = 456
+
+    @pytest.mark.parametrize("N, seed", [(100, 42), (50, 123), (20, 456)])
+    def test_task_func_N_categories(N, seed):
+        df, ax = task_func(N, seed=seed)
+>       assert len(df["category"].unique()) == N
+E       AssertionError: assert 5 == 20
+E        +  where 5 = len(<ArrowStringArray>\n['D', 'C', 'B', 'E', 'A']\nLength: 5, dtype: str)
+E        +    where <ArrowStringArray>\n['D', 'C', 'B', 'E', 'A']\nLength: 5, dtype: str = unique()
+E        +      where unique = 0     D\n1     C\n2     B\n3     B\n4     E\n5     D\n6     E\n7     D\n8     C\n9     B\n10    E\n11    A\n12    D\n13    D\n14    A\n15    E\n16    C\n17    E\n18    E\n19    C\nName: category, dtype: str.unique
+
+test_0478.py:16: AssertionError
+________________ test_task_func_categories_distribution[100-42] ________________
+
+N = 100, seed = 42
+
+    @pytest.mark.parametrize("N, seed", [(100, 42), (50, 123), (20, 456)])
+    def test_task_func_categories_distribution(N, seed):
+        df, ax = task_func(N, seed=seed)
+>       assert np.all(df["category"].value_counts() == N / len(df["category"].unique()))
+E       AssertionError: assert np.False_
+E        +  where np.False_ = <function all at 0x79c5b3f4fbf0>(category\nD    27\nB    20\nE    19\nA    18\nC    16\nName: count, dtype: int64 == (100 / 5))
+E        +    where <function all at 0x79c5b3f4fbf0> = np.all
+E        +    and   category\nD    27\nB    20\nE    19\nA    18\nC    16\nName: count, dtype: int64 = value_counts()
+E        +      where value_counts = 0     C\n1     D\n2     C\n3     E\n4     A\n     ..\n95    B\n96    E\n97    D\n98    E\n99    E\nName: category, Length: 100, dtype: str.value_counts
+E        +    and   5 = len(<ArrowStringArray>\n['C', 'D', 'E', 'A', 'B']\nLength: 5, dtype: str)
+E        +      where <ArrowStringArray>\n['C', 'D', 'E', 'A', 'B']\nLength: 5, dtype: str = unique()
+E        +        where unique = 0     C\n1     D\n2     C\n3     E\n4     A\n     ..\n95    B\n96    E\n97    D\n98    E\n99    E\nName: category, Length: 100, dtype: str.unique
+
+test_0478.py:21: AssertionError
+________________ test_task_func_categories_distribution[50-123] ________________
+
+N = 50, seed = 123
+
+    @pytest.mark.parametrize("N, seed", [(100, 42), (50, 123), (20, 456)])
+    def test_task_func_categories_distribution(N, seed):
+        df, ax = task_func(N, seed=seed)
+>       assert np.all(df["category"].value_counts() == N / len(df["category"].unique()))
+E       AssertionError: assert np.False_
+E        +  where np.False_ = <function all at 0x79c5b3f4fbf0>(category\nB    11\nE    10\nC    10\nA    10\nD     9\nName: count, dtype: int64 == (50 / 5))
+E        +    where <function all at 0x79c5b3f4fbf0> = np.all
+E        +    and   category\nB    11\nE    10\nC    10\nA    10\nD     9\nName: count, dtype: int64 = value_counts()
+E        +      where value_counts = 0     E\n1     E\n2     C\n3     C\n4     C\n5     C\n6     A\n7     B\n8     D\n9     A\n10    C\n11    D\n12    D\n13    B\n14    ...   B\n39    D\n40    E\n41    E\n42    C\n43    A\n44    B\n45    E\n46    A\n47    B\n48    A\n49    C\nName: category, dtype: str.value_counts
+E        +    and   5 = len(<ArrowStringArray>\n['E', 'C', 'A', 'B', 'D']\nLength: 5, dtype: str)
+E        +      where <ArrowStringArray>\n['E', 'C', 'A', 'B', 'D']\nLength: 5, dtype: str = unique()
+E        +        where unique = 0     E\n1     E\n2     C\n3     C\n4     C\n5     C\n6     A\n7     B\n8     D\n9     A\n10    C\n11    D\n12    D\n13    B\n14    ...   B\n39    D\n40    E\n41    E\n42    C\n43    A\n44    B\n45    E\n46    A\n47    B\n48    A\n49    C\nName: category, dtype: str.unique
+
+test_0478.py:21: AssertionError
+________________ test_task_func_categories_distribution[20-456] ________________
+
+N = 20, seed = 456
+
+    @pytest.mark.parametrize("N, seed", [(100, 42), (50, 123), (20, 456)])
+    def test_task_func_categories_distribution(N, seed):
+        df, ax = task_func(N, seed=seed)
+>       assert np.all(df["category"].value_counts() == N / len(df["category"].unique()))
+E       AssertionError: assert np.False_
+E        +  where np.False_ = <function all at 0x79c5b3f4fbf0>(category\nE    6\nD    5\nC    4\nB    3\nA    2\nName: count, dtype: int64 == (20 / 5))
+E        +    where <function all at 0x79c5b3f4fbf0> = np.all
+E        +    and   category\nE    6\nD    5\nC    4\nB    3\nA    2\nName: count, dtype: int64 = value_counts()
+E        +      where value_counts = 0     D\n1     C\n2     B\n3     B\n4     E\n5     D\n6     E\n7     D\n8     C\n9     B\n10    E\n11    A\n12    D\n13    D\n14    A\n15    E\n16    C\n17    E\n18    E\n19    C\nName: category, dtype: str.value_counts
+E        +    and   5 = len(<ArrowStringArray>\n['D', 'C', 'B', 'E', 'A']\nLength: 5, dtype: str)
+E        +      where <ArrowStringArray>\n['D', 'C', 'B', 'E', 'A']\nLength: 5, dtype: str = unique()
+E        +        where unique = 0     D\n1     C\n2     B\n3     B\n4     E\n5     D\n6     E\n7     D\n8     C\n9     B\n10    E\n11    A\n12    D\n13    D\n14    A\n15    E\n16    C\n17    E\n18    E\n19    C\nName: category, dtype: str.unique
+
+test_0478.py:21: AssertionError
+_____________________ test_task_func_scatter_plot[100-42] ______________________
+
+N = 100, seed = 42
+
+    @pytest.mark.parametrize("N, seed", [(100, 42), (50, 123), (20, 456)])
+    def test_task_func_scatter_plot(N, seed):
+        df, ax = task_func(N, seed=seed)
+        for category in df["category"].unique():
+>           assert len(ax.lines) == len(df["category"].unique())
+E           AssertionError: assert 0 == 5
+E            +  where 0 = len(<Axes.ArtistList of 0 lines>)
+E            +    where <Axes.ArtistList of 0 lines> = <Axes: >.lines
+E            +  and   5 = len(<ArrowStringArray>\n['C', 'D', 'E', 'A', 'B']\nLength: 5, dtype: str)
+E            +    where <ArrowStringArray>\n['C', 'D', 'E', 'A', 'B']\nLength: 5, dtype: str = unique()
+E            +      where unique = 0     C\n1     D\n2     C\n3     E\n4     A\n     ..\n95    B\n96    E\n97    D\n98    E\n99    E\nName: category, Length: 100, dtype: str.unique
+
+test_0478.py:27: AssertionError
+_____________________ test_task_func_scatter_plot[50-123] ______________________
+
+N = 50, seed = 123
+
+    @pytest.mark.parametrize("N, seed", [(100, 42), (50, 123), (20, 456)])
+    def test_task_func_scatter_plot(N, seed):
+        df, ax = task_func(N, seed=seed)
+        for category in df["category"].unique():
+>           assert len(ax.lines) == len(df["category"].unique())
+E           AssertionError: assert 0 == 5
+E            +  where 0 = len(<Axes.ArtistList of 0 lines>)
+E            +    where <Axes.ArtistList of 0 lines> = <Axes: >.lines
+E            +  and   5 = len(<ArrowStringArray>\n['E', 'C', 'A', 'B', 'D']\nLength: 5, dtype: str)
+E            +    where <ArrowStringArray>\n['E', 'C', 'A', 'B', 'D']\nLength: 5, dtype: str = unique()
+E            +      where unique = 0     E\n1     E\n2     C\n3     C\n4     C\n5     C\n6     A\n7     B\n8     D\n9     A\n10    C\n11    D\n12    D\n13    B\n14    ...   B\n39    D\n40    E\n41    E\n42    C\n43    A\n44    B\n45    E\n46    A\n47    B\n48    A\n49    C\nName: category, dtype: str.unique
+
+test_0478.py:27: AssertionError
+_____________________ test_task_func_scatter_plot[20-456] ______________________
+
+N = 20, seed = 456
+
+    @pytest.mark.parametrize("N, seed", [(100, 42), (50, 123), (20, 456)])
+    def test_task_func_scatter_plot(N, seed):
+        df, ax = task_func(N, seed=seed)
+        for category in df["category"].unique():
+>           assert len(ax.lines) == len(df["category"].unique())
+E           AssertionError: assert 0 == 5
+E            +  where 0 = len(<Axes.ArtistList of 0 lines>)
+E            +    where <Axes.ArtistList of 0 lines> = <Axes: >.lines
+E            +  and   5 = len(<ArrowStringArray>\n['D', 'C', 'B', 'E', 'A']\nLength: 5, dtype: str)
+E            +    where <ArrowStringArray>\n['D', 'C', 'B', 'E', 'A']\nLength: 5, dtype: str = unique()
+E            +      where unique = 0     D\n1     C\n2     B\n3     B\n4     E\n5     D\n6     E\n7     D\n8     C\n9     B\n10    E\n11    A\n12    D\n13    D\n14    A\n15    E\n16    C\n17    E\n18    E\n19    C\nName: category, dtype: str.unique
+
+test_0478.py:27: AssertionError
+=========================== short test summary info ============================
+FAILED test_0478.py::test_task_func_N_categories[100-42] - AssertionError: as...
+FAILED test_0478.py::test_task_func_N_categories[50-123] - AssertionError: as...
+FAILED test_0478.py::test_task_func_N_categories[20-456] - AssertionError: as...
+FAILED test_0478.py::test_task_func_categories_distribution[100-42] - Asserti...
+FAILED test_0478.py::test_task_func_categories_distribution[50-123] - Asserti...
+FAILED test_0478.py::test_task_func_categories_distribution[20-456] - Asserti...
+FAILED test_0478.py::test_task_func_scatter_plot[100-42] - AssertionError: as...
+FAILED test_0478.py::test_task_func_scatter_plot[50-123] - AssertionError: as...
+FAILED test_0478.py::test_task_func_scatter_plot[20-456] - AssertionError: as...
+9 failed, 3 passed in 2.59s

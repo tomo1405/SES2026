@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        script_path = "path/to/script.sh"
+        timeout = 10
+        expected_output = {"CPU Usage": 10.5, "Memory Usage": 1024}
+    
+        with pytest.raises(FileNotFoundError):
+            task_func("invalid_path", timeout)
+    
+>       output = task_func(script_path, timeout)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0462.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+script_path = 'path/to/script.sh', timeout = 10
+
+    def task_func(script_path: str, timeout=10) -> dict:
+        if not os.path.exists(script_path):
+>           raise FileNotFoundError(f"'{script_path}' does not exist.")
+E           FileNotFoundError: 'path/to/script.sh' does not exist.
+
+test_0462.py:9: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0462.py::test_task_func - FileNotFoundError: 'path/to/script.sh' ...
+1 failed in 0.47s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

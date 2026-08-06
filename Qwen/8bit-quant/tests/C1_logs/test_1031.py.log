@@ -1,0 +1,25 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        df = task_func()
+    
+        # Check if the DataFrame has the correct columns
+        assert list(df.columns) == ["Letter 1", "Letter 2", "Letter 3"], "DataFrame columns are incorrect"
+    
+        # Check if the DataFrame has the correct number of rows
+        expected_rows = len(list(itertools.product(string.ascii_lowercase, repeat=3)))
+        assert len(df) == expected_rows, "DataFrame does not have the correct number of rows"
+    
+        # Check if the DataFrame contains the correct data types
+>       assert all(df.dtypes == object), "DataFrame columns should be of type object (string)"
+E       AssertionError: DataFrame columns should be of type object (string)
+E       assert False
+E        +  where False = all(Letter 1    str\nLetter 2    str\nLetter 3    str\ndtype: object == object)
+E        +    where Letter 1    str\nLetter 2    str\nLetter 3    str\ndtype: object =       Letter 1 Letter 2 Letter 3\n0            a        a        a\n1            a        a        b\n2            a     ...        z        z        x\n17574        z        z        y\n17575        z        z        z\n\n[17576 rows x 3 columns].dtypes
+
+test_1031.py:18: AssertionError
+=========================== short test summary info ============================
+FAILED test_1031.py::test_task_func - AssertionError: DataFrame columns shoul...
+1 failed in 1.48s

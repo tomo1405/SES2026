@@ -1,0 +1,46 @@
+FFF.                                                                     [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_default_args __________________________
+
+input_data = {'Name': ['Alice', 'Bob', 'Charlie'], 'Age': [25, 30, None], 'Occupation': ['Engineer', 'Doctor', 'Teacher']}
+
+    def test_task_func_default_args(input_data):
+        expected_output = pd.DataFrame({'Name': ['Alice', 'Bob', 'Charlie'], 'Age': [25, 30, 50], 'Occupation': ['Engineer', 'Doctor', 'Teacher']})
+        output = task_func(input_data)
+>       assert output.equals(expected_output)
+E       assert False
+E        +  where False = equals(      Name  Age Occupation\n0    Alice   25   Engineer\n1      Bob   30     Doctor\n2  Charlie   50    Teacher)
+E        +    where equals =       Name   Age Occupation\n0    Alice  25.0   Engineer\n1      Bob  30.0     Doctor\n2  Charlie   NaN    Teacher.equals
+
+test_0876.py:13: AssertionError
+_______________________ test_task_func_fill_missing_true _______________________
+
+input_data = {'Name': ['Alice', 'Bob', 'Charlie'], 'Age': [25, 30, None], 'Occupation': ['Engineer', 'Doctor', 'Teacher']}
+
+    def test_task_func_fill_missing_true(input_data):
+        expected_output = pd.DataFrame({'Name': ['Alice', 'Bob', 'Charlie'], 'Age': [25, 30, random.randint(0, 100)], 'Occupation': ['Engineer', 'Doctor', 'Teacher']})
+        output = task_func(input_data, fill_missing=True)
+>       assert output.equals(expected_output)
+E       assert False
+E        +  where False = equals(      Name  Age Occupation\n0    Alice   25   Engineer\n1      Bob   30     Doctor\n2  Charlie    7    Teacher)
+E        +    where equals =       Name   Age Occupation\n0    Alice  25.0   Engineer\n1      Bob  30.0     Doctor\n2  Charlie  76.0    Teacher.equals
+
+test_0876.py:18: AssertionError
+___________________________ test_task_func_num_range ___________________________
+
+input_data = {'Name': ['Alice', 'Bob', 'Charlie'], 'Age': [25, 30, None], 'Occupation': ['Engineer', 'Doctor', 'Teacher']}
+
+    def test_task_func_num_range(input_data):
+        expected_output = pd.DataFrame({'Name': ['Alice', 'Bob', 'Charlie'], 'Age': [25, 30, 75], 'Occupation': ['Engineer', 'Doctor', 'Teacher']})
+        output = task_func(input_data, fill_missing=True, num_range=(50, 100))
+>       assert output.equals(expected_output)
+E       assert False
+E        +  where False = equals(      Name  Age Occupation\n0    Alice   25   Engineer\n1      Bob   30     Doctor\n2  Charlie   75    Teacher)
+E        +    where equals =       Name   Age Occupation\n0    Alice  25.0   Engineer\n1      Bob  30.0     Doctor\n2  Charlie  65.0    Teacher.equals
+
+test_0876.py:23: AssertionError
+=========================== short test summary info ============================
+FAILED test_0876.py::test_task_func_default_args - assert False
+FAILED test_0876.py::test_task_func_fill_missing_true - assert False
+FAILED test_0876.py::test_task_func_num_range - assert False
+3 failed, 1 passed in 1.15s

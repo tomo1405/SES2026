@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        start_time = 1000
+        end_time = 2000
+        step = 100
+        columns = ["Timestamp", "Sensor1", "Sensor2", "Sensor3", "SensorStatus"]
+        sensor_statuses = ["OK", "MAINTENANCE_REQUIRED", "ERROR"]
+        random_seed = 42
+    
+        result = task_func(start_time, end_time, step, columns, sensor_statuses, random_seed)
+    
+        assert isinstance(result, pd.DataFrame)
+>       assert result.shape == (11, 5)
+E       assert (10, 5) == (11, 5)
+E         
+E         At index 0 diff: 10 != 11
+E         Use -v to get more diff
+
+test_0485.py:19: AssertionError
+=============================== warnings summary ===============================
+Codellama/8bit-quant/tests/test_0485.py: 10 warnings
+  /work/tomohiro-w/utg/src/src_0485.py:24: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+    dt = datetime.utcfromtimestamp(ts / 1000).strftime("%Y-%m-%d %H:%M:%S.%f")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0485.py::test_task_func - assert (10, 5) == (11, 5)
+1 failed, 10 warnings in 1.09s

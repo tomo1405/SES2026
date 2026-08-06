@@ -1,0 +1,78 @@
+FFFF.                                                                    [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_zero_iterations ________________________
+
+    def test_task_func_zero_iterations():
+        with pytest.raises(ZeroDivisionError):
+>           task_func(0)
+
+test_0754.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0754.py:17: in task_func
+    return round(statistics.mean(distances), 4)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = []
+
+    def mean(data):
+        """Return the sample arithmetic mean of data.
+    
+        >>> mean([1, 2, 3, 4, 4])
+        2.8
+    
+        >>> from fractions import Fraction as F
+        >>> mean([F(3, 7), F(1, 21), F(5, 3), F(1, 3)])
+        Fraction(13, 21)
+    
+        >>> from decimal import Decimal as D
+        >>> mean([D("0.5"), D("0.75"), D("0.625"), D("0.375")])
+        Decimal('0.5625')
+    
+        If ``data`` is empty, StatisticsError will be raised.
+        """
+        T, total, n = _sum(data)
+        if n < 1:
+>           raise StatisticsError('mean requires at least one data point')
+E           statistics.StatisticsError: mean requires at least one data point
+
+/usr/lib/python3.12/statistics.py:486: StatisticsError
+_________________________ test_task_func_one_iteration _________________________
+
+    def test_task_func_one_iteration():
+        random.seed(0)  # Ensure reproducibility
+        result = task_func(1)
+>       assert result == 0.0
+E       assert 4.353 == 0.0
+
+test_0754.py:14: AssertionError
+______________________ test_task_func_multiple_iterations ______________________
+
+    def test_task_func_multiple_iterations():
+        random.seed(0)  # Ensure reproducibility
+        result = task_func(10)
+        expected_mean = 3.8986  # Pre-calculated expected mean for 10 iterations with seed 0
+>       assert math.isclose(result, expected_mean, rel_tol=1e-4)
+E       assert False
+E        +  where False = <built-in function isclose>(3.6759, 3.8986, rel_tol=0.0001)
+E        +    where <built-in function isclose> = math.isclose
+
+test_0754.py:20: AssertionError
+__________________ test_task_func_large_number_of_iterations ___________________
+
+    def test_task_func_large_number_of_iterations():
+        random.seed(0)  # Ensure reproducibility
+        result = task_func(1000)
+        expected_mean = 3.8979  # Pre-calculated expected mean for 1000 iterations with seed 0
+>       assert math.isclose(result, expected_mean, rel_tol=1e-4)
+E       assert False
+E        +  where False = <built-in function isclose>(3.3267, 3.8979, rel_tol=0.0001)
+E        +    where <built-in function isclose> = math.isclose
+
+test_0754.py:26: AssertionError
+=========================== short test summary info ============================
+FAILED test_0754.py::test_task_func_zero_iterations - statistics.StatisticsEr...
+FAILED test_0754.py::test_task_func_one_iteration - assert 4.353 == 0.0
+FAILED test_0754.py::test_task_func_multiple_iterations - assert False
+FAILED test_0754.py::test_task_func_large_number_of_iterations - assert False
+4 failed, 1 passed in 0.49s

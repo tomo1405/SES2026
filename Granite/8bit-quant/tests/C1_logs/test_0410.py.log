@@ -1,0 +1,52 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+____________________________ test_column_not_found _____________________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x765321cbe210>
+excel_file_path = 'path/to/excel/file', file_name = 'example.xlsx'
+column_name = 'example_column'
+
+    def test_column_not_found(monkeypatch, excel_file_path, file_name, column_name):
+        df = pd.DataFrame({'other_column': [1, 2, 3]})
+        monkeypatch.setattr(pd, 'read_excel', lambda x: df)
+        with pytest.raises(ValueError):
+>           task_func(excel_file_path, file_name, column_name)
+
+test_0410.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+excel_file_path = 'path/to/excel/file', file_name = 'example.xlsx'
+column_name = 'example_column'
+
+    def task_func(excel_file_path, file_name, column_name):
+        excel_file = os.path.join(excel_file_path, file_name)
+        if not os.path.exists(excel_file):
+>           raise FileNotFoundError(f"No file found at {excel_file}")
+E           FileNotFoundError: No file found at path/to/excel/file/example.xlsx
+
+../../../src/src_0410.py:7: FileNotFoundError
+_______________________________ test_valid_input _______________________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x765321cbe330>
+excel_file_path = 'path/to/excel/file', file_name = 'example.xlsx'
+column_name = 'example_column'
+
+    def test_valid_input(monkeypatch, excel_file_path, file_name, column_name):
+        df = pd.DataFrame({column_name: [1, 2, 3]})
+        monkeypatch.setattr(pd, 'read_excel', lambda x: df)
+        monkeypatch.setattr(os.path, 'exists', lambda x: True)
+        result = task_func(excel_file_path, file_name, column_name)
+        expected_result = {'mean': 2.0, 'median': 2.0, 'std_dev': 1.0}
+>       assert result == expected_result
+E       AssertionError: assert {'mean': np.f...496580927726)} == {'mean': 2.0,...std_dev': 1.0}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Differing items:
+E         {'std_dev': np.float64(0.816496580927726)} != {'std_dev': 1.0}
+E         Use -v to get more diff
+
+test_0410.py:36: AssertionError
+=========================== short test summary info ============================
+FAILED test_0410.py::test_column_not_found - FileNotFoundError: No file found...
+FAILED test_0410.py::test_valid_input - AssertionError: assert {'mean': np.f....
+2 failed, 1 passed in 1.08s

@@ -1,0 +1,23 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Process is running
+        def mock_process_iter():
+            class MockProcess:
+                def __init__(self, name):
+                    self.name = name
+            return [MockProcess(process_name)]
+    
+        with patch('psutil.process_iter', side_effect=mock_process_iter):
+>           result = task_func(process_name)
+                               ^^^^^^^^^^^^
+E           NameError: name 'process_name' is not defined
+
+test_0018.py:33: NameError
+=========================== short test summary info ============================
+FAILED test_0018.py::test_task_func - NameError: name 'process_name' is not d...
+1 failed in 0.42s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

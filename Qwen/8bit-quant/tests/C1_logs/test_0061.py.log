@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test data
+        result = [
+            {"name": "Alice", "age": 30},
+            {"name": "Bob", "age": 25}
+        ]
+    
+        # Define temporary file paths
+        csv_file_path = "test_output.csv"
+        json_file_path = "test_output.json"
+    
+        # Call the function
+        task_func(result, csv_file_path, json_file_path)
+    
+        # Check CSV output
+        df = pd.read_csv(csv_file_path)
+        assert df.equals(pd.DataFrame(result))
+    
+        # Check JSON output
+>       with open(json_file_path, 'r') as f:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'test_output.json'
+
+test_0061.py:26: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0061.py::test_task_func - FileNotFoundError: [Errno 2] No such fi...
+1 failed in 1.28s

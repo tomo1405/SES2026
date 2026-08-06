@@ -1,0 +1,58 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data = {'Name': ['John Doe', 'Jane Doe'], 'Age': [25, 30], 'City': ['New York', 'London']}
+        mapping = {'NY': 'New York', 'LDN': 'London'}
+        expected_output = {'Name': ['John Doe', 'Jane Doe'], 'Age': [25, 30], 'City': ['New York', 'London']}
+>       assert task_func(data, mapping).equals(expected_output)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0919.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0919.py:11: in task_func
+    df = df.applymap(lambda x: pattern.sub(replace_match, x) if isinstance(x, str) else x)
+         ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =        Name  Age      City
+0  John Doe   25  New York
+1  Jane Doe   30    London
+name = 'applymap'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute 'applymap'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+______________________ test_task_func_with_invalid_input _______________________
+
+    def test_task_func_with_invalid_input():
+        data = {'Name': ['John Doe', 'Jane Doe'], 'Age': [25, 30], 'City': ['New York', 'London']}
+        mapping = {'NY': 'New York', 'LDN': 'London'}
+        with pytest.raises(ValueError):
+>           task_func(data, mapping, invalid_input)
+                                     ^^^^^^^^^^^^^
+E           NameError: name 'invalid_input' is not defined
+
+test_0919.py:15: NameError
+=========================== short test summary info ============================
+FAILED test_0919.py::test_task_func - AttributeError: 'DataFrame' object has ...
+FAILED test_0919.py::test_task_func_with_invalid_input - NameError: name 'inv...
+2 failed in 1.25s

@@ -1,0 +1,90 @@
+.FFFF                                                                    [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_single_row ________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1582/test_task_func_with_single_row0')
+
+    def test_task_func_with_single_row(tmp_path):
+        single_row_file = tmp_path / "single_row.csv"
+        single_row_file.write_text("Hello, world!")
+    
+        result = task_func(str(single_row_file))
+        expected_counts = Counter(['Hello', ',', 'world', '!'])
+>       assert result == dict(expected_counts)
+E       AssertionError: assert {'Hello': 1} == {'Hello': 1, ...d': 1, '!': 1}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Right contains 3 more items:
+E         {'!': 1, ',': 1, 'world': 1}
+E         Use -v to get more diff
+
+test_0328.py:18: AssertionError
+______________________ test_task_func_with_multiple_rows _______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1582/test_task_func_with_multiple_r0')
+
+    def test_task_func_with_multiple_rows(tmp_path):
+        multiple_rows_file = tmp_path / "multiple_rows.csv"
+        multiple_rows_file.write_text("Hello, world!\nPython is great.\n")
+    
+        result = task_func(str(multiple_rows_file))
+        expected_counts = Counter(['Hello', ',', 'world', '!', 'Python', 'is', 'great', '.'])
+>       assert result == dict(expected_counts)
+E       AssertionError: assert {'Hello': 1, ... 'is': 1, ...} == {'Hello': 1, ..., '!': 1, ...}
+E         
+E         Omitting 5 identical items, use -vv to show
+E         Left contains 1 more item:
+E         {' ': 3}
+E         Right contains 3 more items:
+E         {'!': 1, ',': 1, 'world': 1}
+E         Use -v to get more diff
+
+test_0328.py:26: AssertionError
+_______________________ test_task_func_with_custom_regex _______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1582/test_task_func_with_custom_reg0')
+
+    def test_task_func_with_custom_regex(tmp_path):
+        custom_regex_file = tmp_path / "custom_regex.csv"
+        custom_regex_file.write_text("Hello, world!")
+    
+        result = task_func(str(custom_regex_file), r'\b\w+\b')
+        expected_counts = Counter(['Hello', 'world'])
+>       assert result == dict(expected_counts)
+E       AssertionError: assert {'Hello': 1} == {'Hello': 1, 'world': 1}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Right contains 1 more item:
+E         {'world': 1}
+E         Use -v to get more diff
+
+test_0328.py:34: AssertionError
+____________________ test_task_func_with_special_characters ____________________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1582/test_task_func_with_special_ch0')
+
+    def test_task_func_with_special_characters(tmp_path):
+        special_characters_file = tmp_path / "special_characters.csv"
+        special_characters_file.write_text("Hello, @world! #Python &is* great.")
+    
+        result = task_func(str(special_characters_file))
+        expected_counts = Counter(['Hello', ',', '@', 'world', '!', '#', 'Python', '&', 'is', '*', 'great', '.'])
+>       assert result == dict(expected_counts)
+E       AssertionError: assert {'Hello': 1} == {'Hello': 1, ...orld': 1, ...}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Right contains 11 more items:
+E         {'!': 1,
+E          '#': 1,
+E          '&': 1,
+E          '*': 1,...
+E         
+E         ...Full output truncated (8 lines hidden), use '-vv' to show
+
+test_0328.py:42: AssertionError
+=========================== short test summary info ============================
+FAILED test_0328.py::test_task_func_with_single_row - AssertionError: assert ...
+FAILED test_0328.py::test_task_func_with_multiple_rows - AssertionError: asse...
+FAILED test_0328.py::test_task_func_with_custom_regex - AssertionError: asser...
+FAILED test_0328.py::test_task_func_with_special_characters - AssertionError:...
+4 failed, 1 passed in 0.44s

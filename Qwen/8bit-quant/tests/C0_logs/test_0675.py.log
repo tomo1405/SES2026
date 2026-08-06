@@ -1,0 +1,70 @@
+.FF.                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________________ test_file_empty ________________________________
+
+mock_os_exists = <MagicMock name='open' id='140427457542144'>
+mock_open = <MagicMock name='exists' id='140427451116256'>
+
+    @patch('os.path.exists', return_value=True)
+    @patch('builtins.open', side_effect=FileNotFoundError)
+    def test_file_empty(mock_os_exists, mock_open):
+        """Test case when the file is empty."""
+>       result = task_func("empty_file.csv")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0675.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0675.py:8: in task_func
+    with open(filename, 'r') as file:
+         ^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/unittest/mock.py:1134: in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/unittest/mock.py:1138: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='open' id='140427457542144'>
+args = ('empty_file.csv', 'r'), kwargs = {}
+
+    def _execute_mock_call(self, /, *args, **kwargs):
+        # separate from _increment_mock_call so that awaited functions are
+        # executed separately from their call, also AsyncMock overrides this method
+    
+        effect = self.side_effect
+        if effect is not None:
+            if _is_exception(effect):
+>               raise effect
+E               FileNotFoundError
+
+/usr/lib/python3.12/unittest/mock.py:1193: FileNotFoundError
+_____________________________ test_file_operations _____________________________
+
+create_temp_file = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-2155/test_file_operations0/test.csv')
+
+    def test_file_operations(create_temp_file):
+        """Test case to verify file operations and content."""
+        file_path = create_temp_file
+        original_df = pd.read_csv(file_path)
+    
+        # Call the function
+        result = task_func(str(file_path))
+    
+        # Verify the result
+        assert result == str(file_path)
+    
+        # Read the modified file
+        modified_df = pd.read_csv(file_path)
+    
+        # Verify that the DataFrame is reversed
+>       assert modified_df.equals(original_df.iloc[::-1])
+E       assert False
+E        +  where False = equals(   A  B\n2  3  6\n1  2  5\n0  1  4)
+E        +    where equals =    A  B\n0  3  6\n1  2  5\n2  1  4.equals
+
+test_0675.py:44: AssertionError
+=========================== short test summary info ============================
+FAILED test_0675.py::test_file_empty - FileNotFoundError
+FAILED test_0675.py::test_file_operations - assert False
+2 failed, 2 passed in 1.47s

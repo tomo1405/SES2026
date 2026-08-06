@@ -1,0 +1,23 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        product_list = ['Product 1', 'Product 2', 'Product 3']
+        categories = ['Category 1', 'Category 2', 'Category 3']
+        report_df = task_func(product_list, categories)
+        assert report_df.columns.tolist() == ['Product', 'Category', 'Quantity Sold', 'Revenue']
+        assert len(report_df) == len(product_list)
+        assert all(report_df['Product'].isin(product_list))
+        assert all(report_df['Category'].isin(categories))
+        assert all(report_df['Quantity Sold'] >= 1)
+        assert all(report_df['Quantity Sold'] <= 100)
+        assert all(report_df['Revenue'] >= 10)
+>       assert all(report_df['Revenue'] <= 100)
+E       assert False
+E        +  where False = all(0     714\n1    8245\n2    2784\nName: Revenue, dtype: int64 <= 100)
+
+test_0350.py:15: AssertionError
+=========================== short test summary info ============================
+FAILED test_0350.py::test_task_func - assert False
+1 failed in 1.11s

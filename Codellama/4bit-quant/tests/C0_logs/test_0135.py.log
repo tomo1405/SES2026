@@ -1,0 +1,38 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        df = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]})
+        ax = task_func(df)
+        assert isinstance(ax, matplotlib.axes.Axes)
+        assert ax.get_title() == 'Histogram of B'
+        assert ax.get_xlabel() == 'Value'
+        assert ax.get_ylabel() == 'Frequency'
+>       assert ax.get_xlim() == (1, 6)
+E       assert (np.float64(3....float64(6.1)) == (1, 6)
+E         
+E         At index 0 diff: np.float64(3.9) != 1
+E         Use -v to get more diff
+
+test_0135.py:14: AssertionError
+___________________________ test_task_func_with_bins ___________________________
+
+    def test_task_func_with_bins():
+        df = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]})
+        ax = task_func(df, bins=5)
+        assert isinstance(ax, matplotlib.axes.Axes)
+        assert ax.get_title() == 'Histogram of B'
+        assert ax.get_xlabel() == 'Value'
+        assert ax.get_ylabel() == 'Frequency'
+>       assert ax.get_xlim() == (1, 6)
+E       assert (np.float64(3....float64(6.1)) == (1, 6)
+E         
+E         At index 0 diff: np.float64(3.9) != 1
+E         Use -v to get more diff
+
+test_0135.py:24: AssertionError
+=========================== short test summary info ============================
+FAILED test_0135.py::test_task_func - assert (np.float64(3....float64(6.1)) =...
+FAILED test_0135.py::test_task_func_with_bins - assert (np.float64(3....float...
+2 failed, 1 passed in 2.95s

@@ -1,0 +1,33 @@
+....FF                                                                   [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_mixed_content _______________________
+
+    def test_task_func_with_mixed_content():
+        input_df = pd.DataFrame({'text': ['Python3.8 is great!']})
+        expected_output = pd.DataFrame({'clean_text': ['Python38isgreat'], 'text_length': [13]})
+>       assert task_func(input_df).equals(expected_output)
+E       assert False
+E        +  where False = equals(        clean_text  text_length\n0  Python38isgreat           13)
+E        +    where equals =         clean_text  text_length\n0  Python38isgreat           15.equals
+E        +      where         clean_text  text_length\n0  Python38isgreat           15 = task_func(                  text\n0  Python3.8 is great!)
+
+test_0939.py:28: AssertionError
+______________________ test_task_func_with_multiple_rows _______________________
+
+    def test_task_func_with_multiple_rows():
+        input_df = pd.DataFrame({'text': ['Hello, World!', '12345!@#', 'Python3.8 is great!']})
+        expected_output = pd.DataFrame({
+            'clean_text': ['HelloWorld', '12345', 'Python38isgreat'],
+            'text_length': [10, 5, 13]
+        })
+>       assert task_func(input_df).equals(expected_output)
+E       assert False
+E        +  where False = equals(        clean_text  text_length\n0       HelloWorld           10\n1            12345            5\n2  Python38isgreat           13)
+E        +    where equals =         clean_text  text_length\n0       HelloWorld           10\n1            12345            5\n2  Python38isgreat           15.equals
+E        +      where         clean_text  text_length\n0       HelloWorld           10\n1            12345            5\n2  Python38isgreat           15 = task_func(                  text\n0        Hello, World!\n1             12345!@#\n2  Python3.8 is great!)
+
+test_0939.py:36: AssertionError
+=========================== short test summary info ============================
+FAILED test_0939.py::test_task_func_with_mixed_content - assert False
+FAILED test_0939.py::test_task_func_with_multiple_rows - assert False
+2 failed, 4 passed in 1.21s

@@ -1,0 +1,30 @@
+F.F.                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        df = task_func()
+        assert isinstance(df, pd.DataFrame)
+        assert 'Letter' in df.columns
+        assert 'Category' in df.columns
+>       assert len(df) == len(letters) * len(categories)
+                              ^^^^^^^
+E       NameError: name 'letters' is not defined
+
+test_0910.py:10: NameError
+__________________________ test_task_func_categories ___________________________
+
+    def test_task_func_categories():
+        categories = ['Category 1', 'Category 2', 'Category 3']
+        df = task_func(categories=categories)
+>       assert df['Category'].unique().tolist() == categories
+E       AssertionError: assert ['Category 3'... 'Category 2'] == ['Category 1'... 'Category 3']
+E         
+E         At index 0 diff: 'Category 3' != 'Category 1'
+E         Use -v to get more diff
+
+test_0910.py:20: AssertionError
+=========================== short test summary info ============================
+FAILED test_0910.py::test_task_func - NameError: name 'letters' is not defined
+FAILED test_0910.py::test_task_func_categories - AssertionError: assert ['Cat...
+2 failed, 2 passed in 1.26s

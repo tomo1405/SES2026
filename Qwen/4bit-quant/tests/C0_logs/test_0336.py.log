@@ -1,0 +1,44 @@
+FFF.F.                                                                   [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_default_length _________________________
+
+    def test_task_func_default_length():
+        result = task_func()
+        assert isinstance(result, collections.OrderedDict)
+>       assert len(result) <= len(task_func.LETTERS)
+                                  ^^^^^^^^^^^^^^^^^
+E       AttributeError: 'function' object has no attribute 'LETTERS'
+
+test_0336.py:9: AttributeError
+_________________________ test_task_func_custom_length _________________________
+
+    def test_task_func_custom_length():
+        length = 50
+        result = task_func(length)
+        assert isinstance(result, collections.OrderedDict)
+>       assert len(result) <= len(task_func.LETTERS)
+                                  ^^^^^^^^^^^^^^^^^
+E       AttributeError: 'function' object has no attribute 'LETTERS'
+
+test_0336.py:15: AttributeError
+_________________________ test_task_func_empty_string __________________________
+
+    def test_task_func_empty_string():
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0336.py:19: Failed
+_______________________ test_task_func_all_same_letters ________________________
+
+    def test_task_func_all_same_letters():
+>       result = task_func(string_length=100, LETTERS=['a'])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: task_func() got an unexpected keyword argument 'LETTERS'
+
+test_0336.py:28: TypeError
+=========================== short test summary info ============================
+FAILED test_0336.py::test_task_func_default_length - AttributeError: 'functio...
+FAILED test_0336.py::test_task_func_custom_length - AttributeError: 'function...
+FAILED test_0336.py::test_task_func_empty_string - Failed: DID NOT RAISE Valu...
+FAILED test_0336.py::test_task_func_all_same_letters - TypeError: task_func()...
+4 failed, 2 passed in 0.45s

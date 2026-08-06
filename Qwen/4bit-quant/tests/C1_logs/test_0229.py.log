@@ -1,0 +1,55 @@
+.FFF                                                                     [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_empty_df ____________________________
+
+    def test_task_func_empty_df():
+        # Test case: empty DataFrame
+>       df = pd.DataFrame(columns=COLUMNS)
+                                  ^^^^^^^
+E       NameError: name 'COLUMNS' is not defined
+
+test_0229.py:16: NameError
+___________________________ test_task_func_with_data ___________________________
+
+    def test_task_func_with_data():
+        # Test case: DataFrame with data and dictionary mapping
+        data = {
+            'column1': [1, 2, 3],
+            'column2': [4, 5, 6],
+            'column3': [7, 8, 9],
+            'column4': [10, 11, 12],
+            'column5': [13, 14, 15]
+        }
+        df = pd.DataFrame(data)
+        dct = {'a': 1, 'b': 2}
+        result = task_func(df, dct)
+        expected_correlation = np.corrcoef(df.values, rowvar=False)
+>       expected_df = pd.DataFrame(expected_correlation, columns=COLUMNS, index=COLUMNS)
+                                                                 ^^^^^^^
+E       NameError: name 'COLUMNS' is not defined
+
+test_0229.py:34: NameError
+_________________________ test_task_func_with_mapping __________________________
+
+    def test_task_func_with_mapping():
+        # Test case: DataFrame with data and dictionary mapping that changes some values
+        data = {
+            'column1': [1, 2, 3],
+            'column2': [4, 5, 6],
+            'column3': [7, 8, 9],
+            'column4': [10, 11, 12],
+            'column5': [13, 14, 15]
+        }
+        df = pd.DataFrame(data)
+        dct = {1: 99, 2: 98, 3: 97}
+        result = task_func(df, dct)
+>       expected_df = pd.DataFrame(np.corrcoef(df.replace(dct).values, rowvar=False), columns=COLUMNS, index=COLUMNS)
+                                                                                              ^^^^^^^
+E       NameError: name 'COLUMNS' is not defined
+
+test_0229.py:49: NameError
+=========================== short test summary info ============================
+FAILED test_0229.py::test_task_func_empty_df - NameError: name 'COLUMNS' is n...
+FAILED test_0229.py::test_task_func_with_data - NameError: name 'COLUMNS' is ...
+FAILED test_0229.py::test_task_func_with_mapping - NameError: name 'COLUMNS' ...
+3 failed, 1 passed in 1.14s

@@ -1,0 +1,35 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that the function returns a pandas DataFrame
+        demographics = task_func(10)
+        assert isinstance(demographics, pd.DataFrame)
+    
+        # Test that the function raises a ValueError if num_samples is not an integer
+        with pytest.raises(ValueError):
+            task_func(10.5)
+    
+        # Test that the function returns the correct number of rows
+        demographics = task_func(10)
+        assert len(demographics) == 10
+    
+        # Test that the function returns the correct number of columns
+        demographics = task_func(10)
+        assert len(demographics.columns) == 3
+    
+        # Test that the function returns the correct column names
+        demographics = task_func(10)
+        assert list(demographics.columns) == ['Country', 'Age', 'Gender']
+    
+        # Test that the function returns the correct data types
+        demographics = task_func(10)
+>       assert demographics['Country'].dtype == object
+E       assert <StringDtype(na_value=nan)> == object
+E        +  where <StringDtype(na_value=nan)> = 0    Russia\n1       USA\n2    Brazil\n3     India\n4     China\n5     China\n6     India\n7     India\n8    Russia\n9    Brazil\nName: Country, dtype: str.dtype
+
+test_0759.py:29: AssertionError
+=========================== short test summary info ============================
+FAILED test_0759.py::test_task_func - assert <StringDtype(na_value=nan)> == o...
+1 failed in 2.78s

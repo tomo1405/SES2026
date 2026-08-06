@@ -1,0 +1,577 @@
+.F.FFFFFF.F                                                              [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_input_df_not_object ______________________
+
+    def test_task_func_input_df_not_object():
+        df = pd.DataFrame({"a": [1, 2, 3]})
+        dct = {"a": "b"}
+        columns = None
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0224.py:17: Failed
+____________________ test_task_func_input_columns_not_list _____________________
+
+self = Index(['a'], dtype='str'), key = 'n'
+
+    def get_loc(self, key):
+        """
+        Get integer location, slice or boolean mask for requested label.
+    
+        Parameters
+        ----------
+        key : label
+            The key to check its location if it is present in the index.
+    
+        Returns
+        -------
+        int if unique index, slice if monotonic index, else mask
+            Integer location, slice or boolean mask.
+    
+        See Also
+        --------
+        Index.get_slice_bound : Calculate slice bound that corresponds to
+            given label.
+        Index.get_indexer : Computes indexer and mask for new index given
+            the current index.
+        Index.get_non_unique : Returns indexer and masks for new index given
+            the current index.
+        Index.get_indexer_for : Returns an indexer even when non-unique.
+    
+        Examples
+        --------
+        >>> unique_index = pd.Index(list("abc"))
+        >>> unique_index.get_loc("b")
+        1
+    
+        >>> monotonic_index = pd.Index(list("abbc"))
+        >>> monotonic_index.get_loc("b")
+        slice(1, 3, None)
+    
+        >>> non_monotonic_index = pd.Index(list("abcb"))
+        >>> non_monotonic_index.get_loc("b")
+        array([False,  True, False,  True])
+        """
+        casted_key = self._maybe_cast_indexer(key)
+        try:
+>           return self._engine.get_loc(casted_key)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py:3641: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pandas/_libs/index.pyx:168: in pandas._libs.index.IndexEngine.get_loc
+    ???
+pandas/_libs/index.pyx:197: in pandas._libs.index.IndexEngine.get_loc
+    ???
+pandas/_libs/hashtable_class_helper.pxi:7668: in pandas._libs.hashtable.PyObjectHashTable.get_item
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   KeyError: 'n'
+
+pandas/_libs/hashtable_class_helper.pxi:7676: KeyError
+
+The above exception was the direct cause of the following exception:
+
+    def test_task_func_input_columns_not_list():
+        df = pd.DataFrame({"a": ["a", "b", "c"]})
+        dct = {"a": "b"}
+        columns = "not a list"
+        with pytest.raises(ValueError):
+>           task_func(df, dct, columns)
+
+test_0224.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0224.py:17: in task_func
+    if df[column].dtype == 'object':
+       ^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:4378: in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Index(['a'], dtype='str'), key = 'n'
+
+    def get_loc(self, key):
+        """
+        Get integer location, slice or boolean mask for requested label.
+    
+        Parameters
+        ----------
+        key : label
+            The key to check its location if it is present in the index.
+    
+        Returns
+        -------
+        int if unique index, slice if monotonic index, else mask
+            Integer location, slice or boolean mask.
+    
+        See Also
+        --------
+        Index.get_slice_bound : Calculate slice bound that corresponds to
+            given label.
+        Index.get_indexer : Computes indexer and mask for new index given
+            the current index.
+        Index.get_non_unique : Returns indexer and masks for new index given
+            the current index.
+        Index.get_indexer_for : Returns an indexer even when non-unique.
+    
+        Examples
+        --------
+        >>> unique_index = pd.Index(list("abc"))
+        >>> unique_index.get_loc("b")
+        1
+    
+        >>> monotonic_index = pd.Index(list("abbc"))
+        >>> monotonic_index.get_loc("b")
+        slice(1, 3, None)
+    
+        >>> non_monotonic_index = pd.Index(list("abcb"))
+        >>> non_monotonic_index.get_loc("b")
+        array([False,  True, False,  True])
+        """
+        casted_key = self._maybe_cast_indexer(key)
+        try:
+            return self._engine.get_loc(casted_key)
+        except KeyError as err:
+            if isinstance(casted_key, slice) or (
+                isinstance(casted_key, abc.Iterable)
+                and any(isinstance(x, slice) for x in casted_key)
+            ):
+                raise InvalidIndexError(key) from err
+>           raise KeyError(key) from err
+E           KeyError: 'n'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py:3648: KeyError
+____________________ test_task_func_input_columns_not_in_df ____________________
+
+self = Index(['a'], dtype='str'), key = 'd'
+
+    def get_loc(self, key):
+        """
+        Get integer location, slice or boolean mask for requested label.
+    
+        Parameters
+        ----------
+        key : label
+            The key to check its location if it is present in the index.
+    
+        Returns
+        -------
+        int if unique index, slice if monotonic index, else mask
+            Integer location, slice or boolean mask.
+    
+        See Also
+        --------
+        Index.get_slice_bound : Calculate slice bound that corresponds to
+            given label.
+        Index.get_indexer : Computes indexer and mask for new index given
+            the current index.
+        Index.get_non_unique : Returns indexer and masks for new index given
+            the current index.
+        Index.get_indexer_for : Returns an indexer even when non-unique.
+    
+        Examples
+        --------
+        >>> unique_index = pd.Index(list("abc"))
+        >>> unique_index.get_loc("b")
+        1
+    
+        >>> monotonic_index = pd.Index(list("abbc"))
+        >>> monotonic_index.get_loc("b")
+        slice(1, 3, None)
+    
+        >>> non_monotonic_index = pd.Index(list("abcb"))
+        >>> non_monotonic_index.get_loc("b")
+        array([False,  True, False,  True])
+        """
+        casted_key = self._maybe_cast_indexer(key)
+        try:
+>           return self._engine.get_loc(casted_key)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py:3641: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pandas/_libs/index.pyx:168: in pandas._libs.index.IndexEngine.get_loc
+    ???
+pandas/_libs/index.pyx:197: in pandas._libs.index.IndexEngine.get_loc
+    ???
+pandas/_libs/hashtable_class_helper.pxi:7668: in pandas._libs.hashtable.PyObjectHashTable.get_item
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   KeyError: 'd'
+
+pandas/_libs/hashtable_class_helper.pxi:7676: KeyError
+
+The above exception was the direct cause of the following exception:
+
+    def test_task_func_input_columns_not_in_df():
+        df = pd.DataFrame({"a": ["a", "b", "c"]})
+        dct = {"a": "b"}
+        columns = ["d"]
+        with pytest.raises(ValueError):
+>           task_func(df, dct, columns)
+
+test_0224.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0224.py:17: in task_func
+    if df[column].dtype == 'object':
+       ^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:4378: in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Index(['a'], dtype='str'), key = 'd'
+
+    def get_loc(self, key):
+        """
+        Get integer location, slice or boolean mask for requested label.
+    
+        Parameters
+        ----------
+        key : label
+            The key to check its location if it is present in the index.
+    
+        Returns
+        -------
+        int if unique index, slice if monotonic index, else mask
+            Integer location, slice or boolean mask.
+    
+        See Also
+        --------
+        Index.get_slice_bound : Calculate slice bound that corresponds to
+            given label.
+        Index.get_indexer : Computes indexer and mask for new index given
+            the current index.
+        Index.get_non_unique : Returns indexer and masks for new index given
+            the current index.
+        Index.get_indexer_for : Returns an indexer even when non-unique.
+    
+        Examples
+        --------
+        >>> unique_index = pd.Index(list("abc"))
+        >>> unique_index.get_loc("b")
+        1
+    
+        >>> monotonic_index = pd.Index(list("abbc"))
+        >>> monotonic_index.get_loc("b")
+        slice(1, 3, None)
+    
+        >>> non_monotonic_index = pd.Index(list("abcb"))
+        >>> non_monotonic_index.get_loc("b")
+        array([False,  True, False,  True])
+        """
+        casted_key = self._maybe_cast_indexer(key)
+        try:
+            return self._engine.get_loc(casted_key)
+        except KeyError as err:
+            if isinstance(casted_key, slice) or (
+                isinstance(casted_key, abc.Iterable)
+                and any(isinstance(x, slice) for x in casted_key)
+            ):
+                raise InvalidIndexError(key) from err
+>           raise KeyError(key) from err
+E           KeyError: 'd'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py:3648: KeyError
+___________________ test_task_func_input_columns_not_object ____________________
+
+    def test_task_func_input_columns_not_object():
+        df = pd.DataFrame({"a": ["a", "b", "c"]})
+        dct = {"a": "b"}
+        columns = ["a"]
+        with pytest.raises(ValueError):
+>           task_func(df, dct, columns)
+
+test_0224.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0224.py:22: in task_func
+    df = (df - df.mean()) / df.std()
+               ^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/util/_decorators.py:336: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:14473: in mean
+    result = super().mean(
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:11831: in mean
+    return self._stat_function(
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:11785: in _stat_function
+    return self._reduce(
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:13633: in _reduce
+    res = df._mgr.reduce(blk_func)
+          ^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/managers.py:1681: in reduce
+    res_blocks = [blk.reduce(func) for blk in self.blocks]
+                  ^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/blocks.py:358: in reduce
+    result = func(self.values)
+             ^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:13561: in blk_func
+    return values._reduce(name, skipna=skipna, keepdims=True, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <ArrowStringArray>
+['b', 'b', 'c']
+Length: 3, dtype: str, name = 'mean'
+skipna = True, keepdims = True, kwargs = {}
+
+    def _reduce(
+        self, name: str, *, skipna: bool = True, keepdims: bool = False, **kwargs
+    ):
+        if self.dtype.na_value is np.nan and name in ["any", "all"]:
+            if not skipna:
+                nas = pc.is_null(self._pa_array)
+                arr = pc.or_kleene(nas, pc.not_equal(self._pa_array, ""))
+            else:
+                arr = pc.not_equal(self._pa_array, "")
+            result = ArrowExtensionArray(arr)._reduce(
+                name, skipna=skipna, keepdims=keepdims, **kwargs
+            )
+            if keepdims:
+                # ArrowExtensionArray will return a length-1 bool[pyarrow] array
+                return result.astype(np.bool_)
+            return result
+    
+        if name in ("min", "max", "sum", "argmin", "argmax"):
+            result = self._reduce_calc(name, skipna=skipna, keepdims=keepdims, **kwargs)
+        else:
+>           raise TypeError(f"Cannot perform reduction '{name}' with string dtype")
+E           TypeError: Cannot perform reduction 'mean' with string dtype
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/string_arrow.py:563: TypeError
+_________________________ test_task_func_output_not_df _________________________
+
+    def test_task_func_output_not_df():
+        df = pd.DataFrame({"a": ["a", "b", "c"]})
+        dct = {"a": "b"}
+        columns = None
+>       output = task_func(df, dct, columns)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0224.py:52: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0224.py:22: in task_func
+    df = (df - df.mean()) / df.std()
+               ^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/util/_decorators.py:336: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:14473: in mean
+    result = super().mean(
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:11831: in mean
+    return self._stat_function(
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:11785: in _stat_function
+    return self._reduce(
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:13633: in _reduce
+    res = df._mgr.reduce(blk_func)
+          ^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/managers.py:1681: in reduce
+    res_blocks = [blk.reduce(func) for blk in self.blocks]
+                  ^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/blocks.py:358: in reduce
+    result = func(self.values)
+             ^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:13561: in blk_func
+    return values._reduce(name, skipna=skipna, keepdims=True, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <ArrowStringArray>
+['b', 'b', 'c']
+Length: 3, dtype: str, name = 'mean'
+skipna = True, keepdims = True, kwargs = {}
+
+    def _reduce(
+        self, name: str, *, skipna: bool = True, keepdims: bool = False, **kwargs
+    ):
+        if self.dtype.na_value is np.nan and name in ["any", "all"]:
+            if not skipna:
+                nas = pc.is_null(self._pa_array)
+                arr = pc.or_kleene(nas, pc.not_equal(self._pa_array, ""))
+            else:
+                arr = pc.not_equal(self._pa_array, "")
+            result = ArrowExtensionArray(arr)._reduce(
+                name, skipna=skipna, keepdims=keepdims, **kwargs
+            )
+            if keepdims:
+                # ArrowExtensionArray will return a length-1 bool[pyarrow] array
+                return result.astype(np.bool_)
+            return result
+    
+        if name in ("min", "max", "sum", "argmin", "argmax"):
+            result = self._reduce_calc(name, skipna=skipna, keepdims=keepdims, **kwargs)
+        else:
+>           raise TypeError(f"Cannot perform reduction '{name}' with string dtype")
+E           TypeError: Cannot perform reduction 'mean' with string dtype
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/string_arrow.py:563: TypeError
+__________________ test_task_func_output_columns_not_encoded ___________________
+
+    def test_task_func_output_columns_not_encoded():
+        df = pd.DataFrame({"a": ["a", "b", "c"]})
+        dct = {"a": "b"}
+        columns = None
+>       output = task_func(df, dct, columns)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0224.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0224.py:22: in task_func
+    df = (df - df.mean()) / df.std()
+               ^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/util/_decorators.py:336: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:14473: in mean
+    result = super().mean(
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:11831: in mean
+    return self._stat_function(
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:11785: in _stat_function
+    return self._reduce(
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:13633: in _reduce
+    res = df._mgr.reduce(blk_func)
+          ^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/managers.py:1681: in reduce
+    res_blocks = [blk.reduce(func) for blk in self.blocks]
+                  ^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/blocks.py:358: in reduce
+    result = func(self.values)
+             ^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:13561: in blk_func
+    return values._reduce(name, skipna=skipna, keepdims=True, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <ArrowStringArray>
+['b', 'b', 'c']
+Length: 3, dtype: str, name = 'mean'
+skipna = True, keepdims = True, kwargs = {}
+
+    def _reduce(
+        self, name: str, *, skipna: bool = True, keepdims: bool = False, **kwargs
+    ):
+        if self.dtype.na_value is np.nan and name in ["any", "all"]:
+            if not skipna:
+                nas = pc.is_null(self._pa_array)
+                arr = pc.or_kleene(nas, pc.not_equal(self._pa_array, ""))
+            else:
+                arr = pc.not_equal(self._pa_array, "")
+            result = ArrowExtensionArray(arr)._reduce(
+                name, skipna=skipna, keepdims=keepdims, **kwargs
+            )
+            if keepdims:
+                # ArrowExtensionArray will return a length-1 bool[pyarrow] array
+                return result.astype(np.bool_)
+            return result
+    
+        if name in ("min", "max", "sum", "argmin", "argmax"):
+            result = self._reduce_calc(name, skipna=skipna, keepdims=keepdims, **kwargs)
+        else:
+>           raise TypeError(f"Cannot perform reduction '{name}' with string dtype")
+E           TypeError: Cannot perform reduction 'mean' with string dtype
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/string_arrow.py:563: TypeError
+____________________ test_task_func_output_columns_encoded _____________________
+
+    def test_task_func_output_columns_encoded():
+        df = pd.DataFrame({"a": ["a", "b", "c"]})
+        dct = {"a": "b"}
+        columns = ["a"]
+>       output = task_func(df, dct, columns)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0224.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0224.py:22: in task_func
+    df = (df - df.mean()) / df.std()
+               ^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/util/_decorators.py:336: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:14473: in mean
+    result = super().mean(
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:11831: in mean
+    return self._stat_function(
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:11785: in _stat_function
+    return self._reduce(
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:13633: in _reduce
+    res = df._mgr.reduce(blk_func)
+          ^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/managers.py:1681: in reduce
+    res_blocks = [blk.reduce(func) for blk in self.blocks]
+                  ^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/blocks.py:358: in reduce
+    result = func(self.values)
+             ^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:13561: in blk_func
+    return values._reduce(name, skipna=skipna, keepdims=True, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <ArrowStringArray>
+['b', 'b', 'c']
+Length: 3, dtype: str, name = 'mean'
+skipna = True, keepdims = True, kwargs = {}
+
+    def _reduce(
+        self, name: str, *, skipna: bool = True, keepdims: bool = False, **kwargs
+    ):
+        if self.dtype.na_value is np.nan and name in ["any", "all"]:
+            if not skipna:
+                nas = pc.is_null(self._pa_array)
+                arr = pc.or_kleene(nas, pc.not_equal(self._pa_array, ""))
+            else:
+                arr = pc.not_equal(self._pa_array, "")
+            result = ArrowExtensionArray(arr)._reduce(
+                name, skipna=skipna, keepdims=keepdims, **kwargs
+            )
+            if keepdims:
+                # ArrowExtensionArray will return a length-1 bool[pyarrow] array
+                return result.astype(np.bool_)
+            return result
+    
+        if name in ("min", "max", "sum", "argmin", "argmax"):
+            result = self._reduce_calc(name, skipna=skipna, keepdims=keepdims, **kwargs)
+        else:
+>           raise TypeError(f"Cannot perform reduction '{name}' with string dtype")
+E           TypeError: Cannot perform reduction 'mean' with string dtype
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/string_arrow.py:563: TypeError
+__________________ test_task_func_output_columns_standardized __________________
+
+    def test_task_func_output_columns_standardized():
+        df = pd.DataFrame({"a": [1, 2, 3]})
+        dct = {"a": "b"}
+        columns = None
+        output = task_func(df, dct, columns)
+        assert all(output.columns == df.columns)
+>       assert all(output["a"] == [0, 1, 2])
+E       assert False
+E        +  where False = all(0   -1.0\n1   ...dtype: float64 == [0, 1, 2]
+E           
+E           Use -v to get more diff)
+
+test_0224.py:83: AssertionError
+=============================== warnings summary ===============================
+Codellama/8bit-quant/tests/test_0224.py::test_task_func_output_not_df
+Codellama/8bit-quant/tests/test_0224.py::test_task_func_output_columns_not_encoded
+  /work/tomohiro-w/utg/src/src_0224.py:13: Pandas4Warning: For backward compatibility, 'str' dtypes are included by select_dtypes when 'object' dtype is specified. This behavior is deprecated and will be removed in a future version. Explicitly pass 'str' to `include` to select them, or to `exclude` to remove them and silence this warning.
+  See https://pandas.pydata.org/docs/user_guide/migration-3-strings.html#string-migration-select-dtypes for details on how to write code that works with pandas 2 and 3.
+    columns = df.select_dtypes(include=['object']).columns.tolist()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0224.py::test_task_func_input_df_not_object - Failed: DID NOT RAI...
+FAILED test_0224.py::test_task_func_input_columns_not_list - KeyError: 'n'
+FAILED test_0224.py::test_task_func_input_columns_not_in_df - KeyError: 'd'
+FAILED test_0224.py::test_task_func_input_columns_not_object - TypeError: Can...
+FAILED test_0224.py::test_task_func_output_not_df - TypeError: Cannot perform...
+FAILED test_0224.py::test_task_func_output_columns_not_encoded - TypeError: C...
+FAILED test_0224.py::test_task_func_output_columns_encoded - TypeError: Canno...
+FAILED test_0224.py::test_task_func_output_columns_standardized - assert False
+8 failed, 3 passed, 2 warnings in 4.84s

@@ -1,0 +1,66 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_file = <_io.StringIO object at 0x78f2629e5180>
+
+    def test_task_func(mock_file):
+        # Define expected output after processing
+        expected_output = pd.DataFrame({
+            'id': [1, 2, 3],
+            'name': [0, 1, 2]
+        })
+    
+        # Call the function with the mock file and column name
+        result_df = task_func(mock_file, 'name')
+    
+        # Check if the result matches the expected output
+>       assert result_df.equals(expected_output)
+E       assert False
+E        +  where False = equals(   id  name\n0   1     0\n1   2     1\n2   3     2)
+E        +    where equals =     id  name\n0    1     0\n1  Bob     3\n2    2     1\n3    3     2\n4  Eve     3.equals
+
+test_0928.py:27: AssertionError
+__________________________ test_task_func_empty_file ___________________________
+
+    def test_task_func_empty_file():
+        # Create an empty mock file
+        empty_file = StringIO("")
+    
+        # Define expected output after processing
+        expected_output = pd.DataFrame(columns=['id', 'name'])
+    
+        # Call the function with the empty mock file and column name
+>       result_df = task_func(empty_file, 'name')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0928.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0928.py:5: in task_func
+    df = pd.read_csv(file_path)
+         ^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:873: in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:300: in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:1645: in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:1922: in _make_engine
+    return mapping[engine](f, **self.options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/c_parser_wrapper.py:95: in __init__
+    self._reader = parsers.TextReader(src, **kwds)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   pandas.errors.EmptyDataError: No columns to parse from file
+
+pandas/_libs/parsers.pyx:575: EmptyDataError
+=========================== short test summary info ============================
+FAILED test_0928.py::test_task_func - assert False
+FAILED test_0928.py::test_task_func_empty_file - pandas.errors.EmptyDataError...
+2 failed, 1 passed in 3.84s

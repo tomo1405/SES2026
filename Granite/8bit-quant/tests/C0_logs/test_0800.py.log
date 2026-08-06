@@ -1,0 +1,73 @@
+...FF.FF                                                                 [100%]
+=================================== FAILURES ===================================
+_________________ test_random_seed[None-expected_common_rows0] _________________
+
+input_list = [['a', 'b', 'c'], ['d', 'e', 'f'], ['g', 'h', 'i']]
+random_seed = None, expected_common_rows = []
+
+    @pytest.mark.parametrize("random_seed, expected_common_rows", [(None, []), (123, [])])
+    def test_random_seed(input_list, random_seed, expected_common_rows):
+        seed(random_seed)
+        common_rows, dataframes = task_func(input_list, random_seed=random_seed)
+>       assert common_rows.empty
+E       assert False
+E        +  where False =    o  f  d\n0  g  h  i\n1  a  b  c\n6  d  e  f.empty
+
+test_0800.py:19: AssertionError
+_________________ test_random_seed[123-expected_common_rows1] __________________
+
+input_list = [['a', 'b', 'c'], ['d', 'e', 'f'], ['g', 'h', 'i']]
+random_seed = 123, expected_common_rows = []
+
+    @pytest.mark.parametrize("random_seed, expected_common_rows", [(None, []), (123, [])])
+    def test_random_seed(input_list, random_seed, expected_common_rows):
+        seed(random_seed)
+        common_rows, dataframes = task_func(input_list, random_seed=random_seed)
+>       assert common_rows.empty
+E       assert False
+E        +  where False =    b  c  k\n0  a  b  c\n1  g  h  i\n3  d  e  f.empty
+
+test_0800.py:19: AssertionError
+_______________________ test_L[L1-expected_common_rows1] _______________________
+
+L = [['a', 'b', 'c']], expected_common_rows = []
+
+    @pytest.mark.parametrize("L, expected_common_rows", [
+        ([], []),
+        ([['a', 'b', 'c']], []),
+        ([['a', 'b', 'c'], ['d', 'e', 'f'], ['g', 'h', 'i']], [['a', 'b', 'c'], ['d', 'e', 'f'], ['g', 'h', 'i']])
+    ])
+    def test_L(L, expected_common_rows):
+        common_rows, dataframes = task_func(L)
+>       assert common_rows.values.tolist() == expected_common_rows
+E       AssertionError: assert [['a', 'b', 'c']] == []
+E         
+E         Left contains one more item: ['a', 'b', 'c']
+E         Use -v to get more diff
+
+test_0800.py:28: AssertionError
+_______________________ test_L[L2-expected_common_rows2] _______________________
+
+L = [['a', 'b', 'c'], ['d', 'e', 'f'], ['g', 'h', 'i']]
+expected_common_rows = [['a', 'b', 'c'], ['d', 'e', 'f'], ['g', 'h', 'i']]
+
+    @pytest.mark.parametrize("L, expected_common_rows", [
+        ([], []),
+        ([['a', 'b', 'c']], []),
+        ([['a', 'b', 'c'], ['d', 'e', 'f'], ['g', 'h', 'i']], [['a', 'b', 'c'], ['d', 'e', 'f'], ['g', 'h', 'i']])
+    ])
+    def test_L(L, expected_common_rows):
+        common_rows, dataframes = task_func(L)
+>       assert common_rows.values.tolist() == expected_common_rows
+E       AssertionError: assert [['d', 'e', '...a', 'b', 'c']] == [['a', 'b', '...g', 'h', 'i']]
+E         
+E         At index 0 diff: ['d', 'e', 'f'] != ['a', 'b', 'c']
+E         Use -v to get more diff
+
+test_0800.py:28: AssertionError
+=========================== short test summary info ============================
+FAILED test_0800.py::test_random_seed[None-expected_common_rows0] - assert False
+FAILED test_0800.py::test_random_seed[123-expected_common_rows1] - assert False
+FAILED test_0800.py::test_L[L1-expected_common_rows1] - AssertionError: asser...
+FAILED test_0800.py::test_L[L2-expected_common_rows2] - AssertionError: asser...
+4 failed, 4 passed in 1.19s

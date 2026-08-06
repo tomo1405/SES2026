@@ -1,0 +1,125 @@
+..F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_single_product _________________________
+
+self = <pandas.core.indexing._iLocIndexer object at 0x766727c316d0>
+key = (0, 'Average Sales')
+
+    @final
+    def _validate_tuple_indexer(self, key: tuple) -> tuple:
+        """
+        Check the key for valid keys across my indexer.
+        """
+        key = self._validate_key_length(key)
+        key = self._expand_ellipsis(key)
+        for i, k in enumerate(key):
+            try:
+>               self._validate_key(k, i)
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexing.py:993: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.indexing._iLocIndexer object at 0x766727c316d0>
+key = 'Average Sales', axis = 1
+
+    def _validate_key(self, key, axis: AxisInt) -> None:
+        if com.is_bool_indexer(key):
+            if hasattr(key, "index") and isinstance(key.index, Index):
+                if key.index.inferred_type == "integer":
+                    return
+                raise ValueError(
+                    "iLocation based boolean indexing cannot use an indexable as a mask"
+                )
+            return
+    
+        if isinstance(key, slice):
+            return
+        elif is_integer(key):
+            self._validate_integer(key, axis)
+        elif isinstance(key, tuple):
+            # a tuple should already have been caught by this point
+            # so don't treat a tuple as a valid indexer
+            raise IndexingError("Too many indexers")
+        elif is_list_like_indexer(key):
+            if isinstance(key, ABCSeries):
+                arr = key._values
+            elif is_array_like(key):
+                arr = key
+            else:
+                arr = np.array(key)
+            len_axis = len(self.obj._get_axis(axis))
+    
+            # check that the key has a numeric dtype
+            if not is_numeric_dtype(arr.dtype):
+                raise IndexError(f".iloc requires numeric indexers, got {arr}")
+    
+            if len(arr):
+                if isinstance(arr.dtype, ExtensionDtype):
+                    arr_max = arr._reduce("max")
+                    arr_min = arr._reduce("min")
+                else:
+                    arr_max = np.max(arr)
+                    arr_min = np.min(arr)
+    
+                # check that the key does not exceed the maximum size
+                if arr_max >= len_axis or arr_min < -len_axis:
+                    raise IndexError("positional indexers are out-of-bounds")
+        else:
+>           raise ValueError(f"Can only index by location with a [{self._valid_types}]")
+E           ValueError: Can only index by location with a [integer, integer slice (START point is INCLUDED, END point is EXCLUDED), listlike of integers, boolean array]
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexing.py:1635: ValueError
+
+The above exception was the direct cause of the following exception:
+
+    def test_task_func_single_product():
+        products = ['Product C']
+        df = task_func(products)
+    
+        # Check if the DataFrame has the correct number of rows and columns
+        assert len(df) == 1, "The number of rows in the DataFrame should be 1 for a single product"
+        assert len(df.columns) == 14, "The number of columns in the DataFrame should be 14"
+    
+        # Check if the DataFrame contains the correct columns
+        expected_columns = ['Product'] + [f'Month {i+1}' for i in range(12)] + ['Average Sales']
+        assert all(col in df.columns for col in expected_columns), "The DataFrame should contain the correct columns"
+    
+        # Check if the average sales are correctly calculated
+        monthly_sales = df.iloc[0, 1:13]
+        calculated_avg_sales = mean(monthly_sales)
+>       assert df.iloc[0, 'Average Sales'] == calculated_avg_sales, "The Average Sales should match the mean of the monthly sales"
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0628.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexing.py:1200: in __getitem__
+    return self._getitem_tuple(key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexing.py:1711: in _getitem_tuple
+    tup = self._validate_tuple_indexer(tup)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.indexing._iLocIndexer object at 0x766727c316d0>
+key = (0, 'Average Sales')
+
+    @final
+    def _validate_tuple_indexer(self, key: tuple) -> tuple:
+        """
+        Check the key for valid keys across my indexer.
+        """
+        key = self._validate_key_length(key)
+        key = self._expand_ellipsis(key)
+        for i, k in enumerate(key):
+            try:
+                self._validate_key(k, i)
+            except ValueError as err:
+>               raise ValueError(
+                    f"Location based indexing can only have [{self._valid_types}] types"
+                ) from err
+E               ValueError: Location based indexing can only have [integer, integer slice (START point is INCLUDED, END point is EXCLUDED), listlike of integers, boolean array] types
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexing.py:995: ValueError
+=========================== short test summary info ============================
+FAILED test_0628.py::test_task_func_single_product - ValueError: Location bas...
+1 failed, 2 passed in 1.35s

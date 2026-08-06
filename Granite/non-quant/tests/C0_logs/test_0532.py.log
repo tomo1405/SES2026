@@ -1,0 +1,53 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_duplicates ________________________
+
+mock_plt = <MagicMock name='pyplot' id='131781887238144'>
+
+    def test_task_func_with_duplicates(mock_plt):
+        df = pd.DataFrame({"x": [1, 2, 3, 2, 1], "y": [4, 5, 6, 5, 4]})
+        duplicates_counter, unique_df, ax = task_func(df)
+>       assert duplicates_counter == Counter(((1, 4), (2, 5)))
+E       assert Counter({(np....int64(5)): 2}) == Counter({(1, ...1, (2, 5): 1})
+E         
+E         Differing items:
+E         {(2, 5): 2} != {(2, 5): 1}
+E         {(1, 4): 2} != {(1, 4): 1}
+E         Use -v to get more diff
+
+test_0532.py:41: AssertionError
+______________________ test_task_func_without_duplicates _______________________
+
+mock_plt = <MagicMock name='pyplot' id='131780270012992'>
+
+    def test_task_func_without_duplicates(mock_plt):
+        df = pd.DataFrame({"x": [1, 2, 3], "y": [4, 5, 6]})
+        duplicates_counter, unique_df, ax = task_func(df)
+        assert not duplicates_counter
+>       assert unique_df.equals(df)
+E       assert False
+E        +  where False = equals(   x  y\n0  1  4\n1  2  5\n2  3  6)
+E        +    where equals =    x  y  cluster\n0  1  4        0\n1  2  5        2\n2  3  6        1.equals
+
+test_0532.py:52: AssertionError
+__________ test_task_func_with_fewer_clusters_than_unique_data_points __________
+
+mock_plt = <MagicMock name='pyplot' id='131780270798128'>
+
+    def test_task_func_with_fewer_clusters_than_unique_data_points(mock_plt):
+        df = pd.DataFrame({"x": [1, 2, 3], "y": [4, 5, 6]})
+        duplicates_counter, unique_df, ax = task_func(df, n_clusters=5)
+        assert not duplicates_counter
+>       assert unique_df.equals(df)
+E       assert False
+E        +  where False = equals(   x  y\n0  1  4\n1  2  5\n2  3  6)
+E        +    where equals =    x  y  cluster\n0  1  4        1\n1  2  5        0\n2  3  6        2.equals
+
+test_0532.py:62: AssertionError
+=========================== short test summary info ============================
+FAILED test_0532.py::test_task_func_with_duplicates - assert Counter({(np.......
+FAILED test_0532.py::test_task_func_without_duplicates - assert False
+FAILED test_0532.py::test_task_func_with_fewer_clusters_than_unique_data_points
+3 failed in 4.93s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

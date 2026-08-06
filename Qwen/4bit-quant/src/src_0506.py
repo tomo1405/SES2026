@@ -1,0 +1,4 @@
+import hashlib
+import hmac
+def task_func(secret, message):
+    return hmac.new(secret.encode(), message.encode(), hashlib.sha256).hexdigest()

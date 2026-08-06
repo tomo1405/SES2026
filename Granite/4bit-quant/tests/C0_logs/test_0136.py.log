@@ -1,0 +1,36 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Input is not a pandas DataFrame
+        with pytest.raises(ValueError) as excinfo:
+            task_func(np.array([1, 2, 3]))
+        assert "Input must be a non-empty pandas DataFrame." in str(excinfo.value)
+    
+        # Test case 2: Input is an empty pandas DataFrame
+        with pytest.raises(ValueError) as excinfo:
+            task_func(pd.DataFrame())
+        assert "Input must be a non-empty pandas DataFrame." in str(excinfo.value)
+    
+        # Test case 3: Input is a pandas DataFrame with missing values
+        df = pd.DataFrame({'A': [1, 2, np.nan], 'B': [4, 5, 6]})
+        expected_df = pd.DataFrame({'A': [1, 2, 1.5], 'B': [4, 5, 6]})
+        expected_ax_title = 'Boxplot of Last Column'
+        expected_ax_xlabel = df.columns[-1]
+        df_actual, ax_actual = task_func(df)
+>       assert df_actual.equals(expected_df)
+E       assert False
+E        +  where False = equals(     A  B\n0  1.0  4\n1  2.0  5\n2  1.5  6)
+E        +    where equals =      A    B\n0  1.0  4.0\n1  2.0  5.0\n2  NaN  6.0.equals
+
+test_0136.py:26: AssertionError
+=============================== warnings summary ===============================
+Granite/4bit-quant/tests/test_0136.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/categorical.py:700: MatplotlibDeprecationWarning: vert: bool was deprecated in Matplotlib 3.11 and will be removed in 3.13. Use orientation: {'vertical', 'horizontal'} instead.
+    artists = ax.bxp(**boxplot_kws)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0136.py::test_task_func - assert False
+1 failed, 1 warning in 4.60s

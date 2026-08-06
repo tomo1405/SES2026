@@ -1,0 +1,46 @@
+F.F..                                                                    [100%]
+=================================== FAILURES ===================================
+_________________ TestTaskFunc.test_task_func_with_valid_input _________________
+
+self = <test_0388.TestTaskFunc object at 0x74b4d9c393d0>
+
+    def test_task_func_with_valid_input(self):
+        city_dict = {'city1': 'New York', 'city2': 'London', 'city3': 'Paris'}
+        expected_cities = ['New York', 'London', 'Paris']
+        expected_values = [500000, 900000, 200000]  # Example values, will be replaced by mock
+        np.random.seed(0)  # Ensuring reproducibility
+        mock_random = np.random.RandomState(0)
+        with pytest.MonkeyPatch.context() as mp:
+            mp.setattr(np.random, 'randint', lambda low, high, size=None: mock_random.randint(low, high, size))
+            result, ax = task_func(city_dict, max_range=1000000, seed=0)
+    
+        assert list(result.keys()) == expected_cities
+>       assert all(result[city] in expected_values for city in expected_cities)
+E       assert False
+E        +  where False = all(<generator object TestTaskFunc.test_task_func_with_valid_input.<locals>.<genexpr> at 0x74b4d9b6e960>)
+
+test_0388.py:19: AssertionError
+_______________ TestTaskFunc.test_task_func_with_non_string_city _______________
+
+self = <test_0388.TestTaskFunc object at 0x74b4d9ad2720>
+
+    def test_task_func_with_non_string_city(self):
+        city_dict = {'city1': 'New York', 'city2': 12345, 'city3': 'Paris'}
+        expected_cities = ['New York', 'Paris']
+        expected_values = [500000, 200000]  # Example values, will be replaced by mock
+        np.random.seed(0)  # Ensuring reproducibility
+        mock_random = np.random.RandomState(0)
+        with pytest.MonkeyPatch.context() as mp:
+            mp.setattr(np.random, 'randint', lambda low, high, size=None: mock_random.randint(low, high, size))
+            result, ax = task_func(city_dict, max_range=1000000, seed=0)
+    
+        assert list(result.keys()) == expected_cities
+>       assert all(result[city] in expected_values for city in expected_cities)
+E       assert False
+E        +  where False = all(<generator object TestTaskFunc.test_task_func_with_non_string_city.<locals>.<genexpr> at 0x74b4d97252a0>)
+
+test_0388.py:38: AssertionError
+=========================== short test summary info ============================
+FAILED test_0388.py::TestTaskFunc::test_task_func_with_valid_input - assert F...
+FAILED test_0388.py::TestTaskFunc::test_task_func_with_non_string_city - asse...
+2 failed, 3 passed in 1.78s

@@ -1,0 +1,47 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        matrix1 = np.array([[1, 2, 3], [4, 5, 6]])
+        matrix2 = np.array([[7, 8, 9], [10, 11, 12]])
+        expected_output = "1 2 3 7 8 9n4 5 6 10 11 12n"
+    
+        output = task_func(matrix1, matrix2)
+    
+>       assert output == expected_output, "Output does not match expected output"
+E       AssertionError: Output does not match expected output
+E       assert '1 2 3  7  8 ... 5 6 10 11 12' == '1 2 3 7 8 9n4 5 6 10 11 12n'
+E         
+E         - 1 2 3 7 8 9n4 5 6 10 11 12n
+E         + 1 2 3  7  8  9
+E         + 4 5 6 10 11 12
+
+test_0604.py:13: AssertionError
+_______________________ test_task_func_with_empty_matrix _______________________
+
+    def test_task_func_with_empty_matrix():
+        matrix1 = np.array([])
+        matrix2 = np.array([[7, 8, 9], [10, 11, 12]])
+        expected_output = "7 8 9n10 11 12n"
+    
+>       output = task_func(matrix1, matrix2)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0604.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+matrix1 = array([], dtype=float64)
+matrix2 = array([[ 7,  8,  9],
+       [10, 11, 12]])
+
+    def task_func(matrix1, matrix2):
+>       combined_matrix = np.concatenate((matrix1, matrix2), axis=1)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       numpy.exceptions.AxisError: axis 1 is out of bounds for array of dimension 1
+
+../../../src/src_0604.py:4: AxisError
+=========================== short test summary info ============================
+FAILED test_0604.py::test_task_func - AssertionError: Output does not match e...
+FAILED test_0604.py::test_task_func_with_empty_matrix - numpy.exceptions.Axis...
+2 failed in 1.24s

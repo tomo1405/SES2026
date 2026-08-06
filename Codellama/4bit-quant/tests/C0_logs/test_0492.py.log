@@ -1,0 +1,52 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that the function returns a tuple with two elements
+        result = task_func(1000)
+        assert len(result) == 2
+    
+        # Test that the first element of the tuple is a dictionary
+        sales_data, ax = result
+        assert isinstance(sales_data, dict)
+    
+        # Test that the second element of the tuple is a matplotlib Axes object
+        assert isinstance(ax, matplotlib.axes.Axes)
+    
+        # Test that the function raises a ValueError when the start time is negative
+        with pytest.raises(ValueError):
+            task_func(-1000)
+    
+        # Test that the function raises a ValueError when the start date is after the current date
+        with pytest.raises(ValueError):
+            task_func(datetime.utcnow().timestamp() * 1000)
+    
+        # Test that the function returns a dictionary with the correct keys
+        result = task_func(1000)
+>       assert set(result.keys()) == set(["Electronics", "Clothing", "Home", "Books", "Sports"])
+                   ^^^^^^^^^^^
+E       AttributeError: 'tuple' object has no attribute 'keys'
+
+test_0492.py:30: AttributeError
+=============================== warnings summary ===============================
+Codellama/4bit-quant/tests/test_0492.py::test_task_func
+Codellama/4bit-quant/tests/test_0492.py::test_task_func
+Codellama/4bit-quant/tests/test_0492.py::test_task_func
+  /work/tomohiro-w/utg/src/src_0492.py:13: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+    start_time = datetime.utcfromtimestamp(epoch_milliseconds / 1000.0)
+
+Codellama/4bit-quant/tests/test_0492.py::test_task_func
+Codellama/4bit-quant/tests/test_0492.py::test_task_func
+Codellama/4bit-quant/tests/test_0492.py::test_task_func
+  /work/tomohiro-w/utg/src/src_0492.py:14: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    current_time = datetime.utcnow()
+
+Codellama/4bit-quant/tests/test_0492.py::test_task_func
+  /work/tomohiro-w/utg/Codellama/4bit-quant/tests/test_0492.py:26: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    task_func(datetime.utcnow().timestamp() * 1000)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0492.py::test_task_func - AttributeError: 'tuple' object has no a...
+1 failed, 7 warnings in 1.85s

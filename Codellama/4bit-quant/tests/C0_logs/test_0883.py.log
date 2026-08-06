@@ -1,0 +1,41 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: db_file does not exist
+        with pytest.raises(ValueError):
+            task_func('non_existent_file.db', 'table_name', 'column_name')
+    
+        # Test case 2: db_file exists, but table_name does not exist
+        with pytest.raises(ValueError):
+            task_func('existent_file.db', 'non_existent_table', 'column_name')
+    
+        # Test case 3: db_file exists, table_name exists, but column_name does not exist
+        with pytest.raises(ValueError):
+            task_func('existent_file.db', 'table_name', 'non_existent_column')
+    
+        # Test case 4: db_file exists, table_name exists, column_name exists, but pattern does not match
+        with pytest.raises(ValueError):
+            task_func('existent_file.db', 'table_name', 'column_name', 'invalid_pattern')
+    
+        # Test case 5: db_file exists, table_name exists, column_name exists, pattern matches
+>       matches = task_func('existent_file.db', 'table_name', 'column_name', 'valid_pattern')
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0883.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+db_file = 'existent_file.db', table_name = 'table_name'
+column_name = 'column_name', pattern = 'valid_pattern'
+
+    def task_func(db_file, table_name, column_name, pattern='\d+[xX]'):
+    
+        if not os.path.isfile(db_file):
+>           raise ValueError('db_file does not exist.')
+E           ValueError: db_file does not exist.
+
+../../../src/src_0883.py:7: ValueError
+=========================== short test summary info ============================
+FAILED test_0883.py::test_task_func - ValueError: db_file does not exist.
+1 failed in 1.10s

@@ -1,0 +1,42 @@
+F..F                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        myString = "https://www.google.com https://www.facebook.com http://www.invalid.com"
+        expected_output = {
+            "www.google.com": "172.217.12.142",
+            "www.facebook.com": "31.13.71.36",
+            "www.invalid.com": None
+        }
+>       assert task_func(myString) == expected_output
+E       AssertionError: assert {'www.google....id.com': None} == {'www.google....id.com': None}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'www.google.com': '142.251.153.119'} != {'www.google.com': '172.217.12.142'}
+E         {'www.facebook.com': '157.240.209.35'} != {'www.facebook.com': '31.13.71.36'}
+E         Use -v to get more diff
+
+test_1123.py:11: AssertionError
+__________________________ test_task_func_invalid_url __________________________
+
+    def test_task_func_invalid_url():
+        myString = "https://www.google.com https://www.facebook.com invalid_url"
+        expected_output = {
+            "www.google.com": "172.217.12.142",
+            "www.facebook.com": "31.13.71.36",
+        }
+>       assert task_func(myString) == expected_output
+E       AssertionError: assert {'www.google....7.240.209.35'} == {'www.google....'31.13.71.36'}
+E         
+E         Differing items:
+E         {'www.google.com': '142.251.155.119'} != {'www.google.com': '172.217.12.142'}
+E         {'www.facebook.com': '157.240.209.35'} != {'www.facebook.com': '31.13.71.36'}
+E         Use -v to get more diff
+
+test_1123.py:29: AssertionError
+=========================== short test summary info ============================
+FAILED test_1123.py::test_task_func - AssertionError: assert {'www.google.......
+FAILED test_1123.py::test_task_func_invalid_url - AssertionError: assert {'ww...
+2 failed, 2 passed in 2.86s

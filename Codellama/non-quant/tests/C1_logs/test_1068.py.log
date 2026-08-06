@@ -1,0 +1,106 @@
+.FFF                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_invalid_repo_url ________________________
+
+repo_url = 'https://api.github.com/repos/python/invalid_repo'
+
+    def task_func(repo_url: str) -> dict:
+        try:
+            response = requests.get(repo_url, timeout=2)
+>           response.raise_for_status()  # Raises HTTPError for bad requests
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../../../src/src_1068.py:6: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Response [404]>
+
+    def raise_for_status(self) -> None:
+        """Raises :class:`HTTPError`, if one occurred."""
+    
+        http_error_msg = ""
+        if isinstance(self.reason, bytes):
+            # We attempt to decode utf-8 first because some servers
+            # choose to localize their reason strings. If the string
+            # isn't utf-8, we fall back to iso-8859-1 for all other
+            # encodings. (See PR #3538)
+            try:
+                reason = self.reason.decode("utf-8")
+            except UnicodeDecodeError:
+                reason = self.reason.decode("iso-8859-1")
+        else:
+            reason = self.reason
+    
+        if 400 <= self.status_code < 500:
+            http_error_msg = (
+                f"{self.status_code} Client Error: {reason} for url: {self.url}"
+            )
+    
+        elif 500 <= self.status_code < 600:
+            http_error_msg = (
+                f"{self.status_code} Server Error: {reason} for url: {self.url}"
+            )
+    
+        if http_error_msg:
+>           raise HTTPError(http_error_msg, response=self)
+E           requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://api.github.com/repos/python/invalid_repo
+
+../../../.venv/lib/python3.12/site-packages/requests/models.py:1167: HTTPError
+
+The above exception was the direct cause of the following exception:
+
+    def test_task_func_invalid_repo_url():
+        repo_url = "https://api.github.com/repos/python/invalid_repo"
+        with pytest.raises(requests.exceptions.HTTPError):
+>           task_func(repo_url)
+
+test_1068.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+repo_url = 'https://api.github.com/repos/python/invalid_repo'
+
+    def task_func(repo_url: str) -> dict:
+        try:
+            response = requests.get(repo_url, timeout=2)
+            response.raise_for_status()  # Raises HTTPError for bad requests
+            repo_info = response.json()
+            if (
+                response.status_code == 403
+                and repo_info.get("message") == "API rate limit exceeded"
+            ):
+                raise requests.exceptions.HTTPError("API rate limit exceeded")
+    
+            if repo_info.get("open_issues_count", 0) > 10000:
+                logging.warning("The repository has more than 10000 open issues.")
+    
+            return repo_info
+    
+        except requests.exceptions.RequestException as e:
+>           raise requests.exceptions.RequestException(
+                f"Error fetching repo info: {e}"
+            ) from e
+E           requests.exceptions.RequestException: Error fetching repo info: 404 Client Error: Not Found for url: https://api.github.com/repos/python/invalid_repo
+
+../../../src/src_1068.py:20: RequestException
+____________________ test_task_func_api_rate_limit_exceeded ____________________
+
+    def test_task_func_api_rate_limit_exceeded():
+        repo_url = "https://api.github.com/repos/python/cpython"
+>       with pytest.raises(requests.exceptions.HTTPError):
+E       Failed: DID NOT RAISE HTTPError
+
+test_1068.py:18: Failed
+________________________ test_task_func_logging_warning ________________________
+
+    def test_task_func_logging_warning():
+        repo_url = "https://api.github.com/repos/python/cpython"
+>       with pytest.warns(UserWarning):
+E       Failed: DID NOT WARN. No warnings of type (<class 'UserWarning'>,) were emitted.
+E        Emitted warnings: [].
+
+test_1068.py:23: Failed
+=========================== short test summary info ============================
+FAILED test_1068.py::test_task_func_invalid_repo_url - requests.exceptions.Re...
+FAILED test_1068.py::test_task_func_api_rate_limit_exceeded - Failed: DID NOT...
+FAILED test_1068.py::test_task_func_logging_warning - Failed: DID NOT WARN. N...
+3 failed, 1 passed in 1.36s

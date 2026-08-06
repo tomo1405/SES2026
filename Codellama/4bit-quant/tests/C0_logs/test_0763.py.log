@@ -1,0 +1,26 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        directory_name = "test_directory"
+        content = "Sopetón"
+        file_names = ["file1.txt", "file2.txt", "file3.txt"]
+        encoding = "latin-1"
+    
+        zipped_file = task_func(directory_name, content, file_names, encoding)
+    
+        assert os.path.exists(zipped_file)
+        assert zipfile.is_zipfile(zipped_file)
+    
+        with zipfile.ZipFile(zipped_file, 'r') as zipf:
+            for file in file_names:
+>               assert file in zipf.namelist()
+E               AssertionError: assert 'file1.txt' in ['test_directory/file2.txt', 'test_directory/4.json', 'test_directory/file_3.txt', 'test_directory/1.json', 'test_directory/file_4.txt', 'test_directory/file_2.txt', ...]
+E                +  where ['test_directory/file2.txt', 'test_directory/4.json', 'test_directory/file_3.txt', 'test_directory/1.json', 'test_directory/file_4.txt', 'test_directory/file_2.txt', ...] = namelist()
+E                +    where namelist = <zipfile.ZipFile filename='test_directory.zip' mode='r'>.namelist
+
+test_0763.py:20: AssertionError
+=========================== short test summary info ============================
+FAILED test_0763.py::test_task_func - AssertionError: assert 'file1.txt' in [...
+1 failed in 0.47s

@@ -1,0 +1,52 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        original_file_location = "test.xlsx"
+        new_file_location = "new_test.xlsx"
+        sheet_name = "Sheet1"
+    
+        # Test with valid input
+>       result = task_func(original_file_location, new_file_location, sheet_name)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0363.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+original_file_location = 'test.xlsx', new_file_location = 'new_test.xlsx'
+sheet_name = 'Sheet1'
+
+    def task_func(original_file_location="test.xlsx", new_file_location="new_test.xlsx", sheet_name="Sheet1"):
+        if not os.path.exists(original_file_location):
+>           raise FileNotFoundError(f"No file found at {original_file_location}")
+E           FileNotFoundError: No file found at test.xlsx
+
+../../../src/src_0363.py:5: FileNotFoundError
+______________________ test_task_func_invalid_sheet_name _______________________
+
+    def test_task_func_invalid_sheet_name():
+        original_file_location = "test.xlsx"
+        new_file_location = "new_test.xlsx"
+        sheet_name = "Sheet2"
+    
+        # Test with invalid sheet name
+        with pytest.raises(ValueError):
+>           task_func(original_file_location, new_file_location, sheet_name)
+
+test_0363.py:30: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+original_file_location = 'test.xlsx', new_file_location = 'new_test.xlsx'
+sheet_name = 'Sheet2'
+
+    def task_func(original_file_location="test.xlsx", new_file_location="new_test.xlsx", sheet_name="Sheet1"):
+        if not os.path.exists(original_file_location):
+>           raise FileNotFoundError(f"No file found at {original_file_location}")
+E           FileNotFoundError: No file found at test.xlsx
+
+../../../src/src_0363.py:5: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0363.py::test_task_func_valid_input - FileNotFoundError: No file ...
+FAILED test_0363.py::test_task_func_invalid_sheet_name - FileNotFoundError: N...
+2 failed, 1 passed in 1.11s

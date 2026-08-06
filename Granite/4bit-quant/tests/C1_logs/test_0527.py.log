@@ -1,0 +1,55 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        input_file = "data.json"
+        with open(input_file, "r") as f:
+            data = json.load(f)
+    
+        all_keys = set().union(*(d.keys() for d in data))
+        stats = defaultdict(list)
+        for d in data:
+            for key in all_keys:
+                value = d.get(key, np.nan)
+                if isinstance(value, (int, float)):
+                    stats[key].append(value)
+                else:
+                    stats[key].append(np.nan)
+    
+        result = {
+            k: {"mean": np.nanmean(v), "median": np.nanmedian(v)} for k, v in stats.items()
+        }
+        df = pd.DataFrame(result).transpose().sort_index()
+    
+>       assert task_func(input_file) == df
+
+test_0527.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Empty DataFrame
+Columns: []
+Index: []
+
+    @final
+    def __bool__(self) -> NoReturn:
+>       raise ValueError(
+            f"The truth value of a {type(self).__name__} is ambiguous. "
+            "Use a.empty, a.bool(), a.item(), a.any() or a.all()."
+        )
+E       ValueError: The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:1513: ValueError
+____________________ test_task_func_with_invalid_input_file ____________________
+
+    def test_task_func_with_invalid_input_file():
+        input_file = "invalid_file.json"
+>       with open(input_file, "r") as f:
+             ^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'invalid_file.json'
+
+test_0527.py:31: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0527.py::test_task_func - ValueError: The truth value of a DataFr...
+FAILED test_0527.py::test_task_func_with_invalid_input_file - FileNotFoundErr...
+2 failed in 1.28s

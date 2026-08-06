@@ -1,0 +1,38 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Prepare test data
+        list_of_menuitems = [['burger', 'fries'], ['burger', 'soda'], ['fries', 'soda']]
+    
+        # Call the function
+        ax = task_func(list_of_menuitems)
+    
+        # Check if the plot is created correctly
+        assert isinstance(ax, plt.Axes), "The function should return a matplotlib Axes object"
+    
+        # Check if the plot has the correct number of bars
+        bars = ax.patches
+        assert len(bars) == 3, "There should be 3 bars in the plot (one for each unique menu item)"
+    
+        # Check if the plot has the correct labels
+        labels = [label.get_text() for label in ax.get_xticklabels()]
+>       assert set(labels) == {'burger', 'fries', 'soda'}, "The plot should have 'burger', 'fries', and 'soda' as labels"
+E       AssertionError: The plot should have 'burger', 'fries', and 'soda' as labels
+E       assert {'', 'burger'...ries', 'soda'} == {'burger', 'fries', 'soda'}
+E         
+E         Extra items in the left set:
+E         ''
+E         Use -v to get more diff
+
+test_0541.py:22: AssertionError
+=============================== warnings summary ===============================
+Qwen/4bit-quant/tests/test_0541.py::test_task_func
+  /work/tomohiro-w/utg/src/src_0541.py:17: UserWarning: set_ticklabels() should only be used with a fixed number of ticks, i.e. after set_ticks() or using a FixedLocator. Otherwise, ticks may be mislabeled.
+    ax.set_xticklabels(labels)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0541.py::test_task_func - AssertionError: The plot should have 'b...
+1 failed, 1 warning in 1.61s

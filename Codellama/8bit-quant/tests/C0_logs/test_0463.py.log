@@ -1,0 +1,47 @@
+..FFF                                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_num_rows_positive _______________________
+
+    def test_task_func_num_rows_positive():
+        df, ax = task_func(num_rows=100)
+        assert isinstance(df, pd.DataFrame)
+        assert isinstance(ax, matplotlib.axes.Axes)
+        assert len(df) == 100
+>       assert len(ax.get_xticklabels()) == 4
+E       AssertionError: assert 5 == 4
+E        +  where 5 = len([Text(0, 0, 'b'), Text(1, 0, 'a'), Text(2, 0, 'c'), Text(3, 0, 'e'), Text(4, 0, 'd')])
+E        +    where [Text(0, 0, 'b'), Text(1, 0, 'a'), Text(2, 0, 'c'), Text(3, 0, 'e'), Text(4, 0, 'd')] = get_xticklabels()
+E        +      where get_xticklabels = <Axes: title={'center': 'Category Counts'}, xlabel='Category'>.get_xticklabels
+
+test_0463.py:20: AssertionError
+__________________________ test_task_func_categories ___________________________
+
+    def test_task_func_categories():
+        df, ax = task_func(num_rows=100, categories=["a", "b", "c"])
+        assert isinstance(df, pd.DataFrame)
+        assert isinstance(ax, matplotlib.axes.Axes)
+        assert len(df) == 100
+        assert len(ax.get_xticklabels()) == 3
+>       assert len(ax.get_yticklabels()) == 10
+E       AssertionError: assert 9 == 10
+E        +  where 9 = len([Text(0, 0.0, '0'), Text(0, 5.0, '5'), Text(0, 10.0, '10'), Text(0, 15.0, '15'), Text(0, 20.0, '20'), Text(0, 25.0, '25'), ...])
+E        +    where [Text(0, 0.0, '0'), Text(0, 5.0, '5'), Text(0, 10.0, '10'), Text(0, 15.0, '15'), Text(0, 20.0, '20'), Text(0, 25.0, '25'), ...] = get_yticklabels()
+E        +      where get_yticklabels = <Axes: title={'center': 'Category Counts'}, xlabel='Category'>.get_yticklabels
+
+test_0463.py:29: AssertionError
+__________________________ test_task_func_random_seed __________________________
+
+    def test_task_func_random_seed():
+        df1, ax1 = task_func(num_rows=100, random_seed=42)
+        df2, ax2 = task_func(num_rows=100, random_seed=42)
+        assert df1.equals(df2)
+>       assert ax1.get_figure().equals(ax2.get_figure())
+               ^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Figure' object has no attribute 'equals'
+
+test_0463.py:35: AttributeError
+=========================== short test summary info ============================
+FAILED test_0463.py::test_task_func_num_rows_positive - AssertionError: asser...
+FAILED test_0463.py::test_task_func_categories - AssertionError: assert 9 == 10
+FAILED test_0463.py::test_task_func_random_seed - AttributeError: 'Figure' ob...
+3 failed, 2 passed in 2.07s

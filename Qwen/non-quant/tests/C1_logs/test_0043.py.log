@@ -1,0 +1,74 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_output _____________________________
+
+sample_data = array([[0.5488135 , 0.71518937, 0.60276338, 0.54488318, 0.4236548 ],
+       [0.64589411, 0.43758721, 0.891773  , 0.963... 0.59223042, 0.89676116, 0.40673335, 0.55207828],
+       [0.27165277, 0.45544415, 0.40171354, 0.24841347, 0.50586638]])
+
+    def test_task_func_output(sample_data):
+>       df, ax = task_func(sample_data, n_components=2)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0043.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data_matrix = array([[0.5488135 , 0.71518937, 0.60276338, 0.54488318, 0.4236548 ],
+       [0.64589411, 0.43758721, 0.891773  , 0.963... 0.59223042, 0.89676116, 0.40673335, 0.55207828],
+       [0.27165277, 0.45544415, 0.40171354, 0.24841347, 0.50586638]])
+n_components = 2
+
+    def task_func(data_matrix, n_components=2):
+        pca = PCA(n_components=n_components)
+        transformed_data = pca.fit_transform(data_matrix)
+    
+        df = pd.DataFrame(
+            transformed_data,
+            columns=[f"Component {i+1}" for i in range(transformed_data.shape[1])],
+        )
+        df["Mean"] = df.mean(axis=1)
+    
+        fig, ax = plt.subplots()
+>       ax.plot(np.cumsum(pca.explained_variance_ratio_))
+                ^^
+E       NameError: name 'np' is not defined
+
+../../../src/src_0043.py:15: NameError
+_________________________ test_task_func_n_components __________________________
+
+sample_data = array([[0.5488135 , 0.71518937, 0.60276338, 0.54488318, 0.4236548 ],
+       [0.64589411, 0.43758721, 0.891773  , 0.963... 0.59223042, 0.89676116, 0.40673335, 0.55207828],
+       [0.27165277, 0.45544415, 0.40171354, 0.24841347, 0.50586638]])
+
+    def test_task_func_n_components(sample_data):
+>       df, ax = task_func(sample_data, n_components=3)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0043.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data_matrix = array([[0.5488135 , 0.71518937, 0.60276338, 0.54488318, 0.4236548 ],
+       [0.64589411, 0.43758721, 0.891773  , 0.963... 0.59223042, 0.89676116, 0.40673335, 0.55207828],
+       [0.27165277, 0.45544415, 0.40171354, 0.24841347, 0.50586638]])
+n_components = 3
+
+    def task_func(data_matrix, n_components=2):
+        pca = PCA(n_components=n_components)
+        transformed_data = pca.fit_transform(data_matrix)
+    
+        df = pd.DataFrame(
+            transformed_data,
+            columns=[f"Component {i+1}" for i in range(transformed_data.shape[1])],
+        )
+        df["Mean"] = df.mean(axis=1)
+    
+        fig, ax = plt.subplots()
+>       ax.plot(np.cumsum(pca.explained_variance_ratio_))
+                ^^
+E       NameError: name 'np' is not defined
+
+../../../src/src_0043.py:15: NameError
+=========================== short test summary info ============================
+FAILED test_0043.py::test_task_func_output - NameError: name 'np' is not defined
+FAILED test_0043.py::test_task_func_n_components - NameError: name 'np' is no...
+2 failed in 3.65s

@@ -1,0 +1,136 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_________ test_task_func[10-10-2-private_key-0123456789-011010001010] __________
+
+num = '10', from_base = 10, to_base = 2, private_key = 'private_key'
+alphabet = '0123456789', expected_output = '011010001010'
+
+    @pytest.mark.parametrize("num, from_base, to_base, private_key, alphabet, expected_output", [
+        ("10", 10, 2, "private_key", "0123456789", "011010001010"),
+        ("255", 10, 16, "private_key", "0123456789abcdef", "ff"),
+        ("1234567890", 10, 8, "private_key", "01234567", "313233347735363730"),
+    ])
+    def test_task_func(num, from_base, to_base, private_key, alphabet, expected_output):
+>       assert task_func(num, from_base, to_base, private_key, alphabet) == expected_output
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0535.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+num = '1010', from_base = 10, to_base = 2, private_key = 'private_key'
+alphabet = '0123456789'
+
+    def task_func(num, from_base, to_base, private_key, alphabet):
+        base64_table = np.array(list(alphabet))
+        n = int(num, from_base)
+    
+        new_num = ''
+        while n > 0:
+            n, m = divmod(n, to_base)
+            new_num += base64_table[m]
+    
+        num = new_num[::-1]
+        data = bytes(num, 'utf-8')
+>       signed_num = private_key.sign(
+                     ^^^^^^^^^^^^^^^^
+            data,
+            padding.PSS(
+                mgf=padding.MGF1(hashes.SHA256()),
+                salt_length=padding.PSS.MAX_LENGTH
+            ),
+            hashes.SHA256()
+        )
+E       AttributeError: 'str' object has no attribute 'sign'
+
+../../../src/src_0535.py:16: AttributeError
+__________ test_task_func[255-10-16-private_key-0123456789abcdef-ff] ___________
+
+num = '255', from_base = 10, to_base = 16, private_key = 'private_key'
+alphabet = '0123456789abcdef', expected_output = 'ff'
+
+    @pytest.mark.parametrize("num, from_base, to_base, private_key, alphabet, expected_output", [
+        ("10", 10, 2, "private_key", "0123456789", "011010001010"),
+        ("255", 10, 16, "private_key", "0123456789abcdef", "ff"),
+        ("1234567890", 10, 8, "private_key", "01234567", "313233347735363730"),
+    ])
+    def test_task_func(num, from_base, to_base, private_key, alphabet, expected_output):
+>       assert task_func(num, from_base, to_base, private_key, alphabet) == expected_output
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0535.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+num = 'ff', from_base = 10, to_base = 16, private_key = 'private_key'
+alphabet = '0123456789abcdef'
+
+    def task_func(num, from_base, to_base, private_key, alphabet):
+        base64_table = np.array(list(alphabet))
+        n = int(num, from_base)
+    
+        new_num = ''
+        while n > 0:
+            n, m = divmod(n, to_base)
+            new_num += base64_table[m]
+    
+        num = new_num[::-1]
+        data = bytes(num, 'utf-8')
+>       signed_num = private_key.sign(
+                     ^^^^^^^^^^^^^^^^
+            data,
+            padding.PSS(
+                mgf=padding.MGF1(hashes.SHA256()),
+                salt_length=padding.PSS.MAX_LENGTH
+            ),
+            hashes.SHA256()
+        )
+E       AttributeError: 'str' object has no attribute 'sign'
+
+../../../src/src_0535.py:16: AttributeError
+___ test_task_func[1234567890-10-8-private_key-01234567-313233347735363730] ____
+
+num = '1234567890', from_base = 10, to_base = 8, private_key = 'private_key'
+alphabet = '01234567', expected_output = '313233347735363730'
+
+    @pytest.mark.parametrize("num, from_base, to_base, private_key, alphabet, expected_output", [
+        ("10", 10, 2, "private_key", "0123456789", "011010001010"),
+        ("255", 10, 16, "private_key", "0123456789abcdef", "ff"),
+        ("1234567890", 10, 8, "private_key", "01234567", "313233347735363730"),
+    ])
+    def test_task_func(num, from_base, to_base, private_key, alphabet, expected_output):
+>       assert task_func(num, from_base, to_base, private_key, alphabet) == expected_output
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0535.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+num = '11145401322', from_base = 10, to_base = 8, private_key = 'private_key'
+alphabet = '01234567'
+
+    def task_func(num, from_base, to_base, private_key, alphabet):
+        base64_table = np.array(list(alphabet))
+        n = int(num, from_base)
+    
+        new_num = ''
+        while n > 0:
+            n, m = divmod(n, to_base)
+            new_num += base64_table[m]
+    
+        num = new_num[::-1]
+        data = bytes(num, 'utf-8')
+>       signed_num = private_key.sign(
+                     ^^^^^^^^^^^^^^^^
+            data,
+            padding.PSS(
+                mgf=padding.MGF1(hashes.SHA256()),
+                salt_length=padding.PSS.MAX_LENGTH
+            ),
+            hashes.SHA256()
+        )
+E       AttributeError: 'str' object has no attribute 'sign'
+
+../../../src/src_0535.py:16: AttributeError
+=========================== short test summary info ============================
+FAILED test_0535.py::test_task_func[10-10-2-private_key-0123456789-011010001010]
+FAILED test_0535.py::test_task_func[255-10-16-private_key-0123456789abcdef-ff]
+FAILED test_0535.py::test_task_func[1234567890-10-8-private_key-01234567-313233347735363730]
+3 failed in 0.63s

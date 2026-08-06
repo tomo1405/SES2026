@@ -1,0 +1,35 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        df = pd.DataFrame({'Date': ['2022-01-01', '2022-01-02', '2022-01-03'], 'Value': [1, 2, 3]})
+        corr_df, heatmap = task_func(df, plot=True)
+        assert isinstance(corr_df, pd.DataFrame)
+>       assert isinstance(heatmap, plt.Figure)
+E       AssertionError: assert False
+E        +  where False = isinstance(<Axes: title={'center': 'Correlation Heatmap'}>, <class 'matplotlib.figure.Figure'>)
+E        +    where <class 'matplotlib.figure.Figure'> = plt.Figure
+
+test_0303.py:11: AssertionError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        df = pd.DataFrame({'Date': ['2022-01-01', '2022-01-02', '2022-01-03'], 'Value': [1, 2, 3]})
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0303.py:15: Failed
+________________________ test_task_func_invalid_input_2 ________________________
+
+    def test_task_func_invalid_input_2():
+        df = pd.DataFrame({'Date': ['2022-01-01', '2022-01-02', '2022-01-03'], 'Value': [1, 2, 3]})
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0303.py:20: Failed
+=========================== short test summary info ============================
+FAILED test_0303.py::test_task_func_valid_input - AssertionError: assert False
+FAILED test_0303.py::test_task_func_invalid_input - Failed: DID NOT RAISE Val...
+FAILED test_0303.py::test_task_func_invalid_input_2 - Failed: DID NOT RAISE V...
+3 failed in 3.67s

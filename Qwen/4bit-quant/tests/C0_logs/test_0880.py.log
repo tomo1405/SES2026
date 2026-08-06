@@ -1,0 +1,249 @@
+F...FF                                                                   [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_valid_data ________________________
+
+    def test_task_func_with_valid_data():
+        df = create_sample_df()
+>       p_value = task_func(df, 'Category1', 'Category2')
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0880.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0880.py:14: in task_func
+    if np.issubdtype(data[col1].dtype, np.number) or np.issubdtype(data[col2].dtype, np.number):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+arg1 = <StringDtype(na_value=nan)>, arg2 = <class 'numpy.number'>
+
+    @set_module('numpy')
+    def issubdtype(arg1, arg2):
+        r"""
+        Returns True if first argument is a typecode lower/equal in type hierarchy.
+    
+        This is like the builtin :func:`issubclass`, but for `dtype`\ s.
+    
+        Parameters
+        ----------
+        arg1, arg2 : dtype_like
+            `dtype` or object coercible to one
+    
+        Returns
+        -------
+        out : bool
+    
+        See Also
+        --------
+        :ref:`arrays.scalars` : Overview of the numpy type hierarchy.
+    
+        Examples
+        --------
+        `issubdtype` can be used to check the type of arrays:
+    
+        >>> ints = np.array([1, 2, 3], dtype=np.int32)
+        >>> np.issubdtype(ints.dtype, np.integer)
+        True
+        >>> np.issubdtype(ints.dtype, np.floating)
+        False
+    
+        >>> floats = np.array([1, 2, 3], dtype=np.float32)
+        >>> np.issubdtype(floats.dtype, np.integer)
+        False
+        >>> np.issubdtype(floats.dtype, np.floating)
+        True
+    
+        Similar types of different sizes are not subdtypes of each other:
+    
+        >>> np.issubdtype(np.float64, np.float32)
+        False
+        >>> np.issubdtype(np.float32, np.float64)
+        False
+    
+        but both are subtypes of `floating`:
+    
+        >>> np.issubdtype(np.float64, np.floating)
+        True
+        >>> np.issubdtype(np.float32, np.floating)
+        True
+    
+        For convenience, dtype-like objects are allowed too:
+    
+        >>> np.issubdtype('S1', np.bytes_)
+        True
+        >>> np.issubdtype('i4', np.signedinteger)
+        True
+    
+        """
+        if not issubclass_(arg1, generic):
+>           arg1 = dtype(arg1).type
+                   ^^^^^^^^^^^
+E           TypeError: Cannot interpret '<StringDtype(na_value=nan)>' as a data type
+
+../../../.venv/lib/python3.12/site-packages/numpy/_core/numerictypes.py:470: TypeError
+_____________________ test_task_func_with_single_category ______________________
+
+    def test_task_func_with_single_category():
+        df = create_sample_df()
+        df['Category1'] = ['A', 'A', 'A', 'A', 'A', 'A']
+        with pytest.raises(ValueError, match="One or both of the columns do not have multiple categories. The chi-square test requires variability in data."):
+>           task_func(df, 'Category1', 'Category2')
+
+test_0880.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0880.py:14: in task_func
+    if np.issubdtype(data[col1].dtype, np.number) or np.issubdtype(data[col2].dtype, np.number):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+arg1 = <StringDtype(na_value=nan)>, arg2 = <class 'numpy.number'>
+
+    @set_module('numpy')
+    def issubdtype(arg1, arg2):
+        r"""
+        Returns True if first argument is a typecode lower/equal in type hierarchy.
+    
+        This is like the builtin :func:`issubclass`, but for `dtype`\ s.
+    
+        Parameters
+        ----------
+        arg1, arg2 : dtype_like
+            `dtype` or object coercible to one
+    
+        Returns
+        -------
+        out : bool
+    
+        See Also
+        --------
+        :ref:`arrays.scalars` : Overview of the numpy type hierarchy.
+    
+        Examples
+        --------
+        `issubdtype` can be used to check the type of arrays:
+    
+        >>> ints = np.array([1, 2, 3], dtype=np.int32)
+        >>> np.issubdtype(ints.dtype, np.integer)
+        True
+        >>> np.issubdtype(ints.dtype, np.floating)
+        False
+    
+        >>> floats = np.array([1, 2, 3], dtype=np.float32)
+        >>> np.issubdtype(floats.dtype, np.integer)
+        False
+        >>> np.issubdtype(floats.dtype, np.floating)
+        True
+    
+        Similar types of different sizes are not subdtypes of each other:
+    
+        >>> np.issubdtype(np.float64, np.float32)
+        False
+        >>> np.issubdtype(np.float32, np.float64)
+        False
+    
+        but both are subtypes of `floating`:
+    
+        >>> np.issubdtype(np.float64, np.floating)
+        True
+        >>> np.issubdtype(np.float32, np.floating)
+        True
+    
+        For convenience, dtype-like objects are allowed too:
+    
+        >>> np.issubdtype('S1', np.bytes_)
+        True
+        >>> np.issubdtype('i4', np.signedinteger)
+        True
+    
+        """
+        if not issubclass_(arg1, generic):
+>           arg1 = dtype(arg1).type
+                   ^^^^^^^^^^^
+E           TypeError: Cannot interpret '<StringDtype(na_value=nan)>' as a data type
+
+../../../.venv/lib/python3.12/site-packages/numpy/_core/numerictypes.py:470: TypeError
+_______________________ test_task_func_with_small_counts _______________________
+
+    def test_task_func_with_small_counts():
+        df = create_sample_df()
+        df['Category2'] = ['X', 'X', 'X', 'X', 'X', 'X']
+        with pytest.raises(ValueError, match="Some categories have less than 5 observations. This violates the assumptions of the chi-square test."):
+>           task_func(df, 'Category1', 'Category2')
+
+test_0880.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0880.py:14: in task_func
+    if np.issubdtype(data[col1].dtype, np.number) or np.issubdtype(data[col2].dtype, np.number):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+arg1 = <StringDtype(na_value=nan)>, arg2 = <class 'numpy.number'>
+
+    @set_module('numpy')
+    def issubdtype(arg1, arg2):
+        r"""
+        Returns True if first argument is a typecode lower/equal in type hierarchy.
+    
+        This is like the builtin :func:`issubclass`, but for `dtype`\ s.
+    
+        Parameters
+        ----------
+        arg1, arg2 : dtype_like
+            `dtype` or object coercible to one
+    
+        Returns
+        -------
+        out : bool
+    
+        See Also
+        --------
+        :ref:`arrays.scalars` : Overview of the numpy type hierarchy.
+    
+        Examples
+        --------
+        `issubdtype` can be used to check the type of arrays:
+    
+        >>> ints = np.array([1, 2, 3], dtype=np.int32)
+        >>> np.issubdtype(ints.dtype, np.integer)
+        True
+        >>> np.issubdtype(ints.dtype, np.floating)
+        False
+    
+        >>> floats = np.array([1, 2, 3], dtype=np.float32)
+        >>> np.issubdtype(floats.dtype, np.integer)
+        False
+        >>> np.issubdtype(floats.dtype, np.floating)
+        True
+    
+        Similar types of different sizes are not subdtypes of each other:
+    
+        >>> np.issubdtype(np.float64, np.float32)
+        False
+        >>> np.issubdtype(np.float32, np.float64)
+        False
+    
+        but both are subtypes of `floating`:
+    
+        >>> np.issubdtype(np.float64, np.floating)
+        True
+        >>> np.issubdtype(np.float32, np.floating)
+        True
+    
+        For convenience, dtype-like objects are allowed too:
+    
+        >>> np.issubdtype('S1', np.bytes_)
+        True
+        >>> np.issubdtype('i4', np.signedinteger)
+        True
+    
+        """
+        if not issubclass_(arg1, generic):
+>           arg1 = dtype(arg1).type
+                   ^^^^^^^^^^^
+E           TypeError: Cannot interpret '<StringDtype(na_value=nan)>' as a data type
+
+../../../.venv/lib/python3.12/site-packages/numpy/_core/numerictypes.py:470: TypeError
+=========================== short test summary info ============================
+FAILED test_0880.py::test_task_func_with_valid_data - TypeError: Cannot inter...
+FAILED test_0880.py::test_task_func_with_single_category - TypeError: Cannot ...
+FAILED test_0880.py::test_task_func_with_small_counts - TypeError: Cannot int...
+3 failed, 3 passed in 2.67s

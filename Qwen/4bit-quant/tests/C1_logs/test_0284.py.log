@@ -1,0 +1,120 @@
+.FFFF                                                                    [100%]
+=================================== FAILURES ===================================
+____________________ test_task_func_one_json_file_with_key _____________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d33d977dac0>
+
+    def test_task_func_one_json_file_with_key(monkeypatch):
+        json_data = {'name': 'Alice'}
+        monkeypatch.setattr(os, 'listdir', MockedListDir(['file1.json']))
+        monkeypatch.setattr(json, 'load', MockedJsonLoad(json_data))
+>       result = task_func()
+                 ^^^^^^^^^^^
+
+test_0284.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+json_files_path = './json_files/', key = 'name'
+
+    def task_func(json_files_path='./json_files/', key='name'):
+        key_values = []
+    
+        for filename in os.listdir(json_files_path):
+            if filename.endswith('.json'):
+                file_path = os.path.join(json_files_path, filename)
+>               with open(file_path, 'r') as json_file:
+                     ^^^^^^^^^^^^^^^^^^^^
+E               FileNotFoundError: [Errno 2] No such file or directory: './json_files/file1.json'
+
+../../../src/src_0284.py:10: FileNotFoundError
+_______________ test_task_func_multiple_json_files_with_same_key _______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d33d977f3b0>
+
+    def test_task_func_multiple_json_files_with_same_key(monkeypatch):
+        json_data1 = {'name': 'Alice'}
+        json_data2 = {'name': 'Bob'}
+        json_data3 = {'name': 'Alice'}
+        monkeypatch.setattr(os, 'listdir', MockedListDir(['file1.json', 'file2.json', 'file3.json']))
+        monkeypatch.setattr(json, 'load', MockedJsonLoad(json_data1))
+>       result = task_func()
+                 ^^^^^^^^^^^
+
+test_0284.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+json_files_path = './json_files/', key = 'name'
+
+    def task_func(json_files_path='./json_files/', key='name'):
+        key_values = []
+    
+        for filename in os.listdir(json_files_path):
+            if filename.endswith('.json'):
+                file_path = os.path.join(json_files_path, filename)
+>               with open(file_path, 'r') as json_file:
+                     ^^^^^^^^^^^^^^^^^^^^
+E               FileNotFoundError: [Errno 2] No such file or directory: './json_files/file1.json'
+
+../../../src/src_0284.py:10: FileNotFoundError
+____________ test_task_func_multiple_json_files_with_different_keys ____________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d33d977f290>
+
+    def test_task_func_multiple_json_files_with_different_keys(monkeypatch):
+        json_data1 = {'name': 'Alice'}
+        json_data2 = {'name': 'Bob'}
+        json_data3 = {'age': 30}
+        monkeypatch.setattr(os, 'listdir', MockedListDir(['file1.json', 'file2.json', 'file3.json']))
+        monkeypatch.setattr(json, 'load', MockedJsonLoad(json_data1))
+>       result = task_func()
+                 ^^^^^^^^^^^
+
+test_0284.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+json_files_path = './json_files/', key = 'name'
+
+    def task_func(json_files_path='./json_files/', key='name'):
+        key_values = []
+    
+        for filename in os.listdir(json_files_path):
+            if filename.endswith('.json'):
+                file_path = os.path.join(json_files_path, filename)
+>               with open(file_path, 'r') as json_file:
+                     ^^^^^^^^^^^^^^^^^^^^
+E               FileNotFoundError: [Errno 2] No such file or directory: './json_files/file1.json'
+
+../../../src/src_0284.py:10: FileNotFoundError
+_______________________ test_task_func_non_existent_key ________________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d33d977fc80>
+
+    def test_task_func_non_existent_key(monkeypatch):
+        json_data = {'age': 30}
+        monkeypatch.setattr(os, 'listdir', MockedListDir(['file1.json']))
+        monkeypatch.setattr(json, 'load', MockedJsonLoad(json_data))
+>       result = task_func(key='name')
+                 ^^^^^^^^^^^^^^^^^^^^^
+
+test_0284.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+json_files_path = './json_files/', key = 'name'
+
+    def task_func(json_files_path='./json_files/', key='name'):
+        key_values = []
+    
+        for filename in os.listdir(json_files_path):
+            if filename.endswith('.json'):
+                file_path = os.path.join(json_files_path, filename)
+>               with open(file_path, 'r') as json_file:
+                     ^^^^^^^^^^^^^^^^^^^^
+E               FileNotFoundError: [Errno 2] No such file or directory: './json_files/file1.json'
+
+../../../src/src_0284.py:10: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0284.py::test_task_func_one_json_file_with_key - FileNotFoundErro...
+FAILED test_0284.py::test_task_func_multiple_json_files_with_same_key - FileN...
+FAILED test_0284.py::test_task_func_multiple_json_files_with_different_keys
+FAILED test_0284.py::test_task_func_non_existent_key - FileNotFoundError: [Er...
+4 failed, 1 passed in 0.43s

@@ -1,0 +1,59 @@
+.....F                                                                   [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_malformed_dicts ______________________
+
+    def test_task_func_with_malformed_dicts():
+        # Create a temporary file with malformed dictionaries
+        with open('test_malformed_dicts.txt', 'w') as f:
+            f.write("{'key': 'value' {'another_key': 'another_value'}}")
+    
+        # Expected result should be an empty list because ast.literal_eval will fail on malformed strings
+        expected = []
+    
+        # Run the function and assert the result
+>       assert task_func('test_malformed_dicts.txt') == expected
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1094.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1094.py:11: in task_func
+    results = [ast.literal_eval(match) for match in matches]
+               ^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/ast.py:66: in literal_eval
+    node_or_string = parse(node_or_string.lstrip(" \t"), mode='eval')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+source = "{'key': 'value' {'another_key': 'another_value'}}"
+filename = '<unknown>', mode = 'eval', type_comments = False
+feature_version = -1
+
+    def parse(source, filename='<unknown>', mode='exec', *,
+              type_comments=False, feature_version=None):
+        """
+        Parse the source into an AST node.
+        Equivalent to compile(source, filename, mode, PyCF_ONLY_AST).
+        Pass type_comments=True to get back type comments where the syntax allows.
+        """
+        flags = PyCF_ONLY_AST
+        if type_comments:
+            flags |= PyCF_TYPE_COMMENTS
+        if feature_version is None:
+            feature_version = -1
+        elif isinstance(feature_version, tuple):
+            major, minor = feature_version  # Should be a 2-tuple.
+            if major != 3:
+                raise ValueError(f"Unsupported major version: {major}")
+            feature_version = minor
+        # Else it should be an int giving the minor version for 3.x.
+>       return compile(source, filename, mode, flags,
+                       _feature_version=feature_version)
+E         File "<unknown>", line 1
+E           {'key': 'value' {'another_key': 'another_value'}}
+E                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       SyntaxError: invalid syntax. Perhaps you forgot a comma?
+
+/usr/lib/python3.12/ast.py:52: SyntaxError
+=========================== short test summary info ============================
+FAILED test_1094.py::test_task_func_with_malformed_dicts -   File "<unknown>"...
+1 failed, 5 passed in 0.57s

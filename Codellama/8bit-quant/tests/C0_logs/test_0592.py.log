@@ -1,0 +1,22 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        hours = 10
+        file_path = 'custom_data.csv'
+        file_path, ax = task_func(hours, file_path)
+    
+        assert isinstance(file_path, str)
+        assert isinstance(ax, matplotlib.axes.Axes)
+    
+        df = pd.read_csv(file_path)
+        assert len(df) == hours
+>       assert set(df['Category'].unique()) == set(TEMP_CATEGORIES)
+                                                   ^^^^^^^^^^^^^^^
+E       NameError: name 'TEMP_CATEGORIES' is not defined
+
+test_0592.py:16: NameError
+=========================== short test summary info ============================
+FAILED test_0592.py::test_task_func - NameError: name 'TEMP_CATEGORIES' is no...
+1 failed in 2.18s

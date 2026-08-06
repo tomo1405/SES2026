@@ -1,0 +1,69 @@
+FFF.FF                                                                   [100%]
+=================================== FAILURES ===================================
+_____________________________ test_task_func_basic _____________________________
+
+    def test_task_func_basic():
+        text_dict = {'apple': 4, 'banana': 2, 'cherry': 7}
+        word_keys = ['apple', 'banana', 'cherry']
+        ax, top_k_words = task_func(text_dict, word_keys)
+>       assert isinstance(ax, pd.Series)
+E       AssertionError: assert False
+E        +  where False = isinstance(<Axes: >, <class 'pandas.Series'>)
+E        +    where <class 'pandas.Series'> = pd.Series
+
+test_0353.py:10: AssertionError
+____________________ test_task_func_top_k_less_than_length _____________________
+
+    def test_task_func_top_k_less_than_length():
+        text_dict = {'apple': 4, 'banana': 2, 'cherry': 7, 'date': 1}
+        word_keys = ['apple', 'banana', 'cherry', 'date']
+        ax, top_k_words = task_func(text_dict, word_keys, top_k=2)
+>       assert top_k_words == [('cherry', 7), ('apple', 4)]
+E       AssertionError: assert {'cherry': 7, 'apple': 4} == [('cherry', 7), ('apple', 4)]
+E         
+E         Use -v to get more diff
+
+test_0353.py:17: AssertionError
+___________________ test_task_func_top_k_greater_than_length ___________________
+
+    def test_task_func_top_k_greater_than_length():
+        text_dict = {'apple': 4, 'banana': 2}
+        word_keys = ['apple', 'banana']
+        ax, top_k_words = task_func(text_dict, word_keys, top_k=5)
+>       assert top_k_words == [('apple', 4), ('banana', 2)]
+E       AssertionError: assert {'apple': 4, 'banana': 2} == [('apple', 4), ('banana', 2)]
+E         
+E         Use -v to get more diff
+
+test_0353.py:23: AssertionError
+_______________________ test_task_func_missing_word_keys _______________________
+
+    def test_task_func_missing_word_keys():
+        text_dict = {'apple': 4, 'banana': 2}
+        word_keys = ['apple', 'orange']
+        ax, top_k_words = task_func(text_dict, word_keys)
+>       assert top_k_words == [('apple', 4), ('banana', 2)]
+E       AssertionError: assert {'apple': 4, 'banana': 2} == [('apple', 4), ('banana', 2)]
+E         
+E         Use -v to get more diff
+
+test_0353.py:35: AssertionError
+________________________ test_task_func_empty_text_dict ________________________
+
+    def test_task_func_empty_text_dict():
+        text_dict = {}
+        word_keys = ['apple', 'banana']
+        ax, top_k_words = task_func(text_dict, word_keys)
+>       assert top_k_words == []
+E       assert {} == []
+E         
+E         Use -v to get more diff
+
+test_0353.py:42: AssertionError
+=========================== short test summary info ============================
+FAILED test_0353.py::test_task_func_basic - AssertionError: assert False
+FAILED test_0353.py::test_task_func_top_k_less_than_length - AssertionError: ...
+FAILED test_0353.py::test_task_func_top_k_greater_than_length - AssertionErro...
+FAILED test_0353.py::test_task_func_missing_word_keys - AssertionError: asser...
+FAILED test_0353.py::test_task_func_empty_text_dict - assert {} == []
+5 failed, 1 passed in 2.17s

@@ -1,0 +1,39 @@
+F.F.                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+setup_test_directory = '/tmp/tmp9i82a0gj'
+
+    def test_task_func(setup_test_directory):
+        directory = setup_test_directory
+        result = task_func(directory)
+        expected_files = ['example_like.txt', 'test_what.docx']
+        assert sorted(result) == sorted(expected_files)
+        assert os.path.exists(os.path.join(directory, 'Interesting Files', 'example_like.txt'))
+        assert os.path.exists(os.path.join(directory, 'Interesting Files', 'test_what.docx'))
+>       assert not os.path.exists(os.path.join(directory, 'uninteresting_file.pdf'))
+E       AssertionError: assert not True
+E        +  where True = <function exists at 0x72a1efd9b600>('/tmp/tmp9i82a0gj/uninteresting_file.pdf')
+E        +    where <function exists at 0x72a1efd9b600> = <module 'posixpath' (frozen)>.exists
+E        +      where <module 'posixpath' (frozen)> = os.path
+E        +    and   '/tmp/tmp9i82a0gj/uninteresting_file.pdf' = <function join at 0x72a1efba0cc0>('/tmp/tmp9i82a0gj', 'uninteresting_file.pdf')
+E        +      where <function join at 0x72a1efba0cc0> = <module 'posixpath' (frozen)>.join
+E        +        where <module 'posixpath' (frozen)> = os.path
+
+test_0390.py:25: AssertionError
+________________________ test_task_func_empty_directory ________________________
+
+setup_test_directory = '/tmp/tmpeehnbzot'
+
+    def test_task_func_empty_directory(setup_test_directory):
+        directory = setup_test_directory
+        # Remove all files
+        for file in os.listdir(directory):
+>           os.remove(os.path.join(directory, file))
+E           IsADirectoryError: [Errno 21] Is a directory: '/tmp/tmpeehnbzot/Interesting Files'
+
+test_0390.py:42: IsADirectoryError
+=========================== short test summary info ============================
+FAILED test_0390.py::test_task_func - AssertionError: assert not True
+FAILED test_0390.py::test_task_func_empty_directory - IsADirectoryError: [Err...
+2 failed, 2 passed in 0.49s

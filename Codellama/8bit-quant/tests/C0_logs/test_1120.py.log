@@ -1,0 +1,23 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        password_length = 10
+        salt = "salty"
+        password_chars = string.ascii_letters + string.digits + string.punctuation
+        password = ''.join(random.choice(password_chars) for i in range(password_length))
+        password = codecs.encode(password, 'latin-1').decode('utf-8')
+        salted_password = (password + salt).encode('utf-8')
+        hashed_password = hashlib.sha256(salted_password).hexdigest()
+    
+>       assert task_func(password_length, salt) == hashed_password
+E       AssertionError: assert 'e1b2781c2af9...5bee9df9e5792' == '6ac08ae3a510...d596df59a2e73'
+E         
+E         - 6ac08ae3a510a4e4c529455909f2ff225e8870ec94996094974d596df59a2e73
+E         + e1b2781c2af90ffd2e9f90134592eae3cd20f3b2b99f67f7f035bee9df9e5792
+
+test_1120.py:18: AssertionError
+=========================== short test summary info ============================
+FAILED test_1120.py::test_task_func - AssertionError: assert 'e1b2781c2af9......
+1 failed in 0.48s

@@ -1,0 +1,54 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+___________________ test_task_func_with_default_target_value ___________________
+
+no_plot = None
+
+    def test_task_func_with_default_target_value(no_plot):
+        with Capturing() as output:
+            result = task_func()
+>       assert result == ('N/A', 'N/A', 'N/A', 'N/A'), f"Expected ('N/A', 'N/A', 'N/A', 'N/A'), got {result}"
+E       AssertionError: Expected ('N/A', 'N/A', 'N/A', 'N/A'), got (np.float64(2.0), 'N/A', 'N/A', 'N/A')
+E       assert (np.float64(2... 'N/A', 'N/A') == ('N/A', 'N/A', 'N/A', 'N/A')
+E         
+E         At index 0 diff: np.float64(2.0) != 'N/A'
+E         Use -v to get more diff
+
+test_0653.py:27: AssertionError
+___________________ test_task_func_with_custom_target_value ____________________
+
+no_plot = None
+
+    def test_task_func_with_custom_target_value(no_plot):
+        custom_array = np.array([['332', '1', '2'], ['332', 'bb', 'ccc'], ['332', '33', '2'], ['33', '22', '332']])
+        with Capturing() as output:
+            result = task_func(target_value='332', array=custom_array)
+>       assert result == (1.5, 0.25, 0.0, -1.2), f"Expected (1.5, 0.25, 0.0, -1.2), got {result}"
+E       AssertionError: Expected (1.5, 0.25, 0.0, -1.2), got (np.float64(1.0), np.float64(0.6666666666666666), np.float64(0.0), np.float64(-1.5))
+E       assert (np.float64(1...float64(-1.5)) == (1.5, 0.25, 0.0, -1.2)
+E         
+E         At index 0 diff: np.float64(1.0) != 1.5
+E         Use -v to get more diff
+
+test_0653.py:33: AssertionError
+____________________ test_task_func_with_insufficient_data _____________________
+
+no_plot = None
+
+    def test_task_func_with_insufficient_data(no_plot):
+        small_array = np.array([['332', '1', '2']])
+        with Capturing() as output:
+            result = task_func(array=small_array)
+>       assert result == ('N/A', 'N/A', 'N/A', 'N/A'), f"Expected ('N/A', 'N/A', 'N/A', 'N/A'), got {result}"
+E       AssertionError: Expected ('N/A', 'N/A', 'N/A', 'N/A'), got (np.float64(0.0), 'N/A', 'N/A', 'N/A')
+E       assert (np.float64(0... 'N/A', 'N/A') == ('N/A', 'N/A', 'N/A', 'N/A')
+E         
+E         At index 0 diff: np.float64(0.0) != 'N/A'
+E         Use -v to get more diff
+
+test_0653.py:39: AssertionError
+=========================== short test summary info ============================
+FAILED test_0653.py::test_task_func_with_default_target_value - AssertionErro...
+FAILED test_0653.py::test_task_func_with_custom_target_value - AssertionError...
+FAILED test_0653.py::test_task_func_with_insufficient_data - AssertionError: ...
+3 failed in 2.80s

@@ -1,0 +1,44 @@
+..FFF..                                                                  [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_single_walk __________________________
+
+    def test_task_func_single_walk():
+        ax = task_func(1, 10, seed=42)
+        assert len(ax.lines) == 1
+>       assert len(ax.lines[0].get_xdata()) == 11
+E       assert 10 == 11
+E        +  where 10 = len(array([0., 1., 2., 3., 4., 5., 6., 7., 8., 9.]))
+E        +    where array([0., 1., 2., 3., 4., 5., 6., 7., 8., 9.]) = get_xdata()
+E        +      where get_xdata = <matplotlib.lines.Line2D object at 0x705d673744d0>.get_xdata
+
+test_0474.py:19: AssertionError
+________________________ test_task_func_multiple_walks _________________________
+
+    def test_task_func_multiple_walks():
+        ax = task_func(3, 10, seed=42)
+        assert len(ax.lines) == 3
+        for line in ax.lines:
+>           assert len(line.get_xdata()) == 11
+E           assert 10 == 11
+E            +  where 10 = len(array([0., 1., 2., 3., 4., 5., 6., 7., 8., 9.]))
+E            +    where array([0., 1., 2., 3., 4., 5., 6., 7., 8., 9.]) = get_xdata()
+E            +      where get_xdata = <matplotlib.lines.Line2D object at 0x705d673ade20>.get_xdata
+
+test_0474.py:26: AssertionError
+____________________________ test_task_func_colors _____________________________
+
+    def test_task_func_colors():
+        ax = task_func(7, 10, seed=42)
+        colors = ["b", "g", "r", "c", "m", "y", "k"]
+        for i, line in enumerate(ax.lines):
+>           assert line.get_color() == colors[i]
+E           AssertionError: assert (0.0, 0.0, 1.0, 1) == 'b'
+E            +  where (0.0, 0.0, 1.0, 1) = get_color()
+E            +    where get_color = <matplotlib.lines.Line2D object at 0x705d673ebd70>.get_color
+
+test_0474.py:33: AssertionError
+=========================== short test summary info ============================
+FAILED test_0474.py::test_task_func_single_walk - assert 10 == 11
+FAILED test_0474.py::test_task_func_multiple_walks - assert 10 == 11
+FAILED test_0474.py::test_task_func_colors - AssertionError: assert (0.0, 0.0...
+3 failed, 4 passed in 1.62s

@@ -1,0 +1,72 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_valid_filepath _________________________
+
+    def test_task_func_valid_filepath():
+        filepath = 'test_file.cpp'
+        task_func(filepath)
+>       assert subprocess.check_call(['g++', filepath, '-o', filepath.split('.')[0]])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0605.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+popenargs = (['g++', 'test_file.cpp', '-o', 'test_file'],), kwargs = {}
+
+    def check_call(*popenargs, **kwargs):
+        """Run command with arguments.  Wait for command to complete.  If
+        the exit code was zero then return, otherwise raise
+        CalledProcessError.  The CalledProcessError object will have the
+        return code in the returncode attribute.
+    
+        The arguments are the same as for the call function.  Example:
+    
+        check_call(["ls", "-l"])
+        """
+        retcode = call(*popenargs, **kwargs)
+        if retcode:
+            cmd = kwargs.get("args")
+            if cmd is None:
+                cmd = popenargs[0]
+>           raise CalledProcessError(retcode, cmd)
+E           subprocess.CalledProcessError: Command '['g++', 'test_file.cpp', '-o', 'test_file']' returned non-zero exit status 1.
+
+/usr/lib/python3.12/subprocess.py:413: CalledProcessError
+----------------------------- Captured stderr call -----------------------------
+cc1plus: fatal error: test_file.cpp: No such file or directory
+compilation terminated.
+cc1plus: fatal error: test_file.cpp: No such file or directory
+compilation terminated.
+------------------------------ Captured log call -------------------------------
+ERROR    root:src_0605.py:12 Failed to compile test_file.cpp: Command '['g++', 'test_file.cpp', '-o', 'test_file']' returned non-zero exit status 1.
+_______________________ test_task_func_invalid_filepath ________________________
+
+    def test_task_func_invalid_filepath():
+        filepath = 'invalid_file.cpp'
+>       with pytest.raises(FileNotFoundError):
+E       Failed: DID NOT RAISE FileNotFoundError
+
+test_0605.py:14: Failed
+----------------------------- Captured stderr call -----------------------------
+cc1plus: fatal error: invalid_file.cpp: No such file or directory
+compilation terminated.
+------------------------------ Captured log call -------------------------------
+ERROR    root:src_0605.py:12 Failed to compile invalid_file.cpp: Command '['g++', 'invalid_file.cpp', '-o', 'invalid_file']' returned non-zero exit status 1.
+________________________ test_task_func_compiler_error _________________________
+
+    def test_task_func_compiler_error():
+        filepath = 'test_file.cpp'
+>       with pytest.raises(subprocess.CalledProcessError):
+E       Failed: DID NOT RAISE CalledProcessError
+
+test_0605.py:19: Failed
+----------------------------- Captured stderr call -----------------------------
+cc1plus: fatal error: test_file.cpp: No such file or directory
+compilation terminated.
+------------------------------ Captured log call -------------------------------
+ERROR    root:src_0605.py:12 Failed to compile test_file.cpp: Command '['g++', 'test_file.cpp', '-o', 'test_file']' returned non-zero exit status 1.
+=========================== short test summary info ============================
+FAILED test_0605.py::test_task_func_valid_filepath - subprocess.CalledProcess...
+FAILED test_0605.py::test_task_func_invalid_filepath - Failed: DID NOT RAISE ...
+FAILED test_0605.py::test_task_func_compiler_error - Failed: DID NOT RAISE Ca...
+3 failed in 0.50s

@@ -1,0 +1,217 @@
+.FFF                                                                     [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_target_dir_created _______________________
+
+    def test_task_func_target_dir_created():
+        temp_dir = 'temp_test_dir'
+        try:
+>           task_func('tests/data/source', temp_dir)
+
+test_0815.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+source_dir = 'tests/data/source', target_dir = 'temp_test_dir'
+file_pattern = '\\b[A-Za-z0-9]+\\.(txt|doc|docx)\\b'
+
+    def task_func(source_dir, target_dir, file_pattern=r'\b[A-Za-z0-9]+\.(txt|doc|docx)\b'):
+        if not os.path.exists(source_dir):
+>           raise FileNotFoundError("The source directory does not exist.")
+E           FileNotFoundError: The source directory does not exist.
+
+../../../src/src_0815.py:6: FileNotFoundError
+__________________________ test_task_func_move_files ___________________________
+
+    def test_task_func_move_files():
+        temp_dir = 'temp_test_dir'
+        try:
+>           moved_count = task_func('tests/data/source', temp_dir)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0815.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+source_dir = 'tests/data/source', target_dir = 'temp_test_dir'
+file_pattern = '\\b[A-Za-z0-9]+\\.(txt|doc|docx)\\b'
+
+    def task_func(source_dir, target_dir, file_pattern=r'\b[A-Za-z0-9]+\.(txt|doc|docx)\b'):
+        if not os.path.exists(source_dir):
+>           raise FileNotFoundError("The source directory does not exist.")
+E           FileNotFoundError: The source directory does not exist.
+
+../../../src/src_0815.py:6: FileNotFoundError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func_move_files():
+        temp_dir = 'temp_test_dir'
+        try:
+            moved_count = task_func('tests/data/source', temp_dir)
+            assert moved_count == 2
+            assert os.path.exists(os.path.join(temp_dir, 'example.txt'))
+            assert os.path.exists(os.path.join(temp_dir, 'document.docx'))
+        finally:
+>           shutil.rmtree(temp_dir)
+
+test_0815.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/shutil.py:775: in rmtree
+    onexc(os.lstat, path, err)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = 'temp_test_dir', ignore_errors = False, onerror = None
+onexc = <function rmtree.<locals>.onexc at 0x73e8454dab60>, dir_fd = None
+
+    def rmtree(path, ignore_errors=False, onerror=None, *, onexc=None, dir_fd=None):
+        """Recursively delete a directory tree.
+    
+        If dir_fd is not None, it should be a file descriptor open to a directory;
+        path will then be relative to that directory.
+        dir_fd may not be implemented on your platform.
+        If it is unavailable, using it will raise a NotImplementedError.
+    
+        If ignore_errors is set, errors are ignored; otherwise, if onexc or
+        onerror is set, it is called to handle the error with arguments (func,
+        path, exc_info) where func is platform and implementation dependent;
+        path is the argument to that function that caused it to fail; and
+        the value of exc_info describes the exception. For onexc it is the
+        exception instance, and for onerror it is a tuple as returned by
+        sys.exc_info().  If ignore_errors is false and both onexc and
+        onerror are None, the exception is reraised.
+    
+        onerror is deprecated and only remains for backwards compatibility.
+        If both onerror and onexc are set, onerror is ignored and onexc is used.
+        """
+    
+        sys.audit("shutil.rmtree", path, dir_fd)
+        if ignore_errors:
+            def onexc(*args):
+                pass
+        elif onerror is None and onexc is None:
+            def onexc(*args):
+                raise
+        elif onexc is None:
+            if onerror is None:
+                def onexc(*args):
+                    raise
+            else:
+                # delegate to onerror
+                def onexc(*args):
+                    func, path, exc = args
+                    if exc is None:
+                        exc_info = None, None, None
+                    else:
+                        exc_info = type(exc), exc, exc.__traceback__
+                    return onerror(func, path, exc_info)
+    
+        if _use_fd_functions:
+            # While the unsafe rmtree works fine on bytes, the fd based does not.
+            if isinstance(path, bytes):
+                path = os.fsdecode(path)
+            # Note: To guard against symlink races, we use the standard
+            # lstat()/open()/fstat() trick.
+            try:
+>               orig_st = os.lstat(path, dir_fd=dir_fd)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               FileNotFoundError: [Errno 2] No such file or directory: 'temp_test_dir'
+
+/usr/lib/python3.12/shutil.py:773: FileNotFoundError
+________________________ test_task_func_no_files_match _________________________
+
+    def test_task_func_no_files_match():
+        temp_dir = 'temp_test_dir'
+        try:
+>           moved_count = task_func('tests/data/source_empty', temp_dir)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0815.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+source_dir = 'tests/data/source_empty', target_dir = 'temp_test_dir'
+file_pattern = '\\b[A-Za-z0-9]+\\.(txt|doc|docx)\\b'
+
+    def task_func(source_dir, target_dir, file_pattern=r'\b[A-Za-z0-9]+\.(txt|doc|docx)\b'):
+        if not os.path.exists(source_dir):
+>           raise FileNotFoundError("The source directory does not exist.")
+E           FileNotFoundError: The source directory does not exist.
+
+../../../src/src_0815.py:6: FileNotFoundError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func_no_files_match():
+        temp_dir = 'temp_test_dir'
+        try:
+            moved_count = task_func('tests/data/source_empty', temp_dir)
+            assert moved_count == 0
+            assert not os.path.exists(os.path.join(temp_dir, 'nonexistent.txt'))
+        finally:
+>           shutil.rmtree(temp_dir)
+
+test_0815.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/shutil.py:775: in rmtree
+    onexc(os.lstat, path, err)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = 'temp_test_dir', ignore_errors = False, onerror = None
+onexc = <function rmtree.<locals>.onexc at 0x73e8454db060>, dir_fd = None
+
+    def rmtree(path, ignore_errors=False, onerror=None, *, onexc=None, dir_fd=None):
+        """Recursively delete a directory tree.
+    
+        If dir_fd is not None, it should be a file descriptor open to a directory;
+        path will then be relative to that directory.
+        dir_fd may not be implemented on your platform.
+        If it is unavailable, using it will raise a NotImplementedError.
+    
+        If ignore_errors is set, errors are ignored; otherwise, if onexc or
+        onerror is set, it is called to handle the error with arguments (func,
+        path, exc_info) where func is platform and implementation dependent;
+        path is the argument to that function that caused it to fail; and
+        the value of exc_info describes the exception. For onexc it is the
+        exception instance, and for onerror it is a tuple as returned by
+        sys.exc_info().  If ignore_errors is false and both onexc and
+        onerror are None, the exception is reraised.
+    
+        onerror is deprecated and only remains for backwards compatibility.
+        If both onerror and onexc are set, onerror is ignored and onexc is used.
+        """
+    
+        sys.audit("shutil.rmtree", path, dir_fd)
+        if ignore_errors:
+            def onexc(*args):
+                pass
+        elif onerror is None and onexc is None:
+            def onexc(*args):
+                raise
+        elif onexc is None:
+            if onerror is None:
+                def onexc(*args):
+                    raise
+            else:
+                # delegate to onerror
+                def onexc(*args):
+                    func, path, exc = args
+                    if exc is None:
+                        exc_info = None, None, None
+                    else:
+                        exc_info = type(exc), exc, exc.__traceback__
+                    return onerror(func, path, exc_info)
+    
+        if _use_fd_functions:
+            # While the unsafe rmtree works fine on bytes, the fd based does not.
+            if isinstance(path, bytes):
+                path = os.fsdecode(path)
+            # Note: To guard against symlink races, we use the standard
+            # lstat()/open()/fstat() trick.
+            try:
+>               orig_st = os.lstat(path, dir_fd=dir_fd)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               FileNotFoundError: [Errno 2] No such file or directory: 'temp_test_dir'
+
+/usr/lib/python3.12/shutil.py:773: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0815.py::test_task_func_target_dir_created - FileNotFoundError: T...
+FAILED test_0815.py::test_task_func_move_files - FileNotFoundError: [Errno 2]...
+FAILED test_0815.py::test_task_func_no_files_match - FileNotFoundError: [Errn...
+3 failed, 1 passed in 0.57s

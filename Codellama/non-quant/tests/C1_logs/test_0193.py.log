@@ -1,0 +1,83 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with valid input
+        text = "Josie Smith [3996 COLLEGE AVENUE, SOMETOWN, MD 21003]Mugsy Dog Smith [2560 OAK ST, GLENMEADE, WI 14098]"
+        smtp_server = "smtp.gmail.com"
+        smtp_port = 587
+        email_address = "your.email@gmail.com"
+        email_password = "your.password"
+        recepient_address = "names@gmail.com"
+        smtp = None
+>       names = task_func(text, smtp_server, smtp_port, email_address, email_password, recepient_address, smtp)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0193.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0193.py:23: in task_func
+    server.login(email_address, email_password)
+/usr/lib/python3.12/smtplib.py:750: in login
+    raise last_exception
+/usr/lib/python3.12/smtplib.py:739: in login
+    (code, resp) = self.auth(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <smtplib.SMTP object at 0x708652c27740>, mechanism = 'LOGIN'
+authobject = <bound method SMTP.auth_login of <smtplib.SMTP object at 0x708652c27740>>
+initial_response_ok = True
+
+    def auth(self, mechanism, authobject, *, initial_response_ok=True):
+        """Authentication command - requires response processing.
+    
+        'mechanism' specifies which authentication mechanism is to
+        be used - the valid values are those listed in the 'auth'
+        element of 'esmtp_features'.
+    
+        'authobject' must be a callable object taking a single argument:
+    
+                data = authobject(challenge)
+    
+        It will be called to process the server's challenge response; the
+        challenge argument it is passed will be a bytes.  It should return
+        an ASCII string that will be base64 encoded and sent to the server.
+    
+        Keyword arguments:
+            - initial_response_ok: Allow sending the RFC 4954 initial-response
+              to the AUTH command, if the authentication methods supports it.
+        """
+        # RFC 4954 allows auth methods to provide an initial response.  Not all
+        # methods support it.  By definition, if they return something other
+        # than None when challenge is None, then they do.  See issue #15014.
+        mechanism = mechanism.upper()
+        initial_response = (authobject() if initial_response_ok else None)
+        if initial_response is not None:
+            response = encode_base64(initial_response.encode('ascii'), eol='')
+            (code, resp) = self.docmd("AUTH", mechanism + " " + response)
+            self._auth_challenge_count = 1
+        else:
+            (code, resp) = self.docmd("AUTH", mechanism)
+            self._auth_challenge_count = 0
+        # If server responds with a challenge, send the response.
+        while code == 334:
+            self._auth_challenge_count += 1
+            challenge = base64.decodebytes(resp)
+            response = encode_base64(
+                authobject(challenge).encode('ascii'), eol='')
+            (code, resp) = self.docmd(response)
+            # If server keeps sending challenges, something is wrong.
+            if self._auth_challenge_count > _MAXCHALLENGE:
+                raise SMTPException(
+                    "Server AUTH mechanism infinite loop. Last response: "
+                    + repr((code, resp))
+                )
+        if code in (235, 503):
+            return (code, resp)
+>       raise SMTPAuthenticationError(code, resp)
+E       smtplib.SMTPAuthenticationError: (535, b'5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-84ea037565csm444599b3a.46 - gsmtp')
+
+/usr/lib/python3.12/smtplib.py:662: SMTPAuthenticationError
+=========================== short test summary info ============================
+FAILED test_0193.py::test_task_func - smtplib.SMTPAuthenticationError: (535, ...
+1 failed in 1.62s

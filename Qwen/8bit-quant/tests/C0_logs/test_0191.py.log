@@ -1,0 +1,88 @@
+FFF.                                                                     [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_with_stringio _________________________
+
+    def test_task_func_with_stringio():
+        csv_data = """name,age,city
+    John Doe,30,New York
+    Jane Smith,25,Los Angeles"""
+        csv_input = StringIO(csv_data)
+        df = task_func(csv_input)
+    
+        assert not df.empty
+        assert len(df) == 2
+        assert set(df.columns) == {'name', 'age', 'city'}
+        assert df.iloc[0]['name'] == 'John Doe'
+>       assert df.iloc[1]['age'] == 25
+E       AssertionError: assert '25' == 25
+
+test_0191.py:27: AssertionError
+________________________ test_task_func_with_file_path _________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-2055/test_task_func_with_file_path0')
+
+    def test_task_func_with_file_path(tmpdir):
+        csv_data = """name,age,city
+    Alice Johnson,35,Chicago
+    Bob Brown,40,Houston"""
+        file_path = tmpdir.join("test.csv")
+        with open(file_path, 'w') as f:
+            f.write(csv_data)
+    
+>       df = task_func(str(file_path))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0191.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0191.py:20: in task_func
+    cols = dr.fieldnames
+           ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <csv.DictReader object at 0x760330478740>
+
+    @property
+    def fieldnames(self):
+        if self._fieldnames is None:
+            try:
+>               self._fieldnames = next(self.reader)
+                                   ^^^^^^^^^^^^^^^^^
+E               ValueError: I/O operation on closed file.
+
+/usr/lib/python3.12/csv.py:102: ValueError
+___________________________ test_task_func_empty_csv ___________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-2055/test_task_func_empty_csv0')
+
+    def test_task_func_empty_csv(tmpdir):
+        csv_data = """name,age,city"""
+        file_path = tmpdir.join("empty.csv")
+        with open(file_path, 'w') as f:
+            f.write(csv_data)
+    
+>       df = task_func(str(file_path))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0191.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0191.py:20: in task_func
+    cols = dr.fieldnames
+           ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <csv.DictReader object at 0x7603c82211c0>
+
+    @property
+    def fieldnames(self):
+        if self._fieldnames is None:
+            try:
+>               self._fieldnames = next(self.reader)
+                                   ^^^^^^^^^^^^^^^^^
+E               ValueError: I/O operation on closed file.
+
+/usr/lib/python3.12/csv.py:102: ValueError
+=========================== short test summary info ============================
+FAILED test_0191.py::test_task_func_with_stringio - AssertionError: assert '2...
+FAILED test_0191.py::test_task_func_with_file_path - ValueError: I/O operatio...
+FAILED test_0191.py::test_task_func_empty_csv - ValueError: I/O operation on ...
+3 failed, 1 passed in 1.27s

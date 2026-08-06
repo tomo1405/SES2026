@@ -1,0 +1,63 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Mock the client_socket
+        client_socket = MagicMock()
+    
+        # Call the function with the mock socket
+        task_func(client_socket)
+    
+        # Get the current time and format it as a string
+        current_time = str(datetime.now())
+    
+        # Create the expected response
+        expected_response_data = {"message": "Hello", "time": current_time}
+        expected_response = json.dumps(expected_response_data) + "\n"
+    
+        # Encode the expected response to bytes
+        expected_response_bytes = expected_response.encode("utf-8")
+    
+        # Assert that the send method was called with the correct data
+>       client_socket.send.assert_called_once_with(expected_response_bytes)
+
+test_1039.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/unittest/mock.py:956: in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='mock.send' id='129475559955184'>
+args = (b'{"message": "Hello", "time": "2026-07-28 14:01:52.542528"}\n',)
+kwargs = {}
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\n  Actual: %s'
+                    % (expected, actual))
+            raise AssertionError(error_message)
+    
+        def _error_message():
+            msg = self._format_mock_failure_message(args, kwargs)
+            return msg
+        expected = self._call_matcher(_Call((args, kwargs), two=True))
+        actual = self._call_matcher(self.call_args)
+        if actual != expected:
+            cause = expected if isinstance(expected, Exception) else None
+>           raise AssertionError(_error_message()) from cause
+E           AssertionError: expected call not found.
+E           Expected: send(b'{"message": "Hello", "time": "2026-07-28 14:01:52.542528"}\n')
+E             Actual: send(b'{"message": "Hello", "time": "2026-07-28 14:01:52.541842"}\n')
+
+/usr/lib/python3.12/unittest/mock.py:944: AssertionError
+=========================== short test summary info ============================
+FAILED test_1039.py::test_task_func - AssertionError: expected call not found.
+1 failed in 0.86s

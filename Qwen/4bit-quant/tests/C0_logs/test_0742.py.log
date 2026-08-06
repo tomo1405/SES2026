@@ -1,0 +1,47 @@
+....FFF.                                                                 [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_mixed_case_keys ________________________
+
+    def test_task_func_mixed_case_keys():
+>       assert task_func({'Abc': 1, 'aB': 2, 'Ac': 3}) == {'A': 6}
+E       AssertionError: assert {'A': 4, 'a': 2} == {'A': 6}
+E         
+E         Differing items:
+E         {'A': 4} != {'A': 6}
+E         Left contains 1 more item:
+E         {'a': 2}
+E         Use -v to get more diff
+
+test_0742.py:17: AssertionError
+_________________________ test_task_func_numeric_keys __________________________
+
+    def test_task_func_numeric_keys():
+>       assert task_func({123: 1, 124: 2, 125: 3}) == {'1': 6}
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0742.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0742.py:6: in task_func
+    sorted_items = sorted(my_dict.items(), key=lambda item: item[0][0])
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+item = (123, 1)
+
+>   sorted_items = sorted(my_dict.items(), key=lambda item: item[0][0])
+                                                            ^^^^^^^^^^
+E   TypeError: 'int' object is not subscriptable
+
+../../../src/src_0742.py:6: TypeError
+________________________ test_task_func_mixed_key_types ________________________
+
+    def test_task_func_mixed_key_types():
+>       with pytest.raises(TypeError):
+E       Failed: DID NOT RAISE TypeError
+
+test_0742.py:23: Failed
+=========================== short test summary info ============================
+FAILED test_0742.py::test_task_func_mixed_case_keys - AssertionError: assert ...
+FAILED test_0742.py::test_task_func_numeric_keys - TypeError: 'int' object is...
+FAILED test_0742.py::test_task_func_mixed_key_types - Failed: DID NOT RAISE T...
+3 failed, 5 passed in 0.48s

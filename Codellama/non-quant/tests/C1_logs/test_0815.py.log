@@ -1,0 +1,50 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        source_dir = "test_data/source"
+        target_dir = "test_data/target"
+        file_pattern = r'\b[A-Za-z0-9]+\.(txt|doc|docx)\b'
+    
+>       moved_files_count = task_func(source_dir, target_dir, file_pattern)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0815.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+source_dir = 'test_data/source', target_dir = 'test_data/target'
+file_pattern = '\\b[A-Za-z0-9]+\\.(txt|doc|docx)\\b'
+
+    def task_func(source_dir, target_dir, file_pattern=r'\b[A-Za-z0-9]+\.(txt|doc|docx)\b'):
+        if not os.path.exists(source_dir):
+>           raise FileNotFoundError("The source directory does not exist.")
+E           FileNotFoundError: The source directory does not exist.
+
+../../../src/src_0815.py:6: FileNotFoundError
+_____________________ test_task_func_invalid_file_pattern ______________________
+
+    def test_task_func_invalid_file_pattern():
+        source_dir = "test_data/source"
+        target_dir = "test_data/target"
+        file_pattern = r'\b[A-Za-z0-9]+\.(txt|doc|docx)\b'
+    
+        with pytest.raises(ValueError):
+>           task_func(source_dir, target_dir, file_pattern)
+
+test_0815.py:30: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+source_dir = 'test_data/source', target_dir = 'test_data/target'
+file_pattern = '\\b[A-Za-z0-9]+\\.(txt|doc|docx)\\b'
+
+    def task_func(source_dir, target_dir, file_pattern=r'\b[A-Za-z0-9]+\.(txt|doc|docx)\b'):
+        if not os.path.exists(source_dir):
+>           raise FileNotFoundError("The source directory does not exist.")
+E           FileNotFoundError: The source directory does not exist.
+
+../../../src/src_0815.py:6: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0815.py::test_task_func_valid_input - FileNotFoundError: The sour...
+FAILED test_0815.py::test_task_func_invalid_file_pattern - FileNotFoundError:...
+2 failed, 1 passed in 0.47s

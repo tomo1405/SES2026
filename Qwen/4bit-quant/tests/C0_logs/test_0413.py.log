@@ -1,0 +1,32 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_valid_json ________________________
+
+    def test_task_func_with_valid_json():
+        # Prepare a mock JSON file content
+        json_content = '{"key1": "SGVsbG8gV29ybGQh"}'  # Base64 encoded "Hello World!"
+        mock_file = MockFile(json_content)
+    
+        # Patch the open function to return our mock file
+>       with pytest.monkeypatch.context() as mp:
+             ^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'pytest' has no attribute 'monkeypatch'. Did you mean: 'MonkeyPatch'?
+
+test_0413.py:18: AttributeError
+_______________________ test_task_func_with_invalid_json _______________________
+
+    def test_task_func_with_invalid_json():
+        # Prepare a mock JSON file content with invalid base64
+        json_content = '{"key1": "invalid_base64"}'
+        mock_file = MockFile(json_content)
+    
+        # Patch the open function to return our mock file
+>       with pytest.monkeypatch.context() as mp:
+             ^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'pytest' has no attribute 'monkeypatch'. Did you mean: 'MonkeyPatch'?
+
+test_0413.py:33: AttributeError
+=========================== short test summary info ============================
+FAILED test_0413.py::test_task_func_with_valid_json - AttributeError: module ...
+FAILED test_0413.py::test_task_func_with_invalid_json - AttributeError: modul...
+2 failed, 1 passed in 0.44s

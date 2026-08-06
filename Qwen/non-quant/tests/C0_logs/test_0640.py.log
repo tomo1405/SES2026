@@ -1,0 +1,28 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_output _____________________________
+
+    def test_task_func_output():
+        df, ax = task_func(num_samples=5, num_features=3)
+    
+        # Check DataFrame shape
+        assert df.shape == (5, 3), "DataFrame shape is incorrect"
+    
+        # Check DataFrame index and columns
+        expected_index = ['Sample1', 'Sample2', 'Sample3', 'Sample4', 'Sample5']
+        expected_columns = ['Feature1', 'Feature2', 'Feature3']
+        assert list(df.index) == expected_index, "DataFrame index is incorrect"
+        assert list(df.columns) == expected_columns, "DataFrame columns are incorrect"
+    
+        # Check that the DataFrame contains only float values
+        assert df.dtypes.apply(lambda x: pd.api.types.is_float_dtype(x)).all(), "DataFrame contains non-float values"
+    
+        # Check the heatmap axes
+>       assert isinstance(ax, sns.axisgrid.AxesGrid), "Returned object is not a Seaborn AxesGrid"
+                              ^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'seaborn.axisgrid' has no attribute 'AxesGrid'
+
+test_0640.py:24: AttributeError
+=========================== short test summary info ============================
+FAILED test_0640.py::test_task_func_output - AttributeError: module 'seaborn....
+1 failed, 1 passed in 3.72s

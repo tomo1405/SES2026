@@ -1,0 +1,28 @@
+F...                                                                     [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_valid_data ________________________
+
+    def test_task_func_with_valid_data():
+        data = {
+            'Name': ['Alice', 'Bob', 'Alice', 'Charlie'],
+            'Score': [85, 90, 88, 92]
+        }
+        df = pd.DataFrame(data)
+        expected_result = {
+            'Alice': iter([('Alice', mean([85, 88]))]),
+            'Bob': iter([('Bob', 90)]),
+            'Charlie': iter([('Charlie', 92)])
+        }
+>       assert task_func(df) == expected_result
+E       AssertionError: assert {'Alice': <li...755fb41639d0>} == {'Alice': <li...75604b27ada0>}
+E         
+E         Differing items:
+E         {'Bob': <list_iterator object at 0x755fb4161000>} != {'Bob': <list_iterator object at 0x755fb5950a00>}
+E         {'Charlie': <list_iterator object at 0x755fb41639d0>} != {'Charlie': <list_iterator object at 0x75604b27ada0>}
+E         {'Alice': <list_iterator object at 0x755fb5d8a680>} != {'Alice': <list_iterator object at 0x755fb4ccb160>}
+E         Use -v to get more diff
+
+test_0830.py:17: AssertionError
+=========================== short test summary info ============================
+FAILED test_0830.py::test_task_func_with_valid_data - AssertionError: assert ...
+1 failed, 3 passed in 2.06s

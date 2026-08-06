@@ -1,0 +1,111 @@
+F..FF                                                                    [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_unique_values _______________________
+
+df =    column_a  column_b  column_c
+0         1        50       900
+1         2        60       900
+2         3        70       900
+3         4        80       900
+4         5        90       900
+
+    def test_task_func_with_unique_values(df):
+>       assert task_func(df, 'column_a', 'column_b', 'column_c') is True
+E       AssertionError: assert np.False_ is True
+E        +  where np.False_ = task_func(   column_a  column_b  column_c\n0         1        50       900\n1         2        60       900\n2         3        70       900\n3         4        80       900\n4         5        90       900, 'column_a', 'column_b', 'column_c')
+
+test_0884.py:15: AssertionError
+_________________ test_task_func_with_adf_p_value_less_than_05 _________________
+
+df =    column_a  column_b  column_c
+1         2        60       900
+2         3        70       900
+3         4        80       900
+4         5        90       900
+
+    def test_task_func_with_adf_p_value_less_than_05(df):
+        adf_result = adfuller(df['column_a'])
+        df = df[(df['column_b'] > 50) & (df['column_c'] == 900)]
+>       df['column_a'] = [1, 2, 3, 4, 5]
+        ^^^^^^^^^^^^^^
+
+test_0884.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:4672: in __setitem__
+    self._set_item(key, value)
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:4872: in _set_item
+    value, refs = self._sanitize_column(value)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:5754: in _sanitize_column
+    com.require_length_match(value, self.index)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = [1, 2, 3, 4, 5], index = RangeIndex(start=1, stop=5, step=1)
+
+    def require_length_match(data, index: Index) -> None:
+        """
+        Check the length of data matches the length of the index.
+        """
+        if len(data) != len(index):
+>           raise ValueError(
+                "Length of values "
+                f"({len(data)}) "
+                "does not match length of index "
+                f"({len(index)})"
+            )
+E           ValueError: Length of values (5) does not match length of index (4)
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/common.py:601: ValueError
+_______________ test_task_func_with_adf_p_value_greater_than_05 ________________
+
+df =    column_a  column_b  column_c
+1         2        60       900
+2         3        70       900
+3         4        80       900
+4         5        90       900
+
+    def test_task_func_with_adf_p_value_greater_than_05(df):
+        adf_result = adfuller(df['column_a'])
+        df = df[(df['column_b'] > 50) & (df['column_c'] == 900)]
+>       df['column_a'] = [1, 2, 3, 4, 5]
+        ^^^^^^^^^^^^^^
+
+test_0884.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:4672: in __setitem__
+    self._set_item(key, value)
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:4872: in _set_item
+    value, refs = self._sanitize_column(value)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:5754: in _sanitize_column
+    com.require_length_match(value, self.index)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = [1, 2, 3, 4, 5], index = RangeIndex(start=1, stop=5, step=1)
+
+    def require_length_match(data, index: Index) -> None:
+        """
+        Check the length of data matches the length of the index.
+        """
+        if len(data) != len(index):
+>           raise ValueError(
+                "Length of values "
+                f"({len(data)}) "
+                "does not match length of index "
+                f"({len(index)})"
+            )
+E           ValueError: Length of values (5) does not match length of index (4)
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/common.py:601: ValueError
+=============================== warnings summary ===============================
+Granite/8bit-quant/tests/test_0884.py::test_task_func_with_adf_p_value_less_than_05
+Granite/8bit-quant/tests/test_0884.py::test_task_func_with_adf_p_value_greater_than_05
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/statsmodels/regression/linear_model.py:955: RuntimeWarning: divide by zero encountered in log
+    llf = -nobs2*np.log(2*np.pi) - nobs2*np.log(ssr / nobs) - nobs2
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0884.py::test_task_func_with_unique_values - AssertionError: asse...
+FAILED test_0884.py::test_task_func_with_adf_p_value_less_than_05 - ValueErro...
+FAILED test_0884.py::test_task_func_with_adf_p_value_greater_than_05 - ValueE...
+3 failed, 2 passed, 2 warnings in 2.97s

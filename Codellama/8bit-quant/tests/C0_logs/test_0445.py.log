@@ -1,0 +1,78 @@
+FFF.F                                                                    [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        points, ax = task_func()
+        assert isinstance(points, np.ndarray)
+        assert points.shape == (100, 3)
+        assert isinstance(ax, plt.Axes)
+>       assert ax.get_xlabel() == "X"
+E       AssertionError: assert '' == 'X'
+E         
+E         - X
+
+test_0445.py:11: AssertionError
+_________________________ test_task_func_with_n_points _________________________
+
+    def test_task_func_with_n_points():
+        points, ax = task_func(n_points=50)
+        assert isinstance(points, np.ndarray)
+        assert points.shape == (50, 3)
+        assert isinstance(ax, plt.Axes)
+>       assert ax.get_xlabel() == "X"
+E       AssertionError: assert '' == 'X'
+E         
+E         - X
+
+test_0445.py:20: AssertionError
+_______________________ test_task_func_with_random_seed ________________________
+
+    def test_task_func_with_random_seed():
+        points, ax = task_func(random_seed=42)
+        assert isinstance(points, np.ndarray)
+        assert points.shape == (100, 3)
+        assert isinstance(ax, plt.Axes)
+>       assert ax.get_xlabel() == "X"
+E       AssertionError: assert '' == 'X'
+E         
+E         - X
+
+test_0445.py:29: AssertionError
+___________________ test_task_func_with_invalid_random_seed ____________________
+
+>   ???
+E   TypeError: 'str' object cannot be interpreted as an integer
+
+numpy/random/_mt19937.pyx:180: TypeError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func_with_invalid_random_seed():
+        with pytest.raises(ValueError):
+>           task_func(random_seed="abc")
+
+test_0445.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0445.py:4: in task_func
+    np.random.seed(random_seed)
+numpy/random/mtrand.pyx:4833: in numpy.random.mtrand.seed
+    ???
+numpy/random/mtrand.pyx:255: in numpy.random.mtrand.RandomState.seed
+    ???
+numpy/random/mtrand.pyx:256: in numpy.random.mtrand.RandomState.seed
+    ???
+numpy/random/_mt19937.pyx:168: in numpy.random._mt19937.MT19937._legacy_seeding
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   TypeError: Cannot cast scalar from dtype('<U3') to dtype('int64') according to the rule 'safe'
+
+numpy/random/_mt19937.pyx:188: TypeError
+=========================== short test summary info ============================
+FAILED test_0445.py::test_task_func - AssertionError: assert '' == 'X'
+FAILED test_0445.py::test_task_func_with_n_points - AssertionError: assert ''...
+FAILED test_0445.py::test_task_func_with_random_seed - AssertionError: assert...
+FAILED test_0445.py::test_task_func_with_invalid_random_seed - TypeError: Can...
+4 failed, 1 passed in 1.66s

@@ -1,0 +1,33 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sample_data =            date  closing_price
+0  1.672531e+09            100
+1  1.672618e+09            102
+2  1.672704e+09            101
+
+    def test_task_func(sample_data):
+        pred_prices, ax = task_func(sample_data)
+    
+        # Check if pred_prices is a list of 7 elements
+        assert isinstance(pred_prices, list)
+        assert len(pred_prices) == 7
+    
+        # Check if pred_prices are numeric
+        assert all(isinstance(price, (int, float)) for price in pred_prices)
+    
+        # Check if ax is a matplotlib Axes object
+        assert isinstance(ax, plt.Axes)
+    
+        # Check if the plot contains the correct number of lines
+        lines = ax.get_lines()
+>       assert len(lines) == 2  # 1 for scatter and 1 for plot
+        ^^^^^^^^^^^^^^^^^^^^^^
+E       assert 1 == 2
+E        +  where 1 = len(<a list of 1 Line2D objects>)
+
+test_0915.py:30: AssertionError
+=========================== short test summary info ============================
+FAILED test_0915.py::test_task_func - assert 1 == 2
+1 failed in 4.39s

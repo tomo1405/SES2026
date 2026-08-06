@@ -1,0 +1,42 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data_list = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        expected_results = {'Position 1': 5.0, 'Position 2': 7.0, 'Position 3': 9.0}
+        actual_results = task_func(data_list)
+>       assert actual_results == expected_results
+E       AssertionError: assert {'Position 1'....float64(6.0)} == {'Position 1'...ition 3': 9.0}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'Position 2': np.float64(6.0)} != {'Position 2': 7.0}
+E         Right contains 1 more item:
+E         {'Position 3': 9.0}
+E         Use -v to get more diff
+
+test_0251.py:10: AssertionError
+________________________ test_task_func_with_json_file _________________________
+
+    def test_task_func_with_json_file():
+        data_list = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        expected_results = {'Position 1': 5.0, 'Position 2': 7.0, 'Position 3': 9.0}
+        with open('mean_values.json', 'w') as f:
+            json.dump(expected_results, f)
+        actual_results = task_func(data_list)
+>       assert actual_results == expected_results
+E       AssertionError: assert {'Position 1'....float64(6.0)} == {'Position 1'...ition 3': 9.0}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'Position 2': np.float64(6.0)} != {'Position 2': 7.0}
+E         Right contains 1 more item:
+E         {'Position 3': 9.0}
+E         Use -v to get more diff
+
+test_0251.py:18: AssertionError
+=========================== short test summary info ============================
+FAILED test_0251.py::test_task_func - AssertionError: assert {'Position 1'......
+FAILED test_0251.py::test_task_func_with_json_file - AssertionError: assert {...
+2 failed in 0.65s

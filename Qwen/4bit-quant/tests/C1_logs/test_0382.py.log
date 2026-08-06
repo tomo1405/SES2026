@@ -1,0 +1,34 @@
+F..F                                                                     [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_valid_file ________________________
+
+mock_file_path = '/tmp/pytest-of-tomohiro-w/pytest-1681/test_task_func_with_valid_file0/mock_arena.csv'
+
+    def test_task_func_with_valid_file(mock_file_path):
+        ax, importances = task_func(mock_file_path, target_column='Index', seed=42)
+        assert isinstance(ax, plt.Axes)
+>       assert isinstance(importances, list)
+E       assert False
+E        +  where False = isinstance(array([0.35294118, 0.36470588, 0.28235294]), list)
+
+test_0382.py:21: AssertionError
+________________________ test_task_func_with_empty_file ________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1681/test_task_func_with_empty_file0')
+
+    def test_task_func_with_empty_file(tmpdir):
+        empty_file_path = tmpdir.join("empty_arena.csv")
+        with open(empty_file_path, 'w') as f:
+            pass
+        with pytest.raises(ValueError) as excinfo:
+            task_func(str(empty_file_path), target_column='Index', seed=42)
+>       assert "The specified target column 'Index' does not exist in the CSV file." in str(excinfo.value)
+E       assert "The specified target column 'Index' does not exist in the CSV file." in 'No columns to parse from file'
+E        +  where 'No columns to parse from file' = str(EmptyDataError('No columns to parse from file'))
+E        +    where EmptyDataError('No columns to parse from file') = <ExceptionInfo EmptyDataError('No columns to parse from file') tblen=8>.value
+
+test_0382.py:40: AssertionError
+=========================== short test summary info ============================
+FAILED test_0382.py::test_task_func_with_valid_file - assert False
+FAILED test_0382.py::test_task_func_with_empty_file - assert "The specified t...
+2 failed, 2 passed in 4.47s

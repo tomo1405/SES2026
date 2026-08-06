@@ -1,0 +1,13 @@
+import matplotlib
+import numpy as np
+def task_func(ax, num_points):
+    
+    if not isinstance(ax, matplotlib.axes.Axes):
+        raise ValueError("The input is not an axes")
+
+    r = np.random.rand(num_points)
+    theta = 2 * np.pi * np.random.rand(num_points)
+
+    ax.scatter(theta, r)
+    ax.set_rlabel_position(num_points / 10)
+    return ax

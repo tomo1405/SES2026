@@ -1,0 +1,27 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        source_path = pathlib.Path("source_dir")
+        destination_path = pathlib.Path("destination_dir")
+    
+        source_path.mkdir(parents=True, exist_ok=True)
+        destination_path.mkdir(parents=True, exist_ok=True)
+    
+        source_file = source_path / "test_file.txt"
+        source_file.touch()
+    
+        results = task_func(source_path, destination_path)
+    
+>       assert results == ["test_file.txt"]
+E       AssertionError: assert ('source_dir'..._1.txt', ...]) == ['test_file.txt']
+E         
+E         At index 0 diff: 'source_dir' != 'test_file.txt'
+E         Left contains one more item: ['test_file_6.txt', 'test_file_8.txt', 'test_file_9.txt', 'test_file_5.txt', 'test_file_2.txt', 'test_file_1.txt', ...]
+E         Use -v to get more diff
+
+test_0975.py:18: AssertionError
+=========================== short test summary info ============================
+FAILED test_0975.py::test_task_func - AssertionError: assert ('source_dir'......
+1 failed in 0.50s

@@ -1,0 +1,10 @@
+from datetime import datetime
+import random
+import matplotlib.pyplot as plt
+def task_func(date_str):
+    date = datetime.strptime(date_str, "%Y-%m-%d")
+    num_of_values = date.day
+    random_values = [random.randint(1, 100) for _ in range(num_of_values)]
+    _, ax = plt.subplots()
+    ax.plot(random_values)
+    return ax

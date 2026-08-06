@@ -1,0 +1,33 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        time_strings = ["12/01/2023 12:34:56.789", "13/01/2023 13:45:06.890"]
+        time_format = "%d/%m/%Y %H:%M:%S.%f"
+        ax = task_func(time_strings, time_format)
+        assert ax is not None
+>       assert ax.get_title() == "Histogram of seconds"
+E       AssertionError: assert '' == 'Histogram of seconds'
+E         
+E         - Histogram of seconds
+
+test_1074.py:9: AssertionError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        time_strings = ["12/01/2023 12:34:56.789", "13/01/2023 13:45:06.890", "invalid"]
+        time_format = "%d/%m/%Y %H:%M:%S.%f"
+        ax = task_func(time_strings, time_format)
+        assert ax is None
+>       assert "Error parsing time strings: time data 'invalid' does not match format '%d/%m/%Y %H:%M:%S.%f'" in caplog.text
+                                                                                                                 ^^^^^^
+E       NameError: name 'caplog' is not defined
+
+test_1074.py:24: NameError
+----------------------------- Captured stdout call -----------------------------
+Error parsing time strings: time data 'invalid' does not match format '%d/%m/%Y %H:%M:%S.%f'
+=========================== short test summary info ============================
+FAILED test_1074.py::test_task_func_valid_input - AssertionError: assert '' =...
+FAILED test_1074.py::test_task_func_invalid_input - NameError: name 'caplog' ...
+2 failed in 1.66s

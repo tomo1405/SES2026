@@ -1,0 +1,28 @@
+.F.F...                                                                  [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_no_normal_data _________________________
+
+    def test_task_func_no_normal_data():
+        data, outliers_detected, ax = task_func(num_samples=0)
+        assert len(data) == 5
+>       assert len(outliers_detected) == 5
+E       assert 0 == 5
+E        +  where 0 = len(array([], dtype=float64))
+
+test_1067.py:15: AssertionError
+__________________________ test_task_func_no_outliers __________________________
+
+    def test_task_func_no_outliers():
+        num_samples = 1000
+        num_outliers = 0
+        data, outliers_detected, ax = task_func(num_samples=num_samples, num_outliers=num_outliers)
+        assert len(data) == num_samples
+>       assert len(outliers_detected) == 0
+E       assert 9 == 0
+E        +  where 9 = len(array([-2.82381987, -2.89234722,  2.76258519,  3.46105837,  2.78450408,\n       -2.85916502,  2.75119704, -2.75816686, -3.08011197]))
+
+test_1067.py:31: AssertionError
+=========================== short test summary info ============================
+FAILED test_1067.py::test_task_func_no_normal_data - assert 0 == 5
+FAILED test_1067.py::test_task_func_no_outliers - assert 9 == 0
+2 failed, 5 passed in 2.16s

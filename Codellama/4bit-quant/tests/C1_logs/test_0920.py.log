@@ -1,0 +1,22 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data = {'A': [1, 2, 3, 4, 5], 'B': [2, 4, 6, 8, 10], 'C': [3, 6, 9, 12, 15]}
+        column = 'A'
+        ax = task_func(data, column)
+        assert ax.get_xlabel() == 'Category'
+        assert ax.get_ylabel() == 'Count'
+        assert ax.get_title() == f'Distribution of {column}'
+        assert len(ax.get_xticks()) == 5
+>       assert len(ax.get_yticks()) == 5
+E       AssertionError: assert 7 == 5
+E        +  where 7 = len(array([-0.06, -0.04, -0.02,  0.  ,  0.02,  0.04,  0.06]))
+E        +    where array([-0.06, -0.04, -0.02,  0.  ,  0.02,  0.04,  0.06]) = get_yticks()
+E        +      where get_yticks = <Axes: title={'center': 'Distribution of A'}, xlabel='Category', ylabel='Count'>.get_yticks
+
+test_0920.py:12: AssertionError
+=========================== short test summary info ============================
+FAILED test_0920.py::test_task_func - AssertionError: assert 7 == 5
+1 failed in 2.22s

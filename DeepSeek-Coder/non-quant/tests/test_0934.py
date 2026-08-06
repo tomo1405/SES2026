@@ -1,0 +1,9 @@
+import pytest
+from src_0934 import task_func
+
+def test_task_func():
+    assert task_func("hello") == [('h', 8), ('e', 5), ('l', 12), ('l', 12), ('o', 15)]
+    assert task_func("world") == [('w', 23), ('o', 15), ('r', 18), ('l', 12), ('d', 4)]
+    assert task_func("python") == [('p', 16), ('y', 25), ('t', 20), ('h', 8), ('o', 15), ('n', 14)]
+
+# Add more test cases as needed

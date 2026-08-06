@@ -1,0 +1,41 @@
+F...                                                                     [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_success ____________________________
+
+mock_requests_get = <MagicMock id='126649701378736'>
+mock_zipfile = <class 'test_1013.mock_zipfile.<locals>.MockZipFile'>
+
+    def test_task_func_success(mock_requests_get, mock_zipfile):
+        url = "http://example.com/file.zip"
+        filename = "file.zip"
+>       result, files = task_func(url, filename)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1013.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'http://example.com/file.zip', filename = 'file.zip'
+
+    def task_func(url, filename):
+        try:
+            # Download the file
+            response = requests.get(url, stream=True, timeout=5)
+            if response.status_code == 200:
+                filepath = DOWNLOAD_DIR / filename
+                filepath.parent.mkdir(parents=True, exist_ok=True)
+    
+                with open(filepath, "wb") as handle:
+                    for data in response.iter_content():
+                        handle.write(data)
+    
+                # Unzip the file
+                zip_dir = ZIP_DIR / filename[:-4]
+                zip_dir.mkdir(parents=True, exist_ok=True)
+    
+>               with zipfile.ZipFile(filepath, "r") as zip_ref:
+E               TypeError: 'MockZipFile' object does not support the context manager protocol
+
+../../../src/src_1013.py:23: TypeError
+=========================== short test summary info ============================
+FAILED test_1013.py::test_task_func_success - TypeError: 'MockZipFile' object...
+1 failed, 3 passed in 0.76s

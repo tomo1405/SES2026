@@ -1,0 +1,61 @@
+FFF...F                                                                  [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        with pytest.raises(ValueError):
+            task_func([1, 2, 3])  # Not a 2D numpy array
+    
+        with pytest.raises(ValueError):
+            task_func(np.array([[1, 2], [3, 4]]).reshape(-1))  # Not a 2D numpy array
+    
+        with pytest.raises(ValueError):
+            task_func(np.array([]))  # Empty array
+    
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0979.py:16: Failed
+__________________________ test_task_func_empty_array __________________________
+
+    def test_task_func_empty_array():
+        result = task_func(np.array([[1, 2], [3, 4]]), seed=42)
+>       assert result.equals(pd.DataFrame(columns=["PC1", "PC2"]))
+E       AssertionError: assert False
+E        +  where False = equals(Empty DataFrame\nColumns: [PC1, PC2]\nIndex: [])
+E        +    where equals =         PC1           PC2\n0 -1.414214 -2.372134e-17\n1  1.414214 -2.372134e-17.equals
+E        +    and   Empty DataFrame\nColumns: [PC1, PC2]\nIndex: [] = <class 'pandas.DataFrame'>(columns=['PC1', 'PC2'])
+E        +      where <class 'pandas.DataFrame'> = pd.DataFrame
+
+test_0979.py:21: AssertionError
+_________________________ test_task_func_single_column _________________________
+
+    def test_task_func_single_column():
+        array = np.array([[1], [2], [3]])
+        result = task_func(array, seed=42)
+>       assert result.equals(pd.DataFrame(columns=["PC1"]))
+E       AssertionError: assert False
+E        +  where False = equals(Empty DataFrame\nColumns: [PC1]\nIndex: [])
+E        +    where equals =    PC1\n0 -1.0\n1  0.0\n2  1.0.equals
+E        +    and   Empty DataFrame\nColumns: [PC1]\nIndex: [] = <class 'pandas.DataFrame'>(columns=['PC1'])
+E        +      where <class 'pandas.DataFrame'> = pd.DataFrame
+
+test_0979.py:26: AssertionError
+_________________________ test_task_func_without_seed __________________________
+
+    def test_task_func_without_seed():
+        array = np.array([[1, 2], [3, 4], [5, 6]])
+        result1 = task_func(array)
+        result2 = task_func(array)
+>       assert not result1.equals(result2)
+E       assert not True
+E        +  where True = equals(        PC1           PC2\n0 -2.828427 -4.744269e-17\n1  0.000000 -0.000000e+00\n2  2.828427 -4.744269e-17)
+E        +    where equals =         PC1           PC2\n0 -2.828427 -4.744269e-17\n1  0.000000 -0.000000e+00\n2  2.828427 -4.744269e-17.equals
+
+test_0979.py:50: AssertionError
+=========================== short test summary info ============================
+FAILED test_0979.py::test_task_func_invalid_input - Failed: DID NOT RAISE Val...
+FAILED test_0979.py::test_task_func_empty_array - AssertionError: assert False
+FAILED test_0979.py::test_task_func_single_column - AssertionError: assert False
+FAILED test_0979.py::test_task_func_without_seed - assert not True
+4 failed, 3 passed in 2.82s

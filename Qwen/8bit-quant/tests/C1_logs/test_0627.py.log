@@ -1,0 +1,34 @@
+FF...                                                                    [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        date_str = "2023-10-01 12:00:00"
+        from_tz = "UTC"
+        result = task_func(date_str, from_tz)
+        converted_date, to_tz = result
+    
+        # Parse the original date and convert it to the randomly chosen timezone
+        original_date = parse(date_str).replace(tzinfo=pytz.utc)
+        to_tz_obj = pytz.timezone(to_tz)
+        expected_converted_date = original_date.astimezone(to_tz_obj).strftime('%Y-%m-%d %H:%M:%S')
+    
+        assert converted_date == expected_converted_date
+>       assert to_tz in TIMEZONES
+                        ^^^^^^^^^
+E       NameError: name 'TIMEZONES' is not defined
+
+test_0627.py:19: NameError
+______________________ test_task_func_invalid_date_format ______________________
+
+    def test_task_func_invalid_date_format():
+        date_str = "2023-10-01 12:00"  # Missing seconds
+        from_tz = "UTC"
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0627.py:24: Failed
+=========================== short test summary info ============================
+FAILED test_0627.py::test_task_func_valid_input - NameError: name 'TIMEZONES'...
+FAILED test_0627.py::test_task_func_invalid_date_format - Failed: DID NOT RAI...
+2 failed, 3 passed in 0.79s

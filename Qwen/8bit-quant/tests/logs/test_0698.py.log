@@ -1,0 +1,28 @@
+...F                                                                     [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_random_values _______________________
+
+sample_data =    feature     value
+0        1  0.548814
+1        2  0.715189
+2        3  0.602763
+3        4  0.544883
+4        5  0.423655
+
+    def test_task_func_with_random_values(sample_data):
+        np.random.seed(0)
+        sample_data['value'] = np.random.rand(5)
+        result = task_func(sample_data)
+        expected_coefficients = [[0.49671415]]
+        expected_intercept = [0.0]
+    
+>       assert np.allclose(result['coefficients'], expected_coefficients), f"Expected coefficients {expected_coefficients}, but got {result['coefficients']}"
+E       AssertionError: Expected coefficients [[0.49671415]], but got [[-0.04206235925523627]]
+E       assert False
+E        +  where False = <function allclose at 0x7f466b3f2430>([[-0.04206235925523627]], [[0.49671415]])
+E        +    where <function allclose at 0x7f466b3f2430> = np.allclose
+
+test_0698.py:47: AssertionError
+=========================== short test summary info ============================
+FAILED test_0698.py::test_task_func_with_random_values - AssertionError: Expe...
+1 failed, 3 passed in 3.18s

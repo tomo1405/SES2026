@@ -1,0 +1,57 @@
+FFF.FF                                                                   [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_default_parameters _______________________
+
+    def test_task_func_default_parameters():
+        ax = task_func()
+>       assert isinstance(ax, pd.DataFrame.plot.SeriesPlotter)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: type object 'PlotAccessor' has no attribute 'SeriesPlotter'
+
+test_0164.py:8: AttributeError
+_____________________ test_task_func_custom_rows_and_cols ______________________
+
+    def test_task_func_custom_rows_and_cols():
+        ax = task_func(rows=3, cols=2)
+>       assert isinstance(ax, pd.DataFrame.plot.SeriesPlotter)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: type object 'PlotAccessor' has no attribute 'SeriesPlotter'
+
+test_0164.py:12: AttributeError
+__________________________ test_task_func_max_columns __________________________
+
+    def test_task_func_max_columns():
+        ax = task_func(cols=5)
+>       assert isinstance(ax, pd.DataFrame.plot.SeriesPlotter)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: type object 'PlotAccessor' has no attribute 'SeriesPlotter'
+
+test_0164.py:16: AttributeError
+_______________________ test_task_func_data_correctness ________________________
+
+    def test_task_func_data_correctness():
+        np.random.seed(0)
+        expected_data = pd.DataFrame(np.random.rand(5, 5) * 100, columns=['A', 'B', 'C', 'D', 'E'])
+        ax = task_func()
+>       assert ax.get_figure().get_axes()[0].get_lines()[0].get_ydata().tolist() == expected_data.iloc[0].tolist()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       IndexError: list index out of range
+
+test_0164.py:26: IndexError
+________________________ test_task_func_plot_properties ________________________
+
+    def test_task_func_plot_properties():
+        ax = task_func()
+        assert ax.get_ylabel() == 'Value'
+        assert ax.get_title() == 'Stacked Bar Chart'
+>       assert ax.get_figure().get_size_inches() == (10, 6)
+E       ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+test_0164.py:32: ValueError
+=========================== short test summary info ============================
+FAILED test_0164.py::test_task_func_default_parameters - AttributeError: type...
+FAILED test_0164.py::test_task_func_custom_rows_and_cols - AttributeError: ty...
+FAILED test_0164.py::test_task_func_max_columns - AttributeError: type object...
+FAILED test_0164.py::test_task_func_data_correctness - IndexError: list index...
+FAILED test_0164.py::test_task_func_plot_properties - ValueError: The truth v...
+5 failed, 1 passed in 2.32s

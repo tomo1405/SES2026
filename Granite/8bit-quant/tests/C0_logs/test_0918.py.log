@@ -1,0 +1,47 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test data
+        df = pd.DataFrame({
+            'date': pd.date_range(start='2023-01-01', periods=10),
+            'closing_price': [100, 110, 120, 130, 140, 150, 160, 170, 180, 190]
+        })
+    
+        # Expected output
+        expected_forecast = [191.4124579124579, 193.01190476190476, 194.6113516113516, 196.21079846079847, 197.8102453102453, 199.40969215969216, 201.009139009139]
+        expected_ax_line1_ydata = [100, 110, 120, 130, 140, 150, 160, 170, 180, 190]
+        expected_ax_line2_ydata = [191.4124579124579, 193.01190476190476, 194.6113516113516, 196.21079846079847, 197.8102453102453, 199.40969215969216, 201.009139009139]
+    
+        # Call the function
+        forecast, ax = task_func(df)
+    
+        # Assert the forecast and ax.lines data
+>       assert forecast == expected_forecast
+E       assert [199.99999983...06050621, ...] == [191.41245791...15969216, ...]
+E         
+E         At index 0 diff: 199.99999983241844 != 191.4124579124579
+E         Use -v to get more diff
+
+test_0918.py:33: AssertionError
+=============================== warnings summary ===============================
+Granite/8bit-quant/tests/test_0918.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/statsmodels/tsa/statespace/mlemodel.py:174: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
+  As an alternative, you can create a new view using np.reshape (with copy=False if needed).
+    endog.shape = (endog.shape[0], 1)  # this will be C-contiguous
+
+Granite/8bit-quant/tests/test_0918.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/statsmodels/tsa/statespace/sarimax.py:966: UserWarning: Non-stationary starting autoregressive parameters found. Using zeros as starting parameters.
+    warn('Non-stationary starting autoregressive parameters'
+
+Granite/8bit-quant/tests/test_0918.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/statsmodels/base/model.py:607: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+    warnings.warn("Maximum Likelihood optimization failed to "
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0918.py::test_task_func - assert [199.99999983...06050621, ...] =...
+1 failed, 3 warnings in 3.99s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

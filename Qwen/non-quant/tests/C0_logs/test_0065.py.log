@@ -1,0 +1,188 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sample_data = [[1, 2, 'a'], [1, 2, 'b'], [1, 3, 'c'], [2, 2, 'd'], [2, 3, 'e'], [2, 3, 'f']]
+
+    def test_task_func(sample_data):
+        analyzed_df, ax = task_func(sample_data)
+    
+        # Check if the DataFrame is correctly pivoted
+        expected_df = pd.DataFrame({
+            'col2': {1: {2: 2, 3: 1}, 2: {2: 1, 3: 2}}
+>       }).T.rename_axis(['col1', 'col2']).rename(columns={0: 'col3'})
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0065.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:1253: in rename_axis
+    return self._set_axis_name(mapper, axis=axis, inplace=inplace)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:1346: in _set_axis_name
+    idx = self._get_axis(axis).set_names(name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py:2051: in set_names
+    idx._set_names(names, level=level)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Index(['col2'], dtype='str'), values = ['col1', 'col2'], level = None
+
+    def _set_names(self, values, *, level=None) -> None:
+        """
+        Set new names on index. Each name has to be a hashable type.
+    
+        Parameters
+        ----------
+        values : str or sequence
+            name(s) to set
+        level : int, level name, or sequence of int/level names (default None)
+            If the index is a MultiIndex (hierarchical), level(s) to set (None
+            for all levels).  Otherwise level must be None
+    
+        Raises
+        ------
+        TypeError if each name is not hashable.
+        """
+        if not is_list_like(values):
+            raise ValueError("Names must be a list-like")
+        if len(values) != 1:
+>           raise ValueError(f"Length of new names must be 1, got {len(values)}")
+E           ValueError: Length of new names must be 1, got 2
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py:1938: ValueError
+__________________________ test_task_func_empty_input __________________________
+
+    def test_task_func_empty_input():
+>       analyzed_df, ax = task_func([])
+                          ^^^^^^^^^^^^^
+
+test_0065.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0065.py:10: in task_func
+    ax = sns.heatmap(analyzed_df, annot=True)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/seaborn/matrix.py:446: in heatmap
+    plotter = _HeatMapper(data, vmin, vmax, cmap, center, robust, annot, fmt,
+../../../.venv/lib/python3.12/site-packages/seaborn/matrix.py:163: in __init__
+    self._determine_cmap_params(plot_data, vmin, vmax,
+../../../.venv/lib/python3.12/site-packages/seaborn/matrix.py:202: in _determine_cmap_params
+    vmin = np.nanmin(calc_data)
+           ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = array([], shape=(0, 0), dtype=float64), axis = None, out = None
+keepdims = <no value>, initial = <no value>, where = <no value>
+
+    @array_function_dispatch(_nanmin_dispatcher)
+    def nanmin(a, axis=None, out=None, keepdims=np._NoValue, initial=np._NoValue,
+               where=np._NoValue):
+        """
+        Return minimum of an array or minimum along an axis, ignoring any NaNs.
+        When all-NaN slices are encountered a ``RuntimeWarning`` is raised and
+        Nan is returned for that slice.
+    
+        Parameters
+        ----------
+        a : array_like
+            Array containing numbers whose minimum is desired. If `a` is not an
+            array, a conversion is attempted.
+        axis : {int, tuple of int, None}, optional
+            Axis or axes along which the minimum is computed. The default is to compute
+            the minimum of the flattened array.
+        out : ndarray, optional
+            Alternate output array in which to place the result.  The default
+            is ``None``; if provided, it must have the same shape as the
+            expected output, but the type will be cast if necessary. See
+            :ref:`ufuncs-output-type` for more details.
+        keepdims : bool, optional
+            If this is set to True, the axes which are reduced are left
+            in the result as dimensions with size one. With this option,
+            the result will broadcast correctly against the original `a`.
+    
+            If the value is anything but the default, then
+            `keepdims` will be passed through to the `min` method
+            of sub-classes of `ndarray`.  If the sub-classes methods
+            does not implement `keepdims` any exceptions will be raised.
+        initial : scalar, optional
+            The maximum value of an output element. Must be present to allow
+            computation on empty slice. See `~numpy.ufunc.reduce` for details.
+    
+            .. versionadded:: 1.22.0
+        where : array_like of bool, optional
+            Elements to compare for the minimum. See `~numpy.ufunc.reduce`
+            for details.
+    
+            .. versionadded:: 1.22.0
+    
+        Returns
+        -------
+        nanmin : ndarray
+            An array with the same shape as `a`, with the specified axis
+            removed.  If `a` is a 0-d array, or if axis is None, an ndarray
+            scalar is returned.  The same dtype as `a` is returned.
+    
+        See Also
+        --------
+        nanmax :
+            The maximum value of an array along a given axis, ignoring any NaNs.
+        amin :
+            The minimum value of an array along a given axis, propagating any NaNs.
+        fmin :
+            Element-wise minimum of two arrays, ignoring any NaNs.
+        minimum :
+            Element-wise minimum of two arrays, propagating any NaNs.
+        isnan :
+            Shows which elements are Not a Number (NaN).
+        isfinite:
+            Shows which elements are neither NaN nor infinity.
+    
+        amax, fmax, maximum
+    
+        Notes
+        -----
+        NumPy uses the IEEE Standard for Binary Floating-Point for Arithmetic
+        (IEEE 754). This means that Not a Number is not equivalent to infinity.
+        Positive infinity is treated as a very large number and negative
+        infinity is treated as a very small (i.e. negative) number.
+    
+        If the input has a integer type the function is equivalent to np.min.
+    
+        Examples
+        --------
+        >>> import numpy as np
+        >>> a = np.array([[1, 2], [3, np.nan]])
+        >>> np.nanmin(a)
+        1.0
+        >>> np.nanmin(a, axis=0)
+        array([1.,  2.])
+        >>> np.nanmin(a, axis=1)
+        array([1.,  3.])
+    
+        When positive infinity and negative infinity are present:
+    
+        >>> np.nanmin([1, 2, np.nan, np.inf])
+        1.0
+        >>> np.nanmin([1, 2, np.nan, -np.inf])
+        -inf
+    
+        """
+        kwargs = {}
+        if keepdims is not np._NoValue:
+            kwargs['keepdims'] = keepdims
+        if initial is not np._NoValue:
+            kwargs['initial'] = initial
+        if where is not np._NoValue:
+            kwargs['where'] = where
+    
+        if (type(a) is np.ndarray or type(a) is np.memmap) and a.dtype != np.object_:
+            # Fast, but not safe for subclasses of ndarray, or object arrays,
+            # which do not implement isnan (gh-9009), or fmin correctly (gh-8975)
+>           res = np.fmin.reduce(a, axis=axis, out=out, **kwargs)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           ValueError: zero-size array to reduction operation fmin which has no identity
+
+../../../.venv/lib/python3.12/site-packages/numpy/lib/_nanfunctions_impl.py:356: ValueError
+=========================== short test summary info ============================
+FAILED test_0065.py::test_task_func - ValueError: Length of new names must be...
+FAILED test_0065.py::test_task_func_empty_input - ValueError: zero-size array...
+2 failed in 3.56s

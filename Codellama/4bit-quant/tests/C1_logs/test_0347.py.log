@@ -1,0 +1,26 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_valid_script __________________________
+
+    def test_task_func_valid_script():
+        script_path = "path/to/script.py"
+        args = ["arg1", "arg2"]
+>       returncode = task_func(script_path, wait=True, *args)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: task_func() got multiple values for argument 'wait'
+
+test_0347.py:10: TypeError
+___________________________ test_task_func_exception ___________________________
+
+    def test_task_func_exception():
+        script_path = "path/to/script.py"
+        args = ["arg1", "arg2"]
+        with pytest.raises(subprocess.CalledProcessError):
+>           task_func(script_path, wait=True, *args)
+E           TypeError: task_func() got multiple values for argument 'wait'
+
+test_0347.py:22: TypeError
+=========================== short test summary info ============================
+FAILED test_0347.py::test_task_func_valid_script - TypeError: task_func() got...
+FAILED test_0347.py::test_task_func_exception - TypeError: task_func() got mu...
+2 failed, 1 passed in 0.40s

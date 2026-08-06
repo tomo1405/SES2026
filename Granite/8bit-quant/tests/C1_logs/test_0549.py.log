@@ -1,0 +1,21 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        string_length = random.randint(1, 100)
+        random_string = ''.join(random.choices(string.ascii_uppercase + string.digits, k=string_length))
+        compressed_string = zlib.compress(random_string.encode('utf-8'))
+        encoded_compressed_string = base64.b64encode(compressed_string)
+        expected_result = encoded_compressed_string.decode('utf-8')
+        actual_result = task_func(string_length)
+>       assert actual_result == expected_result
+E       AssertionError: assert 'eJwL84iwDDL2...yDAEAHvcELw==' == 'eJwzNHMLM/YP...2jAQAGtsDpQ=='
+E         
+E         - eJwzNHMLM/YPNfW1DDI2jAQAGtsDpQ==
+E         + eJwL84iwDDL28/T3Co7yDAEAHvcELw==
+
+test_0549.py:15: AssertionError
+=========================== short test summary info ============================
+FAILED test_0549.py::test_task_func - AssertionError: assert 'eJwL84iwDDL2......
+1 failed in 0.45s

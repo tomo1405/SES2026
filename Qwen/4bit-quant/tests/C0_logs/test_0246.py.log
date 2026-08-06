@@ -1,0 +1,287 @@
+FFF..FF                                                                  [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_default_values _________________________
+
+    def test_task_func_default_values():
+>       result = task_func()
+                 ^^^^^^^^^^^
+
+test_0246.py:8: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+n_data_points = 5000, min_value = 0.0, max_value = 10.0
+
+    def task_func(n_data_points=5000, min_value=0.0, max_value=10.0):
+    
+        data = [round(random.uniform(min_value, max_value), 3) for _ in range(n_data_points)]
+        data_df = pd.DataFrame(data, columns=['Value'])
+    
+        mean = data_df['Value'].mean()
+        median = data_df['Value'].median()
+>       mode = stats.mode(data_df['Value'].values)[0][0]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       IndexError: invalid index to scalar variable.
+
+../../../src/src_0246.py:11: IndexError
+_________________________ test_task_func_custom_values _________________________
+
+    def test_task_func_custom_values():
+>       result = task_func(n_data_points=1000, min_value=5.0, max_value=15.0)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0246.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+n_data_points = 1000, min_value = 5.0, max_value = 15.0
+
+    def task_func(n_data_points=5000, min_value=0.0, max_value=10.0):
+    
+        data = [round(random.uniform(min_value, max_value), 3) for _ in range(n_data_points)]
+        data_df = pd.DataFrame(data, columns=['Value'])
+    
+        mean = data_df['Value'].mean()
+        median = data_df['Value'].median()
+>       mode = stats.mode(data_df['Value'].values)[0][0]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       IndexError: invalid index to scalar variable.
+
+../../../src/src_0246.py:11: IndexError
+_____________________________ test_task_func_mode ______________________________
+
+    def test_task_func_mode():
+        # Test mode calculation with a known dataset
+        data = [5.0, 5.0, 5.0, 6.0, 7.0]
+        df = pd.DataFrame(data, columns=['Value'])
+>       mode_result = stats.mode(df['Value'].values)[0][0]
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       IndexError: invalid index to scalar variable.
+
+test_0246.py:31: IndexError
+_________________________ test_task_func_with_no_data __________________________
+
+    def test_task_func_with_no_data():
+        # Edge case: test with no data points
+>       result = task_func(n_data_points=0)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0246.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0246.py:11: in task_func
+    mode = stats.mode(data_df['Value'].values)[0][0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+_no_deco = False, kwds = {}
+
+    @wraps(hypotest_fun_in)
+    def axis_nan_policy_wrapper(*args, _no_deco=False, **kwds):
+    
+        if _no_deco:  # for testing, decorator does nothing
+            return hypotest_fun_in(*args, **kwds)
+    
+        # For now, skip the decorator entirely if using array API. In the future,
+        # we'll probably want to use it for `keepdims`, `axis` tuples, etc.
+        if len(args) == 0:  # extract sample from `kwds` if there are no `args`
+            used_kwd_samples = list(set(kwds).intersection(set(kwd_samples)))
+            temp = used_kwd_samples[:1]
+        else:
+            temp = args[0]
+    
+        if is_dask(array_namespace(temp)):
+            msg = ("Use of `nan_policy` and `keepdims` "
+                   "is incompatible with lazy arrays.")
+            if 'nan_policy' in kwds or 'keepdims' in kwds:
+                raise NotImplementedError(msg)
+            return hypotest_fun_in(*args, **kwds)
+    
+        # We need to be flexible about whether position or keyword
+        # arguments are used, but we need to make sure users don't pass
+        # both for the same parameter. To complicate matters, some
+        # functions accept samples with *args, and some functions already
+        # accept `axis` and `nan_policy` as positional arguments.
+        # The strategy is to make sure that there is no duplication
+        # between `args` and `kwds`, combine the two into `kwds`, then
+        # the samples, `nan_policy`, and `axis` from `kwds`, as they are
+        # dealt with separately.
+    
+        # Check for intersection between positional and keyword args
+        params = list(inspect.signature(hypotest_fun_in).parameters)
+        if n_samples is None:
+            # Give unique names to each positional sample argument
+            # Note that *args can't be provided as a keyword argument
+            params = [f"arg{i}" for i in range(len(args))] + params[1:]
+    
+        # raise if there are too many positional args
+        maxarg = (np.inf if inspect.getfullargspec(hypotest_fun_in).varargs
+                  else len(inspect.getfullargspec(hypotest_fun_in).args))
+        if len(args) > maxarg:  # let the function raise the right error
+            hypotest_fun_in(*args, **kwds)
+    
+        # raise if multiple values passed for same parameter
+        d_args = dict(zip(params, args))
+        intersection = set(d_args) & set(kwds)
+        if intersection:  # let the function raise the right error
+            hypotest_fun_in(*args, **kwds)
+    
+        # Consolidate other positional and keyword args into `kwds`
+        kwds.update(d_args)
+    
+        # rename avoids UnboundLocalError
+        if callable(n_samples):
+            # Future refactoring idea: no need for callable n_samples.
+            # Just replace `n_samples` and `kwd_samples` with a single
+            # list of the names of all samples, and treat all of them
+            # as `kwd_samples` are treated below.
+            n_samp = n_samples(kwds)
+        else:
+            n_samp = n_samples or len(args)
+    
+        # get the number of outputs
+        n_out = n_outputs  # rename to avoid UnboundLocalError
+        if callable(n_out):
+            n_out = n_out(kwds)
+    
+        # If necessary, rearrange function signature: accept other samples
+        # as positional args right after the first n_samp args
+        kwd_samp = [name for name in kwd_samples
+                    if kwds.get(name, None) is not None]
+        n_kwd_samp = len(kwd_samp)
+        if not kwd_samp:
+            hypotest_fun_out = hypotest_fun_in
+        else:
+            def hypotest_fun_out(*samples, **kwds):
+                new_kwds = dict(zip(kwd_samp, samples[n_samp:]))
+                kwds.update(new_kwds)
+                return hypotest_fun_in(*samples[:n_samp], **kwds)
+    
+        # Extract the things we need here
+        try:  # if something is missing
+            samples = [kwds.pop(param) for param in (params[:n_samp] + kwd_samp)]
+            xp = array_namespace(*samples)
+            samples = xp_promote(*samples, xp=xp)
+            samples = (samples,) if not isinstance(samples, tuple) else samples
+            samples = [xpx.atleast_nd(sample, ndim=1) for sample in samples]
+        except KeyError:  # let the function raise the right error
+            # might need to revisit this if required arg is not a "sample"
+            hypotest_fun_in(*args, **kwds)
+        vectorized = True if 'axis' in params else False
+        vectorized = vectorized and not override['vectorization']
+        axis = kwds.pop('axis', default_axis)
+        nan_policy = kwds.pop('nan_policy', 'propagate')
+        keepdims = kwds.pop("keepdims", False)
+        del args  # avoid the possibility of passing both `args` and `kwds`
+    
+        # convert masked arrays to regular arrays with sentinel values
+        sentinel = None
+        if is_numpy(xp):
+            samples, sentinel = _masked_arrays_2_sentinel_arrays(samples)
+    
+        # standardize to always work along last axis
+        reduced_axes = axis
+        if axis is None:
+            if samples:
+                # when axis=None, take the maximum of all dimensions since
+                # all the dimensions are reduced.
+                n_dims = max([xp.asarray(sample).ndim for sample in samples])
+                reduced_axes = tuple(range(n_dims))
+            samples = [xp_ravel(sample) for sample in samples]
+        else:
+            # don't ignore any axes when broadcasting if paired
+            samples = _broadcast_arrays(samples, axis=axis if not paired else None)
+            axis = (axis,) if np.isscalar(axis) else axis
+            n_axes = len(axis)
+            # move all axes in `axis` to the end to be raveled
+            samples = [xp.moveaxis(sample, axis, tuple(range(-len(axis), 0)))
+                       for sample in samples]
+            shapes = [sample.shape for sample in samples]
+            # New shape is unchanged for all axes _not_ in `axis`
+            # At the end, we append the product of the shapes of the axes
+            # in `axis`. Appending -1 doesn't work for zero-size arrays!
+            new_shapes = [shape[:-n_axes] + (math.prod(shape[-n_axes:]),)
+                          for shape in shapes]
+            samples = [xp.reshape(sample, new_shape)
+                       for sample, new_shape in zip(samples, new_shapes)]
+        axis = -1  # work over the last axis
+    
+        NaN = _get_nan(*samples) if samples else xp.nan
+    
+        # if axis is not needed, just handle nan_policy and return
+        ndims = np.array([sample.ndim for sample in samples])  # NumPy OK for ndims
+        if np.all(ndims <= 1):
+            # Addresses nan_policy == "raise"
+            if nan_policy != 'propagate' or override['nan_propagation']:
+                contains_nan = [_contains_nan(sample, nan_policy)
+                                for sample in samples]
+            else:
+                # Behave as though there are no NaNs (even if there are)
+                contains_nan = [False] * len(samples)
+    
+            # To give JAX most benefits of the `_axis_nan_policy` decorator without
+            # value-dependent branching, the decorator will always treat JAX arrays
+            # as if there are no NaNs. Typically, this means that NaNs will
+            # multidimensional naturally. However, there may be cases in which this
+            # doesn't produce the desired result, so for now, JAX users should
+            # treat all functions as though there is no explicit`nan_policy`.
+            # Future work tracked in gh-14651.
+            any_contains_nan = not is_jax(xp) and any(contains_nan)
+            # Addresses nan_policy == "propagate"
+            if any_contains_nan and (nan_policy == 'propagate'
+                                     and override['nan_propagation']):
+                res = xp.full(n_out, xp.nan, dtype=NaN.dtype)
+                res = _add_reduced_axes(res, reduced_axes, keepdims)
+                return tuple_to_result(*res)
+    
+            # Addresses nan_policy == "omit"
+            too_small_msg = too_small_1d_not_omit
+            if any_contains_nan and nan_policy == 'omit':
+                # consider passing in contains_nan
+                samples = _remove_nans(samples, paired)
+                too_small_msg = too_small_1d_omit
+    
+            if sentinel:
+                samples = _remove_sentinel(samples, paired, sentinel)
+    
+            if is_too_small(samples, kwds):
+                warnings.warn(too_small_msg, SmallSampleWarning, stacklevel=2)
+>               res = xp.full(n_out, xp.nan, dtype=NaN.dtype)
+                                                   ^^^^^^^^^
+E               AttributeError: 'float' object has no attribute 'dtype'
+
+../../../.venv/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:597: AttributeError
+____________________ test_task_func_with_single_data_point _____________________
+
+    def test_task_func_with_single_data_point():
+        # Edge case: test with a single data point
+>       result = task_func(n_data_points=1)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0246.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+n_data_points = 1, min_value = 0.0, max_value = 10.0
+
+    def task_func(n_data_points=5000, min_value=0.0, max_value=10.0):
+    
+        data = [round(random.uniform(min_value, max_value), 3) for _ in range(n_data_points)]
+        data_df = pd.DataFrame(data, columns=['Value'])
+    
+        mean = data_df['Value'].mean()
+        median = data_df['Value'].median()
+>       mode = stats.mode(data_df['Value'].values)[0][0]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       IndexError: invalid index to scalar variable.
+
+../../../src/src_0246.py:11: IndexError
+=============================== warnings summary ===============================
+Qwen/4bit-quant/tests/test_0246.py::test_task_func_with_no_data
+  /work/tomohiro-w/utg/src/src_0246.py:11: SmallSampleWarning: One or more sample arguments is too small; all returned values will be NaN. See documentation for sample size requirements.
+    mode = stats.mode(data_df['Value'].values)[0][0]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0246.py::test_task_func_default_values - IndexError: invalid inde...
+FAILED test_0246.py::test_task_func_custom_values - IndexError: invalid index...
+FAILED test_0246.py::test_task_func_mode - IndexError: invalid index to scala...
+FAILED test_0246.py::test_task_func_with_no_data - AttributeError: 'float' ob...
+FAILED test_0246.py::test_task_func_with_single_data_point - IndexError: inva...
+5 failed, 2 passed, 1 warning in 2.41s

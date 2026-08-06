@@ -1,0 +1,75 @@
+FFF.F                                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_valid_input ________________________
+
+    def test_task_func_with_valid_input():
+        input_data = """
+        1 10 A1 100 Apple
+        2 20 B2 200 Banana
+        3 30 C3 300 Orange
+        """
+        expected_output = pd.DataFrame({
+            "ID": [1, 2, 3],
+            "Quantity": [10, 20, 30],
+            "Code": ["A1", "B2", "C3"],
+            "Price": [100, 200, 300],
+            "Product": ["Apple", "Banana", "Orange"],
+            "Description": ["Apple", "Banana", "Orange"]
+        })
+        result = task_func(input_data, seed=42)
+>       pd.testing.assert_frame_equal(result, expected_output)
+E       AssertionError: Attributes of DataFrame.iloc[:, 0] (column name="ID") are different
+E       
+E       Attribute "dtype" are different
+E       [left]:  <StringDtype(na_value=nan)>
+E       [right]: int64
+
+test_0435.py:21: AssertionError
+_______________________ test_task_func_with_missing_data _______________________
+
+    def test_task_func_with_missing_data():
+        input_data = """
+        1 10 A1 100 Apple
+        2 20 B2 200 Banana
+        """
+>       with pytest.raises(ValueError, match="Incomplete data provided."):
+E       Failed: DID NOT RAISE ValueError
+
+test_0435.py:28: Failed
+_______________________ test_task_func_with_invalid_code _______________________
+
+    def test_task_func_with_invalid_code():
+        input_data = """
+        1 10 X1 100 Apple
+        2 20 B2 200 Banana
+        """
+        expected_output = pd.DataFrame({
+            "ID": [1, 2],
+            "Quantity": [10, 20],
+            "Code": ["X1", "B2"],
+            "Price": [100, 200],
+            "Product": ["Grape", "Banana"],  # Assuming "Grape" is randomly chosen
+            "Description": ["Apple", "Banana"]
+        })
+        result = task_func(input_data, seed=42)
+>       pd.testing.assert_frame_equal(result, expected_output)
+E       AssertionError: Attributes of DataFrame.iloc[:, 0] (column name="ID") are different
+E       
+E       Attribute "dtype" are different
+E       [left]:  <StringDtype(na_value=nan)>
+E       [right]: int64
+
+test_0435.py:45: AssertionError
+_____________________ test_task_func_with_whitespace_only ______________________
+
+    def test_task_func_with_whitespace_only():
+>       with pytest.raises(ValueError, match="Incomplete data provided."):
+E       Failed: DID NOT RAISE ValueError
+
+test_0435.py:52: Failed
+=========================== short test summary info ============================
+FAILED test_0435.py::test_task_func_with_valid_input - AssertionError: Attrib...
+FAILED test_0435.py::test_task_func_with_missing_data - Failed: DID NOT RAISE...
+FAILED test_0435.py::test_task_func_with_invalid_code - AssertionError: Attri...
+FAILED test_0435.py::test_task_func_with_whitespace_only - Failed: DID NOT RA...
+4 failed, 1 passed in 1.10s

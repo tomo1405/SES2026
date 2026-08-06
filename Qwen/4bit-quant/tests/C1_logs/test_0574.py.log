@@ -1,0 +1,55 @@
+FF.FF.                                                                   [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_default_length _________________________
+
+    def test_task_func_default_length():
+        df, ax = task_func()
+        assert isinstance(df, pd.DataFrame)
+>       assert isinstance(ax, type(None))  # Assuming no return value is expected for the plot
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert False
+E        +  where False = isinstance(<Axes: >, <class 'NoneType'>)
+E        +    where <class 'NoneType'> = type(None)
+
+test_0574.py:9: AssertionError
+_________________________ test_task_func_custom_length _________________________
+
+    def test_task_func_custom_length():
+        length = 50
+        df, ax = task_func(length)
+        assert isinstance(df, pd.DataFrame)
+>       assert isinstance(ax, type(None))
+E       AssertionError: assert False
+E        +  where False = isinstance(<Axes: >, <class 'NoneType'>)
+E        +    where <class 'NoneType'> = type(None)
+
+test_0574.py:17: AssertionError
+__________________________ test_task_func_mean_values __________________________
+
+    def test_task_func_mean_values():
+        df, ax = task_func(10)
+        mean_array1 = np.mean(np.random.rand(10))
+        mean_array2 = np.mean(np.random.rand(10))
+        assert abs(df.loc['Mean', 'Array1'] - mean_array1) < 0.1
+>       assert abs(df.loc['Mean', 'Array2'] - mean_array2) < 0.1
+E       assert np.float64(0.12615042776026397) < 0.1
+E        +  where np.float64(0.12615042776026397) = abs((np.float64(0.619542734178754) - np.float64(0.4933923064184901)))
+
+test_0574.py:33: AssertionError
+_________________________ test_task_func_median_values _________________________
+
+    def test_task_func_median_values():
+        df, ax = task_func(10)
+        median_array1 = np.median(np.random.rand(10))
+        median_array2 = np.median(np.random.rand(10))
+>       assert abs(df.loc['Median', 'Array1'] - median_array1) < 0.1
+E       assert np.float64(0.19745066335411565) < 0.1
+E        +  where np.float64(0.19745066335411565) = abs((np.float64(0.3089553109635784) - np.float64(0.5064059743176941)))
+
+test_0574.py:39: AssertionError
+=========================== short test summary info ============================
+FAILED test_0574.py::test_task_func_default_length - AssertionError: assert F...
+FAILED test_0574.py::test_task_func_custom_length - AssertionError: assert False
+FAILED test_0574.py::test_task_func_mean_values - assert np.float64(0.1261504...
+FAILED test_0574.py::test_task_func_median_values - assert np.float64(0.19745...
+4 failed, 2 passed in 2.31s

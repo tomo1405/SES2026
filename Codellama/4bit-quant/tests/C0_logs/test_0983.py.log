@@ -1,0 +1,26 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        df = pd.DataFrame({"A": np.random.normal(0, 1, 1000), "B": np.random.normal(0, 1, 1000)})
+        column = "A"
+        bins = 30
+        density = True
+        alpha = 0.6
+        color = "g"
+        seed = None
+    
+        ax = task_func(df, column, bins, density, alpha, color, seed)
+    
+        assert ax.get_title() == f"Normal Fit for '{column}'"
+        assert ax.get_ylabel() == "Density"
+        assert ax.get_xlabel() == column
+>       assert ax.get_xlim() == (xmin, xmax)
+                                 ^^^^
+E       UnboundLocalError: cannot access local variable 'xmin' where it is not associated with a value
+
+test_0983.py:22: UnboundLocalError
+=========================== short test summary info ============================
+FAILED test_0983.py::test_task_func - UnboundLocalError: cannot access local ...
+1 failed in 3.29s

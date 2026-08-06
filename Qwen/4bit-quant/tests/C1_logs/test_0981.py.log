@@ -1,0 +1,23 @@
+F..                                                                      [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_numeric_data _______________________
+
+sample_df =           A         B  C
+0 -1.224745 -1.224745  a
+1  0.000000  0.000000  b
+2  1.224745  1.224745  c
+
+    def test_task_func_with_numeric_data(sample_df):
+        df, fig = task_func(sample_df)
+        assert isinstance(df, pd.DataFrame)
+        assert isinstance(fig, plt.Figure)
+>       assert all(df.dtypes == float)  # Check if all numeric columns are scaled
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert False
+E        +  where False = all(A    float64\nB    float64\nC        str\ndtype: object == float)
+E        +    where A    float64\nB    float64\nC        str\ndtype: object =           A         B  C\n0 -1.224745 -1.224745  a\n1  0.000000  0.000000  b\n2  1.224745  1.224745  c.dtypes
+
+test_0981.py:20: AssertionError
+=========================== short test summary info ============================
+FAILED test_0981.py::test_task_func_with_numeric_data - assert False
+1 failed, 2 passed in 4.08s

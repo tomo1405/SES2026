@@ -1,0 +1,36 @@
+...F                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_random_seed ________________________
+
+db_path = '/tmp/pytest-of-tomohiro-w/pytest-2122/test_task_func_with_random_see0/test.db'
+table_name = 'test_table', cleanup = None
+
+    def test_task_func_with_random_seed(db_path, table_name, cleanup):
+        random_seed = 42
+        num_entries = 5
+        task_func(db_path, table_name, num_entries, random_seed)
+    
+        conn = sqlite3.connect(db_path)
+        cur = conn.cursor()
+        cur.execute(f"SELECT * FROM {table_name}")
+        rows = cur.fetchall()
+        conn.close()
+    
+        # Re-run with the same seed to ensure reproducibility
+        task_func(db_path, table_name, num_entries, random_seed)
+        conn = sqlite3.connect(db_path)
+        cur = conn.cursor()
+        cur.execute(f"SELECT * FROM {table_name}")
+        rows_repeated = cur.fetchall()
+        conn.close()
+    
+>       assert rows == rows_repeated
+E       AssertionError: assert [('Olivia', 2...am', 23, 187)] == [('Olivia', 2...25, 151), ...]
+E         
+E         Right contains 5 more items, first extra item: ('Olivia', 25, 151)
+E         Use -v to get more diff
+
+test_0536.py:70: AssertionError
+=========================== short test summary info ============================
+FAILED test_0536.py::test_task_func_with_random_seed - AssertionError: assert...
+1 failed, 3 passed in 0.75s

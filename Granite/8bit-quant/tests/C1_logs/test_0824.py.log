@@ -1,0 +1,34 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_with_samples __________________________
+
+    def test_task_func_with_samples():
+        samples = 100
+        mean, std = task_func(samples=samples)
+        assert isinstance(mean, float)
+        assert isinstance(std, float)
+        assert mean >= 0
+        assert std >= 0
+>       assert samples == len(task_func(samples=samples)[0])
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: object of type 'numpy.float64' has no len()
+
+test_0824.py:18: TypeError
+__________________________ test_task_func_with_delay ___________________________
+
+    def test_task_func_with_delay():
+        delay = 0.5
+        mean, std = task_func(delay=delay)
+        assert isinstance(mean, float)
+        assert isinstance(std, float)
+        assert mean >= 0
+        assert std >= 0
+>       assert delay == task_func(delay=delay)[0][0]
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       IndexError: invalid index to scalar variable.
+
+test_0824.py:27: IndexError
+=========================== short test summary info ============================
+FAILED test_0824.py::test_task_func_with_samples - TypeError: object of type ...
+FAILED test_0824.py::test_task_func_with_delay - IndexError: invalid index to...
+2 failed, 1 passed in 31.63s

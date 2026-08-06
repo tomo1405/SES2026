@@ -1,0 +1,51 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a known timestamp
+        timestamp = 1633072800  # October 1, 2021, 00:00:00 UTC
+        df, ax = task_func(timestamp)
+    
+        # Check if the DataFrame has the correct shape
+        assert df.shape == (5, 2), "DataFrame should have 5 rows and 2 columns"
+    
+        # Check if the DataFrame contains the correct timezones
+        expected_timezones = [
+            "America/New_York",
+            "Europe/London",
+            "Asia/Shanghai",
+            "Asia/Tokyo",
+            "Australia/Sydney",
+        ]
+        assert all(df["Timezone"] == expected_timezones), "Timezones in DataFrame are incorrect"
+    
+        # Check if the DataFrame contains the correct datetimes
+        expected_datetimes = [
+            "2021-10-01 19:00:00",  # New York
+            "2021-10-01 05:00:00",  # London
+            "2021-10-01 17:00:00",  # Shanghai
+            "2021-10-01 18:00:00",  # Tokyo
+            "2021-10-01 18:00:00",  # Sydney
+        ]
+>       assert all(df["Datetime"].dt.strftime("%Y-%m-%d %H:%M:%S") == expected_datetimes), "Datetimes in DataFrame are incorrect"
+E       AssertionError: Datetimes in DataFrame are incorrect
+E       assert False
+E        +  where False = all(0    2021-10-...me, dtype: str == ['2021-10-01 ...-01 18:00:00']
+E           
+E           Use -v to get more diff)
+
+test_0051.py:32: AssertionError
+=============================== warnings summary ===============================
+Qwen/8bit-quant/tests/test_0051.py::test_task_func
+Qwen/8bit-quant/tests/test_0051.py::test_task_func
+Qwen/8bit-quant/tests/test_0051.py::test_task_func
+Qwen/8bit-quant/tests/test_0051.py::test_task_func
+Qwen/8bit-quant/tests/test_0051.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/matplotlib/axes/_axes.py:2246: DeprecationWarning: The 'generic' unit for NumPy timedelta is deprecated, and will raise an error in the future. This includes implicit conversion of bare integers (e.g. `+ 1`).Please use a specific unit instead.
+    dx = [convert(x0 + ddx) - x for ddx in dx]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0051.py::test_task_func - AssertionError: Datetimes in DataFrame ...
+1 failed, 5 warnings in 2.50s

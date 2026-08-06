@@ -1,0 +1,34 @@
+F..                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        image_path = 'path/to/image.jpg'
+        kernel_size = 5
+>       blurred_image, ax1, ax2 = task_func(image_path, kernel_size)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0243.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0243.py:12: in task_func
+    raise e
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+image_path = 'path/to/image.jpg', kernel_size = 5
+
+    def task_func(image_path, kernel_size):
+        if kernel_size <= 0 or not isinstance(kernel_size, int):
+            raise ValueError("kernel_size must be a positive integer")
+    
+        try:
+            image = cv2.imread(image_path)
+            if image is None:
+>               raise FileNotFoundError(f"No image found at {image_path}")
+E               FileNotFoundError: No image found at path/to/image.jpg
+
+../../../src/src_0243.py:10: FileNotFoundError
+----------------------------- Captured stderr call -----------------------------
+[ WARN:0@0.952] global loadsave.cpp:278 findDecoder imread_('path/to/image.jpg'): can't open/read file: check file path/integrity
+=========================== short test summary info ============================
+FAILED test_0243.py::test_task_func_valid_input - FileNotFoundError: No image...
+1 failed, 2 passed in 1.57s

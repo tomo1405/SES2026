@@ -1,0 +1,12 @@
+import inspect
+import types
+def task_func(f):
+    spec = inspect.getfullargspec(f)
+
+    return {
+        'function_name': f.__name__,
+        'is_lambda': isinstance(f, types.LambdaType),
+        'args': spec.args,
+        'defaults': spec.defaults,
+        'annotations': spec.annotations
+    }

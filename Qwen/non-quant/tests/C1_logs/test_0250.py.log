@@ -1,0 +1,30 @@
+F...                                                                     [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_default_values _________________________
+
+    def test_task_func_default_values():
+        train_data, test_data = task_func()
+    
+        # Check if the total number of data points is correct
+        assert len(train_data) + len(test_data) == 10000
+    
+        # Check if the data is split correctly based on the default test_size (0.2)
+        assert len(test_data) == pytest.approx(2000, rel=1e-2)
+    
+        # Check if the data is within the specified range
+>       assert all(min_value <= value <= max_value for value in train_data['Value'])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0250.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <map object at 0x75767ce1e770>
+
+>   assert all(min_value <= value <= max_value for value in train_data['Value'])
+               ^^^^^^^^^
+E   NameError: name 'min_value' is not defined
+
+test_0250.py:16: NameError
+=========================== short test summary info ============================
+FAILED test_0250.py::test_task_func_default_values - NameError: name 'min_val...
+1 failed, 3 passed in 2.83s

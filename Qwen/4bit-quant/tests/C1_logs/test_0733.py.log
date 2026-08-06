@@ -1,0 +1,157 @@
+FFFFFFFFFFF                                                              [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_empty_string _______________________
+
+    def test_task_func_with_empty_string():
+>       assert task_func("") == {}
+E       AssertionError: assert {'': 1} == {}
+E         
+E         Left contains 1 more item:
+E         {'': 1}
+E         Use -v to get more diff
+
+test_0733.py:11: AssertionError
+_______________________ test_task_func_with_single_word ________________________
+
+    def test_task_func_with_single_word():
+>       assert task_func("Hello") == {'hello': 1}
+E       AssertionError: assert {'': 1} == {'hello': 1}
+E         
+E         Left contains 1 more item:
+E         {'': 1}
+E         Right contains 1 more item:
+E         {'hello': 1}
+E         Use -v to get more diff
+
+test_0733.py:14: AssertionError
+______________________ test_task_func_with_multiple_words ______________________
+
+    def test_task_func_with_multiple_words():
+>       assert task_func("Hello world! Hello, everyone.") == {'hello': 2, 'world': 1, 'everyon': 1}
+E       AssertionError: assert {'hello': 2, ...ld': 1, '': 1} == {'hello': 2, ... 'everyon': 1}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Left contains 1 more item:
+E         {'': 1}
+E         Right contains 1 more item:
+E         {'everyon': 1}
+E         Use -v to get more diff
+
+test_0733.py:17: AssertionError
+_______________________ test_task_func_with_punctuation ________________________
+
+    def test_task_func_with_punctuation():
+>       assert task_func("!!!Hello... World?") == {'hello': 1, 'world': 1}
+E       AssertionError: assert {'': 2, 'hello': 1} == {'hello': 1, 'world': 1}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Left contains 1 more item:
+E         {'': 2}
+E         Right contains 1 more item:
+E         {'world': 1}
+E         Use -v to get more diff
+
+test_0733.py:20: AssertionError
+_________________________ test_task_func_with_numbers __________________________
+
+    def test_task_func_with_numbers():
+>       assert task_func("Hello 123 world!") == {'hello': 1, 'world': 1}
+E       AssertionError: assert {'hello': 1, '123': 1} == {'hello': 1, 'world': 1}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Left contains 1 more item:
+E         {'123': 1}
+E         Right contains 1 more item:
+E         {'world': 1}
+E         Use -v to get more diff
+
+test_0733.py:23: AssertionError
+____________________ test_task_func_with_special_characters ____________________
+
+    def test_task_func_with_special_characters():
+>       assert task_func("$$$Hello%%% world!") == {'hello': 1, 'world': 1}
+E       AssertionError: assert {'': 2, 'hello': 1} == {'hello': 1, 'world': 1}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Left contains 1 more item:
+E         {'': 2}
+E         Right contains 1 more item:
+E         {'world': 1}
+E         Use -v to get more diff
+
+test_0733.py:26: AssertionError
+_________________________ test_task_func_with_stemming _________________________
+
+    def test_task_func_with_stemming():
+>       assert task_func("Running runs ran") == {'run': 3}
+E       AssertionError: assert {'run': 2} == {'run': 3}
+E         
+E         Differing items:
+E         {'run': 2} != {'run': 3}
+E         Use -v to get more diff
+
+test_0733.py:29: AssertionError
+____________________ test_task_func_with_case_insensitivity ____________________
+
+    def test_task_func_with_case_insensitivity():
+>       assert task_func("Hello hello HELLO") == {'hello': 3}
+E       AssertionError: assert {'hello': 2} == {'hello': 3}
+E         
+E         Differing items:
+E         {'hello': 2} != {'hello': 3}
+E         Use -v to get more diff
+
+test_0733.py:32: AssertionError
+_______________________ test_task_func_with_large_input ________________________
+
+    def test_task_func_with_large_input():
+        large_input = " ".join(["This is a test"] * 100)
+        expected_output = {'this': 100, 'is': 100, 'a': 100, 'test': 100}
+>       assert task_func(large_input) == expected_output
+E       AssertionError: assert {'thi': 100, ...0, 'test': 99} == {'this': 100,..., 'test': 100}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Differing items:
+E         {'test': 99} != {'test': 100}
+E         Left contains 1 more item:
+E         {'thi': 100}
+E         Right contains 1 more item:
+E         {'this': 100}
+E         Use -v to get more diff
+
+test_0733.py:37: AssertionError
+_________________________ test_task_func_with_no_words _________________________
+
+    def test_task_func_with_no_words():
+>       assert task_func("!@#$%^&*()") == {}
+E       AssertionError: assert {'': 1} == {}
+E         
+E         Left contains 1 more item:
+E         {'': 1}
+E         Use -v to get more diff
+
+test_0733.py:40: AssertionError
+________________________ test_task_func_with_whitespace ________________________
+
+    def test_task_func_with_whitespace():
+>       assert task_func("   ") == {}
+E       AssertionError: assert {'': 2} == {}
+E         
+E         Left contains 1 more item:
+E         {'': 2}
+E         Use -v to get more diff
+
+test_0733.py:43: AssertionError
+=========================== short test summary info ============================
+FAILED test_0733.py::test_task_func_with_empty_string - AssertionError: asser...
+FAILED test_0733.py::test_task_func_with_single_word - AssertionError: assert...
+FAILED test_0733.py::test_task_func_with_multiple_words - AssertionError: ass...
+FAILED test_0733.py::test_task_func_with_punctuation - AssertionError: assert...
+FAILED test_0733.py::test_task_func_with_numbers - AssertionError: assert {'h...
+FAILED test_0733.py::test_task_func_with_special_characters - AssertionError:...
+FAILED test_0733.py::test_task_func_with_stemming - AssertionError: assert {'...
+FAILED test_0733.py::test_task_func_with_case_insensitivity - AssertionError:...
+FAILED test_0733.py::test_task_func_with_large_input - AssertionError: assert...
+FAILED test_0733.py::test_task_func_with_no_words - AssertionError: assert {'...
+FAILED test_0733.py::test_task_func_with_whitespace - AssertionError: assert ...
+11 failed in 3.43s

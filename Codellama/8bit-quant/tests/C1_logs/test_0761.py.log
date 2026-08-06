@@ -1,0 +1,19 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Testing with default parameters
+        df = task_func()
+        assert isinstance(df, pd.DataFrame)
+        assert len(df) == 100
+        assert list(df.columns) == ['ID', 'Name', 'Date of Birth', 'Email']
+        assert all(df['ID'] == list(range(1, 101)))
+>       assert all(df['Name'].str.contains('|'.join(task_func.latin_names)))
+                                                    ^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'function' object has no attribute 'latin_names'
+
+test_0761.py:12: AttributeError
+=========================== short test summary info ============================
+FAILED test_0761.py::test_task_func - AttributeError: 'function' object has n...
+1 failed in 1.11s

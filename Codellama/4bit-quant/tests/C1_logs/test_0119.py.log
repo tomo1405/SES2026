@@ -1,0 +1,29 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        directory = 'path/to/directory'
+        backup_directory = 'path/to/backup_directory'
+>       copied_files = task_func(directory, backup_directory)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0119.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = 'path/to/directory', backup_directory = 'path/to/backup_directory'
+
+    def task_func(directory, backup_directory):
+        copied_files = []
+    
+        if not os.path.exists(backup_directory):
+            os.makedirs(backup_directory)
+    
+>       for filename in os.listdir(directory):
+                        ^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'path/to/directory'
+
+../../../src/src_0119.py:9: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0119.py::test_task_func - FileNotFoundError: [Errno 2] No such fi...
+1 failed in 0.40s

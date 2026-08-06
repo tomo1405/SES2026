@@ -1,0 +1,76 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        directory = "/path/to/directory"
+        backup_directory = "/path/to/backup_directory"
+>       copied_files = task_func(directory, backup_directory)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0119.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0119.py:7: in task_func
+    os.makedirs(backup_directory)
+<frozen os>:215: in makedirs
+    ???
+<frozen os>:215: in makedirs
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = '/path', mode = 511, exist_ok = False
+
+>   ???
+E   PermissionError: [Errno 13] Permission denied: '/path'
+
+<frozen os>:225: PermissionError
+__________________ test_task_func_with_nonexistent_directory ___________________
+
+    def test_task_func_with_nonexistent_directory():
+        directory = "/path/to/nonexistent_directory"
+        backup_directory = "/path/to/backup_directory"
+        with pytest.raises(FileNotFoundError):
+>           task_func(directory, backup_directory)
+
+test_0119.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0119.py:7: in task_func
+    os.makedirs(backup_directory)
+<frozen os>:215: in makedirs
+    ???
+<frozen os>:215: in makedirs
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = '/path', mode = 511, exist_ok = False
+
+>   ???
+E   PermissionError: [Errno 13] Permission denied: '/path'
+
+<frozen os>:225: PermissionError
+_______________ test_task_func_with_nonexistent_backup_directory _______________
+
+    def test_task_func_with_nonexistent_backup_directory():
+        directory = "/path/to/directory"
+        backup_directory = "/path/to/nonexistent_backup_directory"
+>       os.makedirs(backup_directory, exist_ok=True)
+
+test_0119.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<frozen os>:215: in makedirs
+    ???
+<frozen os>:215: in makedirs
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = '/path', mode = 511, exist_ok = True
+
+>   ???
+E   PermissionError: [Errno 13] Permission denied: '/path'
+
+<frozen os>:225: PermissionError
+=========================== short test summary info ============================
+FAILED test_0119.py::test_task_func - PermissionError: [Errno 13] Permission ...
+FAILED test_0119.py::test_task_func_with_nonexistent_directory - PermissionEr...
+FAILED test_0119.py::test_task_func_with_nonexistent_backup_directory - Permi...
+3 failed in 0.42s

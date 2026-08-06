@@ -1,0 +1,39 @@
+..FF                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_content_mismatch ________________________
+
+    def test_task_func_content_mismatch():
+        # Create a temporary file and data to write
+        with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+            filename = temp_file.name
+            data = {"key": "value"}
+            incorrect_data = {"wrong_key": "wrong_value"}
+    
+            # Write incorrect data to the file first
+            with open(filename, 'w') as f:
+                json.dump(incorrect_data, f)
+    
+            # Call the function
+            result, written_data = task_func(filename, data)
+    
+            # Assertions
+>           assert result is False
+E           assert True is False
+
+test_0831.py:50: AssertionError
+___________________________ test_task_func_exception ___________________________
+
+    def test_task_func_exception():
+        # Mock os.path.exists to raise an exception
+        def mock_exists(path):
+            raise OSError("Mocked OS error")
+    
+        # Patch os.path.exists
+>       with pytest.raises(OSError), pytest.MonkeyPatch.context() as mp:
+E       Failed: DID NOT RAISE OSError
+
+test_0831.py:62: Failed
+=========================== short test summary info ============================
+FAILED test_0831.py::test_task_func_content_mismatch - assert True is False
+FAILED test_0831.py::test_task_func_exception - Failed: DID NOT RAISE OSError
+2 failed, 2 passed in 0.48s

@@ -1,0 +1,59 @@
+.F..FF.                                                                  [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_no_employees __________________________
+
+    def test_task_func_no_employees():
+        with pytest.raises(ValueError):
+>           task_func(["Task 1"], 1, employees=[])
+
+test_0953.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0953.py:20: in task_func
+    employee = random.choice(employees)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <random.Random object at 0x11810410>, seq = []
+
+    def choice(self, seq):
+        """Choose a random element from a non-empty sequence."""
+    
+        # As an accommodation for NumPy, we don't use "if not seq"
+        # because bool(numpy.array()) raises a ValueError.
+        if not len(seq):
+>           raise IndexError('Cannot choose from an empty sequence')
+E           IndexError: Cannot choose from an empty sequence
+
+/usr/lib/python3.12/random.py:347: IndexError
+________________________ test_task_func_multiple_tasks _________________________
+
+    def test_task_func_multiple_tasks():
+        random.seed(0)
+        result = task_func(["Task 1", "Task 2", "Task 3"], 3)
+        expected_columns = ["Task Name", "Assigned To", "Due Date"]
+        assert list(result.columns) == expected_columns
+        assert len(result) == 3
+>       assert result.iloc[0]["Task Name"] == "Task_1"
+E       AssertionError: assert 'Task_2' == 'Task_1'
+E         
+E         - Task_1
+E         ?      ^
+E         + Task_2
+E         ?      ^
+
+test_0953.py:35: AssertionError
+___________________ test_task_func_more_tasks_than_available ___________________
+
+    def test_task_func_more_tasks_than_available():
+        random.seed(0)
+        result = task_func(["Task 1"], 2)
+>       assert len(result) == 1
+E       assert 2 == 1
+E        +  where 2 = len(  Task Name   Assigned To    Due Date\n0    Task_1  Mary Johnson  2026-07-29\n1    Task_1   James Brown  2026-07-29)
+
+test_0953.py:45: AssertionError
+=========================== short test summary info ============================
+FAILED test_0953.py::test_task_func_no_employees - IndexError: Cannot choose ...
+FAILED test_0953.py::test_task_func_multiple_tasks - AssertionError: assert '...
+FAILED test_0953.py::test_task_func_more_tasks_than_available - assert 2 == 1
+3 failed, 4 passed in 1.15s

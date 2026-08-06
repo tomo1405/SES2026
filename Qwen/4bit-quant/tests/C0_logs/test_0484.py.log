@@ -1,0 +1,41 @@
+..F.FF                                                                   [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_single_match __________________________
+
+    def test_task_func_single_match():
+        df = pd.DataFrame({'text': ['hello world 123', 'foo bar']})
+        expected_df = pd.DataFrame({'text': ['hello world 321', 'foo bar']})
+        result = task_func(df, 'text', r'\d+')
+>       assert result.equals(expected_df)
+E       assert False
+E        +  where False = equals(              text\n0  hello world 321\n1          foo bar)
+E        +    where equals =               text\n0  hello world 123\n1          foo bar.equals
+
+test_0484.py:21: AssertionError
+_______________________ test_task_func_case_insensitive ________________________
+
+    def test_task_func_case_insensitive():
+        df = pd.DataFrame({'text': ['Hello World', 'Foo Bar']})
+        expected_df = pd.DataFrame({'text': ['Hello World', 'Foo Bar']})
+>       result = task_func(df, 'text', r'world', flags=re.IGNORECASE)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: task_func() got an unexpected keyword argument 'flags'
+
+test_0484.py:32: TypeError
+____________________ test_task_func_with_special_characters ____________________
+
+    def test_task_func_with_special_characters():
+        df = pd.DataFrame({'text': ['hello @world#', 'foo $bar!']})
+        expected_df = pd.DataFrame({'text': ['hello $#world@', 'foo $bar!']})
+        result = task_func(df, 'text', r'\w+')
+>       assert result.equals(expected_df)
+E       assert False
+E        +  where False = equals(             text\n0  hello $#world@\n1       foo $bar!)
+E        +    where equals =             text\n0  @world# hello\n1      $bar! foo.equals
+
+test_0484.py:39: AssertionError
+=========================== short test summary info ============================
+FAILED test_0484.py::test_task_func_single_match - assert False
+FAILED test_0484.py::test_task_func_case_insensitive - TypeError: task_func()...
+FAILED test_0484.py::test_task_func_with_special_characters - assert False
+3 failed, 3 passed in 1.15s

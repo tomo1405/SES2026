@@ -1,0 +1,100 @@
+FFFFFF                                                                   [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_default_seed _______________________
+
+    def test_task_func_with_default_seed():
+        # Test with default seed
+        feature_array = np.array([[1, 2, 3, 4, 5], [6, 7, 8, 9, 10]])
+        target_array = np.array([0, 1])
+    
+        clf = task_func(feature_array, target_array, seed=42)
+    
+>       assert isinstance(clf, RandomForestClassifier)
+                               ^^^^^^^^^^^^^^^^^^^^^^
+E       NameError: name 'RandomForestClassifier' is not defined
+
+test_0980.py:13: NameError
+_________________________ test_task_func_without_seed __________________________
+
+    def test_task_func_without_seed():
+        # Test without setting a seed
+        feature_array = np.array([[1, 2, 3, 4, 5], [6, 7, 8, 9, 10]])
+        target_array = np.array([0, 1])
+    
+        clf = task_func(feature_array, target_array)
+    
+>       assert isinstance(clf, RandomForestClassifier)
+                               ^^^^^^^^^^^^^^^^^^^^^^
+E       NameError: name 'RandomForestClassifier' is not defined
+
+test_0980.py:22: NameError
+___________________ test_task_func_with_custom_feature_names ___________________
+
+    def test_task_func_with_custom_feature_names():
+        # Test with custom feature names
+        feature_array = np.array([[1, 2, 3, 4, 5], [6, 7, 8, 9, 10]])
+        target_array = np.array([0, 1])
+        feature_names = ["feature1", "feature2", "feature3", "feature4", "feature5"]
+    
+        clf = task_func(feature_array, target_array, feature_names=feature_names, seed=42)
+    
+>       assert isinstance(clf, RandomForestClassifier)
+                               ^^^^^^^^^^^^^^^^^^^^^^
+E       NameError: name 'RandomForestClassifier' is not defined
+
+test_0980.py:32: NameError
+____________________ test_task_func_with_custom_target_name ____________________
+
+    def test_task_func_with_custom_target_name():
+        # Test with custom target name
+        feature_array = np.array([[1, 2, 3, 4, 5], [6, 7, 8, 9, 10]])
+        target_array = np.array([0, 1])
+        target_name = "label"
+    
+        clf = task_func(feature_array, target_array, target_name=target_name, seed=42)
+    
+>       assert isinstance(clf, RandomForestClassifier)
+                               ^^^^^^^^^^^^^^^^^^^^^^
+E       NameError: name 'RandomForestClassifier' is not defined
+
+test_0980.py:42: NameError
+__________________ test_task_func_with_different_array_sizes ___________________
+
+    def test_task_func_with_different_array_sizes():
+        # Test with different sizes of feature and target arrays
+        feature_array = np.array([[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, 12, 13, 14, 15]])
+        target_array = np.array([0, 1])
+    
+        with pytest.raises(ValueError) as excinfo:
+            task_func(feature_array, target_array, seed=42)
+    
+>       assert "Data cardinality mismatch" in str(excinfo.value)
+E       AssertionError: assert 'Data cardinality mismatch' in 'Length of values (2) does not match length of index (3)'
+E        +  where 'Length of values (2) does not match length of index (3)' = str(ValueError('Length of values (2) does not match length of index (3)'))
+E        +    where ValueError('Length of values (2) does not match length of index (3)') = <ExceptionInfo ValueError('Length of values (2) does not match length of index (3)') tblen=6>.value
+
+test_0980.py:52: AssertionError
+_______________________ test_task_func_with_empty_arrays _______________________
+
+    def test_task_func_with_empty_arrays():
+        # Test with empty arrays
+        feature_array = np.array([])
+        target_array = np.array([])
+    
+        with pytest.raises(ValueError) as excinfo:
+            task_func(feature_array, target_array, seed=42)
+    
+>       assert "Data cardinality mismatch" in str(excinfo.value)
+E       AssertionError: assert 'Data cardinality mismatch' in 'Shape of passed values is (0, 1), indices imply (0, 5)'
+E        +  where 'Shape of passed values is (0, 1), indices imply (0, 5)' = str(ValueError('Shape of passed values is (0, 1), indices imply (0, 5)'))
+E        +    where ValueError('Shape of passed values is (0, 1), indices imply (0, 5)') = <ExceptionInfo ValueError('Shape of passed values is (0, 1), indices imply (0, 5)') tblen=5>.value
+
+test_0980.py:62: AssertionError
+=========================== short test summary info ============================
+FAILED test_0980.py::test_task_func_with_default_seed - NameError: name 'Rand...
+FAILED test_0980.py::test_task_func_without_seed - NameError: name 'RandomFor...
+FAILED test_0980.py::test_task_func_with_custom_feature_names - NameError: na...
+FAILED test_0980.py::test_task_func_with_custom_target_name - NameError: name...
+FAILED test_0980.py::test_task_func_with_different_array_sizes - AssertionErr...
+FAILED test_0980.py::test_task_func_with_empty_arrays - AssertionError: asser...
+6 failed in 3.62s

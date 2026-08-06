@@ -1,0 +1,40 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        letter_list = ['a', 'b', 'c', 'a', 'b', 'a']
+        element = 'a'
+        log_path = '/path/to/log'
+        expected_output = 3
+    
+        with pytest.raises(ValueError) as exc_info:
+>           result = task_func(letter_list, element, log_path)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0818.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0818.py:5: in task_func
+    handler = logging.FileHandler(log_path+'/task_func.log', mode='w')
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/logging/__init__.py:1231: in __init__
+    StreamHandler.__init__(self, self._open())
+                                 ^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <[AttributeError("'FileHandler' object has no attribute 'level'") raised in repr()] FileHandler object at 0x749ea2c65d90>
+
+    def _open(self):
+        """
+        Open the current base file with the (original) mode and encoding.
+        Return the resulting stream.
+        """
+        open_func = self._builtin_open
+>       return open_func(self.baseFilename, self.mode,
+                         encoding=self.encoding, errors=self.errors)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/path/to/log/task_func.log'
+
+/usr/lib/python3.12/logging/__init__.py:1263: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0818.py::test_task_func - FileNotFoundError: [Errno 2] No such fi...
+1 failed in 0.54s

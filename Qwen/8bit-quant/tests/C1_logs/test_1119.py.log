@@ -1,0 +1,66 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_exists = <MagicMock name='exists' id='130154673698816'>
+mock_get = <MagicMock name='get' id='130154670584848'>
+mock_csv_response = <Mock name='get()' id='130154670581248'>
+
+    @patch('requests.get')
+    @patch('os.path.exists')
+    def test_task_func(mock_exists, mock_get, mock_csv_response):
+        mock_get.return_value = mock_csv_response
+        mock_exists.return_value = False  # Ensure file does not exist initially
+    
+        json_file_path = task_func(csv_url='https://example.com/data.csv', json_file_path='test_data.json')
+    
+>       assert os.path.exists(json_file_path)  # Check if the JSON file was created
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert False
+E        +  where False = <MagicMock name='exists' id='130154673698816'>('test_data.json')
+E        +    where <MagicMock name='exists' id='130154673698816'> = <module 'posixpath' (frozen)>.exists
+E        +      where <module 'posixpath' (frozen)> = os.path
+
+test_1119.py:21: AssertionError
+_______________________ test_task_func_with_invalid_csv ________________________
+
+mock_get = <MagicMock name='get' id='130154668705264'>
+
+    @patch('requests.get')
+    def test_task_func_with_invalid_csv(mock_get):
+        mock_get.return_value.text = "invalid,csv,data"
+    
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_1119.py:37: Failed
+________________________ test_task_func_with_empty_csv _________________________
+
+mock_get = <MagicMock name='get' id='130154668716688'>
+
+    @patch('requests.get')
+    def test_task_func_with_empty_csv(mock_get):
+        mock_get.return_value.text = ""
+    
+        with pytest.raises(ValueError):
+>           task_func(csv_url='https://example.com/data.csv', json_file_path='test_data.json')
+
+test_1119.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+csv_url = 'https://example.com/data.csv', json_file_path = 'test_data.json'
+
+    def task_func(csv_url=CSV_URL, json_file_path=JSON_FILE):
+        response = requests.get(csv_url)
+        csv_data = csv.reader(StringIO(response.text))
+    
+>       headers = next(csv_data)
+                  ^^^^^^^^^^^^^^
+E       StopIteration
+
+../../../src/src_1119.py:12: StopIteration
+=========================== short test summary info ============================
+FAILED test_1119.py::test_task_func - AssertionError: assert False
+FAILED test_1119.py::test_task_func_with_invalid_csv - Failed: DID NOT RAISE ...
+FAILED test_1119.py::test_task_func_with_empty_csv - StopIteration
+3 failed in 0.92s

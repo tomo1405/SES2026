@@ -1,0 +1,41 @@
+.FFF...                                                                  [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_no_normal_data _________________________
+
+    def test_task_func_no_normal_data():
+        data, outliers_detected, ax = task_func(num_samples=0)
+        assert len(data) == 5
+>       assert len(outliers_detected) == 5
+E       assert 0 == 5
+E        +  where 0 = len(array([], dtype=float64))
+
+test_1067.py:15: AssertionError
+__________________ test_task_func_custom_samples_and_outliers __________________
+
+    def test_task_func_custom_samples_and_outliers():
+        num_samples = 200
+        num_outliers = 10
+        data, outliers_detected, ax = task_func(num_samples=num_samples, num_outliers=num_outliers)
+        assert len(data) == num_samples + num_outliers
+>       assert len(outliers_detected) <= num_outliers
+E       assert 12 <= 10
+E        +  where 12 = len(array([-2.73239823,  2.50468957, -2.47427651,  6.32123464,  4.77876907,\n       -7.88040135,  8.34458907, -7.37406541, -6.16073973,  6.37855644,\n        3.20285796,  7.6752623 ]))
+
+test_1067.py:23: AssertionError
+__________________________ test_task_func_no_outliers __________________________
+
+    def test_task_func_no_outliers():
+        num_samples = 1000
+        num_outliers = 0
+        data, outliers_detected, ax = task_func(num_samples=num_samples, num_outliers=num_outliers)
+        assert len(data) == num_samples
+>       assert len(outliers_detected) == 0
+E       assert 4 == 0
+E        +  where 4 = len(array([ 4.18982012,  3.17433157, -2.89623124, -3.06894262]))
+
+test_1067.py:31: AssertionError
+=========================== short test summary info ============================
+FAILED test_1067.py::test_task_func_no_normal_data - assert 0 == 5
+FAILED test_1067.py::test_task_func_custom_samples_and_outliers - assert 12 <...
+FAILED test_1067.py::test_task_func_no_outliers - assert 4 == 0
+3 failed, 4 passed in 1.91s

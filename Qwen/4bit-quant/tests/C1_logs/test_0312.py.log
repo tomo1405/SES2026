@@ -1,0 +1,56 @@
+FFF..FF                                                                  [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_non_empty_lists ______________________
+
+    def test_task_func_with_non_empty_lists():
+        list_of_lists = [[1, 2, 3], [4, 5, 6]]
+        result = task_func(list_of_lists)
+        assert result['mean'] == 3.5
+        assert result['median'] == 3.5
+>       assert result['mode'] == 3
+E       assert np.int64(1) == 3
+
+test_0312.py:9: AssertionError
+_______________________ test_task_func_with_empty_lists ________________________
+
+    def test_task_func_with_empty_lists():
+        list_of_lists = [[], []]
+        result = task_func(list_of_lists)
+>       assert result['mean'] == 50.0
+E       assert np.float64(55.3) == 50.0
+
+test_0312.py:14: AssertionError
+_______________________ test_task_func_with_mixed_lists ________________________
+
+    def test_task_func_with_mixed_lists():
+        list_of_lists = [[1, 2, 3], [], [7, 8, 9]]
+        result = task_func(list_of_lists)
+>       assert result['mean'] == 5.0
+E       assert np.float64(24.272727272727273) == 5.0
+
+test_0312.py:21: AssertionError
+_______________________ test_task_func_with_custom_size ________________________
+
+    def test_task_func_with_custom_size():
+        list_of_lists = [[], []]
+        result = task_func(list_of_lists, size=10)
+>       assert result['mean'] == 50.0
+E       assert np.float64(50.1) == 50.0
+
+test_0312.py:42: AssertionError
+_______________________ test_task_func_with_custom_seed ________________________
+
+    def test_task_func_with_custom_seed():
+        list_of_lists = [[], []]
+        result = task_func(list_of_lists, seed=42)
+>       assert result['mean'] == 50.0
+E       assert np.float64(41.0) == 50.0
+
+test_0312.py:49: AssertionError
+=========================== short test summary info ============================
+FAILED test_0312.py::test_task_func_with_non_empty_lists - assert np.int64(1)...
+FAILED test_0312.py::test_task_func_with_empty_lists - assert np.float64(55.3...
+FAILED test_0312.py::test_task_func_with_mixed_lists - assert np.float64(24.2...
+FAILED test_0312.py::test_task_func_with_custom_size - assert np.float64(50.1...
+FAILED test_0312.py::test_task_func_with_custom_seed - assert np.float64(41.0...
+5 failed, 2 passed in 1.95s

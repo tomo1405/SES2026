@@ -1,0 +1,58 @@
+F.F.                                                                     [100%]
+=================================== FAILURES ===================================
+____________________ test_task_func_no_interesting_articles ____________________
+
+sample_df =                        Title                              Content
+0        How to learn Python      Python is a versat...troduction to AI            AI has many applications.
+3              Python basics        Basics of Python programming.
+
+    def test_task_func_no_interesting_articles(sample_df):
+        # Modify the DataFrame to have no titles matching the pattern
+>       sample_df['Title'] = ['General topic', 'Another general topic']
+        ^^^^^^^^^^^^^^^^^^
+
+test_0183.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:4672: in __setitem__
+    self._set_item(key, value)
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:4872: in _set_item
+    value, refs = self._sanitize_column(value)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:5754: in _sanitize_column
+    com.require_length_match(value, self.index)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = ['General topic', 'Another general topic']
+index = RangeIndex(start=0, stop=4, step=1)
+
+    def require_length_match(data, index: Index) -> None:
+        """
+        Check the length of data matches the length of the index.
+        """
+        if len(data) != len(index):
+>           raise ValueError(
+                "Length of values "
+                f"({len(data)}) "
+                "does not match length of index "
+                f"({len(index)})"
+            )
+E           ValueError: Length of values (2) does not match length of index (4)
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/common.py:601: ValueError
+_________________________ test_task_func_kmeans_labels _________________________
+
+sample_df =                        Title                              Content
+0        How to learn Python      Python is a versat...troduction to AI            AI has many applications.
+3              Python basics        Basics of Python programming.
+
+    def test_task_func_kmeans_labels(sample_df):
+        result = task_func(sample_df)
+>       assert all(isinstance(label, int) for label in result)
+E       assert False
+E        +  where False = all(<generator object test_task_func_kmeans_labels.<locals>.<genexpr> at 0x74c6955e8900>)
+
+test_0183.py:27: AssertionError
+=========================== short test summary info ============================
+FAILED test_0183.py::test_task_func_no_interesting_articles - ValueError: Len...
+FAILED test_0183.py::test_task_func_kmeans_labels - assert False
+2 failed, 2 passed in 3.48s

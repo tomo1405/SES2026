@@ -1,0 +1,112 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        pattern = "test"
+        directory = "."
+        extensions = ["*.txt", "*.py"]
+        expected = [Path("test_file.txt").resolve(), Path("test_file.py").resolve()]
+    
+>       result = task_func(pattern, directory, extensions)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0337.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pattern = 'test', directory = '.', extensions = ['*.txt', '*.py']
+
+    def task_func(pattern, directory, extensions):
+        matched_files = []
+        for ext in extensions:
+            files = glob.glob(os.path.join(directory, ext))
+            for file in files:
+>               with open(file, 'r') as f:
+                     ^^^^^^^^^^^^^^^
+E               FileNotFoundError: [Errno 2] No such file or directory: 'test_file.txt'
+
+../../../src/src_0337.py:10: FileNotFoundError
+___________________________ test_task_func_no_match ____________________________
+
+    def test_task_func_no_match():
+        pattern = "nonexistent"
+        directory = "."
+        extensions = ["*.txt", "*.py"]
+        expected = []
+    
+>       result = task_func(pattern, directory, extensions)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0337.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pattern = 'nonexistent', directory = '.', extensions = ['*.txt', '*.py']
+
+    def task_func(pattern, directory, extensions):
+        matched_files = []
+        for ext in extensions:
+            files = glob.glob(os.path.join(directory, ext))
+            for file in files:
+>               with open(file, 'r') as f:
+                     ^^^^^^^^^^^^^^^
+E               FileNotFoundError: [Errno 2] No such file or directory: 'test_file.txt'
+
+../../../src/src_0337.py:10: FileNotFoundError
+________________________ test_task_func_empty_directory ________________________
+
+    def test_task_func_empty_directory():
+        pattern = "test"
+        directory = "."
+        extensions = ["*.txt", "*.py"]
+        expected = []
+    
+>       result = task_func(pattern, directory, extensions)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0337.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pattern = 'test', directory = '.', extensions = ['*.txt', '*.py']
+
+    def task_func(pattern, directory, extensions):
+        matched_files = []
+        for ext in extensions:
+            files = glob.glob(os.path.join(directory, ext))
+            for file in files:
+>               with open(file, 'r') as f:
+                     ^^^^^^^^^^^^^^^
+E               FileNotFoundError: [Errno 2] No such file or directory: 'test_file.txt'
+
+../../../src/src_0337.py:10: FileNotFoundError
+______________________ test_task_func_case_insensitivity _______________________
+
+    def test_task_func_case_insensitivity():
+        pattern = "HELLO"
+        directory = "."
+        extensions = ["*.py"]
+        expected = [Path("test_file.py").resolve()]
+    
+>       result = task_func(pattern, directory, extensions)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0337.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pattern = 'HELLO', directory = '.', extensions = ['*.py']
+
+    def task_func(pattern, directory, extensions):
+        matched_files = []
+        for ext in extensions:
+            files = glob.glob(os.path.join(directory, ext))
+            for file in files:
+>               with open(file, 'r') as f:
+                     ^^^^^^^^^^^^^^^
+E               FileNotFoundError: [Errno 2] No such file or directory: 'test_file.py'
+
+../../../src/src_0337.py:10: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0337.py::test_task_func - FileNotFoundError: [Errno 2] No such fi...
+FAILED test_0337.py::test_task_func_no_match - FileNotFoundError: [Errno 2] N...
+FAILED test_0337.py::test_task_func_empty_directory - FileNotFoundError: [Err...
+FAILED test_0337.py::test_task_func_case_insensitivity - FileNotFoundError: [...
+4 failed in 0.42s

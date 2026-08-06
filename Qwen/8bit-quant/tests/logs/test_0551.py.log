@@ -1,0 +1,59 @@
+....F                                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_nested_lists _______________________
+
+    def test_task_func_with_nested_lists():
+        input_data = [[['burger'], ['fries']], [['burger', 'soda']]]
+        expected_output = pd.DataFrame({'Count': [2, 1, 1]}, index=['burger', 'fries', 'soda']).rename_axis('MenuItem')
+>       assert task_func(input_data).equals(expected_output)
+               ^^^^^^^^^^^^^^^^^^^^^
+
+test_0551.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0551.py:6: in task_func
+    counter = Counter(flat_list)
+              ^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/collections/__init__.py:607: in __init__
+    self.update(iterable, **kwds)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Counter(), iterable = [['burger'], ['fries'], ['burger', 'soda']]
+kwds = {}
+
+    def update(self, iterable=None, /, **kwds):
+        '''Like dict.update() but add counts instead of replacing them.
+    
+        Source can be an iterable, a dictionary, or another Counter instance.
+    
+        >>> c = Counter('which')
+        >>> c.update('witch')           # add elements from another iterable
+        >>> d = Counter('watch')
+        >>> c.update(d)                 # add elements from another counter
+        >>> c['h']                      # four 'h' in which, witch, and watch
+        4
+    
+        '''
+        # The regular dict.update() operation makes no sense here because the
+        # replace behavior results in some of the original untouched counts
+        # being mixed-in with all of the other counts for a mismash that
+        # doesn't have a straight-forward interpretation in most counting
+        # contexts.  Instead, we implement straight-addition.  Both the inputs
+        # and outputs are allowed to contain zero and negative counts.
+    
+        if iterable is not None:
+            if isinstance(iterable, _collections_abc.Mapping):
+                if self:
+                    self_get = self.get
+                    for elem, count in iterable.items():
+                        self[elem] = count + self_get(elem, 0)
+                else:
+                    # fast path when counter is empty
+                    super().update(iterable)
+            else:
+>               _count_elements(self, iterable)
+E               TypeError: unhashable type: 'list'
+
+/usr/lib/python3.12/collections/__init__.py:699: TypeError
+=========================== short test summary info ============================
+FAILED test_0551.py::test_task_func_with_nested_lists - TypeError: unhashable...
+1 failed, 4 passed in 1.12s

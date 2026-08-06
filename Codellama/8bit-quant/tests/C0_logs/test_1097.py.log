@@ -1,0 +1,22 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        text = "This is a test text with $dollar_prefixed_words."
+        filename = "test_file.csv"
+        expected_output = "Word\n$dollar_prefixed_words\n"
+    
+        output = task_func(text, filename)
+    
+        with open(output, 'r') as f:
+            reader = csv.reader(f)
+            actual_output = [row for row in reader]
+    
+>       assert actual_output == expected_output
+E       AssertionError: assert [['Word'], ['$dollar_prefixed_words']] == 'Word\n$dollar_prefixed_words\n'
+
+test_1097.py:17: AssertionError
+=========================== short test summary info ============================
+FAILED test_1097.py::test_task_func - AssertionError: assert [['Word'], ['$do...
+1 failed in 3.25s

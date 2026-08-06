@@ -1,0 +1,27 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Test that the function returns a DataFrame with the correct column names
+        df = pd.DataFrame({'a': [1, 2, 3], 'b': [4, 5, 6]})
+        df_pca = task_func(df)
+        assert isinstance(df_pca, pd.DataFrame)
+        assert df_pca.columns.tolist() == ['PC1', 'PC2']
+    
+        # Test case 2: Test that the function returns a DataFrame with the correct number of rows
+        assert df_pca.shape[0] == df.shape[0]
+    
+        # Test case 3: Test that the function returns a DataFrame with the correct values
+        expected_values = [[1, 2], [3, 4], [5, 6]]
+>       assert (df_pca.values == expected_values).all()
+E       assert np.False_
+E        +  where np.False_ = <built-in method all of numpy.ndarray object at 0x7c3dc1d0cbd0>()
+E        +    where <built-in method all of numpy.ndarray object at 0x7c3dc1d0cbd0> = array([[-1.41...7213427e-17]]) == [[1, 2], [3, 4], [5, 6]]
+E             
+E             Use -v to get more diff.all
+
+test_0703.py:18: AssertionError
+=========================== short test summary info ============================
+FAILED test_0703.py::test_task_func - assert np.False_
+1 failed in 2.74s

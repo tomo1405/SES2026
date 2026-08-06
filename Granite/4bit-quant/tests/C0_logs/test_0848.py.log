@@ -1,0 +1,91 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        input_string = "Hello, world!\nThis is a test line."
+        expected_file_paths = [
+            './text_files/12345.txt',
+            './text_files/67890.txt'
+        ]
+>       actual_file_paths = task_func(input_string)
+                            ^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0848.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input_string = 'Hello, world!\nThis is a test line.', directory = './text_files'
+
+    def task_func(input_string, directory='./text_files'):
+        lines = input_string.split('\n')
+        file_paths = []
+        for line in lines:
+            line = re.sub('['+string.punctuation+']', '', line)
+            filename = str(random.randint(10000, 99999)) + '.txt'
+            filepath = os.path.join(directory, filename)
+            file_paths.append(filepath)
+>           with open(filepath, 'w') as file:
+                 ^^^^^^^^^^^^^^^^^^^
+E           FileNotFoundError: [Errno 2] No such file or directory: './text_files/18181.txt'
+
+../../../src/src_0848.py:13: FileNotFoundError
+_______________________ test_task_func_with_empty_input ________________________
+
+    def test_task_func_with_empty_input():
+        input_string = ""
+        expected_file_paths = []
+>       actual_file_paths = task_func(input_string)
+                            ^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0848.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input_string = '', directory = './text_files'
+
+    def task_func(input_string, directory='./text_files'):
+        lines = input_string.split('\n')
+        file_paths = []
+        for line in lines:
+            line = re.sub('['+string.punctuation+']', '', line)
+            filename = str(random.randint(10000, 99999)) + '.txt'
+            filepath = os.path.join(directory, filename)
+            file_paths.append(filepath)
+>           with open(filepath, 'w') as file:
+                 ^^^^^^^^^^^^^^^^^^^
+E           FileNotFoundError: [Errno 2] No such file or directory: './text_files/85747.txt'
+
+../../../src/src_0848.py:13: FileNotFoundError
+____________________ test_task_func_with_directory_argument ____________________
+
+    def test_task_func_with_directory_argument():
+        input_string = "Another test line."
+        expected_directory = '/tmp/text_files'
+        expected_file_paths = [
+            '/tmp/text_files/54321.txt'
+        ]
+>       actual_file_paths = task_func(input_string, directory=expected_directory)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0848.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input_string = 'Another test line.', directory = '/tmp/text_files'
+
+    def task_func(input_string, directory='./text_files'):
+        lines = input_string.split('\n')
+        file_paths = []
+        for line in lines:
+            line = re.sub('['+string.punctuation+']', '', line)
+            filename = str(random.randint(10000, 99999)) + '.txt'
+            filepath = os.path.join(directory, filename)
+            file_paths.append(filepath)
+>           with open(filepath, 'w') as file:
+                 ^^^^^^^^^^^^^^^^^^^
+E           FileNotFoundError: [Errno 2] No such file or directory: '/tmp/text_files/90096.txt'
+
+../../../src/src_0848.py:13: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0848.py::test_task_func - FileNotFoundError: [Errno 2] No such fi...
+FAILED test_0848.py::test_task_func_with_empty_input - FileNotFoundError: [Er...
+FAILED test_0848.py::test_task_func_with_directory_argument - FileNotFoundErr...
+3 failed in 0.52s

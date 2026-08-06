@@ -1,0 +1,46 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        X = ...  # Generate some data
+        Y = ...  # Generate some labels
+>       X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.3)
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0420.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/sklearn/utils/_param_validation.py:218: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/model_selection/_split.py:2943: in train_test_split
+    arrays = indexable(*arrays)
+             ^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:515: in indexable
+    check_consistent_length(*result)
+../../../.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:456: in check_consistent_length
+    lengths = [_num_samples(X) for X in arrays if X is not None]
+               ^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+x = array(Ellipsis, dtype=object)
+
+    def _num_samples(x):
+        """Return number of samples in array-like x."""
+        message = "Expected sequence or array-like, got %s" % type(x)
+        if hasattr(x, "fit") and callable(x.fit):
+            # Don't get num_samples from an ensembles length!
+            raise TypeError(message)
+    
+        if hasattr(x, "shape") and x.shape is not None:
+            if len(x.shape) == 0:
+>               raise TypeError(
+                    "Input should have at least 1 dimension i.e. satisfy "
+                    f"`len(x.shape) > 0`, got scalar `{x!r}` instead."
+                )
+E               TypeError: Input should have at least 1 dimension i.e. satisfy `len(x.shape) > 0`, got scalar `array(Ellipsis, dtype=object)` instead.
+
+../../../.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:374: TypeError
+=========================== short test summary info ============================
+FAILED test_0420.py::test_task_func - TypeError: Input should have at least 1...
+1 failed in 8.83s

@@ -1,0 +1,48 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        folder_path = "path/to/folder"
+        expected_result = {"192.168.1.1": 1, "10.0.0.1": 2, "172.16.0.1": 1}
+>       result = task_func(folder_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^
+
+test_0282.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+folder_path = 'path/to/folder'
+
+    def task_func(folder_path: str) -> dict:
+        IP_REGEX = re.compile('\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}')
+        counter = Counter()
+>       for filename in os.listdir(folder_path):
+                        ^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'path/to/folder'
+
+../../../src/src_0282.py:7: FileNotFoundError
+_______________________ test_task_func_with_empty_folder _______________________
+
+    def test_task_func_with_empty_folder():
+        folder_path = "path/to/empty/folder"
+        expected_result = {}
+>       result = task_func(folder_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^
+
+test_0282.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+folder_path = 'path/to/empty/folder'
+
+    def task_func(folder_path: str) -> dict:
+        IP_REGEX = re.compile('\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}')
+        counter = Counter()
+>       for filename in os.listdir(folder_path):
+                        ^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'path/to/empty/folder'
+
+../../../src/src_0282.py:7: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0282.py::test_task_func - FileNotFoundError: [Errno 2] No such fi...
+FAILED test_0282.py::test_task_func_with_empty_folder - FileNotFoundError: [E...
+2 failed, 1 passed in 0.42s

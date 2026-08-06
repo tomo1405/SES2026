@@ -1,0 +1,33 @@
+....F                                                                    [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_sufficient_files _____________________
+
+    def test_task_func_with_sufficient_files():
+        my_list = [1, 2, 3]
+        file_dir = './data_files/'
+        file_ext = '.csv'
+    
+>       result_df = task_func(my_list, file_dir, file_ext)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0124.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+my_list = [1, 2, 3, 12], file_dir = './data_files/', file_ext = '.csv'
+
+    def task_func(my_list, file_dir='./data_files/', file_ext='.csv'):
+        if not isinstance(my_list, list):
+            raise TypeError("my_list must be a list.")
+    
+        my_list.append(12)
+        num_files = sum(my_list)
+    
+        files = glob.glob(os.path.join(file_dir, '*' + file_ext))[:num_files]
+        if not files:
+>           raise FileNotFoundError(f"No files with extension '{file_ext}' found in directory '{file_dir}'.")
+E           FileNotFoundError: No files with extension '.csv' found in directory './data_files/'.
+
+../../../src/src_0124.py:13: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0124.py::test_task_func_with_sufficient_files - FileNotFoundError...
+1 failed, 4 passed in 1.07s

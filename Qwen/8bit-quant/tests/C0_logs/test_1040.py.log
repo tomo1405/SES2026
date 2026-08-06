@@ -1,0 +1,76 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_file_exists __________________________
+
+    def test_task_func_file_exists():
+        # Arrange
+        client_socket = Mock()
+        client_socket.recv.return_value = b"/path/to/existing/file"
+        cert_file = "path/to/cert.pem"
+        key_file = "path/to/key.pem"
+        mock_open = Mock()
+        mock_file = Mock()
+        mock_file.read.side_effect = [b"data", b""]
+>       mock_open.return_value.__enter__.return_value = mock_file
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1040.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock name='mock()' id='134101699792672'>, name = '__enter__'
+
+    def __getattr__(self, name):
+        if name in {'_mock_methods', '_mock_unsafe'}:
+            raise AttributeError(name)
+        elif self._mock_methods is not None:
+            if name not in self._mock_methods or name in _all_magics:
+                raise AttributeError("Mock object has no attribute %r" % name)
+        elif _is_magic(name):
+>           raise AttributeError(name)
+E           AttributeError: __enter__
+
+/usr/lib/python3.12/unittest/mock.py:660: AttributeError
+___________________________ test_task_func_exception ___________________________
+
+    def test_task_func_exception():
+        # Arrange
+        client_socket = Mock()
+        client_socket.recv.side_effect = Exception("Mocked exception")
+        cert_file = "path/to/cert.pem"
+        key_file = "path/to/key.pem"
+        with patch('src_1040.ssl.SSLContext') as mock_ssl_context:
+            mock_context = Mock()
+            mock_context.wrap_socket.return_value = client_socket
+            mock_context.load_cert_chain = Mock()
+            context_instance = mock_ssl_context.return_value
+            context_instance.wrap_socket = mock_context.wrap_socket
+    
+            # Act
+            response = task_func(client_socket, cert_file, key_file)
+    
+            # Assert
+            assert response == "Error: Mocked exception"
+>           client_socket.send.assert_called_once_with("Error: Mocked exception".encode("utf-8"))
+
+test_1040.py:70: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock name='mock.wrap_socket().send' id='134101696786992'>
+args = (b'Error: Mocked exception',), kwargs = {}
+
+    def assert_called_once_with(self, /, *args, **kwargs):
+        """assert that the mock was called exactly once and that that call was
+        with the specified arguments."""
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to be called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'send' to be called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:955: AssertionError
+=========================== short test summary info ============================
+FAILED test_1040.py::test_task_func_file_exists - AttributeError: __enter__
+FAILED test_1040.py::test_task_func_exception - AssertionError: Expected 'sen...
+2 failed, 1 passed in 0.70s

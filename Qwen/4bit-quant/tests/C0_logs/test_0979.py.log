@@ -1,0 +1,43 @@
+F.F..                                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_input_validation ________________________
+
+    def test_task_func_input_validation():
+        # Test with non-2D input
+        with pytest.raises(ValueError, match="Input must be a 2D numpy array."):
+            task_func([1, 2, 3])
+    
+        # Test with empty array
+>       assert task_func(np.array([])).equals(pd.DataFrame(columns=["PC1", "PC2"]))
+               ^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0979.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+array = array([], dtype=float64), seed = None
+
+    def task_func(array, seed=None):
+        if seed is not None:
+            np.random.seed(seed)
+    
+        if not isinstance(array, np.ndarray) or len(array.shape) != 2:
+>           raise ValueError("Input must be a 2D numpy array.")
+E           ValueError: Input must be a 2D numpy array.
+
+../../../src/src_0979.py:9: ValueError
+_________________________ test_task_func_without_seed __________________________
+
+    def test_task_func_without_seed():
+        array = np.array([[1, 2], [3, 4], [5, 6]])
+        df1 = task_func(array)
+        df2 = task_func(array)
+>       assert not df1.equals(df2)
+E       assert not True
+E        +  where True = equals(        PC1           PC2\n0 -2.828427 -4.744269e-17\n1  0.000000 -0.000000e+00\n2  2.828427 -4.744269e-17)
+E        +    where equals =         PC1           PC2\n0 -2.828427 -4.744269e-17\n1  0.000000 -0.000000e+00\n2  2.828427 -4.744269e-17.equals
+
+test_0979.py:27: AssertionError
+=========================== short test summary info ============================
+FAILED test_0979.py::test_task_func_input_validation - ValueError: Input must...
+FAILED test_0979.py::test_task_func_without_seed - assert not True
+2 failed, 3 passed in 3.35s

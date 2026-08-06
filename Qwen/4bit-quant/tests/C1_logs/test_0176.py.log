@@ -1,0 +1,82 @@
+..FF.F                                                                   [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_no_interesting_videos _____________________
+
+sample_df =             Title  Likes  Views
+0     How to Code    100    500
+1  What is Python    200   1000
+2    Random Video     50    200
+3   Another Title     30    100
+
+    def test_task_func_no_interesting_videos(sample_df):
+        # Modify the 'Title' column to remove matches for the pattern
+>       sample_df['Title'] = ['No Match', 'Also No Match']
+        ^^^^^^^^^^^^^^^^^^
+
+test_0176.py:30: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:4672: in __setitem__
+    self._set_item(key, value)
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:4872: in _set_item
+    value, refs = self._sanitize_column(value)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:5754: in _sanitize_column
+    com.require_length_match(value, self.index)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = ['No Match', 'Also No Match']
+index = RangeIndex(start=0, stop=4, step=1)
+
+    def require_length_match(data, index: Index) -> None:
+        """
+        Check the length of data matches the length of the index.
+        """
+        if len(data) != len(index):
+>           raise ValueError(
+                "Length of values "
+                f"({len(data)}) "
+                "does not match length of index "
+                f"({len(index)})"
+            )
+E           ValueError: Length of values (2) does not match length of index (4)
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/common.py:601: ValueError
+____________________ test_task_func_with_interesting_videos ____________________
+
+sample_df =             Title  Likes  Views
+0     How to Code    100    500
+1  What is Python    200   1000
+2    Random Video     50    200
+3   Another Title     30    100
+
+    def test_task_func_with_interesting_videos(sample_df):
+        ax = task_func(sample_df)
+        assert isinstance(ax, plt.Axes)
+        assert 'Like Ratio' in ax.get_ylabel()
+>       assert all(label.get_text() in sample_df['Title'] for label in ax.get_xticklabels())
+E       assert False
+E        +  where False = all(<generator object test_task_func_with_interesting_videos.<locals>.<genexpr> at 0x7de4b9e1dc40>)
+
+test_0176.py:38: AssertionError
+_________________________ test_task_func_plot_rotation _________________________
+
+sample_df =             Title  Likes  Views
+0     How to Code    100    500
+1  What is Python    200   1000
+2    Random Video     50    200
+3   Another Title     30    100
+
+    def test_task_func_plot_rotation(sample_df):
+        ax = task_func(sample_df)
+        for label in ax.get_xticklabels():
+>           assert label.get_rotation() == 'vertical'
+E           AssertionError: assert 90.0 == 'vertical'
+E            +  where 90.0 = get_rotation()
+E            +    where get_rotation = Text(0, 0, 'How to Code').get_rotation
+
+test_0176.py:49: AssertionError
+=========================== short test summary info ============================
+FAILED test_0176.py::test_task_func_no_interesting_videos - ValueError: Lengt...
+FAILED test_0176.py::test_task_func_with_interesting_videos - assert False
+FAILED test_0176.py::test_task_func_plot_rotation - AssertionError: assert 90...
+3 failed, 3 passed in 2.33s

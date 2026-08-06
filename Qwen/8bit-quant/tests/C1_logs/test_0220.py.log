@@ -1,0 +1,147 @@
+FFFFFFFFFF                                                               [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_empty_list ________________________
+
+    def test_task_func_with_empty_list():
+>       result = task_func([])
+                 ^^^^^^^^^^^^^
+
+test_0220.py:8: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0220.py:5: in task_func
+    fft = np.abs(np.fft.fft([math.degrees(x) for x in input_list]))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/numpy/fft/_pocketfft.py:215: in fft
+    output = _raw_fft(a, n, axis, False, True, norm, out)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = array([], dtype=float64), n = 0, axis = -1, is_real = False
+is_forward = True, norm = None, out = None
+
+    def _raw_fft(a, n, axis, is_real, is_forward, norm, out=None):
+        if n < 1:
+>           raise ValueError(f"Invalid number of FFT data points ({n}) specified.")
+E           ValueError: Invalid number of FFT data points (0) specified.
+
+../../../.venv/lib/python3.12/site-packages/numpy/fft/_pocketfft.py:60: ValueError
+______________________ test_task_func_with_single_element ______________________
+
+    def test_task_func_with_single_element():
+        result = task_func([1.0])
+>       assert result == (1.0, 1.0, 1.0, 1, 1, 1)
+E       assert (1.0, 1.0, 1.0, 57, 57, 57) == (1.0, 1.0, 1.0, 1, 1, 1)
+E         
+E         At index 3 diff: 57 != 1
+E         Use -v to get more diff
+
+test_0220.py:13: AssertionError
+____________________ test_task_func_with_multiple_elements _____________________
+
+    def test_task_func_with_multiple_elements():
+        result = task_func([1.0, 2.0, 3.0])
+>       assert result == (2.0, 2.0, 1.0, 1, 1, 1)
+E       assert (2.0, 2.0, 1.0, 181, 99, 99) == (2.0, 2.0, 1.0, 1, 1, 1)
+E         
+E         At index 3 diff: 181 != 1
+E         Use -v to get more diff
+
+test_0220.py:17: AssertionError
+____________________ test_task_func_with_repeated_elements _____________________
+
+    def test_task_func_with_repeated_elements():
+        result = task_func([1.0, 1.0, 2.0, 2.0, 3.0])
+>       assert result == (1.8, 2.0, 1.0, 1, 1, 1)
+E       assert (1.8, 2.0, 1.0, 188, 123, 123) == (1.8, 2.0, 1.0, 1, 1, 1)
+E         
+E         At index 3 diff: 188 != 1
+E         Use -v to get more diff
+
+test_0220.py:21: AssertionError
+_____________________ test_task_func_with_negative_values ______________________
+
+    def test_task_func_with_negative_values():
+        result = task_func([-1.0, -2.0, -3.0])
+>       assert result == (-2.0, -2.0, -3.0, 1, 1, 1)
+E       assert (-2.0, -2.0, ..., 181, 99, 99) == (-2.0, -2.0, -3.0, 1, 1, 1)
+E         
+E         At index 3 diff: 181 != 1
+E         Use -v to get more diff
+
+test_0220.py:25: AssertionError
+_______________________ test_task_func_with_mixed_values _______________________
+
+    def test_task_func_with_mixed_values():
+        result = task_func([-1.0, 0.0, 1.0])
+>       assert result == (0.0, 0.0, 0.0, 1, 1, 1)
+E       assert (0.0, 0.0, -1.0, 66, 99, 99) == (0.0, 0.0, 0.0, 1, 1, 1)
+E         
+E         At index 2 diff: -1.0 != 0.0
+E         Use -v to get more diff
+
+test_0220.py:29: AssertionError
+______________________ test_task_func_with_large_numbers _______________________
+
+    def test_task_func_with_large_numbers():
+        result = task_func([100.0, 200.0, 300.0])
+>       assert result == (200.0, 200.0, 100.0, 1, 1, 1)
+E       assert (200.0, 200.0...5, 9924, 9924) == (200.0, 200.0, 100.0, 1, 1, 1)
+E         
+E         At index 3 diff: 18075 != 1
+E         Use -v to get more diff
+
+test_0220.py:33: AssertionError
+______________________ test_task_func_with_small_numbers _______________________
+
+    def test_task_func_with_small_numbers():
+        result = task_func([0.001, 0.002, 0.003])
+>       assert result == (0.002, 0.002, 0.001, 1, 1, 1)
+E       assert (0.002, 0.002, 0.001, 0, 0, 0) == (0.002, 0.002, 0.001, 1, 1, 1)
+E         
+E         At index 3 diff: 0 != 1
+E         Use -v to get more diff
+
+test_0220.py:37: AssertionError
+________________________ test_task_func_with_pi_values _________________________
+
+    def test_task_func_with_pi_values():
+        result = task_func([math.pi/4, math.pi/2, 3*math.pi/4])
+>       assert result == (math.pi/2, math.pi/2, math.pi/4, 1, 1, 1)
+E       assert (1.5707963267..., 142, 78, 78) == (1.5707963267...4483, 1, 1, 1)
+E         
+E         At index 3 diff: 142 != 1
+E         Use -v to get more diff
+
+test_0220.py:41: AssertionError
+______________________ test_task_func_with_random_values _______________________
+
+    def test_task_func_with_random_values():
+        np.random.seed(0)
+        random_values = np.random.rand(10)
+        result = task_func(random_values)
+        expected_mean = statistics.mean(random_values)
+        expected_median = statistics.median(random_values)
+        expected_mode = statistics.mode(random_values)
+        fft = np.abs(np.fft.fft([math.degrees(x) for x in random_values]))
+        expected_mean_fft = round(statistics.mean(fft))
+        expected_median_fft = round(statistics.median(fft))
+        expected_mode_fft = round(statistics.mode(fft))
+>       assert result == (expected_mean, expected_median, expected_mode, expected_mean_fft, expected_median_fft, expected_mode_fft)
+E       assert (np.float64(0...), 66, 37, 40) == (np.float64(0...), 66, 37, 40)
+E         
+E         At index 2 diff: np.float64(0.3834415188257777) != np.float64(0.5488135039273248)
+E         Use -v to get more diff
+
+test_0220.py:54: AssertionError
+=========================== short test summary info ============================
+FAILED test_0220.py::test_task_func_with_empty_list - ValueError: Invalid num...
+FAILED test_0220.py::test_task_func_with_single_element - assert (1.0, 1.0, 1...
+FAILED test_0220.py::test_task_func_with_multiple_elements - assert (2.0, 2.0...
+FAILED test_0220.py::test_task_func_with_repeated_elements - assert (1.8, 2.0...
+FAILED test_0220.py::test_task_func_with_negative_values - assert (-2.0, -2.0...
+FAILED test_0220.py::test_task_func_with_mixed_values - assert (0.0, 0.0, -1....
+FAILED test_0220.py::test_task_func_with_large_numbers - assert (200.0, 200.0...
+FAILED test_0220.py::test_task_func_with_small_numbers - assert (0.002, 0.002...
+FAILED test_0220.py::test_task_func_with_pi_values - assert (1.5707963267...,...
+FAILED test_0220.py::test_task_func_with_random_values - assert (np.float64(0...
+10 failed in 0.70s

@@ -1,0 +1,36 @@
+....F.                                                                   [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_zero_components ________________________
+
+sample_data = array([[1, 2],
+       [3, 4],
+       [5, 6]])
+
+    def test_task_func_zero_components(sample_data):
+        with pytest.raises(ValueError):
+>           task_func(sample_data, n_components=0)
+
+test_0448.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = array([[1, 2],
+       [3, 4],
+       [5, 6]]), n_components = 0
+random_state = None
+
+    def task_func(data, n_components=2, random_state=None):
+        pca = PCA(n_components=n_components, random_state=random_state)
+        transformed_data = pca.fit_transform(data)
+    
+        fig, ax = plt.subplots()
+        if transformed_data.shape[1] == 1:
+            ax.scatter(transformed_data[:, 0], np.zeros_like(transformed_data[:, 0]))
+        else:
+>           ax.scatter(transformed_data[:, 0], transformed_data[:, 1])
+                       ^^^^^^^^^^^^^^^^^^^^^^
+E           IndexError: index 0 is out of bounds for axis 1 with size 0
+
+../../../src/src_0448.py:12: IndexError
+=========================== short test summary info ============================
+FAILED test_0448.py::test_task_func_zero_components - IndexError: index 0 is ...
+1 failed, 5 passed in 3.71s

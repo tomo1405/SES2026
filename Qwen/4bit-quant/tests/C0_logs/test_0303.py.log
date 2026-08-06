@@ -1,0 +1,88 @@
+FF..F                                                                    [100%]
+=================================== FAILURES ===================================
+_____________________________ test_task_func_basic _____________________________
+
+    def test_task_func_basic():
+        data = {
+            'Date': ['2020-01-01', '2020-01-02', '2020-01-03'],
+            'Value': [1, 2, 3]
+        }
+        df = pd.DataFrame(data)
+        result = task_func(df)
+        assert isinstance(result, pd.DataFrame)
+>       assert result.equals(pd.DataFrame({'Value': [1.0]}))
+E       AssertionError: assert False
+E        +  where False = equals(   Value\n0    1.0)
+E        +    where equals =      0\n0  1.0.equals
+E        +    and      Value\n0    1.0 = <class 'pandas.DataFrame'>({'Value': [1.0]})
+E        +      where <class 'pandas.DataFrame'> = pd.DataFrame
+
+test_0303.py:13: AssertionError
+___________________________ test_task_func_with_plot ___________________________
+
+    def test_task_func_with_plot():
+        data = {
+            'Date': ['2020-01-01', '2020-01-02', '2020-01-03'],
+            'Value': [1, 2, 3]
+        }
+        df = pd.DataFrame(data)
+        result, heatmap = task_func(df, plot=True)
+        assert isinstance(result, pd.DataFrame)
+>       assert result.equals(pd.DataFrame({'Value': [1.0]}))
+E       AssertionError: assert False
+E        +  where False = equals(   Value\n0    1.0)
+E        +    where equals =      0\n0  1.0.equals
+E        +    and      Value\n0    1.0 = <class 'pandas.DataFrame'>({'Value': [1.0]})
+E        +      where <class 'pandas.DataFrame'> = pd.DataFrame
+
+test_0303.py:23: AssertionError
+______________________ test_task_func_invalid_date_format ______________________
+
+    def test_task_func_invalid_date_format():
+        data = {
+            'Date': ['not-a-date', '2020-01-02', '2020-01-03'],
+            'Value': [1, 2, 3]
+        }
+        df = pd.DataFrame(data)
+        with pytest.raises(pd.errors.ParserError):
+>           task_func(df)
+
+test_0303.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0303.py:11: in task_func
+    df['Date'] = pd.to_datetime(df['Date'])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/tools/datetimes.py:1040: in to_datetime
+    values = convert_listlike(arg._values, format)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/tools/datetimes.py:437: in _convert_listlike_datetimes
+    result, tz_parsed = objects_to_datetime64(
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/datetimes.py:2623: in objects_to_datetime64
+    result, tz_parsed = tslib.array_to_datetime(
+pandas/_libs/tslib.pyx:259: in pandas._libs.tslib.array_to_datetime
+    ???
+pandas/_libs/tslib.pyx:473: in pandas._libs.tslib.array_to_datetime
+    ???
+pandas/_libs/tslib.pyx:430: in pandas._libs.tslib.array_to_datetime
+    ???
+pandas/_libs/tslibs/conversion.pyx:658: in pandas._libs.tslibs.conversion.convert_str_to_tsobject
+    ???
+pandas/_libs/tslibs/parsing.pyx:321: in pandas._libs.tslibs.parsing.parse_datetime_string
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   pandas._libs.tslibs.parsing.DateParseError: Unknown datetime string format, unable to parse: not-a-date
+
+pandas/_libs/tslibs/parsing.pyx:652: DateParseError
+=============================== warnings summary ===============================
+Qwen/4bit-quant/tests/test_0303.py::test_task_func_invalid_date_format
+  /work/tomohiro-w/utg/src/src_0303.py:11: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+    df['Date'] = pd.to_datetime(df['Date'])
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0303.py::test_task_func_basic - AssertionError: assert False
+FAILED test_0303.py::test_task_func_with_plot - AssertionError: assert False
+FAILED test_0303.py::test_task_func_invalid_date_format - pandas._libs.tslibs...
+3 failed, 2 passed, 1 warning in 3.86s

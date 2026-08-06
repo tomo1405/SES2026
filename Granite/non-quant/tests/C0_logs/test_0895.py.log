@@ -1,0 +1,33 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        array, mean, std, ax = task_func()
+    
+        # Test the return type of the function
+        assert isinstance(array, np.ndarray)
+        assert isinstance(mean, float)
+        assert isinstance(std, float)
+        assert isinstance(ax, plt.Axes)
+    
+        # Test the values of the mean and standard deviation
+        assert mean == np.mean(array)
+        assert std == np.std(array)
+    
+        # Test the title, x-label, and y-label of the histogram
+        assert ax.get_title() == 'Histogram of Random Integers'
+        assert ax.get_xlabel() == 'Value'
+        assert ax.get_ylabel() == 'Frequency'
+    
+        # Test the presence of the mean and standard deviation lines
+>       assert len(ax.get_lines()) == 4
+E       AssertionError: assert 3 == 4
+E        +  where 3 = len(<a list of 3 Line2D objects>)
+E        +    where <a list of 3 Line2D objects> = get_lines()
+E        +      where get_lines = <Axes: title={'center': 'Histogram of Random Integers'}, xlabel='Value', ylabel='Frequency'>.get_lines
+
+test_0895.py:25: AssertionError
+=========================== short test summary info ============================
+FAILED test_0895.py::test_task_func - AssertionError: assert 3 == 4
+1 failed in 2.08s

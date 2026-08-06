@@ -1,0 +1,40 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_file = '/tmp/pytest-of-tomohiro-w/pytest-1514/test_task_func0/sub/test.csv'
+
+    def test_task_func(mock_file):
+>       means, std_devs, axes, anova_results = task_func(mock_file)
+                                               ^^^^^^^^^^^^^^^^^^^^
+
+test_1085.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data_file_path = '/tmp/pytest-of-tomohiro-w/pytest-1514/test_task_func0/sub/test.csv'
+
+    def task_func(data_file_path: str):
+        df = pd.read_csv(data_file_path)
+        # Convert strings with commas to float, if applicable
+        for col in df.columns:
+            df[col] = pd.to_numeric(df[col].replace(",", "", regex=True), errors="coerce")
+        # drop columns with NaN values
+        df = df.dropna(axis=1)
+        means = df.mean()
+        std_devs = df.std()
+    
+        # Creating a histogram for each numerical column
+        axes = []
+        for col in df.columns:
+            ax = df[col].hist(bins=50)
+            ax.set_title(col)
+            axes.append(ax)
+    
+>       plt.show()
+        ^^^
+E       NameError: name 'plt' is not defined
+
+../../../src/src_1085.py:20: NameError
+=========================== short test summary info ============================
+FAILED test_1085.py::test_task_func - NameError: name 'plt' is not defined
+1 failed in 4.66s

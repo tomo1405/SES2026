@@ -1,0 +1,24 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_process_running ________________________
+
+    def test_task_func_process_running():
+        process_name = "example_process"
+        with patch('psutil.process_iter') as mock_process_iter:
+            mock_process_iter.return_value = [MagicMock(name=process_name)]
+            with patch('subprocess.Popen') as mock_popen:
+                with patch('time.sleep'):
+                    result = task_func(process_name)
+                    mock_popen.assert_called_once_with(process_name)
+>                   assert result == f"Process found. Restarting {process_name}."
+E                   AssertionError: assert 'Process not ...mple_process.' == 'Process foun...mple_process.'
+E                     
+E                     - Process found. Restarting example_process.
+E                     ?                ^^^
+E                     + Process not found. Starting example_process.
+E                     ?         ++++       ^
+
+test_0018.py:13: AssertionError
+=========================== short test summary info ============================
+FAILED test_0018.py::test_task_func_process_running - AssertionError: assert ...
+1 failed, 1 passed in 0.40s

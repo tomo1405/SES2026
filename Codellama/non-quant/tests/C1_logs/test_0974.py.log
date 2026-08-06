@@ -1,0 +1,47 @@
+F..F                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_path ___________________________
+
+    def test_task_func_valid_path():
+        path = "/path/to/directory"
+>       results = task_func(path)
+                  ^^^^^^^^^^^^^^^
+
+test_0974.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = '/path/to/directory', delimiter = '/'
+
+    def task_func(path, delimiter="/"):
+        if not path or not isinstance(path, str):
+            raise ValueError("Path must be a non-empty string")
+        if not os.path.exists(path):
+>           raise FileNotFoundError(f"Path '{path}' does not exist")
+E           FileNotFoundError: Path '/path/to/directory' does not exist
+
+../../../src/src_0974.py:7: FileNotFoundError
+_______________________ test_task_func_invalid_delimiter _______________________
+
+    def test_task_func_invalid_delimiter():
+        path = "/path/to/directory"
+        delimiter = ""
+        with pytest.raises(ValueError):
+>           task_func(path, delimiter)
+
+test_0974.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = '/path/to/directory', delimiter = ''
+
+    def task_func(path, delimiter="/"):
+        if not path or not isinstance(path, str):
+            raise ValueError("Path must be a non-empty string")
+        if not os.path.exists(path):
+>           raise FileNotFoundError(f"Path '{path}' does not exist")
+E           FileNotFoundError: Path '/path/to/directory' does not exist
+
+../../../src/src_0974.py:7: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0974.py::test_task_func_valid_path - FileNotFoundError: Path '/pa...
+FAILED test_0974.py::test_task_func_invalid_delimiter - FileNotFoundError: Pa...
+2 failed, 2 passed in 0.47s

@@ -1,0 +1,69 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_output _____________________________
+
+df1 =    id  feature1  feature2  target
+0   1        10        15       0
+1   2        20        25       1
+2   3        30        35       0
+df2 =    id  feature3
+0   1        12
+1   2        22
+2   3        32
+
+    def test_task_func_output(df1, df2):
+        selected_features, heatmap = task_func(df1, df2)
+    
+        # Check if the selected features are correct
+        assert isinstance(selected_features, list)
+        assert len(selected_features) == 2
+>       assert set(selected_features).issubset({"feature1", "feature2"})
+E       AssertionError: assert False
+E        +  where False = <built-in method issubset of set object at 0x760e79eb12a0>({'feature1', 'feature2'})
+E        +    where <built-in method issubset of set object at 0x760e79eb12a0> = {'feature2', 'target'}.issubset
+E        +      where {'feature2', 'target'} = set(['feature2', 'target'])
+
+test_0430.py:30: AssertionError
+__________________________ test_task_func_no_features __________________________
+
+df1 =    id  feature1  feature2  target
+0   1        10        15       0
+1   2        20        25       1
+2   3        30        35       0
+df2 =    id  feature3
+0   1        12
+1   2        22
+2   3        32
+
+    def test_task_func_no_features(df1, df2):
+        # Modify df1 to have only 'id' and 'target' columns
+        df1_no_features = df1[['id', 'target']]
+        selected_features, heatmap = task_func(df1_no_features, df2)
+    
+        # Check if no features are selected
+>       assert selected_features == []
+E       AssertionError: assert ['target'] == []
+E         
+E         Left contains one more item: 'target'
+E         Use -v to get more diff
+
+test_0430.py:57: AssertionError
+=============================== warnings summary ===============================
+Qwen/8bit-quant/tests/test_0430.py::test_task_func_output
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:110: UserWarning: Features [2] are constant.
+    warnings.warn("Features %s are constant." % constant_features_idx, UserWarning)
+
+Qwen/8bit-quant/tests/test_0430.py::test_task_func_output
+Qwen/8bit-quant/tests/test_0430.py::test_task_func_no_features
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:111: RuntimeWarning: divide by zero encountered in divide
+    f = msb / msw
+
+Qwen/8bit-quant/tests/test_0430.py::test_task_func_no_features
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:782: UserWarning: k=2 is greater than n_features=1. All the features will be returned.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0430.py::test_task_func_output - AssertionError: assert False
+FAILED test_0430.py::test_task_func_no_features - AssertionError: assert ['ta...
+2 failed, 1 passed, 4 warnings in 5.34s

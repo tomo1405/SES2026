@@ -1,0 +1,54 @@
+FF.F                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        goals = {'Team A': 5, 'Team B': -3, 'Team C': 7, 'Team D': 2, 'Team E': -8}
+        penalties = {'Team A': 2, 'Team B': 1, 'Team C': 3, 'Team D': 5, 'Team E': 4}
+    
+        expected_output = pd.DataFrame({
+            'Team': ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
+            'Score': [3, -4, 4, -3, -12]
+        })
+    
+        result = task_func(goals, penalties)
+    
+        # Check if the DataFrame has the correct structure
+>       assert result.equals(expected_output)
+E       assert False
+E        +  where False = equals(     Team  Score\n0  Team A      3\n1  Team B     -4\n2  Team C      4\n3  Team D     -3\n4  Team E    -12)
+E        +    where equals =      Team  Score\n0  Team A      3\n1  Team B     -4\n2  Team C      4\n3  Team D     -3\n4  Team E    -10.equals
+
+test_0614.py:17: AssertionError
+_________________________ test_task_func_missing_teams _________________________
+
+    def test_task_func_missing_teams():
+        goals = {'Team A': 5, 'Team C': 7, 'Team E': -8}
+        penalties = {'Team A': 2, 'Team B': 1, 'Team D': 5, 'Team E': 4}
+    
+        expected_output = pd.DataFrame({
+            'Team': ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
+            'Score': [3, -1, 4, -5, -12]
+        })
+    
+        result = task_func(goals, penalties)
+    
+>       assert result.equals(expected_output)
+E       assert False
+E        +  where False = equals(     Team  Score\n0  Team A      3\n1  Team B     -1\n2  Team C      4\n3  Team D     -5\n4  Team E    -12)
+E        +    where equals =      Team  Score\n0  Team A      3\n1  Team B     -1\n2  Team C      7\n3  Team D     -5\n4  Team E    -10.equals
+
+test_0614.py:33: AssertionError
+__________________ test_task_func_all_teams_with_zero_scores ___________________
+
+    def test_task_func_all_teams_with_zero_scores():
+>       goals = {team: 0 for team in TEAMS}
+                                     ^^^^^
+E       NameError: name 'TEAMS' is not defined
+
+test_0614.py:49: NameError
+=========================== short test summary info ============================
+FAILED test_0614.py::test_task_func - assert False
+FAILED test_0614.py::test_task_func_missing_teams - assert False
+FAILED test_0614.py::test_task_func_all_teams_with_zero_scores - NameError: n...
+3 failed, 1 passed in 2.08s

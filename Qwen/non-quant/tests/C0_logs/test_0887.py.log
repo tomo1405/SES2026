@@ -1,0 +1,54 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_data ___________________________
+
+    def test_task_func_valid_data():
+        data = {
+            'Name': ['Alice', 'Bob', 'Alice', 'Charlie'],
+            'Age': [25, 30, 25, 35],
+            'Score': [88, 92, 85, 90]
+        }
+        df, avg_scores, most_common_age = task_func(data)
+    
+        # Check DataFrame
+        expected_df = pd.DataFrame({
+            'Name': ['Alice', 'Alice', 'Bob', 'Charlie'],
+            'Age': [25, 25, 30, 35],
+            'Score': [88, 85, 92, 90]
+        })
+        pd.testing.assert_frame_equal(df.reset_index(drop=True), expected_df)
+    
+        # Check average scores
+        expected_avg_scores = pd.Series([86.5, 92, 90], index=['Alice', 'Bob', 'Charlie'])
+>       pd.testing.assert_series_equal(avg_scores, expected_avg_scores)
+E       AssertionError: Series.index are different
+E       
+E       Attribute "names" are different
+E       [left]:  ['Name']
+E       [right]: [None]
+
+test_0887.py:23: AssertionError
+__________________________ test_task_func_empty_data ___________________________
+
+    def test_task_func_empty_data():
+        data = {
+            'Name': [],
+            'Age': [],
+            'Score': []
+        }
+        df, avg_scores, most_common_age = task_func(data)
+    
+        # Check DataFrame
+        expected_df = pd.DataFrame(columns=['Name', 'Age', 'Score'])
+>       pd.testing.assert_frame_equal(df, expected_df)
+E       AssertionError: Attributes of DataFrame.iloc[:, 0] (column name="Name") are different
+E       
+E       Attribute "dtype" are different
+E       [left]:  float64
+E       [right]: object
+
+test_0887.py:46: AssertionError
+=========================== short test summary info ============================
+FAILED test_0887.py::test_task_func_valid_data - AssertionError: Series.index...
+FAILED test_0887.py::test_task_func_empty_data - AssertionError: Attributes o...
+2 failed, 1 passed in 1.22s

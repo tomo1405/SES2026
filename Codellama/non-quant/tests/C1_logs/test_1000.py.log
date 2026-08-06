@@ -1,0 +1,49 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        url = "https://example.com/data.csv"
+        column_name = "age"
+        csv_file_path = "data.csv"
+    
+        # Test that the function raises a ValueError if the column name is not in the CSV file
+        with pytest.raises(ValueError):
+>           task_func(url, "invalid_column_name", csv_file_path)
+
+test_1000.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1000.py:6: in task_func
+    urllib.request.urlretrieve(url, csv_file_path)
+/usr/lib/python3.12/urllib/request.py:240: in urlretrieve
+    with contextlib.closing(urlopen(url, data)) as fp:
+                            ^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:215: in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:521: in open
+    response = meth(req, response)
+               ^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:630: in http_response
+    response = self.parent.error(
+/usr/lib/python3.12/urllib/request.py:559: in error
+    return self._call_chain(*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:492: in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <urllib.request.HTTPDefaultErrorHandler object at 0x7979fa3c9190>
+req = <urllib.request.Request object at 0x7979fa3c9100>
+fp = <http.client.HTTPResponse object at 0x7979fa3c9630>, code = 404
+msg = 'Not Found', hdrs = <http.client.HTTPMessage object at 0x7979fa3c9be0>
+
+    def http_error_default(self, req, fp, code, msg, hdrs):
+>       raise HTTPError(req.full_url, code, msg, hdrs, fp)
+E       urllib.error.HTTPError: HTTP Error 404: Not Found
+
+/usr/lib/python3.12/urllib/request.py:639: HTTPError
+=========================== short test summary info ============================
+FAILED test_1000.py::test_task_func - urllib.error.HTTPError: HTTP Error 404:...
+1 failed in 0.71s

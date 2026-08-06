@@ -1,0 +1,62 @@
+FFF.                                                                     [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_valid_data ________________________
+
+    def test_task_func_with_valid_data():
+        data_list = [
+            ('Header', 1, 2, 3),
+            ('Row1', 4, 5, 6),
+            ('Row2', 7, 8, 9)
+        ]
+        file_name = 'test_output.txt'
+        expected_mean_values = [np.mean([4, 7]), np.mean([5, 8]), np.mean([6, 9])]
+    
+        mean_values = task_func(data_list, file_name)
+    
+>       assert np.allclose(mean_values, expected_mean_values)
+E       assert False
+E        +  where False = <function allclose at 0x7b9e7cb0dd30>([np.float64(4.0), np.float64(5.0), np.float64(6.0)], [np.float64(5.5), np.float64(6.5), np.float64(7.5)])
+E        +    where <function allclose at 0x7b9e7cb0dd30> = np.allclose
+
+test_0872.py:16: AssertionError
+______________________ test_task_func_with_missing_values ______________________
+
+    def test_task_func_with_missing_values():
+        data_list = [
+            ('Header', 1, 2, 3),
+            ('Row1', 4, None, 6),
+            ('Row2', 7, 8, None)
+        ]
+        file_name = 'test_output_missing.txt'
+        expected_mean_values = [np.mean([4, 7]), np.mean([2, 8]), np.nan]
+    
+        mean_values = task_func(data_list, file_name)
+    
+>       assert np.allclose(mean_values, expected_mean_values, equal_nan=True)
+E       assert False
+E        +  where False = <function allclose at 0x7b9e7cb0dd30>([np.float64(4.0), np.float64(5.0), np.float64(4.5)], [np.float64(5.5), np.float64(5.0), nan], equal_nan=True)
+E        +    where <function allclose at 0x7b9e7cb0dd30> = np.allclose
+
+test_0872.py:40: AssertionError
+________________________ test_task_func_with_single_row ________________________
+
+    def test_task_func_with_single_row():
+        data_list = [
+            ('Header', 1, 2, 3),
+        ]
+        file_name = 'test_output_single.txt'
+        expected_mean_values = [np.nan, np.nan, np.nan]
+    
+        mean_values = task_func(data_list, file_name)
+    
+>       assert np.allclose(mean_values, expected_mean_values, equal_nan=True)
+E       assert False
+E        +  where False = <function allclose at 0x7b9e7cb0dd30>([np.float64(1.0), np.float64(2.0), np.float64(3.0)], [nan, nan, nan], equal_nan=True)
+E        +    where <function allclose at 0x7b9e7cb0dd30> = np.allclose
+
+test_0872.py:62: AssertionError
+=========================== short test summary info ============================
+FAILED test_0872.py::test_task_func_with_valid_data - assert False
+FAILED test_0872.py::test_task_func_with_missing_values - assert False
+FAILED test_0872.py::test_task_func_with_single_row - assert False
+3 failed, 1 passed in 0.66s

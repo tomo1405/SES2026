@@ -1,0 +1,47 @@
+F..F                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________________ test_valid_input _______________________________
+
+    def test_valid_input():
+        f_list = [print, len, sum]
+        file_path = "test_file.csv"
+        task_func(f_list, file_path)
+        df = pd.read_csv(file_path)
+        assert df.shape == (3, 5)
+        assert df['Function Name'].tolist() == ['print', 'len', 'sum']
+>       assert df['Number of Arguments'].tolist() == [0, 1, 1]
+E       assert [0, 1, 2] == [0, 1, 1]
+E         
+E         At index 2 diff: 2 != 1
+E         Use -v to get more diff
+
+test_0572.py:12: AssertionError
+____________________________ test_invalid_file_path ____________________________
+
+    def test_invalid_file_path():
+        f_list = [print, len, sum]
+        file_path = 123
+        with pytest.raises(IOError) as e:
+>           task_func(f_list, file_path)
+
+test_0572.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+f_list = [<built-in function print>, <built-in function len>, <built-in function sum>]
+file_path = 123
+
+    def task_func(f_list, file_path):
+    
+        if not all(callable(f) for f in f_list):
+            raise ValueError("All elements in f_list must be callable functions.")
+        if not f_list:
+            raise ValueError("f_list should not be empty.")
+        if not isinstance(file_path, str):
+>           raise ValueError("file_path must be a string.")
+E           ValueError: file_path must be a string.
+
+../../../src/src_0572.py:10: ValueError
+=========================== short test summary info ============================
+FAILED test_0572.py::test_valid_input - assert [0, 1, 2] == [0, 1, 1]
+FAILED test_0572.py::test_invalid_file_path - ValueError: file_path must be a...
+2 failed, 2 passed in 1.17s

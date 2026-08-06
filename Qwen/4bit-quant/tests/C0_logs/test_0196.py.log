@@ -1,0 +1,192 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_success ____________________________
+
+    def test_task_func_success():
+        # Mock the platform.system to simulate a Darwin system
+        platform.system = lambda: 'Darwin'
+    
+        # Mock subprocess.Popen to simulate a successful process
+        class MockPopen:
+            def __init__(self, args, shell):
+                self.args = args
+                self.shell = shell
+    
+            def poll(self):
+                return 0  # Simulate successful completion
+    
+        subprocess.Popen = MockPopen
+    
+        # Test with a valid URL
+>       result = task_func('http://example.com')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0196.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'http://example.com'
+
+    def task_func(url):
+        if platform.system() == 'Darwin':
+            cmd = 'open'
+        elif platform.system() == 'Windows':
+            cmd = 'start'
+        else:
+            cmd = 'xdg-open'
+    
+        # Open webpage in a background process
+        process = subprocess.Popen([cmd, url], shell=True)
+    
+        # Wait for the process to complete
+        while process.poll() is None:
+            time.sleep(1)
+    
+>       return process.returncode
+               ^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'MockPopen' object has no attribute 'returncode'
+
+../../../src/src_0196.py:19: AttributeError
+____________________________ test_task_func_failure ____________________________
+
+    def test_task_func_failure():
+        # Mock the platform.system to simulate a Darwin system
+        platform.system = lambda: 'Darwin'
+    
+        # Mock subprocess.Popen to simulate a failed process
+        class MockPopen:
+            def __init__(self, args, shell):
+                self.args = args
+                self.shell = shell
+    
+            def poll(self):
+                return 1  # Simulate failure
+    
+        subprocess.Popen = MockPopen
+    
+        # Test with a valid URL
+>       result = task_func('http://example.com')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0196.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'http://example.com'
+
+    def task_func(url):
+        if platform.system() == 'Darwin':
+            cmd = 'open'
+        elif platform.system() == 'Windows':
+            cmd = 'start'
+        else:
+            cmd = 'xdg-open'
+    
+        # Open webpage in a background process
+        process = subprocess.Popen([cmd, url], shell=True)
+    
+        # Wait for the process to complete
+        while process.poll() is None:
+            time.sleep(1)
+    
+>       return process.returncode
+               ^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'MockPopen' object has no attribute 'returncode'
+
+../../../src/src_0196.py:19: AttributeError
+____________________________ test_task_func_windows ____________________________
+
+    def test_task_func_windows():
+        # Mock the platform.system to simulate a Windows system
+        platform.system = lambda: 'Windows'
+    
+        # Mock subprocess.Popen to simulate a successful process
+        class MockPopen:
+            def __init__(self, args, shell):
+                self.args = args
+                self.shell = shell
+    
+            def poll(self):
+                return 0  # Simulate successful completion
+    
+        subprocess.Popen = MockPopen
+    
+        # Test with a valid URL
+>       result = task_func('http://example.com')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0196.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'http://example.com'
+
+    def task_func(url):
+        if platform.system() == 'Darwin':
+            cmd = 'open'
+        elif platform.system() == 'Windows':
+            cmd = 'start'
+        else:
+            cmd = 'xdg-open'
+    
+        # Open webpage in a background process
+        process = subprocess.Popen([cmd, url], shell=True)
+    
+        # Wait for the process to complete
+        while process.poll() is None:
+            time.sleep(1)
+    
+>       return process.returncode
+               ^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'MockPopen' object has no attribute 'returncode'
+
+../../../src/src_0196.py:19: AttributeError
+_____________________________ test_task_func_other _____________________________
+
+    def test_task_func_other():
+        # Mock the platform.system to simulate another OS (e.g., Linux)
+        platform.system = lambda: 'Linux'
+    
+        # Mock subprocess.Popen to simulate a successful process
+        class MockPopen:
+            def __init__(self, args, shell):
+                self.args = args
+                self.shell = shell
+    
+            def poll(self):
+                return 0  # Simulate successful completion
+    
+        subprocess.Popen = MockPopen
+    
+        # Test with a valid URL
+>       result = task_func('http://example.com')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0196.py:80: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'http://example.com'
+
+    def task_func(url):
+        if platform.system() == 'Darwin':
+            cmd = 'open'
+        elif platform.system() == 'Windows':
+            cmd = 'start'
+        else:
+            cmd = 'xdg-open'
+    
+        # Open webpage in a background process
+        process = subprocess.Popen([cmd, url], shell=True)
+    
+        # Wait for the process to complete
+        while process.poll() is None:
+            time.sleep(1)
+    
+>       return process.returncode
+               ^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'MockPopen' object has no attribute 'returncode'
+
+../../../src/src_0196.py:19: AttributeError
+=========================== short test summary info ============================
+FAILED test_0196.py::test_task_func_success - AttributeError: 'MockPopen' obj...
+FAILED test_0196.py::test_task_func_failure - AttributeError: 'MockPopen' obj...
+FAILED test_0196.py::test_task_func_windows - AttributeError: 'MockPopen' obj...
+FAILED test_0196.py::test_task_func_other - AttributeError: 'MockPopen' objec...
+4 failed in 0.43s

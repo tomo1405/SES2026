@@ -1,0 +1,29 @@
+.F                                                                       [100%]
+=================================== FAILURES ===================================
+___________________ test_task_func_with_different_parameters ___________________
+
+    def test_task_func_with_different_parameters():
+        mu = 5
+        sigma = 2
+        sample_size = 500
+    
+        # Capture the output to check if the function runs without errors
+        with io.StringIO() as buf, pytest.MonkeyPatch().context() as mp:
+            mp.setattr(plt, 'savefig', lambda x: buf.write("Saved plot to " + x))
+            samples = task_func(mu, sigma, sample_size)
+    
+        # Check if the returned samples have the correct shape
+        assert samples.shape == (sample_size,)
+    
+        # Check if the mean and standard deviation are close to the expected values
+>       assert np.isclose(np.mean(samples), mu, atol=0.2)
+E       assert np.False_
+E        +  where np.False_ = <function isclose at 0x795e30b7e4b0>(np.float64(4.7525161257047746), 5, atol=0.2)
+E        +    where <function isclose at 0x795e30b7e4b0> = np.isclose
+E        +    and   np.float64(4.7525161257047746) = <function mean at 0x795e30b73070>(array([ 4.77520713,  5.98330049,  7.23067761,  7.38975487,  0.54703984,\n        7.20208396,  3.79838584,  0.76056811, ...113844,  1.06654902,  5.69447876,  2.86828762,\n        3.90753308,  4.39131951,  4.09342919,  4.82948201,  6.03309429]))
+E        +      where <function mean at 0x795e30b73070> = np.mean
+
+test_0117.py:41: AssertionError
+=========================== short test summary info ============================
+FAILED test_0117.py::test_task_func_with_different_parameters - assert np.False_
+1 failed, 1 passed in 1.53s

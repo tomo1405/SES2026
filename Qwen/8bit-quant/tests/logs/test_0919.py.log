@@ -1,0 +1,248 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_no_acronyms __________________________
+
+    def test_task_func_no_acronyms():
+        data = {
+            'Column1': ['Hello World', 'This is a test'],
+            'Column2': [123, 456]
+        }
+        mapping = {}
+        expected_output = pd.DataFrame({
+            'Column1': ['Hello World', 'This is a test'],
+            'Column2': [123, 456]
+        })
+>       result = task_func(data, mapping)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0919.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0919.py:11: in task_func
+    df = df.applymap(lambda x: pattern.sub(replace_match, x) if isinstance(x, str) else x)
+         ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =           Column1  Column2
+0     Hello World      123
+1  This is a test      456
+name = 'applymap'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute 'applymap'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+_________________________ test_task_func_with_acronyms _________________________
+
+    def test_task_func_with_acronyms():
+        data = {
+            'Column1': ['NASA is exploring space', 'UN is working on peace'],
+            'Column2': ['The EU has 27 countries', 'WHO focuses on health']
+        }
+        mapping = {
+            'NASA': 'National Aeronautics and Space Administration',
+            'UN': 'United Nations',
+            'EU': 'European Union',
+            'WHO': 'World Health Organization'
+        }
+        expected_output = pd.DataFrame({
+            'Column1': ['National Aeronautics and Space Administration is exploring space', 'United Nations is working on peace'],
+            'Column2': ['The European Union has 27 countries', 'World Health Organization focuses on health']
+        })
+>       result = task_func(data, mapping)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0919.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0919.py:11: in task_func
+    df = df.applymap(lambda x: pattern.sub(replace_match, x) if isinstance(x, str) else x)
+         ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =                    Column1                  Column2
+0  NASA is exploring space  The EU has 27 countries
+1   UN is working on peace    WHO focuses on health
+name = 'applymap'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute 'applymap'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+________________________ test_task_func_partial_mapping ________________________
+
+    def test_task_func_partial_mapping():
+        data = {
+            'Column1': ['NASA is exploring space', 'UN is working on peace'],
+            'Column2': ['The EU has 27 countries', 'WHO focuses on health']
+        }
+        mapping = {
+            'NASA': 'National Aeronautics and Space Administration',
+            'UN': 'United Nations'
+        }
+        expected_output = pd.DataFrame({
+            'Column1': ['National Aeronautics and Space Administration is exploring space', 'United Nations is working on peace'],
+            'Column2': ['The EU has 27 countries', 'WHO focuses on health']
+        })
+>       result = task_func(data, mapping)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0919.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0919.py:11: in task_func
+    df = df.applymap(lambda x: pattern.sub(replace_match, x) if isinstance(x, str) else x)
+         ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =                    Column1                  Column2
+0  NASA is exploring space  The EU has 27 countries
+1   UN is working on peace    WHO focuses on health
+name = 'applymap'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute 'applymap'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+__________________________ test_task_func_empty_data ___________________________
+
+    def test_task_func_empty_data():
+        data = {}
+        mapping = {'NASA': 'National Aeronautics and Space Administration'}
+        expected_output = pd.DataFrame()
+>       result = task_func(data, mapping)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0919.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0919.py:11: in task_func
+    df = df.applymap(lambda x: pattern.sub(replace_match, x) if isinstance(x, str) else x)
+         ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Empty DataFrame
+Columns: []
+Index: [], name = 'applymap'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute 'applymap'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+_______________________ test_task_func_non_string_values _______________________
+
+    def test_task_func_non_string_values():
+        data = {
+            'Column1': [123, 'NASA is exploring space'],
+            'Column2': [456, 'UN is working on peace']
+        }
+        mapping = {
+            'NASA': 'National Aeronautics and Space Administration',
+            'UN': 'United Nations'
+        }
+        expected_output = pd.DataFrame({
+            'Column1': [123, 'National Aeronautics and Space Administration is exploring space'],
+            'Column2': [456, 'United Nations is working on peace']
+        })
+>       result = task_func(data, mapping)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0919.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0919.py:11: in task_func
+    df = df.applymap(lambda x: pattern.sub(replace_match, x) if isinstance(x, str) else x)
+         ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =                    Column1                 Column2
+0                      123                     456
+1  NASA is exploring space  UN is working on peace
+name = 'applymap'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute 'applymap'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+=========================== short test summary info ============================
+FAILED test_0919.py::test_task_func_no_acronyms - AttributeError: 'DataFrame'...
+FAILED test_0919.py::test_task_func_with_acronyms - AttributeError: 'DataFram...
+FAILED test_0919.py::test_task_func_partial_mapping - AttributeError: 'DataFr...
+FAILED test_0919.py::test_task_func_empty_data - AttributeError: 'DataFrame' ...
+FAILED test_0919.py::test_task_func_non_string_values - AttributeError: 'Data...
+5 failed in 1.92s

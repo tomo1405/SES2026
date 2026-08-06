@@ -1,0 +1,26 @@
+import random
+import string
+from matplotlib import pyplot as plt
+def task_func(elements, seed=100):
+    random.seed(seed)
+    random_patterns = []
+
+    for element in elements:
+        random_str = ''.join(random.choices(string.ascii_letters + string.digits, k=5))
+        pattern = '% {}%'.format(random_str)
+        random_patterns.append(pattern)
+
+    # Histogram of character occurrences
+    char_count = {}
+    for pattern in random_patterns:
+        for char in pattern:
+            if char in char_count:
+                char_count[char] += 1
+            else:
+                char_count[char] = 1
+            
+    # Getting the axes object for the histogram plot
+    _, ax = plt.subplots()
+    ax.bar(char_count.keys(), char_count.values())
+
+    return random_patterns, ax, char_count

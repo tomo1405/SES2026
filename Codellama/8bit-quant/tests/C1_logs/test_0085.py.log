@@ -1,0 +1,39 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_type_error ___________________________
+
+    def test_task_func_type_error():
+>       with pytest.raises(TypeError):
+E       Failed: DID NOT RAISE TypeError
+
+test_0085.py:7: Failed
+__________________________ test_task_func_value_error __________________________
+
+    def test_task_func_value_error():
+        with pytest.raises(ValueError):
+            task_func(products=["A", "B", "C"], n_samples=0, sales_lower=50, sales_upper=200, profit_margin_min=0.1, profit_margin_max=0.5, random_seed=42)
+    
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0085.py:14: Failed
+_________________________ test_task_func_return_value __________________________
+
+    def test_task_func_return_value():
+        df = task_func(products=["A", "B", "C"], n_samples=100, sales_lower=50, sales_upper=200, profit_margin_min=0.1, profit_margin_max=0.5, random_seed=42)
+        assert isinstance(df, pd.DataFrame)
+        assert df.shape == (3, 3)
+        assert list(df.columns) == ["Product", "Sales", "Profit"]
+        assert all(df["Product"].isin(["A", "B", "C"]))
+>       assert all(df["Sales"].between(50, 200))
+E       assert False
+E        +  where False = all(2    False\n1    False\n0    False\nName: Sales, dtype: bool)
+E        +    where 2    False\n1    False\n0    False\nName: Sales, dtype: bool = between(50, 200)
+E        +      where between = 2    5076\n1    4340\n0    3468\nName: Sales, dtype: int64.between
+
+test_0085.py:26: AssertionError
+=========================== short test summary info ============================
+FAILED test_0085.py::test_task_func_type_error - Failed: DID NOT RAISE TypeError
+FAILED test_0085.py::test_task_func_value_error - Failed: DID NOT RAISE Value...
+FAILED test_0085.py::test_task_func_return_value - assert False
+3 failed in 1.14s

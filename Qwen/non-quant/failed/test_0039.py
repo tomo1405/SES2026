@@ -1,0 +1,51 @@
+import pytest
+from src_0039 import task_func
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+@pytest.fixture
+def sample_data():
+    return np.array([
+        [1, 2, 3, 4, 5],
+        [6, 7, 8, 9, 10],
+        [11, 12, 13, 14, 15]
+    ])
+
+def test_task_func_output(sample_data):
+    df, ax = task_func(sample_data)
+    
+    # Check if the DataFrame has the correct shape
+    assert df.shape == (3, 6), "DataFrame should have 3 rows and 6 columns"
+    
+    # Check if the DataFrame has the correct column names
+    expected_columns = ["Feature 1", "Feature 2", "Feature 3", "Feature 4", "Feature 5", "Mean"]
+    assert list(df.columns) == expected_columns, "DataFrame columns do not match expected names"
+    
+    # Check if the 'Mean' column is calculated correctly
+    expected_means = np.array([3.0, 8.0, 13.0])
+    assert np.allclose(df["Mean"], expected_means), "Mean column values are incorrect"
+    
+    # Check if the plot is created correctly
+    assert isinstance(ax, plt.Axes), "Return value is not a matplotlib Axes object"
+    assert ax.get_title() == "Distribution of Means", "Plot title is incorrect"
+
+def test_task_func_with_empty_data():
+    empty_data = np.array([])
+    with pytest.raises(ValueError):
+        task_func(empty_data)
+
+def test_task_func_with_single_row_data(sample_data):
+    single_row_data = sample_data[:1]
+    df, ax = task_func(single_row_data)
+    
+    # Check if the DataFrame has the correct shape
+    assert df.shape == (1, 6), "DataFrame should have 1 row and 6 columns"
+    
+    # Check if the 'Mean' column is calculated correctly
+    expected_mean = np.array([3.0])
+    assert np.allclose(df["Mean"], expected_mean), "Mean column value is incorrect"
+    
+    # Check if the plot is created correctly
+    assert isinstance(ax, plt.Axes), "Return value is not a matplotlib Axes object"
+    assert ax.get_title() == "Distribution of Means", "Plot title is incorrect"

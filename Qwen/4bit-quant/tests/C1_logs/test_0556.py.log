@@ -1,0 +1,50 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with simple linear relationship
+        a = np.array([1, 2, 3, 4, 5])
+        b = np.array([2, 4, 6, 8, 10])
+        correlation, ax = task_func(a, b)
+        assert np.isclose(correlation, 1.0)
+        assert isinstance(ax, plt.Axes)
+    
+        # Test with no relationship
+        a = np.array([1, 2, 3, 4, 5])
+        b = np.array([5, 4, 3, 2, 1])
+        correlation, ax = task_func(a, b)
+        assert np.isclose(correlation, -1.0)
+        assert isinstance(ax, plt.Axes)
+    
+        # Test with random data
+        np.random.seed(0)
+        a = np.random.rand(10)
+        b = np.random.rand(10)
+        correlation, ax = task_func(a, b)
+        assert isinstance(correlation, float)
+        assert isinstance(ax, plt.Axes)
+    
+        # Test with identical data
+        a = np.array([1, 1, 1, 1, 1])
+        b = np.array([1, 1, 1, 1, 1])
+        correlation, ax = task_func(a, b)
+>       assert np.isclose(correlation, 1.0)
+E       assert np.False_
+E        +  where np.False_ = <function isclose at 0x7a5f27b4bdb0>(np.float64(nan), 1.0)
+E        +    where <function isclose at 0x7a5f27b4bdb0> = np.isclose
+
+test_0556.py:34: AssertionError
+=============================== warnings summary ===============================
+Qwen/4bit-quant/tests/test_0556.py::test_task_func
+  /work/tomohiro-w/utg/src/src_0556.py:6: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+    correlation, _ = stats.pearsonr(a, b)
+
+Qwen/4bit-quant/tests/test_0556.py::test_task_func
+  /work/tomohiro-w/utg/src/src_0556.py:10: RankWarning: Polyfit may be poorly conditioned
+    plt.plot(np.unique(df['A']), np.poly1d(np.polyfit(df['A'], df['B'], 1))(np.unique(df['A'])), color='red')
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0556.py::test_task_func - assert np.False_
+1 failed, 2 warnings in 3.24s

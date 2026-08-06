@@ -1,0 +1,73 @@
+F.F.F                                                                    [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_valid_data ________________________
+
+sample_df =          Word
+0       apple
+1      banana
+2      cherry
+3        date
+4  elderberry
+
+    def test_task_func_with_valid_data(sample_df):
+        ax = task_func(sample_df, 'a')
+>       assert isinstance(ax, sns.axisgrid.AxesSubplot)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'seaborn.axisgrid' has no attribute 'AxesSubplot'
+
+test_0602.py:21: AttributeError
+_____________________ test_task_func_with_empty_dataframe ______________________
+
+empty_df = Empty DataFrame
+Columns: []
+Index: []
+
+    def test_task_func_with_empty_dataframe(empty_df):
+>       ax = task_func(empty_df, 'a')
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0602.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df = Empty DataFrame
+Columns: []
+Index: [], letter = 'a'
+
+    def task_func(df, letter):
+        start_time = time.time()
+        # Validate if 'Word' column exists in df
+        if 'Word' not in df.columns:
+>           raise ValueError("The DataFrame should contain a 'Word' column.")
+E           ValueError: The DataFrame should contain a 'Word' column.
+
+../../../src/src_0602.py:7: ValueError
+__________________________ test_task_func_performance __________________________
+
+sample_df =          Word
+0       apple
+1      banana
+2      cherry
+3        date
+4  elderberry
+
+    def test_task_func_performance(sample_df):
+        start_time = time.time()
+        ax = task_func(sample_df, 'a')
+        end_time = time.time()
+>       assert isinstance(ax, sns.axisgrid.AxesSubplot)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'seaborn.axisgrid' has no attribute 'AxesSubplot'
+
+test_0602.py:42: AttributeError
+=============================== warnings summary ===============================
+Qwen/non-quant/tests/test_0602.py::test_task_func_with_valid_data
+Qwen/non-quant/tests/test_0602.py::test_task_func_performance
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/categorical.py:700: MatplotlibDeprecationWarning: vert: bool was deprecated in Matplotlib 3.11 and will be removed in 3.13. Use orientation: {'vertical', 'horizontal'} instead.
+    artists = ax.bxp(**boxplot_kws)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0602.py::test_task_func_with_valid_data - AttributeError: module ...
+FAILED test_0602.py::test_task_func_with_empty_dataframe - ValueError: The Da...
+FAILED test_0602.py::test_task_func_performance - AttributeError: module 'sea...
+3 failed, 2 passed, 2 warnings in 3.69s

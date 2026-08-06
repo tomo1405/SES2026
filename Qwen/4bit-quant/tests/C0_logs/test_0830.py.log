@@ -1,0 +1,48 @@
+F...F                                                                    [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_data ___________________________
+
+    def test_task_func_valid_data():
+        data = {
+            'Name': ['Alice', 'Bob', 'Alice', 'Charlie'],
+            'Score': [85, 92, 78, 88]
+        }
+        df = pd.DataFrame(data)
+        expected_output = {
+            'Alice': [('Alice', mean([85, 78]))],
+            'Bob': [('Bob', mean([92]))],
+            'Charlie': [('Charlie', mean([88]))]
+        }
+>       assert task_func(df) == expected_output
+E       AssertionError: assert {'Alice': <li...714399688700>} == {'Alice': [('...harlie', 88)]}
+E         
+E         Differing items:
+E         {'Bob': <list_iterator object at 0x71439b783730>} != {'Bob': [('Bob', 92)]}
+E         {'Alice': <list_iterator object at 0x7143996885b0>} != {'Alice': [('Alice', 81.5)]}
+E         {'Charlie': <list_iterator object at 0x714399688700>} != {'Charlie': [('Charlie', 88)]}
+E         Use -v to get more diff
+
+test_0830.py:17: AssertionError
+__________________________ test_task_func_single_row ___________________________
+
+    def test_task_func_single_row():
+        data = {
+            'Name': ['Alice'],
+            'Score': [85]
+        }
+        df = pd.DataFrame(data)
+        expected_output = {
+            'Alice': [('Alice', mean([85]))]
+        }
+>       assert task_func(df) == expected_output
+E       AssertionError: assert {'Alice': <li...714399689930>} == {'Alice': [('Alice', 85)]}
+E         
+E         Differing items:
+E         {'Alice': <list_iterator object at 0x714399689930>} != {'Alice': [('Alice', 85)]}
+E         Use -v to get more diff
+
+test_0830.py:49: AssertionError
+=========================== short test summary info ============================
+FAILED test_0830.py::test_task_func_valid_data - AssertionError: assert {'Ali...
+FAILED test_0830.py::test_task_func_single_row - AssertionError: assert {'Ali...
+2 failed, 3 passed in 1.32s

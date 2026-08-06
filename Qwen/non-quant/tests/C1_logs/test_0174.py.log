@@ -1,0 +1,19 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with all countries present
+        country_dict = {'country1': 'USA', 'country2': 'UK', 'country3': 'China', 'country4': 'Japan', 'country5': 'Australia'}
+        df = task_func(country_dict)
+        assert isinstance(df, pd.DataFrame)
+        assert list(df.index) == ['USA', 'UK', 'China', 'Japan', 'Australia']
+        assert df.shape[1] == 1
+>       assert all(isinstance(gdp, np.int64) for gdp in df['GDP'])
+E       assert False
+E        +  where False = all(<generator object test_task_func.<locals>.<genexpr> at 0x779d005ba5e0>)
+
+test_0174.py:13: AssertionError
+=========================== short test summary info ============================
+FAILED test_0174.py::test_task_func - assert False
+1 failed in 1.15s

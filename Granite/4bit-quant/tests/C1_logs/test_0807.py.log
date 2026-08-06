@@ -1,0 +1,70 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        text = "This is a test sentence. It contains some words and punctuation."
+        n = 2
+        expected_output = Counter({('this', 'is'): 1, ('is', 'a'): 1, ('a', 'test'): 1, ('test', 'sentence.'): 1, ('sentence.', 'it'): 1, ('it', 'contains'): 1, ('contains', 'some'): 1, ('some', 'words'): 1, ('words', 'and'): 1, ('and', 'punctuation.'): 1})
+        actual_output = task_func(text, n)
+>       assert actual_output == expected_output, "Output does not match expected output"
+E       AssertionError: Output does not match expected output
+E       assert Counter({('te...tuation'): 1}) == Counter({('th...uation.'): 1})
+E         
+E         Left contains 4 more items:
+E         {('contains', 'words'): 1,
+E          ('sentence', 'contains'): 1,
+E          ('test', 'sentence'): 1,
+E          ('words', 'punctuation'): 1}
+E         Right contains 10 more items:...
+E         
+E         ...Full output truncated (11 lines hidden), use '-vv' to show
+
+test_0807.py:15: AssertionError
+________________________ test_task_func_with_stopwords _________________________
+
+    def test_task_func_with_stopwords():
+        text = "This is a test sentence. It contains some stopwords like 'is' and 'a'."
+        n = 2
+        expected_output = Counter({('this', 'test'): 1, ('test', 'sentence.'): 1, ('sentence.', 'contains'): 1, ('contains', 'stopwords'): 1, ('stopwords', 'like'): 1, ('like', 'is'): 1, ('is', 'and'): 1, ('and', 'a'): 1})
+        actual_output = task_func(text, n)
+>       assert actual_output == expected_output, "Output does not match expected output"
+E       AssertionError: Output does not match expected output
+E       assert Counter({('te..., 'like'): 1}) == Counter({('th...nd', 'a'): 1})
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Left contains 2 more items:
+E         {('sentence', 'contains'): 1, ('test', 'sentence'): 1}
+E         Right contains 6 more items:
+E         {('and', 'a'): 1,
+E          ('is', 'and'): 1,...
+E         
+E         ...Full output truncated (5 lines hidden), use '-vv' to show
+
+test_0807.py:22: AssertionError
+_______________________ test_task_func_with_punctuation ________________________
+
+    def test_task_func_with_punctuation():
+        text = "This, is a test! sentence... It contains some words and punctuation."
+        n = 2
+        expected_output = Counter({('this', 'is'): 1, ('is', 'a'): 1, ('a', 'test'): 1, ('test', 'sentence'): 1, ('sentence', 'it'): 1, ('it', 'contains'): 1, ('contains', 'some'): 1, ('some', 'words'): 1, ('words', 'and'): 1, ('and', 'punctuation'): 1})
+        actual_output = task_func(text, n)
+>       assert actual_output == expected_output, "Output does not match expected output"
+E       AssertionError: Output does not match expected output
+E       assert Counter({('te...tuation'): 1}) == Counter({('th...tuation'): 1})
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Left contains 3 more items:
+E         {('contains', 'words'): 1,
+E          ('sentence', 'contains'): 1,
+E          ('words', 'punctuation'): 1}
+E         Right contains 9 more items:...
+E         
+E         ...Full output truncated (10 lines hidden), use '-vv' to show
+
+test_0807.py:29: AssertionError
+=========================== short test summary info ============================
+FAILED test_0807.py::test_task_func - AssertionError: Output does not match e...
+FAILED test_0807.py::test_task_func_with_stopwords - AssertionError: Output d...
+FAILED test_0807.py::test_task_func_with_punctuation - AssertionError: Output...
+3 failed in 3.90s

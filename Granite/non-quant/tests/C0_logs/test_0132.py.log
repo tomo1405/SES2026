@@ -1,0 +1,25 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        hex_str = '48656c6c6f'
+        salt_size = 16
+        salt, hash_value = task_func(hex_str, salt_size)
+        assert isinstance(salt, str)
+        assert isinstance(hash_value, str)
+        assert len(salt) == 24
+        assert len(hash_value) == 64
+        assert salt.isascii()
+        assert hash_value.isascii()
+        assert base64.b64decode(salt, validate=True)
+>       assert hashlib.sha256(binascii.unhexlify(hex_str.replace('\\x', ''))).hexdigest() == hash_value
+E       AssertionError: assert '185f8db32271...1764826381969' == '872edddbd578...601345f7e5b95'
+E         
+E         - 872edddbd578439156a083ce20088dfa1b5d5788d9e85c4eaed601345f7e5b95
+E         + 185f8db32271fe25f561a6fc938b2e264306ec304eda518007d1764826381969
+
+test_0132.py:20: AssertionError
+=========================== short test summary info ============================
+FAILED test_0132.py::test_task_func - AssertionError: assert '185f8db32271......
+1 failed in 0.42s

@@ -1,0 +1,32 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a sample DataFrame for testing
+        df = pd.DataFrame({
+            'Age': [25, 30, 35, 40, 45],
+            'Weight': [70, 80, 90, 100, 110]
+        })
+    
+        # Test case 1: No data should be selected
+        selected_df = task_func(df, 30, 80)
+        assert selected_df.empty
+    
+        # Test case 2: Data should be selected and standardized
+        selected_df = task_func(df, 40, 90)
+        expected_df = pd.DataFrame({
+            'Age': [0.0, 0.5, 1.0, 1.5, 2.0],
+            'Weight': [-1.22474487, -0.63245553, 0.0, 0.63245553, 1.22474487]
+        })
+>       assert selected_df.equals(expected_df)
+E       assert False
+E        +  where False = equals(   Age    Weight\n0  0.0 -1.224745\n1  0.5 -0.632456\n2  1.0  0.000000\n3  1.5  0.632456\n4  2.0  1.224745)
+E        +    where equals = Empty DataFrame\nColumns: [Age, Weight]\nIndex: [].equals
+
+test_0749.py:35: AssertionError
+=========================== short test summary info ============================
+FAILED test_0749.py::test_task_func - assert False
+1 failed in 3.21s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

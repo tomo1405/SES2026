@@ -1,0 +1,35 @@
+F.F.                                                                     [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_no_json_files _________________________
+
+    def test_task_func_no_json_files():
+        with tempfile.TemporaryDirectory() as temp_dir:
+            archive_dir = os.path.join(temp_dir, 'archive')
+            result, errors = task_func(temp_dir, archive_dir)
+            assert result is True
+            assert errors == []
+>           assert not os.path.exists(archive_dir)
+E           AssertionError: assert not True
+E            +  where True = <function exists at 0x7c8c5cb3b600>('/tmp/tmp_gdvvi74/archive')
+E            +    where <function exists at 0x7c8c5cb3b600> = <module 'posixpath' (frozen)>.exists
+E            +      where <module 'posixpath' (frozen)> = os.path
+
+test_0392.py:12: AssertionError
+_______________________ test_task_func_permission_error ________________________
+
+    def test_task_func_permission_error():
+        with tempfile.TemporaryDirectory() as temp_dir:
+            json_file = os.path.join(temp_dir, 'file1.json')
+            with open(json_file, 'w') as f:
+                f.write('{"key": "value"}')
+    
+            archive_dir = os.path.join(temp_dir, 'archive')
+>           os.chmod(archive_dir, 0o000)  # Make archive directory non-writable
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmps_2emzi2/archive'
+
+test_0392.py:38: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0392.py::test_task_func_no_json_files - AssertionError: assert no...
+FAILED test_0392.py::test_task_func_permission_error - FileNotFoundError: [Er...
+2 failed, 2 passed in 0.41s

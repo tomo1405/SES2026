@@ -1,0 +1,50 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sample_fruit_dict = {'1': 'Apple', '2': 'Banana', '3': 123, '4': 'Cherry', ...}
+
+    def test_task_func(sample_fruit_dict):
+        expected_counter = Counter({
+            'Apple': 2,
+            'Banana': 1,
+            'Cherry': 1,
+            'Grape': 1,
+            'Honeydew': 1,
+            'Indian Prune': 1,
+            'Jackfruit': 1
+        })
+        result_counter, ax = task_func(sample_fruit_dict)
+    
+>       assert result_counter == expected_counter
+E       AssertionError: assert Counter({'App...ackfruit': 1}) == Counter({'App...ackfruit': 1})
+E         
+E         Omitting 7 identical items, use -vv to show
+E         Left contains 1 more item:
+E         {'Orange': 1}
+E         Use -v to get more diff
+
+test_0386.py:33: AssertionError
+________________________ test_task_func_no_valid_fruits ________________________
+
+    def test_task_func_no_valid_fruits():
+        invalid_fruit_dict = {
+            '1': 'Pineapple',
+            '2': 'Watermelon',
+            '3': 'Mango'
+        }
+        expected_counter = Counter()
+        result_counter, ax = task_func(invalid_fruit_dict)
+    
+>       assert result_counter == expected_counter
+E       AssertionError: assert Counter({'Pin..., 'Mango': 1}) == Counter()
+E         
+E         Left contains 3 more items:
+E         {'Mango': 1, 'Pineapple': 1, 'Watermelon': 1}
+E         Use -v to get more diff
+
+test_0386.py:45: AssertionError
+=========================== short test summary info ============================
+FAILED test_0386.py::test_task_func - AssertionError: assert Counter({'App......
+FAILED test_0386.py::test_task_func_no_valid_fruits - AssertionError: assert ...
+2 failed, 1 passed in 1.49s

@@ -1,0 +1,78 @@
+.F.F.FFF.                                                                [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_single_word ________________________
+
+    def test_task_func_with_single_word():
+>       assert task_func("hello") == {}
+E       AssertionError: assert {'hello': 1} == {}
+E         
+E         Left contains 1 more item:
+E         {'hello': 1}
+E         Use -v to get more diff
+
+test_0850.py:9: AssertionError
+______________________ test_task_func_with_multiple_lines ______________________
+
+    def test_task_func_with_multiple_lines():
+        input_string = "hello world\nthis is a test"
+        expected_output = {'world': 1, 'test': 1}
+>       assert task_func(input_string) == expected_output
+E       AssertionError: assert {'hello': 1, ... 1, 'test': 1} == {'world': 1, 'test': 1}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Left contains 1 more item:
+E         {'hello': 1}
+E         Use -v to get more diff
+
+test_0850.py:17: AssertionError
+______________________ test_task_func_with_stopwords_only ______________________
+
+    def test_task_func_with_stopwords_only():
+        input_string = "this is a test of the system"
+        expected_output = {}
+>       assert task_func(input_string) == expected_output
+E       AssertionError: assert {'test': 1, 'system': 1} == {}
+E         
+E         Left contains 2 more items:
+E         {'system': 1, 'test': 1}
+E         Use -v to get more diff
+
+test_0850.py:27: AssertionError
+________________________ test_task_func_with_mixed_case ________________________
+
+    def test_task_func_with_mixed_case():
+        input_string = "Hello World\nHELLO world"
+        expected_output = {'hello': 2, 'world': 2}
+>       assert task_func(input_string) == expected_output
+E       AssertionError: assert {'Hello': 1, ...1, 'world': 1} == {'hello': 2, 'world': 2}
+E         
+E         Differing items:
+E         {'world': 1} != {'world': 2}
+E         Left contains 3 more items:
+E         {'HELLO': 1, 'Hello': 1, 'World': 1}
+E         Right contains 1 more item:
+E         {'hello': 2}
+E         Use -v to get more diff
+
+test_0850.py:32: AssertionError
+_________________________ test_task_func_with_numbers __________________________
+
+    def test_task_func_with_numbers():
+        input_string = "hello world 1234"
+        expected_output = {'hello': 1, 'world': 1}
+>       assert task_func(input_string) == expected_output
+E       AssertionError: assert {'hello': 1, ... 1, '1234': 1} == {'hello': 1, 'world': 1}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Left contains 1 more item:
+E         {'1234': 1}
+E         Use -v to get more diff
+
+test_0850.py:37: AssertionError
+=========================== short test summary info ============================
+FAILED test_0850.py::test_task_func_with_single_word - AssertionError: assert...
+FAILED test_0850.py::test_task_func_with_multiple_lines - AssertionError: ass...
+FAILED test_0850.py::test_task_func_with_stopwords_only - AssertionError: ass...
+FAILED test_0850.py::test_task_func_with_mixed_case - AssertionError: assert ...
+FAILED test_0850.py::test_task_func_with_numbers - AssertionError: assert {'h...
+5 failed, 4 passed in 3.66s

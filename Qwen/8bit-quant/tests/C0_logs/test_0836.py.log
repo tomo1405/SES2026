@@ -1,0 +1,93 @@
+.......F                                                                 [100%]
+=================================== FAILURES ===================================
+___________________ test_task_func_invalid_remove_cols_type ____________________
+
+    def test_task_func_invalid_remove_cols_type():
+        # Test with invalid remove_cols type
+        with pytest.raises(TypeError):
+>           task_func(n_rows=5, remove_cols='invalid')
+
+test_0836.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0836.py:6: in task_func
+    df = df.drop(df.columns[remove_cols], axis=1)
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py:5425: in __getitem__
+    result = getitem(key)
+             ^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <ArrowStringArray>
+['A', 'B', 'C', 'D', 'E']
+Length: 5, dtype: str
+item = 'invalid'
+
+    def __getitem__(self, item: PositionalIndexer):
+        """Select a subset of self.
+    
+        Parameters
+        ----------
+        item : int, slice, or ndarray
+            * int: The position in 'self' to get.
+            * slice: A slice object, where 'start', 'stop', and 'step' are
+              integers or None
+            * ndarray: A 1-d boolean NumPy ndarray the same length as 'self'
+    
+        Returns
+        -------
+        item : scalar or ExtensionArray
+    
+        Notes
+        -----
+        For scalar ``item``, return a scalar value suitable for the array's
+        type. This should be an instance of ``self.dtype.type``.
+        For slice ``key``, return an instance of ``ExtensionArray``, even
+        if the slice is length 0 or 1.
+        For a boolean mask, return an instance of ``ExtensionArray``, filtered
+        to the values where ``item`` is True.
+        """
+        item = check_array_indexer(self, item)
+    
+        if isinstance(item, np.ndarray):
+            if not len(item):
+                # Removable once we migrate StringDtype[pyarrow] to ArrowDtype[string]
+                if (
+                    isinstance(self._dtype, StringDtype)
+                    and self._dtype.storage == "pyarrow"
+                ):
+                    # TODO(infer_string) should this be large_string?
+                    pa_dtype = pa.string()
+                else:
+                    pa_dtype = self._dtype.pyarrow_dtype
+                result = pa.chunked_array([], type=pa_dtype)
+                return self._from_pyarrow_array(result)
+    
+            elif item.dtype.kind in "iu":
+                return self.take(item)
+            elif item.dtype.kind == "b":
+                return self._from_pyarrow_array(self._pa_array.filter(item))
+            else:
+                raise IndexError(
+                    "Only integers, slices and integer or "
+                    "boolean arrays are valid indices."
+                )
+        elif isinstance(item, tuple):
+            item = unpack_tuple_and_ellipses(item)
+    
+        if item is Ellipsis:
+            # TODO: should be handled by pyarrow?
+            item = slice(None)
+    
+        if is_scalar(item) and not is_integer(item):
+            # e.g. "foo" or 2.5
+            # exception message copied from numpy
+>           raise IndexError(
+                r"only integers, slices (`:`), ellipsis (`...`), numpy.newaxis "
+                r"(`None`) and integer or boolean arrays are valid indices"
+            )
+E           IndexError: only integers, slices (`:`), ellipsis (`...`), numpy.newaxis (`None`) and integer or boolean arrays are valid indices
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/arrow/array.py:781: IndexError
+=========================== short test summary info ============================
+FAILED test_0836.py::test_task_func_invalid_remove_cols_type - IndexError: on...
+1 failed, 7 passed in 1.61s

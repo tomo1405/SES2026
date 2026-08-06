@@ -1,0 +1,36 @@
+..FF.                                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_column_selection ________________________
+
+setup_data = (['row1', 'row2', 'row3'], ['col1', 'col2'])
+
+    def test_task_func_column_selection(setup_data):
+        a, b = setup_data
+        ax = task_func(a, b)
+        labels = [patch.get_label() for patch in ax.patches]
+        expected_labels = ['col1', 'col2', 'col1', 'col2', 'col1', 'col2']
+>       assert labels == expected_labels
+E       AssertionError: assert ['_nolegend_'... '_nolegend_'] == ['col1', 'col...col1', 'col2']
+E         
+E         At index 0 diff: '_nolegend_' != 'col1'
+E         Use -v to get more diff
+
+test_0554.py:29: AssertionError
+______________________ test_task_func_dataframe_creation _______________________
+
+setup_data = (['row1', 'row2', 'row3'], ['col1', 'col2'])
+
+    def test_task_func_dataframe_creation(setup_data):
+        a, b = setup_data
+        ax = task_func(a, b)
+        df = pd.DataFrame(np.random.randn(len(a), len(b)), index=a, columns=['col1', 'col2'])
+>       assert df.equals(ax.get_legend_handles_labels()[1])
+E       AssertionError: assert False
+E        +  where False = equals(['A', 'B'])
+E        +    where equals =           col1      col2\nrow1  0.950088 -0.151357\nrow2 -0.103219  0.410599\nrow3  0.144044  1.454274.equals
+
+test_0554.py:35: AssertionError
+=========================== short test summary info ============================
+FAILED test_0554.py::test_task_func_column_selection - AssertionError: assert...
+FAILED test_0554.py::test_task_func_dataframe_creation - AssertionError: asse...
+2 failed, 3 passed in 2.60s

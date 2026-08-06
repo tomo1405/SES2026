@@ -1,0 +1,77 @@
+F..FF                                                                    [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_valid_zip ___________________________
+
+    def test_task_func_valid_zip():
+        url = "http://example.com/test.zip"
+        download_path = "/tmp/downloads/"
+        expected_extract_path = "/tmp/downloads/test"
+    
+        with patch('requests.get') as mock_get:
+            mock_response = MagicMock()
+            mock_response.status_code = 200
+            mock_response.headers = {'Content-Type': 'application/zip'}
+            mock_response.content = b'zip_content'
+            mock_get.return_value = mock_response
+    
+            with patch('zipfile.ZipFile') as mock_zipfile:
+                mock_zipfile.return_value.extractall = MagicMock()
+    
+                result = task_func(url, download_path)
+    
+>               assert result == expected_extract_path
+E               AssertionError: assert 'Error: The d...lid ZIP file.' == '/tmp/downloads/test'
+E                 
+E                 - /tmp/downloads/test
+E                 + Error: The downloaded file is not a valid ZIP file.
+
+test_1007.py:25: AssertionError
+_______________________ test_task_func_invalid_zip_file ________________________
+
+    def test_task_func_invalid_zip_file():
+        url = "http://example.com/test.zip"
+        download_path = "/tmp/downloads/"
+    
+        with patch('requests.get') as mock_get:
+            mock_response = MagicMock()
+            mock_response.status_code = 200
+            mock_response.headers = {'Content-Type': 'application/zip'}
+            mock_response.content = b'invalid_zip_content'
+            mock_get.return_value = mock_response
+    
+            with patch('zipfile.ZipFile') as mock_zipfile:
+>               mock_zipfile.side_effect = BadZipFile
+                                           ^^^^^^^^^^
+E               NameError: name 'BadZipFile' is not defined
+
+test_1007.py:70: NameError
+_________________________ test_task_func_runtime_error _________________________
+
+    def test_task_func_runtime_error():
+        url = "http://example.com/test.zip"
+        download_path = "/tmp/downloads/"
+    
+        with patch('requests.get') as mock_get:
+            mock_response = MagicMock()
+            mock_response.status_code = 200
+            mock_response.headers = {'Content-Type': 'application/zip'}
+            mock_response.content = b'zip_content'
+            mock_get.return_value = mock_response
+    
+            with patch('zipfile.ZipFile') as mock_zipfile:
+                mock_zipfile.return_value.extractall.side_effect = RuntimeError("Some error")
+    
+                result = task_func(url, download_path)
+    
+>               assert result == "Error: Some error"
+E               AssertionError: assert 'Error: The d...lid ZIP file.' == 'Error: Some error'
+E                 
+E                 - Error: Some error
+E                 + Error: The downloaded file is not a valid ZIP file.
+
+test_1007.py:94: AssertionError
+=========================== short test summary info ============================
+FAILED test_1007.py::test_task_func_valid_zip - AssertionError: assert 'Error...
+FAILED test_1007.py::test_task_func_invalid_zip_file - NameError: name 'BadZi...
+FAILED test_1007.py::test_task_func_runtime_error - AssertionError: assert 'E...
+3 failed, 2 passed in 0.82s

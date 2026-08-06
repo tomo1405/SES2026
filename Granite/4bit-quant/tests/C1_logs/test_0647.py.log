@@ -1,0 +1,27 @@
+.F                                                                       [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_valid_csv ___________________________
+
+    def test_task_func_valid_csv():
+        csv_path = os.path.join(OUTPUT_DIR, 'data.csv')
+        df = pd.DataFrame({'date': ['2022-01-01', '2022-01-02', '2022-01-03']})
+        df['date'] = df['date'].apply(lambda x: parse(x))
+        expected_hist = df['date'].dt.year.value_counts()
+>       actual_hist = task_func(csv_path)
+                      ^^^^^^^^^^^^^^^^^^^
+
+test_0647.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+csv_path = './output/data.csv', date_column = 'date'
+
+    def task_func(csv_path=os.path.join(OUTPUT_DIR, 'data.csv'), date_column='date'):
+    
+        if not os.path.isfile(csv_path):
+>           raise FileNotFoundError(f"{csv_path} does not exist")
+E           FileNotFoundError: ./output/data.csv does not exist
+
+../../../src/src_0647.py:8: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0647.py::test_task_func_valid_csv - FileNotFoundError: ./output/d...
+1 failed, 1 passed in 1.19s

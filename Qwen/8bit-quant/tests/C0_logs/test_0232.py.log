@@ -1,0 +1,103 @@
+FFFFFF                                                                   [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_empty_list ________________________
+
+    def test_task_func_with_empty_list():
+        ax = task_func([])
+        assert isinstance(ax, plt.Axes)
+>       assert ax.get_lines() == []  # No lines should be plotted for an empty list
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert <a list of 1 Line2D objects> == []
+E         
+E         Left contains one more item: <matplotlib.lines.Line2D object at 0x7d1c69716b10>
+E         Use -v to get more diff
+
+test_0232.py:9: AssertionError
+___________________ test_task_func_with_single_value_object ____________________
+
+    def test_task_func_with_single_value_object():
+        obj = ValueObject(mu=5, std=2)
+        ax = task_func([obj])
+        assert isinstance(ax, plt.Axes)
+        assert len(ax.get_lines()) == 1  # One line for the PDF
+>       assert len(ax.get_patches()) == 1  # One bar for the histogram
+                   ^^^^^^^^^^^^^^
+E       AttributeError: 'Axes' object has no attribute 'get_patches'. Did you mean: 'get_anchor'?
+
+test_0232.py:17: AttributeError
+__________________ test_task_func_with_multiple_value_objects __________________
+
+    def test_task_func_with_multiple_value_objects():
+        obj1 = ValueObject(mu=5, std=2)
+        obj2 = ValueObject(mu=5, std=2)
+        obj3 = ValueObject(mu=5, std=2)
+        ax = task_func([obj1, obj2, obj3])
+        assert isinstance(ax, plt.Axes)
+        assert len(ax.get_lines()) == 1  # One line for the PDF
+>       assert len(ax.get_patches()) > 1  # Multiple bars for the histogram
+                   ^^^^^^^^^^^^^^
+E       AttributeError: 'Axes' object has no attribute 'get_patches'. Did you mean: 'get_anchor'?
+
+test_0232.py:26: AttributeError
+_________________________ test_task_func_mean_and_std __________________________
+
+    def test_task_func_mean_and_std():
+        obj1 = ValueObject(mu=5, std=2)
+        obj2 = ValueObject(mu=5, std=2)
+        obj3 = ValueObject(mu=5, std=2)
+        ax = task_func([obj1, obj2, obj3])
+        title = ax.get_title()
+>       mean, std = map(float, title.split('mu = ')[1].split(', std = '))
+        ^^^^^^^^^
+E       ValueError: could not convert string to float: '5.54,  std = 0.00'
+
+test_0232.py:34: ValueError
+_______________________ test_task_func_histogram_density _______________________
+
+    def test_task_func_histogram_density():
+        obj1 = ValueObject(mu=5, std=2)
+        obj2 = ValueObject(mu=5, std=2)
+        obj3 = ValueObject(mu=5, std=2)
+        ax = task_func([obj1, obj2, obj3])
+        hist_data = ax.patches[0].get_height()
+>       assert np.isclose(hist_data, 1/30, atol=0.01)  # Density should sum to 1 over the bins
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert np.False_
+E        +  where np.False_ = <function isclose at 0x7d1d88970cb0>(np.float64(0.0), (1 / 30), atol=0.01)
+E        +    where <function isclose at 0x7d1d88970cb0> = np.isclose
+
+test_0232.py:44: AssertionError
+___________________________ test_task_func_pdf_plot ____________________________
+
+    def test_task_func_pdf_plot():
+        obj1 = ValueObject(mu=5, std=2)
+        obj2 = ValueObject(mu=5, std=2)
+        obj3 = ValueObject(mu=5, std=2)
+        ax = task_func([obj1, obj2, obj3])
+        pdf_line = ax.get_lines()[0]
+        x_data = pdf_line.get_xdata()
+        y_data = pdf_line.get_ydata()
+>       assert np.allclose(y_data, stats.norm.pdf(x_data, 5, 2), atol=0.01)
+                                   ^^^^^
+E       NameError: name 'stats' is not defined
+
+test_0232.py:54: NameError
+=============================== warnings summary ===============================
+Qwen/8bit-quant/tests/test_0232.py::test_task_func_with_empty_list
+Qwen/8bit-quant/tests/test_0232.py::test_task_func_with_single_value_object
+Qwen/8bit-quant/tests/test_0232.py::test_task_func_with_multiple_value_objects
+Qwen/8bit-quant/tests/test_0232.py::test_task_func_mean_and_std
+Qwen/8bit-quant/tests/test_0232.py::test_task_func_histogram_density
+Qwen/8bit-quant/tests/test_0232.py::test_task_func_pdf_plot
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/scipy/stats/_distn_infrastructure.py:2079: RuntimeWarning: divide by zero encountered in divide
+    x = np.asarray((x - loc)/scale, dtype=dtyp)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0232.py::test_task_func_with_empty_list - assert <a list of 1 Lin...
+FAILED test_0232.py::test_task_func_with_single_value_object - AttributeError...
+FAILED test_0232.py::test_task_func_with_multiple_value_objects - AttributeEr...
+FAILED test_0232.py::test_task_func_mean_and_std - ValueError: could not conv...
+FAILED test_0232.py::test_task_func_histogram_density - assert np.False_
+FAILED test_0232.py::test_task_func_pdf_plot - NameError: name 'stats' is not...
+6 failed, 6 warnings in 3.56s

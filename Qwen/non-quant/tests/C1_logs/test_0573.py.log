@@ -1,0 +1,34 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Capture the plot output to ensure it's created correctly
+        with plt.ioff():  # Turn off interactive mode to prevent plot display
+            ax = task_func(array_length=10)
+    
+        # Check if the returned object is a matplotlib AxesSubplot
+        assert isinstance(ax, plt.Axes)
+    
+        # Check if the y-axis label is set correctly
+        assert ax.get_ylabel() == 'Maximum Values'
+    
+        # Check if the plot data is correct
+>       max_values = np.maximum(ax.lines[0].get_ydata(), ax.lines[1].get_ydata())
+                                                         ^^^^^^^^^^^
+
+test_0573.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Axes.ArtistList of 1 lines>, key = 1
+
+    def __getitem__(self, key):
+>       return [artist
+                for artist in self._axes._children
+                if self._type_check(artist)][key]
+E       IndexError: list index out of range
+
+../../../.venv/lib/python3.12/site-packages/matplotlib/axes/_base.py:1530: IndexError
+=========================== short test summary info ============================
+FAILED test_0573.py::test_task_func - IndexError: list index out of range
+1 failed in 1.57s

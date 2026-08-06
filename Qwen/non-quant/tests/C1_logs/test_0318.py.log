@@ -1,0 +1,46 @@
+....F...F.                                                               [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_string_with_numbers ______________________
+
+    def test_task_func_string_with_numbers():
+        result = task_func("This is an example string with numbers 123.")
+        assert isinstance(result, dict)
+        assert "example" in result
+        assert "string" in result
+        assert "this" in result
+        assert "is" in result
+        assert "an" in result
+        assert "numbers" in result
+>       assert "123" not in result
+E       AssertionError: assert '123' not in {'123': np.float64(0.35355339059327373), 'an': np.float64(0.35355339059327373), 'example': np.float64(0.35355339059327373), 'is': np.float64(0.35355339059327373), ...}
+
+test_0318.py:41: AssertionError
+____________________ test_task_func_string_with_single_word ____________________
+
+    def test_task_func_string_with_single_word():
+>       result = task_func("Example")
+                 ^^^^^^^^^^^^^^^^^^^^
+
+test_0318.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+example_str = 'Example'
+
+    def task_func(example_str):
+        pattern = r'\[.*?\]'
+        text = re.sub(pattern, '', example_str)
+        if not text.strip():
+            return {}
+    
+        tfidf_vectorizer = TfidfVectorizer()
+        tfidf_matrix = tfidf_vectorizer.fit_transform([text])
+        feature_names = tfidf_vectorizer.get_feature_names_out()
+>       tfidf_scores = dict(zip(feature_names, np.squeeze(tfidf_matrix.toarray())))
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: iteration over a 0-d array
+
+../../../src/src_0318.py:13: TypeError
+=========================== short test summary info ============================
+FAILED test_0318.py::test_task_func_string_with_numbers - AssertionError: ass...
+FAILED test_0318.py::test_task_func_string_with_single_word - TypeError: iter...
+2 failed, 8 passed in 2.94s

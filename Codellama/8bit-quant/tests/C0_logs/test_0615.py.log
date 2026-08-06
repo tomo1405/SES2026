@@ -1,0 +1,27 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        goals = {'Team A': 10, 'Team B': 5, 'Team C': 8, 'Team D': 12, 'Team E': 7}
+        penalties = {'Team A': 3, 'Team B': 2, 'Team C': 4, 'Team D': 1, 'Team E': 5}
+    
+        df, plot = task_func(goals, penalties)
+    
+        assert isinstance(df, pd.DataFrame)
+        assert isinstance(plot, sns.PairGrid)
+        assert df.shape == (5, 3)
+        assert df.columns.tolist() == ['Team', 'Goals', 'Penalties']
+        assert df['Team'].tolist() == ['Team A', 'Team B', 'Team C', 'Team D', 'Team E']
+        assert df['Goals'].tolist() == [10, 5, 8, 12, 7]
+        assert df['Penalties'].tolist() == [3, 2, 4, 1, 5]
+        assert plot.axes.shape == (2, 2)
+>       assert plot.axes[0, 0].get_title() == 'Goals'
+E       AssertionError: assert '' == 'Goals'
+E         
+E         - Goals
+
+test_0615.py:20: AssertionError
+=========================== short test summary info ============================
+FAILED test_0615.py::test_task_func - AssertionError: assert '' == 'Goals'
+1 failed in 4.01s

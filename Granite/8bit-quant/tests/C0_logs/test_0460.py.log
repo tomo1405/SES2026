@@ -1,0 +1,46 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        script_dir = "/path/to/script/directory"
+        scripts = ["script1.sh", "script2.sh"]
+        delay = 5
+    
+        with pytest.raises(ValueError):
+            task_func(script_dir, [], delay)  # Test if ValueError is raised when no scripts are provided
+    
+        with pytest.raises(ValueError):
+            task_func(script_dir, scripts, -1)  # Test if ValueError is raised when delay is negative
+    
+>       start_times = task_func(script_dir, scripts, delay)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0460.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+script_dir = '/path/to/script/directory', scripts = ['script1.sh', 'script2.sh']
+delay = 5
+
+    def task_func(script_dir, scripts, delay):
+        if delay < 0:
+            raise ValueError("delay cannot be negative.")
+        if not scripts:
+            raise ValueError("No scripts provided.")
+        start_times = []
+        for script in scripts:
+            script_path = os.path.join(script_dir, script)
+            start_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            start_times.append(start_time)
+    
+            result = subprocess.call(script_path, shell=True)
+            if result != 0:
+>               raise FileNotFoundError(f"Script not found: {script_path}")
+E               FileNotFoundError: Script not found: /path/to/script/directory/script1.sh
+
+../../../src/src_0460.py:18: FileNotFoundError
+----------------------------- Captured stderr call -----------------------------
+/bin/sh: 1: /path/to/script/directory/script1.sh: not found
+=========================== short test summary info ============================
+FAILED test_0460.py::test_task_func - FileNotFoundError: Script not found: /p...
+1 failed in 0.45s

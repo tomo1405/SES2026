@@ -1,0 +1,30 @@
+FF..                                                                     [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_default ____________________________
+
+    def test_task_func_default():
+        U, s, Vh = task_func()
+        assert U.shape == (3, 3)
+        assert s.shape == (2,)
+        assert Vh.shape == (2, 2)
+>       assert np.allclose(np.dot(U, np.diag(s)), np.dot(Vh.T, np.eye(2)))
+                           ^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: shapes (3,3) and (2,2) not aligned: 3 (dim 1) != 2 (dim 0)
+
+test_0951.py:10: ValueError
+_______________________ test_task_func_custom_dimensions _______________________
+
+    def test_task_func_custom_dimensions():
+        U, s, Vh = task_func(rows=4, columns=3)
+        assert U.shape == (4, 4)
+        assert s.shape == (3,)
+        assert Vh.shape == (3, 3)
+>       assert np.allclose(np.dot(U, np.diag(s)), np.dot(Vh.T, np.eye(3)))
+                           ^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: shapes (4,4) and (3,3) not aligned: 4 (dim 1) != 3 (dim 0)
+
+test_0951.py:17: ValueError
+=========================== short test summary info ============================
+FAILED test_0951.py::test_task_func_default - ValueError: shapes (3,3) and (2...
+FAILED test_0951.py::test_task_func_custom_dimensions - ValueError: shapes (4...
+2 failed, 2 passed in 1.06s

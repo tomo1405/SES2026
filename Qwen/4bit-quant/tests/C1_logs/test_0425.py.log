@@ -1,0 +1,112 @@
+..FFFFF                                                                  [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_failed_to_read_image ______________________
+
+    def test_task_func_failed_to_read_image():
+        with pytest.raises(ValueError, match="Failed to read the image file."):
+>           task_func(image_path='invalid_image_path.jpg')
+
+test_0425.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+image_path = 'invalid_image_path.jpg', n_clusters = 3, random_seed = 42
+
+    def task_func(image_path='image.jpg', n_clusters=3, random_seed=42):
+    
+        if not isinstance(n_clusters, int) or n_clusters <= 0:
+            raise ValueError("n_clusters must be a positive integer.")
+    
+        if not os.path.exists(image_path):
+>           raise FileNotFoundError(f"No image found at {image_path}")
+E           FileNotFoundError: No image found at invalid_image_path.jpg
+
+../../../src/src_0425.py:11: FileNotFoundError
+________________________ test_task_func_single_cluster _________________________
+
+    def test_task_func_single_cluster():
+>       original_img, segmented_img = task_func(n_clusters=1)
+                                      ^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0425.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+image_path = 'image.jpg', n_clusters = 1, random_seed = 42
+
+    def task_func(image_path='image.jpg', n_clusters=3, random_seed=42):
+    
+        if not isinstance(n_clusters, int) or n_clusters <= 0:
+            raise ValueError("n_clusters must be a positive integer.")
+    
+        if not os.path.exists(image_path):
+>           raise FileNotFoundError(f"No image found at {image_path}")
+E           FileNotFoundError: No image found at image.jpg
+
+../../../src/src_0425.py:11: FileNotFoundError
+_______________________ test_task_func_multiple_clusters _______________________
+
+    def test_task_func_multiple_clusters():
+>       original_img, segmented_img = task_func(n_clusters=3)
+                                      ^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0425.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+image_path = 'image.jpg', n_clusters = 3, random_seed = 42
+
+    def task_func(image_path='image.jpg', n_clusters=3, random_seed=42):
+    
+        if not isinstance(n_clusters, int) or n_clusters <= 0:
+            raise ValueError("n_clusters must be a positive integer.")
+    
+        if not os.path.exists(image_path):
+>           raise FileNotFoundError(f"No image found at {image_path}")
+E           FileNotFoundError: No image found at image.jpg
+
+../../../src/src_0425.py:11: FileNotFoundError
+_____________________ test_task_func_cluster_images_exist ______________________
+
+    def test_task_func_cluster_images_exist():
+>       task_func(n_clusters=3)
+
+test_0425.py:30: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+image_path = 'image.jpg', n_clusters = 3, random_seed = 42
+
+    def task_func(image_path='image.jpg', n_clusters=3, random_seed=42):
+    
+        if not isinstance(n_clusters, int) or n_clusters <= 0:
+            raise ValueError("n_clusters must be a positive integer.")
+    
+        if not os.path.exists(image_path):
+>           raise FileNotFoundError(f"No image found at {image_path}")
+E           FileNotFoundError: No image found at image.jpg
+
+../../../src/src_0425.py:11: FileNotFoundError
+____________________________ test_task_func_cleanup ____________________________
+
+    def test_task_func_cleanup():
+>       task_func(n_clusters=3)
+
+test_0425.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+image_path = 'image.jpg', n_clusters = 3, random_seed = 42
+
+    def task_func(image_path='image.jpg', n_clusters=3, random_seed=42):
+    
+        if not isinstance(n_clusters, int) or n_clusters <= 0:
+            raise ValueError("n_clusters must be a positive integer.")
+    
+        if not os.path.exists(image_path):
+>           raise FileNotFoundError(f"No image found at {image_path}")
+E           FileNotFoundError: No image found at image.jpg
+
+../../../src/src_0425.py:11: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0425.py::test_task_func_failed_to_read_image - FileNotFoundError:...
+FAILED test_0425.py::test_task_func_single_cluster - FileNotFoundError: No im...
+FAILED test_0425.py::test_task_func_multiple_clusters - FileNotFoundError: No...
+FAILED test_0425.py::test_task_func_cluster_images_exist - FileNotFoundError:...
+FAILED test_0425.py::test_task_func_cleanup - FileNotFoundError: No image fou...
+5 failed, 2 passed in 2.91s

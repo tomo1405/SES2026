@@ -1,0 +1,65 @@
+F....FFFFF                                                               [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_valid_directory ______________________
+
+    def test_task_func_with_valid_directory():
+        directory = "test_directory"
+        os.makedirs(directory, exist_ok=True)
+        jquery_file = "jquery.js"
+        with open(os.path.join(directory, jquery_file), "w") as f:
+            f.write("")
+        files = os.listdir(directory)
+>       assert len(files) == 1
+E       AssertionError: assert 6 == 1
+E        +  where 6 = len(['files.zip', 'file2.txt', 'Invalid', 'jquery.js', 'test_file.txt', 'file1.txt'])
+
+test_0307.py:14: AssertionError
+_______________ test_task_func_with_directory_that_is_a_symlink ________________
+
+    def test_task_func_with_directory_that_is_a_symlink():
+        directory = "test_symlink"
+>       os.symlink("test_directory", directory)
+E       FileExistsError: [Errno 17] File exists: 'test_directory' -> 'test_symlink'
+
+test_0307.py:48: FileExistsError
+_________________ test_task_func_with_directory_that_is_a_fifo _________________
+
+    def test_task_func_with_directory_that_is_a_fifo():
+        directory = "test_fifo"
+>       os.mkfifo(directory)
+E       FileExistsError: [Errno 17] File exists
+
+test_0307.py:54: FileExistsError
+________________ test_task_func_with_directory_that_is_a_socket ________________
+
+    def test_task_func_with_directory_that_is_a_socket():
+        directory = "test_socket"
+>       os.socket(directory)
+        ^^^^^^^^^
+E       AttributeError: module 'os' has no attribute 'socket'
+
+test_0307.py:60: AttributeError
+_____________ test_task_func_with_directory_that_is_a_block_device _____________
+
+    def test_task_func_with_directory_that_is_a_block_device():
+        directory = "test_block_device"
+>       os.mknod(directory)
+E       FileExistsError: [Errno 17] File exists
+
+test_0307.py:66: FileExistsError
+___________ test_task_func_with_directory_that_is_a_character_device ___________
+
+    def test_task_func_with_directory_that_is_a_character_device():
+        directory = "test_character_device"
+>       os.mknod(directory)
+E       FileExistsError: [Errno 17] File exists
+
+test_0307.py:72: FileExistsError
+=========================== short test summary info ============================
+FAILED test_0307.py::test_task_func_with_valid_directory - AssertionError: as...
+FAILED test_0307.py::test_task_func_with_directory_that_is_a_symlink - FileEx...
+FAILED test_0307.py::test_task_func_with_directory_that_is_a_fifo - FileExist...
+FAILED test_0307.py::test_task_func_with_directory_that_is_a_socket - Attribu...
+FAILED test_0307.py::test_task_func_with_directory_that_is_a_block_device - F...
+FAILED test_0307.py::test_task_func_with_directory_that_is_a_character_device
+6 failed, 4 passed in 0.51s

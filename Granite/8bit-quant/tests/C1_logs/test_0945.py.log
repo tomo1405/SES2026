@@ -1,0 +1,19 @@
+..F                                                                      [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_default_arguments _______________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7df8389ef140>
+
+    def test_task_func_default_arguments(monkeypatch):
+        monkeypatch.setattr(np.random, 'seed', lambda x: None)
+        prices_df_1, _ = task_func()
+        prices_df_2, _ = task_func(seed=None)
+>       assert prices_df_1.equals(prices_df_2)
+E       assert False
+E        +  where False = equals(                 Price\nDate                  \n2016-01-08  157.341315\n2016-02-12  477.867567\n2016-03-11  308.739329\n201...3580\n2016-09-09  107.515920\n2016-10-14  347.054199\n2016-11-11  344.838289\n2016-12-09  346.773599\n2017-01-13  477.499231)
+E        +    where equals =                  Price\nDate                  \n2016-01-08  470.238655\n2016-02-12  128.414423\n2016-03-11  134.851720\n201...7337\n2016-09-09  419.663426\n2016-10-14  284.591745\n2016-11-11  412.211671\n2016-12-09  147.309770\n2017-01-13  355.968409.equals
+
+test_0945.py:35: AssertionError
+=========================== short test summary info ============================
+FAILED test_0945.py::test_task_func_default_arguments - assert False
+1 failed, 2 passed in 2.37s

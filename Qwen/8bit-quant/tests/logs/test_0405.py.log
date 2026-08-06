@@ -1,0 +1,48 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_image __________________________
+
+mock_imread = <MagicMock name='imread' id='125588907964416'>
+
+    @patch('cv2.imread', return_value=dummy_image)
+    def test_task_func_valid_image(mock_imread):
+        img_path = 'valid_image.jpg'
+>       img, contours = task_func(img_path)
+                        ^^^^^^^^^^^^^^^^^^^
+
+test_0405.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+img_path = 'valid_image.jpg'
+
+    def task_func(img_path):
+        if not os.path.exists(img_path):
+>           raise FileNotFoundError(f"No file found at {img_path}")
+E           FileNotFoundError: No file found at valid_image.jpg
+
+../../../src/src_0405.py:6: FileNotFoundError
+_________________________ test_task_func_invalid_image _________________________
+
+mock_imread = <MagicMock name='imread' id='125586294599760'>
+
+    @patch('cv2.imread', return_value=None)
+    def test_task_func_invalid_image(mock_imread):
+        img_path = 'invalid_image.jpg'
+        with pytest.raises(cv2.error) as excinfo:
+>           task_func(img_path)
+
+test_0405.py:30: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+img_path = 'invalid_image.jpg'
+
+    def task_func(img_path):
+        if not os.path.exists(img_path):
+>           raise FileNotFoundError(f"No file found at {img_path}")
+E           FileNotFoundError: No file found at invalid_image.jpg
+
+../../../src/src_0405.py:6: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0405.py::test_task_func_valid_image - FileNotFoundError: No file ...
+FAILED test_0405.py::test_task_func_invalid_image - FileNotFoundError: No fil...
+2 failed, 1 passed in 0.69s

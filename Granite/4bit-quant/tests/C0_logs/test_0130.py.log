@@ -1,0 +1,213 @@
+FFF.                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+url = 'http://example.com'
+
+    def task_func(url='http://example.com'):
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+        except requests.ConnectionError as e:
+            raise ConnectionError(f"Could not connect to URL: {e}")
+        except requests.HTTPError as e:
+            raise requests.HTTPError(f"HTTP error occurred: {e}")
+    
+        try:
+            soup = BeautifulSoup(response.text, 'html.parser')
+            table = soup.find('table')  # Assuming only the first table is of interest
+            if table is None:
+>               raise ValueError("No table found on the page.")
+E               ValueError: No table found on the page.
+
+../../../src/src_0130.py:17: ValueError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func():
+>       df = task_func()
+             ^^^^^^^^^^^
+
+test_0130.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'http://example.com'
+
+    def task_func(url='http://example.com'):
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+        except requests.ConnectionError as e:
+            raise ConnectionError(f"Could not connect to URL: {e}")
+        except requests.HTTPError as e:
+            raise requests.HTTPError(f"HTTP error occurred: {e}")
+    
+        try:
+            soup = BeautifulSoup(response.text, 'html.parser')
+            table = soup.find('table')  # Assuming only the first table is of interest
+            if table is None:
+                raise ValueError("No table found on the page.")
+    
+            # Extracting headers if present
+            headers = [th.text.strip() for th in table.find_all('th')]
+    
+            # Extracting data rows
+            data = []
+            for row in table.find_all('tr'):
+                cols = row.find_all('td')
+                if not cols:  # This skips rows without <td> (like header rows)
+                    continue
+                cols = [ele.text.strip() for ele in cols]
+                data.append(cols)
+    
+            if not data:
+                raise ValueError("No data found in the table.")
+    
+            df = pd.DataFrame(data, columns=headers if headers else None)
+        except Exception as e:
+>           raise ValueError(f"Error parsing the page content: {e}")
+E           ValueError: Error parsing the page content: No table found on the page.
+
+../../../src/src_0130.py:36: ValueError
+___________________________ test_task_func_with_url ____________________________
+
+url = 'http://example.com'
+
+    def task_func(url='http://example.com'):
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+        except requests.ConnectionError as e:
+            raise ConnectionError(f"Could not connect to URL: {e}")
+        except requests.HTTPError as e:
+            raise requests.HTTPError(f"HTTP error occurred: {e}")
+    
+        try:
+            soup = BeautifulSoup(response.text, 'html.parser')
+            table = soup.find('table')  # Assuming only the first table is of interest
+            if table is None:
+>               raise ValueError("No table found on the page.")
+E               ValueError: No table found on the page.
+
+../../../src/src_0130.py:17: ValueError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func_with_url():
+>       df = task_func(url='http://example.com')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0130.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'http://example.com'
+
+    def task_func(url='http://example.com'):
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+        except requests.ConnectionError as e:
+            raise ConnectionError(f"Could not connect to URL: {e}")
+        except requests.HTTPError as e:
+            raise requests.HTTPError(f"HTTP error occurred: {e}")
+    
+        try:
+            soup = BeautifulSoup(response.text, 'html.parser')
+            table = soup.find('table')  # Assuming only the first table is of interest
+            if table is None:
+                raise ValueError("No table found on the page.")
+    
+            # Extracting headers if present
+            headers = [th.text.strip() for th in table.find_all('th')]
+    
+            # Extracting data rows
+            data = []
+            for row in table.find_all('tr'):
+                cols = row.find_all('td')
+                if not cols:  # This skips rows without <td> (like header rows)
+                    continue
+                cols = [ele.text.strip() for ele in cols]
+                data.append(cols)
+    
+            if not data:
+                raise ValueError("No data found in the table.")
+    
+            df = pd.DataFrame(data, columns=headers if headers else None)
+        except Exception as e:
+>           raise ValueError(f"Error parsing the page content: {e}")
+E           ValueError: Error parsing the page content: No table found on the page.
+
+../../../src/src_0130.py:36: ValueError
+_______________________ test_task_func_with_invalid_url ________________________
+
+    def test_task_func_with_invalid_url():
+        with pytest.raises(requests.ConnectionError):
+>           task_func(url='invalid_url')
+
+test_0130.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0130.py:6: in task_func
+    response = requests.get(url)
+               ^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/requests/api.py:87: in get
+    return request("get", url, params=params, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/requests/api.py:71: in request
+    return session.request(method=method, url=url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/requests/sessions.py:635: in request
+    prep = self.prepare_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/requests/sessions.py:541: in prepare_request
+    p.prepare(
+../../../.venv/lib/python3.12/site-packages/requests/models.py:439: in prepare
+    self.prepare_url(url, params)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <PreparedRequest [GET]>, url = 'invalid_url', params = OrderedDict()
+
+    def prepare_url(
+        self,
+        url: _t.UriType,
+        params: _t.ParamsType,
+    ) -> None:
+        """Prepares the given HTTP URL."""
+        #: Accept objects that have string representations.
+        #: We're unable to blindly call unicode/str functions
+        #: as this will include the bytestring indicator (b'')
+        #: on python 3.x.
+        #: https://github.com/psf/requests/pull/2238
+        if isinstance(url, bytes):
+            url = url.decode("utf8")
+        else:
+            url = str(url)
+    
+        # Remove leading whitespaces from url
+        url = url.lstrip()
+    
+        # Don't do any URL preparation for non-HTTP schemes like `mailto`,
+        # `data` etc to work around exceptions from `url_parse`, which
+        # handles RFC 3986 only.
+        if ":" in url and not url.lower().startswith("http"):
+            self.url = url
+            return
+    
+        # Support for unicode domain names and paths.
+        try:
+            scheme, auth, host, port, path, query, fragment = parse_url(url)
+        except LocationParseError as e:
+            raise InvalidURL(*e.args)
+    
+        if not scheme:
+>           raise MissingSchema(
+                f"Invalid URL {url!r}: No scheme supplied. "
+                f"Perhaps you meant https://{url}?"
+            )
+E           requests.exceptions.MissingSchema: Invalid URL 'invalid_url': No scheme supplied. Perhaps you meant https://invalid_url?
+
+../../../.venv/lib/python3.12/site-packages/requests/models.py:514: MissingSchema
+=========================== short test summary info ============================
+FAILED test_0130.py::test_task_func - ValueError: Error parsing the page cont...
+FAILED test_0130.py::test_task_func_with_url - ValueError: Error parsing the ...
+FAILED test_0130.py::test_task_func_with_invalid_url - requests.exceptions.Mi...
+3 failed, 1 passed in 2.09s

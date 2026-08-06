@@ -1,0 +1,35 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test 1: num_of_students is positive
+        num_of_students = 10
+        df = task_func(num_of_students)
+        assert len(df) == num_of_students
+    
+        # Test 2: num_of_students is negative
+        num_of_students = -10
+        with pytest.raises(ValueError):
+            task_func(num_of_students)
+    
+        # Test 3: name_list is not None
+        name_list = ['Alice', 'Bob', 'Charlie']
+>       df = task_func(num_of_students, name_list=name_list)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0118.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+num_of_students = -10, seed = 42, name_list = ['Alice', 'Bob', 'Charlie']
+gender_list = None, age_range = (15, 20), score_range = (50, 100)
+
+    def task_func(num_of_students, seed=42, name_list=None, gender_list=None, age_range=(15, 20), score_range=(50, 100)):
+        if num_of_students <= 0:
+>           raise ValueError("num_of_students must be positive.")
+E           ValueError: num_of_students must be positive.
+
+../../../src/src_0118.py:6: ValueError
+=========================== short test summary info ============================
+FAILED test_0118.py::test_task_func - ValueError: num_of_students must be pos...
+1 failed in 1.10s

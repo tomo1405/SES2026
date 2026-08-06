@@ -1,0 +1,26 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a sample dataframe
+        df = pd.DataFrame({'IntCol': [1, 10, 100, 1000]})
+    
+        # Test that the function returns the expected dataframe
+        expected_df = pd.DataFrame({'IntCol': [1, 10, 100, 1000]})
+        expected_df['IntCol'] = np.log10(expected_df['IntCol'])
+        assert task_func(df).equals(expected_df)
+    
+        # Test that the function writes the expected JSON file
+        with open('IntCol.json', 'r') as json_file:
+            int_col_list = json.load(json_file)
+>       assert int_col_list == [1, 10, 100, 1000]
+E       assert [0.0, 1.0, 2.0, 3.0] == [1, 10, 100, 1000]
+E         
+E         At index 0 diff: 0.0 != 1
+E         Use -v to get more diff
+
+test_0708.py:20: AssertionError
+=========================== short test summary info ============================
+FAILED test_0708.py::test_task_func - assert [0.0, 1.0, 2.0, 3.0] == [1, 10, ...
+1 failed in 1.15s

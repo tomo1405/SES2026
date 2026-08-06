@@ -1,0 +1,60 @@
+..F..F..                                                                 [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_single_mode __________________________
+
+    def test_task_func_single_mode():
+        result = task_func([1, 1, 2, 2, 3])
+>       assert np.array_equal(result['mode'], np.array([1]))
+E       assert False
+E        +  where False = <function array_equal at 0x70be129120f0>(array([1, 2]), array([1]))
+E        +    where <function array_equal at 0x70be129120f0> = np.array_equal
+E        +    and   array([1]) = <built-in function array>([1])
+E        +      where <built-in function array> = np.array
+
+test_0914.py:20: AssertionError
+_________________________ test_task_func_with_strings __________________________
+
+    def test_task_func_with_strings():
+>       result = task_func(['a', 'a', 'b', 'b', 'c'])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0914.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0914.py:28: in task_func
+    return {'mode': np.sort(mode), 'count': count, 'fft': scipy.fft.fft(data)}
+                                                          ^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/scipy/fft/_backend.py:29: in __ua_function__
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/scipy/fft/_basic_backend.py:79: in fft
+    return _execute_1D('fft', _duccfft.fft, x, n=n, axis=axis, norm=norm,
+../../../.venv/lib/python3.12/site-packages/scipy/fft/_basic_backend.py:32: in _execute_1D
+    return duccfft_func(x, n=n, axis=axis, norm=norm,
+../../../.venv/lib/python3.12/site-packages/scipy/fft/_duccfft/basic.py:17: in c2c
+    tmp = _asfarray(x)
+          ^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+x = array(['a', 'a', 'b', 'b', 'c'], dtype='<U1')
+
+    def _asfarray(x):
+        """
+        Convert to array with floating or complex dtype.
+    
+        float16 values are also promoted to float32.
+        """
+        if not hasattr(x, "dtype"):
+            x = np.asarray(x)
+    
+        if x.dtype == np.float16:
+            return np.asarray(x, np.float32)
+        elif x.dtype.kind not in 'fc':
+>           return np.asarray(x, np.float64)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+E           ValueError: could not convert string to float: np.str_('a')
+
+../../../.venv/lib/python3.12/site-packages/scipy/fft/_duccfft/helper.py:126: ValueError
+=========================== short test summary info ============================
+FAILED test_0914.py::test_task_func_single_mode - assert False
+FAILED test_0914.py::test_task_func_with_strings - ValueError: could not conv...
+2 failed, 6 passed in 1.54s

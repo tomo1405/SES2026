@@ -1,0 +1,24 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Test if the function returns the correct CSV file path
+        csv_path = task_func()
+        assert csv_path == "emails.csv"
+    
+        # Test case 2: Test if the function finds the correct number of emails
+        csv_path = "test_emails.csv"
+        num_emails = len(re.findall(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b", "example email addresses"))
+        assert task_func(csv_path=csv_path) == csv_path
+>       assert len(open(csv_path, "r").readlines()) == num_emails
+E       AssertionError: assert 1 == 0
+E        +  where 1 = len(['Emails\n'])
+E        +    where ['Emails\n'] = <built-in method readlines of _io.TextIOWrapper object at 0x79b367705700>()
+E        +      where <built-in method readlines of _io.TextIOWrapper object at 0x79b367705700> = <_io.TextIOWrapper name='test_emails.csv' mode='r' encoding='UTF-8'>.readlines
+E        +        where <_io.TextIOWrapper name='test_emails.csv' mode='r' encoding='UTF-8'> = open('test_emails.csv', 'r')
+
+test_1137.py:16: AssertionError
+=========================== short test summary info ============================
+FAILED test_1137.py::test_task_func - AssertionError: assert 1 == 0
+1 failed in 1.50s

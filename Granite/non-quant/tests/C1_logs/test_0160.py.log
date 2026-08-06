@@ -1,0 +1,27 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        newArray = [1.0, 2.0, 3.0]  # Replace with your desired input
+        expected_output = b'\x1f\x8b\x08\x08\x9e\xe3\x59\x53\x00\x03\x63\x60\x60\x80\x00\x01\xf3\x0b\x08\x00\x00\x00'
+>       actual_output = task_func(newArray)
+                        ^^^^^^^^^^^^^^^^^^^
+
+test_0160.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+newArray = [1.0, 2.0, 3.0]
+
+    def task_func(newArray):
+        buffer = io.BytesIO()
+    
+        with gzip.GzipFile(fileobj=buffer, mode='w') as f:
+>           f.write(struct.pack('d'*newArray.size, *newArray))
+                                    ^^^^^^^^^^^^^
+E           AttributeError: 'list' object has no attribute 'size'
+
+../../../src/src_0160.py:8: AttributeError
+=========================== short test summary info ============================
+FAILED test_0160.py::test_task_func - AttributeError: 'list' object has no at...
+1 failed in 0.41s

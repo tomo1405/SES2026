@@ -1,0 +1,22 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        json_file = 'test_data.json'
+        csv_file = 'test_data.csv'
+        with open(json_file, 'w') as f:
+            json.dump({'a': 1, 'b': 2}, f)
+    
+        task_func(json_file, csv_file)
+    
+        with open(csv_file, 'r') as f:
+            reader = csv.reader(f)
+>           assert reader.next() == ['a', 'b']
+                   ^^^^^^^^^^^
+E           AttributeError: '_csv.reader' object has no attribute 'next'
+
+test_0712.py:17: AttributeError
+=========================== short test summary info ============================
+FAILED test_0712.py::test_task_func - AttributeError: '_csv.reader' object ha...
+1 failed in 0.48s

@@ -1,0 +1,52 @@
+F.FFF                                                                    [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_length _____________________________
+
+    def test_task_func_length():
+        length = 5
+        df = task_func(length)
+>       assert len(df) == length
+E       assert 24 == 5
+E        +  where 24 = len(    Column1  Column2  Column3  Column4  Column5\n4       NaN      NaN      NaN      NaN      1.0\n5       NaN      1.0  ...  NaN      NaN      5.0\n90      NaN      4.0      NaN      NaN      NaN\n98      NaN      5.0      NaN      NaN      NaN)
+
+test_0387.py:7: AssertionError
+________________________ test_task_func_min_max_values _________________________
+
+    def test_task_func_min_max_values():
+        min_value = 10
+        max_value = 20
+        df = task_func(5, min_value=min_value, max_value=max_value)
+>       assert df.values.min() >= min_value
+E       assert np.float64(nan) >= 10
+E        +  where np.float64(nan) = <built-in method min of numpy.ndarray object at 0x7b9374c43cf0>()
+E        +    where <built-in method min of numpy.ndarray object at 0x7b9374c43cf0> = array([[ 2.,  1., nan, nan,  2.],\n       [nan,  2.,  1., nan, nan],\n       [ 3., nan, nan, nan,  3.],\n       [ 4., nan...  3.,  1., nan],\n       [nan,  5.,  4.,  3.,  4.],\n       [ 5., nan,  5.,  5., nan],\n       [nan, nan, nan, nan,  5.]]).min
+E        +      where array([[ 2.,  1., nan, nan,  2.],\n       [nan,  2.,  1., nan, nan],\n       [ 3., nan, nan, nan,  3.],\n       [ 4., nan...  3.,  1., nan],\n       [nan,  5.,  4.,  3.,  4.],\n       [ 5., nan,  5.,  5., nan],\n       [nan, nan, nan, nan,  5.]]) =     Column1  Column2  Column3  Column4  Column5\n10      2.0      1.0      NaN      NaN      2.0\n11      NaN      2.0  ...  4.0      3.0      4.0\n18      5.0      NaN      5.0      5.0      NaN\n19      NaN      NaN      NaN      NaN      5.0.values
+
+test_0387.py:17: AssertionError
+______________________________ test_task_func_cdf ______________________________
+
+    def test_task_func_cdf():
+        df = task_func(5)
+        for column in df.columns:
+>           assert df[column].is_monotonic_increasing
+E           assert False
+E            +  where False = 9     NaN\n10    NaN\n11    1.0\n14    NaN\n15    NaN\n20    NaN\n23    3.0\n37    NaN\n38    NaN\n51    4.0\n54    NaN\n58    NaN\n61    NaN\n63    NaN\n64    NaN\n67    NaN\n82    NaN\n88    NaN\n95    NaN\n99    5.0\nName: Column1, dtype: float64.is_monotonic_increasing
+
+test_0387.py:23: AssertionError
+________________________ test_task_func_default_values _________________________
+
+    def test_task_func_default_values():
+        df = task_func(5)
+>       assert df.values.min() >= 0
+E       assert np.float64(nan) >= 0
+E        +  where np.float64(nan) = <built-in method min of numpy.ndarray object at 0x7b9374c41650>()
+E        +    where <built-in method min of numpy.ndarray object at 0x7b9374c41650> = array([[nan,  1., nan, nan, nan],\n       [nan, nan, nan,  1., nan],\n       [nan, nan, nan,  2., nan],\n       [ 1., nan... nan,  4., nan],\n       [nan, nan,  5., nan, nan],\n       [nan, nan, nan,  5., nan],\n       [nan, nan, nan, nan,  5.]]).min
+E        +      where array([[nan,  1., nan, nan, nan],\n       [nan, nan, nan,  1., nan],\n       [nan, nan, nan,  2., nan],\n       [ 1., nan... nan,  4., nan],\n       [nan, nan,  5., nan, nan],\n       [nan, nan, nan,  5., nan],\n       [nan, nan, nan, nan,  5.]]) =     Column1  Column2  Column3  Column4  Column5\n1       NaN      1.0      NaN      NaN      NaN\n4       NaN      NaN  ...  5.0      NaN      NaN\n91      NaN      NaN      NaN      5.0      NaN\n97      NaN      NaN      NaN      NaN      5.0.values
+
+test_0387.py:27: AssertionError
+=========================== short test summary info ============================
+FAILED test_0387.py::test_task_func_length - assert 24 == 5
+FAILED test_0387.py::test_task_func_min_max_values - assert np.float64(nan) >...
+FAILED test_0387.py::test_task_func_cdf - assert False
+FAILED test_0387.py::test_task_func_default_values - assert np.float64(nan) >= 0
+4 failed, 1 passed in 1.37s

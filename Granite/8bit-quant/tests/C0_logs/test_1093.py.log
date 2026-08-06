@@ -1,0 +1,42 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+_____________ test_task_func[https://example.com-expected_output0] _____________
+
+url = 'https://example.com', expected_output = [1, 2, 3]
+
+    @pytest.mark.parametrize("url, expected_output", [
+        ("https://example.com", [1, 2, 3]),
+        ("https://another-example.com", ["a", "b", "c"]),
+        ("https://invalid-url.com", []),
+    ])
+    def test_task_func(url, expected_output):
+        result = task_func(url)
+>       assert result == expected_output
+E       assert [] == [1, 2, 3]
+E         
+E         Right contains 3 more items, first extra item: 1
+E         Use -v to get more diff
+
+test_1093.py:14: AssertionError
+_________ test_task_func[https://another-example.com-expected_output1] _________
+
+url = 'https://another-example.com', expected_output = ['a', 'b', 'c']
+
+    @pytest.mark.parametrize("url, expected_output", [
+        ("https://example.com", [1, 2, 3]),
+        ("https://another-example.com", ["a", "b", "c"]),
+        ("https://invalid-url.com", []),
+    ])
+    def test_task_func(url, expected_output):
+        result = task_func(url)
+>       assert result == expected_output
+E       AssertionError: assert [] == ['a', 'b', 'c']
+E         
+E         Right contains 3 more items, first extra item: 'a'
+E         Use -v to get more diff
+
+test_1093.py:14: AssertionError
+=========================== short test summary info ============================
+FAILED test_1093.py::test_task_func[https://example.com-expected_output0] - a...
+FAILED test_1093.py::test_task_func[https://another-example.com-expected_output1]
+2 failed, 1 passed in 1.55s

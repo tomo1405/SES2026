@@ -1,0 +1,38 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        department_data = {
+            'EMP$$': 5,
+            'MAN$$': 3,
+            'DEV$$': 2,
+            'HR$$': 1
+        }
+        expected_output = '{"EMP$$": ["Mid", "Senior", "Junior", "Junior", "Senior"], "MAN$$": ["Mid", "Junior", "Senior"], "DEV$$": ["Junior", "Mid"], "HR$$": ["Senior"]}'
+        actual_output = task_func(department_data)
+>       assert actual_output == expected_output, "Output does not match the expected output"
+E       AssertionError: Output does not match the expected output
+E       assert '{"EMP$$": ["...: ["Senior"]}' == '{"EMP$$": ["...: ["Senior"]}'
+E         
+E         - {"EMP$$": ["Mid", "Senior", "Junior", "Junior", "Senior"], "MAN$$": ["Mid", "Junior", "Senior"], "DEV$$": ["Junior", "Mid"], "HR$$": ["Senior"]}
+E         + {"EMP$$": ["Mid", "Junior", "Junior", "Mid", "Senior"], "MAN$$": ["Mid", "Junior", "Junior"], "DEV$$": ["Junior", "Senior"], "HR$$": ["Senior"]}
+
+test_1118.py:13: AssertionError
+______________________ test_task_func_with_invalid_input _______________________
+
+    def test_task_func_with_invalid_input():
+        department_data = {
+            'Invalid Prefix': 5,
+            'MAN$$': 3,
+            'DEV$$': 2,
+            'HR$$': 1
+        }
+>       with pytest.raises(ValueError) as excinfo:
+E       Failed: DID NOT RAISE ValueError
+
+test_1118.py:22: Failed
+=========================== short test summary info ============================
+FAILED test_1118.py::test_task_func - AssertionError: Output does not match t...
+FAILED test_1118.py::test_task_func_with_invalid_input - Failed: DID NOT RAIS...
+2 failed in 0.54s

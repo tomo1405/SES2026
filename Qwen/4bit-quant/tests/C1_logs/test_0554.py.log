@@ -1,0 +1,65 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_empty_lists ________________________
+
+    def test_task_func_with_empty_lists():
+        result = task_func([], [])
+        assert isinstance(result, plt.Axes)
+>       assert result.figure.get_axes() == []
+E       assert [<Axes: >] == []
+E         
+E         Left contains one more item: <Axes: >
+E         Use -v to get more diff
+
+test_0554.py:10: AssertionError
+___________________ test_task_func_with_single_element_lists ___________________
+
+    def test_task_func_with_single_element_lists():
+        result = task_func(['a'], [1])
+        assert isinstance(result, plt.Axes)
+        expected_df = pd.DataFrame(np.array([[0]]), index=['a'], columns=['A'])
+>       pd.testing.assert_frame_equal(result.get_lines()[0].get_data()[1], expected_df)
+                                      ^^^^^^^^^^^^^^^^^^^^^
+E       IndexError: list index out of range
+
+test_0554.py:16: IndexError
+_________________ test_task_func_with_multiple_elements_lists __________________
+
+    def test_task_func_with_multiple_elements_lists():
+        result = task_func(['a', 'b'], [1, 2])
+        assert isinstance(result, plt.Axes)
+        expected_df = pd.DataFrame(np.array([[0, 0], [0, 0]]), index=['a', 'b'], columns=['A', 'B'])
+>       pd.testing.assert_frame_equal(result.get_lines()[0].get_data()[1], expected_df)
+                                      ^^^^^^^^^^^^^^^^^^^^^
+E       IndexError: list index out of range
+
+test_0554.py:22: IndexError
+___________________ test_task_func_with_more_columns_than_b ____________________
+
+    def test_task_func_with_more_columns_than_b():
+        result = task_func(['a', 'b'], [1, 2, 3])
+        assert isinstance(result, plt.Axes)
+        expected_df = pd.DataFrame(np.array([[0, 0, 0], [0, 0, 0]]), index=['a', 'b'], columns=['A', 'B', 'C'])
+>       pd.testing.assert_frame_equal(result.get_lines()[0].get_data()[1], expected_df)
+                                      ^^^^^^^^^^^^^^^^^^^^^
+E       IndexError: list index out of range
+
+test_0554.py:28: IndexError
+___________________ test_task_func_with_less_columns_than_b ____________________
+
+    def test_task_func_with_less_columns_than_b():
+        result = task_func(['a'], [1])
+        assert isinstance(result, plt.Axes)
+        expected_df = pd.DataFrame(np.array([[0]]), index=['a'], columns=['A'])
+>       pd.testing.assert_frame_equal(result.get_lines()[0].get_data()[1], expected_df)
+                                      ^^^^^^^^^^^^^^^^^^^^^
+E       IndexError: list index out of range
+
+test_0554.py:34: IndexError
+=========================== short test summary info ============================
+FAILED test_0554.py::test_task_func_with_empty_lists - assert [<Axes: >] == []
+FAILED test_0554.py::test_task_func_with_single_element_lists - IndexError: l...
+FAILED test_0554.py::test_task_func_with_multiple_elements_lists - IndexError...
+FAILED test_0554.py::test_task_func_with_more_columns_than_b - IndexError: li...
+FAILED test_0554.py::test_task_func_with_less_columns_than_b - IndexError: li...
+5 failed in 2.22s

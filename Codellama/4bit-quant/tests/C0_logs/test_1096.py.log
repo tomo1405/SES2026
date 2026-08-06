@@ -1,0 +1,24 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        text = "This is a test text with $dollar_prefixed_words."
+        output_filename = "test_output.txt"
+        expected_output = "dollar_prefixed_words\n"
+    
+        result = task_func(text, output_filename)
+    
+        assert result == os.path.abspath(output_filename)
+        with open(output_filename, 'r') as file:
+>           assert file.read() == expected_output
+E           AssertionError: assert '$dollar_prefixed_words\n' == 'dollar_prefixed_words\n'
+E             
+E             - dollar_prefixed_words
+E             + $dollar_prefixed_words
+E             ? +
+
+test_1096.py:15: AssertionError
+=========================== short test summary info ============================
+FAILED test_1096.py::test_task_func - AssertionError: assert '$dollar_prefixe...
+1 failed in 3.26s

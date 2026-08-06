@@ -1,0 +1,117 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+>       p_value, heatmap = task_func(df1, df2)
+                           ^^^^^^^^^^^^^^^^^^^
+
+test_0433.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df1 =    id feature1
+0   1        A
+1   2        B
+2   3        A
+3   4        B
+df2 =    id feature2
+0   1        X
+1   2        Y
+2   3        X
+3   4        Y
+column1 = 'feature1', column2 = 'feature2'
+
+    def task_func(df1, df2, column1="feature1", column2="feature2"):
+>       df = pd.merge(df1, df2, on="id")
+             ^^
+E       NameError: name 'pd' is not defined
+
+../../../src/src_0433.py:4: NameError
+____________________ test_task_func_with_different_columns _____________________
+
+    def test_task_func_with_different_columns():
+>       p_value, heatmap = task_func(df1, df2, column1='feature1', column2='feature2')
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0433.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df1 =    id feature1
+0   1        A
+1   2        B
+2   3        A
+3   4        B
+df2 =    id feature2
+0   1        X
+1   2        Y
+2   3        X
+3   4        Y
+column1 = 'feature1', column2 = 'feature2'
+
+    def task_func(df1, df2, column1="feature1", column2="feature2"):
+>       df = pd.merge(df1, df2, on="id")
+             ^^
+E       NameError: name 'pd' is not defined
+
+../../../src/src_0433.py:4: NameError
+________________________ test_task_func_with_missing_id ________________________
+
+    def test_task_func_with_missing_id():
+        df1_missing = pd.DataFrame({
+            'id': [1, 2, 5],
+            'feature1': ['A', 'B', 'A']
+        })
+        with pytest.raises(KeyError):
+>           task_func(df1_missing, df2)
+
+test_0433.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df1 =    id feature1
+0   1        A
+1   2        B
+2   5        A
+df2 =    id feature2
+0   1        X
+1   2        Y
+2   3        X
+3   4        Y
+column1 = 'feature1', column2 = 'feature2'
+
+    def task_func(df1, df2, column1="feature1", column2="feature2"):
+>       df = pd.merge(df1, df2, on="id")
+             ^^
+E       NameError: name 'pd' is not defined
+
+../../../src/src_0433.py:4: NameError
+_____________________ test_task_func_with_empty_dataframes _____________________
+
+    def test_task_func_with_empty_dataframes():
+        empty_df1 = pd.DataFrame(columns=['id', 'feature1'])
+        empty_df2 = pd.DataFrame(columns=['id', 'feature2'])
+        with pytest.raises(ValueError):
+>           task_func(empty_df1, empty_df2)
+
+test_0433.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df1 = Empty DataFrame
+Columns: [id, feature1]
+Index: []
+df2 = Empty DataFrame
+Columns: [id, feature2]
+Index: [], column1 = 'feature1'
+column2 = 'feature2'
+
+    def task_func(df1, df2, column1="feature1", column2="feature2"):
+>       df = pd.merge(df1, df2, on="id")
+             ^^
+E       NameError: name 'pd' is not defined
+
+../../../src/src_0433.py:4: NameError
+=========================== short test summary info ============================
+FAILED test_0433.py::test_task_func - NameError: name 'pd' is not defined
+FAILED test_0433.py::test_task_func_with_different_columns - NameError: name ...
+FAILED test_0433.py::test_task_func_with_missing_id - NameError: name 'pd' is...
+FAILED test_0433.py::test_task_func_with_empty_dataframes - NameError: name '...
+4 failed in 4.43s

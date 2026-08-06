@@ -1,0 +1,36 @@
+.FF..F                                                                   [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_default_parameters _______________________
+
+    def test_task_func_default_parameters():
+        data, ax, mean_fft, median_fft = task_func()
+>       assert isinstance(data, tuple)
+E       assert False
+E        +  where False = isinstance(<generator object task_func.<locals>.<genexpr> at 0x76dac845d740>, tuple)
+
+test_0225.py:12: AssertionError
+_______________________ test_task_func_custom_parameters _______________________
+
+    def test_task_func_custom_parameters():
+        data, ax, mean_fft, median_fft = task_func(range_start=-5, range_end=5, step=0.5)
+>       assert isinstance(data, tuple)
+E       assert False
+E        +  where False = isinstance(<generator object task_func.<locals>.<genexpr> at 0x76dac83e5640>, tuple)
+
+test_0225.py:19: AssertionError
+_____________________________ test_task_func_plot ______________________________
+
+    def test_task_func_plot():
+        _, ax, _, _ = task_func()
+>       assert len(ax.collections) == 3  # 3 scatter plots for sin, cos, and abs values
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert 600 == 3
+E        +  where 600 = len(<Axes.ArtistList of 600 collections>)
+E        +    where <Axes.ArtistList of 600 collections> = <Axes: >.collections
+
+test_0225.py:39: AssertionError
+=========================== short test summary info ============================
+FAILED test_0225.py::test_task_func_default_parameters - assert False
+FAILED test_0225.py::test_task_func_custom_parameters - assert False
+FAILED test_0225.py::test_task_func_plot - assert 600 == 3
+3 failed, 3 passed in 5.34s

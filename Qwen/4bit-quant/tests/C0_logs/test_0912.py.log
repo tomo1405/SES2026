@@ -1,0 +1,48 @@
+.FF..F                                                                   [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_multiple_letters ________________________
+
+    def test_task_func_multiple_letters():
+        assert task_func(['A', 'B', 'C']) == 6  # 1 * 2 * 3
+>       assert task_func(['X', 'Y', 'Z']) == 702  # 24 * 25 * 26
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 15600 == 702
+E        +  where 15600 = task_func(['X', 'Y', 'Z'])
+
+test_0912.py:10: AssertionError
+__________________________ test_task_func_mixed_case ___________________________
+
+    def test_task_func_mixed_case():
+>       assert task_func(['a', 'B', 'c']) == 6  # 1 * 2 * 3 (case should be ignored)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0912.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+letters = ['a', 'B', 'c']
+
+    def task_func(letters):
+        # Creating a dictionary to map each letter to its corresponding number
+        letter_to_number = {letter: i+1 for i, letter in enumerate(string.ascii_uppercase)}
+    
+        # Convert the letters to numbers
+>       numbers = [letter_to_number[letter] for letter in letters]
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'a'
+
+../../../src/src_0912.py:9: KeyError
+__________________________ test_task_func_large_input __________________________
+
+    def test_task_func_large_input():
+>       assert task_func(list('ABCDEFGHIJKLMNOPQRSTUVWXYZ')) == 10888869450418352160768000000  # Product of numbers 1 to 26
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 403291461126605635584000000 == 10888869450418352160768000000
+E        +  where 403291461126605635584000000 = task_func(['A', 'B', 'C', 'D', 'E', 'F', ...])
+E        +    where ['A', 'B', 'C', 'D', 'E', 'F', ...] = list('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+
+test_0912.py:24: AssertionError
+=========================== short test summary info ============================
+FAILED test_0912.py::test_task_func_multiple_letters - AssertionError: assert...
+FAILED test_0912.py::test_task_func_mixed_case - KeyError: 'a'
+FAILED test_0912.py::test_task_func_large_input - AssertionError: assert 4032...
+3 failed, 3 passed in 0.50s

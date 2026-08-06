@@ -1,0 +1,27 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        word = "hello"
+        difference, entropy = task_func(word)
+        assert isinstance(difference, np.ndarray)
+        assert isinstance(entropy, float)
+        assert len(difference) == len(word) - 1
+>       assert entropy >= 0 and entropy <= np.log2(len(word))
+E       assert (np.float64(-inf) >= 0)
+
+test_0930.py:11: AssertionError
+_________________________ test_task_func_empty_string __________________________
+
+    def test_task_func_empty_string():
+        word = ""
+>       difference, entropy = task_func(word)
+        ^^^^^^^^^^^^^^^^^^^
+E       ValueError: not enough values to unpack (expected 2, got 0)
+
+test_0930.py:15: ValueError
+=========================== short test summary info ============================
+FAILED test_0930.py::test_task_func - assert (np.float64(-inf) >= 0)
+FAILED test_0930.py::test_task_func_empty_string - ValueError: not enough val...
+2 failed in 1.85s

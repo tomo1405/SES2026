@@ -1,0 +1,67 @@
+..FFFF                                                                   [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_single_item __________________________
+
+    def test_task_func_single_item():
+        result = task_func([['item1']])
+>       assert isinstance(result, sns.axisgrid.FacetGrid)
+E       AssertionError: assert False
+E        +  where False = isinstance(<Axes: xlabel='Count', ylabel='Item'>, <class 'seaborn.axisgrid.FacetGrid'>)
+E        +    where <class 'seaborn.axisgrid.FacetGrid'> = <module 'seaborn.axisgrid' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/axisgrid.py'>.FacetGrid
+E        +      where <module 'seaborn.axisgrid' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/axisgrid.py'> = sns.axisgrid
+
+test_0552.py:18: AssertionError
+________________________ test_task_func_multiple_items _________________________
+
+    def test_task_func_multiple_items():
+        result = task_func([['item1', 'item2'], ['item2', 'item3']])
+>       assert isinstance(result, sns.axisgrid.FacetGrid)
+E       AssertionError: assert False
+E        +  where False = isinstance(<Axes: xlabel='Count', ylabel='Item'>, <class 'seaborn.axisgrid.FacetGrid'>)
+E        +    where <class 'seaborn.axisgrid.FacetGrid'> = <module 'seaborn.axisgrid' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/axisgrid.py'>.FacetGrid
+E        +      where <module 'seaborn.axisgrid' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/axisgrid.py'> = sns.axisgrid
+
+test_0552.py:28: AssertionError
+_______________________ test_task_func_with_none_values ________________________
+
+    def test_task_func_with_none_values():
+        result = task_func([[None], [None]])
+>       assert result is None
+E       AssertionError: assert <Axes: xlabel='Count', ylabel='Item'> is None
+
+test_0552.py:38: AssertionError
+_______________________ test_task_func_with_mixed_values _______________________
+
+    def test_task_func_with_mixed_values():
+        result = task_func([['item1', None], ['item2', 'item1']])
+>       assert isinstance(result, sns.axisgrid.FacetGrid)
+E       AssertionError: assert False
+E        +  where False = isinstance(<Axes: xlabel='Count', ylabel='Item'>, <class 'seaborn.axisgrid.FacetGrid'>)
+E        +    where <class 'seaborn.axisgrid.FacetGrid'> = <module 'seaborn.axisgrid' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/axisgrid.py'>.FacetGrid
+E        +      where <module 'seaborn.axisgrid' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/axisgrid.py'> = sns.axisgrid
+
+test_0552.py:42: AssertionError
+=============================== warnings summary ===============================
+Qwen/non-quant/tests/test_0552.py::test_task_func_single_item
+Qwen/non-quant/tests/test_0552.py::test_task_func_multiple_items
+Qwen/non-quant/tests/test_0552.py::test_task_func_with_mixed_values
+  /work/tomohiro-w/utg/src/src_0552.py:29: FutureWarning: 
+  
+  Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `y` variable to `hue` and set `legend=False` for the same effect.
+  
+    ax = sns.barplot(x="Count", y="Item", data=df, palette="viridis")
+
+Qwen/non-quant/tests/test_0552.py::test_task_func_with_none_values
+  /work/tomohiro-w/utg/src/src_0552.py:29: FutureWarning: 
+  
+  Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+  
+    ax = sns.barplot(x="Count", y="Item", data=df, palette="viridis")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0552.py::test_task_func_single_item - AssertionError: assert False
+FAILED test_0552.py::test_task_func_multiple_items - AssertionError: assert F...
+FAILED test_0552.py::test_task_func_with_none_values - AssertionError: assert...
+FAILED test_0552.py::test_task_func_with_mixed_values - AssertionError: asser...
+4 failed, 2 passed, 4 warnings in 3.73s

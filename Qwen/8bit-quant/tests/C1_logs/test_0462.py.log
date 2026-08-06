@@ -1,0 +1,73 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_valid_script __________________________
+
+    def test_task_func_valid_script():
+        script_path = "/path/to/script.sh"
+>       result = task_func(script_path, timeout=1)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0462.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0462.py:28: in task_func
+    total_memory += process.memory_info().rss
+                    ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <test_0462.MockProcess object at 0x7f4c014f53a0>
+
+    def memory_info(self):
+>       return psutil._common.sinfo(rss=1024)
+               ^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'psutil._common' has no attribute 'sinfo'
+
+test_0462.py:33: AttributeError
+______________________ test_task_func_nonexistent_script _______________________
+
+    def test_task_func_nonexistent_script():
+        script_path = "/path/to/nonexistent_script.sh"
+        with pytest.raises(FileNotFoundError) as excinfo:
+>           task_func(script_path)
+
+test_0462.py:60: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0462.py:28: in task_func
+    total_memory += process.memory_info().rss
+                    ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <test_0462.MockProcess object at 0x7f4c014f4d10>
+
+    def memory_info(self):
+>       return psutil._common.sinfo(rss=1024)
+               ^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'psutil._common' has no attribute 'sinfo'
+
+test_0462.py:33: AttributeError
+____________________________ test_task_func_timeout ____________________________
+
+    def test_task_func_timeout():
+        script_path = "/path/to/script.sh"
+>       result = task_func(script_path, timeout=0.1)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0462.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0462.py:28: in task_func
+    total_memory += process.memory_info().rss
+                    ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <test_0462.MockProcess object at 0x7f4c014f6060>
+
+    def memory_info(self):
+>       return psutil._common.sinfo(rss=1024)
+               ^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'psutil._common' has no attribute 'sinfo'
+
+test_0462.py:33: AttributeError
+=========================== short test summary info ============================
+FAILED test_0462.py::test_task_func_valid_script - AttributeError: module 'ps...
+FAILED test_0462.py::test_task_func_nonexistent_script - AttributeError: modu...
+FAILED test_0462.py::test_task_func_timeout - AttributeError: module 'psutil....
+3 failed in 0.57s

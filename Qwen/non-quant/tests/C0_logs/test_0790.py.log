@@ -1,0 +1,52 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_output_shape __________________________
+
+    def test_task_func_output_shape():
+        result = task_func()
+>       assert result.shape == (ARRAY_LENGTH, 1), "The output shape should be (10, 1)"
+                                ^^^^^^^^^^^^
+E       NameError: name 'ARRAY_LENGTH' is not defined
+
+test_0790.py:7: NameError
+_________________________ test_task_func_output_values _________________________
+
+    def test_task_func_output_values():
+        expected_output = np.array([
+            [0.13636364],
+            [0.27272727],
+            [0.40909091],
+            [0.54545455],
+            [0.68181818],
+            [0.81818182],
+            [0.        ],
+            [0.90909091],
+            [0.72727273],
+            [0.36363636]
+        ])
+        result = task_func()
+>       np.testing.assert_almost_equal(result, expected_output, decimal=8, err_msg="The output values do not match the expected scaled values")
+E       AssertionError: 
+E       Arrays are not almost equal to 8 decimals
+E       The output values do not match the expected scaled values
+E       Mismatched elements: 9 / 10 (90%)
+E       First 5 mismatches are at indices:
+E        [0, 0]: 0.5714285714285714 (ACTUAL), 0.13636364 (DESIRED)
+E        [1, 0]: 0.14285714285714285 (ACTUAL), 0.27272727 (DESIRED)
+E        [2, 0]: 0.7142857142857143 (ACTUAL), 0.40909091 (DESIRED)
+E        [3, 0]: 0.2857142857142857 (ACTUAL), 0.54545455 (DESIRED)
+E        [4, 0]: 0.5714285714285714 (ACTUAL), 0.68181818 (DESIRED)
+E       Max absolute difference among violations: 0.43506493
+E       Max relative difference among violations: 3.19047608
+E        ACTUAL: array([[0.57142857],
+E              [0.14285714],
+E              [0.71428571],...
+E        DESIRED: array([[0.13636364],
+E              [0.27272727],
+E              [0.40909091],...
+
+test_0790.py:23: AssertionError
+=========================== short test summary info ============================
+FAILED test_0790.py::test_task_func_output_shape - NameError: name 'ARRAY_LEN...
+FAILED test_0790.py::test_task_func_output_values - AssertionError: 
+2 failed, 1 passed in 2.77s

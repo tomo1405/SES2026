@@ -1,0 +1,13 @@
+import math
+import yaml
+def task_func(yaml_path, key):
+    with open(yaml_path, 'r') as file:
+        data = yaml.safe_load(file)
+
+    if key in data:
+        data[key] = math.cos(data[key])
+
+    with open(yaml_path, 'w') as file:
+        yaml.safe_dump(data, file)
+
+    return data

@@ -1,0 +1,39 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a small set
+        t = [1, 2, 3, 4]
+        n = 2
+        result = task_func(t, n)
+        assert len(result) == n
+        assert all(item in t for item in result)
+    
+        # Test with a larger set
+        t = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        n = 3
+        result = task_func(t, n)
+        assert len(result) == n
+        assert all(item in t for item in result)
+    
+        # Test with n=1
+        t = ['a', 'b', 'c']
+        n = 1
+        result = task_func(t, n)
+        assert len(result) == n
+        assert result[0] in t
+    
+        # Test with n=len(t)
+        t = [True, False, None]
+        n = len(t)
+        result = task_func(t, n)
+        assert len(result) == n
+>       assert sorted(result) == sorted(t)
+               ^^^^^^^^^^^^^^
+E       TypeError: '<' not supported between instances of 'NoneType' and 'bool'
+
+test_0695.py:33: TypeError
+=========================== short test summary info ============================
+FAILED test_0695.py::test_task_func - TypeError: '<' not supported between in...
+1 failed in 0.45s

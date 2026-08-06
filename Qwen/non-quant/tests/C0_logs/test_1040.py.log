@@ -1,0 +1,30 @@
+F..                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_file_exists __________________________
+
+    def test_task_func_file_exists():
+        # Mock the client socket and file operations
+        mock_client_socket = Mock()
+        mock_client_socket.recv.return_value = b"test_file.txt"
+    
+        mock_file = Mock()
+        mock_file.read.side_effect = [b"data", b""]
+    
+        with patch('os.path.exists', return_value=True):
+            with patch('builtins.open', return_value=mock_file):
+                with patch('ssl.SSLContext') as MockSSLContext:
+                    mock_context = MockSSLContext.return_value
+                    mock_context.wrap_socket.return_value = mock_client_socket
+    
+                    response = task_func(mock_client_socket, "cert.pem", "key.pem")
+    
+>                   assert response == "d5503c8a1d5e6e2d8a3d7f2a1e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e"
+E                   assert "Error: 'Mock...ager protocol" == 'd5503c8a1d5e...e2e2e2e2e2e2e'
+E                     
+E                     - d5503c8a1d5e6e2d8a3d7f2a1e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e
+E                     + Error: 'Mock' object does not support the context manager protocol
+
+test_1040.py:21: AssertionError
+=========================== short test summary info ============================
+FAILED test_1040.py::test_task_func_file_exists - assert "Error: 'Mock...ager...
+1 failed, 2 passed in 0.49s

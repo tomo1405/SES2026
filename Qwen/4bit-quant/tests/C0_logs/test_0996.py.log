@@ -1,0 +1,68 @@
+.FFF                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_empty_file ___________________________
+
+    def test_task_func_empty_file():
+        with patch('src_0996.pd.read_csv', side_effect=pd.errors.EmptyDataError):
+>           result = task_func("empty_file.csv", "plot.png")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0996.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = 'empty_file.csv', plot_path = 'plot.png'
+
+    def task_func(file_path: str, plot_path: str) -> (float, float, str):
+        # Check if file exists
+        if not os.path.isfile(file_path):
+>           raise FileNotFoundError(f"File {file_path} does not exist.")
+E           FileNotFoundError: File empty_file.csv does not exist.
+
+../../../src/src_0996.py:8: FileNotFoundError
+__________________________ test_task_func_valid_data ___________________________
+
+    def test_task_func_valid_data():
+        # Prepare a temporary CSV file with valid data
+        with tempfile.NamedTemporaryFile(delete=False, suffix='.csv') as temp_file:
+            temp_file.write(b"1\n2\n3\n4\n5")
+            temp_file.flush()
+            temp_file_path = temp_file.name
+    
+        # Prepare a temporary file path for the plot
+        with tempfile.NamedTemporaryFile(delete=False, suffix='.png') as temp_plot_file:
+            temp_plot_path = temp_plot_file.name
+    
+        try:
+            result = task_func(temp_file_path, temp_plot_path)
+            mean, median, plot_path = result
+>           assert mean == 3.0
+E           assert 3.5 == 3.0
+
+test_0996.py:35: AssertionError
+_________________________ test_task_func_invalid_data __________________________
+
+    def test_task_func_invalid_data():
+        # Prepare a temporary CSV file with invalid data
+        with tempfile.NamedTemporaryFile(delete=False, suffix='.csv') as temp_file:
+            temp_file.write(b"a\nb\nc\n4\n5")
+            temp_file.flush()
+            temp_file_path = temp_file.name
+    
+        # Prepare a temporary file path for the plot
+        with tempfile.NamedTemporaryFile(delete=False, suffix='.png') as temp_plot_file:
+            temp_plot_path = temp_plot_file.name
+    
+        try:
+            result = task_func(temp_file_path, temp_plot_path)
+            mean, median, plot_path = result
+>           assert np.isnan(mean)
+E           AssertionError: assert np.False_
+E            +  where np.False_ = <ufunc 'isnan'>(4.5)
+E            +    where <ufunc 'isnan'> = np.isnan
+
+test_0996.py:61: AssertionError
+=========================== short test summary info ============================
+FAILED test_0996.py::test_task_func_empty_file - FileNotFoundError: File empt...
+FAILED test_0996.py::test_task_func_valid_data - assert 3.5 == 3.0
+FAILED test_0996.py::test_task_func_invalid_data - AssertionError: assert np....
+3 failed, 1 passed in 2.41s

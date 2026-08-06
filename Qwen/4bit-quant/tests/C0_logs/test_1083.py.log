@@ -1,0 +1,63 @@
+.F.FFF                                                                   [100%]
+=================================== FAILURES ===================================
+____________________ test_task_func_with_less_than_two_rows ____________________
+
+    def test_task_func_with_less_than_two_rows():
+        data = {
+            "Score_String": ["85.5"],
+            "Grade": ["A"]
+        }
+        result = task_func(data)
+>       assert result == float("nan")
+E       AssertionError: assert nan == nan
+E        +  where nan = float('nan')
+
+test_1083.py:18: AssertionError
+________________________ test_task_func_with_empty_data ________________________
+
+    def test_task_func_with_empty_data():
+        data = {}
+        result = task_func(data)
+>       assert result == float("nan")
+E       AssertionError: assert nan == nan
+E        +  where nan = float('nan')
+
+test_1083.py:31: AssertionError
+_____________________ test_task_func_with_all_null_scores ______________________
+
+    def test_task_func_with_all_null_scores():
+        data = {
+            "Score_String": [None, None],
+            "Grade": ["A", "B"]
+        }
+        result = task_func(data)
+>       assert result == float("nan")
+E       AssertionError: assert np.float64(nan) == nan
+E        +  where nan = float('nan')
+
+test_1083.py:39: AssertionError
+_____________________ test_task_func_with_all_null_grades ______________________
+
+    def test_task_func_with_all_null_grades():
+        data = {
+            "Score_String": ["85.5", "90.0"],
+            "Grade": [None, None]
+        }
+        result = task_func(data)
+>       assert result == float("nan")
+E       AssertionError: assert np.float64(nan) == nan
+E        +  where nan = float('nan')
+
+test_1083.py:47: AssertionError
+=============================== warnings summary ===============================
+Qwen/4bit-quant/tests/test_1083.py::test_task_func_with_all_null_grades
+  /work/tomohiro-w/utg/src/src_1083.py:10: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+    correlation = pearsonr(df["Score_Float"], df["Grade_Encoded"])[0]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_1083.py::test_task_func_with_less_than_two_rows - AssertionError:...
+FAILED test_1083.py::test_task_func_with_empty_data - AssertionError: assert ...
+FAILED test_1083.py::test_task_func_with_all_null_scores - AssertionError: as...
+FAILED test_1083.py::test_task_func_with_all_null_grades - AssertionError: as...
+4 failed, 2 passed, 1 warning in 2.73s

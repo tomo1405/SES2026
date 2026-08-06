@@ -1,0 +1,20 @@
+import pytest
+from src_0758 import task_func
+import numpy as np
+import datetime
+
+def test_task_func():
+    arr = np.array(['1.2.3', '4.5.6', '7.8.9'])
+    expected = np.array(['3.2.1', '6.5.4', '9.8.7'])
+    assert np.array_equal(task_func(arr), expected)
+
+def test_task_func_with_invalid_input():
+    arr = np.array(['1.2.3', '4.5.6', '7.8.9'])
+    with pytest.raises(ValueError):
+        task_func(arr, invalid_input=True)
+
+def test_task_func_with_different_datetime():
+    arr = np.array(['1.2.3', '4.5.6', '7.8.9'])
+    expected = np.array(['3.2.1', '6.5.4', '9.8.7'])
+    now = datetime.datetime(2022, 1, 1)
+    assert np.array_equal(task_func(arr, now), expected)

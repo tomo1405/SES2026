@@ -1,0 +1,22 @@
+import pytest
+from src_0822 import task_func
+
+def test_task_func():
+    # Test that the function returns a list of strings
+    results = task_func()
+    assert isinstance(results, list)
+    assert all(isinstance(result, str) for result in results)
+
+    # Test that the function delays for the correct amount of time
+    delay_time = 2.0
+    results = task_func(delay_time)
+    assert all(result.startswith(f'Delay in thread {i} completed') for i, result in enumerate(results))
+
+    # Test that the function creates the correct number of threads
+    num_threads = 10
+    results = task_func(num_threads=num_threads)
+    assert len(results) == num_threads
+
+    # Test that the function joins all threads before returning
+    with pytest.raises(RuntimeError):
+        task_func(num_threads=10, delay_time=0.0)

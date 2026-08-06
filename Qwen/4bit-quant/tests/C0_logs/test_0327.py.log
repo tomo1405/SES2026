@@ -1,0 +1,60 @@
+E.FF                                                                     [100%]
+==================================== ERRORS ====================================
+_______________________ ERROR at setup of test_task_func _______________________
+file /work/tomohiro-w/utg/Qwen/4bit-quant/tests/test_0327.py, line 23
+  def test_task_func(create_temp_dir, create_bat_files):
+file /work/tomohiro-w/utg/Qwen/4bit-quant/tests/test_0327.py, line 13
+  @pytest.fixture
+  def create_bat_files(temp_dir):
+E       fixture 'temp_dir' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, cov, create_bat_files, create_temp_dir, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, no_cover, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/work/tomohiro-w/utg/Qwen/4bit-quant/tests/test_0327.py:13
+=================================== FAILURES ===================================
+______________________ test_task_func_with_non_executable ______________________
+
+create_temp_dir = '/tmp/tmp9wyoodjj'
+
+    def test_task_func_with_non_executable(create_temp_dir):
+        non_executable_file = os.path.join(create_temp_dir, 'non_executable.bat')
+        with open(non_executable_file, 'w') as f:
+            f.write('@echo off\necho This file is not executable\nexit /b 1')
+        os.chmod(non_executable_file, 0o444)  # Make the file read-only
+    
+        results = task_func(create_temp_dir)
+        assert len(results) == 1
+>       assert ('non_executable.bat', None) in results
+E       AssertionError: assert ('non_executable.bat', None) in [('non_executable.bat', 126)]
+
+test_0327.py:41: AssertionError
+----------------------------- Captured stderr call -----------------------------
+/bin/sh: 1: /tmp/tmp9wyoodjj/non_executable.bat: Permission denied
+__________________________ test_task_func_with_error ___________________________
+
+create_temp_dir = '/tmp/tmp2exwhcyo'
+
+    def test_task_func_with_error(create_temp_dir):
+        error_file = os.path.join(create_temp_dir, 'error.bat')
+        with open(error_file, 'w') as f:
+            f.write('@echo off\necho This file will cause an error\nexit /b 1')
+    
+        def mock_subprocess_popen(*args, **kwargs):
+            raise Exception("Mocked subprocess error")
+    
+        with pytest.raises(Exception) as excinfo:
+            with patch('src_0327.subprocess.Popen', side_effect=mock_subprocess_popen):
+                task_func(create_temp_dir)
+    
+>       assert str(excinfo.value) == "Mocked subprocess error"
+E       assert "name 'patch' is not defined" == 'Mocked subprocess error'
+E         
+E         - Mocked subprocess error
+E         + name 'patch' is not defined
+
+test_0327.py:55: AssertionError
+=========================== short test summary info ============================
+FAILED test_0327.py::test_task_func_with_non_executable - AssertionError: ass...
+FAILED test_0327.py::test_task_func_with_error - assert "name 'patch' is not ...
+ERROR test_0327.py::test_task_func
+2 failed, 1 passed, 1 error in 0.44s

@@ -1,0 +1,29 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that the function raises an error if the keys parameter does not contain exactly 10 unique elements
+        with pytest.raises(ValueError):
+            task_func({}, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])
+    
+        # Test that the function updates the dictionary correctly
+        my_dict = {}
+        keys = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        task_func(my_dict, keys)
+>       assert my_dict == {1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7, 8: 8, 9: 9, 10: 10}
+E       AssertionError: assert {1: 8, 2: 7, ...6, 4: 56, ...} == {1: 1, 2: 2, 3: 3, 4: 4, ...}
+E         
+E         Differing items:
+E         {1: 8} != {1: 1}
+E         {2: 7} != {2: 2}
+E         {3: 36} != {3: 3}
+E         {4: 56} != {4: 4}
+E         {5: 23} != {5: 5}...
+E         
+E         ...Full output truncated (6 lines hidden), use '-vv' to show
+
+test_0114.py:13: AssertionError
+=========================== short test summary info ============================
+FAILED test_0114.py::test_task_func - AssertionError: assert {1: 8, 2: 7, ......
+1 failed in 0.52s

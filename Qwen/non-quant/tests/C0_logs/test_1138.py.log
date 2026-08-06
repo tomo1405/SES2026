@@ -1,0 +1,66 @@
+FF..                                                                     [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_with_url ____________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1332/test_task_func_with_url0')
+
+    def test_task_func_with_url(tmpdir):
+        url = "http://example.com"
+        output_path = str(tmpdir / "output.json")
+        expected_output = ['+123 456-7890']
+    
+>       result = task_func(url, output_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1138.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1138.py:20: in task_func
+    with open(output_path, 'w') as f:
+         ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+filename = '/tmp/pytest-of-tomohiro-w/pytest-1332/test_task_func_with_url0/output.json'
+mode = 'w'
+
+    def mock_open(filename, mode):
+        if filename == "local_file.html":
+            return io.StringIO("<html><body>Phone: +987 654-3210</body></html>")
+        else:
+>           raise FileNotFoundError(f"File {filename} not found")
+E           FileNotFoundError: File /tmp/pytest-of-tomohiro-w/pytest-1332/test_task_func_with_url0/output.json not found
+
+test_1138.py:25: FileNotFoundError
+________________________ test_task_func_with_local_file ________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1332/test_task_func_with_local_file0')
+
+    def test_task_func_with_local_file(tmpdir):
+        url = "file://local_file.html"
+        output_path = str(tmpdir / "output.json")
+        expected_output = ['+987 654-3210']
+    
+>       result = task_func(url, output_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1138.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1138.py:20: in task_func
+    with open(output_path, 'w') as f:
+         ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+filename = '/tmp/pytest-of-tomohiro-w/pytest-1332/test_task_func_with_local_file0/output.json'
+mode = 'w'
+
+    def mock_open(filename, mode):
+        if filename == "local_file.html":
+            return io.StringIO("<html><body>Phone: +987 654-3210</body></html>")
+        else:
+>           raise FileNotFoundError(f"File {filename} not found")
+E           FileNotFoundError: File /tmp/pytest-of-tomohiro-w/pytest-1332/test_task_func_with_local_file0/output.json not found
+
+test_1138.py:25: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_1138.py::test_task_func_with_url - FileNotFoundError: File /tmp/p...
+FAILED test_1138.py::test_task_func_with_local_file - FileNotFoundError: File...
+2 failed, 2 passed in 1.22s

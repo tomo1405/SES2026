@@ -1,0 +1,56 @@
+FFFF...                                                                  [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_single_mode ________________________
+
+    def test_task_func_with_single_mode():
+        input_data = [[1, 2, 2, 3], [4, 2, 5]]
+        expected_output = (np.array([2]), np.array([4]))
+>       assert task_func(input_data) == expected_output
+E       assert (np.int64(2), np.int64(3)) == (array([2]), array([4]))
+E         
+E         At index 1 diff: np.int64(3) != array([4])
+E         Use -v to get more diff
+
+test_0688.py:9: AssertionError
+______________________ test_task_func_with_multiple_modes ______________________
+
+    def test_task_func_with_multiple_modes():
+        input_data = [[1, 1, 2, 2], [3, 3, 4, 4]]
+        expected_output = (np.array([1, 2, 3, 4]), np.array([2, 2, 2, 2]))
+>       assert task_func(input_data) == expected_output
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+test_0688.py:14: ValueError
+_______________________ test_task_func_with_empty_lists ________________________
+
+    def test_task_func_with_empty_lists():
+        input_data = [[], []]
+        expected_output = (np.array([]), np.array([]))
+>       assert task_func(input_data) == expected_output
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: The truth value of an empty array is ambiguous. Use `array.size > 0` to check that an array is not empty.
+
+test_0688.py:19: ValueError
+___________________ test_task_func_with_single_element_lists ___________________
+
+    def test_task_func_with_single_element_lists():
+        input_data = [[1], [2], [3]]
+        expected_output = (np.array([1, 2, 3]), np.array([1, 1, 1]))
+>       assert task_func(input_data) == expected_output
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+test_0688.py:24: ValueError
+=============================== warnings summary ===============================
+Qwen/8bit-quant/tests/test_0688.py::test_task_func_with_empty_lists
+  /work/tomohiro-w/utg/src/src_0688.py:5: SmallSampleWarning: One or more sample arguments is too small; all returned values will be NaN. See documentation for sample size requirements.
+    mode_value, mode_count = mode(merged_list)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0688.py::test_task_func_with_single_mode - assert (np.int64(2), n...
+FAILED test_0688.py::test_task_func_with_multiple_modes - ValueError: The tru...
+FAILED test_0688.py::test_task_func_with_empty_lists - ValueError: The truth ...
+FAILED test_0688.py::test_task_func_with_single_element_lists - ValueError: T...
+4 failed, 3 passed, 1 warning in 1.90s

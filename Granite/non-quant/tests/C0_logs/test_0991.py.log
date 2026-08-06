@@ -1,0 +1,58 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        hex_string = "48656c6c6f20576f726c64"
+        expected_encodings = {
+            "hex": "48656c6c6f20576f726c64",
+            "base64": "SGVsbG8gV29ybGQ=",
+            "utf-8": "Hello World",
+            "utf-16": "Hello World",
+            "utf-32": "Hello World",
+            "ASCII": "Hello World",
+            "URL": "Hello+World",
+            "ROT13": "Uryyb%20Jbeyq",
+        }
+        actual_encodings = task_func(hex_string)
+>       assert actual_encodings == expected_encodings
+E       AssertionError: assert {'hex': '4865...o World', ...} == {'hex': '4865...o World', ...}
+E         
+E         Omitting 6 identical items, use -vv to show
+E         Differing items:
+E         {'URL': 'Hello%20World'} != {'URL': 'Hello+World'}
+E         {'ROT13': 'Uryyb Jbeyq'} != {'ROT13': 'Uryyb%20Jbeyq'}
+E         Use -v to get more diff
+
+test_0991.py:17: AssertionError
+___________________ test_task_func_with_ascii_encoding_error ___________________
+
+    def test_task_func_with_ascii_encoding_error():
+        hex_string = "48656c6c6f204d657373"
+        expected_encodings = {
+            "hex": "48656c6c6f204d657373",
+            "base64": "SGVsbG8gTWVlc3M=",
+            "utf-8": "Hello Mess",
+            "utf-16": "Hello Mess",
+            "utf-32": "Hello Mess",
+            "ASCII": "Not representable in ASCII",
+            "URL": "Hello+Mess",
+            "ROT13": "Uryyb%20Fynpx",
+        }
+        actual_encodings = task_func(hex_string)
+>       assert actual_encodings == expected_encodings
+E       AssertionError: assert {'hex': '4865...lo Mess', ...} == {'hex': '4865...lo Mess', ...}
+E         
+E         Omitting 4 identical items, use -vv to show
+E         Differing items:
+E         {'ASCII': 'Hello Mess'} != {'ASCII': 'Not representable in ASCII'}
+E         {'URL': 'Hello%20Mess'} != {'URL': 'Hello+Mess'}
+E         {'base64': 'SGVsbG8gTWVzcw=='} != {'base64': 'SGVsbG8gTWVlc3M='}
+E         {'ROT13': 'Uryyb Zrff'} != {'ROT13': 'Uryyb%20Fynpx'}
+E         Use -v to get more diff
+
+test_0991.py:37: AssertionError
+=========================== short test summary info ============================
+FAILED test_0991.py::test_task_func - AssertionError: assert {'hex': '4865......
+FAILED test_0991.py::test_task_func_with_ascii_encoding_error - AssertionErro...
+2 failed, 1 passed in 0.49s

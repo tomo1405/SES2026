@@ -1,0 +1,40 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_creates_files _________________________
+
+    def test_task_func_creates_files():
+        directory = "test_directory"
+        n_files = 5
+    
+        task_func(directory, n_files)
+    
+        assert os.path.exists(directory)
+>       assert len(os.listdir(directory)) == n_files
+E       AssertionError: assert 24 == 5
+E        +  where 24 = len(['0.json', 'test_file3.pdf', 'file_5.txt', 'file_1.txt', '4.json', 'test_file.txt', ...])
+E        +    where ['0.json', 'test_file3.pdf', 'file_5.txt', 'file_1.txt', '4.json', 'test_file.txt', ...] = <built-in function listdir>('test_directory')
+E        +      where <built-in function listdir> = os.listdir
+
+test_0674.py:14: AssertionError
+_____________________ test_task_func_writes_random_numbers _____________________
+
+    def test_task_func_writes_random_numbers():
+        directory = "test_directory"
+        n_files = 5
+    
+        task_func(directory, n_files)
+    
+        for i in range(n_files):
+            filename = os.path.join(directory, f"file_{i+1}.txt")
+            with open(filename, 'r') as file:
+>               assert file.read() == str(random.randint(0, 9))
+E               AssertionError: assert '9' == '5'
+E                 
+E                 - 5
+E                 + 9
+
+test_0674.py:25: AssertionError
+=========================== short test summary info ============================
+FAILED test_0674.py::test_task_func_creates_files - AssertionError: assert 24...
+FAILED test_0674.py::test_task_func_writes_random_numbers - AssertionError: a...
+2 failed in 0.46s

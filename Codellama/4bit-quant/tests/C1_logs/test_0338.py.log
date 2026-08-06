@@ -1,0 +1,29 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a sample dataframe
+        df = pd.DataFrame({'A': [1, 2, 3, 4, 5], 'B': [2, 4, 6, 8, 10]})
+        group_col = 'A'
+        value_col = 'B'
+        ax = task_func(df, group_col, value_col)
+    
+        # Check that the bar chart is created correctly
+        assert ax.get_xlabel() == group_col
+        assert ax.get_ylabel() == value_col
+        assert ax.get_title() == f'Bar chart of {value_col} by {group_col}'
+        assert len(ax.get_xticks()) == len(df[group_col].unique())
+>       assert len(ax.get_yticks()) == len(df[value_col].unique())
+E       AssertionError: assert 7 == 5
+E        +  where 7 = len(array([ 0.,  2.,  4.,  6.,  8., 10., 12.]))
+E        +    where array([ 0.,  2.,  4.,  6.,  8., 10., 12.]) = get_yticks()
+E        +      where get_yticks = <Axes: title={'center': 'Bar chart of B by A'}, xlabel='A', ylabel='B'>.get_yticks
+E        +  and   5 = len(array([ 2,  4,  6,  8, 10]))
+E        +    where array([ 2,  4,  6,  8, 10]) = unique()
+E        +      where unique = 0     2\n1     4\n2     6\n3     8\n4    10\nName: B, dtype: int64.unique
+
+test_0338.py:19: AssertionError
+=========================== short test summary info ============================
+FAILED test_0338.py::test_task_func - AssertionError: assert 7 == 5
+1 failed in 2.00s

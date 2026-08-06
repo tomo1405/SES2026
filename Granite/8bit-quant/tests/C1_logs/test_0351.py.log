@@ -1,0 +1,65 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        with patch('subprocess.Popen') as mock_popen, patch('os.path.isdir') as mock_isdir, patch('shutil.move') as mock_move:
+            mock_isdir.return_value = True
+            task_func('/path/to/src', '/path/to/dst')
+>           mock_popen.assert_has_calls([
+                call(['gzip', '/path/to/src/file1']),
+                call().wait(),
+                call(['gzip', '/path/to/src/file2']),
+                call().wait(),
+                call(['gzip', '/path/to/src/file3']),
+                call().wait()
+            ])
+
+test_0351.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='Popen' id='139540802315008'>
+calls = [call(['gzip', '/path/to/src/file1']), call().wait(), call(['gzip', '/path/to/src/file2']), call().wait(), call(['gzip', '/path/to/src/file3']), call().wait()]
+any_order = False
+
+    def assert_has_calls(self, calls, any_order=False):
+        """assert the mock has been called with the specified calls.
+        The `mock_calls` list is checked for the calls.
+    
+        If `any_order` is False (the default) then the calls must be
+        sequential. There can be extra calls before or after the
+        specified calls.
+    
+        If `any_order` is True then the calls can be in any order, but
+        they must all appear in `mock_calls`."""
+        expected = [self._call_matcher(c) for c in calls]
+        cause = next((e for e in expected if isinstance(e, Exception)), None)
+        all_calls = _CallList(self._call_matcher(c) for c in self.mock_calls)
+        if not any_order:
+            if expected not in all_calls:
+                if cause is None:
+                    problem = 'Calls not found.'
+                else:
+                    problem = ('Error processing expected calls.\n'
+                               'Errors: {}').format(
+                                   [e if isinstance(e, Exception) else None
+                                    for e in expected])
+>               raise AssertionError(
+                    f'{problem}\n'
+                    f'Expected: {_CallList(calls)}'
+                    f'{self._calls_repr(prefix="  Actual").rstrip(".")}'
+                ) from cause
+E               AssertionError: Calls not found.
+E               Expected: [call(['gzip', '/path/to/src/file1']),
+E                call().wait(),
+E                call(['gzip', '/path/to/src/file2']),
+E                call().wait(),
+E                call(['gzip', '/path/to/src/file3']),
+E                call().wait()]
+
+/usr/lib/python3.12/unittest/mock.py:981: AssertionError
+=========================== short test summary info ============================
+FAILED test_0351.py::test_task_func - AssertionError: Calls not found.
+1 failed in 0.47s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

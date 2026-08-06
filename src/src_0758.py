@@ -1,0 +1,8 @@
+import numpy as np
+import datetime
+def task_func(arr):
+    vectorized_reverse = np.vectorize(lambda s: '.'.join(s.split('.')[::-1]))
+    
+    now = datetime.datetime.now()
+    
+    return vectorized_reverse(arr)

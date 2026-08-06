@@ -1,0 +1,45 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        person_names = ['John Doe', 'Jane Doe', 'John Smith']
+        email_domains = ['example.com', 'example.org']
+        num_records = 5
+    
+>       df = task_func(person_names, email_domains, num_records)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0924.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+person_names = ['John Doe', 'Jane Doe', 'John Smith']
+email_domains = ['example.com', 'example.org'], num_records = 5
+
+    def task_func(person_names, email_domains, num_records=5):
+        if len(person_names) < num_records or len(email_domains) == 0:
+>           raise ValueError("Insufficient number of names or domains provided.")
+E           ValueError: Insufficient number of names or domains provided.
+
+../../../src/src_0924.py:6: ValueError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        person_names = ['John Doe', 'Jane Doe', 'John Smith']
+        email_domains = ['example.com', 'example.org']
+        num_records = 5
+    
+        with pytest.raises(ValueError):
+            task_func(person_names, [], num_records)
+    
+        with pytest.raises(ValueError):
+            task_func([], email_domains, num_records)
+    
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0924.py:27: Failed
+=========================== short test summary info ============================
+FAILED test_0924.py::test_task_func_valid_input - ValueError: Insufficient nu...
+FAILED test_0924.py::test_task_func_invalid_input - Failed: DID NOT RAISE Val...
+2 failed in 1.11s

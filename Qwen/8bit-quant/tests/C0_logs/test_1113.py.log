@@ -1,0 +1,27 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test if the function returns the correct file name
+        file_name = task_func()
+        assert file_name == "data.csv"
+    
+        # Check if the file is created
+        assert os.path.exists(file_name)
+    
+        # Read the contents of the file and validate its structure
+        with open(file_name, newline='') as file:
+            reader = csv.reader(file)
+            header = next(reader)
+            assert header == ['Time', 'Temperature', 'Humidity', 'Pressure']
+    
+            for row in reader:
+>               assert len(row) == 4
+E               AssertionError: assert 1 == 4
+E                +  where 1 = len(['625'])
+
+test_1113.py:21: AssertionError
+=========================== short test summary info ============================
+FAILED test_1113.py::test_task_func - AssertionError: assert 1 == 4
+1 failed in 0.67s

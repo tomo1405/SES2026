@@ -1,0 +1,62 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_valid_url ___________________________
+
+    def test_task_func_valid_url():
+        url = "https://www.example.com/file.zip"
+        download_path = "mnt/data/downloads/"
+        expected_extract_path = os.path.splitext(os.path.join(download_path, os.path.basename(url)))[0]
+>       assert task_func(url, download_path) == expected_extract_path
+E       AssertionError: assert 'Error: Unabl...provided URL.' == 'mnt/data/downloads/file'
+E         
+E         - mnt/data/downloads/file
+E         + Error: Unable to download the file from the provided URL.
+
+test_1007.py:12: AssertionError
+__________________________ test_task_func_invalid_url __________________________
+
+    def test_task_func_invalid_url():
+        url = "https://www.example.com/file.txt"
+        download_path = "mnt/data/downloads/"
+>       assert task_func(url, download_path) == "Error: The URL does not point to a ZIP file."
+E       AssertionError: assert 'Error: Unabl...provided URL.' == 'Error: The U...o a ZIP file.'
+E         
+E         - Error: The URL does not point to a ZIP file.
+E         + Error: Unable to download the file from the provided URL.
+
+test_1007.py:17: AssertionError
+________________________ test_task_func_download_error _________________________
+
+    def test_task_func_download_error():
+        url = "https://www.example.com/file.zip"
+        download_path = "mnt/data/downloads/"
+>       with pytest.raises(requests.RequestException):
+E       Failed: DID NOT RAISE RequestException
+
+test_1007.py:22: Failed
+_________________________ test_task_func_bad_zip_file __________________________
+
+    def test_task_func_bad_zip_file():
+        url = "https://www.example.com/file.zip"
+        download_path = "mnt/data/downloads/"
+>       with pytest.raises(BadZipFile):
+                           ^^^^^^^^^^
+E       NameError: name 'BadZipFile' is not defined
+
+test_1007.py:28: NameError
+_________________________ test_task_func_runtime_error _________________________
+
+    def test_task_func_runtime_error():
+        url = "https://www.example.com/file.zip"
+        download_path = "mnt/data/downloads/"
+>       with pytest.raises(RuntimeError):
+E       Failed: DID NOT RAISE RuntimeError
+
+test_1007.py:34: Failed
+=========================== short test summary info ============================
+FAILED test_1007.py::test_task_func_valid_url - AssertionError: assert 'Error...
+FAILED test_1007.py::test_task_func_invalid_url - AssertionError: assert 'Err...
+FAILED test_1007.py::test_task_func_download_error - Failed: DID NOT RAISE Re...
+FAILED test_1007.py::test_task_func_bad_zip_file - NameError: name 'BadZipFil...
+FAILED test_1007.py::test_task_func_runtime_error - Failed: DID NOT RAISE Run...
+5 failed in 0.90s

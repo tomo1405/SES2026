@@ -1,0 +1,51 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Default arguments
+        fig = task_func()
+        assert isinstance(fig, plt.Figure)
+    
+        # Test case 2: Custom arguments
+        fig = task_func(num_rows=10, rand_range=(1, 10))
+        assert isinstance(fig, plt.Figure)
+    
+        # Test case 3: Invalid number of rows
+        with pytest.raises(ValueError):
+>           task_func(num_rows=0)
+
+test_0166.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test_0166.py:12: in task_func
+    data.plot(kind='bar', stacked=True, ax=ax)
+../../../.venv/lib/python3.12/site-packages/pandas/plotting/_core.py:1185: in __call__
+    return plot_backend.plot(data, kind=kind, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/plotting/_matplotlib/__init__.py:71: in plot
+    plot_obj.generate()
+../../../.venv/lib/python3.12/site-packages/pandas/plotting/_matplotlib/core.py:525: in generate
+    self._post_plot_logic(ax, self.data)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.plotting._matplotlib.core.BarPlot object at 0x7e4932794d10>
+ax = <Axes: >, data = Empty DataFrame
+Columns: [A, B, C, D, E]
+Index: []
+
+    def _post_plot_logic(self, ax: Axes, data) -> None:
+        if self.use_index:
+            str_index = [pprint_thing(key) for key in data.index]
+        else:
+            str_index = [pprint_thing(key) for key in range(data.shape[0])]
+    
+>       s_edge = self.ax_pos[0] - 0.25 + self.lim_offset
+                 ^^^^^^^^^^^^^^
+E       IndexError: index 0 is out of bounds for axis 0 with size 0
+
+../../../.venv/lib/python3.12/site-packages/pandas/plotting/_matplotlib/core.py:2049: IndexError
+=========================== short test summary info ============================
+FAILED test_0166.py::test_task_func - IndexError: index 0 is out of bounds fo...
+1 failed in 2.32s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

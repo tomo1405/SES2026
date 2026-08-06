@@ -1,0 +1,27 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Test with valid input
+        excel_file_location = "test.xlsx"
+        sheet_name = "Sheet1"
+        expected_column_sum = {"A": 10, "B": 20, "C": 30}
+    
+        df = pd.DataFrame({"A": [1, 2, 3], "B": [4, 5, 6], "C": [7, 8, 9]})
+        df.to_excel(excel_file_location, sheet_name=sheet_name, index=False)
+    
+        result = task_func(sheet_name, excel_file_location, "test.csv")
+>       assert result == expected_column_sum
+E       AssertionError: assert {'A': 6, 'B': 15, 'C': 24} == {'A': 10, 'B': 20, 'C': 30}
+E         
+E         Differing items:
+E         {'B': 15} != {'B': 20}
+E         {'C': 24} != {'C': 30}
+E         {'A': 6} != {'A': 10}
+E         Use -v to get more diff
+
+test_0362.py:20: AssertionError
+=========================== short test summary info ============================
+FAILED test_0362.py::test_task_func - AssertionError: assert {'A': 6, 'B': 15...
+1 failed in 1.73s

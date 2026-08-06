@@ -1,0 +1,19 @@
+...F                                                                     [100%]
+=================================== FAILURES ===================================
+_____________ TestTaskFunc.test_task_func_with_invalid_object_type _____________
+
+self = <test_0465.TestTaskFunc object at 0x77213fef8ec0>
+
+    def test_task_func_with_invalid_object_type(self):
+        my_obj = {"file": open(__file__)}
+        with pytest.raises(TypeError) as exc_info:
+            task_func(my_obj)
+>       assert "Object of type 'file' is not JSON serializable" in str(exc_info.value)
+E       assert "Object of type 'file' is not JSON serializable" in 'Object of type TextIOWrapper is not JSON serializable'
+E        +  where 'Object of type TextIOWrapper is not JSON serializable' = str(TypeError('Object of type TextIOWrapper is not JSON serializable'))
+E        +    where TypeError('Object of type TextIOWrapper is not JSON serializable') = <ExceptionInfo TypeError('Object of type TextIOWrapper is not JSON serializable') tblen=7>.value
+
+test_0465.py:37: AssertionError
+=========================== short test summary info ============================
+FAILED test_0465.py::TestTaskFunc::test_task_func_with_invalid_object_type - ...
+1 failed, 3 passed in 0.45s

@@ -1,0 +1,29 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        x_list = [1, 2, 3, 4, 5]
+        y_list = [1, 2, 3, 4, 5]
+        n_clusters = 2
+        random_state = 0
+        labels, centers = task_func(x_list, y_list, n_clusters, random_state)
+        assert len(labels) == len(x_list)
+        assert len(centers) == n_clusters
+        assert all(label in range(n_clusters) for label in labels)
+>       assert all(center in range(n_clusters) for center in centers)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0700.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <iterator object at 0x7aeaadb62a70>
+
+>   assert all(center in range(n_clusters) for center in centers)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+test_0700.py:13: ValueError
+=========================== short test summary info ============================
+FAILED test_0700.py::test_task_func - ValueError: The truth value of an array...
+1 failed in 3.79s

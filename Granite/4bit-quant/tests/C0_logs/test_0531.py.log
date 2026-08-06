@@ -1,0 +1,33 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: empty DataFrame
+        df = pd.DataFrame()
+        with pytest.raises(ValueError, match="Input data cannot be empty."):
+            task_func(df)
+    
+        # Test case 2: negative age
+        df = pd.DataFrame({"name": ["Alice", "Bob", "Charlie"], "age": [25, 30, -1]})
+        with pytest.raises(ValueError, match="Invalid age: age cannot be less than 0."):
+            task_func(df)
+    
+        # Test case 3: duplicate names with ages
+        df = pd.DataFrame({"name": ["Alice", "Bob", "Alice"], "age": [25, 30, 30]})
+        duplicates_counter, ax = task_func(df)
+>       assert duplicates_counter == Counter({30: 2})
+E       assert Counter({25: 1, 30: 1}) == Counter({30: 2})
+E         
+E         Differing items:
+E         {30: 1} != {30: 2}
+E         Left contains 1 more item:
+E         {25: 1}
+E         Use -v to get more diff
+
+test_0531.py:51: AssertionError
+=========================== short test summary info ============================
+FAILED test_0531.py::test_task_func - assert Counter({25: 1, 30: 1}) == Count...
+1 failed in 3.90s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

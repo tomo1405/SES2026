@@ -1,0 +1,29 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        start_time = "2022-01-01"
+        end_time = "2022-01-02"
+        ax = task_func(start_time, end_time)
+        assert ax.get_xlabel() == "Date"
+        assert ax.get_ylabel() == "Time difference (hours)"
+        assert len(ax.get_legend_handles_labels()[0]) == 5
+        assert len(ax.get_legend_handles_labels()[1]) == 5
+        assert len(ax.get_lines()) == 5
+>       assert all(ax.get_lines()[i].get_color() == COLORS[i % len(COLORS)] for i in range(5))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0486.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <range_iterator object at 0x7e0a195498c0>
+
+>   assert all(ax.get_lines()[i].get_color() == COLORS[i % len(COLORS)] for i in range(5))
+                                                ^^^^^^
+E   NameError: name 'COLORS' is not defined
+
+test_0486.py:13: NameError
+=========================== short test summary info ============================
+FAILED test_0486.py::test_task_func - NameError: name 'COLORS' is not defined
+1 failed in 1.73s

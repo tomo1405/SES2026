@@ -1,0 +1,29 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        my_obj = {"key1": "value1", "key2": datetime.now(), "key3": Decimal("123.45")}
+        expected_result = '{"key1": "value1", "key2": "2022-01-01T00:00:00", "key3": "123.45"}'
+        result = task_func(my_obj)
+>       assert result == expected_result
+E       assert '{"key1": "va...3": "123.45"}' == '{"key1": "va...3": "123.45"}'
+E         
+E         - {"key1": "value1", "key2": "2022-01-01T00:00:00", "key3": "123.45"}
+E         ?                                ^  ^   ^^^   ^^^
+E         + {"key1": "value1", "key2": "2026-07-30T01:38:03.220148", "key3": "123.45"}
+E         ?                                ^  ^ +++  ^^^  ++++ ^^^
+
+test_0465.py:11: AssertionError
+______________________ test_task_func_with_invalid_input _______________________
+
+    def test_task_func_with_invalid_input():
+        my_obj = {"key1": "value1", "key2": "invalid_datetime", "key3": "invalid_decimal"}
+>       with pytest.raises(TypeError):
+E       Failed: DID NOT RAISE TypeError
+
+test_0465.py:15: Failed
+=========================== short test summary info ============================
+FAILED test_0465.py::test_task_func - assert '{"key1": "va...3": "123.45"}' =...
+FAILED test_0465.py::test_task_func_with_invalid_input - Failed: DID NOT RAIS...
+2 failed in 0.44s

@@ -1,0 +1,69 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+self = <pandas.io.sql.SQLiteDatabase object at 0x781e8f7910d0>
+sql = 'SELECT * FROM EmailData', params = None
+
+    def execute(self, sql: str | Select | TextClause, params=None):
+        from sqlite3 import Error
+    
+        if not isinstance(sql, str):
+            raise TypeError("Query must be a string unless using sqlalchemy.")
+        args = [] if params is None else [params]
+        cur = self.con.cursor()
+        try:
+>           cur.execute(sql, *args)
+E           sqlite3.OperationalError: no such table: EmailData
+
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:2702: OperationalError
+
+The above exception was the direct cause of the following exception:
+
+    def test_task_func():
+        db_file = "test_db.db"
+>       df, ax = task_func(db_file)
+                 ^^^^^^^^^^^^^^^^^^
+
+test_0074.py:6: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0074.py:8: in task_func
+    df = pd.read_sql_query("SELECT * FROM EmailData", conn)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:497: in read_sql_query
+    return pandas_sql.read_query(
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:2766: in read_query
+    cursor = self.execute(sql, params)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.io.sql.SQLiteDatabase object at 0x781e8f7910d0>
+sql = 'SELECT * FROM EmailData', params = None
+
+    def execute(self, sql: str | Select | TextClause, params=None):
+        from sqlite3 import Error
+    
+        if not isinstance(sql, str):
+            raise TypeError("Query must be a string unless using sqlalchemy.")
+        args = [] if params is None else [params]
+        cur = self.con.cursor()
+        try:
+            cur.execute(sql, *args)
+            return cur
+        except Error as exc:
+            try:
+                self.con.rollback()
+            except Error as inner_exc:  # pragma: no cover
+                ex = DatabaseError(
+                    f"Execution failed on sql: {sql}\n{exc}\nunable to rollback"
+                )
+                raise ex from inner_exc
+    
+            ex = DatabaseError(f"Execution failed on sql '{sql}': {exc}")
+>           raise ex from exc
+E           pandas.errors.DatabaseError: Execution failed on sql 'SELECT * FROM EmailData': no such table: EmailData
+
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:2714: DatabaseError
+=========================== short test summary info ============================
+FAILED test_0074.py::test_task_func - pandas.errors.DatabaseError: Execution ...
+1 failed in 2.71s

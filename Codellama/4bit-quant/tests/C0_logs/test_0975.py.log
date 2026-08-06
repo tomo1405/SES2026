@@ -1,0 +1,25 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        source_path = pathlib.Path("source_path")
+        destination_path = pathlib.Path("destination_path")
+    
+        with pytest.raises(ValueError):
+            task_func(source_path, destination_path)
+    
+        source_path.mkdir(parents=True, exist_ok=True)
+        destination_path.mkdir(parents=True, exist_ok=True)
+    
+        results = task_func(source_path, destination_path)
+>       assert results == [str(entry.name) for entry in source_path.iterdir() if entry.is_file()]
+E       AssertionError: assert ('source_path', []) == []
+E         
+E         Left contains 2 more items, first extra item: 'source_path'
+E         Use -v to get more diff
+
+test_0975.py:18: AssertionError
+=========================== short test summary info ============================
+FAILED test_0975.py::test_task_func - AssertionError: assert ('source_path', ...
+1 failed in 0.48s

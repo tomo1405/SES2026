@@ -1,0 +1,44 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_success ____________________________
+
+mock_subprocess = None, mock_glob = None
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-2223/test_task_func_success0')
+
+    def test_task_func_success(mock_subprocess, mock_glob, tmpdir):
+        # Create a temporary directory for testing
+        r_script_path = tmpdir.join('test_script.R').strpath
+        output_path = tmpdir.mkdir('output').strpath
+    
+        # Mock the glob module to simulate successful file generation
+        def mock_glob_success(pattern):
+            return [os.path.join(output_path, 'test_output.csv')]
+    
+>       mock_glob.glob = mock_glob_success
+        ^^^^^^^^^^^^^^
+E       AttributeError: 'NoneType' object has no attribute 'glob'
+
+test_1106.py:37: AttributeError
+____________________________ test_task_func_failure ____________________________
+
+mock_subprocess = None, mock_glob = None
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-2223/test_task_func_failure0')
+
+    def test_task_func_failure(mock_subprocess, mock_glob, tmpdir):
+        # Create a temporary directory for testing
+        r_script_path = tmpdir.join('test_script.R').strpath
+        output_path = tmpdir.mkdir('output').strpath
+    
+        # Mock the glob module to simulate no file generation
+        def mock_glob_failure(pattern):
+            return []
+    
+>       mock_glob.glob = mock_glob_failure
+        ^^^^^^^^^^^^^^
+E       AttributeError: 'NoneType' object has no attribute 'glob'
+
+test_1106.py:55: AttributeError
+=========================== short test summary info ============================
+FAILED test_1106.py::test_task_func_success - AttributeError: 'NoneType' obje...
+FAILED test_1106.py::test_task_func_failure - AttributeError: 'NoneType' obje...
+2 failed in 0.62s

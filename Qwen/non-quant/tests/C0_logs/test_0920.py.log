@@ -1,0 +1,22 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data = {'Category': ['A', 'B', 'A', 'C', 'D', 'E', 'A']}
+        column = 'Category'
+        ax = task_func(data, column)
+    
+        # Check if the plot is created
+        assert isinstance(ax, plt.Axes)
+    
+        # Check if the DataFrame is correctly processed
+        expected_counts = pd.Series({'A': 3, 'B': 1, 'C': 1, 'D': 1, 'E': 1})
+>       actual_counts = ax.get_lines()[0].get_ydata()
+                        ^^^^^^^^^^^^^^^^^
+E       IndexError: list index out of range
+
+test_0920.py:18: IndexError
+=========================== short test summary info ============================
+FAILED test_0920.py::test_task_func - IndexError: list index out of range
+1 failed in 2.23s

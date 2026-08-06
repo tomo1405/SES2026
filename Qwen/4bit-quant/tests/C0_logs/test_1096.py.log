@@ -1,0 +1,47 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a temporary directory to store the output file
+        with tempfile.TemporaryDirectory() as temp_dir:
+            output_filename = os.path.join(temp_dir, 'output.txt')
+    
+            # Test case 1: Simple text with valid dollar-prefixed words
+            text = "This is a $test and another $example."
+            expected_output = ["$test", "$example"]
+            task_func(text, output_filename)
+    
+            with open(output_filename, 'r') as file:
+                actual_output = file.read().splitlines()
+    
+            assert actual_output == expected_output
+    
+            # Test case 2: Text with only dollar sign
+            text = "Just a $ sign."
+            expected_output = []
+            task_func(text, output_filename)
+    
+            with open(output_filename, 'r') as file:
+                actual_output = file.read().splitlines()
+    
+            assert actual_output == expected_output
+    
+            # Test case 3: Text with dollar-prefixed words followed by punctuation
+            text = "Check these: $hello-world and $goodbye!"
+            expected_output = ["$hello-world", "$goodbye"]
+            task_func(text, output_filename)
+    
+            with open(output_filename, 'r') as file:
+                actual_output = file.read().splitlines()
+    
+>           assert actual_output == expected_output
+E           AssertionError: assert ['$hello', '$goodbye'] == ['$hello-world', '$goodbye']
+E             
+E             At index 0 diff: '$hello' != '$hello-world'
+E             Use -v to get more diff
+
+test_1096.py:39: AssertionError
+=========================== short test summary info ============================
+FAILED test_1096.py::test_task_func - AssertionError: assert ['$hello', '$goo...
+1 failed in 4.00s

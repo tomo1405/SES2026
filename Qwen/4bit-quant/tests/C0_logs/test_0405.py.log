@@ -1,0 +1,31 @@
+.F.                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_image __________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1358/test_task_func_valid_image0')
+
+    def test_task_func_valid_image(tmpdir):
+        # Create a temporary directory and a test image
+        tmp_dir = tmpdir.mkdir("test_images")
+        test_image_path = str(tmp_dir.join("test_image.png"))
+    
+        # Create a simple black image
+        img = np.zeros((100, 100, 3), dtype=np.uint8)
+        cv2.imwrite(test_image_path, img)
+    
+        # Call the function
+        result_img, contours = task_func(test_image_path)
+    
+        # Check if the returned image is the same as the input image
+        assert np.array_equal(result_img, img)
+    
+        # Check if contours are returned as a numpy array
+>       assert isinstance(contours, np.ndarray)
+E       AssertionError: assert False
+E        +  where False = isinstance((), <class 'numpy.ndarray'>)
+E        +    where <class 'numpy.ndarray'> = np.ndarray
+
+test_0405.py:28: AssertionError
+=========================== short test summary info ============================
+FAILED test_0405.py::test_task_func_valid_image - AssertionError: assert False
+1 failed, 2 passed in 0.68s

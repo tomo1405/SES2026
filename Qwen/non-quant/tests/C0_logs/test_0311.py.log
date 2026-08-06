@@ -1,0 +1,32 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Define a temporary filename
+        temp_filename = "test_people.csv"
+    
+        # Call the function to generate the CSV file
+        filepath = task_func(temp_filename)
+    
+        # Check if the file exists
+        assert os.path.exists(filepath), "The file was not created."
+    
+        # Read the contents of the file
+        with open(filepath, newline='') as file:
+            reader = csv.reader(file)
+            rows = list(reader)
+    
+        # Check the header row
+        assert rows[0] == ['Name', 'Age', 'Height', 'Weight'], "Header row is incorrect."
+    
+        # Check the number of people rows
+>       assert len(rows) == 101, "Incorrect number of rows in the CSV file."
+E       AssertionError: Incorrect number of rows in the CSV file.
+E       assert 102 == 101
+E        +  where 102 = len([['Name', 'Age', 'Height', 'Weight'], ['Person_1', '30', '168', '62'], ['Person_2', '24', '170', '97'], ['Person_3', '50', '180', '85'], ['Person_4', '41', '170', '72'], ['Person_5', '23', '200', '90'], ...])
+
+test_0311.py:26: AssertionError
+=========================== short test summary info ============================
+FAILED test_0311.py::test_task_func - AssertionError: Incorrect number of row...
+1 failed in 0.44s

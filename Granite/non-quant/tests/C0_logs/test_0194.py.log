@@ -1,0 +1,21 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        rows = 10
+        columns = 5
+        df = task_func(rows, columns)
+        assert isinstance(df, pd.DataFrame)
+        assert len(df.columns) == columns
+        for col in df.columns:
+            data_type = df[col].dtype
+            if data_type == np.object_:
+>               assert all(isinstance(val, str) for val in df[col])
+E               assert False
+E                +  where False = all(<generator object test_task_func.<locals>.<genexpr> at 0x7f831b3fc2e0>)
+
+test_0194.py:19: AssertionError
+=========================== short test summary info ============================
+FAILED test_0194.py::test_task_func - assert False
+1 failed in 1.16s

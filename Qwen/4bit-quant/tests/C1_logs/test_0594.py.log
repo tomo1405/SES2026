@@ -1,0 +1,35 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1700/test_task_func0')
+
+    def test_task_func(tmpdir):
+        # Create a temporary directory for output
+        output_dir = tmpdir.mkdir("output")
+    
+        # Call the function with 1 hour of data
+        file_path, ax = task_func(1, str(output_dir))
+    
+        # Check if the file was created
+        assert os.path.exists(file_path)
+    
+        # Read the CSV file
+        df = pd.read_csv(file_path)
+    
+        # Check if the DataFrame is not empty
+        assert not df.empty
+    
+        # Check if the DataFrame has the correct columns
+        assert all(column in df.columns for column in ['Time'] + ['Car', 'Bus', 'Truck', 'Bike'])
+    
+        # Check if the number of rows is correct (including the header row)
+>       assert len(df) == 2  # 1 header row + 1 data row
+        ^^^^^^^^^^^^^^^^^^^
+E       assert 1 == 2
+E        +  where 1 = len(                         Time  Car  Bus  Truck  Bike\n0  2026-07-29 02:19:56.232556   40   39     43     8)
+
+test_0594.py:26: AssertionError
+=========================== short test summary info ============================
+FAILED test_0594.py::test_task_func - assert 1 == 2
+1 failed in 2.22s

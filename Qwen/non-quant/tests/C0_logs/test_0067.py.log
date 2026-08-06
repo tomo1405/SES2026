@@ -1,0 +1,51 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test data
+        data = [
+            [1, 2, 3],
+            [1, 2, 4],
+            [1, 3, 5],
+            [2, 3, 6],
+            [2, 3, 7]
+        ]
+    
+        # Expected result
+        expected_df = pd.DataFrame({
+            'col1': [1, 2],
+            'col2': [2, 3],
+            'col3': [2, 2]
+        })
+    
+        # Call the function
+        result_df, ax = task_func(data)
+    
+        # Check if the DataFrame is correct
+>       pd.testing.assert_frame_equal(result_df.reset_index(drop=True), expected_df.reset_index(drop=True))
+E       AssertionError: DataFrame are different
+E       
+E       DataFrame shape mismatch
+E       [left]:  (3, 3)
+E       [right]: (2, 3)
+
+test_0067.py:27: AssertionError
+=============================== warnings summary ===============================
+Qwen/non-quant/tests/test_0067.py::test_task_func
+  /work/tomohiro-w/utg/src/src_0067.py:8: UserWarning: 
+  
+  `distplot` is a deprecated function and will be removed in seaborn v0.14.0.
+  
+  Please adapt your code to use either `displot` (a figure-level function with
+  similar flexibility) or `histplot` (an axes-level function for histograms).
+  
+  For a guide to updating your code to use the new functions, please see
+  https://gist.github.com/mwaskom/de44147ed2974457ad6372750bbe5751
+  
+    ax = sns.distplot(analyzed_df[COLUMNS[-1]])
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0067.py::test_task_func - AssertionError: DataFrame are different
+1 failed, 1 warning in 3.78s

@@ -1,0 +1,42 @@
+.F.F..F                                                                  [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_invalid_json_data _______________________
+
+    def test_task_func_invalid_json_data():
+        json_data = '{"Invalid": "JSON"}'
+        output_dir = "test_output"
+        file_name = "test_country_population_report.csv"
+    
+>       with pytest.raises(ValueError, match="Invalid JSON data provided."):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'Invalid JSON data provided.'
+E         Actual message: 'No valid country population data found in JSON.'
+
+test_0986.py:29: AssertionError
+_____________________ test_task_func_invalid_country_name ______________________
+
+    def test_task_func_invalid_country_name():
+        json_data = '{"Countries": {"123": 123}}'
+        output_dir = "test_output"
+        file_name = "test_country_population_report.csv"
+    
+>       with pytest.raises(ValueError, match="Country name must be a string. Invalid entry: 123"):
+E       Failed: DID NOT RAISE ValueError
+
+test_0986.py:45: Failed
+_______________________ test_task_func_failed_csv_write ________________________
+
+    def test_task_func_failed_csv_write():
+        json_data = '{"Countries": {"China": 123}}'
+        output_dir = "invalid_output"
+        file_name = "test_country_population_report.csv"
+    
+>       with pytest.raises(IOError, match="Failed to write the CSV file to invalid_output"):
+E       Failed: DID NOT RAISE OSError
+
+test_0986.py:69: Failed
+=========================== short test summary info ============================
+FAILED test_0986.py::test_task_func_invalid_json_data - AssertionError: Regex...
+FAILED test_0986.py::test_task_func_invalid_country_name - Failed: DID NOT RA...
+FAILED test_0986.py::test_task_func_failed_csv_write - Failed: DID NOT RAISE ...
+3 failed, 4 passed in 1.36s

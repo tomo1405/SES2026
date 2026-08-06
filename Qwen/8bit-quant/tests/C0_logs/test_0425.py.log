@@ -1,0 +1,93 @@
+F...FF                                                                   [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+>       original_img, segmented_img = task_func(image_path='image.jpg', n_clusters=3, random_seed=42)
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0425.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0425.py:23: in task_func
+    kmeans.fit(pixels)
+../../../.venv/lib/python3.12/site-packages/sklearn/base.py:1403: in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/cluster/_kmeans.py:1473: in fit
+    self._check_params_vs_input(X)
+../../../.venv/lib/python3.12/site-packages/sklearn/cluster/_kmeans.py:1413: in _check_params_vs_input
+    super()._check_params_vs_input(X, default_n_init=10)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = KMeans(n_clusters=3, random_state=42)
+X = array([[  0.,   0.,   0.],
+       [255., 255., 255.]]), default_n_init = 10
+
+    def _check_params_vs_input(self, X, default_n_init=None):
+        # n_clusters
+        if X.shape[0] < self.n_clusters:
+>           raise ValueError(
+                f"n_samples={X.shape[0]} should be >= n_clusters={self.n_clusters}."
+            )
+E           ValueError: n_samples=2 should be >= n_clusters=3.
+
+../../../.venv/lib/python3.12/site-packages/sklearn/cluster/_kmeans.py:877: ValueError
+_____________________ test_task_func_failed_to_read_image ______________________
+
+    def test_task_func_failed_to_read_image():
+        with pytest.raises(ValueError, match="Failed to read the image file."):
+>           task_func(image_path='invalid_image.jpg', n_clusters=3, random_seed=42)
+
+test_0425.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+image_path = 'invalid_image.jpg', n_clusters = 3, random_seed = 42
+
+    def task_func(image_path='image.jpg', n_clusters=3, random_seed=42):
+    
+        if not isinstance(n_clusters, int) or n_clusters <= 0:
+            raise ValueError("n_clusters must be a positive integer.")
+    
+        if not os.path.exists(image_path):
+>           raise FileNotFoundError(f"No image found at {image_path}")
+E           FileNotFoundError: No image found at invalid_image.jpg
+
+../../../src/src_0425.py:11: FileNotFoundError
+_____________________ test_task_func_saves_cluster_images ______________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-2092/test_task_func_saves_cluster_i0')
+
+    def test_task_func_saves_cluster_images(tmpdir):
+>       task_func(image_path='image.jpg', n_clusters=3, random_seed=42)
+
+test_0425.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0425.py:23: in task_func
+    kmeans.fit(pixels)
+../../../.venv/lib/python3.12/site-packages/sklearn/base.py:1403: in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/cluster/_kmeans.py:1473: in fit
+    self._check_params_vs_input(X)
+../../../.venv/lib/python3.12/site-packages/sklearn/cluster/_kmeans.py:1413: in _check_params_vs_input
+    super()._check_params_vs_input(X, default_n_init=10)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = KMeans(n_clusters=3, random_state=42)
+X = array([[  0.,   0.,   0.],
+       [255., 255., 255.]]), default_n_init = 10
+
+    def _check_params_vs_input(self, X, default_n_init=None):
+        # n_clusters
+        if X.shape[0] < self.n_clusters:
+>           raise ValueError(
+                f"n_samples={X.shape[0]} should be >= n_clusters={self.n_clusters}."
+            )
+E           ValueError: n_samples=2 should be >= n_clusters=3.
+
+../../../.venv/lib/python3.12/site-packages/sklearn/cluster/_kmeans.py:877: ValueError
+=========================== short test summary info ============================
+FAILED test_0425.py::test_task_func_valid_input - ValueError: n_samples=2 sho...
+FAILED test_0425.py::test_task_func_failed_to_read_image - FileNotFoundError:...
+FAILED test_0425.py::test_task_func_saves_cluster_images - ValueError: n_samp...
+3 failed, 3 passed in 4.46s

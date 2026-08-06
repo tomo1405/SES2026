@@ -1,0 +1,42 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+___________________ test_task_func_with_incompatible_shapes ____________________
+
+    def test_task_func_with_incompatible_shapes():
+        P = np.array([[1, 2], [3, 4]])
+        T = np.array([[1, 2, 3], [4, 5, 6]])
+>       with pytest.raises(ValueError) as excinfo:
+E       Failed: DID NOT RAISE ValueError
+
+test_0441.py:17: Failed
+_______________________ test_task_func_with_valid_inputs _______________________
+
+    def test_task_func_with_valid_inputs():
+        P = np.array([[1, 2], [3, 4]])
+        T = np.array([[1, 2], [3, 4], [5, 6]])
+>       result = task_func(P, T)
+                 ^^^^^^^^^^^^^^^
+
+test_0441.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+P = array([[1, 2],
+       [3, 4]])
+T = array([[1, 2],
+       [3, 4],
+       [5, 6]])
+
+    def task_func(P, T):
+        if P.size == 0 or T.size == 0:
+            raise ValueError("Inputs cannot be empty.")
+        if P.shape[1] != T.shape[0]:
+>           raise ValueError(
+                f"Matrix P shape {P.shape[1]} and Tensor T shape {T.shape[0]} are incompatible for tensor multiplication."
+            )
+E           ValueError: Matrix P shape 2 and Tensor T shape 3 are incompatible for tensor multiplication.
+
+../../../src/src_0441.py:8: ValueError
+=========================== short test summary info ============================
+FAILED test_0441.py::test_task_func_with_incompatible_shapes - Failed: DID NO...
+FAILED test_0441.py::test_task_func_with_valid_inputs - ValueError: Matrix P ...
+2 failed, 1 passed in 3.00s

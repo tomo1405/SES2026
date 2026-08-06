@@ -1,0 +1,33 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data = [
+            {'Name': 'Alice', 'Age': 25, 'Score': 85},
+            {'Name': 'Bob', 'Age': 30, 'Score': 90},
+            {'Name': 'Charlie', 'Age': 25, 'Score': 95},
+        ]
+        expected_df = pd.DataFrame(data).sort_values(['Name', 'Age'])
+        expected_avg_scores = pd.Series([85, 90, 95], index=['Alice', 'Bob', 'Charlie'])
+        expected_most_common_age = 25
+    
+>       df, avg_scores, most_common_age = task_func(data)
+                                          ^^^^^^^^^^^^^^^
+
+test_0887.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = [{'Name': 'Alice', 'Age': 25, 'Score': 85}, {'Name': 'Bob', 'Age': 30, 'Score': 90}, {'Name': 'Charlie', 'Age': 25, 'Score': 95}]
+
+    def task_func(data):
+        if not all(key in data for key in ['Name', 'Age', 'Score']):
+>           raise ValueError("The dictionary must have the keys 'Name', 'Age', 'Score'")
+E           ValueError: The dictionary must have the keys 'Name', 'Age', 'Score'
+
+test_0887.py:7: ValueError
+=========================== short test summary info ============================
+FAILED test_0887.py::test_task_func - ValueError: The dictionary must have th...
+1 failed, 1 passed in 1.16s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

@@ -1,0 +1,39 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        source_path = pathlib.Path("source_dir")
+        destination_path = pathlib.Path("destination_dir")
+        source_path.mkdir(parents=True, exist_ok=True)
+        (source_path / "file1.txt").touch()
+        (source_path / "file2.txt").touch()
+        (source_path / "file3.txt").touch()
+    
+        result = task_func(source_path, destination_path)
+    
+>       assert result == ("source_dir", ["file1.txt", "file2.txt", "file3.txt"])
+E       AssertionError: assert ('source_dir'..._9.txt', ...]) == ('source_dir'... 'file3.txt'])
+E         
+E         At index 1 diff: ['file3.txt', 'test_file_6.txt', 'test_file_7.txt', 'test_file_10.txt', 'file2.txt', 'test_file_9.txt', 'test_file_1.txt', 'test_file_2.txt', 'test_file_4.txt', 'file1.txt', 'test_file_5.txt', 'test_file_8.txt', 'test_file_3.txt'] != ['file1.txt', 'file2.txt', 'file3.txt']
+E         Use -v to get more diff
+
+test_0975.py:17: AssertionError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        source_path = pathlib.Path("source_dir")
+        destination_path = pathlib.Path("destination_dir")
+        source_path.mkdir(parents=True, exist_ok=True)
+        (source_path / "file1.txt").touch()
+        (source_path / "file2.txt").touch()
+        (source_path / "file3.txt").touch()
+    
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0975.py:27: Failed
+=========================== short test summary info ============================
+FAILED test_0975.py::test_task_func_valid_input - AssertionError: assert ('so...
+FAILED test_0975.py::test_task_func_invalid_input - Failed: DID NOT RAISE Val...
+2 failed in 0.53s

@@ -1,0 +1,26 @@
+.F                                                                       [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_empty_array __________________________
+
+    def test_task_func_empty_array():
+        empty_array = []
+        df, ax = task_func(empty_array)
+    
+        # Check DataFrame
+        expected_columns = ["A", "B", "C", "D", "E"]
+        assert list(df.columns) == expected_columns
+        assert df.shape == (0, 5)
+    
+        # Check sums
+        expected_sums = pd.Series([0, 0, 0, 0, 0], index=expected_columns)
+>       assert df.sum().equals(expected_sums)
+E       assert False
+E        +  where False = equals(A    0\nB    0\nC    0\nD    0\nE    0\ndtype: int64)
+E        +    where equals = A    0\nB    0\nC    0\nD    0\nE    0\ndtype: object.equals
+E        +      where A    0\nB    0\nC    0\nD    0\nE    0\ndtype: object = sum()
+E        +        where sum = Empty DataFrame\nColumns: [A, B, C, D, E]\nIndex: [].sum
+
+test_0515.py:41: AssertionError
+=========================== short test summary info ============================
+FAILED test_0515.py::test_task_func_empty_array - assert False
+1 failed, 1 passed in 2.26s

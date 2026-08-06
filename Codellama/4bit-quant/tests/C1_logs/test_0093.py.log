@@ -1,0 +1,27 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test 1: Input data is not a pandas DataFrame
+        data = [1, 2, 3, 4, 5]
+        with pytest.raises(ValueError):
+            task_func(data)
+    
+        # Test 2: Number of clusters is not an integer greater than 1
+        data = pd.DataFrame({'x': [1, 2, 3, 4, 5], 'y': [2, 4, 6, 8, 10]})
+        with pytest.raises(ValueError):
+            task_func(data, n_clusters=0)
+    
+        # Test 3: Input data is a pandas DataFrame
+        data = pd.DataFrame({'x': [1, 2, 3, 4, 5], 'y': [2, 4, 6, 8, 10]})
+        labels, ax = task_func(data)
+>       assert isinstance(labels, pd.Series)
+E       AssertionError: assert False
+E        +  where False = isinstance(array([1, 1, 0, 0, 2], dtype=int32), <class 'pandas.Series'>)
+E        +    where <class 'pandas.Series'> = pd.Series
+
+test_0093.py:22: AssertionError
+=========================== short test summary info ============================
+FAILED test_0093.py::test_task_func - AssertionError: assert False
+1 failed in 3.90s

@@ -1,0 +1,30 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data = [
+            ['Name', 'Age', 'Gender'],
+            ['Alice', 25, 'Female'],
+            ['Bob', 30, 'Male'],
+            ['Charlie', 35, 'Male']
+        ]
+        file_path = 'test_data.csv'
+        headers = ['Name', 'Age', 'Gender']
+        result = task_func(data, file_path, headers)
+        assert result == os.path.abspath(file_path)
+    
+        with open(file_path, 'r') as csvfile:
+            reader = csv.reader(csvfile)
+            rows = list(reader)
+            assert rows[0] == headers
+>           assert rows[1] == ['Alice', 25, 'Female']
+E           AssertionError: assert ['Name', 'Age', 'Gender'] == ['Alice', 25, 'Female']
+E             
+E             At index 0 diff: 'Name' != 'Alice'
+E             Use -v to get more diff
+
+test_0874.py:23: AssertionError
+=========================== short test summary info ============================
+FAILED test_0874.py::test_task_func - AssertionError: assert ['Name', 'Age', ...
+1 failed in 0.48s

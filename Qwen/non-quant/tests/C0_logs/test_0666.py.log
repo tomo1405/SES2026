@@ -1,0 +1,53 @@
+..F..FF                                                                  [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_subdirectories ______________________
+
+    def test_task_func_with_subdirectories():
+        with tempfile.TemporaryDirectory() as src_dir, tempfile.TemporaryDirectory() as dst_dir:
+            # Create subdirectories and files
+            subdir = os.path.join(src_dir, 'subdir')
+            os.makedirs(subdir)
+            open(os.path.join(subdir, 'report.txt'), 'w').close()
+            open(os.path.join(src_dir, 'summary.docx'), 'w').close()
+    
+            result = task_func(src_dir, dst_dir)
+            assert result == dst_dir
+            assert set(os.listdir(dst_dir)) == {'summary.docx'}
+>           assert not os.listdir(subdir)  # Ensure no files were copied from subdirectories
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AssertionError: assert not ['report.txt']
+E            +  where ['report.txt'] = <built-in function listdir>('/tmp/tmp44m3g3mx/subdir')
+E            +    where <built-in function listdir> = os.listdir
+
+test_0666.py:38: AssertionError
+___________________ test_task_func_dst_directory_not_exists ____________________
+
+    def test_task_func_dst_directory_not_exists():
+        with tempfile.TemporaryDirectory() as src_dir:
+            dst_dir = os.path.join(src_dir, 'nonexistent_dir')
+            open(os.path.join(src_dir, 'document.txt'), 'w').close()
+            open(os.path.join(src_dir, 'notes.docx'), 'w').close()
+    
+            result = task_func(src_dir, dst_dir)
+            assert result == dst_dir
+>           assert set(os.listdir(dst_dir)) == {'document.txt', 'notes.docx'}
+                       ^^^^^^^^^^^^^^^^^^^
+E           NotADirectoryError: [Errno 20] Not a directory: '/tmp/tmphnibhthv/nonexistent_dir'
+
+test_0666.py:65: NotADirectoryError
+__________________________ test_task_func_permissions __________________________
+
+    def test_task_func_permissions():
+        with tempfile.TemporaryDirectory() as src_dir, tempfile.TemporaryDirectory() as dst_dir:
+            # Make source directory read-only
+            os.chmod(src_dir, 0o444)
+>           open(os.path.join(src_dir, 'document.txt'), 'w').close()
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           PermissionError: [Errno 13] Permission denied: '/tmp/tmp3qs5jxkv/document.txt'
+
+test_0666.py:71: PermissionError
+=========================== short test summary info ============================
+FAILED test_0666.py::test_task_func_with_subdirectories - AssertionError: ass...
+FAILED test_0666.py::test_task_func_dst_directory_not_exists - NotADirectoryE...
+FAILED test_0666.py::test_task_func_permissions - PermissionError: [Errno 13]...
+3 failed, 4 passed in 0.47s

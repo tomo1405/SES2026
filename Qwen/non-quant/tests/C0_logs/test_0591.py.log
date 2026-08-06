@@ -1,0 +1,48 @@
+..FF                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_invalid_url __________________________
+
+mock_urlopen = <MagicMock name='urlopen' id='127078897376080'>
+
+    @patch('src_0591.urllib.request.urlopen')
+    def test_task_func_invalid_url(mock_urlopen):
+        mock_urlopen.side_effect = URLError("Mocked URLError")
+    
+        url = "http://invalid-url.com"
+        with pytest.raises(URLError) as excinfo:
+            task_func(url)
+>       assert str(excinfo.value) == f"Error fetching URL {url}: Mocked URLError"
+E       AssertionError: assert '<urlopen err...ed URLError>>' == 'Error fetchi...cked URLError'
+E         
+E         - Error fetching URL http://invalid-url.com: Mocked URLError
+E         + <urlopen error Error fetching URL http://invalid-url.com: <urlopen error Mocked URLError>>
+E         ? +++++++++++++++                                           +++++++++++++++               ++
+
+test_0591.py:38: AssertionError
+__________________________ test_task_func_no_anchors ___________________________
+
+mock_urlopen = <MagicMock name='urlopen' id='127078897374880'>
+
+    @patch('src_0591.urllib.request.urlopen')
+    def test_task_func_no_anchors(mock_urlopen):
+        # Mock the response with no anchor tags
+        mock_response = BytesIO(b'<html><body>No anchors here</body></html>')
+        mock_urlopen.return_value = mock_response
+    
+        url = "http://no-anchors.com"
+        result_df = task_func(url)
+    
+        # Check if the DataFrame is correctly formed with no rows
+        expected_df = pd.DataFrame(columns=['text', 'href', 'fetch_time'])
+>       pd.testing.assert_frame_equal(result_df, expected_df)
+E       AssertionError: Attributes of DataFrame.iloc[:, 2] (column name="fetch_time") are different
+E       
+E       Attribute "dtype" are different
+E       [left]:  <StringDtype(na_value=nan)>
+E       [right]: object
+
+test_0591.py:51: AssertionError
+=========================== short test summary info ============================
+FAILED test_0591.py::test_task_func_invalid_url - AssertionError: assert '<ur...
+FAILED test_0591.py::test_task_func_no_anchors - AssertionError: Attributes o...
+2 failed, 2 passed in 2.22s

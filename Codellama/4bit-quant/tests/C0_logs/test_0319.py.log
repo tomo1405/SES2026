@@ -1,0 +1,26 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        points_count = 1000
+        radius = 1
+        points = [(radius * math.sqrt(random.random()) * math.cos(2 * math.pi * random.random()),
+                   radius * math.sqrt(random.random()) * math.sin(2 * math.pi * random.random()))
+                  for _ in range(points_count)]
+    
+        fig, ax = plt.subplots()
+        ax.scatter(*zip(*points))
+        ax.set_aspect('equal', adjustable='box')
+    
+        assert len(points) == points_count
+>       assert all(math.sqrt(x**2 + y**2) <= radius for x, y in points)
+E       assert False
+E        +  where False = all(<generator object test_task_func.<locals>.<genexpr> at 0x7f3d1893a110>)
+
+test_0319.py:19: AssertionError
+=========================== short test summary info ============================
+FAILED test_0319.py::test_task_func - assert False
+1 failed in 1.55s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

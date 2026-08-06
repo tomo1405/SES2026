@@ -1,0 +1,40 @@
+FFF..                                                                    [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+colors = ['red', 'green', 'blue'], states = ['AL', 'AK', 'AZ', 'AR', 'CA']
+
+    def test_task_func(colors, states):
+        df = task_func(colors, states)
+        assert isinstance(df, pd.DataFrame)
+>       assert df.shape == (min(len(colors), len(states)),)
+E       assert (5, 3) == (3,)
+E         
+E         At index 0 diff: 5 != 3
+E         Left contains one more item: 3
+E         Use -v to get more diff
+
+test_1056.py:18: AssertionError
+_______________________ test_task_func_with_empty_colors _______________________
+
+states = ['AL', 'AK', 'AZ', 'AR', 'CA']
+
+    def test_task_func_with_empty_colors(states):
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_1056.py:23: Failed
+_______________________ test_task_func_with_empty_states _______________________
+
+colors = ['red', 'green', 'blue']
+
+    def test_task_func_with_empty_states(colors):
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_1056.py:27: Failed
+=========================== short test summary info ============================
+FAILED test_1056.py::test_task_func - assert (5, 3) == (3,)
+FAILED test_1056.py::test_task_func_with_empty_colors - Failed: DID NOT RAISE...
+FAILED test_1056.py::test_task_func_with_empty_states - Failed: DID NOT RAISE...
+3 failed, 2 passed in 1.25s

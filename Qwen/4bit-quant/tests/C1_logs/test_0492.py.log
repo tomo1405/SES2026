@@ -1,0 +1,162 @@
+..FFFF                                                                   [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_with_seed ___________________________
+
+    def test_task_func_with_seed():
+        epoch_milliseconds = int(datetime.utcnow().timestamp()) * 1000
+>       sales_data1, _ = task_func(epoch_milliseconds, seed=42)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0492.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+epoch_milliseconds = 1785226566000, seed = 42
+
+    def task_func(epoch_milliseconds, seed=None):
+        CATEGORIES = ["Electronics", "Clothing", "Home", "Books", "Sports"]
+    
+        if seed is not None:
+            random.seed(seed)
+    
+        if epoch_milliseconds < 0:
+            raise ValueError("Start time cannot be negative.")
+    
+        start_time = datetime.utcfromtimestamp(epoch_milliseconds / 1000.0)
+        current_time = datetime.utcnow()
+        days_diff = (current_time - start_time).days
+        if days_diff <= 0:
+>           raise ValueError("Start date must be before current time.")
+E           ValueError: Start date must be before current time.
+
+../../../src/src_0492.py:17: ValueError
+_________________________ test_task_func_without_seed __________________________
+
+    def test_task_func_without_seed():
+        epoch_milliseconds = int(datetime.utcnow().timestamp()) * 1000
+>       sales_data1, _ = task_func(epoch_milliseconds)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0492.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+epoch_milliseconds = 1785226566000, seed = None
+
+    def task_func(epoch_milliseconds, seed=None):
+        CATEGORIES = ["Electronics", "Clothing", "Home", "Books", "Sports"]
+    
+        if seed is not None:
+            random.seed(seed)
+    
+        if epoch_milliseconds < 0:
+            raise ValueError("Start time cannot be negative.")
+    
+        start_time = datetime.utcfromtimestamp(epoch_milliseconds / 1000.0)
+        current_time = datetime.utcnow()
+        days_diff = (current_time - start_time).days
+        if days_diff <= 0:
+>           raise ValueError("Start date must be before current time.")
+E           ValueError: Start date must be before current time.
+
+../../../src/src_0492.py:17: ValueError
+__________________________ test_task_func_categories ___________________________
+
+    def test_task_func_categories():
+        epoch_milliseconds = int(datetime.utcnow().timestamp()) * 1000
+>       sales_data, _ = task_func(epoch_milliseconds)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0492.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+epoch_milliseconds = 1785226566000, seed = None
+
+    def task_func(epoch_milliseconds, seed=None):
+        CATEGORIES = ["Electronics", "Clothing", "Home", "Books", "Sports"]
+    
+        if seed is not None:
+            random.seed(seed)
+    
+        if epoch_milliseconds < 0:
+            raise ValueError("Start time cannot be negative.")
+    
+        start_time = datetime.utcfromtimestamp(epoch_milliseconds / 1000.0)
+        current_time = datetime.utcnow()
+        days_diff = (current_time - start_time).days
+        if days_diff <= 0:
+>           raise ValueError("Start date must be before current time.")
+E           ValueError: Start date must be before current time.
+
+../../../src/src_0492.py:17: ValueError
+__________________________ test_task_func_sales_range __________________________
+
+    def test_task_func_sales_range():
+        epoch_milliseconds = int(datetime.utcnow().timestamp()) * 1000
+>       sales_data, _ = task_func(epoch_milliseconds)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0492.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+epoch_milliseconds = 1785226566000, seed = None
+
+    def task_func(epoch_milliseconds, seed=None):
+        CATEGORIES = ["Electronics", "Clothing", "Home", "Books", "Sports"]
+    
+        if seed is not None:
+            random.seed(seed)
+    
+        if epoch_milliseconds < 0:
+            raise ValueError("Start time cannot be negative.")
+    
+        start_time = datetime.utcfromtimestamp(epoch_milliseconds / 1000.0)
+        current_time = datetime.utcnow()
+        days_diff = (current_time - start_time).days
+        if days_diff <= 0:
+>           raise ValueError("Start date must be before current time.")
+E           ValueError: Start date must be before current time.
+
+../../../src/src_0492.py:17: ValueError
+=============================== warnings summary ===============================
+Qwen/4bit-quant/tests/test_0492.py::test_task_func_future_start_time
+  /work/tomohiro-w/utg/Qwen/4bit-quant/tests/test_0492.py:10: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    epoch_milliseconds = int((datetime.utcnow() + timedelta(days=1)).timestamp()) * 1000
+
+Qwen/4bit-quant/tests/test_0492.py::test_task_func_future_start_time
+Qwen/4bit-quant/tests/test_0492.py::test_task_func_with_seed
+Qwen/4bit-quant/tests/test_0492.py::test_task_func_without_seed
+Qwen/4bit-quant/tests/test_0492.py::test_task_func_categories
+Qwen/4bit-quant/tests/test_0492.py::test_task_func_sales_range
+  /work/tomohiro-w/utg/src/src_0492.py:13: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+    start_time = datetime.utcfromtimestamp(epoch_milliseconds / 1000.0)
+
+Qwen/4bit-quant/tests/test_0492.py::test_task_func_future_start_time
+Qwen/4bit-quant/tests/test_0492.py::test_task_func_with_seed
+Qwen/4bit-quant/tests/test_0492.py::test_task_func_without_seed
+Qwen/4bit-quant/tests/test_0492.py::test_task_func_categories
+Qwen/4bit-quant/tests/test_0492.py::test_task_func_sales_range
+  /work/tomohiro-w/utg/src/src_0492.py:14: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    current_time = datetime.utcnow()
+
+Qwen/4bit-quant/tests/test_0492.py::test_task_func_with_seed
+  /work/tomohiro-w/utg/Qwen/4bit-quant/tests/test_0492.py:15: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    epoch_milliseconds = int(datetime.utcnow().timestamp()) * 1000
+
+Qwen/4bit-quant/tests/test_0492.py::test_task_func_without_seed
+  /work/tomohiro-w/utg/Qwen/4bit-quant/tests/test_0492.py:21: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    epoch_milliseconds = int(datetime.utcnow().timestamp()) * 1000
+
+Qwen/4bit-quant/tests/test_0492.py::test_task_func_categories
+  /work/tomohiro-w/utg/Qwen/4bit-quant/tests/test_0492.py:27: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    epoch_milliseconds = int(datetime.utcnow().timestamp()) * 1000
+
+Qwen/4bit-quant/tests/test_0492.py::test_task_func_sales_range
+  /work/tomohiro-w/utg/Qwen/4bit-quant/tests/test_0492.py:32: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    epoch_milliseconds = int(datetime.utcnow().timestamp()) * 1000
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0492.py::test_task_func_with_seed - ValueError: Start date must b...
+FAILED test_0492.py::test_task_func_without_seed - ValueError: Start date mus...
+FAILED test_0492.py::test_task_func_categories - ValueError: Start date must ...
+FAILED test_0492.py::test_task_func_sales_range - ValueError: Start date must...
+4 failed, 2 passed, 15 warnings in 1.50s

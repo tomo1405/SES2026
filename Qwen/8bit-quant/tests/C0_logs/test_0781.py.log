@@ -1,0 +1,74 @@
+....FF                                                                   [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        articles = [
+            {
+                "category": "news",
+                "id": 1,
+                "title": "Title 1",
+                "title_url": "url1",
+                "published_time": "2023-10-01T12:00:00Z"
+            },
+            {
+                "category": "news",
+                "id": 2,
+                "title": "Title 2",
+                "title_url": "url2",
+                "published_time": "2023-10-01T14:00:00Z"
+            }
+        ]
+        expected_output = pd.DataFrame({
+            'count': [2],
+            'mean': [13.0],
+            'min': [12],
+            'max': [14]
+        }, index=['news'])
+        result = task_func(articles, "UTC")
+>       pd.testing.assert_frame_equal(result, expected_output)
+E       AssertionError: DataFrame.index are different
+E       
+E       Attribute "names" are different
+E       [left]:  ['category']
+E       [right]: [None]
+
+test_0781.py:46: AssertionError
+______________________ test_task_func_different_timezone _______________________
+
+    def test_task_func_different_timezone():
+        articles = [
+            {
+                "category": "news",
+                "id": 1,
+                "title": "Title 1",
+                "title_url": "url1",
+                "published_time": "2023-10-01T12:00:00Z"
+            },
+            {
+                "category": "news",
+                "id": 2,
+                "title": "Title 2",
+                "title_url": "url2",
+                "published_time": "2023-10-01T14:00:00Z"
+            }
+        ]
+        expected_output = pd.DataFrame({
+            'count': [2],
+            'mean': [9.0],
+            'min': [8],
+            'max': [10]
+        }, index=['news'])
+        result = task_func(articles, "America/New_York")
+>       pd.testing.assert_frame_equal(result, expected_output)
+E       AssertionError: DataFrame.index are different
+E       
+E       Attribute "names" are different
+E       [left]:  ['category']
+E       [right]: [None]
+
+test_0781.py:72: AssertionError
+=========================== short test summary info ============================
+FAILED test_0781.py::test_task_func_valid_input - AssertionError: DataFrame.i...
+FAILED test_0781.py::test_task_func_different_timezone - AssertionError: Data...
+2 failed, 4 passed in 1.56s

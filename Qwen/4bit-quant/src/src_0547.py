@@ -1,0 +1,10 @@
+from collections import OrderedDict
+from prettytable import PrettyTable
+def task_func(my_dict):
+    ordered_dict = OrderedDict(sorted(my_dict.items(), key=lambda t: t[0]))
+    table = PrettyTable(['Key', 'Value'])
+
+    for key, value in ordered_dict.items():
+        table.add_row([key, value])
+
+    return table

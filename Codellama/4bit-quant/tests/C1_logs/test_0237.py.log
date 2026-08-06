@@ -1,0 +1,29 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_valid_input ________________________
+
+    def test_task_func_with_valid_input():
+        df = pd.DataFrame({'Name': ['Alice', 'Bob', 'Charlie'], 'Age': [20, 25, 30], 'Score': [80, 90, 70], 'Category': ['A', 'B', 'C']})
+        test_size = 0.2
+        random_state = 42
+        accuracy = task_func(df, test_size, random_state)
+        assert isinstance(accuracy, float)
+>       assert accuracy > 0
+E       assert 0.0 > 0
+
+test_0237.py:12: AssertionError
+______________________ test_task_func_with_invalid_input _______________________
+
+    def test_task_func_with_invalid_input():
+        df = pd.DataFrame({'Name': ['Alice', 'Bob', 'Charlie'], 'Age': [20, 25, 30], 'Score': [80, 90, 70], 'Category': ['A', 'B', 'C']})
+        test_size = 0.2
+        random_state = 42
+        with pytest.raises(ValueError):
+>           task_func(df, test_size, random_state, invalid_param=True)
+E           TypeError: task_func() got an unexpected keyword argument 'invalid_param'
+
+test_0237.py:19: TypeError
+=========================== short test summary info ============================
+FAILED test_0237.py::test_task_func_with_valid_input - assert 0.0 > 0
+FAILED test_0237.py::test_task_func_with_invalid_input - TypeError: task_func...
+2 failed in 3.12s

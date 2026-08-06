@@ -1,0 +1,38 @@
+......F                                                                  [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        data = pd.DataFrame({"feature1": [1, 2, 3], "feature2": [4, 5, 6]})
+        target_column = "target"
+        test_size = 0.2
+        random_state = 0
+    
+>       result = task_func(data, target_column, test_size, random_state)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0753.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data =    feature1  feature2
+0         1         4
+1         2         5
+2         3         6
+target_column = 'target', test_size = 0.2, random_state = 0
+
+    def task_func(data, target_column, test_size=0.2, random_state = 0) -> float:
+    
+        if not isinstance(data, pd.DataFrame):
+            raise ValueError("data should be a DataFrame.")
+    
+        if data.empty:
+            raise ValueError("data should contain at least one row.")
+    
+        if target_column not in data.columns:
+>           raise ValueError("target_column should be in the provided DataFrame.")
+E           ValueError: target_column should be in the provided DataFrame.
+
+../../../src/src_0753.py:14: ValueError
+=========================== short test summary info ============================
+FAILED test_0753.py::test_task_func_valid_input - ValueError: target_column s...
+1 failed, 6 passed in 3.07s

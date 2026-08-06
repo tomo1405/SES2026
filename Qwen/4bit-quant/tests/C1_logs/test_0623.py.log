@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sample_data = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+
+    def test_task_func(sample_data):
+        ax = task_func(sample_data)
+    
+        # Check if the axis object is of the correct type
+        assert isinstance(ax, plt.Axes), "The function should return a matplotlib Axes object."
+    
+        # Check if the histogram is plotted correctly
+        lines = ax.get_lines()
+        assert len(lines) == 1, "There should be exactly one line plot on the axes."
+    
+        # Check if the title contains the expected format
+        title = ax.get_title()
+        assert "Fit results: mu =" in title and "std =" in title, "The title should contain 'Fit results: mu =' and 'std ='."
+    
+        # Check if the histogram data matches the input data
+        hist_data, _ = ax.get_legend_handles_labels()
+>       assert len(hist_data) == 1, "There should be exactly one histogram plot on the axes."
+E       AssertionError: There should be exactly one histogram plot on the axes.
+E       assert 0 == 1
+E        +  where 0 = len([])
+
+test_0623.py:26: AssertionError
+=========================== short test summary info ============================
+FAILED test_0623.py::test_task_func - AssertionError: There should be exactly...
+1 failed in 2.84s

@@ -1,0 +1,52 @@
+F...F.                                                                   [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_valid_input ________________________
+
+    def test_task_func_with_valid_input():
+        def sample_function(a, b, c=1):
+            return a + b + c
+    
+        file_path = "test_output.csv"
+        task_func([sample_function], file_path)
+    
+        df = pd.read_csv(file_path)
+>       assert df.equals(pd.DataFrame({
+            'Function Name': ['sample_function'],
+            'Number of Arguments': [3],
+            'Defaults': [[1]],
+            'Annotations': [{}],
+            'Is Lambda': [False]
+        }))
+E       AssertionError: assert False
+E        +  where False = equals(     Function Name  Number of Arguments Defaults Annotations  Is Lambda\n0  sample_function                    3      [1]          {}      False)
+E        +    where equals =      Function Name  Number of Arguments Defaults Annotations  Is Lambda\n0  sample_function                    3     (1,)          {}      False.equals
+E        +    and        Function Name  Number of Arguments Defaults Annotations  Is Lambda\n0  sample_function                    3      [1]          {}      False = <class 'pandas.DataFrame'>({'Function Name': ['sample_function'], 'Number of Arguments': [3], 'Defaults': [[1]], 'Annotations': [{}], ...})
+E        +      where <class 'pandas.DataFrame'> = pd.DataFrame
+
+test_0572.py:13: AssertionError
+_____________________ test_task_func_with_lambda_function ______________________
+
+    def test_task_func_with_lambda_function():
+        lambda_func = lambda x, y: x + y
+        file_path = "test_output.csv"
+        task_func([lambda_func], file_path)
+    
+        df = pd.read_csv(file_path)
+>       assert df.equals(pd.DataFrame({
+            'Function Name': ['<lambda>'],
+            'Number of Arguments': [2],
+            'Defaults': [None],
+            'Annotations': [{}],
+            'Is Lambda': [True]
+        }))
+E       AssertionError: assert False
+E        +  where False = equals(  Function Name  Number of Arguments Defaults Annotations  Is Lambda\n0      <lambda>                    2     None          {}       True)
+E        +    where equals =   Function Name  Number of Arguments  Defaults Annotations  Is Lambda\n0      <lambda>                    2       NaN          {}       True.equals
+E        +    and     Function Name  Number of Arguments Defaults Annotations  Is Lambda\n0      <lambda>                    2     None          {}       True = <class 'pandas.DataFrame'>({'Function Name': ['<lambda>'], 'Number of Arguments': [2], 'Defaults': [None], 'Annotations': [{}], ...})
+E        +      where <class 'pandas.DataFrame'> = pd.DataFrame
+
+test_0572.py:42: AssertionError
+=========================== short test summary info ============================
+FAILED test_0572.py::test_task_func_with_valid_input - AssertionError: assert...
+FAILED test_0572.py::test_task_func_with_lambda_function - AssertionError: as...
+2 failed, 4 passed in 1.16s

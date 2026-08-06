@@ -1,0 +1,39 @@
+..F.FF..                                                                 [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_path ___________________________
+
+    def test_task_func_valid_path():
+        assert task_func("/valid/path") == ["valid", "path"]
+>       assert task_func("C:/valid/path", "\\") == ["C:", "valid", "path"]
+E       AssertionError: assert [] == ['C:', 'valid', 'path']
+E         
+E         Right contains 3 more items, first extra item: 'C:'
+E         Use -v to get more diff
+
+test_0973.py:13: AssertionError
+______________________ test_task_func_trailing_delimiter _______________________
+
+    def test_task_func_trailing_delimiter():
+        assert task_func("/valid/path/") == ["valid", "path"]
+>       assert task_func("C:\\valid\\path\\", "\\") == ["C:", "valid", "path"]
+E       AssertionError: assert [] == ['C:', 'valid', 'path']
+E         
+E         Right contains 3 more items, first extra item: 'C:'
+E         Use -v to get more diff
+
+test_0973.py:21: AssertionError
+_________________________ test_task_func_windows_path __________________________
+
+    def test_task_func_windows_path():
+>       assert task_func("C:\\Windows\\System32", "\\") == ["C:", "Windows", "System32"]
+E       AssertionError: assert [] == ['C:', 'Windows', 'System32']
+E         
+E         Right contains 3 more items, first extra item: 'C:'
+E         Use -v to get more diff
+
+test_0973.py:24: AssertionError
+=========================== short test summary info ============================
+FAILED test_0973.py::test_task_func_valid_path - AssertionError: assert [] ==...
+FAILED test_0973.py::test_task_func_trailing_delimiter - AssertionError: asse...
+FAILED test_0973.py::test_task_func_windows_path - AssertionError: assert [] ...
+3 failed, 5 passed in 0.50s

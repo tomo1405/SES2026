@@ -1,0 +1,87 @@
+FF.FFFF                                                                  [100%]
+=================================== FAILURES ===================================
+_______________________________ test_input_type ________________________________
+
+    def test_input_type():
+        df = pd.DataFrame()
+>       with pytest.raises(TypeError):
+E       Failed: DID NOT RAISE TypeError
+
+test_0076.py:10: Failed
+_______________________________ test_input_empty _______________________________
+
+    def test_input_empty():
+        df = pd.DataFrame()
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0076.py:15: Failed
+_________________________________ test_fruits __________________________________
+
+    def test_fruits():
+        df = pd.DataFrame()
+        result_df, plot = task_func(df, fruits=['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry'], days=None, seed=None, sales_lower_bound=1, sales_upper_bound=50)
+        assert result_df.columns.tolist() == ['Fruit', 'Day', 'Sales']
+>       assert result_df['Fruit'].tolist() == ['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry']
+E       AssertionError: assert ['Apple', 'Ap... 'Apple', ...] == ['Apple', 'Ba... 'Elderberry']
+E         
+E         At index 1 diff: 'Apple' != 'Banana'
+E         Left contains 30 more items, first extra item: 'Apple'
+E         Use -v to get more diff
+
+test_0076.py:27: AssertionError
+__________________________________ test_days ___________________________________
+
+    def test_days():
+        df = pd.DataFrame()
+>       result_df, plot = task_func(df, fruits=None, days=[datetime(2024, 1, 1) + timedelta(days=x) for x in range(7)], seed=None, sales_lower_bound=1, sales_upper_bound=50)
+                                                                                  ^^^^^^^^^
+E       NameError: name 'timedelta' is not defined
+
+test_0076.py:31: NameError
+__________________________________ test_seed ___________________________________
+
+    def test_seed():
+        df = pd.DataFrame()
+        result_df, plot = task_func(df, fruits=None, days=None, seed=1234, sales_lower_bound=1, sales_upper_bound=50)
+        assert result_df.columns.tolist() == ['Fruit', 'Day', 'Sales']
+>       assert result_df['Sales'].tolist() == [1, 2, 3, 4, 5, 6, 7]
+E       assert [48, 20, 39, 13, 25, 16, ...] == [1, 2, 3, 4, 5, 6, ...]
+E         
+E         At index 0 diff: 48 != 1
+E         Left contains 28 more items, first extra item: 42
+E         Use -v to get more diff
+
+test_0076.py:39: AssertionError
+_______________________________ test_sales_data ________________________________
+
+    def test_sales_data():
+        df = pd.DataFrame()
+        result_df, plot = task_func(df, fruits=None, days=None, seed=None, sales_lower_bound=1, sales_upper_bound=50)
+        assert result_df.columns.tolist() == ['Fruit', 'Day', 'Sales']
+>       assert result_df['Sales'].tolist() == [1, 2, 3, 4, 5, 6, 7]
+E       assert [13, 2, 12, 44, 18, 15, ...] == [1, 2, 3, 4, 5, 6, ...]
+E         
+E         At index 0 diff: 13 != 1
+E         Left contains 28 more items, first extra item: 43
+E         Use -v to get more diff
+
+test_0076.py:45: AssertionError
+=============================== warnings summary ===============================
+Codellama/4bit-quant/tests/test_0076.py::test_input_type
+Codellama/4bit-quant/tests/test_0076.py::test_input_empty
+Codellama/4bit-quant/tests/test_0076.py::test_fruits
+Codellama/4bit-quant/tests/test_0076.py::test_seed
+Codellama/4bit-quant/tests/test_0076.py::test_sales_data
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/categorical.py:700: MatplotlibDeprecationWarning: vert: bool was deprecated in Matplotlib 3.11 and will be removed in 3.13. Use orientation: {'vertical', 'horizontal'} instead.
+    artists = ax.bxp(**boxplot_kws)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0076.py::test_input_type - Failed: DID NOT RAISE TypeError
+FAILED test_0076.py::test_input_empty - Failed: DID NOT RAISE ValueError
+FAILED test_0076.py::test_fruits - AssertionError: assert ['Apple', 'Ap... 'A...
+FAILED test_0076.py::test_days - NameError: name 'timedelta' is not defined
+FAILED test_0076.py::test_seed - assert [48, 20, 39, 13, 25, 16, ...] == [1, ...
+FAILED test_0076.py::test_sales_data - assert [13, 2, 12, 44, 18, 15, ...] ==...
+6 failed, 1 passed, 5 warnings in 3.41s

@@ -1,0 +1,79 @@
+F..F                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_data ___________________________
+
+mock_plot = None
+
+    def test_task_func_valid_data(mock_plot):
+        column = "Quantity Sold"
+        data = [
+            ["Product A", 10, 200],
+            ["Product B", 15, 300],
+            ["Product C", 5, 100]
+        ]
+>       result, ax = task_func(column, data)
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0513.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+column = 'Quantity Sold'
+data = [['Product A', 10, 200], ['Product B', 15, 300], ['Product C', 5, 100]]
+
+    def task_func(column, data):
+        COLUMNS = ["Product", "Quantity Sold", "Total Sales"]
+        df = pd.DataFrame(data, columns=COLUMNS)
+        if (df["Quantity Sold"] < 0).any() or (df["Total Sales"] < 0).any():
+            raise ValueError("Value must not be negative")
+        column_data = df[column]
+    
+        result = {
+            "sum": np.sum(column_data),
+            "mean": np.mean(column_data),
+            "min": np.min(column_data),
+            "max": np.max(column_data),
+        }
+    
+>       ax = df.plot.bar(x="Product", y=column, title=f"Bar Chart of {column}")
+             ^^^^^^^^^^^
+E       AttributeError: 'function' object has no attribute 'bar'
+
+../../../src/src_0513.py:17: AttributeError
+__________________________ test_task_func_empty_data ___________________________
+
+mock_plot = None
+
+    def test_task_func_empty_data(mock_plot):
+        column = "Quantity Sold"
+        data = []
+        with pytest.raises(IndexError) as excinfo:
+>           task_func(column, data)
+
+test_0513.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+column = 'Quantity Sold', data = []
+
+    def task_func(column, data):
+        COLUMNS = ["Product", "Quantity Sold", "Total Sales"]
+        df = pd.DataFrame(data, columns=COLUMNS)
+        if (df["Quantity Sold"] < 0).any() or (df["Total Sales"] < 0).any():
+            raise ValueError("Value must not be negative")
+        column_data = df[column]
+    
+        result = {
+            "sum": np.sum(column_data),
+            "mean": np.mean(column_data),
+            "min": np.min(column_data),
+            "max": np.max(column_data),
+        }
+    
+>       ax = df.plot.bar(x="Product", y=column, title=f"Bar Chart of {column}")
+             ^^^^^^^^^^^
+E       AttributeError: 'function' object has no attribute 'bar'
+
+../../../src/src_0513.py:17: AttributeError
+=========================== short test summary info ============================
+FAILED test_0513.py::test_task_func_valid_data - AttributeError: 'function' o...
+FAILED test_0513.py::test_task_func_empty_data - AttributeError: 'function' o...
+2 failed, 2 passed in 2.00s

@@ -1,0 +1,24 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create test data
+        feature = pd.Series([1, 2, 3, 4, 5])
+        target = pd.Series([0, 1, 0, 1, 0])
+    
+        # Call the function and check the output
+        cm, ax = task_func(feature, target)
+        assert isinstance(cm, np.ndarray)
+        assert isinstance(ax, plt.Axes)
+        assert cm.shape == (2, 2)
+        assert ax.get_title() == "Confusion Matrix"
+        assert ax.get_xlabel() == "Predicted"
+        assert ax.get_ylabel() == "Actual"
+>       assert ax.get_xticks() == [0, 1]
+E       ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+test_1036.py:20: ValueError
+=========================== short test summary info ============================
+FAILED test_1036.py::test_task_func - ValueError: The truth value of an array...
+1 failed in 3.79s

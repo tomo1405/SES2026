@@ -1,0 +1,41 @@
+F...F.                                                                   [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        rows = 5
+        df, stats_dict = task_func(rows)
+    
+        assert isinstance(df, pd.DataFrame)
+        assert df.shape == (rows, 6)
+        assert all(col in df.columns for col in ['A', 'B', 'C', 'D', 'E', 'F'])
+    
+        for col in ['A', 'B', 'C', 'D', 'E', 'F']:
+            assert isinstance(stats_dict[col]['mean'], float)
+>           assert isinstance(stats_dict[col]['median'], float)
+E           assert False
+E            +  where False = isinstance(33, float)
+
+test_0142.py:16: AssertionError
+________________________ test_task_func_custom_columns _________________________
+
+    def test_task_func_custom_columns():
+        rows = 3
+        columns = ['X', 'Y']
+        df, stats_dict = task_func(rows, columns=columns)
+    
+        assert isinstance(df, pd.DataFrame)
+        assert df.shape == (rows, 2)
+        assert all(col in df.columns for col in columns)
+    
+        for col in columns:
+            assert isinstance(stats_dict[col]['mean'], float)
+>           assert isinstance(stats_dict[col]['median'], float)
+E           assert False
+E            +  where False = isinstance(52, float)
+
+test_0142.py:41: AssertionError
+=========================== short test summary info ============================
+FAILED test_0142.py::test_task_func_valid_input - assert False
+FAILED test_0142.py::test_task_func_custom_columns - assert False
+2 failed, 4 passed in 1.08s

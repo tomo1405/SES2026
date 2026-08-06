@@ -1,0 +1,80 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_ test_task_func[This is a secret message-abcdefghijklmnopqrstuvwxyz123456-5d5h6eMhQ293a1Q0Z2hVemhUemhFZ2lK] _
+
+message = 'This is a secret message'
+encryption_key = 'abcdefghijklmnopqrstuvwxyz123456'
+expected_output = '5d5h6eMhQ293a1Q0Z2hVemhUemhFZ2lK'
+
+    @pytest.mark.parametrize("message, encryption_key, expected_output", [
+        (
+            "This is a secret message",
+            "abcdefghijklmnopqrstuvwxyz123456",
+            "5d5h6eMhQ293a1Q0Z2hVemhUemhFZ2lK"
+        ),
+        (
+            "Another secret message",
+            "1234567890abcdef",
+            "5Z2eZ2hFZ2lKemhUemhFZ2lKemhU"
+        ),
+    ])
+    def test_task_func(message, encryption_key, expected_output):
+        fernet = Fernet(base64.urlsafe_b64encode(encryption_key.encode()))
+        encrypted_message = fernet.encrypt(message.encode())
+        actual_output = task_func(message, encryption_key)
+>       assert actual_output == expected_output
+E       AssertionError: assert 'Z0FBQUFBQnFh...kWHRvQ2ZiSXM9' == '5d5h6eMhQ293...VemhUemhFZ2lK'
+E         
+E         - 5d5h6eMhQ293a1Q0Z2hVemhUemhFZ2lK
+E         + Z0FBQUFBQnFhRGpzaEZuUXBSSnR2a3U5Mkp5VlNvbmoyNGc0TklDd1dPZS12aXFvSTh3RTdXbmhZTVl4TzZxVXVZT2lRdTlYc3NyUEtBNzdWSm9waVlZSV8xT0VrcGQ4cmliSGVJWjNQR25VV3lkWHRvQ2ZiSXM9
+
+test_0027.py:22: AssertionError
+_ test_task_func[Another secret message-1234567890abcdef-5Z2eZ2hFZ2lKemhUemhFZ2lKemhU] _
+
+message = 'Another secret message', encryption_key = '1234567890abcdef'
+expected_output = '5Z2eZ2hFZ2lKemhUemhFZ2lKemhU'
+
+    @pytest.mark.parametrize("message, encryption_key, expected_output", [
+        (
+            "This is a secret message",
+            "abcdefghijklmnopqrstuvwxyz123456",
+            "5d5h6eMhQ293a1Q0Z2hVemhUemhFZ2lK"
+        ),
+        (
+            "Another secret message",
+            "1234567890abcdef",
+            "5Z2eZ2hFZ2lKemhUemhFZ2lKemhU"
+        ),
+    ])
+    def test_task_func(message, encryption_key, expected_output):
+>       fernet = Fernet(base64.urlsafe_b64encode(encryption_key.encode()))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0027.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <cryptography.fernet.Fernet object at 0x738289e590d0>
+key = b'1234567890abcdef', backend = None
+
+    def __init__(
+        self,
+        key: bytes | str,
+        backend: typing.Any = None,
+    ) -> None:
+        try:
+            key = base64.urlsafe_b64decode(key)
+        except binascii.Error as exc:
+            raise ValueError(
+                "Fernet key must be 32 url-safe base64-encoded bytes."
+            ) from exc
+        if len(key) != 32:
+>           raise ValueError(
+                "Fernet key must be 32 url-safe base64-encoded bytes."
+            )
+E           ValueError: Fernet key must be 32 url-safe base64-encoded bytes.
+
+../../../.venv/lib/python3.12/site-packages/cryptography/fernet.py:41: ValueError
+=========================== short test summary info ============================
+FAILED test_0027.py::test_task_func[This is a secret message-abcdefghijklmnopqrstuvwxyz123456-5d5h6eMhQ293a1Q0Z2hVemhUemhFZ2lK]
+FAILED test_0027.py::test_task_func[Another secret message-1234567890abcdef-5Z2eZ2hFZ2lKemhUemhFZ2lKemhU]
+2 failed in 0.72s

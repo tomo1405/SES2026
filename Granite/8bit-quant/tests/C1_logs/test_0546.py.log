@@ -1,0 +1,59 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_default_keys _______________________
+
+    def test_task_func_with_default_keys():
+        hex_key = random.choice(KEYS)
+        float_num = struct.unpack('!f', bytes.fromhex(hex_key))[0]
+        encoded_float = codecs.encode(str(float_num), 'utf-8')
+>       assert task_func() == encoded_float
+E       AssertionError: assert b'268198208.0' == b'20941864.0'
+E         
+E         At index 1 diff: b'6' != b'0'
+E         Use -v to get more diff
+
+test_0546.py:11: AssertionError
+_______________________ test_task_func_with_custom_keys ________________________
+
+    def test_task_func_with_custom_keys():
+        custom_keys = ['12345678', '87654321']
+        hex_key = random.choice(custom_keys)
+        float_num = struct.unpack('!f', bytes.fromhex(hex_key))[0]
+        encoded_float = codecs.encode(str(float_num), 'utf-8')
+>       assert task_func(custom_keys) == encoded_float
+E       AssertionError: assert b'5.690456613903524e-28' == b'-1.7247772618169884e-34'
+E         
+E         At index 0 diff: b'5' != b'-'
+E         Use -v to get more diff
+
+test_0546.py:18: AssertionError
+________________________ test_task_func_with_empty_keys ________________________
+
+    def test_task_func_with_empty_keys():
+>       assert task_func([]) is None
+               ^^^^^^^^^^^^^
+
+test_0546.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0546.py:6: in task_func
+    hex_key = random.choice(hex_keys)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <random.Random object at 0x25da3410>, seq = []
+
+    def choice(self, seq):
+        """Choose a random element from a non-empty sequence."""
+    
+        # As an accommodation for NumPy, we don't use "if not seq"
+        # because bool(numpy.array()) raises a ValueError.
+        if not len(seq):
+>           raise IndexError('Cannot choose from an empty sequence')
+E           IndexError: Cannot choose from an empty sequence
+
+/usr/lib/python3.12/random.py:347: IndexError
+=========================== short test summary info ============================
+FAILED test_0546.py::test_task_func_with_default_keys - AssertionError: asser...
+FAILED test_0546.py::test_task_func_with_custom_keys - AssertionError: assert...
+FAILED test_0546.py::test_task_func_with_empty_keys - IndexError: Cannot choo...
+3 failed in 0.50s

@@ -1,0 +1,33 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Redirect stdout to capture print output
+        captured_output = io.StringIO()
+        sys.stdout = captured_output
+    
+        # Define test inputs
+        a = ['apple', 'banana', 'apple']
+        b = ['banana', 'apple', 'orange']
+    
+        # Call the function
+        ax = task_func(a, b)
+    
+        # Check if the returned object is a matplotlib Axes
+        assert isinstance(ax, plt.Axes)
+    
+        # Check if the plot has the correct number of bars
+        assert len(ax.patches) == 2
+    
+        # Check if the x-ticks are set correctly
+>       assert list(ax.get_xticklabels()) == ['apple', 'banana']
+E       AssertionError: assert [Text(0, 0, '... 0, 'banana')] == ['apple', 'banana']
+E         
+E         At index 0 diff: Text(0, 0, 'apple') != 'apple'
+E         Use -v to get more diff
+
+test_0553.py:26: AssertionError
+=========================== short test summary info ============================
+FAILED test_0553.py::test_task_func - AssertionError: assert [Text(0, 0, '......
+1 failed in 1.54s

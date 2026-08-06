@@ -1,0 +1,26 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        """
+        Test that task_func returns a valid DataFrame for valid input.
+        """
+        data = [round(random.uniform(MIN_VALUE, MAX_VALUE), 3) for _ in range(N_DATA_POINTS)]
+        data_df = pd.DataFrame(data, columns=['Value'])
+    
+        scaler = StandardScaler()
+        normalized_data = scaler.fit_transform(data_df[['Value']])
+    
+        expected_df = pd.DataFrame(normalized_data, columns=['Normalized Value'])
+        actual_df = task_func(n_data_points=N_DATA_POINTS, min_value=MIN_VALUE, max_value=MAX_VALUE)
+    
+>       assert actual_df.equals(expected_df)
+E       assert False
+E        +  where False = equals(      Normalized Value\n0             1.088381\n1            -1.031058\n2             0.605358\n3            -1.719367\n4  ...31\n4996         -0.544239\n4997         -1.614827\n4998         -0.268225\n4999          0.379371\n\n[5000 rows x 1 columns])
+E        +    where equals =       Normalized Value\n0             1.106184\n1            -1.086794\n2             0.902292\n3             0.985940\n4  ...92\n4996          0.973044\n4997          0.168975\n4998          1.624455\n4999          0.423754\n\n[5000 rows x 1 columns].equals
+
+test_0248.py:26: AssertionError
+=========================== short test summary info ============================
+FAILED test_0248.py::test_task_func_valid_input - assert False
+1 failed, 1 passed in 2.74s

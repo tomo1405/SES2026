@@ -1,0 +1,29 @@
+..F                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_empty_file ___________________________
+
+    def test_task_func_empty_file():
+        # Create a temporary empty CSV file for testing
+        with open('test_sales_data_empty.csv', 'w') as f:
+            pass
+    
+        # Test the function
+        with pytest.raises(ValueError):
+>           task_func('test_sales_data_empty.csv')
+
+test_0008.py:52: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+csv_file_path = 'test_sales_data_empty.csv'
+
+    def task_func(csv_file_path):
+        with open(csv_file_path, 'r') as f:
+            reader = csv.reader(f)
+>           next(reader)  # Skip the header row
+            ^^^^^^^^^^^^
+E           StopIteration
+
+../../../src/src_0008.py:7: StopIteration
+=========================== short test summary info ============================
+FAILED test_0008.py::test_task_func_empty_file - StopIteration
+1 failed, 2 passed in 0.41s

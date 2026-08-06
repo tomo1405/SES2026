@@ -1,0 +1,67 @@
+F..F                                                                     [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_valid_csv _________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1479/test_task_func_with_valid_csv0')
+
+    def test_task_func_with_valid_csv(tmpdir):
+        # Create a temporary directory and a CSV file within it
+        csv_file_path = tmpdir.join('data.csv')
+        data = {'date': ['2020-01-01', '2021-01-01', '2020-06-01']}
+        df = pd.DataFrame(data)
+        df.to_csv(csv_file_path, index=False)
+    
+        # Call the function with the path to the temporary CSV file
+        result = task_func(str(csv_file_path))
+    
+        # Check if the result is a Series object
+>       assert isinstance(result, pd.Series)
+E       AssertionError: assert False
+E        +  where False = isinstance(<Axes: >, <class 'pandas.Series'>)
+E        +    where <class 'pandas.Series'> = pd.Series
+
+test_0647.py:18: AssertionError
+________________________ test_task_func_with_empty_csv _________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1479/test_task_func_with_empty_csv0')
+
+    def test_task_func_with_empty_csv(tmpdir):
+        # Create a temporary directory and an empty CSV file within it
+        csv_file_path = tmpdir.join('data.csv')
+        df = pd.DataFrame()
+        df.to_csv(csv_file_path, index=False)
+    
+        # Call the function with the path to the empty CSV file
+>       result = task_func(str(csv_file_path))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0647.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0647.py:10: in task_func
+    df = pd.read_csv(csv_path)
+         ^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:873: in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:300: in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:1645: in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:1922: in _make_engine
+    return mapping[engine](f, **self.options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/c_parser_wrapper.py:95: in __init__
+    self._reader = parsers.TextReader(src, **kwds)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   pandas.errors.EmptyDataError: No columns to parse from file
+
+pandas/_libs/parsers.pyx:575: EmptyDataError
+=========================== short test summary info ============================
+FAILED test_0647.py::test_task_func_with_valid_csv - AssertionError: assert F...
+FAILED test_0647.py::test_task_func_with_empty_csv - pandas.errors.EmptyDataE...
+2 failed, 2 passed in 2.23s

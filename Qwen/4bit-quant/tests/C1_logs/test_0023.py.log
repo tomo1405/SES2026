@@ -1,0 +1,52 @@
+...F...F                                                                 [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_with_all_none _________________________
+
+    def test_task_func_with_all_none():
+        l1 = [None, None, None]
+        l2 = [None, None, None]
+        seed(0)  # For reproducibility
+>       result = task_func(l1, l2, K=5)
+                 ^^^^^^^^^^^^^^^^^^^^^^
+
+test_0023.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0023.py:6: in task_func
+    sample = choices(combined, k=K)
+             ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <random.Random object at 0x3f842410>, population = [], weights = None
+cum_weights = None, k = 5
+
+    def choices(self, population, weights=None, *, cum_weights=None, k=1):
+        """Return a k sized list of population elements chosen with replacement.
+    
+        If the relative weights or cumulative weights are not specified,
+        the selections are made with equal probability.
+    
+        """
+        random = self.random
+        n = len(population)
+        if cum_weights is None:
+            if weights is None:
+                floor = _floor
+                n += 0.0    # convert to float for a small speed improvement
+>               return [population[floor(random() * n)] for i in _repeat(None, k)]
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               IndexError: list index out of range
+
+/usr/lib/python3.12/random.py:467: IndexError
+________________________ test_task_func_with_negative_K ________________________
+
+    def test_task_func_with_negative_K():
+        l1 = [1, 2, 3]
+        l2 = [4, 5, 6]
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0023.py:69: Failed
+=========================== short test summary info ============================
+FAILED test_0023.py::test_task_func_with_all_none - IndexError: list index ou...
+FAILED test_0023.py::test_task_func_with_negative_K - Failed: DID NOT RAISE V...
+2 failed, 6 passed in 0.40s

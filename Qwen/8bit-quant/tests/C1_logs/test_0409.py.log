@@ -1,0 +1,26 @@
+.E                                                                       [100%]
+==================================== ERRORS ====================================
+_____________________ ERROR at teardown of test_task_func ______________________
+
+    @pytest.fixture
+    def temp_db():
+        db_file = 'temp_test.db'
+        conn = sqlite3.connect(db_file)
+        try:
+            # Create a test table
+            conn.execute('CREATE TABLE test_table (id INTEGER PRIMARY KEY, name TEXT)')
+            # Insert some test data
+            conn.execute("INSERT INTO test_table (name) VALUES ('Alice')")
+            conn.execute("INSERT INTO test_table (name) VALUES ('Bob')")
+            conn.commit()
+            yield db_file
+        finally:
+            # Close the connection and remove the database file
+            conn.close()
+>           os.remove(db_file)
+E           FileNotFoundError: [Errno 2] No such file or directory: 'temp_test.db'
+
+test_0409.py:25: FileNotFoundError
+=========================== short test summary info ============================
+ERROR test_0409.py::test_task_func - FileNotFoundError: [Errno 2] No such fil...
+1 passed, 1 error in 1.49s

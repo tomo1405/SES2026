@@ -1,0 +1,69 @@
+...FFFF                                                                  [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_default_values _________________________
+
+    def test_task_func_default_values():
+        # Test case using default values
+        result = task_func()
+        assert isinstance(result, tuple)
+        assert len(result) == 4
+        mean, variance, skewness, kurtosis = result
+        assert isinstance(mean, float)
+>       assert isinstance(variance, float)
+E       AssertionError: assert False
+E        +  where False = isinstance('N/A', float)
+
+test_0653.py:46: AssertionError
+__________________________ test_task_func_empty_array __________________________
+
+    def test_task_func_empty_array():
+        # Test case with an empty array
+        array = np.array([])
+>       result = task_func(array=array)
+                 ^^^^^^^^^^^^^^^^^^^^^^
+
+test_0653.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+target_value = '332', array = array([], dtype=float64)
+
+    def task_func(target_value=TARGET_VALUE, array=ARRAY):
+>       indices = np.where(array[:, 0] == target_value)[0]
+                           ^^^^^^^^^^^
+E       IndexError: too many indices for array: array is 1-dimensional, but 2 were indexed
+
+../../../src/src_0653.py:8: IndexError
+____________________ test_task_func_non_string_target_value ____________________
+
+    def test_task_func_non_string_target_value():
+        # Test case with a non-string target value
+        array = np.array([['0', '1', '2'], ['332', 'bb', 'ccc'], ['332', '33', '2'], ['33', '22', '332']])
+>       with pytest.raises(TypeError):
+E       Failed: DID NOT RAISE TypeError
+
+test_0653.py:59: Failed
+________________________ test_task_func_non_array_input ________________________
+
+    def test_task_func_non_array_input():
+        # Test case with a non-array input
+        with pytest.raises(IndexError):
+>           task_func(array=[['0', '1', '2'], ['332', 'bb', 'ccc'], ['332', '33', '2'], ['33', '22', '332']])
+
+test_0653.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+target_value = '332'
+array = [['0', '1', '2'], ['332', 'bb', 'ccc'], ['332', '33', '2'], ['33', '22', '332']]
+
+    def task_func(target_value=TARGET_VALUE, array=ARRAY):
+>       indices = np.where(array[:, 0] == target_value)[0]
+                           ^^^^^^^^^^^
+E       TypeError: list indices must be integers or slices, not tuple
+
+../../../src/src_0653.py:8: TypeError
+=========================== short test summary info ============================
+FAILED test_0653.py::test_task_func_default_values - AssertionError: assert F...
+FAILED test_0653.py::test_task_func_empty_array - IndexError: too many indice...
+FAILED test_0653.py::test_task_func_non_string_target_value - Failed: DID NOT...
+FAILED test_0653.py::test_task_func_non_array_input - TypeError: list indices...
+4 failed, 3 passed in 3.02s

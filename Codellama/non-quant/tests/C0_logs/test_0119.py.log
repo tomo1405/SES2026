@@ -1,0 +1,36 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_copies_json_files _______________________
+
+    def test_task_func_copies_json_files():
+        directory = 'test_directory'
+        backup_directory = 'test_backup_directory'
+        expected_copied_files = ['test_directory/file1.json', 'test_directory/file2.json']
+    
+        copied_files = task_func(directory, backup_directory)
+    
+>       assert copied_files == expected_copied_files
+E       AssertionError: assert [] == ['test_direct...y/file2.json']
+E         
+E         Right contains 2 more items, first extra item: 'test_directory/file1.json'
+E         Use -v to get more diff
+
+test_0119.py:13: AssertionError
+_________________ test_task_func_does_not_copy_non_json_files __________________
+
+    def test_task_func_does_not_copy_non_json_files():
+        directory = 'test_directory'
+        backup_directory = 'test_backup_directory'
+        expected_copied_files = []
+    
+        task_func(directory, backup_directory)
+    
+>       assert copied_files == expected_copied_files
+               ^^^^^^^^^^^^
+E       NameError: name 'copied_files' is not defined
+
+test_0119.py:30: NameError
+=========================== short test summary info ============================
+FAILED test_0119.py::test_task_func_copies_json_files - AssertionError: asser...
+FAILED test_0119.py::test_task_func_does_not_copy_non_json_files - NameError:...
+2 failed, 1 passed in 0.52s

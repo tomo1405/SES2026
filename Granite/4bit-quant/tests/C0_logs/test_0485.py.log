@@ -1,0 +1,39 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Check if ValueError is raised when start_time is greater than end_time
+        with pytest.raises(ValueError):
+            task_func(start_time=100, end_time=50, step=1)
+    
+        # Test case 2: Check if ValueError is raised when step is negative
+        with pytest.raises(ValueError):
+            task_func(start_time=0, end_time=100, step=-1)
+    
+        # Test case 3: Check if the returned DataFrame has the correct number of rows
+        df = task_func(start_time=0, end_time=1000, step=1)
+        assert len(df) == 1000
+    
+        # Test case 4: Check if the returned DataFrame has the correct column names
+        df = task_func(start_time=0, end_time=1000, step=1)
+        assert list(df.columns) == ["Timestamp", "Sensor1", "Sensor2", "Sensor3", "SensorStatus"]
+    
+        # Test case 5: Check if the returned DataFrame has the correct data types
+        df = task_func(start_time=0, end_time=1000, step=1)
+>       assert df["Timestamp"].dtype == "object"
+E       AssertionError: assert <StringDtype(na_value=nan)> == 'object'
+E        +  where <StringDtype(na_value=nan)> = 0      1970-01-01 00:00:00.000000\n1      1970-01-01 00:00:00.001000\n2      1970-01-01 00:00:00.002000\n3      1970-01-0...00.997000\n998    1970-01-01 00:00:00.998000\n999    1970-01-01 00:00:00.999000\nName: Timestamp, Length: 1000, dtype: str.dtype
+
+test_0485.py:55: AssertionError
+=============================== warnings summary ===============================
+Granite/4bit-quant/tests/test_0485.py: 3000 warnings
+  /work/tomohiro-w/utg/Granite/4bit-quant/tests/test_0485.py:26: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+    dt = datetime.utcfromtimestamp(ts / 1000).strftime("%Y-%m-%d %H:%M:%S.%f")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0485.py::test_task_func - AssertionError: assert <StringDtype(na_...
+1 failed, 3000 warnings in 1.24s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

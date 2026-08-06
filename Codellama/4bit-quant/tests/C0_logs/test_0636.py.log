@@ -1,0 +1,64 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Empty input
+        text = ''
+        n = 2
+        expected_output = pd.DataFrame()
+        actual_output = task_func(text, n)
+>       assert actual_output == expected_output
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0636.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/ops/common.py:85: in new_method
+    return method(self, other)
+           ^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/arraylike.py:42: in __eq__
+    return self._cmp_method(other, operator.eq)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:9135: in _cmp_method
+    self, other = self._align_for_op(other, axis, flex=False, level=None)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:9442: in _align_for_op
+    right = to_series(right)
+            ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+right = (Empty DataFrame
+Columns: []
+Index: [], <Axes: >)
+
+    def to_series(right):
+        msg = (
+            "Unable to coerce to Series, "
+            "length must be {req_len}: given {given_len}"
+        )
+    
+        # pass dtype to avoid doing inference, which would break consistency
+        #  with Index/Series ops
+        dtype = None
+        if getattr(right, "dtype", None) == object:
+            # can't pass right.dtype unconditionally as that would break on e.g.
+            #  datetime64[h] ndarray
+            dtype = object
+    
+        if axis == 0:
+            if len(left.index) != len(right):
+                raise ValueError(
+                    msg.format(req_len=len(left.index), given_len=len(right))
+                )
+            right = left._constructor_sliced(right, index=left.index, dtype=dtype)
+        else:
+            if len(left.columns) != len(right):
+>               raise ValueError(
+                    msg.format(req_len=len(left.columns), given_len=len(right))
+                )
+E               ValueError: Unable to coerce to Series, length must be 0: given 2
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:9388: ValueError
+=========================== short test summary info ============================
+FAILED test_0636.py::test_task_func - ValueError: Unable to coerce to Series,...
+1 failed in 4.73s

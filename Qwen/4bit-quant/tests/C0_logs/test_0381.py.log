@@ -1,0 +1,24 @@
+..F                                                                      [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_no_extension __________________________
+
+    def test_task_func_no_extension():
+        # Create a temporary directory
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Create a file with no extension
+            with open(os.path.join(temp_dir, 'file'), 'w') as f:
+                f.write('Sample content')
+    
+            # Run the task function
+            task_func(temp_dir)
+    
+            # Check if no directories are created and file remains in place
+>           assert not os.listdir(temp_dir)
+E           AssertionError: assert not ['file']
+E            +  where ['file'] = <built-in function listdir>('/tmp/tmpi2r6hnzf')
+E            +    where <built-in function listdir> = os.listdir
+
+test_0381.py:52: AssertionError
+=========================== short test summary info ============================
+FAILED test_0381.py::test_task_func_no_extension - AssertionError: assert not...
+1 failed, 2 passed in 0.43s

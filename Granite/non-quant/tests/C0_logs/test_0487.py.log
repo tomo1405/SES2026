@@ -1,0 +1,73 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        with pytest.raises(ValueError):
+            task_func(1641881600000, 1641881599999, 0, 1)
+        with pytest.raises(ValueError):
+            task_func(1641881600000, 1641881599999, -1, 1)
+        with pytest.raises(ValueError):
+            task_func(1641881600000, 1641881599999, 1, -1)
+        with pytest.raises(ValueError):
+            task_func(1641881600001, 1641881599999, 1, 1)
+>       ax = task_func(1641881600000, 1641881600000, 1, 1)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0487.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0487.py:20: in task_func
+    ax = df.plot(x="Time", y="Value")
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/plotting/_core.py:1185: in __call__
+    return plot_backend.plot(data, kind=kind, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/plotting/_matplotlib/__init__.py:71: in plot
+    plot_obj.generate()
+../../../.venv/lib/python3.12/site-packages/pandas/plotting/_matplotlib/core.py:516: in generate
+    self._compute_plot_data()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.plotting._matplotlib.core.LinePlot object at 0x7f73a4bae570>
+
+    @final
+    def _compute_plot_data(self) -> None:
+        data = self.data
+    
+        # GH15079 reconstruct data if by is defined
+        if self.by is not None:
+            self.subplots = True
+            data = reconstruct_data_with_by(self.data, by=self.by, cols=self.columns)
+    
+        # GH16953, infer_objects is needed as fallback, for ``Series``
+        # with ``dtype == object``
+        data = data.infer_objects()
+        include_type = [np.number, "datetime", "datetimetz", "timedelta"]
+    
+        # GH23719, allow plotting boolean
+        if self.include_bool is True:
+            include_type.append(np.bool_)
+    
+        # GH22799, exclude datetime-like type for boxplot
+        exclude_type = None
+        if self._kind == "box":
+            # TODO: change after solving issue 27881
+            include_type = [np.number]
+            exclude_type = ["timedelta"]
+    
+        # GH 18755, include object and category type for scatter plot
+        if self._kind == "scatter":
+            include_type.extend(["object", "category", "string"])
+    
+        numeric_data = data.select_dtypes(include=include_type, exclude=exclude_type)
+    
+        is_empty = numeric_data.shape[-1] == 0
+        # no non-numeric frames or series allowed
+        if is_empty:
+>           raise TypeError("no numeric data to plot")
+E           TypeError: no numeric data to plot
+
+../../../.venv/lib/python3.12/site-packages/pandas/plotting/_matplotlib/core.py:716: TypeError
+=========================== short test summary info ============================
+FAILED test_0487.py::test_task_func - TypeError: no numeric data to plot
+1 failed in 2.19s

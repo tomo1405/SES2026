@@ -1,0 +1,33 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        csv_file = 'test_file.csv'
+        with open(csv_file, 'w') as file:
+            file.write('word1,word2,word3\n')
+            file.write('Word1,Word2,Word3\n')
+            file.write('WORD1,WORD2,WORD3\n')
+        ax, most_common_words = task_func(csv_file)
+        assert ax is not None
+>       assert most_common_words == [('word1', 3), ('word2', 3), ('word3', 3)]
+E       AssertionError: assert [('word1', 1)...rd3', 1), ...] == [('word1', 3)... ('word3', 3)]
+E         
+E         At index 0 diff: ('word1', 1) != ('word1', 3)
+E         Left contains 6 more items, first extra item: ('Word1', 1)
+E         Use -v to get more diff
+
+test_0580.py:12: AssertionError
+___________________________ test_task_func_io_error ____________________________
+
+    def test_task_func_io_error():
+        with open('test_file.csv', 'w') as file:
+            file.write('word1,word2,word3')
+>       with pytest.raises(IOError):
+E       Failed: DID NOT RAISE OSError
+
+test_0580.py:21: Failed
+=========================== short test summary info ============================
+FAILED test_0580.py::test_task_func - AssertionError: assert [('word1', 1)......
+FAILED test_0580.py::test_task_func_io_error - Failed: DID NOT RAISE OSError
+2 failed, 1 passed in 1.56s

@@ -1,0 +1,30 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_valid_inputs _______________________
+
+    def test_task_func_with_valid_inputs():
+        task_list = ["Task 1", "Task 2", "Task 3"]
+        n_tasks = 3
+        employees = ["John Doe", "Jane Smith", "James Brown", "Mary Johnson", "Robert Davis"]
+        seed = 1234
+    
+        expected_output = pd.DataFrame(
+            [
+                ["Task_1", "John Doe", "2023-02-28"],
+                ["Task_2", "Jane Smith", "2023-02-28"],
+                ["Task_3", "James Brown", "2023-02-28"],
+            ],
+            columns=["Task Name", "Assigned To", "Due Date"],
+        )
+    
+        output = task_func(task_list, n_tasks, employees, seed)
+    
+>       assert output.equals(expected_output)
+E       assert False
+E        +  where False = equals(  Task Name  Assigned To    Due Date\n0    Task_1     John Doe  2023-02-28\n1    Task_2   Jane Smith  2023-02-28\n2    Task_3  James Brown  2023-02-28)
+E        +    where equals =   Task Name Assigned To    Due Date\n0    Task_2    John Doe  2026-07-29\n1    Task_1    John Doe  2026-07-29\n2    Task_3    John Doe  2026-07-29.equals
+
+test_0953.py:23: AssertionError
+=========================== short test summary info ============================
+FAILED test_0953.py::test_task_func_with_valid_inputs - assert False
+1 failed, 1 passed in 1.13s

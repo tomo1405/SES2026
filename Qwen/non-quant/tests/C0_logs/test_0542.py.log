@@ -1,0 +1,25 @@
+F..                                                                      [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_existing_package _____________________
+
+    def test_task_func_with_existing_package():
+        # Mocking the package and its modules
+        package_name = 'mock_package'
+        mock_package_path = '/path/to/mock_package'
+    
+        # Create a mock package
+        sys.modules[package_name] = type(sys)('mock_package')
+        sys.modules[package_name].__path__ = [mock_package_path]
+    
+        # Create mock modules within the package
+        mock_modules = ['module1', 'module2']
+        for module in mock_modules:
+            module_path = os.path.join(mock_package_path, f'{module}.py')
+>           with open(module_path, 'w') as f:
+                 ^^^^^^^^^^^^^^^^^^^^^^
+E           FileNotFoundError: [Errno 2] No such file or directory: '/path/to/mock_package/module1.py'
+
+test_0542.py:21: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0542.py::test_task_func_with_existing_package - FileNotFoundError...
+1 failed, 2 passed in 0.42s

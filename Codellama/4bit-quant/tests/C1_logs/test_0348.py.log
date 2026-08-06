@@ -1,0 +1,65 @@
+F.FF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        df = pd.DataFrame({'A': ['abc123', 'def456', 'ghi789'],
+                           'B': ['jkl012', 'mno345', 'pqr678']})
+        column = 'A'
+        expected_output = pd.Series({'abc123': 1, 'def456': 1, 'ghi789': 1,
+                                    'jkl012': 1, 'mno345': 1, 'pqr678': 1})
+        output = task_func(df, column)
+>       pd.testing.assert_series_equal(output, expected_output)
+E       AssertionError: Series are different
+E       
+E       Series length are different
+E       [left]:  0, Index([], dtype='float64')
+E       [right]: 6, Index(['abc123', 'def456', 'ghi789', 'jkl012', 'mno345', 'pqr678'], dtype='str')
+
+test_0348.py:13: AssertionError
+_________________________ test_task_func_empty_column __________________________
+
+    def test_task_func_empty_column():
+        df = pd.DataFrame({'A': ['abc123', 'def456', 'ghi789'],
+                           'B': ['jkl012', 'mno345', 'pqr678']})
+        column = 'A'
+        df[column] = ''
+        expected_output = pd.Series({})
+        output = task_func(df, column)
+>       pd.testing.assert_series_equal(output, expected_output)
+
+test_0348.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+left = Index([], dtype='float64'), right = RangeIndex(start=0, stop=0, step=1)
+obj = 'Series.index'
+
+    def _check_types(left, right, obj: str = "Index") -> None:
+        if not exact:
+            return
+    
+        assert_class_equal(left, right, exact=exact, obj=obj)
+>       assert_attr_equal("inferred_type", left, right, obj=obj)
+E       AssertionError: Series.index are different
+E       
+E       Attribute "inferred_type" are different
+E       [left]:  floating
+E       [right]: integer
+
+../../../.venv/lib/python3.12/site-packages/pandas/_testing/asserters.py:253: AssertionError
+_________________________ test_task_func_invalid_data __________________________
+
+    def test_task_func_invalid_data():
+        df = pd.DataFrame({'A': ['abc123', 'def456', 'ghi789'],
+                           'B': ['jkl012', 'mno345', 'pqr678']})
+        column = 'A'
+        df[column] = 'invalid data'
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0348.py:36: Failed
+=========================== short test summary info ============================
+FAILED test_0348.py::test_task_func - AssertionError: Series are different
+FAILED test_0348.py::test_task_func_empty_column - AssertionError: Series.ind...
+FAILED test_0348.py::test_task_func_invalid_data - Failed: DID NOT RAISE Valu...
+3 failed, 1 passed in 1.16s

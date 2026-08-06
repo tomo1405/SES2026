@@ -1,0 +1,40 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        with patch('src_1130.requests.get') as mock_get, patch('src_1130.os.getcwd') as mock_getcwd:
+            mock_get.return_value = MagicMock(content=b'content')
+            mock_getcwd.return_value = '/path/to/current/directory'
+            json_data = '{"key": "https://example.com"}'
+            unknown_key = 'key'
+            save_dir = '/path/to/save/directory'
+>           file_path = task_func(json_data, unknown_key, save_dir)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1130.py:30: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+json_data = '{"key": "https://example.com"}', unknown_key = 'key'
+save_dir = '/path/to/save/directory'
+
+    def task_func(json_data, unknown_key, save_dir=None):
+        data = json.loads(json_data)
+        url = data[unknown_key]  # Assuming the key directly contains the URL
+    
+        response = requests.get(url)
+    
+        # Using datetime to include milliseconds in the timestamp
+        timestamp = datetime.now().strftime("%Y%m%d%H%M%S%f")
+        filename = f"{unknown_key}_{timestamp}.txt"
+        save_dir = save_dir or os.getcwd()
+        file_path = os.path.join(save_dir, filename)
+    
+>       with open(file_path, 'wb') as f:
+             ^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/path/to/save/directory/key_20260729044040774844.txt'
+
+test_1130.py:19: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_1130.py::test_task_func - FileNotFoundError: [Errno 2] No such fi...
+1 failed in 1.11s

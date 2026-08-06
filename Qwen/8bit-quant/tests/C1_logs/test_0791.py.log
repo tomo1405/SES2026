@@ -1,0 +1,55 @@
+...FFF.                                                                  [100%]
+=================================== FAILURES ===================================
+____________________ test_task_func_with_identical_columns _____________________
+
+    def test_task_func_with_identical_columns():
+        data = {
+            'col1': [1, 2, 3, 4, 5],
+            'col2': [1, 2, 3, 4, 5]
+        }
+        df = pd.DataFrame(data)
+        result = task_func(df, 'col1', 'col2')
+        assert all(diff == 0 for diff in np.abs(df['col1'].values - df['col2'].values))
+>       assert result == []
+E       assert [0, 1, 2, 3, 4] == []
+E         
+E         Left contains 5 more items, first extra item: 0
+E         Use -v to get more diff
+
+test_0791.py:41: AssertionError
+_____________________ test_task_func_with_negative_values ______________________
+
+    def test_task_func_with_negative_values():
+        data = {
+            'col1': [-1, -2, -3, -4, -5],
+            'col2': [5, 4, 3, 2, 1]
+        }
+        df = pd.DataFrame(data)
+        result = task_func(df, 'col1', 'col2')
+>       assert result == [0, 4, 1, 3, 2]
+E       assert [0, 1, 2, 3, 4] == [0, 4, 1, 3, 2]
+E         
+E         At index 1 diff: 1 != 4
+E         Use -v to get more diff
+
+test_0791.py:50: AssertionError
+_____________________ test_task_func_with_missing_columns ______________________
+
+    def test_task_func_with_missing_columns():
+        data = {
+            'col1': [1, 2, 3, 4, 5]
+        }
+        df = pd.DataFrame(data)
+        with pytest.raises(ValueError) as excinfo:
+            task_func(df, 'col1', 'col2')
+>       assert "Columns col2 not found in the DataFrame." in str(excinfo.value)
+E       AssertionError: assert 'Columns col2 not found in the DataFrame.' in 'Columns col1 or col2 not found in the DataFrame.'
+E        +  where 'Columns col1 or col2 not found in the DataFrame.' = str(ValueError('Columns col1 or col2 not found in the DataFrame.'))
+E        +    where ValueError('Columns col1 or col2 not found in the DataFrame.') = <ExceptionInfo ValueError('Columns col1 or col2 not found in the DataFrame.') tblen=2>.value
+
+test_0791.py:59: AssertionError
+=========================== short test summary info ============================
+FAILED test_0791.py::test_task_func_with_identical_columns - assert [0, 1, 2,...
+FAILED test_0791.py::test_task_func_with_negative_values - assert [0, 1, 2, 3...
+FAILED test_0791.py::test_task_func_with_missing_columns - AssertionError: as...
+3 failed, 4 passed in 3.26s

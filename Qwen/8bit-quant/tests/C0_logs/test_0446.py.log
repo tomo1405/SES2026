@@ -1,0 +1,41 @@
+...FF.                                                                   [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_output_type __________________________
+
+    def test_task_func_output_type():
+        points = np.array([[1, 2], [3, 4], [5, 6]])
+        vor, ax = task_func(points)
+>       assert isinstance(vor, Voronoi)
+                               ^^^^^^^
+E       NameError: name 'Voronoi' is not defined
+
+test_0446.py:22: NameError
+____________________________ test_task_func_jitter _____________________________
+
+    def test_task_func_jitter():
+        points = np.array([[1, 2], [3, 4], [5, 6]])
+        vor, _ = task_func(points, seed=0)
+        jittered_points = points + np.random.normal(0, 1e-10, points.shape)
+>       np.testing.assert_array_almost_equal(vor.points, jittered_points, decimal=10)
+E       AssertionError: 
+E       Arrays are not almost equal to 10 decimals
+E       
+E       Mismatched elements: 3 / 6 (50%)
+E       Mismatch at indices:
+E        [1, 1]: 4.000000000224089 (ACTUAL), 4.00000000004106 (DESIRED)
+E        [2, 0]: 5.0000000001867555 (ACTUAL), 5.0000000000144045 (DESIRED)
+E        [2, 1]: 5.999999999902272 (ACTUAL), 6.000000000145428 (DESIRED)
+E       Max absolute difference among violations: 2.43155718e-10
+E       Max relative difference among violations: 4.57573979e-11
+E        ACTUAL: array([[1.0000000002, 2.          ],
+E              [3.0000000001, 4.0000000002],
+E              [5.0000000002, 5.9999999999]])
+E        DESIRED: array([[1.0000000001, 2.          ],
+E              [3.          , 4.          ],
+E              [5.          , 6.0000000001]])
+
+test_0446.py:29: AssertionError
+=========================== short test summary info ============================
+FAILED test_0446.py::test_task_func_output_type - NameError: name 'Voronoi' i...
+FAILED test_0446.py::test_task_func_jitter - AssertionError: 
+2 failed, 4 passed in 2.34s

@@ -1,0 +1,45 @@
+F.FF                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_host ___________________________
+
+    def test_task_func_valid_host():
+        host = "example.com"
+        expected_ip_address = "192.0.2.1"
+        expected_geolocation = {
+            "ip": expected_ip_address,
+            "city": "New York",
+            "region": "New York",
+            "country": "US",
+            "loc": "40.71427,-74.00597",
+            "org": "AS15169 Google LLC",
+            "postal": "10001"
+        }
+        result = task_func(host)
+>       assert result["ip_address"] == expected_ip_address
+E       AssertionError: assert '172.66.147.243' == '192.0.2.1'
+E         
+E         - 192.0.2.1
+E         + 172.66.147.243
+
+test_0075.py:17: AssertionError
+_________________________ test_task_func_socket_error __________________________
+
+    def test_task_func_socket_error():
+        host = "example.com"
+>       with pytest.raises(ConnectionError):
+E       Failed: DID NOT RAISE ConnectionError
+
+test_0075.py:27: Failed
+________________________ test_task_func_requests_error _________________________
+
+    def test_task_func_requests_error():
+        host = "example.com"
+>       with pytest.raises(ConnectionError):
+E       Failed: DID NOT RAISE ConnectionError
+
+test_0075.py:32: Failed
+=========================== short test summary info ============================
+FAILED test_0075.py::test_task_func_valid_host - AssertionError: assert '172....
+FAILED test_0075.py::test_task_func_socket_error - Failed: DID NOT RAISE Conn...
+FAILED test_0075.py::test_task_func_requests_error - Failed: DID NOT RAISE Co...
+3 failed, 1 passed in 1.54s

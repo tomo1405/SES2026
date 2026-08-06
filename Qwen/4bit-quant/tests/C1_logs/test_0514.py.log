@@ -1,0 +1,45 @@
+FF..                                                                     [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_valid_column __________________________
+
+    def test_task_func_valid_column():
+        data = [
+            ["2023-01-01", 1000, 50, 2.0],
+            ["2023-01-02", 2000, 75, 3.5],
+            ["2023-01-03", 1500, 60, 3.0]
+        ]
+        result, ax = task_func("Steps", data)
+        assert result == {
+            "sum": 4500,
+            "mean": 1500.0,
+            "min": 1000,
+            "max": 2000
+        }
+>       assert isinstance(ax, MockAxes)
+E       AssertionError: assert False
+E        +  where False = isinstance(<Axes: title={'center': 'Line Chart of Steps'}, xlabel='Date', ylabel='Steps'>, MockAxes)
+
+test_0514.py:34: AssertionError
+________________________ test_task_func_invalid_column _________________________
+
+    def test_task_func_invalid_column():
+        data = [
+            ["2023-01-01", 1000, 50, 2.0],
+            ["2023-01-02", 2000, 75, 3.5],
+            ["2023-01-03", 1500, 60, 3.0]
+        ]
+        with pytest.raises(KeyError) as excinfo:
+            task_func("InvalidColumn", data)
+>       assert str(excinfo.value) == "'InvalidColumn' is not a valid column. Choose from ['Date', 'Steps', 'Calories Burned', 'Distance Walked']."
+E       assert '"InvalidColu...e Walked\']."' == "'InvalidColu...nce Walked']."
+E         
+E         - 'InvalidColumn' is not a valid column. Choose from ['Date', 'Steps', 'Calories Burned', 'Distance Walked'].
+E         ? ^             -
+E         + "InvalidColumn is not a valid column. Choose from ['Date', 'Steps', 'Calories Burned', 'Distance Walked']."
+E         ? ^                                                                                                         +
+
+test_0514.py:44: AssertionError
+=========================== short test summary info ============================
+FAILED test_0514.py::test_task_func_valid_column - AssertionError: assert False
+FAILED test_0514.py::test_task_func_invalid_column - assert '"InvalidColu...e...
+2 failed, 2 passed in 2.18s

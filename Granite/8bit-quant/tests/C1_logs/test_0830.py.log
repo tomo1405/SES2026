@@ -1,0 +1,27 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Check if the function raises a ValueError when the DataFrame does not have the required columns
+        df = pd.DataFrame({'Name': ['Alice', 'Bob'], 'Age': [25, 30]})
+        with raises(ValueError):
+            task_func(df)
+    
+        # Test case 2: Check if the function returns the correct result when the DataFrame has the required columns
+        df = pd.DataFrame({'Name': ['Alice', 'Bob'], 'Score': [80, 90]})
+        expected_result = {'Alice': iter([('Alice', 80)]), 'Bob': iter([('Bob', 90)])}
+>       assert task_func(df) == expected_result
+E       AssertionError: assert {'Alice': <li...7bfbe73948b0>} == {'Alice': <li...7bfbec6593f0>}
+E         
+E         Differing items:
+E         {'Bob': <list_iterator object at 0x7bfbe73948b0>} != {'Bob': <list_iterator object at 0x7bfbec6593f0>}
+E         {'Alice': <list_iterator object at 0x7bfbe73946d0>} != {'Alice': <list_iterator object at 0x7bfc827af3a0>}
+E         Use -v to get more diff
+
+test_0830.py:27: AssertionError
+=========================== short test summary info ============================
+FAILED test_0830.py::test_task_func - AssertionError: assert {'Alice': <li......
+1 failed in 1.23s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

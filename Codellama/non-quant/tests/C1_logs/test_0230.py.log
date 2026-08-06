@@ -1,0 +1,61 @@
+.FFFF                                                                    [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_writes_to_file _________________________
+
+    def test_task_func_writes_to_file():
+        file_path = 'test_log.json'
+        num_entries = 10
+        seed = 1234
+        task_func(file_path, num_entries, seed)
+        with open(file_path, 'r') as json_file:
+            log_entries = json.load(json_file)
+        assert len(log_entries) == num_entries
+>       assert all(entry['user'] in USERS for entry in log_entries)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0230.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <list_iterator object at 0x72f40fcf1360>
+
+>   assert all(entry['user'] in USERS for entry in log_entries)
+                                ^^^^^
+E   NameError: name 'USERS' is not defined
+
+test_0230.py:22: NameError
+___________________ test_task_func_handles_invalid_file_path ___________________
+
+    def test_task_func_handles_invalid_file_path():
+        file_path = 'invalid_path.json'
+        num_entries = 10
+        seed = 1234
+>       with pytest.raises(FileNotFoundError):
+E       Failed: DID NOT RAISE FileNotFoundError
+
+test_0230.py:30: Failed
+__________________ test_task_func_handles_invalid_num_entries __________________
+
+    def test_task_func_handles_invalid_num_entries():
+        file_path = 'test_log.json'
+        num_entries = 0
+        seed = 1234
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0230.py:37: Failed
+_____________________ test_task_func_handles_invalid_seed ______________________
+
+    def test_task_func_handles_invalid_seed():
+        file_path = 'test_log.json'
+        num_entries = 10
+        seed = 'invalid_seed'
+>       with pytest.raises(TypeError):
+E       Failed: DID NOT RAISE TypeError
+
+test_0230.py:44: Failed
+=========================== short test summary info ============================
+FAILED test_0230.py::test_task_func_writes_to_file - NameError: name 'USERS' ...
+FAILED test_0230.py::test_task_func_handles_invalid_file_path - Failed: DID N...
+FAILED test_0230.py::test_task_func_handles_invalid_num_entries - Failed: DID...
+FAILED test_0230.py::test_task_func_handles_invalid_seed - Failed: DID NOT RA...
+4 failed, 1 passed in 0.44s

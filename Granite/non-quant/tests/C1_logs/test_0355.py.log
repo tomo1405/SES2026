@@ -1,0 +1,47 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        sentences_dict = {'1': 'The quick brown fox', '2': 'jumped over the lazy dog'}
+        word_keys = ['the', 'fox', 'jumped', 'lazy']
+        with patch('sys.stdout', new=StringIO()) as fake_stdout:
+            task_func(sentences_dict, word_keys)
+>           assert fake_stdout.getvalue() != ''
+E           AssertionError: assert '' != ''
+E            +  where '' = <built-in method getvalue of _io.StringIO object at 0x7d4b4e7b31c0>()
+E            +    where <built-in method getvalue of _io.StringIO object at 0x7d4b4e7b31c0> = <_io.StringIO object at 0x7d4b4e7b31c0>.getvalue
+
+test_0355.py:25: AssertionError
+_____________________________ test_task_func_plot ______________________________
+
+    def test_task_func_plot():
+        sentences_dict = {'1': 'The quick brown fox', '2': 'jumped over the lazy dog'}
+        word_keys = ['the', 'fox', 'jumped', 'lazy']
+        with patch('matplotlib.pyplot.show') as mock_show:
+            task_func(sentences_dict, word_keys)
+>           mock_show.assert_called_once()
+
+test_0355.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='show' id='137761315967280'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'show' to have been called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:923: AssertionError
+=========================== short test summary info ============================
+FAILED test_0355.py::test_task_func - AssertionError: assert '' != ''
+FAILED test_0355.py::test_task_func_plot - AssertionError: Expected 'show' to...
+2 failed, 1 passed in 2.12s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

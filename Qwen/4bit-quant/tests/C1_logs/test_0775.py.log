@@ -1,0 +1,34 @@
+FFF..                                                                    [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_default_parameters _______________________
+
+    def test_task_func_default_parameters():
+        mean_score, model = task_func()
+        assert isinstance(mean_score, float)
+>       assert isinstance(model, RandomForestRegressor)
+                                 ^^^^^^^^^^^^^^^^^^^^^
+E       NameError: name 'RandomForestRegressor' is not defined
+
+test_0775.py:8: NameError
+_______________________ test_task_func_custom_parameters _______________________
+
+    def test_task_func_custom_parameters():
+        mean_score, model = task_func(num_samples=200, n_estimators=200, random_seed=42, cv=10)
+        assert isinstance(mean_score, float)
+>       assert isinstance(model, RandomForestRegressor)
+                                 ^^^^^^^^^^^^^^^^^^^^^
+E       NameError: name 'RandomForestRegressor' is not defined
+
+test_0775.py:13: NameError
+__________________________ test_task_func_invalid_cv ___________________________
+
+    def test_task_func_invalid_cv():
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0775.py:16: Failed
+=========================== short test summary info ============================
+FAILED test_0775.py::test_task_func_default_parameters - NameError: name 'Ran...
+FAILED test_0775.py::test_task_func_custom_parameters - NameError: name 'Rand...
+FAILED test_0775.py::test_task_func_invalid_cv - Failed: DID NOT RAISE ValueE...
+3 failed, 2 passed in 7.21s

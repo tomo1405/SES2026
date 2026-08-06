@@ -1,0 +1,413 @@
+FFFFFF                                                                   [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+data = {'username': 'admin', 'password': 'password'}
+
+    def task_func(data):
+        try:
+            username = data['username']
+>           password = base64.b64decode(data['password']).decode()
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           UnicodeDecodeError: 'utf-8' codec can't decode byte 0xa5 in position 0: invalid start byte
+
+../../../src/src_0078.py:8: UnicodeDecodeError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func_valid_input():
+        data = {'username': 'admin', 'password': 'password'}
+>       response = task_func(data)
+                   ^^^^^^^^^^^^^^^
+
+test_0078.py:6: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0078.py:10: in task_func
+    return HttpResponseBadRequest('Bad Request')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/django/http/response.py:382: in __init__
+    super().__init__(*args, **kwargs)
+../../../.venv/lib/python3.12/site-packages/django/http/response.py:124: in __init__
+    content_type = f"text/html; charset={self.charset}"
+                                         ^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/django/http/response.py:172: in charset
+    return settings.DEFAULT_CHARSET
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/django/conf/__init__.py:75: in __getattr__
+    self._setup(name)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <LazySettings [Unevaluated]>, name = 'DEFAULT_CHARSET'
+
+    def _setup(self, name=None):
+        """
+        Load the settings module pointed to by the environment variable. This
+        is used the first time settings are needed, if the user hasn't
+        configured settings manually.
+        """
+        settings_module = os.environ.get(ENVIRONMENT_VARIABLE)
+        if not settings_module:
+            desc = ("setting %s" % name) if name else "settings"
+>           raise ImproperlyConfigured(
+                "Requested %s, but settings are not configured. "
+                "You must either define the environment variable %s "
+                "or call settings.configure() before accessing settings."
+                % (desc, ENVIRONMENT_VARIABLE)
+            )
+E           django.core.exceptions.ImproperlyConfigured: Requested setting DEFAULT_CHARSET, but settings are not configured. You must either define the environment variable DJANGO_SETTINGS_MODULE or call settings.configure() before accessing settings.
+
+../../../.venv/lib/python3.12/site-packages/django/conf/__init__.py:55: ImproperlyConfigured
+_________________________ test_task_func_invalid_input _________________________
+
+data = {'username': 'admin', 'password': 'invalid'}
+
+    def task_func(data):
+        try:
+            username = data['username']
+>           password = base64.b64decode(data['password']).decode()
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../../../src/src_0078.py:8: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+s = b'invalid', altchars = None, validate = False
+
+    def b64decode(s, altchars=None, validate=False):
+        """Decode the Base64 encoded bytes-like object or ASCII string s.
+    
+        Optional altchars must be a bytes-like object or ASCII string of length 2
+        which specifies the alternative alphabet used instead of the '+' and '/'
+        characters.
+    
+        The result is returned as a bytes object.  A binascii.Error is raised if
+        s is incorrectly padded.
+    
+        If validate is False (the default), characters that are neither in the
+        normal base-64 alphabet nor the alternative alphabet are discarded prior
+        to the padding check.  If validate is True, these non-alphabet characters
+        in the input result in a binascii.Error.
+        For more information about the strict base64 check, see:
+    
+        https://docs.python.org/3.11/library/binascii.html#binascii.a2b_base64
+        """
+        s = _bytes_from_decode_data(s)
+        if altchars is not None:
+            altchars = _bytes_from_decode_data(altchars)
+            assert len(altchars) == 2, repr(altchars)
+            s = s.translate(bytes.maketrans(altchars, b'+/'))
+>       return binascii.a2b_base64(s, strict_mode=validate)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       binascii.Error: Incorrect padding
+
+/usr/lib/python3.12/base64.py:88: Error
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func_invalid_input():
+        data = {'username': 'admin', 'password': 'invalid'}
+>       response = task_func(data)
+                   ^^^^^^^^^^^^^^^
+
+test_0078.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0078.py:10: in task_func
+    return HttpResponseBadRequest('Bad Request')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/django/http/response.py:382: in __init__
+    super().__init__(*args, **kwargs)
+../../../.venv/lib/python3.12/site-packages/django/http/response.py:124: in __init__
+    content_type = f"text/html; charset={self.charset}"
+                                         ^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/django/http/response.py:172: in charset
+    return settings.DEFAULT_CHARSET
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/django/conf/__init__.py:75: in __getattr__
+    self._setup(name)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <LazySettings [Unevaluated]>, name = 'DEFAULT_CHARSET'
+
+    def _setup(self, name=None):
+        """
+        Load the settings module pointed to by the environment variable. This
+        is used the first time settings are needed, if the user hasn't
+        configured settings manually.
+        """
+        settings_module = os.environ.get(ENVIRONMENT_VARIABLE)
+        if not settings_module:
+            desc = ("setting %s" % name) if name else "settings"
+>           raise ImproperlyConfigured(
+                "Requested %s, but settings are not configured. "
+                "You must either define the environment variable %s "
+                "or call settings.configure() before accessing settings."
+                % (desc, ENVIRONMENT_VARIABLE)
+            )
+E           django.core.exceptions.ImproperlyConfigured: Requested setting DEFAULT_CHARSET, but settings are not configured. You must either define the environment variable DJANGO_SETTINGS_MODULE or call settings.configure() before accessing settings.
+
+../../../.venv/lib/python3.12/site-packages/django/conf/__init__.py:55: ImproperlyConfigured
+_______________________ test_task_func_missing_username ________________________
+
+data = {'password': 'password'}
+
+    def task_func(data):
+        try:
+>           username = data['username']
+                       ^^^^^^^^^^^^^^^^
+E           KeyError: 'username'
+
+../../../src/src_0078.py:7: KeyError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func_missing_username():
+        data = {'password': 'password'}
+>       response = task_func(data)
+                   ^^^^^^^^^^^^^^^
+
+test_0078.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0078.py:10: in task_func
+    return HttpResponseBadRequest('Bad Request')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/django/http/response.py:382: in __init__
+    super().__init__(*args, **kwargs)
+../../../.venv/lib/python3.12/site-packages/django/http/response.py:124: in __init__
+    content_type = f"text/html; charset={self.charset}"
+                                         ^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/django/http/response.py:172: in charset
+    return settings.DEFAULT_CHARSET
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/django/conf/__init__.py:75: in __getattr__
+    self._setup(name)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <LazySettings [Unevaluated]>, name = 'DEFAULT_CHARSET'
+
+    def _setup(self, name=None):
+        """
+        Load the settings module pointed to by the environment variable. This
+        is used the first time settings are needed, if the user hasn't
+        configured settings manually.
+        """
+        settings_module = os.environ.get(ENVIRONMENT_VARIABLE)
+        if not settings_module:
+            desc = ("setting %s" % name) if name else "settings"
+>           raise ImproperlyConfigured(
+                "Requested %s, but settings are not configured. "
+                "You must either define the environment variable %s "
+                "or call settings.configure() before accessing settings."
+                % (desc, ENVIRONMENT_VARIABLE)
+            )
+E           django.core.exceptions.ImproperlyConfigured: Requested setting DEFAULT_CHARSET, but settings are not configured. You must either define the environment variable DJANGO_SETTINGS_MODULE or call settings.configure() before accessing settings.
+
+../../../.venv/lib/python3.12/site-packages/django/conf/__init__.py:55: ImproperlyConfigured
+_______________________ test_task_func_missing_password ________________________
+
+data = {'username': 'admin'}
+
+    def task_func(data):
+        try:
+            username = data['username']
+>           password = base64.b64decode(data['password']).decode()
+                                        ^^^^^^^^^^^^^^^^
+E           KeyError: 'password'
+
+../../../src/src_0078.py:8: KeyError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func_missing_password():
+        data = {'username': 'admin'}
+>       response = task_func(data)
+                   ^^^^^^^^^^^^^^^
+
+test_0078.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0078.py:10: in task_func
+    return HttpResponseBadRequest('Bad Request')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/django/http/response.py:382: in __init__
+    super().__init__(*args, **kwargs)
+../../../.venv/lib/python3.12/site-packages/django/http/response.py:124: in __init__
+    content_type = f"text/html; charset={self.charset}"
+                                         ^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/django/http/response.py:172: in charset
+    return settings.DEFAULT_CHARSET
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/django/conf/__init__.py:75: in __getattr__
+    self._setup(name)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <LazySettings [Unevaluated]>, name = 'DEFAULT_CHARSET'
+
+    def _setup(self, name=None):
+        """
+        Load the settings module pointed to by the environment variable. This
+        is used the first time settings are needed, if the user hasn't
+        configured settings manually.
+        """
+        settings_module = os.environ.get(ENVIRONMENT_VARIABLE)
+        if not settings_module:
+            desc = ("setting %s" % name) if name else "settings"
+>           raise ImproperlyConfigured(
+                "Requested %s, but settings are not configured. "
+                "You must either define the environment variable %s "
+                "or call settings.configure() before accessing settings."
+                % (desc, ENVIRONMENT_VARIABLE)
+            )
+E           django.core.exceptions.ImproperlyConfigured: Requested setting DEFAULT_CHARSET, but settings are not configured. You must either define the environment variable DJANGO_SETTINGS_MODULE or call settings.configure() before accessing settings.
+
+../../../.venv/lib/python3.12/site-packages/django/conf/__init__.py:55: ImproperlyConfigured
+_______________________ test_task_func_invalid_username ________________________
+
+data = {'username': 'invalid', 'password': 'password'}
+
+    def task_func(data):
+        try:
+            username = data['username']
+>           password = base64.b64decode(data['password']).decode()
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           UnicodeDecodeError: 'utf-8' codec can't decode byte 0xa5 in position 0: invalid start byte
+
+../../../src/src_0078.py:8: UnicodeDecodeError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func_invalid_username():
+        data = {'username': 'invalid', 'password': 'password'}
+>       response = task_func(data)
+                   ^^^^^^^^^^^^^^^
+
+test_0078.py:30: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0078.py:10: in task_func
+    return HttpResponseBadRequest('Bad Request')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/django/http/response.py:382: in __init__
+    super().__init__(*args, **kwargs)
+../../../.venv/lib/python3.12/site-packages/django/http/response.py:124: in __init__
+    content_type = f"text/html; charset={self.charset}"
+                                         ^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/django/http/response.py:172: in charset
+    return settings.DEFAULT_CHARSET
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/django/conf/__init__.py:75: in __getattr__
+    self._setup(name)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <LazySettings [Unevaluated]>, name = 'DEFAULT_CHARSET'
+
+    def _setup(self, name=None):
+        """
+        Load the settings module pointed to by the environment variable. This
+        is used the first time settings are needed, if the user hasn't
+        configured settings manually.
+        """
+        settings_module = os.environ.get(ENVIRONMENT_VARIABLE)
+        if not settings_module:
+            desc = ("setting %s" % name) if name else "settings"
+>           raise ImproperlyConfigured(
+                "Requested %s, but settings are not configured. "
+                "You must either define the environment variable %s "
+                "or call settings.configure() before accessing settings."
+                % (desc, ENVIRONMENT_VARIABLE)
+            )
+E           django.core.exceptions.ImproperlyConfigured: Requested setting DEFAULT_CHARSET, but settings are not configured. You must either define the environment variable DJANGO_SETTINGS_MODULE or call settings.configure() before accessing settings.
+
+../../../.venv/lib/python3.12/site-packages/django/conf/__init__.py:55: ImproperlyConfigured
+_______________________ test_task_func_invalid_password ________________________
+
+data = {'username': 'admin', 'password': 'invalid'}
+
+    def task_func(data):
+        try:
+            username = data['username']
+>           password = base64.b64decode(data['password']).decode()
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../../../src/src_0078.py:8: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+s = b'invalid', altchars = None, validate = False
+
+    def b64decode(s, altchars=None, validate=False):
+        """Decode the Base64 encoded bytes-like object or ASCII string s.
+    
+        Optional altchars must be a bytes-like object or ASCII string of length 2
+        which specifies the alternative alphabet used instead of the '+' and '/'
+        characters.
+    
+        The result is returned as a bytes object.  A binascii.Error is raised if
+        s is incorrectly padded.
+    
+        If validate is False (the default), characters that are neither in the
+        normal base-64 alphabet nor the alternative alphabet are discarded prior
+        to the padding check.  If validate is True, these non-alphabet characters
+        in the input result in a binascii.Error.
+        For more information about the strict base64 check, see:
+    
+        https://docs.python.org/3.11/library/binascii.html#binascii.a2b_base64
+        """
+        s = _bytes_from_decode_data(s)
+        if altchars is not None:
+            altchars = _bytes_from_decode_data(altchars)
+            assert len(altchars) == 2, repr(altchars)
+            s = s.translate(bytes.maketrans(altchars, b'+/'))
+>       return binascii.a2b_base64(s, strict_mode=validate)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       binascii.Error: Incorrect padding
+
+/usr/lib/python3.12/base64.py:88: Error
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func_invalid_password():
+        data = {'username': 'admin', 'password': 'invalid'}
+>       response = task_func(data)
+                   ^^^^^^^^^^^^^^^
+
+test_0078.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0078.py:10: in task_func
+    return HttpResponseBadRequest('Bad Request')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/django/http/response.py:382: in __init__
+    super().__init__(*args, **kwargs)
+../../../.venv/lib/python3.12/site-packages/django/http/response.py:124: in __init__
+    content_type = f"text/html; charset={self.charset}"
+                                         ^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/django/http/response.py:172: in charset
+    return settings.DEFAULT_CHARSET
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/django/conf/__init__.py:75: in __getattr__
+    self._setup(name)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <LazySettings [Unevaluated]>, name = 'DEFAULT_CHARSET'
+
+    def _setup(self, name=None):
+        """
+        Load the settings module pointed to by the environment variable. This
+        is used the first time settings are needed, if the user hasn't
+        configured settings manually.
+        """
+        settings_module = os.environ.get(ENVIRONMENT_VARIABLE)
+        if not settings_module:
+            desc = ("setting %s" % name) if name else "settings"
+>           raise ImproperlyConfigured(
+                "Requested %s, but settings are not configured. "
+                "You must either define the environment variable %s "
+                "or call settings.configure() before accessing settings."
+                % (desc, ENVIRONMENT_VARIABLE)
+            )
+E           django.core.exceptions.ImproperlyConfigured: Requested setting DEFAULT_CHARSET, but settings are not configured. You must either define the environment variable DJANGO_SETTINGS_MODULE or call settings.configure() before accessing settings.
+
+../../../.venv/lib/python3.12/site-packages/django/conf/__init__.py:55: ImproperlyConfigured
+=========================== short test summary info ============================
+FAILED test_0078.py::test_task_func_valid_input - django.core.exceptions.Impr...
+FAILED test_0078.py::test_task_func_invalid_input - django.core.exceptions.Im...
+FAILED test_0078.py::test_task_func_missing_username - django.core.exceptions...
+FAILED test_0078.py::test_task_func_missing_password - django.core.exceptions...
+FAILED test_0078.py::test_task_func_invalid_username - django.core.exceptions...
+FAILED test_0078.py::test_task_func_invalid_password - django.core.exceptions...
+6 failed in 1.18s

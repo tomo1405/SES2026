@@ -1,0 +1,44 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_file_path = '/tmp/pytest-of-tomohiro-w/pytest-1221/test_task_func0/sub/test_image.png'
+mock_onpick = <function mock_onpick.<locals>.onpick at 0x788f2e50b060>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x788f2e5153a0>
+
+    def test_task_func(mock_file_path, mock_onpick, monkeypatch):
+        # Mocking the figure creation
+        mock_figure = MockFigure()
+        monkeypatch.setattr(plt, 'figure', lambda: mock_figure)
+    
+        # Call the function
+>       ax = task_func(mock_file_path, mock_onpick)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0283.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0283.py:13: in task_func
+    ax = Axes3D(fig)
+         ^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/mpl_toolkits/mplot3d/axes3d.py:185: in __init__
+    super().__init__(
+../../../.venv/lib/python3.12/site-packages/matplotlib/axes/_base.py:711: in __init__
+    self.set_figure(fig)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <[AttributeError("'Axes3D' object has no attribute '_left_title'") raised in repr()] Axes3D object at 0x788f2e517a70>
+fig = <test_0283.MockFigure object at 0x788f2e5179b0>
+
+    def set_figure(self, fig):
+        # docstring inherited
+        super().set_figure(fig)
+    
+        self.bbox = mtransforms.TransformedBbox(self._position,
+>                                               fig.transSubfigure)
+                                                ^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'MockFigure' object has no attribute 'transSubfigure'
+
+../../../.venv/lib/python3.12/site-packages/matplotlib/axes/_base.py:885: AttributeError
+=========================== short test summary info ============================
+FAILED test_0283.py::test_task_func - AttributeError: 'MockFigure' object has...
+1 failed, 1 passed in 1.88s

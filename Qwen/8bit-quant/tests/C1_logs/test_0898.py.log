@@ -1,0 +1,38 @@
+F..F                                                                     [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_with_seed ___________________________
+
+    def test_task_func_with_seed():
+        rolls = 10
+        seed = 42
+        expected_frequencies = np.array([2, 1, 1, 1, 3, 2])
+    
+        frequencies, ax = task_func(rolls, seed)
+    
+>       assert np.array_equal(frequencies, expected_frequencies), f"Expected {expected_frequencies}, but got {frequencies}"
+E       AssertionError: Expected [2 1 1 1 3 2], but got [3 3 1 0 0 3]
+E       assert False
+E        +  where False = <function array_equal at 0x7723681485f0>(array([3, 3, 1, 0, 0, 3]), array([2, 1, 1, 1, 3, 2]))
+E        +    where <function array_equal at 0x7723681485f0> = np.array_equal
+
+test_0898.py:13: AssertionError
+__________________________ test_task_func_large_rolls __________________________
+
+    def test_task_func_large_rolls():
+        rolls = 1000
+        seed = 42
+        expected_frequencies = np.array([165, 168, 171, 166, 171, 169])
+    
+        frequencies, ax = task_func(rolls, seed)
+    
+>       assert np.allclose(frequencies, expected_frequencies, atol=10), "Frequencies should be close to expected values"
+E       AssertionError: Frequencies should be close to expected values
+E       assert False
+E        +  where False = <function allclose at 0x772368148370>(array([166, 172, 162, 165, 160, 175]), array([165, 168, 171, 166, 171, 169]), atol=10)
+E        +    where <function allclose at 0x772368148370> = np.allclose
+
+test_0898.py:37: AssertionError
+=========================== short test summary info ============================
+FAILED test_0898.py::test_task_func_with_seed - AssertionError: Expected [2 1...
+FAILED test_0898.py::test_task_func_large_rolls - AssertionError: Frequencies...
+2 failed, 2 passed in 1.75s

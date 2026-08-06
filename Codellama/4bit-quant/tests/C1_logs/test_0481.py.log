@@ -1,0 +1,61 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data_list = ["apple, banana, cherry", "orange, grapes, mango"]
+        expected_output = pd.DataFrame({"Original String": data_list, "Shuffled String": ["banana, apple, cherry", "orange, mango, grapes"]})
+>       assert task_func(data_list) == expected_output
+
+test_0481.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =    Original String  Shuffled String
+0             True            False
+1             True            False
+
+    @final
+    def __bool__(self) -> NoReturn:
+>       raise ValueError(
+            f"The truth value of a {type(self).__name__} is ambiguous. "
+            "Use a.empty, a.bool(), a.item(), a.any() or a.all()."
+        )
+E       ValueError: The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:1513: ValueError
+___________________________ test_task_func_with_seed ___________________________
+
+    def test_task_func_with_seed():
+        data_list = ["apple, banana, cherry", "orange, grapes, mango"]
+        expected_output = pd.DataFrame({"Original String": data_list, "Shuffled String": ["banana, apple, cherry", "orange, mango, grapes"]})
+>       assert task_func(data_list, seed=42) == expected_output
+
+test_0481.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =    Original String  Shuffled String
+0             True             True
+1             True            False
+
+    @final
+    def __bool__(self) -> NoReturn:
+>       raise ValueError(
+            f"The truth value of a {type(self).__name__} is ambiguous. "
+            "Use a.empty, a.bool(), a.item(), a.any() or a.all()."
+        )
+E       ValueError: The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:1513: ValueError
+______________________ test_task_func_with_invalid_input _______________________
+
+    def test_task_func_with_invalid_input():
+        data_list = ["apple, banana, cherry", "orange, grapes, mango"]
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0481.py:18: Failed
+=========================== short test summary info ============================
+FAILED test_0481.py::test_task_func - ValueError: The truth value of a DataFr...
+FAILED test_0481.py::test_task_func_with_seed - ValueError: The truth value o...
+FAILED test_0481.py::test_task_func_with_invalid_input - Failed: DID NOT RAIS...
+3 failed in 1.29s

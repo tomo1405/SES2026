@@ -1,0 +1,61 @@
+..FF..FF.                                                                [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_multiple_words ______________________
+
+    def test_task_func_with_multiple_words():
+        result = task_func("hello world hello")
+>       assert result == {'world': 1}
+E       AssertionError: assert {'hello': 1, 'world': 1} == {'world': 1}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Left contains 1 more item:
+E         {'hello': 1}
+E         Use -v to get more diff
+
+test_0634.py:14: AssertionError
+________________________ test_task_func_with_stopwords _________________________
+
+    def test_task_func_with_stopwords():
+        result = task_func("this is a test sentence with some stopwords")
+>       assert result == {'sentence': 1, 'some': 1, 'stopwords': 1, 'test': 1, 'with': 1}
+E       AssertionError: assert {'test': 1, '...stopwords': 1} == {'sentence': ...test': 1, ...}
+E         
+E         Omitting 3 identical items, use -vv to show
+E         Right contains 2 more items:
+E         {'some': 1, 'with': 1}
+E         Use -v to get more diff
+
+test_0634.py:18: AssertionError
+_____________________ test_task_func_with_duplicate_words ______________________
+
+    def test_task_func_with_duplicate_words():
+        result = task_func("repeat repeat repeat word")
+>       assert result == {'repeat': 3, 'word': 1}
+E       AssertionError: assert {'repeat': 1, 'word': 1} == {'repeat': 3, 'word': 1}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'repeat': 1} != {'repeat': 3}
+E         Use -v to get more diff
+
+test_0634.py:30: AssertionError
+_________________________ test_task_func_with_numbers __________________________
+
+    def test_task_func_with_numbers():
+        result = task_func("number 123 number")
+>       assert result == {'number': 2}
+E       AssertionError: assert {'number': 1, '123': 1} == {'number': 2}
+E         
+E         Differing items:
+E         {'number': 1} != {'number': 2}
+E         Left contains 1 more item:
+E         {'123': 1}
+E         Use -v to get more diff
+
+test_0634.py:34: AssertionError
+=========================== short test summary info ============================
+FAILED test_0634.py::test_task_func_with_multiple_words - AssertionError: ass...
+FAILED test_0634.py::test_task_func_with_stopwords - AssertionError: assert {...
+FAILED test_0634.py::test_task_func_with_duplicate_words - AssertionError: as...
+FAILED test_0634.py::test_task_func_with_numbers - AssertionError: assert {'n...
+4 failed, 5 passed in 3.69s

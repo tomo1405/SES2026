@@ -1,0 +1,36 @@
+..FF...                                                                  [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_mixed_data_types ________________________
+
+    def test_task_func_mixed_data_types():
+        data_list = [(1, 'a', 3), ('b', 5, 6)]
+        expected_result = [1.0, 5.0, 6.0]
+>       assert task_func(data_list) == expected_result
+E       assert [np.float64(1....float64(4.5)] == [1.0, 5.0, 6.0]
+E         
+E         At index 2 diff: np.float64(4.5) != 6.0
+E         Use -v to get more diff
+
+test_0873.py:18: AssertionError
+________________________ test_task_func_all_non_numeric ________________________
+
+    def test_task_func_all_non_numeric():
+        data_list = [('a', 'b'), ('c', 'd')]
+        expected_result = [np.nan, np.nan]
+>       assert np.allclose(task_func(data_list), expected_result)
+E       AssertionError: assert False
+E        +  where False = <function allclose at 0x77681e788570>([np.float64(nan), np.float64(nan)], [nan, nan])
+E        +    where <function allclose at 0x77681e788570> = np.allclose
+E        +    and   [np.float64(nan), np.float64(nan)] = task_func([('a', 'b'), ('c', 'd')])
+
+test_0873.py:23: AssertionError
+=============================== warnings summary ===============================
+Qwen/8bit-quant/tests/test_0873.py::test_task_func_all_non_numeric
+  /work/tomohiro-w/utg/src/src_0873.py:8: RuntimeWarning: Mean of empty slice
+    mean_values = [np.nanmean([val for val in column if isinstance(val, (int, float))]) for column in unzipped_data]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0873.py::test_task_func_mixed_data_types - assert [np.float64(1.....
+FAILED test_0873.py::test_task_func_all_non_numeric - AssertionError: assert ...
+2 failed, 5 passed, 1 warning in 0.75s

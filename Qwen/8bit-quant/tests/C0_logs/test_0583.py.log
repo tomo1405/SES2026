@@ -1,0 +1,42 @@
+.FFF                                                                     [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_data_size ___________________________
+
+    def test_task_func_data_size():
+        # Test that the function generates data of the correct size
+        fig = task_func(size=500)
+        ax = fig.axes[0]
+>       data, _ = ax.hist.get_data()
+                  ^^^^^^^^^^^^^^^^
+E       AttributeError: 'function' object has no attribute 'get_data'
+
+test_0583.py:28: AttributeError
+_____________________ test_task_func_histogram_properties ______________________
+
+plot_capture = <_io.BytesIO object at 0x7964a86d0770>
+
+    def test_task_func_histogram_properties(plot_capture):
+        # Test that the histogram has the correct properties
+        fig = plt.imread(plot_capture)
+>       ax = fig.axes[0]
+             ^^^^^^^^
+E       AttributeError: 'numpy.ndarray' object has no attribute 'axes'
+
+test_0583.py:34: AttributeError
+___________________________ test_task_func_plot_line ___________________________
+
+plot_capture = <_io.BytesIO object at 0x7964a656e9d0>
+
+    def test_task_func_plot_line(plot_capture):
+        # Test that the plot line is present
+        fig = plt.imread(plot_capture)
+>       lines = fig.axes[0].get_lines()
+                ^^^^^^^^
+E       AttributeError: 'numpy.ndarray' object has no attribute 'axes'
+
+test_0583.py:41: AttributeError
+=========================== short test summary info ============================
+FAILED test_0583.py::test_task_func_data_size - AttributeError: 'function' ob...
+FAILED test_0583.py::test_task_func_histogram_properties - AttributeError: 'n...
+FAILED test_0583.py::test_task_func_plot_line - AttributeError: 'numpy.ndarra...
+3 failed, 1 passed in 3.63s

@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sample_df =      A    B   C
+0  1.0  5.0   9
+1  2.0  NaN  10
+2  NaN  7.0  11
+3  4.0  8.0  12
+
+    def test_task_func(sample_df):
+        # Call the function with the sample DataFrame
+        transformed_df, heatmap = task_func(sample_df)
+    
+        # Check that the transformed DataFrame has no NaN values
+        assert not transformed_df.isnull().values.any(), "Transformed DataFrame contains NaN values"
+    
+        # Check that the transformed DataFrame is standardized
+        assert np.allclose(transformed_df.mean(), 0, atol=1e-6), "Mean of transformed DataFrame is not close to zero"
+>       assert np.allclose(transformed_df.std(), 1, atol=1e-6), "Standard deviation of transformed DataFrame is not close to one"
+E       AssertionError: Standard deviation of transformed DataFrame is not close to one
+E       assert False
+E        +  where False = <function allclose at 0x75b6d11de9b0>(A    1.154701\nB    1.154701\nC    1.154701\ndtype: float64, 1, atol=1e-06)
+E        +    where <function allclose at 0x75b6d11de9b0> = np.allclose
+E        +    and   A    1.154701\nB    1.154701\nC    1.154701\ndtype: float64 = std()
+E        +      where std =           A         B         C\n0 -1.234427 -1.543033 -1.341641\n1 -0.308607  0.000000 -0.447214\n2  0.000000  0.308607  0.447214\n3  1.543033  1.234427  1.341641.std
+
+test_0048.py:24: AssertionError
+=========================== short test summary info ============================
+FAILED test_0048.py::test_task_func - AssertionError: Standard deviation of t...
+1 failed in 3.93s

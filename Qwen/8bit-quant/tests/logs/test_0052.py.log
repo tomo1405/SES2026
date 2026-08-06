@@ -1,0 +1,44 @@
+F..F                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_no_clusters __________________________
+
+sample_df =    Age  Height
+0   25     160
+1   30     170
+2   35     180
+3   40     190
+4   45     200
+
+    def test_task_func_no_clusters(sample_df):
+        age = 40
+        height = 170
+        result_df, ax = task_func(sample_df, age, height)
+>       assert result_df["Cluster"].nunique() == 1
+E       assert 0 == 1
+E        +  where 0 = nunique()
+E        +    where nunique = Series([], Name: Cluster, dtype: int64).nunique
+
+test_0052.py:19: AssertionError
+___________________________ test_task_func_edge_case ___________________________
+
+sample_df =    Age  Height
+0   25     160
+1   30     170
+2   35     180
+3   40     190
+4   45     200
+
+    def test_task_func_edge_case(sample_df):
+        age = 35
+        height = 180
+        result_df, ax = task_func(sample_df, age, height)
+>       assert result_df["Cluster"].nunique() == 1
+E       assert 0 == 1
+E        +  where 0 = nunique()
+E        +    where nunique = Series([], Name: Cluster, dtype: int64).nunique
+
+test_0052.py:40: AssertionError
+=========================== short test summary info ============================
+FAILED test_0052.py::test_task_func_no_clusters - assert 0 == 1
+FAILED test_0052.py::test_task_func_edge_case - assert 0 == 1
+2 failed, 2 passed in 4.04s

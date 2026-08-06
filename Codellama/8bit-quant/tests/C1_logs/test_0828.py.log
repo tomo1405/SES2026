@@ -1,0 +1,148 @@
+.F.                                                                      [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_invalid_input _______________________
+
+n = 'hello', strict = True
+
+    def as_int(n, strict=True):
+        """
+        Convert the argument to a builtin integer.
+    
+        The return value is guaranteed to be equal to the input. ValueError is
+        raised if the input has a non-integral value. When ``strict`` is True, this
+        uses `__index__ <https://docs.python.org/3/reference/datamodel.html#object.__index__>`_
+        and when it is False it uses ``int``.
+    
+    
+        Examples
+        ========
+    
+        >>> from sympy.utilities.misc import as_int
+        >>> from sympy import sqrt, S
+    
+        The function is primarily concerned with sanitizing input for
+        functions that need to work with builtin integers, so anything that
+        is unambiguously an integer should be returned as an int:
+    
+        >>> as_int(S(3))
+        3
+    
+        Floats, being of limited precision, are not assumed to be exact and
+        will raise an error unless the ``strict`` flag is False. This
+        precision issue becomes apparent for large floating point numbers:
+    
+        >>> big = 1e23
+        >>> type(big) is float
+        True
+        >>> big == int(big)
+        True
+        >>> as_int(big)
+        Traceback (most recent call last):
+        ...
+        ValueError: ... is not an integer
+        >>> as_int(big, strict=False)
+        99999999999999991611392
+    
+        Input that might be a complex representation of an integer value is
+        also rejected by default:
+    
+        >>> one = sqrt(3 + 2*sqrt(2)) - sqrt(2)
+        >>> int(one) == 1
+        True
+        >>> as_int(one)
+        Traceback (most recent call last):
+        ...
+        ValueError: ... is not an integer
+        """
+        if strict:
+            try:
+                if isinstance(n, bool):
+                    raise TypeError
+>               return operator.index(n)
+                       ^^^^^^^^^^^^^^^^^
+E               TypeError: 'str' object cannot be interpreted as an integer
+
+../../../.venv/lib/python3.12/site-packages/sympy/utilities/misc.py:554: TypeError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func_with_invalid_input():
+        input_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "hello"]
+        with pytest.raises(TypeError):
+>           task_func(input_list)
+
+test_0828.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0828.py:4: in task_func
+    primes = [i for i in input_list if isprime(i)]
+                                       ^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sympy/ntheory/primetest.py:696: in isprime
+    n = as_int(n)
+        ^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+n = 'hello', strict = True
+
+    def as_int(n, strict=True):
+        """
+        Convert the argument to a builtin integer.
+    
+        The return value is guaranteed to be equal to the input. ValueError is
+        raised if the input has a non-integral value. When ``strict`` is True, this
+        uses `__index__ <https://docs.python.org/3/reference/datamodel.html#object.__index__>`_
+        and when it is False it uses ``int``.
+    
+    
+        Examples
+        ========
+    
+        >>> from sympy.utilities.misc import as_int
+        >>> from sympy import sqrt, S
+    
+        The function is primarily concerned with sanitizing input for
+        functions that need to work with builtin integers, so anything that
+        is unambiguously an integer should be returned as an int:
+    
+        >>> as_int(S(3))
+        3
+    
+        Floats, being of limited precision, are not assumed to be exact and
+        will raise an error unless the ``strict`` flag is False. This
+        precision issue becomes apparent for large floating point numbers:
+    
+        >>> big = 1e23
+        >>> type(big) is float
+        True
+        >>> big == int(big)
+        True
+        >>> as_int(big)
+        Traceback (most recent call last):
+        ...
+        ValueError: ... is not an integer
+        >>> as_int(big, strict=False)
+        99999999999999991611392
+    
+        Input that might be a complex representation of an integer value is
+        also rejected by default:
+    
+        >>> one = sqrt(3 + 2*sqrt(2)) - sqrt(2)
+        >>> int(one) == 1
+        True
+        >>> as_int(one)
+        Traceback (most recent call last):
+        ...
+        ValueError: ... is not an integer
+        """
+        if strict:
+            try:
+                if isinstance(n, bool):
+                    raise TypeError
+                return operator.index(n)
+            except TypeError:
+>               raise ValueError('%s is not an integer' % (n,))
+E               ValueError: hello is not an integer
+
+../../../.venv/lib/python3.12/site-packages/sympy/utilities/misc.py:556: ValueError
+=========================== short test summary info ============================
+FAILED test_0828.py::test_task_func_with_invalid_input - ValueError: hello is...
+1 failed, 2 passed in 1.84s

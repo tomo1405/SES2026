@@ -1,0 +1,43 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a simple sentence
+        text = "The quick brown fox jumps over the lazy dog"
+        expected_output = pd.Series({'quick': 1, 'brown': 1, 'fox': 1, 'jumps': 1, 'over': 1, 'lazy': 1, 'dog': 1})
+        assert task_func(text).equals(expected_output)
+    
+        # Test with multiple sentences and punctuation
+        text = "Hello, world! Hello universe."
+        expected_output = pd.Series({'hello': 2, 'world': 1, 'universe': 1})
+        assert task_func(text).equals(expected_output)
+    
+        # Test with stopwords only
+        text = "a an the in is are"
+        expected_output = pd.Series(dtype=int)
+        assert task_func(text).equals(expected_output)
+    
+        # Test with empty string
+        text = ""
+        expected_output = pd.Series(dtype=int)
+        assert task_func(text).equals(expected_output)
+    
+        # Test with case insensitivity
+        text = "THE quick BROWN fox"
+        expected_output = pd.Series({'quick': 1, 'brown': 1, 'fox': 1})
+        assert task_func(text).equals(expected_output)
+    
+        # Test with numbers and symbols
+        text = "123 the quick brown fox! 456"
+        expected_output = pd.Series({'quick': 1, 'brown': 1, 'fox': 1})
+>       assert task_func(text).equals(expected_output)
+E       AssertionError: assert False
+E        +  where False = equals(quick    1\nbrown    1\nfox      1\ndtype: int64)
+E        +    where equals = 123      1\nquick    1\nbrown    1\nfox      1\n456      1\ndtype: int64.equals
+E        +      where 123      1\nquick    1\nbrown    1\nfox      1\n456      1\ndtype: int64 = task_func('123 the quick brown fox! 456')
+
+test_0053.py:34: AssertionError
+=========================== short test summary info ============================
+FAILED test_0053.py::test_task_func - AssertionError: assert False
+1 failed in 1.09s

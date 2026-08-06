@@ -1,0 +1,46 @@
+....FFF                                                                  [100%]
+=================================== FAILURES ===================================
+____________________ test_task_func_with_special_characters ____________________
+
+    def test_task_func_with_special_characters():
+>       assert task_func("a!b@c#") == {'ab': 1}
+E       AssertionError: assert defaultdict(<...: 1, 'bc': 1}) == {'ab': 1}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Left contains 1 more item:
+E         {'bc': 1}
+E         Use -v to get more diff
+
+test_0932.py:17: AssertionError
+__________________________ test_task_func_mixed_case ___________________________
+
+    def test_task_func_mixed_case():
+>       assert task_func("AbcABC") == {'Ab': 1, 'bC': 1, 'cA': 1, 'Ca': 1, 'aB': 1, 'BC': 1}
+E       AssertionError: assert defaultdict(<...: 1, 'BC': 1}) == {'Ab': 1, 'bC... 'Ca': 1, ...}
+E         
+E         Omitting 3 identical items, use -vv to show
+E         Left contains 2 more items:
+E         {'AB': 1, 'bc': 1}
+E         Right contains 3 more items:
+E         {'Ca': 1, 'aB': 1, 'bC': 1}
+E         Use -v to get more diff
+
+test_0932.py:20: AssertionError
+__________________________ test_task_func_large_input __________________________
+
+    def test_task_func_large_input():
+        large_input = "a" * 1000
+        expected_output = {f"{large_input[i]}{large_input[i+1]}": 1 for i in range(len(large_input) - 1)}
+>       assert task_func(large_input) == expected_output
+E       AssertionError: assert defaultdict(<..., {'aa': 999}) == {'aa': 1}
+E         
+E         Differing items:
+E         {'aa': 999} != {'aa': 1}
+E         Use -v to get more diff
+
+test_0932.py:25: AssertionError
+=========================== short test summary info ============================
+FAILED test_0932.py::test_task_func_with_special_characters - AssertionError:...
+FAILED test_0932.py::test_task_func_mixed_case - AssertionError: assert defau...
+FAILED test_0932.py::test_task_func_large_input - AssertionError: assert defa...
+3 failed, 4 passed in 0.48s

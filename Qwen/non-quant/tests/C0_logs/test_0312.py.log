@@ -1,0 +1,56 @@
+.FFFF                                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_empty_lists ________________________
+
+    def test_task_func_with_empty_lists():
+        list_of_lists = [[], []]
+        result = task_func(list_of_lists)
+        expected_data = [random.randint(0, 100) for _ in range(10)]
+>       assert result['mean'] == np.mean(expected_data)
+E       assert np.float64(55.3) == np.float64(44.9)
+E        +  where np.float64(44.9) = <function mean at 0x76ee0a7b8db0>([61, 45, 74, 27, 64, 17, ...])
+E        +    where <function mean at 0x76ee0a7b8db0> = np.mean
+
+test_0312.py:19: AssertionError
+_______________________ test_task_func_with_mixed_lists ________________________
+
+    def test_task_func_with_mixed_lists():
+        list_of_lists = [[1, 2, 3], [], [4, 5, 6]]
+        result = task_func(list_of_lists)
+        expected_data = [1, 2, 3] + [random.randint(0, 100) for _ in range(5)] + [4, 5, 6]
+>       assert result['mean'] == np.mean(expected_data)
+E       assert np.float64(23.454545454545453) == np.float64(30.636363636363637)
+E        +  where np.float64(30.636363636363637) = <function mean at 0x76ee0a7b8db0>([1, 2, 3, 65, 62, 51, ...])
+E        +    where <function mean at 0x76ee0a7b8db0> = np.mean
+
+test_0312.py:27: AssertionError
+_______________________ test_task_func_with_custom_size ________________________
+
+    def test_task_func_with_custom_size():
+        list_of_lists = [[1, 2, 3], []]
+        result = task_func(list_of_lists, size=3)
+        expected_data = [1, 2, 3] + [random.randint(0, 100) for _ in range(3)]
+>       assert result['mean'] == np.mean(expected_data)
+E       assert np.float64(34.166666666666664) == np.float64(18.166666666666668)
+E        +  where np.float64(18.166666666666668) = <function mean at 0x76ee0a7b8db0>([1, 2, 3, 5, 33, 65])
+E        +    where <function mean at 0x76ee0a7b8db0> = np.mean
+
+test_0312.py:35: AssertionError
+_______________________ test_task_func_with_custom_seed ________________________
+
+    def test_task_func_with_custom_seed():
+        list_of_lists = [[1, 2, 3], []]
+        result = task_func(list_of_lists, seed=42)
+        expected_data = [1, 2, 3] + [random.randint(0, 100) for _ in range(5)]
+>       assert result['mean'] == np.mean(expected_data)
+E       assert np.float64(29.125) == np.float64(23.625)
+E        +  where np.float64(23.625) = <function mean at 0x76ee0a7b8db0>([1, 2, 3, 31, 28, 17, ...])
+E        +    where <function mean at 0x76ee0a7b8db0> = np.mean
+
+test_0312.py:43: AssertionError
+=========================== short test summary info ============================
+FAILED test_0312.py::test_task_func_with_empty_lists - assert np.float64(55.3...
+FAILED test_0312.py::test_task_func_with_mixed_lists - assert np.float64(23.4...
+FAILED test_0312.py::test_task_func_with_custom_size - assert np.float64(34.1...
+FAILED test_0312.py::test_task_func_with_custom_seed - assert np.float64(29.1...
+4 failed, 1 passed in 1.80s

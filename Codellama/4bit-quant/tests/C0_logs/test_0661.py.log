@@ -1,0 +1,25 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with valid input
+        x = [[1, 2, 3], [4, 5, 6]]
+        y = [[7, 8, 9], [10, 11, 12]]
+        labels = ['label1', 'label2']
+        fig = task_func(x, y, labels)
+        assert isinstance(fig, plt.Figure)
+        assert len(fig.axes) == 1
+        ax = fig.axes[0]
+        assert len(ax.lines) == 2
+        assert ax.get_legend() is not None
+    
+        # Test with invalid input
+        with pytest.raises(ValueError):
+>           task_func(x, y, labels, invalid_input=True)
+E           TypeError: task_func() got an unexpected keyword argument 'invalid_input'
+
+test_0661.py:21: TypeError
+=========================== short test summary info ============================
+FAILED test_0661.py::test_task_func - TypeError: task_func() got an unexpecte...
+1 failed in 3.42s

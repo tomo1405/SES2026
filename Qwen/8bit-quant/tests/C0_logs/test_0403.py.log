@@ -1,0 +1,46 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_open = <MagicMock name='open' id='124191958265696'>
+mock_get = <MagicMock name='get' id='124191958267232'>
+mock_response = <test_0403.mock_response.<locals>.MockResponse object at 0x70f3b18e6d80>
+
+    @patch('src_0403.requests.get')
+    @patch('src_0403.open', new_callable=mock_open)
+    def test_task_func(mock_open, mock_get, mock_response):
+        # Mock the API response
+        mock_get.return_value = mock_response
+    
+        # Define the pattern to search for
+        pattern = 'i'
+    
+        # Call the function
+        result = task_func(pattern)
+    
+        # Check that the CSV file was written correctly
+        mock_open.assert_called_once_with('matched_data.csv', 'w')
+        handle = mock_open()
+>       handle().writerows.assert_called_once_with([['i'], ['i']])
+
+test_0403.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='open()().writerows' id='124191958597456'>
+args = ([['i'], ['i']],), kwargs = {}
+
+    def assert_called_once_with(self, /, *args, **kwargs):
+        """assert that the mock was called exactly once and that that call was
+        with the specified arguments."""
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to be called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'writerows' to be called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:955: AssertionError
+=========================== short test summary info ============================
+FAILED test_0403.py::test_task_func - AssertionError: Expected 'writerows' to...
+1 failed, 1 passed in 0.94s

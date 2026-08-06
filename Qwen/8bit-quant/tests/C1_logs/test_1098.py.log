@@ -1,0 +1,73 @@
+FFFF.F                                                                   [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_remove_urls __________________________
+
+    def test_task_func_remove_urls():
+        input_text = "Check out this link http://example.com and see what happens!"
+        expected_output = "Check out this link  and see what happens"
+>       assert task_func(input_text) == expected_output
+E       AssertionError: assert 'Check link see happens' == 'Check out th... what happens'
+E         
+E         - Check out this link  and see what happens
+E         + Check link see happens
+
+test_1098.py:7: AssertionError
+______________________ test_task_func_remove_punctuation _______________________
+
+    def test_task_func_remove_punctuation():
+        input_text = "Hello, world! This is a test."
+        expected_output = "Hello world This is a test"
+>       assert task_func(input_text) == expected_output
+E       AssertionError: assert 'Hello world test' == 'Hello world This is a test'
+E         
+E         - Hello world This is a test
+E         ?             ----------
+E         + Hello world test
+
+test_1098.py:12: AssertionError
+_______________________ test_task_func_remove_stopwords ________________________
+
+    def test_task_func_remove_stopwords():
+        input_text = "The quick brown fox jumps over the lazy dog."
+        expected_output = "quick brown fox jumps over lazy dog"
+>       assert task_func(input_text) == expected_output
+E       AssertionError: assert 'quick brown ...umps lazy dog' == 'quick brown ...over lazy dog'
+E         
+E         - quick brown fox jumps over lazy dog
+E         ?                       -----
+E         + quick brown fox jumps lazy dog
+
+test_1098.py:17: AssertionError
+___________________________ test_task_func_combined ____________________________
+
+    def test_task_func_combined():
+        input_text = "Visit http://example.com for more info! It's a great place to learn Python."
+        expected_output = "Visit  for more info Its a great place to learn Python"
+>       assert task_func(input_text) == expected_output
+E       AssertionError: assert 'Visit info g... learn Python' == 'Visit  for m... learn Python'
+E         
+E         - Visit  for more info Its a great place to learn Python
+E         ?       ----------    ------             ---
+E         + Visit info great place learn Python
+
+test_1098.py:22: AssertionError
+_______________________ test_task_func_no_change_needed ________________________
+
+    def test_task_func_no_change_needed():
+        input_text = "Unique content without stopwords or links."
+        expected_output = "Unique content without stopwords or links"
+>       assert task_func(input_text) == expected_output
+E       AssertionError: assert 'Unique conte...opwords links' == 'Unique conte...ords or links'
+E         
+E         - Unique content without stopwords or links
+E         ?                                  ---
+E         + Unique content without stopwords links
+
+test_1098.py:32: AssertionError
+=========================== short test summary info ============================
+FAILED test_1098.py::test_task_func_remove_urls - AssertionError: assert 'Che...
+FAILED test_1098.py::test_task_func_remove_punctuation - AssertionError: asse...
+FAILED test_1098.py::test_task_func_remove_stopwords - AssertionError: assert...
+FAILED test_1098.py::test_task_func_combined - AssertionError: assert 'Visit ...
+FAILED test_1098.py::test_task_func_no_change_needed - AssertionError: assert...
+5 failed, 1 passed in 0.62s

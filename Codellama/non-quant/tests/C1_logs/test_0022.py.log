@@ -1,0 +1,22 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        system_info = task_func()
+        assert system_info['OS'] == platform.system()
+        assert system_info['Architecture'] == platform.architecture()[0]
+        total_memory = psutil.virtual_memory().total
+        used_memory = psutil.virtual_memory().used
+>       assert system_info['Memory Usage'] == f'{used_memory/total_memory*100:.2f}%'
+E       AssertionError: assert '18.93%' == '18.94%'
+E         
+E         - 18.94%
+E         ?     ^
+E         + 18.93%
+E         ?     ^
+
+test_0022.py:13: AssertionError
+=========================== short test summary info ============================
+FAILED test_0022.py::test_task_func - AssertionError: assert '18.93%' == '18....
+1 failed in 0.42s

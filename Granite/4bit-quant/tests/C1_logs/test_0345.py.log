@@ -1,0 +1,20 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        src_folder = "/path/to/source/folder"
+        backup_dir = "/path/to/backup/directory"
+    
+        # Test if source folder exists
+        with pytest.raises(ValueError) as exc_info:
+            task_func(src_folder, "invalid_backup_dir")
+>       assert "Source folder 'invalid_backup_dir' does not exist." in str(exc_info.value)
+E       assert "Source folder 'invalid_backup_dir' does not exist." in "Source folder '/path/to/source/folder' does not exist."
+E        +  where "Source folder '/path/to/source/folder' does not exist." = str(ValueError("Source folder '/path/to/source/folder' does not exist."))
+E        +    where ValueError("Source folder '/path/to/source/folder' does not exist.") = <ExceptionInfo ValueError("Source folder '/path/to/source/folder' does not exist.") tblen=2>.value
+
+test_0345.py:14: AssertionError
+=========================== short test summary info ============================
+FAILED test_0345.py::test_task_func - assert "Source folder 'invalid_backup_d...
+1 failed in 0.41s

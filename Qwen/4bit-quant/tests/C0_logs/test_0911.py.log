@@ -1,0 +1,64 @@
+F..FFF                                                                   [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        letters = ['A', 'B', 'C']
+        repetitions = [3, 5, 2]
+        colors = ['red', 'blue', 'green']
+    
+        ax = task_func(letters, repetitions, colors)
+    
+        # Check if the bar chart is created correctly
+>       assert isinstance(ax, plt.AxesSubplot)
+                              ^^^^^^^^^^^^^^^
+E       AttributeError: module 'matplotlib.pyplot' has no attribute 'AxesSubplot'
+
+test_0911.py:16: AttributeError
+________________________ test_task_func_single_element _________________________
+
+    def test_task_func_single_element():
+        letters = ['X']
+        repetitions = [10]
+        colors = ['purple']
+    
+        ax = task_func(letters, repetitions, colors)
+    
+>       assert isinstance(ax, plt.AxesSubplot)
+                              ^^^^^^^^^^^^^^^
+E       AttributeError: module 'matplotlib.pyplot' has no attribute 'AxesSubplot'
+
+test_0911.py:39: AttributeError
+__________________________ test_task_func_large_input __________________________
+
+    def test_task_func_large_input():
+        letters = list('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+        repetitions = np.random.randint(1, 100, size=len(letters))
+        colors = ['black'] * len(letters)
+    
+        ax = task_func(letters, repetitions, colors)
+    
+>       assert isinstance(ax, plt.AxesSubplot)
+                              ^^^^^^^^^^^^^^^
+E       AttributeError: module 'matplotlib.pyplot' has no attribute 'AxesSubplot'
+
+test_0911.py:52: AttributeError
+_________________________ test_task_func_plot_capture __________________________
+
+    def test_task_func_plot_capture():
+        letters = ['A', 'B', 'C']
+        repetitions = [3, 5, 2]
+        colors = ['red', 'blue', 'green']
+    
+        fig, ax = plt.subplots()
+>       ax = task_func(letters, repetitions, colors, ax=ax)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: task_func() got an unexpected keyword argument 'ax'
+
+test_0911.py:64: TypeError
+=========================== short test summary info ============================
+FAILED test_0911.py::test_task_func_valid_input - AttributeError: module 'mat...
+FAILED test_0911.py::test_task_func_single_element - AttributeError: module '...
+FAILED test_0911.py::test_task_func_large_input - AttributeError: module 'mat...
+FAILED test_0911.py::test_task_func_plot_capture - TypeError: task_func() got...
+4 failed, 2 passed in 1.63s

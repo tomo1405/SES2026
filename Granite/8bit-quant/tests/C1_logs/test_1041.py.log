@@ -1,0 +1,70 @@
+.F.F..F                                                                  [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_custom_address _________________________
+
+    def test_task_func_custom_address():
+>       assert task_func(server_address="192.168.1.1") == "Server started on 192.168.1.1:12345. Ran for 5 seconds."
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1041.py:8: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+server_address = '192.168.1.1', server_port = 12345, buffer_size = 1024
+run_duration = 5
+
+    def task_func(
+        server_address="localhost", server_port=12345, buffer_size=1024, run_duration=5
+    ):
+        server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        server.setblocking(0)
+>       server.bind((server_address, server_port))
+E       OSError: [Errno 99] Cannot assign requested address
+
+../../../src/src_1041.py:10: OSError
+____________________ test_task_func_custom_address_and_port ____________________
+
+    def test_task_func_custom_address_and_port():
+>       assert task_func(server_address="192.168.1.1", server_port=8080) == "Server started on 192.168.1.1:8080. Ran for 5 seconds."
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1041.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+server_address = '192.168.1.1', server_port = 8080, buffer_size = 1024
+run_duration = 5
+
+    def task_func(
+        server_address="localhost", server_port=12345, buffer_size=1024, run_duration=5
+    ):
+        server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        server.setblocking(0)
+>       server.bind((server_address, server_port))
+E       OSError: [Errno 99] Cannot assign requested address
+
+../../../src/src_1041.py:10: OSError
+__________________________ test_task_func_custom_all ___________________________
+
+    def test_task_func_custom_all():
+>       assert task_func(server_address="192.168.1.1", server_port=8080, buffer_size=4096, run_duration=10) == "Server started on 192.168.1.1:8080. Ran for 10 seconds."
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1041.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+server_address = '192.168.1.1', server_port = 8080, buffer_size = 4096
+run_duration = 10
+
+    def task_func(
+        server_address="localhost", server_port=12345, buffer_size=1024, run_duration=5
+    ):
+        server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        server.setblocking(0)
+>       server.bind((server_address, server_port))
+E       OSError: [Errno 99] Cannot assign requested address
+
+../../../src/src_1041.py:10: OSError
+=========================== short test summary info ============================
+FAILED test_1041.py::test_task_func_custom_address - OSError: [Errno 99] Cann...
+FAILED test_1041.py::test_task_func_custom_address_and_port - OSError: [Errno...
+FAILED test_1041.py::test_task_func_custom_all - OSError: [Errno 99] Cannot a...
+3 failed, 4 passed in 25.54s

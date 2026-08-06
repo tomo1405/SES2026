@@ -1,0 +1,78 @@
+FF.F                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_data ___________________________
+
+    def test_task_func_valid_data():
+        # Arrange
+        data = [
+            ['Alice', 30],
+            ['Bob', 25]
+        ]
+        headers = ['Name', 'Age']
+        with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+            file_path = temp_file.name
+    
+        # Act
+        result = task_func(data, file_path, headers)
+    
+        # Assert
+        assert os.path.exists(result)
+        with open(result, newline='') as csvfile:
+            reader = csv.reader(csvfile)
+            rows = list(reader)
+>       assert rows == [headers] + data
+E       AssertionError: assert [['Name', 'Ag...['Bob', '25']] == [['Name', 'Ag..., ['Bob', 25]]
+E         
+E         At index 1 diff: ['Alice', '30'] != ['Alice', 30]
+E         Use -v to get more diff
+
+test_0874.py:27: AssertionError
+_________________________ test_task_func_missing_data __________________________
+
+    def test_task_func_missing_data():
+        # Arrange
+        data = [
+            ['Alice', 30],
+            ['Bob']  # Missing age
+        ]
+        headers = ['Name', 'Age']
+        with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+            file_path = temp_file.name
+    
+        # Act
+        result = task_func(data, file_path, headers)
+    
+        # Assert
+        assert os.path.exists(result)
+        with open(result, newline='') as csvfile:
+            reader = csv.reader(csvfile)
+            rows = list(reader)
+>       assert rows == [headers, ['Alice', 30], ['Bob', None]]
+E       AssertionError: assert [['Name', 'Ag..., ['Bob', '']] == [['Name', 'Ag...['Bob', None]]
+E         
+E         At index 1 diff: ['Alice', '30'] != ['Alice', 30]
+E         Use -v to get more diff
+
+test_0874.py:50: AssertionError
+__________________________ test_task_func_no_headers ___________________________
+
+    def test_task_func_no_headers():
+        # Arrange
+        data = [
+            ['Alice', 30],
+            ['Bob', 25]
+        ]
+        headers = []
+        with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+            file_path = temp_file.name
+    
+        # Act & Assert
+>       with pytest.raises(IndexError):
+E       Failed: DID NOT RAISE IndexError
+
+test_0874.py:80: Failed
+=========================== short test summary info ============================
+FAILED test_0874.py::test_task_func_valid_data - AssertionError: assert [['Na...
+FAILED test_0874.py::test_task_func_missing_data - AssertionError: assert [['...
+FAILED test_0874.py::test_task_func_no_headers - Failed: DID NOT RAISE IndexE...
+3 failed, 1 passed in 0.48s

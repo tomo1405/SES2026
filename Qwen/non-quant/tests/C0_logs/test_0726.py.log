@@ -1,0 +1,40 @@
+EEF                                                                      [100%]
+==================================== ERRORS ====================================
+_______________________ ERROR at setup of test_task_func _______________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1298/test_task_func0')
+
+    @pytest.fixture
+    def setup_files(tmpdir):
+        # Create temporary directory and files
+        temp_dir = tmpdir.mkdir('temp_files')
+>       temp_dir.join('file1.txt').write('Привет мир', encoding='cp1251')
+E       TypeError: LocalPath.write() got an unexpected keyword argument 'encoding'
+
+test_0726.py:12: TypeError
+_______________________ ERROR at setup of test_no_files ________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1298/test_no_files0')
+
+    @pytest.fixture
+    def setup_files(tmpdir):
+        # Create temporary directory and files
+        temp_dir = tmpdir.mkdir('temp_files')
+>       temp_dir.join('file1.txt').write('Привет мир', encoding='cp1251')
+E       TypeError: LocalPath.write() got an unexpected keyword argument 'encoding'
+
+test_0726.py:12: TypeError
+=================================== FAILURES ===================================
+__________________________ test_nonexistent_directory __________________________
+
+    def test_nonexistent_directory():
+        # Run the function with a non-existent directory
+>       with pytest.raises(FileNotFoundError):
+E       Failed: DID NOT RAISE FileNotFoundError
+
+test_0726.py:40: Failed
+=========================== short test summary info ============================
+FAILED test_0726.py::test_nonexistent_directory - Failed: DID NOT RAISE FileN...
+ERROR test_0726.py::test_task_func - TypeError: LocalPath.write() got an unex...
+ERROR test_0726.py::test_no_files - TypeError: LocalPath.write() got an unexp...
+1 failed, 2 errors in 0.47s

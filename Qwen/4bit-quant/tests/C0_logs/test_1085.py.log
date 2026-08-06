@@ -1,0 +1,82 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_data = '/tmp/pytest-of-tomohiro-w/pytest-1416/test_task_func0/data.csv'
+
+    def test_task_func(mock_data):
+>       means, std_devs, axes, anova_results = task_func(mock_data)
+                                               ^^^^^^^^^^^^^^^^^^^^
+
+test_1085.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data_file_path = '/tmp/pytest-of-tomohiro-w/pytest-1416/test_task_func0/data.csv'
+
+    def task_func(data_file_path: str):
+        df = pd.read_csv(data_file_path)
+        # Convert strings with commas to float, if applicable
+        for col in df.columns:
+            df[col] = pd.to_numeric(df[col].replace(",", "", regex=True), errors="coerce")
+        # drop columns with NaN values
+        df = df.dropna(axis=1)
+        means = df.mean()
+        std_devs = df.std()
+    
+        # Creating a histogram for each numerical column
+        axes = []
+        for col in df.columns:
+            ax = df[col].hist(bins=50)
+            ax.set_title(col)
+            axes.append(ax)
+    
+>       plt.show()
+        ^^^
+E       NameError: name 'plt' is not defined
+
+../../../src/src_1085.py:20: NameError
+_________________________ test_task_func_single_column _________________________
+
+mock_data = '/tmp/pytest-of-tomohiro-w/pytest-1416/test_task_func_single_column0/data.csv'
+
+    def test_task_func_single_column(mock_data):
+        # Modify the mock data to have only one column
+        df = pd.read_csv(mock_data)
+        df.drop('B', axis=1, inplace=True)
+        df.drop('C', axis=1, inplace=True)
+        df.to_csv(mock_data, index=False)
+    
+>       means, std_devs, axes, anova_results = task_func(mock_data)
+                                               ^^^^^^^^^^^^^^^^^^^^
+
+test_1085.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data_file_path = '/tmp/pytest-of-tomohiro-w/pytest-1416/test_task_func_single_column0/data.csv'
+
+    def task_func(data_file_path: str):
+        df = pd.read_csv(data_file_path)
+        # Convert strings with commas to float, if applicable
+        for col in df.columns:
+            df[col] = pd.to_numeric(df[col].replace(",", "", regex=True), errors="coerce")
+        # drop columns with NaN values
+        df = df.dropna(axis=1)
+        means = df.mean()
+        std_devs = df.std()
+    
+        # Creating a histogram for each numerical column
+        axes = []
+        for col in df.columns:
+            ax = df[col].hist(bins=50)
+            ax.set_title(col)
+            axes.append(ax)
+    
+>       plt.show()
+        ^^^
+E       NameError: name 'plt' is not defined
+
+../../../src/src_1085.py:20: NameError
+=========================== short test summary info ============================
+FAILED test_1085.py::test_task_func - NameError: name 'plt' is not defined
+FAILED test_1085.py::test_task_func_single_column - NameError: name 'plt' is ...
+2 failed in 4.10s

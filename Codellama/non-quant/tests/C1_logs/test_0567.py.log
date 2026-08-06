@@ -1,0 +1,61 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        def test_func(x, y):
+            return x + y
+    
+        result = task_func(test_func)
+    
+        assert result['function_name'] == 'test_func'
+>       assert result['is_lambda'] == False
+E       assert True == False
+
+test_0567.py:11: AssertionError
+____________________________ test_task_func_lambda _____________________________
+
+    def test_task_func_lambda():
+        test_func = lambda x, y: x + y
+    
+        result = task_func(test_func)
+    
+>       assert result['function_name'] == 'test_func'
+E       AssertionError: assert '<lambda>' == 'test_func'
+E         
+E         - test_func
+E         + <lambda>
+
+test_0567.py:21: AssertionError
+___________________________ test_task_func_defaults ____________________________
+
+    def test_task_func_defaults():
+        def test_func(x, y=1):
+            return x + y
+    
+        result = task_func(test_func)
+    
+        assert result['function_name'] == 'test_func'
+>       assert result['is_lambda'] == False
+E       assert True == False
+
+test_0567.py:34: AssertionError
+__________________________ test_task_func_annotations __________________________
+
+    def test_task_func_annotations():
+        def test_func(x: int, y: int) -> int:
+            return x + y
+    
+        result = task_func(test_func)
+    
+        assert result['function_name'] == 'test_func'
+>       assert result['is_lambda'] == False
+E       assert True == False
+
+test_0567.py:46: AssertionError
+=========================== short test summary info ============================
+FAILED test_0567.py::test_task_func - assert True == False
+FAILED test_0567.py::test_task_func_lambda - AssertionError: assert '<lambda>...
+FAILED test_0567.py::test_task_func_defaults - assert True == False
+FAILED test_0567.py::test_task_func_annotations - assert True == False
+4 failed in 0.45s

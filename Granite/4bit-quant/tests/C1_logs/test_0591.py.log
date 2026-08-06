@@ -1,0 +1,38 @@
+..F                                                                      [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_invalid_url_2 _______________________
+
+    def test_task_func_with_invalid_url_2():
+        with pytest.raises(urllib.error.URLError) as exc_info:
+>           task_func("invalid_url")
+
+test_0591.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0591.py:11: in task_func
+    with urllib.request.urlopen(url) as res:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:215: in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:499: in open
+    req = Request(fullurl, data)
+          ^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:318: in __init__
+    self.full_url = url
+    ^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:344: in full_url
+    self._parse()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <urllib.request.Request object at 0x7f2b9c5d5970>
+
+    def _parse(self):
+        self.type, rest = _splittype(self._full_url)
+        if self.type is None:
+>           raise ValueError("unknown url type: %r" % self.full_url)
+E           ValueError: unknown url type: 'invalid_url'
+
+/usr/lib/python3.12/urllib/request.py:373: ValueError
+=========================== short test summary info ============================
+FAILED test_0591.py::test_task_func_with_invalid_url_2 - ValueError: unknown ...
+1 failed, 2 passed in 1.93s

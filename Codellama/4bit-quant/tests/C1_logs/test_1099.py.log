@@ -1,0 +1,47 @@
+F.FF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        text = "This is a sample text for testing the task function."
+        top_n = 3
+        expected_result = [('sample', 2), ('testing', 1), ('task', 1)]
+>       assert task_func(text, top_n) == expected_result
+E       AssertionError: assert [('This', 1),... 1), ('a', 1)] == [('sample', 2..., ('task', 1)]
+E         
+E         At index 0 diff: ('This', 1) != ('sample', 2)
+E         Use -v to get more diff
+
+test_1099.py:8: AssertionError
+____________ test_task_func_with_top_n_greater_than_number_of_words ____________
+
+    def test_task_func_with_top_n_greater_than_number_of_words():
+        text = "This is a sample text for testing the task function."
+        top_n = 10
+        expected_result = [('sample', 2), ('testing', 1), ('task', 1)]
+>       assert task_func(text, top_n) == expected_result
+E       AssertionError: assert [('This', 1),...for', 1), ...] == [('sample', 2..., ('task', 1)]
+E         
+E         At index 0 diff: ('This', 1) != ('sample', 2)
+E         Left contains 7 more items, first extra item: ('sample', 1)
+E         Use -v to get more diff
+
+test_1099.py:20: AssertionError
+_____________ test_task_func_with_top_n_less_than_number_of_words ______________
+
+    def test_task_func_with_top_n_less_than_number_of_words():
+        text = "This is a sample text for testing the task function."
+        top_n = 2
+        expected_result = [('sample', 2), ('testing', 1)]
+>       assert task_func(text, top_n) == expected_result
+E       AssertionError: assert [('This', 1), ('is', 1)] == [('sample', 2...'testing', 1)]
+E         
+E         At index 0 diff: ('This', 1) != ('sample', 2)
+E         Use -v to get more diff
+
+test_1099.py:26: AssertionError
+=========================== short test summary info ============================
+FAILED test_1099.py::test_task_func - AssertionError: assert [('This', 1),......
+FAILED test_1099.py::test_task_func_with_top_n_greater_than_number_of_words
+FAILED test_1099.py::test_task_func_with_top_n_less_than_number_of_words - As...
+3 failed, 1 passed in 0.49s

@@ -1,0 +1,10 @@
+import numpy as np
+import pandas as pd
+def task_func(df, letter):
+    df = pd.DataFrame(df)
+    regex = '^' + letter
+    filtered_df = df[df['Word'].str.contains(regex, regex=True)]
+    word_lengths = filtered_df['Word'].str.len()
+    statistics = {'mean': np.mean(word_lengths), 'median': np.median(word_lengths), 'mode': word_lengths.mode().values[0]}
+
+    return statistics

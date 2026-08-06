@@ -1,0 +1,35 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+_____________________________ test_task_func_cols ______________________________
+
+    def test_task_func_cols():
+        df = pd.DataFrame({"col1": [1, 2, 3], "col2": [4, 5, 6]})
+        with pytest.raises(ValueError) as excinfo:
+            task_func(df, "not_a_list")
+        assert "cols must be a list of column names." in str(excinfo.value)
+    
+        with pytest.raises(ValueError) as excinfo:
+            task_func(df, ["col1", 2])
+>       assert "All columns in cols must exist in the dataframe." in str(excinfo.value)
+E       AssertionError: assert 'All columns in cols must exist in the dataframe.' in 'cols must be a list of column names.'
+E        +  where 'cols must be a list of column names.' = str(ValueError('cols must be a list of column names.'))
+E        +    where ValueError('cols must be a list of column names.') = <ExceptionInfo ValueError('cols must be a list of column names.') tblen=2>.value
+
+test_0141.py:19: AssertionError
+____________________________ test_task_func_scaling ____________________________
+
+    def test_task_func_scaling():
+        df = pd.DataFrame({"col1": [1, 2, 3], "col2": [4, 5, 6]})
+        scaled_df = task_func(df, ["col1", "col2"])
+        scaler = StandardScaler()
+        expected_result = pd.DataFrame(scaler.fit_transform(df[["col1", "col2"]]), columns=["col1", "col2"])
+>       assert scaled_df.equals(expected_result)
+E       assert False
+E        +  where False = equals(       col1      col2\n0 -1.224745 -1.224745\n1  0.000000  0.000000\n2  1.224745  1.224745)
+E        +    where equals =        col1      col2\n0 -1.224745 -1.224745\n1  0.000000  0.000000\n2  1.224745  1.224745.equals
+
+test_0141.py:26: AssertionError
+=========================== short test summary info ============================
+FAILED test_0141.py::test_task_func_cols - AssertionError: assert 'All column...
+FAILED test_0141.py::test_task_func_scaling - assert False
+2 failed, 1 passed in 2.89s

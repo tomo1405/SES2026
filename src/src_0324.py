@@ -1,0 +1,18 @@
+import re
+import numpy as np
+from collections import Counter
+from sklearn.mixture import GaussianMixture
+def task_func(text, num_gaussians=1, seed=42):
+    np.random.seed(seed)
+    names = re.findall(r'(.*?)(?:\[.*?\]|$)', text)
+    words = ' '.join(names).split()
+    word_freqs = Counter(words)
+    if num_gaussians <= 0:
+        raise ValueError('Number of Gaussians must be greater than 0.')
+    if len(word_freqs) < num_gaussians:
+        raise Exception('Number of Gaussians must be less than or equal to the number of unique words.')
+
+    mixture = GaussianMixture(n_components=num_gaussians)
+    mixture.fit([[freq] for freq in word_freqs.values()])
+    means = mixture.means_
+    return dict(word_freqs), means

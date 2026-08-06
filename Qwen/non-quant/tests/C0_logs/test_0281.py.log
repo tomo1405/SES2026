@@ -1,0 +1,48 @@
+FF...                                                                    [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_output _____________________________
+
+sample_signal = array([1, 2, 3, 4, 5])
+
+    def test_task_func_output(sample_signal):
+        transformed_signal, ax = task_func(sample_signal)
+        assert isinstance(transformed_signal, np.ndarray)
+        assert len(transformed_signal) == len(sample_signal)
+>       assert isinstance(ax, plt.AxesSubplot)
+                              ^^^^^^^^^^^^^^^
+E       AttributeError: module 'matplotlib.pyplot' has no attribute 'AxesSubplot'
+
+test_0281.py:14: AttributeError
+___________________________ test_task_func_precision ___________________________
+
+sample_signal = array([1, 2, 3, 4, 5])
+
+    def test_task_func_precision(sample_signal):
+        transformed_signal, _ = task_func(sample_signal, precision=3)
+>       assert all(isinstance(x, float) for x in transformed_signal.flatten())
+E       assert False
+E        +  where False = all(<generator object test_task_func_precision.<locals>.<genexpr> at 0x7efb703749e0>)
+
+test_0281.py:18: AssertionError
+=============================== warnings summary ===============================
+Qwen/non-quant/tests/test_0281.py::test_task_func_output
+Qwen/non-quant/tests/test_0281.py::test_task_func_precision
+Qwen/non-quant/tests/test_0281.py::test_task_func_seed
+Qwen/non-quant/tests/test_0281.py::test_task_func_plot_titles
+Qwen/non-quant/tests/test_0281.py::test_task_func_plot_layout
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/matplotlib/cbook.py:1810: ComplexWarning: Casting complex values to real discards the imaginary part
+    return math.isfinite(val)
+
+Qwen/non-quant/tests/test_0281.py::test_task_func_output
+Qwen/non-quant/tests/test_0281.py::test_task_func_precision
+Qwen/non-quant/tests/test_0281.py::test_task_func_seed
+Qwen/non-quant/tests/test_0281.py::test_task_func_plot_titles
+Qwen/non-quant/tests/test_0281.py::test_task_func_plot_layout
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/matplotlib/cbook.py:1407: ComplexWarning: Casting complex values to real discards the imaginary part
+    return np.asanyarray(x, float)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0281.py::test_task_func_output - AttributeError: module 'matplotl...
+FAILED test_0281.py::test_task_func_precision - assert False
+2 failed, 3 passed, 10 warnings in 2.57s

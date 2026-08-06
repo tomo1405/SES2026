@@ -1,0 +1,39 @@
+.FF...                                                                   [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_custom_dates __________________________
+
+    def test_task_func_custom_dates():
+        start_date = datetime(2023, 1, 1)
+        end_date = datetime(2023, 1, 31)
+        result = task_func(start_date, end_date)
+>       assert len(result) == 21, "There should be 21 business days between January 1, 2023, and January 31, 2023."
+E       AssertionError: There should be 21 business days between January 1, 2023, and January 31, 2023.
+E       assert 20 == 21
+E        +  where 20 = len([Timestamp('2023-01-03 00:00:00'), Timestamp('2023-01-04 00:00:00'), Timestamp('2023-01-05 00:00:00'), Timestamp('2023-01-06 00:00:00'), Timestamp('2023-01-09 00:00:00'), Timestamp('2023-01-10 00:00:00'), ...])
+
+test_0167.py:15: AssertionError
+_______________________ test_task_func_no_business_days ________________________
+
+    def test_task_func_no_business_days():
+        start_date = datetime(2023, 12, 24)
+        end_date = datetime(2023, 12, 30)
+        result = task_func(start_date, end_date)
+>       assert len(result) == 0, "There should be no business days between December 24, 2023, and December 30, 2023."
+E       AssertionError: There should be no business days between December 24, 2023, and December 30, 2023.
+E       assert 4 == 0
+E        +  where 4 = len([Timestamp('2023-12-26 00:00:00'), Timestamp('2023-12-27 00:00:00'), Timestamp('2023-12-28 00:00:00'), Timestamp('2023-12-29 00:00:00')])
+
+test_0167.py:21: AssertionError
+=============================== warnings summary ===============================
+Qwen/8bit-quant/tests/test_0167.py::test_task_func_default_parameters
+Qwen/8bit-quant/tests/test_0167.py::test_task_func_custom_dates
+Qwen/8bit-quant/tests/test_0167.py::test_task_func_no_business_days
+Qwen/8bit-quant/tests/test_0167.py::test_task_func_non_us_country
+  /work/tomohiro-w/utg/src/src_0167.py:10: DeprecationWarning: CountryHoliday is deprecated, use country_holidays instead.
+    country_holidays = holidays.CountryHoliday(country)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0167.py::test_task_func_custom_dates - AssertionError: There shou...
+FAILED test_0167.py::test_task_func_no_business_days - AssertionError: There ...
+2 failed, 4 passed, 4 warnings in 2.86s

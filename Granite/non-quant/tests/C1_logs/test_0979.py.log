@@ -1,0 +1,48 @@
+F.F.F                                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_valid_input ________________________
+
+    def test_task_func_with_valid_input():
+        array = np.array([[1, 2, 3], [4, 5, 6]])
+>       expected_output = pd.DataFrame(data([[1.5, 3.5], [4.5, 6.5]], columns=["PC1", "PC2"]))
+                                       ^^^^
+E       NameError: name 'data' is not defined
+
+test_0979.py:9: NameError
+_____________________ test_task_func_with_zero_size_input ______________________
+
+    def test_task_func_with_zero_size_input():
+        array = np.array([])
+        expected_output = pd.DataFrame(columns=["PC1", "PC2"])
+>       output = task_func(array)
+                 ^^^^^^^^^^^^^^^^
+
+test_0979.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+array = array([], dtype=float64), seed = None
+
+    def task_func(array, seed=None):
+        if seed is not None:
+            np.random.seed(seed)
+    
+        if not isinstance(array, np.ndarray) or len(array.shape) != 2:
+>           raise ValueError("Input must be a 2D numpy array.")
+E           ValueError: Input must be a 2D numpy array.
+
+../../../src/src_0979.py:9: ValueError
+___________________________ test_task_func_with_seed ___________________________
+
+    def test_task_func_with_seed():
+        array = np.array([[1, 2, 3], [4, 5, 6]])
+        seed = 42
+>       expected_output = pd.DataFrame(data([[1.5, 3.5], [4.5, 6.5]], columns=["PC1", "PC2"]))
+                                       ^^^^
+E       NameError: name 'data' is not defined
+
+test_0979.py:33: NameError
+=========================== short test summary info ============================
+FAILED test_0979.py::test_task_func_with_valid_input - NameError: name 'data'...
+FAILED test_0979.py::test_task_func_with_zero_size_input - ValueError: Input ...
+FAILED test_0979.py::test_task_func_with_seed - NameError: name 'data' is not...
+3 failed, 2 passed in 3.10s

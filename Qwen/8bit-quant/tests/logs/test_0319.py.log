@@ -1,0 +1,58 @@
+..FF.F                                                                   [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_zero_points __________________________
+
+    def test_task_func_zero_points():
+>       ax = task_func(points_count=0)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0319.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+points_count = 0, radius = 1
+
+    def task_func(points_count=1000, radius=1):
+    
+        points = [(radius * math.sqrt(random.random()) * math.cos(2 * math.pi * random.random()),
+                   radius * math.sqrt(random.random()) * math.sin(2 * math.pi * random.random()))
+                  for _ in range(points_count)]
+    
+        fig, ax = plt.subplots()
+>       ax.scatter(*zip(*points))
+E       TypeError: Axes.scatter() missing 2 required positional arguments: 'x' and 'y'
+
+../../../src/src_0319.py:11: TypeError
+________________________ test_task_func_negative_radius ________________________
+
+    def test_task_func_negative_radius():
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0319.py:25: Failed
+___________________ test_task_func_non_positive_points_count ___________________
+
+    def test_task_func_non_positive_points_count():
+        with pytest.raises(ValueError):
+>           task_func(points_count=-1000)
+
+test_0319.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+points_count = -1000, radius = 1
+
+    def task_func(points_count=1000, radius=1):
+    
+        points = [(radius * math.sqrt(random.random()) * math.cos(2 * math.pi * random.random()),
+                   radius * math.sqrt(random.random()) * math.sin(2 * math.pi * random.random()))
+                  for _ in range(points_count)]
+    
+        fig, ax = plt.subplots()
+>       ax.scatter(*zip(*points))
+E       TypeError: Axes.scatter() missing 2 required positional arguments: 'x' and 'y'
+
+../../../src/src_0319.py:11: TypeError
+=========================== short test summary info ============================
+FAILED test_0319.py::test_task_func_zero_points - TypeError: Axes.scatter() m...
+FAILED test_0319.py::test_task_func_negative_radius - Failed: DID NOT RAISE V...
+FAILED test_0319.py::test_task_func_non_positive_points_count - TypeError: Ax...
+3 failed, 3 passed in 1.59s

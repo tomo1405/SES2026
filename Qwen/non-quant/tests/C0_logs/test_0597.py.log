@@ -1,0 +1,54 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_randint = <MagicMock name='randint' id='138282249612912'>
+mock_time = <MagicMock name='time' id='138282249616800'>
+mock_plot = <MagicMock name='plot' id='138282249849984'>
+mock_clf = <MagicMock name='clf' id='138282249853776'>
+mock_draw = <MagicMock name='draw' id='138282249857520'>
+mock_pause = <MagicMock name='pause' id='138282249612240'>
+mock_show = <MagicMock name='show' id='138282249881120'>
+
+    @patch('matplotlib.pyplot.show')
+    @patch('matplotlib.pyplot.pause')
+    @patch('matplotlib.pyplot.draw')
+    @patch('matplotlib.pyplot.clf')
+    @patch('matplotlib.pyplot.plot')
+    @patch('time.time')
+    @patch('random.randint')
+    def test_task_func(mock_randint, mock_time, mock_plot, mock_clf, mock_draw, mock_pause, mock_show):
+        # Mocking constants
+        VALUES_RANGE = (0, 100)
+        PLOT_INTERVAL = 0.1
+    
+        # Mocking time.time to control the loop
+        mock_time.side_effect = [0, 0.1, 0.2, 0.3, 1]  # Simulate time passing
+    
+        # Mocking randint to return predictable values
+        mock_randint.side_effect = [10, 20, 30, 40]
+    
+        # Expected output
+        expected_x_data = [
+            datetime.fromtimestamp(0).strftime('%H:%M:%S.%f'),
+            datetime.fromtimestamp(0.1).strftime('%H:%M:%S.%f'),
+            datetime.fromtimestamp(0.2).strftime('%H:%M:%S.%f'),
+            datetime.fromtimestamp(0.3).strftime('%H:%M:%S.%f')
+        ]
+        expected_y_data = [10, 20, 30, 40]
+    
+        # Call the function
+        x_data, y_data = task_func(duration=1)
+    
+        # Assertions
+>       assert x_data == expected_x_data
+E       AssertionError: assert ['11:51:46.28...51:46.284302'] == ['09:00:00.00...00:00.300000']
+E         
+E         At index 0 diff: '11:51:46.283797' != '09:00:00.000000'
+E         Right contains one more item: '09:00:00.300000'
+E         Use -v to get more diff
+
+test_0597.py:38: AssertionError
+=========================== short test summary info ============================
+FAILED test_0597.py::test_task_func - AssertionError: assert ['11:51:46.28......
+1 failed in 1.53s

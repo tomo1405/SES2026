@@ -1,0 +1,24 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Empty DataFrame
+        dataframe = pd.DataFrame()
+        with pytest.raises(ValueError):
+            task_func(dataframe)
+    
+        # Test case 2: Non-numeric columns
+        dataframe = pd.DataFrame({'A': ['a', 'b', 'c'], 'B': ['d', 'e', 'f']})
+        with pytest.raises(TypeError):
+            task_func(dataframe)
+    
+        # Test case 3: DataFrame with less than 2 columns
+        dataframe = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]})
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_1024.py:20: Failed
+=========================== short test summary info ============================
+FAILED test_1024.py::test_task_func - Failed: DID NOT RAISE ValueError
+1 failed in 2.19s

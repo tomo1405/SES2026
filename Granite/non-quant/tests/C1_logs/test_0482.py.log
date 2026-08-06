@@ -1,0 +1,28 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data_list = ["apple,banana,orange", "cat,dog,bird", "one,two,three,four"]
+        df = task_func(data_list)
+        assert isinstance(df, pd.DataFrame)
+        assert "Original String" in df.columns
+        assert "Randomized String" in df.columns
+        for i, row in df.iterrows():
+            original_string = row["Original String"]
+            randomized_string = row["Randomized String"]
+            assert isinstance(original_string, str)
+            assert isinstance(randomized_string, str)
+>           assert len(randomized_string.split(", ")) == len(original_string.split(", "))
+E           AssertionError: assert 3 == 1
+E            +  where 3 = len(['orange', 'apple', 'banana'])
+E            +    where ['orange', 'apple', 'banana'] = <built-in method split of str object at 0x788ab4c55570>(', ')
+E            +      where <built-in method split of str object at 0x788ab4c55570> = 'orange, apple, banana'.split
+E            +  and   1 = len(['apple,banana,orange'])
+E            +    where ['apple,banana,orange'] = <built-in method split of str object at 0x788ab4c55530>(', ')
+E            +      where <built-in method split of str object at 0x788ab4c55530> = 'apple,banana,orange'.split
+
+test_0482.py:18: AssertionError
+=========================== short test summary info ============================
+FAILED test_0482.py::test_task_func - AssertionError: assert 3 == 1
+1 failed in 1.16s

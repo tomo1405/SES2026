@@ -1,0 +1,74 @@
+F.F.                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+sample_df =   group        date  value
+0     A  2022-01-01     10
+1     B  2022-01-02     20
+2     C  2022-01-03     30
+3     D  2022-01-04     40
+
+    def test_task_func_valid_input(sample_df):
+        try:
+>           heatmap_fig, pairplot_grid = task_func(sample_df)
+                                         ^^^^^^^^^^^^^^^^^^^^
+
+test_0106.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df =   group        date  value
+0     A  2022-01-01     10
+1     B  2022-01-02     20
+2     C  2022-01-03     30
+3     D  2022-01-04     40
+
+    def task_func(df):
+        if df.empty or not all(col in df.columns for col in ['group', 'date', 'value']):
+            raise ValueError("DataFrame must be non-empty and contain 'group', 'date', and 'value' columns.")
+    
+        if not pd.api.types.is_datetime64_any_dtype(df['date']):
+>           raise ValueError("'date' column must be in datetime format.")
+E           ValueError: 'date' column must be in datetime format.
+
+../../../src/src_0106.py:9: ValueError
+
+During handling of the above exception, another exception occurred:
+
+sample_df =   group        date  value
+0     A  2022-01-01     10
+1     B  2022-01-02     20
+2     C  2022-01-03     30
+3     D  2022-01-04     40
+
+    def test_task_func_valid_input(sample_df):
+        try:
+            heatmap_fig, pairplot_grid = task_func(sample_df)
+            assert isinstance(heatmap_fig, plt.Figure)
+            assert isinstance(pairplot_grid, sns.PairGrid)
+        except Exception as e:
+>           pytest.fail(f"Unexpected exception: {e}")
+E           Failed: Unexpected exception: 'date' column must be in datetime format.
+
+test_0106.py:22: Failed
+_________________ test_task_func_invalid_input_missing_columns _________________
+
+sample_df =          date  value
+0  2022-01-01     10
+1  2022-01-02     20
+2  2022-01-03     30
+3  2022-01-04     40
+
+    def test_task_func_invalid_input_missing_columns(sample_df):
+        sample_df = sample_df.drop(columns=['group'])
+        with pytest.raises(ValueError) as excinfo:
+            task_func(sample_df)
+>       assert "DataFrame must contain 'group', 'date', and 'value' columns" in str(excinfo.value)
+E       assert "DataFrame must contain 'group', 'date', and 'value' columns" in "DataFrame must be non-empty and contain 'group', 'date', and 'value' columns."
+E        +  where "DataFrame must be non-empty and contain 'group', 'date', and 'value' columns." = str(ValueError("DataFrame must be non-empty and contain 'group', 'date', and 'value' columns."))
+E        +    where ValueError("DataFrame must be non-empty and contain 'group', 'date', and 'value' columns.") = <ExceptionInfo ValueError("DataFrame must be non-empty and contain 'group', 'date', and 'value' columns.") tblen=2>.value
+
+test_0106.py:34: AssertionError
+=========================== short test summary info ============================
+FAILED test_0106.py::test_task_func_valid_input - Failed: Unexpected exceptio...
+FAILED test_0106.py::test_task_func_invalid_input_missing_columns - assert "D...
+2 failed, 2 passed in 3.31s

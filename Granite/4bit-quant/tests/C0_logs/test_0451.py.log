@@ -1,0 +1,48 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_with_plot ___________________________
+
+setup = (200, 4, 42, array([[  6.50565335,   2.4470026 ],
+       [ -5.12894273,   9.83618863],
+       [ -8.85057453,   6.42626..., 1, 1, 2, 1, 3, 0, 2, 2, 1, 2,
+       1, 0, 0, 2, 0, 2, 3, 3, 3, 0, 1, 1, 1, 0, 0, 2, 3, 3, 0, 3, 1, 0,
+       2, 1]))
+
+    def test_task_func_with_plot(setup):
+        n_samples, centers, random_seed, X, y = setup
+        plot_path = "plot.png"
+        distance_matrix, ax = task_func(
+            n_samples=n_samples,
+            centers=centers,
+            plot_path=plot_path,
+            random_seed=random_seed,
+        )
+>       assert isinstance(distance_matrix, cdist)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: isinstance() arg 2 must be a type, a tuple of types, or a union
+
+test_0451.py:29: TypeError
+_________________________ test_task_func_without_plot __________________________
+
+setup = (200, 4, 42, array([[  6.50565335,   2.4470026 ],
+       [ -5.12894273,   9.83618863],
+       [ -8.85057453,   6.42626..., 1, 1, 2, 1, 3, 0, 2, 2, 1, 2,
+       1, 0, 0, 2, 0, 2, 3, 3, 3, 0, 1, 1, 1, 0, 0, 2, 3, 3, 0, 3, 1, 0,
+       2, 1]))
+
+    def test_task_func_without_plot(setup):
+        n_samples, centers, random_seed, X, y = setup
+        distance_matrix, ax = task_func(
+            n_samples=n_samples,
+            centers=centers,
+            random_seed=random_seed,
+        )
+>       assert isinstance(distance_matrix, cdist)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: isinstance() arg 2 must be a type, a tuple of types, or a union
+
+test_0451.py:39: TypeError
+=========================== short test summary info ============================
+FAILED test_0451.py::test_task_func_with_plot - TypeError: isinstance() arg 2...
+FAILED test_0451.py::test_task_func_without_plot - TypeError: isinstance() ar...
+2 failed in 4.08s

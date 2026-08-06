@@ -1,0 +1,40 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        csv_file = "test_data.csv"
+        emp_prefix = "EMP$$"
+        expected_result = {"EMP$$1": 2, "EMP$$2": 3}
+    
+        result = task_func(csv_file, emp_prefix)
+    
+>       assert result == expected_result
+E       AssertionError: assert {} == {'EMP$$1': 2, 'EMP$$2': 3}
+E         
+E         Right contains 2 more items:
+E         {'EMP$$1': 2, 'EMP$$2': 3}
+E         Use -v to get more diff
+
+test_1114.py:11: AssertionError
+______________________ test_task_func_with_invalid_prefix ______________________
+
+    def test_task_func_with_invalid_prefix():
+        csv_file = "test_data.csv"
+        emp_prefix = "INVALID$$"
+        expected_result = {"error": f"The prefix {emp_prefix} is not valid."}
+    
+        result = task_func(csv_file, emp_prefix)
+    
+>       assert result == expected_result
+E       AssertionError: assert {} == {'error': 'Th...s not valid.'}
+E         
+E         Right contains 1 more item:
+E         {'error': 'The prefix INVALID$$ is not valid.'}
+E         Use -v to get more diff
+
+test_1114.py:29: AssertionError
+=========================== short test summary info ============================
+FAILED test_1114.py::test_task_func - AssertionError: assert {} == {'EMP$$1':...
+FAILED test_1114.py::test_task_func_with_invalid_prefix - AssertionError: ass...
+2 failed, 1 passed in 0.51s

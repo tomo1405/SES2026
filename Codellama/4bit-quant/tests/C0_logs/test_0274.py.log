@@ -1,0 +1,54 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+___________________________ test_do_POST_valid_json ____________________________
+
+    def test_do_POST_valid_json():
+        request_handler = task_func()
+        request_handler.headers = {'content-type': 'application/json'}
+        request_handler.rfile = b'{"data": "test"}'
+>       request_handler.do_POST()
+E       TypeError: task_func.<locals>.PostRequestHandler.do_POST() missing 1 required positional argument: 'self'
+
+test_0274.py:8: TypeError
+__________________________ test_do_POST_invalid_json ___________________________
+
+    def test_do_POST_invalid_json():
+        request_handler = task_func()
+        request_handler.headers = {'content-type': 'application/json'}
+        request_handler.rfile = b'{"data": "test"'
+>       request_handler.do_POST()
+E       TypeError: task_func.<locals>.PostRequestHandler.do_POST() missing 1 required positional argument: 'self'
+
+test_0274.py:15: TypeError
+___________________________ test_do_POST_no_data_key ___________________________
+
+    def test_do_POST_no_data_key():
+        request_handler = task_func()
+        request_handler.headers = {'content-type': 'application/json'}
+        request_handler.rfile = b'{"test": "test"}'
+>       request_handler.do_POST()
+E       TypeError: task_func.<locals>.PostRequestHandler.do_POST() missing 1 required positional argument: 'self'
+
+test_0274.py:22: TypeError
+______________________ test_do_POST_invalid_content_type _______________________
+
+    def test_do_POST_invalid_content_type():
+        request_handler = task_func()
+        request_handler.headers = {'content-type': 'text/plain'}
+        request_handler.rfile = b'{"data": "test"}'
+>       request_handler.do_POST()
+E       TypeError: task_func.<locals>.PostRequestHandler.do_POST() missing 1 required positional argument: 'self'
+
+test_0274.py:29: TypeError
+=============================== warnings summary ===============================
+../../../src/src_0274.py:1
+  /work/tomohiro-w/utg/src/src_0274.py:1: DeprecationWarning: 'cgi' is deprecated and slated for removal in Python 3.13
+    import cgi
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0274.py::test_do_POST_valid_json - TypeError: task_func.<locals>....
+FAILED test_0274.py::test_do_POST_invalid_json - TypeError: task_func.<locals...
+FAILED test_0274.py::test_do_POST_no_data_key - TypeError: task_func.<locals>...
+FAILED test_0274.py::test_do_POST_invalid_content_type - TypeError: task_func...
+4 failed, 1 warning in 0.55s

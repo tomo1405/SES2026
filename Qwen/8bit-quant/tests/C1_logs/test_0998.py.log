@@ -1,0 +1,51 @@
+FF..                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_urlretrieve = <MagicMock name='urlretrieve' id='138339170363936'>
+mock_zipfile = <MagicMock name='ZipFile' id='138339170368112'>
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-2206/test_task_func0')
+
+    def test_task_func(mock_urlretrieve, mock_zipfile, tmpdir):
+        # Setup
+        url = "http://example.com/file.zip"
+        expected_dir = str(tmpdir / "downloaded_files")
+        os.chdir(str(tmpdir))
+    
+        # Mocking behavior
+        mock_urlretrieve.return_value = None
+        mock_zipfile_instance = MagicMock()
+        mock_zipfile.return_value = mock_zipfile_instance
+        mock_zipfile_instance.extractall.return_value = None
+    
+        # Execute
+        result = task_func(url)
+    
+        # Assert
+>       assert result == expected_dir
+E       AssertionError: assert 'downloaded_files' == '/tmp/pytest-...nloaded_files'
+E         
+E         - /tmp/pytest-of-tomohiro-w/pytest-2206/test_task_func0/downloaded_files
+E         + downloaded_files
+
+/work/tomohiro-w/utg/Qwen/8bit-quant/tests/test_0998.py:35: AssertionError
+______________________ test_task_func_directory_creation _______________________
+
+mock_urlretrieve = <MagicMock name='urlretrieve' id='138339170639104'>
+mock_zipfile = <MagicMock name='ZipFile' id='138339170643232'>
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-2206/test_task_func_directory_creat0')
+
+    def test_task_func_directory_creation(mock_urlretrieve, mock_zipfile, tmpdir):
+        # Setup
+        url = "http://example.com/file.zip"
+        expected_dir = str(tmpdir / "downloaded_files")
+        os.chdir(str(tmpdir))
+>       os.rmdir(expected_dir)  # Ensure the directory does not exist initially
+        ^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-tomohiro-w/pytest-2206/test_task_func_directory_creat0/downloaded_files'
+
+/work/tomohiro-w/utg/Qwen/8bit-quant/tests/test_0998.py:46: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0998.py::test_task_func - AssertionError: assert 'downloaded_file...
+FAILED test_0998.py::test_task_func_directory_creation - FileNotFoundError: [...
+2 failed, 2 passed in 0.61s

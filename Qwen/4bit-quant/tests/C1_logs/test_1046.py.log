@@ -1,0 +1,44 @@
+.FFFF                                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_future_date ________________________
+
+    def test_task_func_with_future_date():
+        # Test with a future date
+>       future_date = datetime.now() + timedelta(days=1)
+                                       ^^^^^^^^^
+E       NameError: name 'timedelta' is not defined
+
+test_1046.py:15: NameError
+________________________ test_task_func_with_past_date _________________________
+
+    def test_task_func_with_past_date():
+        # Test with a past date
+>       past_date = datetime.now() - timedelta(days=1)
+                                     ^^^^^^^^^
+E       NameError: name 'timedelta' is not defined
+
+test_1046.py:22: NameError
+_____________________ test_task_func_with_leap_second_year _____________________
+
+    def test_task_func_with_leap_second_year():
+        # Test with a date in a leap second year
+>       for year in LEAP_SECONDS:
+                    ^^^^^^^^^^^^
+E       NameError: name 'LEAP_SECONDS' is not defined
+
+test_1046.py:29: NameError
+___________________ test_task_func_with_non_leap_second_year ___________________
+
+    def test_task_func_with_non_leap_second_year():
+        # Test with a date in a non-leap second year
+>       non_leap_years = [year for year in range(1972, datetime.now().year) if year not in LEAP_SECONDS]
+                                                                                           ^^^^^^^^^^^^
+E       NameError: name 'LEAP_SECONDS' is not defined
+
+test_1046.py:36: NameError
+=========================== short test summary info ============================
+FAILED test_1046.py::test_task_func_with_future_date - NameError: name 'timed...
+FAILED test_1046.py::test_task_func_with_past_date - NameError: name 'timedel...
+FAILED test_1046.py::test_task_func_with_leap_second_year - NameError: name '...
+FAILED test_1046.py::test_task_func_with_non_leap_second_year - NameError: na...
+4 failed, 1 passed in 0.63s

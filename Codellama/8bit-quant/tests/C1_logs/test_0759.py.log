@@ -1,0 +1,63 @@
+..F.FF...F                                                               [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_countries_type _________________________
+
+    def test_task_func_countries_type():
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0759.py:16: Failed
+_________________________ test_task_func_genders_type __________________________
+
+    def test_task_func_genders_type():
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0759.py:24: Failed
+_________________________ test_task_func_rng_seed_type _________________________
+
+    def test_task_func_rng_seed_type():
+        with pytest.raises(ValueError):
+>           task_func(num_samples=10, rng_seed='hello')
+
+test_0759.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0759.py:10: in task_func
+    rng = np.random.default_rng(seed=rng_seed)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+numpy/random/_generator.pyx:5083: in numpy.random._generator.default_rng
+    ???
+numpy/random/_pcg64.pyx:123: in numpy.random._pcg64.PCG64.__init__
+    ???
+numpy/random/bit_generator.pyx:541: in numpy.random.bit_generator.BitGenerator.__init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   TypeError: SeedSequence expects int or sequence of ints for entropy not hello
+
+numpy/random/bit_generator.pyx:310: TypeError
+_________________________ test_task_func_output_values _________________________
+
+    def test_task_func_output_values():
+        output = task_func(num_samples=10)
+        assert set(output['Country'].unique()) == {'Russia', 'China', 'USA', 'India', 'Brazil'}
+>       assert set(output['Age'].unique()) == set(np.arange(18, 60))
+E       AssertionError: assert {np.int64(18)...nt64(43), ...} == {np.int64(18)...nt64(23), ...}
+E         
+E         Extra items in the right set:
+E         np.int64(19)
+E         np.int64(20)
+E         np.int64(21)
+E         np.int64(22)
+E         np.int64(23)...
+E         
+E         ...Full output truncated (29 lines hidden), use '-vv' to show
+
+test_0759.py:46: AssertionError
+=========================== short test summary info ============================
+FAILED test_0759.py::test_task_func_countries_type - Failed: DID NOT RAISE Va...
+FAILED test_0759.py::test_task_func_genders_type - Failed: DID NOT RAISE Valu...
+FAILED test_0759.py::test_task_func_rng_seed_type - TypeError: SeedSequence e...
+FAILED test_0759.py::test_task_func_output_values - AssertionError: assert {n...
+4 failed, 6 passed in 2.76s

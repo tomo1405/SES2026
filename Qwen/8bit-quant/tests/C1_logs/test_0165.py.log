@@ -1,0 +1,148 @@
+.FF.F..                                                                  [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_dataframe_shape ________________________
+
+expected_data =      Label1    Label2    Label3    Label4    Label5
+0  0.548814  0.715189  0.602763  0.544883  0.423655
+1  0.645894  0...25597  0.071036
+3  0.087129  0.020218  0.832620  0.778157  0.870012
+4  0.978618  0.799159  0.461479  0.780529  0.118274
+
+    def test_task_func_dataframe_shape(expected_data):
+        fig = task_func()
+        ax = fig.axes[0]
+>       plotted_data = pd.DataFrame(ax.patches).get_widths().reshape((5, 5))
+                       ^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0165.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:852: in __init__
+    mgr = ndarray_to_mgr(
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:282: in ndarray_to_mgr
+    values = _prep_ndarraylike(values, copy=copy)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:537: in _prep_ndarraylike
+    values = convert(values)
+             ^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:521: in convert
+    res = maybe_convert_platform(v)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+values = <Axes.ArtistList of 25 patches>
+
+    def maybe_convert_platform(
+        values: list | tuple | range | np.ndarray | ExtensionArray,
+    ) -> ArrayLike:
+        """try to do platform conversion, allow ndarray or list here"""
+        arr: ArrayLike
+    
+        if isinstance(values, (list, tuple, range)):
+            arr = construct_1d_object_array_from_listlike(values)
+        else:
+            # The caller is responsible for ensuring that we have np.ndarray
+            #  or ExtensionArray here.
+            arr = values
+    
+>       if arr.dtype == _dtype_obj:
+           ^^^^^^^^^
+E       AttributeError: 'ArtistList' object has no attribute 'dtype'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/dtypes/cast.py:140: AttributeError
+_______________________ test_task_func_dataframe_values ________________________
+
+expected_data =      Label1    Label2    Label3    Label4    Label5
+0  0.548814  0.715189  0.602763  0.544883  0.423655
+1  0.645894  0...25597  0.071036
+3  0.087129  0.020218  0.832620  0.778157  0.870012
+4  0.978618  0.799159  0.461479  0.780529  0.118274
+
+    def test_task_func_dataframe_values(expected_data):
+        fig = task_func()
+        ax = fig.axes[0]
+>       plotted_data = pd.DataFrame(ax.patches).get_widths().reshape((5, 5))
+                       ^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0165.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:852: in __init__
+    mgr = ndarray_to_mgr(
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:282: in ndarray_to_mgr
+    values = _prep_ndarraylike(values, copy=copy)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:537: in _prep_ndarraylike
+    values = convert(values)
+             ^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:521: in convert
+    res = maybe_convert_platform(v)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+values = <Axes.ArtistList of 25 patches>
+
+    def maybe_convert_platform(
+        values: list | tuple | range | np.ndarray | ExtensionArray,
+    ) -> ArrayLike:
+        """try to do platform conversion, allow ndarray or list here"""
+        arr: ArrayLike
+    
+        if isinstance(values, (list, tuple, range)):
+            arr = construct_1d_object_array_from_listlike(values)
+        else:
+            # The caller is responsible for ensuring that we have np.ndarray
+            #  or ExtensionArray here.
+            arr = values
+    
+>       if arr.dtype == _dtype_obj:
+           ^^^^^^^^^
+E       AttributeError: 'ArtistList' object has no attribute 'dtype'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/dtypes/cast.py:140: AttributeError
+____________________ test_task_func_with_custom_data_range _____________________
+
+    def test_task_func_with_custom_data_range():
+        fig = task_func(data_range=(10, 20))
+        ax = fig.axes[0]
+>       plotted_data = pd.DataFrame(ax.patches).get_widths().reshape((5, 5))
+                       ^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0165.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:852: in __init__
+    mgr = ndarray_to_mgr(
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:282: in ndarray_to_mgr
+    values = _prep_ndarraylike(values, copy=copy)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:537: in _prep_ndarraylike
+    values = convert(values)
+             ^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:521: in convert
+    res = maybe_convert_platform(v)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+values = <Axes.ArtistList of 25 patches>
+
+    def maybe_convert_platform(
+        values: list | tuple | range | np.ndarray | ExtensionArray,
+    ) -> ArrayLike:
+        """try to do platform conversion, allow ndarray or list here"""
+        arr: ArrayLike
+    
+        if isinstance(values, (list, tuple, range)):
+            arr = construct_1d_object_array_from_listlike(values)
+        else:
+            # The caller is responsible for ensuring that we have np.ndarray
+            #  or ExtensionArray here.
+            arr = values
+    
+>       if arr.dtype == _dtype_obj:
+           ^^^^^^^^^
+E       AttributeError: 'ArtistList' object has no attribute 'dtype'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/dtypes/cast.py:140: AttributeError
+=========================== short test summary info ============================
+FAILED test_0165.py::test_task_func_dataframe_shape - AttributeError: 'Artist...
+FAILED test_0165.py::test_task_func_dataframe_values - AttributeError: 'Artis...
+FAILED test_0165.py::test_task_func_with_custom_data_range - AttributeError: ...
+3 failed, 4 passed in 2.97s

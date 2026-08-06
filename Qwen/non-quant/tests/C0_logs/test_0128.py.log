@@ -1,0 +1,28 @@
+.....F                                                                   [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_nested_files __________________________
+
+temp_dirs = ('/tmp/tmp6q1xcge3', '/tmp/tmpeijngrvk')
+
+    def test_task_func_nested_files(temp_dirs):
+        root_dir, dest_dir = temp_dirs
+        os.makedirs(os.path.join(root_dir, 'subdir'))
+        file_contents = {'subdir/file1.txt': b'content1'}
+>       create_temp_files(os.path.join(root_dir, 'subdir'), file_contents)
+
+test_0128.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root_dir = '/tmp/tmp6q1xcge3/subdir'
+file_contents = {'subdir/file1.txt': b'content1'}
+
+    def create_temp_files(root_dir, file_contents):
+        for filename, content in file_contents.items():
+>           with open(os.path.join(root_dir, filename), 'wb') as f:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmp6q1xcge3/subdir/subdir/file1.txt'
+
+test_0128.py:12: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0128.py::test_task_func_nested_files - FileNotFoundError: [Errno ...
+1 failed, 5 passed in 0.48s

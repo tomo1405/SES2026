@@ -1,0 +1,54 @@
+.F.FF.                                                                   [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_single_url_resolvable _____________________
+
+    def test_task_func_single_url_resolvable():
+        input_string = "Check out this website: https://www.example.com"
+        expected_output = {"www.example.com": "93.184.216.34"}  # Example IP, may change
+>       assert task_func(input_string) == expected_output
+E       AssertionError: assert {'www.example...2.66.147.243'} == {'www.example...3.184.216.34'}
+E         
+E         Differing items:
+E         {'www.example.com': '172.66.147.243'} != {'www.example.com': '93.184.216.34'}
+E         Use -v to get more diff
+
+test_1123.py:12: AssertionError
+_________________________ test_task_func_multiple_urls _________________________
+
+    def test_task_func_multiple_urls():
+        input_string = "Visit https://www.example.com or http://www.google.com"
+        expected_output = {
+            "www.example.com": "93.184.216.34",  # Example IP, may change
+            "www.google.com": "172.217.16.196"   # Example IP, may change
+        }
+>       assert task_func(input_string) == expected_output
+E       AssertionError: assert {'www.example....251.153.119'} == {'www.example...2.217.16.196'}
+E         
+E         Differing items:
+E         {'www.google.com': '142.251.153.119'} != {'www.google.com': '172.217.16.196'}
+E         {'www.example.com': '172.66.147.243'} != {'www.example.com': '93.184.216.34'}
+E         Use -v to get more diff
+
+test_1123.py:25: AssertionError
+_________________________ test_task_func_mixed_content _________________________
+
+    def test_task_func_mixed_content():
+        input_string = "Here's a link: https://www.example.com and some text, then another link: http://www.google.com"
+        expected_output = {
+            "www.example.com": "93.184.216.34",  # Example IP, may change
+            "www.google.com": "172.217.16.196"   # Example IP, may change
+        }
+>       assert task_func(input_string) == expected_output
+E       AssertionError: assert {'www.example....251.157.119'} == {'www.example...2.217.16.196'}
+E         
+E         Differing items:
+E         {'www.google.com': '142.251.157.119'} != {'www.google.com': '172.217.16.196'}
+E         {'www.example.com': '172.66.147.243'} != {'www.example.com': '93.184.216.34'}
+E         Use -v to get more diff
+
+test_1123.py:33: AssertionError
+=========================== short test summary info ============================
+FAILED test_1123.py::test_task_func_single_url_resolvable - AssertionError: a...
+FAILED test_1123.py::test_task_func_multiple_urls - AssertionError: assert {'...
+FAILED test_1123.py::test_task_func_mixed_content - AssertionError: assert {'...
+3 failed, 3 passed in 0.53s

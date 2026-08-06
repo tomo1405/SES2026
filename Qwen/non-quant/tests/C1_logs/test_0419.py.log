@@ -1,0 +1,39 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sample_data = (array([[0.5488135 , 0.71518937],
+       [0.60276338, 0.54488318],
+       [0.4236548 , 0.64589411],
+       [0.43758721...,
+       0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1,
+       1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0]))
+
+    def test_task_func(sample_data):
+        X, Y = sample_data
+        model, ax = task_func(X, Y)
+    
+        # Check if the model is an instance of keras.models.Sequential
+        assert isinstance(model, keras.models.Sequential)
+    
+        # Check if the axes object is an instance of matplotlib.axes.Axes
+        assert isinstance(ax, plt.Axes)
+    
+        # Check if the AUC score is calculated correctly
+        Y_pred = model.predict(X, verbose=0).ravel()
+>       fpr, tpr, _ = roc_curve(Y, Y_pred)
+                      ^^^^^^^^^
+E       NameError: name 'roc_curve' is not defined
+
+test_0419.py:28: NameError
+----------------------------- Captured stderr call -----------------------------
+E0000 00:00:1785255498.893419 1254311 cuda_platform.cc:52] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: UNKNOWN ERROR (303)
+=============================== warnings summary ===============================
+Qwen/non-quant/tests/test_0419.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/keras/src/layers/core/dense.py:107: UserWarning: Do not pass an `input_shape`/`input_dim` argument to a layer. When using Sequential models, prefer using an `Input(shape)` object as the first layer in the model instead.
+    super().__init__(activity_regularizer=activity_regularizer, **kwargs)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0419.py::test_task_func - NameError: name 'roc_curve' is not defined
+1 failed, 1 warning in 20.81s

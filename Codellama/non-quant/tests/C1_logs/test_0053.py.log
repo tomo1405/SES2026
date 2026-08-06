@@ -1,0 +1,136 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        text = "The quick brown fox jumps over the lazy dog."
+        expected_output = pd.Series(["quick", "brown", "fox", "jumps", "lazy", "dog"]).value_counts().rename(None)
+>       assert task_func(text) == expected_output
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0053.py:8: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/ops/common.py:85: in new_method
+    return method(self, other)
+           ^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/arraylike.py:42: in __eq__
+    return self._cmp_method(other, operator.eq)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = quick    1
+brown    1
+fox      1
+jumps    1
+over     1
+lazy     1
+dog      1
+dtype: int64
+other = quick    1
+brown    1
+fox      1
+jumps    1
+lazy     1
+dog      1
+dtype: int64
+op = <built-in function eq>
+
+    def _cmp_method(self, other, op):
+        res_name = ops.get_op_result_name(self, other)
+    
+        if isinstance(other, Series) and not self._indexed_same(other):
+>           raise ValueError("Can only compare identically-labeled Series objects")
+E           ValueError: Can only compare identically-labeled Series objects
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/series.py:6730: ValueError
+________________________ test_task_func_with_stopwords _________________________
+
+    def test_task_func_with_stopwords():
+        text = "The quick brown fox jumps over the lazy dog."
+        expected_output = pd.Series(["quick", "brown", "fox", "jumps", "lazy", "dog"]).value_counts().rename(None)
+>       assert task_func(text) == expected_output
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0053.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/ops/common.py:85: in new_method
+    return method(self, other)
+           ^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/arraylike.py:42: in __eq__
+    return self._cmp_method(other, operator.eq)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = quick    1
+brown    1
+fox      1
+jumps    1
+over     1
+lazy     1
+dog      1
+dtype: int64
+other = quick    1
+brown    1
+fox      1
+jumps    1
+lazy     1
+dog      1
+dtype: int64
+op = <built-in function eq>
+
+    def _cmp_method(self, other, op):
+        res_name = ops.get_op_result_name(self, other)
+    
+        if isinstance(other, Series) and not self._indexed_same(other):
+>           raise ValueError("Can only compare identically-labeled Series objects")
+E           ValueError: Can only compare identically-labeled Series objects
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/series.py:6730: ValueError
+_______________________ test_task_func_with_empty_string _______________________
+
+    def test_task_func_with_empty_string():
+        text = ""
+        expected_output = pd.Series([]).value_counts().rename(None)
+>       assert task_func(text) == expected_output
+
+test_0053.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Series([], dtype: bool)
+
+    @final
+    def __bool__(self) -> NoReturn:
+>       raise ValueError(
+            f"The truth value of a {type(self).__name__} is ambiguous. "
+            "Use a.empty, a.bool(), a.item(), a.any() or a.all()."
+        )
+E       ValueError: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:1513: ValueError
+______________________ test_task_func_with_stopwords_only ______________________
+
+    def test_task_func_with_stopwords_only():
+        text = "the in is a an"
+        expected_output = pd.Series([]).value_counts().rename(None)
+>       assert task_func(text) == expected_output
+
+test_0053.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Series([], dtype: bool)
+
+    @final
+    def __bool__(self) -> NoReturn:
+>       raise ValueError(
+            f"The truth value of a {type(self).__name__} is ambiguous. "
+            "Use a.empty, a.bool(), a.item(), a.any() or a.all()."
+        )
+E       ValueError: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:1513: ValueError
+=========================== short test summary info ============================
+FAILED test_0053.py::test_task_func - ValueError: Can only compare identicall...
+FAILED test_0053.py::test_task_func_with_stopwords - ValueError: Can only com...
+FAILED test_0053.py::test_task_func_with_empty_string - ValueError: The truth...
+FAILED test_0053.py::test_task_func_with_stopwords_only - ValueError: The tru...
+4 failed in 1.44s

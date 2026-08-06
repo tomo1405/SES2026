@@ -1,0 +1,30 @@
+..F..                                                                    [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_scaler _____________________________
+
+sample_data =     Feature1  Feature2  Feature3  Feature4  Feature5  OtherColumn
+0   0.662191  0.124425  1.083363  1.923972 -1.181045...078675 -0.906896     1.247228
+99  0.664182  0.178546 -0.510756 -0.956355  0.730123    -0.823358
+
+[100 rows x 6 columns]
+
+    def test_task_func_scaler(sample_data):
+        standardized_data, _ = task_func(sample_data)
+        mean = standardized_data.mean()
+        std = standardized_data.std()
+        assert np.allclose(mean, 0, atol=1e-6)
+>       assert np.allclose(std, 1, atol=1e-6)
+E       assert False
+E        +  where False = <function allclose at 0x707c28779fb0>(Feature1    1.005038\nFeature2    1.005038\nFeature3    1.005038\nFeature4    1.005038\nFeature5    1.005038\ndtype: float64, 1, atol=1e-06)
+E        +    where <function allclose at 0x707c28779fb0> = np.allclose
+
+test_0450.py:34: AssertionError
+=============================== warnings summary ===============================
+Qwen/4bit-quant/tests/test_0450.py::test_task_func_plot_titles
+  /work/tomohiro-w/utg/src/src_0450.py:14: RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (`matplotlib.pyplot.figure`) are retained until explicitly closed and may consume too much memory. (To control this warning, see the rcParam `figure.max_open_warning`). Consider using `matplotlib.pyplot.close()`.
+    fig, ax = plt.subplots()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0450.py::test_task_func_scaler - assert False
+1 failed, 4 passed, 1 warning in 4.00s

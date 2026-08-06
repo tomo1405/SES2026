@@ -1,0 +1,88 @@
+F.FFF                                                                    [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_default_rng __________________________
+
+    def test_task_func_default_rng():
+        # Test with default random number generator
+        df = task_func(5, 3)
+        assert isinstance(df, pd.DataFrame)
+        assert len(df) == 5  # There should be one row per team
+>       assert all(isinstance(row['Team'], str) for row in df.itertuples())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0616.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <map object at 0x71ccdaba9390>
+
+>   assert all(isinstance(row['Team'], str) for row in df.itertuples())
+                          ^^^^^^^^^^^
+E   TypeError: tuple indices must be integers or slices, not str
+
+test_0616.py:10: TypeError
+________________________ test_task_func_negative_inputs ________________________
+
+    def test_task_func_negative_inputs():
+        # Test with negative inputs for goals and penalties
+        df = task_func(-10, -5)
+        assert isinstance(df, pd.DataFrame)
+        assert len(df) == 5
+>       assert all(isinstance(row['Team'], str) for row in df.itertuples())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0616.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <map object at 0x71ccdabaad10>
+
+>   assert all(isinstance(row['Team'], str) for row in df.itertuples())
+                          ^^^^^^^^^^^
+E   TypeError: tuple indices must be integers or slices, not str
+
+test_0616.py:25: TypeError
+__________________________ test_task_func_zero_inputs __________________________
+
+    def test_task_func_zero_inputs():
+        # Test with zero inputs for goals and penalties
+        df = task_func(0, 0)
+        assert isinstance(df, pd.DataFrame)
+        assert len(df) == 5
+>       assert all(isinstance(row['Team'], str) for row in df.itertuples())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0616.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <map object at 0x71ccdababcd0>
+
+>   assert all(isinstance(row['Team'], str) for row in df.itertuples())
+                          ^^^^^^^^^^^
+E   TypeError: tuple indices must be integers or slices, not str
+
+test_0616.py:33: TypeError
+_________________________ test_task_func_large_numbers _________________________
+
+    def test_task_func_large_numbers():
+        # Test with large numbers for goals and penalties
+        df = task_func(1000, 500)
+        assert isinstance(df, pd.DataFrame)
+        assert len(df) == 5
+>       assert all(isinstance(row['Team'], str) for row in df.itertuples())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0616.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <map object at 0x71cc9aa04a60>
+
+>   assert all(isinstance(row['Team'], str) for row in df.itertuples())
+                          ^^^^^^^^^^^
+E   TypeError: tuple indices must be integers or slices, not str
+
+test_0616.py:41: TypeError
+=========================== short test summary info ============================
+FAILED test_0616.py::test_task_func_default_rng - TypeError: tuple indices mu...
+FAILED test_0616.py::test_task_func_negative_inputs - TypeError: tuple indice...
+FAILED test_0616.py::test_task_func_zero_inputs - TypeError: tuple indices mu...
+FAILED test_0616.py::test_task_func_large_numbers - TypeError: tuple indices ...
+4 failed, 1 passed in 1.12s

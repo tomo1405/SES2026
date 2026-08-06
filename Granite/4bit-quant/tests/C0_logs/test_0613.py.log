@@ -1,0 +1,58 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        goals = GOALS
+        penalties =PENALTIES
+        report_df = task_func(goals, penalties)
+        assert report_df.shape == (len(TEAMS), 5)
+        assert report_df['Team'].tolist() == list(TEAMS)
+        assert report_df['Goals'].tolist() == [goals.get(team, 0) for team in TEAMS]
+        assert report_df['Penalties'].tolist() == [penalties.get(team, 0) for team in TEAMS]
+>       assert report_df['Penalties Cost'].tolist() == [penalties.get(team, 0) * choice(PENALTIES_COSTS) for team in TEAMS]
+                                                                                 ^^^^^^
+E       NameError: name 'choice' is not defined
+
+test_0613.py:18: NameError
+________________ test_task_func_with_empty_goals_and_penalties _________________
+
+    def test_task_func_with_empty_goals_and_penalties():
+        goals = {}
+        penalties = {}
+        report_df = task_func(goals, penalties)
+        assert report_df.shape == (len(TEAMS), 5)
+        assert report_df['Team'].tolist() == list(TEAMS)
+        assert report_df['Goals'].tolist() == [goals.get(team, 0) for team in TEAMS]
+        assert report_df['Penalties'].tolist() == [penalties.get(team, 0) for team in TEAMS]
+>       assert report_df['Penalties Cost'].tolist() == [penalties.get(team, 0) * choice(PENALTIES_COSTS) for team in TEAMS]
+                                                                                 ^^^^^^
+E       NameError: name 'choice' is not defined
+
+test_0613.py:29: NameError
+_______________ test_task_func_with_invalid_goals_and_penalties ________________
+
+    def test_task_func_with_invalid_goals_and_penalties():
+        with pytest.raises(ValueError):
+>           task_func('invalid_goals', 'invalid_penalties')
+
+test_0613.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+goals = 'invalid_goals', penalties = 'invalid_penalties'
+teams = ['Team A', 'Team B', 'Team C', 'Team D', 'Team E']
+penalties_costs = [100, 200, 300, 400, 500]
+
+    def task_func(goals, penalties, teams=TEAMS, penalties_costs=PENALTIES_COSTS):
+        report_data = []
+        for team in teams:
+>           team_goals = goals.get(team, 0)
+                         ^^^^^^^^^
+E           AttributeError: 'str' object has no attribute 'get'
+
+../../../src/src_0613.py:10: AttributeError
+=========================== short test summary info ============================
+FAILED test_0613.py::test_task_func - NameError: name 'choice' is not defined
+FAILED test_0613.py::test_task_func_with_empty_goals_and_penalties - NameErro...
+FAILED test_0613.py::test_task_func_with_invalid_goals_and_penalties - Attrib...
+3 failed in 1.28s

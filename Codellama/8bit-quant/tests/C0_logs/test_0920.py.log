@@ -1,0 +1,35 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data = {'A': [1, 2, 3, 4, 5], 'B': [2, 4, 6, 8, 10], 'C': [3, 6, 9, 12, 15]}
+        column = 'A'
+        df = pd.DataFrame(data)
+        CATEGORIES = ['A', 'B', 'C', 'D', 'E']
+        counts = df[column].value_counts()
+        missing_categories = list(set(CATEGORIES) - set(counts.index))
+        for category in missing_categories:
+            counts[category] = 0
+        counts = counts.reindex(CATEGORIES)
+        ax = counts.plot(kind='bar')
+        ax.set_xlabel('Category')
+        ax.set_ylabel('Count')
+        ax.set_title(f'Distribution of {column}')
+        plt.show()
+        assert ax.get_xlabel() == 'Category'
+        assert ax.get_ylabel() == 'Count'
+        assert ax.get_title() == f'Distribution of {column}'
+        assert ax.get_legend() == None
+>       assert ax.get_xaxis().get_ticklabels() == ['A', 'B', 'C', 'D', 'E']
+E       AssertionError: assert [Text(0, 0, '...xt(4, 0, 'E')] == ['A', 'B', 'C', 'D', 'E']
+E         
+E         At index 0 diff: Text(0, 0, 'A') != 'A'
+E         Use -v to get more diff
+
+test_0920.py:24: AssertionError
+=========================== short test summary info ============================
+FAILED test_0920.py::test_task_func - AssertionError: assert [Text(0, 0, '......
+1 failed in 2.23s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

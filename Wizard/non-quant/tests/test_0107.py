@@ -1,0 +1,41 @@
+python
+import pandas as pd
+import pytest
+from sklearn.linear_model import LinearRegression
+import matplotlib.pyplot as plt
+
+def task_func(df):
+
+    if not isinstance(df, pd.DataFrame) or not all(col in df.columns for col in ['group', 'date', 'value']):
+        raise ValueError("Invalid 'df': must be a DataFrame with 'group', 'date', and 'value' columns.")
+
+    df['date'] = df['date'].apply(lambda x: x.toordinal())
+    X = df[['date']]
+    y = df['value']
+
+    model = LinearRegression()
+    model.fit(X, y)
+    y_pred = model.predict(X)
+
+    fig, ax = plt.subplots()
+    ax.scatter(X, y, color='red')
+    ax.plot(X, y_pred, color='blue')
+    ax.set_title('Value vs Date (Linear Regression Prediction)')
+    ax.set_xlabel('Date (ordinal)')
+    ax.set_ylabel('Value')
+
+    return model, y_pred, ax
+
+def test_task_func():
+    df = pd.DataFrame({'group': ['A', 'B', 'A', 'B'], 'date': ['2021-01-01', '2021-01-02', '2021-01-03', '2021-01-04'], 'value': [10, 20, 30, 40]})
+    model, y_pred, ax = task_func(df)
+    assert isinstance(model, LinearRegression)
+    assert isinstance(y_pred, pd.Series)
+    assert isinstance(ax, plt.Axes)
+    assert len(y_pred) == len(df)
+    assert all(isinstance(x, float) for x in y_pred)
+    assert ax.get_title() == 'Value vs Date (Linear Regression Prediction)'
+    assert ax.get_xlabel() == 'Date (ordinal)'
+    assert ax.get_ylabel() == 'Value'
+
+test_task_func()

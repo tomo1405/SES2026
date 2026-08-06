@@ -1,0 +1,14 @@
+import pandas as pd
+from sklearn.preprocessing import MinMaxScaler
+def task_func(data, columns):
+    df = pd.DataFrame(data)
+    # Create a local MinMaxScaler object
+    scaler = MinMaxScaler()
+    
+    # Create a copy of the DataFrame to avoid modifying the original DataFrame
+    df_copy = df.copy()
+
+    # Normalize the specified columns
+    df_copy[columns] = scaler.fit_transform(df_copy[columns])
+
+    return df_copy

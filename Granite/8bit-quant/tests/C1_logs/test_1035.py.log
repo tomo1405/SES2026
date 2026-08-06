@@ -1,0 +1,27 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_no_high_sales _________________________
+
+    def test_task_func_no_high_sales():
+        s1 = pd.Series([100, 200, 300, 400, 500], index=CATEGORIES)
+        s2 = pd.Series([150, 200, 350, 380, 490], index=CATEGORIES)
+        ax, edit_distance = task_func(s1, s2)
+>       assert ax is None
+E       AssertionError: assert <Axes: title={'center': 'Sales Comparison Above Threshold in Categories'}> is None
+
+test_1035.py:19: AssertionError
+_________________________ test_task_func_edit_distance _________________________
+
+    def test_task_func_edit_distance():
+        s1 = pd.Series([100, 250, 300, 400, 500], index=CATEGORIES)
+        s2 = pd.Series([150, 200, 350, 380, 490], index=CATEGORIES)
+        ax, edit_distance = task_func(s1, s2)
+        expected_edit_distance = np.linalg.norm(s1 - s2)
+>       assert edit_distance == expected_edit_distance
+E       assert np.float64(54.772255750516614) == np.float64(89.44271909999159)
+
+test_1035.py:27: AssertionError
+=========================== short test summary info ============================
+FAILED test_1035.py::test_task_func_no_high_sales - AssertionError: assert <A...
+FAILED test_1035.py::test_task_func_edit_distance - assert np.float64(54.7722...
+2 failed, 1 passed in 2.22s

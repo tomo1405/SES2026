@@ -1,0 +1,58 @@
+...FFFF.                                                                 [100%]
+=================================== FAILURES ===================================
+____________________ test_task_func_with_identical_columns _____________________
+
+    def test_task_func_with_identical_columns():
+        result = task_func([["A", "A"], ["A"]])
+        assert len(result) == 2
+>       assert result[0].equals(result[1])
+E       assert False
+E        +  where False = equals(   A\n0  F\n1  G\n2  B\n3  J\n4  D\n5  E\n6  I\n7  H\n8  C\n9  A)
+E        +    where equals =    A\n0  H\n1  A\n2  E\n3  I\n4  D\n5  B\n6  J\n7  G\n8  C\n9  F.equals
+
+test_1071.py:25: AssertionError
+___________________ test_task_func_with_all_possible_values ____________________
+
+    def test_task_func_with_all_possible_values():
+        result = task_func([["A", "B", "C"]])
+>       assert all(value in POSSIBLE_VALUES for value in result[0].values.flatten())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1071.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <iterator object at 0x7e1b66125e70>
+
+>   assert all(value in POSSIBLE_VALUES for value in result[0].values.flatten())
+                        ^^^^^^^^^^^^^^^
+E   NameError: name 'POSSIBLE_VALUES' is not defined
+
+test_1071.py:29: NameError
+_________________ test_task_func_with_different_column_orders __________________
+
+    def test_task_func_with_different_column_orders():
+        result1 = task_func([["A", "B"]])
+        result2 = task_func([["B", "A"]])
+>       assert result1[0].equals(result2[0])  # DataFrames should be equal regardless of column order
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert False
+E        +  where False = equals(   B  A\n0  H  F\n1  I  D\n2  F  G\n3  J  I\n4  D  B\n5  G  E\n6  E  H\n7  B  J\n8  C  A\n9  A  C)
+E        +    where equals =    A  B\n0  H  C\n1  J  A\n2  A  B\n3  F  E\n4  E  J\n5  I  D\n6  C  I\n7  D  F\n8  G  G\n9  B  H.equals
+
+test_1071.py:34: AssertionError
+_____________________ test_task_func_with_shuffled_values ______________________
+
+    def test_task_func_with_shuffled_values():
+        result = task_func([["A"]])
+        shuffled_values = set(result[0].values.flatten())
+>       assert shuffled_values == set(POSSIBLE_VALUES)
+                                      ^^^^^^^^^^^^^^^
+E       NameError: name 'POSSIBLE_VALUES' is not defined
+
+test_1071.py:39: NameError
+=========================== short test summary info ============================
+FAILED test_1071.py::test_task_func_with_identical_columns - assert False
+FAILED test_1071.py::test_task_func_with_all_possible_values - NameError: nam...
+FAILED test_1071.py::test_task_func_with_different_column_orders - assert False
+FAILED test_1071.py::test_task_func_with_shuffled_values - NameError: name 'P...
+4 failed, 4 passed in 1.14s

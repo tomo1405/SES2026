@@ -1,0 +1,134 @@
+..FFF                                                                    [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_empty_data ________________________
+
+    def test_task_func_with_empty_data():
+        data = []
+        columns = ['feature1', 'feature2', 'target']
+        target_column = 'target'
+    
+>       with pytest.raises(ValueError, match='Target column does not exist in DataFrame'):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'Target column does not exist in DataFrame'
+E         Actual message: 'With n_samples=0, test_size=0.2 and train_size=None, the resulting train set will be empty. Adjust any of the aforementioned parameters.'
+
+test_0707.py:37: AssertionError
+_____________________ test_task_func_with_single_row_data ______________________
+
+    def test_task_func_with_single_row_data():
+        data = [[1, 0, 1]]
+        columns = ['feature1', 'feature2', 'target']
+        target_column = 'target'
+    
+>       accuracy = task_func(data, columns, target_column)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0707.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0707.py:13: in task_func
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/utils/_param_validation.py:218: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/model_selection/_split.py:2946: in train_test_split
+    n_train, n_test = _validate_shuffle_split(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+n_samples = 1, test_size = 0.2, train_size = None, default_test_size = 0.25
+
+    def _validate_shuffle_split(n_samples, test_size, train_size, default_test_size=None):
+        """
+        Validation helper to check if the train/test sizes are meaningful w.r.t. the
+        size of the data (n_samples).
+        """
+        if test_size is None and train_size is None:
+            test_size = default_test_size
+    
+        test_size_type = np.asarray(test_size).dtype.kind
+        train_size_type = np.asarray(train_size).dtype.kind
+    
+        if (test_size_type == "i" and (test_size >= n_samples or test_size <= 0)) or (
+            test_size_type == "f" and (test_size <= 0 or test_size >= 1)
+        ):
+            raise ValueError(
+                "test_size={0} should be either positive and smaller"
+                " than the number of samples {1} or a float in the "
+                "(0, 1) range".format(test_size, n_samples)
+            )
+    
+        if (train_size_type == "i" and (train_size >= n_samples or train_size <= 0)) or (
+            train_size_type == "f" and (train_size <= 0 or train_size >= 1)
+        ):
+            raise ValueError(
+                "train_size={0} should be either positive and smaller"
+                " than the number of samples {1} or a float in the "
+                "(0, 1) range".format(train_size, n_samples)
+            )
+    
+        if train_size is not None and train_size_type not in ("i", "f"):
+            raise ValueError("Invalid value for train_size: {}".format(train_size))
+        if test_size is not None and test_size_type not in ("i", "f"):
+            raise ValueError("Invalid value for test_size: {}".format(test_size))
+    
+        if train_size_type == "f" and test_size_type == "f" and train_size + test_size > 1:
+            raise ValueError(
+                "The sum of test_size and train_size = {}, should be in the (0, 1)"
+                " range. Reduce test_size and/or train_size.".format(train_size + test_size)
+            )
+    
+        if test_size_type == "f":
+            n_test = ceil(test_size * n_samples)
+        elif test_size_type == "i":
+            n_test = float(test_size)
+    
+        if train_size_type == "f":
+            n_train = floor(train_size * n_samples)
+        elif train_size_type == "i":
+            n_train = float(train_size)
+    
+        if train_size is None:
+            n_train = n_samples - n_test
+        elif test_size is None:
+            n_test = n_samples - n_train
+    
+        if n_train + n_test > n_samples:
+            raise ValueError(
+                "The sum of train_size and test_size = %d, "
+                "should be smaller than the number of "
+                "samples %d. Reduce test_size and/or "
+                "train_size." % (n_train + n_test, n_samples)
+            )
+    
+        n_train, n_test = int(n_train), int(n_test)
+    
+        if n_train == 0:
+>           raise ValueError(
+                "With n_samples={}, test_size={} and train_size={}, the "
+                "resulting train set will be empty. Adjust any of the "
+                "aforementioned parameters.".format(n_samples, test_size, train_size)
+            )
+E           ValueError: With n_samples=1, test_size=0.2 and train_size=None, the resulting train set will be empty. Adjust any of the aforementioned parameters.
+
+../../../.venv/lib/python3.12/site-packages/sklearn/model_selection/_split.py:2511: ValueError
+_____________________ test_task_func_with_non_numeric_data _____________________
+
+    def test_task_func_with_non_numeric_data():
+        data = [
+            ['a', 'b', 'c'],
+            ['d', 'e', 'f']
+        ]
+        columns = ['feature1', 'feature2', 'target']
+        target_column = 'target'
+    
+>       with pytest.raises(ValueError, match='Target column does not exist in DataFrame'):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'Target column does not exist in DataFrame'
+E         Actual message: "could not convert string to float: 'a'"
+
+test_0707.py:57: AssertionError
+=========================== short test summary info ============================
+FAILED test_0707.py::test_task_func_with_empty_data - AssertionError: Regex p...
+FAILED test_0707.py::test_task_func_with_single_row_data - ValueError: With n...
+FAILED test_0707.py::test_task_func_with_non_numeric_data - AssertionError: R...
+3 failed, 2 passed in 3.52s

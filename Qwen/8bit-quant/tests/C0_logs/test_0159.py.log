@@ -1,0 +1,28 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-2051/test_task_func0')
+
+    def test_task_func(tmpdir):
+        # Mock the urllib.request.urlopen to return a predefined JSON string
+        class MockResponse:
+            def __init__(self, data):
+                self.data = data
+    
+            def read(self):
+                return self.data.encode()
+    
+        url_str = "http://example.com/data"
+        json_string = '{"key": "value"}'
+        mock_response = MockResponse(json_string)
+    
+        # Patch urllib.request.urlopen to return our mock response
+>       with pytest.monkeypatch.context() as mp:
+             ^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'pytest' has no attribute 'monkeypatch'. Did you mean: 'MonkeyPatch'?
+
+test_0159.py:21: AttributeError
+=========================== short test summary info ============================
+FAILED test_0159.py::test_task_func - AttributeError: module 'pytest' has no ...
+1 failed in 0.41s

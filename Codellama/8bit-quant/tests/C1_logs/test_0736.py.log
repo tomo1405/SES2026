@@ -1,0 +1,105 @@
+FF.FFF                                                                   [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        L = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        expected = {'mean': 5.0, 'variance': 2.25}
+>       assert task_func(L) == expected
+E       AssertionError: assert {'mean': np.f...666666666667)} == {'mean': 5.0,...riance': 2.25}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'variance': np.float64(6.666666666666667)} != {'variance': 2.25}
+E         Use -v to get more diff
+
+test_0736.py:8: AssertionError
+__________________________ test_task_func_empty_list ___________________________
+
+    def test_task_func_empty_list():
+        L = []
+        expected = {'mean': np.nan, 'variance': np.nan}
+>       assert task_func(L) == expected
+E       AssertionError: assert {'mean': np.f....float64(nan)} == {'mean': nan, 'variance': nan}
+E         
+E         Differing items:
+E         {'variance': np.float64(nan)} != {'variance': nan}
+E         {'mean': np.float64(nan)} != {'mean': nan}
+E         Use -v to get more diff
+
+test_0736.py:13: AssertionError
+_________________ test_task_func_single_element_list_with_nan __________________
+
+    def test_task_func_single_element_list_with_nan():
+        L = [[np.nan]]
+        expected = {'mean': np.nan, 'variance': np.nan}
+>       assert task_func(L) == expected
+E       AssertionError: assert {'mean': np.f....float64(nan)} == {'mean': nan, 'variance': nan}
+E         
+E         Differing items:
+E         {'variance': np.float64(nan)} != {'variance': nan}
+E         {'mean': np.float64(nan)} != {'mean': nan}
+E         Use -v to get more diff
+
+test_0736.py:23: AssertionError
+_________________ test_task_func_single_element_list_with_inf __________________
+
+    def test_task_func_single_element_list_with_inf():
+        L = [[np.inf]]
+        expected = {'mean': np.inf, 'variance': np.inf}
+>       assert task_func(L) == expected
+E       AssertionError: assert {'mean': np.f....float64(nan)} == {'mean': inf, 'variance': inf}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'variance': np.float64(nan)} != {'variance': inf}
+E         Use -v to get more diff
+
+test_0736.py:28: AssertionError
+_____________ test_task_func_single_element_list_with_nan_and_inf ______________
+
+    def test_task_func_single_element_list_with_nan_and_inf():
+        L = [[np.nan, np.inf]]
+        expected = {'mean': np.nan, 'variance': np.nan}
+>       assert task_func(L) == expected
+E       AssertionError: assert {'mean': np.f....float64(nan)} == {'mean': nan, 'variance': nan}
+E         
+E         Differing items:
+E         {'variance': np.float64(nan)} != {'variance': nan}
+E         {'mean': np.float64(nan)} != {'mean': nan}
+E         Use -v to get more diff
+
+test_0736.py:33: AssertionError
+=============================== warnings summary ===============================
+Codellama/8bit-quant/tests/test_0736.py::test_task_func_empty_list
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:3862: RuntimeWarning: Mean of empty slice
+    return _methods._mean(a, axis=axis, dtype=dtype,
+
+Codellama/8bit-quant/tests/test_0736.py::test_task_func_empty_list
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/_methods.py:142: RuntimeWarning: invalid value encountered in scalar divide
+    ret = ret.dtype.type(ret / rcount)
+
+Codellama/8bit-quant/tests/test_0736.py::test_task_func_empty_list
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:4270: RuntimeWarning: Degrees of freedom <= 0 for slice
+    return _methods._var(a, axis=axis, dtype=dtype, out=out, ddof=ddof,
+
+Codellama/8bit-quant/tests/test_0736.py::test_task_func_empty_list
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/_methods.py:178: RuntimeWarning: invalid value encountered in divide
+    arrmean = um.true_divide(arrmean, div, out=arrmean,
+
+Codellama/8bit-quant/tests/test_0736.py::test_task_func_empty_list
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/_methods.py:211: RuntimeWarning: invalid value encountered in scalar divide
+    ret = ret.dtype.type(ret / rcount)
+
+Codellama/8bit-quant/tests/test_0736.py::test_task_func_single_element_list_with_inf
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/_methods.py:188: RuntimeWarning: invalid value encountered in subtract
+    x = um.subtract(arr, arrmean, out=...)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0736.py::test_task_func - AssertionError: assert {'mean': np.f......
+FAILED test_0736.py::test_task_func_empty_list - AssertionError: assert {'mea...
+FAILED test_0736.py::test_task_func_single_element_list_with_nan - AssertionE...
+FAILED test_0736.py::test_task_func_single_element_list_with_inf - AssertionE...
+FAILED test_0736.py::test_task_func_single_element_list_with_nan_and_inf - As...
+5 failed, 1 passed, 6 warnings in 0.63s

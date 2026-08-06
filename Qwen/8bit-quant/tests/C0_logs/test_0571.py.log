@@ -1,0 +1,87 @@
+FFFF.F                                                                   [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_no_args ____________________________
+
+    def test_task_func_no_args():
+        def func():
+            pass
+        expected = '{"function_name": "func", "args": [], "defaults": null, "annotations": {}, "is_lambda": false}'
+>       assert task_func(func) == expected
+E       assert '{"function_n...ambda": true}' == '{"function_n...mbda": false}'
+E         
+E         Skipping 78 identical leading characters in diff, use -v to show
+E         - _lambda": false}
+E         ?           ^^^^
+E         + _lambda": true}
+E         ?           ^^^
+
+test_0571.py:8: AssertionError
+___________________________ test_task_func_with_args ___________________________
+
+    def test_task_func_with_args():
+        def func(a, b):
+            pass
+        expected = '{"function_name": "func", "args": ["a", "b"], "defaults": null, "annotations": {}, "is_lambda": false}'
+>       assert task_func(func) == expected
+E       assert '{"function_n...ambda": true}' == '{"function_n...mbda": false}'
+E         
+E         Skipping 86 identical leading characters in diff, use -v to show
+E         - _lambda": false}
+E         ?           ^^^^
+E         + _lambda": true}
+E         ?           ^^^
+
+test_0571.py:14: AssertionError
+_________________________ test_task_func_with_defaults _________________________
+
+    def test_task_func_with_defaults():
+        def func(a, b=2):
+            pass
+        expected = '{"function_name": "func", "args": ["a", "b"], "defaults": [2], "annotations": {}, "is_lambda": false}'
+>       assert task_func(func) == expected
+E       assert '{"function_n...ambda": true}' == '{"function_n...mbda": false}'
+E         
+E         Skipping 85 identical leading characters in diff, use -v to show
+E         - _lambda": false}
+E         ?           ^^^^
+E         + _lambda": true}
+E         ?           ^^^
+
+test_0571.py:20: AssertionError
+_______________________ test_task_func_with_annotations ________________________
+
+    def test_task_func_with_annotations():
+        def func(a: int, b: str) -> bool:
+            pass
+        expected = '{"function_name": "func", "args": ["a", "b"], "defaults": null, "annotations": {"a": "int", "b": "str", "return": "bool"}, "is_lambda": false}'
+>       assert task_func(func) == expected
+E       assert '{"function_n...ambda": true}' == '{"function_n...mbda": false}'
+E         
+E         Skipping 71 identical leading characters in diff, use -v to show
+E         - tions": {"a": "int", "b": "str", "return": "bool"}, "is_lambda": false}
+E         + tions": {"return": "bool", "a": "int", "b": "str"}, "is_lambda": true}
+
+test_0571.py:26: AssertionError
+_______________________ test_task_func_complex_defaults ________________________
+
+    def test_task_func_complex_defaults():
+        def func(a, b=(1, 2), c={'key': 'value'}):
+            pass
+        expected = '{"function_name": "func", "args": ["a", "b", "c"], "defaults": [(1, 2), {"key": "value"}], "annotations": {}, "is_lambda": false}'
+>       assert task_func(func) == expected
+E       assert '{"function_n...ambda": true}' == '{"function_n...mbda": false}'
+E         
+E         Skipping 54 identical leading characters in diff, use -v to show
+E         - faults": [(1, 2), {"key": "value"}], "annotations": {}, "is_lambda": false}
+E         ?           ^    ^                                                     ^^^^
+E         + faults": [[1, 2], {"key": "value"}], "annotations": {}, "is_lambda": true}
+E         ?           ^    ^                                                     ^^^
+
+test_0571.py:37: AssertionError
+=========================== short test summary info ============================
+FAILED test_0571.py::test_task_func_no_args - assert '{"function_n...ambda": ...
+FAILED test_0571.py::test_task_func_with_args - assert '{"function_n...ambda"...
+FAILED test_0571.py::test_task_func_with_defaults - assert '{"function_n...am...
+FAILED test_0571.py::test_task_func_with_annotations - assert '{"function_n.....
+FAILED test_0571.py::test_task_func_complex_defaults - assert '{"function_n.....
+5 failed, 1 passed in 0.51s

@@ -1,0 +1,134 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_show = <MagicMock name='show' id='129633962509088'>
+mock_match = <MagicMock name='match' id='129633962514032'>
+mock_listdir = <MagicMock name='listdir' id='129633965378352'>
+
+    @patch('os.listdir')
+    # Mocking re.match to simulate pattern matching
+    @patch('re.match')
+    # Mocking plt.show to prevent actual plotting
+    @patch('matplotlib.pyplot.show')
+    def test_task_func(mock_show, mock_match, mock_listdir):
+        # Define mock data
+        mock_listdir.return_value = ['data1.csv', 'data2.csv', 'data3.txt']
+        mock_match.side_effect = [True, False, True]
+    
+        # Create temporary CSV files with sample data
+        temp_dir = 'temp_test_dir'
+        os.makedirs(temp_dir, exist_ok=True)
+        for i in range(1, 4):
+            file_path = os.path.join(temp_dir, f'data{i}.csv')
+            if i % 2 != 0:  # Only create CSV files that match the pattern
+                df = pd.DataFrame({'Month': ['Jan', 'Feb'], 'Sales': [100, 200]})
+                df.to_csv(file_path, index=False)
+    
+        # Run the function
+>       plots = task_func(temp_dir, r'.*\.csv')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0909.py:30: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0909.py:11: in task_func
+    ax = df.plot(x='Month', y='Sales', title=file)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/plotting/_core.py:1185: in __call__
+    return plot_backend.plot(data, kind=kind, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/plotting/_matplotlib/__init__.py:71: in plot
+    plot_obj.generate()
+../../../.venv/lib/python3.12/site-packages/pandas/plotting/_matplotlib/core.py:517: in generate
+    fig = self.fig
+          ^^^^^^^^
+pandas/_libs/properties.pyx:36: in pandas._libs.properties.CachedProperty.__get__
+    ???
+../../../.venv/lib/python3.12/site-packages/pandas/plotting/_matplotlib/core.py:572: in fig
+    return self._axes_and_fig[1]
+           ^^^^^^^^^^^^^^^^^^
+pandas/_libs/properties.pyx:36: in pandas._libs.properties.CachedProperty.__get__
+    ???
+../../../.venv/lib/python3.12/site-packages/pandas/plotting/_matplotlib/core.py:599: in _axes_and_fig
+    fig = plt.figure(figsize=self.figsize)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/matplotlib/pyplot.py:1096: in figure
+    manager = new_figure_manager(
+../../../.venv/lib/python3.12/site-packages/matplotlib/pyplot.py:575: in new_figure_manager
+    _warn_if_gui_out_of_main_thread()
+../../../.venv/lib/python3.12/site-packages/matplotlib/pyplot.py:552: in _warn_if_gui_out_of_main_thread
+    canvas_class = cast(type[FigureCanvasBase], _get_backend_mod().FigureCanvas)
+                                                ^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/matplotlib/pyplot.py:390: in _get_backend_mod
+    switch_backend(rcParams._get("backend"))
+../../../.venv/lib/python3.12/site-packages/matplotlib/pyplot.py:440: in switch_backend
+    switch_backend("agg")
+../../../.venv/lib/python3.12/site-packages/matplotlib/pyplot.py:445: in switch_backend
+    module = backend_registry.load_backend_module(newbackend)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/matplotlib/backends/registry.py:317: in load_backend_module
+    return importlib.import_module(module_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1331: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:935: in _load_unlocked
+    ???
+<frozen importlib._bootstrap_external>:995: in exec_module
+    ???
+<frozen importlib._bootstrap>:488: in _call_with_frames_removed
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    """
+    An `Anti-Grain Geometry`_ (AGG) backend.
+    
+    Features that are implemented:
+    
+    * capstyles and join styles
+    * dashes
+    * linewidth
+    * lines, rectangles, ellipses
+    * clipping to a rectangle
+    * output to RGBA and Pillow-supported image formats
+    * alpha blending
+    * DPI scaling properly - everything scales properly (dashes, linewidths, etc)
+    * draw polygon
+    * freetype2 w/ ft2font
+    
+    Still TODO:
+    
+    * integrate screen dpi w/ ppi and text
+    
+    .. _Anti-Grain Geometry: http://agg.sourceforge.net/antigrain.com
+    """
+    
+    from contextlib import nullcontext
+    import math
+    
+    import numpy as np
+    from PIL import features
+    
+    import matplotlib as mpl
+    from matplotlib import _api, cbook
+    from matplotlib.backend_bases import (
+        _Backend, FigureCanvasBase, FigureManagerBase, RendererBase)
+    from matplotlib.dviread import Dvi
+    from matplotlib.font_manager import fontManager as _fontManager, get_font
+    from matplotlib.ft2font import LoadFlags, RenderMode
+    from matplotlib.mathtext import MathTextParser
+    from matplotlib.path import Path
+    from matplotlib.transforms import Bbox, BboxBase
+>   from matplotlib.backends._backend_agg import RendererAgg as _RendererAgg
+E   ImportError: generic_type: type "RendererAgg" is already registered!
+
+../../../.venv/lib/python3.12/site-packages/matplotlib/backends/backend_agg.py:40: ImportError
+=========================== short test summary info ============================
+FAILED test_0909.py::test_task_func - ImportError: generic_type: type "Render...
+1 failed in 2.53s

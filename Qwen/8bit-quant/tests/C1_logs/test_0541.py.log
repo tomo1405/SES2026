@@ -1,0 +1,113 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+_____________________________ test_task_func_basic _____________________________
+
+    def test_task_func_basic():
+        # Test with a simple list of menu items
+        list_of_menuitems = [['burger', 'fries'], ['burger', 'soda']]
+        ax = task_func(list_of_menuitems)
+    
+        # Check that the plot has the correct number of bars
+        assert len(ax.patches) == 3  # 'burger', 'fries', 'soda'
+    
+        # Check that the labels and values are correct
+        labels = [patch.get_label() for patch in ax.patches]
+        expected_labels = ['burger', 'fries', 'soda']
+>       assert labels == expected_labels
+E       AssertionError: assert ['_nolegend_'... '_nolegend_'] == ['burger', 'fries', 'soda']
+E         
+E         At index 0 diff: '_nolegend_' != 'burger'
+E         Use -v to get more diff
+
+test_0541.py:18: AssertionError
+__________________ test_task_func_with_custom_title_and_color __________________
+
+    def test_task_func_with_custom_title_and_color():
+        # Test with custom title and color
+        list_of_menuitems = [['pizza', 'pasta'], ['pizza', 'salad']]
+        ax = task_func(list_of_menuitems, title="Custom Title", color="green")
+    
+        # Check that the title and color are set correctly
+        assert ax.get_title() == "Custom Title"
+>       assert all(patch.get_facecolor() == (0, 1, 0, 1) for patch in ax.patches)  # Green color
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert False
+E        +  where False = all(<generator object test_task_func_with_custom_title_and_color.<locals>.<genexpr> at 0x7ef8175edf20>)
+
+test_0541.py:31: AssertionError
+________________________ test_task_func_with_empty_list ________________________
+
+    def test_task_func_with_empty_list():
+        # Test with an empty list of menu items
+        list_of_menuitems = []
+>       ax = task_func(list_of_menuitems)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0541.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+list_of_menuitems = [], title = 'Menu Distribution', color = 'blue', width = 1.0
+
+    def task_func(list_of_menuitems, title="Menu Distribution", color="blue", width=1.0):
+        # Flatten the list
+        flat_list = list(itertools.chain(*list_of_menuitems))
+    
+        # Count the occurrences of each menu item
+        counter = Counter(flat_list)
+>       labels, values = zip(*sorted(counter.items(), key=lambda x: x[0]))
+        ^^^^^^^^^^^^^^
+E       ValueError: not enough values to unpack (expected 2, got 0)
+
+../../../src/src_0541.py:11: ValueError
+_______________________ test_task_func_with_single_item ________________________
+
+    def test_task_func_with_single_item():
+        # Test with a single menu item
+        list_of_menuitems = [['soup']]
+        ax = task_func(list_of_menuitems)
+    
+        # Check that there is one bar in the plot
+        assert len(ax.patches) == 1
+>       assert ax.patches[0].get_label() == 'soup'
+E       AssertionError: assert '_nolegend_' == 'soup'
+E         
+E         - soup
+E         + _nolegend_
+
+test_0541.py:48: AssertionError
+______________________ test_task_func_with_multiple_items ______________________
+
+    def test_task_func_with_multiple_items():
+        # Test with multiple menu items
+        list_of_menuitems = [['apple', 'banana'], ['banana', 'cherry'], ['apple', 'cherry']]
+        ax = task_func(list_of_menuitems)
+    
+        # Check that the plot has the correct number of bars
+        assert len(ax.patches) == 3  # 'apple', 'banana', 'cherry'
+    
+        # Check that the labels and values are correct
+        labels = [patch.get_label() for patch in ax.patches]
+        expected_labels = ['apple', 'banana', 'cherry']
+>       assert labels == expected_labels
+E       AssertionError: assert ['_nolegend_'... '_nolegend_'] == ['apple', 'banana', 'cherry']
+E         
+E         At index 0 diff: '_nolegend_' != 'apple'
+E         Use -v to get more diff
+
+test_0541.py:62: AssertionError
+=============================== warnings summary ===============================
+Qwen/8bit-quant/tests/test_0541.py::test_task_func_basic
+Qwen/8bit-quant/tests/test_0541.py::test_task_func_with_custom_title_and_color
+Qwen/8bit-quant/tests/test_0541.py::test_task_func_with_single_item
+Qwen/8bit-quant/tests/test_0541.py::test_task_func_with_multiple_items
+  /work/tomohiro-w/utg/src/src_0541.py:17: UserWarning: set_ticklabels() should only be used with a fixed number of ticks, i.e. after set_ticks() or using a FixedLocator. Otherwise, ticks may be mislabeled.
+    ax.set_xticklabels(labels)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0541.py::test_task_func_basic - AssertionError: assert ['_nolegen...
+FAILED test_0541.py::test_task_func_with_custom_title_and_color - assert False
+FAILED test_0541.py::test_task_func_with_empty_list - ValueError: not enough ...
+FAILED test_0541.py::test_task_func_with_single_item - AssertionError: assert...
+FAILED test_0541.py::test_task_func_with_multiple_items - AssertionError: ass...
+5 failed, 4 warnings in 1.68s

@@ -1,0 +1,146 @@
+.FFFFF                                                                   [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_single_dataset _________________________
+
+    def test_task_func_single_dataset():
+        x = [[1, 2, 3]]
+        y = [[1, 0.5, 0.25]]
+        labels = ["Dataset 1"]
+>       fig = task_func(x, y, labels)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0664.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+x = [[1, 2, 3]], y = [[1, 0.5, 0.25]], labels = ['Dataset 1']
+
+    def task_func(x, y, labels):
+    
+        if not x or not y or not labels:
+            raise ValueError("Empty data lists provided.")
+    
+        def exponential_func(x, a, b, c):
+            """Exponential function model for curve fitting."""
+            return a * np.exp(-b * x) + c
+    
+>       fig, ax = plt.subplots()
+                  ^^^
+E       NameError: name 'plt' is not defined
+
+../../../src/src_0664.py:12: NameError
+_______________________ test_task_func_multiple_datasets _______________________
+
+    def test_task_func_multiple_datasets():
+        x = [[1, 2, 3], [4, 5, 6]]
+        y = [[1, 0.5, 0.25], [0.5, 0.25, 0.125]]
+        labels = ["Dataset 1", "Dataset 2"]
+>       fig = task_func(x, y, labels)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0664.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+x = [[1, 2, 3], [4, 5, 6]], y = [[1, 0.5, 0.25], [0.5, 0.25, 0.125]]
+labels = ['Dataset 1', 'Dataset 2']
+
+    def task_func(x, y, labels):
+    
+        if not x or not y or not labels:
+            raise ValueError("Empty data lists provided.")
+    
+        def exponential_func(x, a, b, c):
+            """Exponential function model for curve fitting."""
+            return a * np.exp(-b * x) + c
+    
+>       fig, ax = plt.subplots()
+                  ^^^
+E       NameError: name 'plt' is not defined
+
+../../../src/src_0664.py:12: NameError
+_____________________ test_task_func_non_exponential_data ______________________
+
+    def test_task_func_non_exponential_data():
+        x = [[1, 2, 3]]
+        y = [[1, 2, 3]]  # Linear data, not exponential
+        labels = ["Dataset 1"]
+>       fig = task_func(x, y, labels)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0664.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+x = [[1, 2, 3]], y = [[1, 2, 3]], labels = ['Dataset 1']
+
+    def task_func(x, y, labels):
+    
+        if not x or not y or not labels:
+            raise ValueError("Empty data lists provided.")
+    
+        def exponential_func(x, a, b, c):
+            """Exponential function model for curve fitting."""
+            return a * np.exp(-b * x) + c
+    
+>       fig, ax = plt.subplots()
+                  ^^^
+E       NameError: name 'plt' is not defined
+
+../../../src/src_0664.py:12: NameError
+______________________ test_task_func_invalid_input_types ______________________
+
+    def test_task_func_invalid_input_types():
+        with pytest.raises(TypeError):
+>           task_func([1, 2, 3], [1, 2, 3], "label")  # labels should be a list
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0664.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+x = [1, 2, 3], y = [1, 2, 3], labels = 'label'
+
+    def task_func(x, y, labels):
+    
+        if not x or not y or not labels:
+            raise ValueError("Empty data lists provided.")
+    
+        def exponential_func(x, a, b, c):
+            """Exponential function model for curve fitting."""
+            return a * np.exp(-b * x) + c
+    
+>       fig, ax = plt.subplots()
+                  ^^^
+E       NameError: name 'plt' is not defined
+
+../../../src/src_0664.py:12: NameError
+_______________________ test_task_func_different_lengths _______________________
+
+    def test_task_func_different_lengths():
+        with pytest.raises(ValueError):
+>           task_func([[1, 2, 3]], [[1, 2]], ["Dataset 1"])  # x and y have different lengths
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0664.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+x = [[1, 2, 3]], y = [[1, 2]], labels = ['Dataset 1']
+
+    def task_func(x, y, labels):
+    
+        if not x or not y or not labels:
+            raise ValueError("Empty data lists provided.")
+    
+        def exponential_func(x, a, b, c):
+            """Exponential function model for curve fitting."""
+            return a * np.exp(-b * x) + c
+    
+>       fig, ax = plt.subplots()
+                  ^^^
+E       NameError: name 'plt' is not defined
+
+../../../src/src_0664.py:12: NameError
+=========================== short test summary info ============================
+FAILED test_0664.py::test_task_func_single_dataset - NameError: name 'plt' is...
+FAILED test_0664.py::test_task_func_multiple_datasets - NameError: name 'plt'...
+FAILED test_0664.py::test_task_func_non_exponential_data - NameError: name 'p...
+FAILED test_0664.py::test_task_func_invalid_input_types - NameError: name 'pl...
+FAILED test_0664.py::test_task_func_different_lengths - NameError: name 'plt'...
+5 failed, 1 passed in 2.23s

@@ -1,0 +1,44 @@
+.F..F                                                                    [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_with_seed ___________________________
+
+    def test_task_func_with_seed():
+        data_list = ["apple, banana, cherry", "dog, elephant, frog"]
+        seed = 42
+        result_df = task_func(data_list, seed=seed)
+    
+        assert isinstance(result_df, pd.DataFrame)
+        assert result_df.shape == (2, 2)
+        assert all(result_df.columns == ["Original String", "Shuffled String"])
+        assert result_df.iloc[0]["Original String"] == "apple, banana, cherry"
+        assert result_df.iloc[1]["Original String"] == "dog, elephant, frog"
+        assert result_df.iloc[0]["Shuffled String"] == "banana, apple, cherry"
+>       assert result_df.iloc[1]["Shuffled String"] == "elephant, dog, frog"
+E       AssertionError: assert 'frog, elephant, dog' == 'elephant, dog, frog'
+E         
+E         - elephant, dog, frog
+E         + frog, elephant, dog
+
+test_0481.py:26: AssertionError
+________________________ test_task_func_multiple_commas ________________________
+
+    def test_task_func_multiple_commas():
+        data_list = ["apple,, banana,, cherry"]
+        result_df = task_func(data_list)
+    
+        assert isinstance(result_df, pd.DataFrame)
+        assert result_df.shape == (1, 2)
+        assert all(result_df.columns == ["Original String", "Shuffled String"])
+        assert result_df.iloc[0]["Original String"] == "apple,, banana,, cherry"
+        # The shuffled string should have the same number of elements and order
+>       assert result_df.iloc[0]["Shuffled String"] == "apple,, banana,, cherry"
+E       AssertionError: assert ', banana, apple, cherry, ' == 'apple,, banana,, cherry'
+E         
+E         - apple,, banana,, cherry
+E         + , banana, apple, cherry,
+
+test_0481.py:55: AssertionError
+=========================== short test summary info ============================
+FAILED test_0481.py::test_task_func_with_seed - AssertionError: assert 'frog,...
+FAILED test_0481.py::test_task_func_multiple_commas - AssertionError: assert ...
+2 failed, 3 passed in 1.16s

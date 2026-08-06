@@ -1,0 +1,41 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+input_data = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+
+    def test_task_func(input_data):
+        result = task_func(input_data)
+        assert result is not None
+>       assert isinstance(result, sns.matrix.Matrix)
+                                  ^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'seaborn.matrix' has no attribute 'Matrix'
+
+test_0417.py:14: AttributeError
+______________________ test_task_func_with_invalid_column ______________________
+
+input_data = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+
+    def test_task_func_with_invalid_column(input_data):
+        result = task_func(input_data, column="invalid_column")
+>       assert result is None
+E       assert <Axes: > is None
+
+test_0417.py:18: AssertionError
+____________________ test_task_func_with_no_number_columns _____________________
+
+input_data = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+
+    def test_task_func_with_no_number_columns(input_data):
+        data = pd.DataFrame(input_data)
+        data["category"] = ["A", "B", "C"]
+        result = task_func(data)
+>       assert result is None
+E       assert <Axes: > is None
+
+test_0417.py:24: AssertionError
+=========================== short test summary info ============================
+FAILED test_0417.py::test_task_func - AttributeError: module 'seaborn.matrix'...
+FAILED test_0417.py::test_task_func_with_invalid_column - assert <Axes: > is ...
+FAILED test_0417.py::test_task_func_with_no_number_columns - assert <Axes: > ...
+3 failed in 3.66s

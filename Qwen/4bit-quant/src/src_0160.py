@@ -1,0 +1,10 @@
+import struct
+import io
+import gzip
+def task_func(newArray):
+    buffer = io.BytesIO()
+
+    with gzip.GzipFile(fileobj=buffer, mode='w') as f:
+        f.write(struct.pack('d'*newArray.size, *newArray))
+
+    return buffer.getvalue()

@@ -1,0 +1,53 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b64edff7680>
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1216/test_task_func0')
+
+    def test_task_func(monkeypatch, tmpdir):
+        # Create a temporary CSV file
+        csv_file_path = tmpdir.join('test.csv')
+        csv_content = "name,age\nAlice,30\nBob,25"
+        with open(csv_file_path, 'w') as f:
+            f.write(csv_content)
+    
+        # Mock the open function to return our mock objects
+        def mock_open(file_name, mode):
+            if file_name.endswith('.csv'):
+                return MockOpen(file_name, mode)
+            elif file_name.endswith('.json'):
+                return MockOpen(file_name, mode)
+    
+        monkeypatch.setattr('builtins.open', mock_open)
+    
+        # Call the function
+>       json_file_name = task_func(str(csv_file_path))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0207.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0207.py:11: in task_func
+    csv_reader = csv.DictReader(f)
+                 ^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <csv.DictReader object at 0x7b64edff6d20>
+f = <test_0207.MockOpen object at 0x7b64edff6c30>, fieldnames = None
+restkey = None, restval = None, dialect = 'excel', args = (), kwds = {}
+
+    def __init__(self, f, fieldnames=None, restkey=None, restval=None,
+                 dialect="excel", *args, **kwds):
+        if fieldnames is not None and iter(fieldnames) is fieldnames:
+            fieldnames = list(fieldnames)
+        self._fieldnames = fieldnames   # list of keys for the dict
+        self.restkey = restkey          # key to catch long rows
+        self.restval = restval          # default value for short rows
+>       self.reader = reader(f, dialect, *args, **kwds)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: 'MockOpen' object is not iterable
+
+/usr/lib/python3.12/csv.py:91: TypeError
+=========================== short test summary info ============================
+FAILED test_0207.py::test_task_func - TypeError: 'MockOpen' object is not ite...
+1 failed, 1 passed in 0.47s

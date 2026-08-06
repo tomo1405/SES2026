@@ -1,0 +1,99 @@
+..F.F                                                                    [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_values _____________________________
+
+sample_data =    feature1  feature2
+0         1         5
+1         2         4
+2         3         3
+3         4         2
+4         5         1
+
+    def test_task_func_values(sample_data):
+        result = task_func(sample_data)
+        expected_values = np.array([
+            [-3.16227766, 0.],
+            [-1.58113883, 0.],
+            [0., 0.],
+            [1.58113883, 0.],
+            [3.16227766, 0.]
+        ])
+>       np.testing.assert_allclose(result.values, expected_values, rtol=1e-5, atol=1e-8, err_msg="The values in the output DataFrame do not match the expected PCA transformation.")
+E       AssertionError: 
+E       Not equal to tolerance rtol=1e-05, atol=1e-08
+E       The values in the output DataFrame do not match the expected PCA transformation.
+E       Mismatched elements: 4 / 10 (40%)
+E       Mismatch at indices:
+E        [0, 0]: -2.8284271247461903 (ACTUAL), -3.16227766 (DESIRED)
+E        [1, 0]: -1.414213562373095 (ACTUAL), -1.58113883 (DESIRED)
+E        [3, 0]: 1.414213562373095 (ACTUAL), 1.58113883 (DESIRED)
+E        [4, 0]: 2.82842712474619 (ACTUAL), 3.16227766 (DESIRED)
+E       Max absolute difference among violations: 0.33385054
+E       Max relative difference among violations: 0.10557281
+E        ACTUAL: array([[-2.828427e+00, -2.941441e-16],
+E              [-1.414214e+00,  9.804804e-17],
+E              [ 0.000000e+00, -0.000000e+00],...
+E        DESIRED: array([[-3.162278,  0.      ],
+E              [-1.581139,  0.      ],
+E              [ 0.      ,  0.      ],...
+
+test_0703.py:31: AssertionError
+_______________________ test_task_func_single_row_input ________________________
+
+sample_data =    feature1  feature2
+0         1         5
+1         2         4
+2         3         3
+3         4         2
+4         5         1
+
+    def test_task_func_single_row_input(sample_data):
+        single_row_df = sample_data.head(1)
+>       result = task_func(single_row_df)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0703.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0703.py:5: in task_func
+    df_pca = pca.fit_transform(df)
+             ^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/utils/_set_output.py:319: in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/base.py:1403: in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/decomposition/_pca.py:466: in fit_transform
+    U, S, _, X, x_is_centered, xp = self._fit(X)
+                                    ^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/decomposition/_pca.py:540: in _fit
+    return self._fit_full(X, n_components, xp, is_array_api_compliant)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PCA(n_components=2), X = array([[1., 5.]]), n_components = 2
+xp = <module 'sklearn.externals.array_api_compat.numpy' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/sklearn/externals/array_api_compat/numpy/__init__.py'>
+is_array_api_compliant = False
+
+    def _fit_full(self, X, n_components, xp, is_array_api_compliant):
+        """Fit the model by computing full SVD on X."""
+        n_samples, n_features = X.shape
+    
+        if n_components == "mle":
+            if n_samples < n_features:
+                raise ValueError(
+                    "n_components='mle' is only supported if n_samples >= n_features"
+                )
+        elif not 0 <= n_components <= min(n_samples, n_features):
+>           raise ValueError(
+                f"n_components={n_components} must be between 0 and "
+                f"min(n_samples, n_features)={min(n_samples, n_features)} with "
+                f"svd_solver={self._fit_svd_solver!r}"
+            )
+E           ValueError: n_components=2 must be between 0 and min(n_samples, n_features)=1 with svd_solver='full'
+
+../../../.venv/lib/python3.12/site-packages/sklearn/decomposition/_pca.py:554: ValueError
+=========================== short test summary info ============================
+FAILED test_0703.py::test_task_func_values - AssertionError: 
+FAILED test_0703.py::test_task_func_single_row_input - ValueError: n_componen...
+2 failed, 3 passed in 2.82s

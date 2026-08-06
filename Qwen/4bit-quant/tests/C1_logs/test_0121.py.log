@@ -1,0 +1,31 @@
+F.F.                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_dates __________________________
+
+    def test_task_func_valid_dates():
+        start_date = datetime(2020, 1, 1)
+        end_date = datetime(2020, 12, 31)
+        result = task_func(start_date, end_date)
+        assert isinstance(result, pd.Series)
+>       assert len(result) == (end_date - start_date).days + 1
+E       assert 365 == (365 + 1)
+E        +  where 365 = len(0     2020-11-23\n1     2020-02-27\n2     2020-01-13\n3     2020-05-20\n4     2020-05-05\n         ...    \n360   2020-12-09\n361   2020-11-26\n362   2020-06-02\n363   2020-08-22\n364   2020-06-10\nLength: 365, dtype: datetime64[us])
+E        +  and   365 = (datetime.datetime(2020, 12, 31, 0, 0) - datetime.datetime(2020, 1, 1, 0, 0)).days
+
+test_0121.py:13: AssertionError
+__________________________ test_task_func_same_dates ___________________________
+
+    def test_task_func_same_dates():
+        start_date = datetime(2020, 1, 1)
+        end_date = datetime(2020, 1, 1)
+        result = task_func(start_date, end_date)
+        assert isinstance(result, pd.Series)
+>       assert len(result) == 1
+E       assert 0 == 1
+E        +  where 0 = len(Series([], dtype: object))
+
+test_0121.py:31: AssertionError
+=========================== short test summary info ============================
+FAILED test_0121.py::test_task_func_valid_dates - assert 365 == (365 + 1)
+FAILED test_0121.py::test_task_func_same_dates - assert 0 == 1
+2 failed, 2 passed in 1.11s

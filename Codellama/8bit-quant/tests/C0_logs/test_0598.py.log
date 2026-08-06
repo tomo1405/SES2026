@@ -1,0 +1,82 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func[data0-j-expected0] _______________________
+
+data =     Name
+0   John
+1   Jane
+2    Jim
+3  Jenny, letter = 'j'
+expected = John    2
+Jane    1
+Jim     1
+dtype: int64
+
+    @pytest.mark.parametrize("data, letter, expected", [
+        (pd.DataFrame({'Name': ['John', 'Jane', 'Jim', 'Jenny']}), 'j', pd.Series([2, 1, 1], index=['John', 'Jane', 'Jim'])),
+        (pd.DataFrame({'Name': ['John', 'Jane', 'Jim', 'Jenny']}), 'a', pd.Series([1, 1, 1], index=['John', 'Jane', 'Jim'])),
+        (pd.DataFrame({'Name': ['John', 'Jane', 'Jim', 'Jenny']}), 'z', pd.Series([0, 0, 0], index=['John', 'Jane', 'Jim'])),
+    ])
+    def test_task_func(data, letter, expected):
+        result = task_func(data, letter)
+>       assert result.equals(expected)
+E       assert False
+E        +  where False = equals(John    2\nJane    1\nJim     1\ndtype: int64)
+E        +    where equals = Name\nJohn     1\nJane     1\nJim      1\nJenny    1\nName: count, dtype: int64.equals
+
+test_0598.py:12: AssertionError
+______________________ test_task_func[data1-a-expected1] _______________________
+
+data =     Name
+0   John
+1   Jane
+2    Jim
+3  Jenny, letter = 'a'
+expected = John    1
+Jane    1
+Jim     1
+dtype: int64
+
+    @pytest.mark.parametrize("data, letter, expected", [
+        (pd.DataFrame({'Name': ['John', 'Jane', 'Jim', 'Jenny']}), 'j', pd.Series([2, 1, 1], index=['John', 'Jane', 'Jim'])),
+        (pd.DataFrame({'Name': ['John', 'Jane', 'Jim', 'Jenny']}), 'a', pd.Series([1, 1, 1], index=['John', 'Jane', 'Jim'])),
+        (pd.DataFrame({'Name': ['John', 'Jane', 'Jim', 'Jenny']}), 'z', pd.Series([0, 0, 0], index=['John', 'Jane', 'Jim'])),
+    ])
+    def test_task_func(data, letter, expected):
+        result = task_func(data, letter)
+>       assert result.equals(expected)
+E       assert False
+E        +  where False = equals(John    1\nJane    1\nJim     1\ndtype: int64)
+E        +    where equals = Series([], Name: count, dtype: int64).equals
+
+test_0598.py:12: AssertionError
+______________________ test_task_func[data2-z-expected2] _______________________
+
+data =     Name
+0   John
+1   Jane
+2    Jim
+3  Jenny, letter = 'z'
+expected = John    0
+Jane    0
+Jim     0
+dtype: int64
+
+    @pytest.mark.parametrize("data, letter, expected", [
+        (pd.DataFrame({'Name': ['John', 'Jane', 'Jim', 'Jenny']}), 'j', pd.Series([2, 1, 1], index=['John', 'Jane', 'Jim'])),
+        (pd.DataFrame({'Name': ['John', 'Jane', 'Jim', 'Jenny']}), 'a', pd.Series([1, 1, 1], index=['John', 'Jane', 'Jim'])),
+        (pd.DataFrame({'Name': ['John', 'Jane', 'Jim', 'Jenny']}), 'z', pd.Series([0, 0, 0], index=['John', 'Jane', 'Jim'])),
+    ])
+    def test_task_func(data, letter, expected):
+        result = task_func(data, letter)
+>       assert result.equals(expected)
+E       assert False
+E        +  where False = equals(John    0\nJane    0\nJim     0\ndtype: int64)
+E        +    where equals = Series([], Name: count, dtype: int64).equals
+
+test_0598.py:12: AssertionError
+=========================== short test summary info ============================
+FAILED test_0598.py::test_task_func[data0-j-expected0] - assert False
+FAILED test_0598.py::test_task_func[data1-a-expected1] - assert False
+FAILED test_0598.py::test_task_func[data2-z-expected2] - assert False
+3 failed in 1.07s

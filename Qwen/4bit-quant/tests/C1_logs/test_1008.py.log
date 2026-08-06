@@ -1,0 +1,160 @@
+.FF.                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_http_error ___________________________
+
+mock_get = <MagicMock name='get' id='140179255397216'>
+
+    @patch('src_1008.requests.get')
+    def test_task_func_http_error(mock_get):
+        # Define a mock response with a non-200 status code
+        mock_response = requests.Response()
+        mock_response.status_code = 404
+    
+        # Configure the mock to raise an HTTPError
+        mock_get.return_value = mock_response
+>       mock_get.return_value.raise_for_status.side_effect = requests.HTTPError('HTTP Error 404: Not Found')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'method' object has no attribute 'side_effect'
+
+test_1008.py:38: AttributeError
+_________________________ test_task_func_invalid_json __________________________
+
+self = <Response [200]>, kwargs = {}
+
+    def json(self, **kwargs: Any) -> Any:
+        r"""Decodes the JSON response body (if any) as a Python object.
+    
+        This may return a dictionary, list, etc. depending on what is in the response.
+    
+        :param \*\*kwargs: Optional arguments that ``json.loads`` takes.
+        :raises requests.exceptions.JSONDecodeError: If the response body does not
+            contain valid json.
+        """
+    
+        if not self.encoding and self.content and len(self.content) > 3:
+            # No encoding set. JSON RFC 4627 section 3 states we should expect
+            # UTF-8, -16 or -32. Detect which one to use; If the detection or
+            # decoding fails, fall back to `self.text` (using charset_normalizer to make
+            # a best guess).
+            encoding = guess_json_utf(self.content)
+            if encoding is not None:
+                try:
+>                   return complexjson.loads(self.content.decode(encoding), **kwargs)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../../../.venv/lib/python3.12/site-packages/requests/models.py:1105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/json/__init__.py:346: in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/decoder.py:337: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <json.decoder.JSONDecoder object at 0x7f7ea346f9b0>, s = 'not valid json'
+idx = 0
+
+    def raw_decode(self, s, idx=0):
+        """Decode a JSON document from ``s`` (a ``str`` beginning with
+        a JSON document) and return a 2-tuple of the Python
+        representation and the index in ``s`` where the document ended.
+    
+        This can be used to decode a JSON document from a string that may
+        have extraneous data at the end.
+    
+        """
+        try:
+            obj, end = self.scan_once(s, idx)
+        except StopIteration as err:
+>           raise JSONDecodeError("Expecting value", s, err.value) from None
+E           json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+/usr/lib/python3.12/json/decoder.py:355: JSONDecodeError
+
+During handling of the above exception, another exception occurred:
+
+url = 'https://example.com/data'
+
+    def task_func(url: str) -> pd.DataFrame:
+        try:
+            response = requests.get(url, timeout=5)
+            response.raise_for_status()  # Raises an HTTPError if the HTTP request returned an unsuccessful status code
+>           data = response.json()  # Directly converts the response content to JSON
+                   ^^^^^^^^^^^^^^^
+
+../../../src/src_1008.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Response [200]>, kwargs = {}
+
+    def json(self, **kwargs: Any) -> Any:
+        r"""Decodes the JSON response body (if any) as a Python object.
+    
+        This may return a dictionary, list, etc. depending on what is in the response.
+    
+        :param \*\*kwargs: Optional arguments that ``json.loads`` takes.
+        :raises requests.exceptions.JSONDecodeError: If the response body does not
+            contain valid json.
+        """
+    
+        if not self.encoding and self.content and len(self.content) > 3:
+            # No encoding set. JSON RFC 4627 section 3 states we should expect
+            # UTF-8, -16 or -32. Detect which one to use; If the detection or
+            # decoding fails, fall back to `self.text` (using charset_normalizer to make
+            # a best guess).
+            encoding = guess_json_utf(self.content)
+            if encoding is not None:
+                try:
+                    return complexjson.loads(self.content.decode(encoding), **kwargs)
+                except UnicodeDecodeError:
+                    # Wrong UTF codec detected; usually because it's not UTF-8
+                    # but some other 8-bit codec.  This is an RFC violation,
+                    # and the server didn't bother to tell us what codec *was*
+                    # used.
+                    pass
+                except JSONDecodeError as e:
+>                   raise RequestsJSONDecodeError(e.msg, e.doc, e.pos)
+E                   requests.exceptions.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+../../../.venv/lib/python3.12/site-packages/requests/models.py:1113: JSONDecodeError
+
+The above exception was the direct cause of the following exception:
+
+mock_get = <MagicMock name='get' id='140179254681552'>
+
+    @patch('src_1008.requests.get')
+    def test_task_func_invalid_json(mock_get):
+        # Define a mock response with invalid JSON
+        mock_response = requests.Response()
+        mock_response.status_code = 200
+        mock_response._content = b'not valid json'
+    
+        # Configure the mock to return the mock response
+        mock_get.return_value = mock_response
+    
+        # Assert that the function raises ValueError with the correct message
+        with pytest.raises(ValueError, match="Invalid JSON format for DataFrame conversion"):
+>           task_func('https://example.com/data')
+
+test_1008.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'https://example.com/data'
+
+    def task_func(url: str) -> pd.DataFrame:
+        try:
+            response = requests.get(url, timeout=5)
+            response.raise_for_status()  # Raises an HTTPError if the HTTP request returned an unsuccessful status code
+            data = response.json()  # Directly converts the response content to JSON
+            df = pd.DataFrame(data)
+            return df
+        except requests.RequestException as e:
+>           raise SystemError(f"Network error occurred: {e}") from e
+E           SystemError: Network error occurred: Expecting value: line 1 column 1 (char 0)
+
+../../../src/src_1008.py:11: SystemError
+=========================== short test summary info ============================
+FAILED test_1008.py::test_task_func_http_error - AttributeError: 'method' obj...
+FAILED test_1008.py::test_task_func_invalid_json - SystemError: Network error...
+2 failed, 2 passed in 1.49s

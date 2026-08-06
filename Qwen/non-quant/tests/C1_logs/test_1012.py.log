@@ -1,0 +1,38 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sample_csv_data = <_io.StringIO object at 0x7eccc014e8c0>
+
+    def test_task_func(sample_csv_data):
+        ax = task_func(sample_csv_data, "column1", "column2")
+    
+        # Check if the returned object is a matplotlib AxesSubplot
+        assert isinstance(ax, plt.Axes)
+    
+        # Check if the plot has the correct title
+        assert ax.get_title() == "Mean of column2 Grouped by column1"
+    
+        # Check if the plot has the correct x and y labels
+        assert ax.get_xlabel() == "column1"
+        assert ax.get_ylabel() == "Mean of column2"
+    
+        # Check if the bar heights are correct
+        bars = ax.patches
+        expected_heights = [1.5, 3.5]  # Mean of values for 'A' and 'B'
+        actual_heights = [bar.get_height() for bar in bars]
+        assert actual_heights == expected_heights
+    
+        # Check if the bar labels are correct
+        expected_labels = ['A', 'B']
+        actual_labels = [bar.get_x() + bar.get_width() / 2 for bar in bars]
+>       assert [ax.get_xticks()[int(round(label))] for label in actual_labels] == expected_labels
+E       AssertionError: assert [0, 1] == ['A', 'B']
+E         
+E         At index 0 diff: 0 != 'A'
+E         Use -v to get more diff
+
+test_1012.py:34: AssertionError
+=========================== short test summary info ============================
+FAILED test_1012.py::test_task_func - AssertionError: assert [0, 1] == ['A', ...
+1 failed in 2.05s

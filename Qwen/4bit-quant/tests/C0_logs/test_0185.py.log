@@ -1,0 +1,252 @@
+FF.FFF                                                                   [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_empty_dataframe ______________________
+
+    def test_task_func_with_empty_dataframe():
+        df = pd.DataFrame(columns=['text'])
+>       result = task_func(df, 'text')
+                 ^^^^^^^^^^^^^^^^^^^^^
+
+test_0185.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0185.py:24: in task_func
+    vectorized_data = vectorizer.fit_transform(dataframe[text_column])
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/base.py:1403: in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/feature_extraction/text.py:1387: in fit_transform
+    vocabulary, X = self._count_vocab(raw_documents, self.fixed_vocabulary_)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = CountVectorizer(), raw_documents = Series([], Name: text, dtype: object)
+fixed_vocab = False
+
+    def _count_vocab(self, raw_documents, fixed_vocab):
+        """Create sparse feature matrix, and vocabulary where fixed_vocab=False"""
+        if fixed_vocab:
+            vocabulary = self.vocabulary_
+        else:
+            # Add a new value when a new vocabulary item is seen
+            vocabulary = defaultdict()
+            vocabulary.default_factory = vocabulary.__len__
+    
+        analyze = self.build_analyzer()
+        j_indices = []
+        indptr = []
+    
+        values = _make_int_array()
+        indptr.append(0)
+        for doc in raw_documents:
+            feature_counter = {}
+            for feature in analyze(doc):
+                try:
+                    feature_idx = vocabulary[feature]
+                    if feature_idx not in feature_counter:
+                        feature_counter[feature_idx] = 1
+                    else:
+                        feature_counter[feature_idx] += 1
+                except KeyError:
+                    # Ignore out-of-vocabulary items for fixed_vocab=True
+                    continue
+    
+            j_indices.extend(feature_counter.keys())
+            values.extend(feature_counter.values())
+            indptr.append(len(j_indices))
+    
+        if not fixed_vocab:
+            # disable defaultdict behaviour
+            vocabulary = dict(vocabulary)
+            if not vocabulary:
+>               raise ValueError(
+                    "empty vocabulary; perhaps the documents only contain stop words"
+                )
+E               ValueError: empty vocabulary; perhaps the documents only contain stop words
+
+../../../.venv/lib/python3.12/site-packages/sklearn/feature_extraction/text.py:1293: ValueError
+________________________ test_task_func_with_single_row ________________________
+
+self = Index(['test'], dtype='str'), key = 0
+
+    def get_loc(self, key):
+        """
+        Get integer location, slice or boolean mask for requested label.
+    
+        Parameters
+        ----------
+        key : label
+            The key to check its location if it is present in the index.
+    
+        Returns
+        -------
+        int if unique index, slice if monotonic index, else mask
+            Integer location, slice or boolean mask.
+    
+        See Also
+        --------
+        Index.get_slice_bound : Calculate slice bound that corresponds to
+            given label.
+        Index.get_indexer : Computes indexer and mask for new index given
+            the current index.
+        Index.get_non_unique : Returns indexer and masks for new index given
+            the current index.
+        Index.get_indexer_for : Returns an indexer even when non-unique.
+    
+        Examples
+        --------
+        >>> unique_index = pd.Index(list("abc"))
+        >>> unique_index.get_loc("b")
+        1
+    
+        >>> monotonic_index = pd.Index(list("abbc"))
+        >>> monotonic_index.get_loc("b")
+        slice(1, 3, None)
+    
+        >>> non_monotonic_index = pd.Index(list("abcb"))
+        >>> non_monotonic_index.get_loc("b")
+        array([False,  True, False,  True])
+        """
+        casted_key = self._maybe_cast_indexer(key)
+        try:
+>           return self._engine.get_loc(casted_key)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py:3641: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pandas/_libs/index.pyx:168: in pandas._libs.index.IndexEngine.get_loc
+    ???
+pandas/_libs/index.pyx:176: in pandas._libs.index.IndexEngine.get_loc
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   KeyError: 0
+
+pandas/_libs/index.pyx:583: KeyError
+
+The above exception was the direct cause of the following exception:
+
+    def test_task_func_with_single_row():
+        df = pd.DataFrame({'text': ['This is a test.']})
+        expected_columns = ['test']
+        result = task_func(df, 'text')
+        assert list(result.columns) == expected_columns, "The result should have the correct column names"
+>       assert result.iloc[0][0] == 1, "The first row should have the correct token count"
+               ^^^^^^^^^^^^^^^^^
+
+test_0185.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/series.py:959: in __getitem__
+    return self._get_value(key)
+           ^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/series.py:1046: in _get_value
+    loc = self.index.get_loc(label)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Index(['test'], dtype='str'), key = 0
+
+    def get_loc(self, key):
+        """
+        Get integer location, slice or boolean mask for requested label.
+    
+        Parameters
+        ----------
+        key : label
+            The key to check its location if it is present in the index.
+    
+        Returns
+        -------
+        int if unique index, slice if monotonic index, else mask
+            Integer location, slice or boolean mask.
+    
+        See Also
+        --------
+        Index.get_slice_bound : Calculate slice bound that corresponds to
+            given label.
+        Index.get_indexer : Computes indexer and mask for new index given
+            the current index.
+        Index.get_non_unique : Returns indexer and masks for new index given
+            the current index.
+        Index.get_indexer_for : Returns an indexer even when non-unique.
+    
+        Examples
+        --------
+        >>> unique_index = pd.Index(list("abc"))
+        >>> unique_index.get_loc("b")
+        1
+    
+        >>> monotonic_index = pd.Index(list("abbc"))
+        >>> monotonic_index.get_loc("b")
+        slice(1, 3, None)
+    
+        >>> non_monotonic_index = pd.Index(list("abcb"))
+        >>> non_monotonic_index.get_loc("b")
+        array([False,  True, False,  True])
+        """
+        casted_key = self._maybe_cast_indexer(key)
+        try:
+            return self._engine.get_loc(casted_key)
+        except KeyError as err:
+            if isinstance(casted_key, slice) or (
+                isinstance(casted_key, abc.Iterable)
+                and any(isinstance(x, slice) for x in casted_key)
+            ):
+                raise InvalidIndexError(key) from err
+>           raise KeyError(key) from err
+E           KeyError: 0
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py:3648: KeyError
+________________________ test_task_func_with_stopwords _________________________
+
+    def test_task_func_with_stopwords():
+        df = pd.DataFrame({'text': ['This is a test with stopwords.']})
+        expected_columns = ['test', 'with', 'stopwords']
+        result = task_func(df, 'text')
+>       assert list(result.columns) == expected_columns, "The result should have the correct column names"
+E       AssertionError: The result should have the correct column names
+E       assert ['stopwords', 'test'] == ['test', 'with', 'stopwords']
+E         
+E         At index 0 diff: 'stopwords' != 'test'
+E         Right contains one more item: 'stopwords'
+E         Use -v to get more diff
+
+test_0185.py:29: AssertionError
+_________________________ test_task_func_with_numbers __________________________
+
+    def test_task_func_with_numbers():
+        df = pd.DataFrame({'text': ['This is a test with numbers 123.']})
+        expected_columns = ['test', 'with', 'numbers']
+        result = task_func(df, 'text')
+>       assert list(result.columns) == expected_columns, "The result should have the correct column names"
+E       AssertionError: The result should have the correct column names
+E       assert ['numbers', 'test'] == ['test', 'with', 'numbers']
+E         
+E         At index 0 diff: 'numbers' != 'test'
+E         Right contains one more item: 'numbers'
+E         Use -v to get more diff
+
+test_0185.py:36: AssertionError
+____________________ test_task_func_with_special_characters ____________________
+
+    def test_task_func_with_special_characters():
+        df = pd.DataFrame({'text': ['This is a test with special characters!@#']})
+        expected_columns = ['test', 'with', 'special', 'characters']
+        result = task_func(df, 'text')
+>       assert list(result.columns) == expected_columns, "The result should have the correct column names"
+E       AssertionError: The result should have the correct column names
+E       assert ['characters'...cial', 'test'] == ['test', 'wit... 'characters']
+E         
+E         At index 0 diff: 'characters' != 'test'
+E         Right contains one more item: 'characters'
+E         Use -v to get more diff
+
+test_0185.py:43: AssertionError
+=========================== short test summary info ============================
+FAILED test_0185.py::test_task_func_with_empty_dataframe - ValueError: empty ...
+FAILED test_0185.py::test_task_func_with_single_row - KeyError: 0
+FAILED test_0185.py::test_task_func_with_stopwords - AssertionError: The resu...
+FAILED test_0185.py::test_task_func_with_numbers - AssertionError: The result...
+FAILED test_0185.py::test_task_func_with_special_characters - AssertionError:...
+5 failed, 1 passed in 3.15s

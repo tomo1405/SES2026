@@ -1,0 +1,100 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        file_path1 = 'file1.txt'
+        file_path2 = 'file2.txt'
+        with open(file_path1, 'w') as file1, open(file_path2, 'w') as file2:
+            file1.write('Hello, World!')
+            file2.write('Hello, World!')
+    
+>       diff = task_func(file_path1, file_path2)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0511.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0511.py:5: in task_func
+    file1_content = file1.readlines()
+                    ^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/gzip.py:337: in read1
+    return self._buffer.read1(size)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/_compression.py:68: in readinto
+    data = self.read(len(byte_view))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/gzip.py:527: in read
+    if not self._read_gzip_header():
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/gzip.py:496: in _read_gzip_header
+    last_mtime = _read_gzip_header(self._fp)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fp = <gzip._PaddedFile object at 0x76c7c70f0dd0>
+
+    def _read_gzip_header(fp):
+        '''Read a gzip header from `fp` and progress to the end of the header.
+    
+        Returns last mtime if header was present or None otherwise.
+        '''
+        magic = fp.read(2)
+        if magic == b'':
+            return None
+    
+        if magic != b'\037\213':
+>           raise BadGzipFile('Not a gzipped file (%r)' % magic)
+E           gzip.BadGzipFile: Not a gzipped file (b'He')
+
+/usr/lib/python3.12/gzip.py:456: BadGzipFile
+_____________________________ test_task_func_diff ______________________________
+
+    def test_task_func_diff():
+        file_path1 = 'file1.txt'
+        file_path2 = 'file2.txt'
+        with open(file_path1, 'w') as file1, open(file_path2, 'w') as file2:
+            file1.write('Hello, World!')
+            file2.write('Hello, Universe!')
+    
+>       diff = task_func(file_path1, file_path2)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0511.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0511.py:5: in task_func
+    file1_content = file1.readlines()
+                    ^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/gzip.py:337: in read1
+    return self._buffer.read1(size)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/_compression.py:68: in readinto
+    data = self.read(len(byte_view))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/gzip.py:527: in read
+    if not self._read_gzip_header():
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/gzip.py:496: in _read_gzip_header
+    last_mtime = _read_gzip_header(self._fp)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fp = <gzip._PaddedFile object at 0x76c7c70f1b50>
+
+    def _read_gzip_header(fp):
+        '''Read a gzip header from `fp` and progress to the end of the header.
+    
+        Returns last mtime if header was present or None otherwise.
+        '''
+        magic = fp.read(2)
+        if magic == b'':
+            return None
+    
+        if magic != b'\037\213':
+>           raise BadGzipFile('Not a gzipped file (%r)' % magic)
+E           gzip.BadGzipFile: Not a gzipped file (b'He')
+
+/usr/lib/python3.12/gzip.py:456: BadGzipFile
+=========================== short test summary info ============================
+FAILED test_0511.py::test_task_func - gzip.BadGzipFile: Not a gzipped file (b...
+FAILED test_0511.py::test_task_func_diff - gzip.BadGzipFile: Not a gzipped fi...
+2 failed in 0.49s

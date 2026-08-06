@@ -1,0 +1,46 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data_list = [('a', 1, 2.1), ('b', 2, 3.2), ('c', 3, 4.3), ('d', 4, 5.4), ('e', 5, 6.5)]
+        df = task_func(data_list)
+        assert isinstance(df, pd.DataFrame)
+>       assert df.shape == (5, 1)
+E       assert (3, 1) == (5, 1)
+E         
+E         At index 0 diff: 3 != 5
+E         Use -v to get more diff
+
+test_0871.py:10: AssertionError
+______________________ test_task_func_with_missing_values ______________________
+
+    def test_task_func_with_missing_values():
+        data_list = [('a', 1, 2.1), ('b', 2, np.nan), ('c', 3, 4.3), ('d', 4, 5.4), ('e', np.nan, 6.5)]
+        df = task_func(data_list)
+>       assert df['Mean Value'].tolist() == [2.1, 3.2, 4.3, 5.4, 6.5]
+E       assert [nan, 2.5, 4.575] == [2.1, 3.2, 4.3, 5.4, 6.5]
+E         
+E         At index 0 diff: nan != 2.1
+E         Right contains 2 more items, first extra item: 5.4
+E         Use -v to get more diff
+
+test_0871.py:18: AssertionError
+____________________ test_task_func_with_non_numeric_values ____________________
+
+    def test_task_func_with_non_numeric_values():
+        data_list = [('a', 1, 2.1), ('b', 2, 'abc'), ('c', 3, 4.3), ('d', 4, 5.4), ('e', 5, 6.5)]
+        df = task_func(data_list)
+>       assert df['Mean Value'].tolist() == [3.0, np.nan, 3.0, 3.0, 3.0]
+E       assert [nan, 3.0, 4.575] == [3.0, nan, 3.0, 3.0, 3.0]
+E         
+E         At index 0 diff: nan != 3.0
+E         Right contains 2 more items, first extra item: 3.0
+E         Use -v to get more diff
+
+test_0871.py:23: AssertionError
+=========================== short test summary info ============================
+FAILED test_0871.py::test_task_func - assert (3, 1) == (5, 1)
+FAILED test_0871.py::test_task_func_with_missing_values - assert [nan, 2.5, 4...
+FAILED test_0871.py::test_task_func_with_non_numeric_values - assert [nan, 3....
+3 failed in 1.20s

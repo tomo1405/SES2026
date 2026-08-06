@@ -1,0 +1,62 @@
+FFFFF..                                                                  [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_same_timezone _________________________
+
+    def test_task_func_same_timezone():
+        date_str = "2023-12-31T23:59:59"
+        tz_str = "UTC"
+        result = task_func(date_str, tz_str)
+>       assert result == 86400  # 1 day until New Year's Day in UTC
+        ^^^^^^^^^^^^^^^^^^^^^^
+E       assert 32401 == 86400
+
+test_0651.py:11: AssertionError
+______________________ test_task_func_different_timezone _______________________
+
+    def test_task_func_different_timezone():
+        date_str = "2023-12-31T23:59:59"
+        tz_str = "America/New_York"
+        result = task_func(date_str, tz_str)
+>       assert result == 7200  # 2 hours until New Year's Day in EST
+        ^^^^^^^^^^^^^^^^^^^^^
+E       assert 50401 == 7200
+
+test_0651.py:17: AssertionError
+__________________________ test_task_func_dst_change ___________________________
+
+    def test_task_func_dst_change():
+        date_str = "2023-11-05T01:59:59"  # Just before DST change in US/Eastern
+        tz_str = "US/Eastern"
+        result = task_func(date_str, tz_str)
+>       assert result == 31536000  # 1 year until New Year's Day
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert 4968001 == 31536000
+
+test_0651.py:23: AssertionError
+___________________________ test_task_func_leap_year ___________________________
+
+    def test_task_func_leap_year():
+        date_str = "2020-02-28T23:59:59"  # Leap year case
+        tz_str = "UTC"
+        result = task_func(date_str, tz_str)
+>       assert result == 86400 * 366  # 366 days until New Year's Day
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert 26557201 == (86400 * 366)
+
+test_0651.py:29: AssertionError
+_______________________ test_task_func_nonexistent_time ________________________
+
+    def test_task_func_nonexistent_time():
+        date_str = "2023-03-13T02:30:00"  # Nonexistent time due to DST in US/Eastern
+        tz_str = "US/Eastern"
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0651.py:34: Failed
+=========================== short test summary info ============================
+FAILED test_0651.py::test_task_func_same_timezone - assert 32401 == 86400
+FAILED test_0651.py::test_task_func_different_timezone - assert 50401 == 7200
+FAILED test_0651.py::test_task_func_dst_change - assert 4968001 == 31536000
+FAILED test_0651.py::test_task_func_leap_year - assert 26557201 == (86400 * 366)
+FAILED test_0651.py::test_task_func_nonexistent_time - Failed: DID NOT RAISE ...
+5 failed, 2 passed in 0.61s

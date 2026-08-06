@@ -1,0 +1,61 @@
+....FFF                                                                  [100%]
+=================================== FAILURES ===================================
+___________________ test_parser_selection[False-html.parser] ___________________
+
+use_lxml = False, parser = 'html.parser'
+
+    @pytest.mark.parametrize("use_lxml, parser", [
+        (False, "html.parser"),
+        (True, "lxml"),
+    ])
+    def test_parser_selection(use_lxml, parser):
+        with patch('requests.get') as mock_get:
+            mock_response = Mock()
+            mock_response.status_code = 200
+            mock_response.content = b"<html><body></body></html>"
+            mock_get.return_value = mock_response
+    
+>           result = task_func(URL, use_lxml=use_lxml)
+                               ^^^
+E           NameError: name 'URL' is not defined
+
+test_1019.py:42: NameError
+_______________________ test_parser_selection[True-lxml] _______________________
+
+use_lxml = True, parser = 'lxml'
+
+    @pytest.mark.parametrize("use_lxml, parser", [
+        (False, "html.parser"),
+        (True, "lxml"),
+    ])
+    def test_parser_selection(use_lxml, parser):
+        with patch('requests.get') as mock_get:
+            mock_response = Mock()
+            mock_response.status_code = 200
+            mock_response.content = b"<html><body></body></html>"
+            mock_get.return_value = mock_response
+    
+>           result = task_func(URL, use_lxml=use_lxml)
+                               ^^^
+E           NameError: name 'URL' is not defined
+
+test_1019.py:42: NameError
+___________________________ test_exception_handling ____________________________
+
+    def test_exception_handling():
+        with patch('requests.get') as mock_get:
+            mock_response = Mock()
+            mock_response.status_code = 200
+            mock_response.content = b"<html><body></body></html>"
+            mock_get.side_effect = Exception("Simulated error")
+    
+>           result = task_func(URL)
+                               ^^^
+E           NameError: name 'URL' is not defined
+
+test_1019.py:53: NameError
+=========================== short test summary info ============================
+FAILED test_1019.py::test_parser_selection[False-html.parser] - NameError: na...
+FAILED test_1019.py::test_parser_selection[True-lxml] - NameError: name 'URL'...
+FAILED test_1019.py::test_exception_handling - NameError: name 'URL' is not d...
+3 failed, 4 passed in 1.36s

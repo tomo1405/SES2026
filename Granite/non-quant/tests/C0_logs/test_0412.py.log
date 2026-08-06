@@ -1,0 +1,266 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data = {"a": [1, 2, 3], "b": [4, 5, 6], "c": [7, 8, 9]}
+        output_path = "./test_data_output.json"
+        expected_output_path = "./test_data_output.json"
+        df = pd.DataFrame(data)
+        df = df.drop(columns="c", errors="ignore")
+        data_dict = df.to_dict(orient="dict")
+        with open(output_path, "w") as file:
+            json.dump(data_dict, file)
+        assert task_func(data, output_path) == expected_output_path
+        assert os.path.exists(output_path)
+        with open(output_path, "r") as file:
+            data_dict = json.load(file)
+>       assert data_dict == {"a": [1, 2, 3], "b": [4, 5, 6]}
+E       AssertionError: assert {'a': {'0': 1...': 5, '2': 6}} == {'a': [1, 2, ...b': [4, 5, 6]}
+E         
+E         Differing items:
+E         {'b': {'0': 4, '1': 5, '2': 6}} != {'b': [4, 5, 6]}
+E         {'a': {'0': 1, '1': 2, '2': 3}} != {'a': [1, 2, 3]}
+E         Use -v to get more diff
+
+test_0412.py:22: AssertionError
+_______________________ test_task_func_with_output_path ________________________
+
+    def test_task_func_with_output_path():
+        data = {"a": [1, 2, 3], "b": [4, 5, 6], "c": [7, 8, 9]}
+        output_path = "./test_data_output.json"
+        expected_output_path = "./test_data_output.json"
+        df = pd.DataFrame(data)
+        df = df.drop(columns="c", errors="ignore")
+        data_dict = df.to_dict(orient="dict")
+        with open(output_path, "w") as file:
+            json.dump(data_dict, file)
+        assert task_func(data, output_path) == expected_output_path
+        assert os.path.exists(output_path)
+        with open(output_path, "r") as file:
+            data_dict = json.load(file)
+>       assert data_dict == {"a": [1, 2, 3], "b": [4, 5, 6]}
+E       AssertionError: assert {'a': {'0': 1...': 5, '2': 6}} == {'a': [1, 2, ...b': [4, 5, 6]}
+E         
+E         Differing items:
+E         {'b': {'0': 4, '1': 5, '2': 6}} != {'b': [4, 5, 6]}
+E         {'a': {'0': 1, '1': 2, '2': 3}} != {'a': [1, 2, 3]}
+E         Use -v to get more diff
+
+test_0412.py:38: AssertionError
+_______________________ test_task_func_with_invalid_data _______________________
+
+    def test_task_func_with_invalid_data():
+        with pytest.raises(TypeError):
+>           task_func("invalid_data", "./test_data_output.json")
+
+test_0412.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0412.py:4: in task_func
+    df = pd.DataFrame(data)
+         ^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <[AttributeError("'DataFrame' object has no attribute '_mgr'") raised in repr()] DataFrame object at 0x7b5a57b122a0>
+data = 'invalid_data', index = None, columns = None, dtype = None, copy = True
+
+    def __init__(
+        self,
+        data=None,
+        index: Axes | None = None,
+        columns: Axes | None = None,
+        dtype: Dtype | None = None,
+        copy: bool | None = None,
+    ) -> None:
+        allow_mgr = False
+        if dtype is not None:
+            dtype = self._validate_dtype(dtype)
+    
+        if isinstance(data, DataFrame):
+            data = data._mgr
+            allow_mgr = True
+            if not copy:
+                # if not copying data, ensure to still return a shallow copy
+                # to avoid the result sharing the same Manager
+                data = data.copy(deep=False)
+    
+        if isinstance(data, BlockManager):
+            if not allow_mgr:
+                # GH#52419
+                warnings.warn(
+                    f"Passing a {type(data).__name__} to {type(self).__name__} "
+                    "is deprecated and will raise in a future version. "
+                    "Use public APIs instead.",
+                    Pandas4Warning,
+                    stacklevel=2,
+                )
+    
+            data = data.copy(deep=False)
+            # first check if a Manager is passed without any other arguments
+            # -> use fastpath (without checking Manager type)
+            if index is None and columns is None and dtype is None and not copy:
+                # GH#33357 fastpath
+                NDFrame.__init__(self, data)
+                return
+    
+        # GH47215
+        if isinstance(index, set):
+            raise ValueError("index cannot be a set")
+        if isinstance(columns, set):
+            raise ValueError("columns cannot be a set")
+    
+        if copy is None:
+            if isinstance(data, dict):
+                # retain pre-GH#38939 default behavior
+                copy = True
+            elif not isinstance(data, (Index, DataFrame, Series)):
+                copy = True
+            else:
+                copy = False
+    
+        if data is None:
+            index = index if index is not None else default_index(0)
+            columns = columns if columns is not None else default_index(0)
+            dtype = dtype if dtype is not None else pandas_dtype(object)
+            data = []
+    
+        if isinstance(data, BlockManager):
+            mgr = self._init_mgr(
+                data, axes={"index": index, "columns": columns}, dtype=dtype, copy=copy
+            )
+    
+        elif isinstance(data, dict):
+            # GH#38939 de facto copy defaults to False only in non-dict cases
+            mgr = dict_to_mgr(data, index, columns, dtype=dtype, copy=copy)
+        elif isinstance(data, ma.MaskedArray):
+            from numpy.ma import mrecords
+    
+            # masked recarray
+            if isinstance(data, mrecords.MaskedRecords):
+                raise TypeError(
+                    "MaskedRecords are not supported. Pass "
+                    "{name: data[name] for name in data.dtype.names} "
+                    "instead"
+                )
+    
+            # a masked array
+            data = sanitize_masked_array(data)
+            mgr = ndarray_to_mgr(
+                data,
+                index,
+                columns,
+                dtype=dtype,
+                copy=copy,
+            )
+    
+        elif isinstance(data, (np.ndarray, Series, Index, ExtensionArray)):
+            if data.dtype.names:
+                # i.e. numpy structured array
+                data = cast(np.ndarray, data)
+                mgr = rec_array_to_mgr(
+                    data,
+                    index,
+                    columns,
+                    dtype,
+                    copy,
+                )
+            elif isinstance(data, (ABCSeries, ABCIndex)) and data.name is not None:
+                # i.e. Series/Index with non-None name
+                mgr = dict_to_mgr(
+                    # error: Item "ndarray" of "Union[ndarray, Series, Index]" has no
+                    # attribute "name"
+                    {data.name: data},
+                    index,
+                    columns,
+                    dtype=dtype,
+                    copy=copy,
+                )
+            else:
+                mgr = ndarray_to_mgr(
+                    data,
+                    index,
+                    columns,
+                    dtype=dtype,
+                    copy=copy,
+                )
+    
+        # For data is list-like, or Iterable (will consume into list)
+        elif is_list_like(data):
+            if not isinstance(data, abc.Sequence):
+                if hasattr(data, "__array__"):
+                    # GH#44616 big perf improvement for e.g. pytorch tensor
+                    data = np.asarray(data)
+                else:
+                    data = list(data)
+            if len(data) > 0:
+                if is_dataclass(data[0]):
+                    data = dataclasses_to_dicts(data)
+                if not isinstance(data, np.ndarray) and treat_as_nested(data):
+                    # exclude ndarray as we may have cast it a few lines above
+                    if columns is not None:
+                        columns = ensure_index(columns)
+                    arrays, columns, index = nested_data_to_arrays(
+                        # error: Argument 3 to "nested_data_to_arrays" has incompatible
+                        # type "Optional[Collection[Any]]"; expected "Optional[Index]"
+                        data,
+                        columns,
+                        index,  # type: ignore[arg-type]
+                        dtype,
+                    )
+                    mgr = arrays_to_mgr(
+                        arrays,
+                        columns,
+                        index,
+                        dtype=dtype,
+                    )
+                else:
+                    mgr = ndarray_to_mgr(
+                        data,
+                        index,
+                        columns,
+                        dtype=dtype,
+                        copy=copy,
+                    )
+            else:
+                mgr = dict_to_mgr(
+                    {},
+                    index,
+                    columns if columns is not None else default_index(0),
+                    dtype=dtype,
+                )
+        # For data is scalar
+        else:
+            if index is None or columns is None:
+>               raise ValueError("DataFrame constructor not properly called!")
+E               ValueError: DataFrame constructor not properly called!
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:869: ValueError
+___________________ test_task_func_with_invalid_output_path ____________________
+
+    def test_task_func_with_invalid_output_path():
+        with pytest.raises(TypeError):
+>           task_func({"a": [1, 2, 3], "b": [4, 5, 6], "c": [7, 8, 9]}, 123)
+
+test_0412.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = {'a': [1, 2, 3], 'b': [4, 5, 6], 'c': [7, 8, 9]}, output_path = 123
+
+    def task_func(data: dict, output_path: str = "./default_data_output.json") -> str:
+        df = pd.DataFrame(data)
+        # Drop column named 'c' if it exists
+        df = df.drop(columns="c", errors="ignore")
+        # Convert the DataFrame to dictionary
+        data_dict = df.to_dict(orient="dict")
+        # Save the dictionary as a JSON file
+>       with open(output_path, "w") as file:
+             ^^^^^^^^^^^^^^^^^^^^^^
+E       OSError: [Errno 9] Bad file descriptor
+
+../../../src/src_0412.py:10: OSError
+=========================== short test summary info ============================
+FAILED test_0412.py::test_task_func - AssertionError: assert {'a': {'0': 1......
+FAILED test_0412.py::test_task_func_with_output_path - AssertionError: assert...
+FAILED test_0412.py::test_task_func_with_invalid_data - ValueError: DataFrame...
+FAILED test_0412.py::test_task_func_with_invalid_output_path - OSError: [Errn...
+4 failed in 1.33s

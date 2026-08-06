@@ -1,0 +1,62 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Call the function
+        df = task_func()
+    
+        # Check if the DataFrame has the correct columns
+        assert list(df.columns) == ["Letter 1", "Letter 2", "Letter 3"]
+    
+        # Check if the DataFrame has the correct number of rows
+        expected_rows = len(list(itertools.product(string.ascii_lowercase, repeat=3)))
+        assert len(df) == expected_rows
+    
+        # Check if the DataFrame contains the correct data types
+        assert all(isinstance(value, str) for value in df.values.flatten())
+    
+        # Check if the DataFrame contains the correct unique values
+        unique_values = set(df.values.flatten())
+        assert unique_values == set(string.ascii_lowercase)
+    
+        # Check if the DataFrame is sorted correctly
+>       assert df.is_sorted == True
+               ^^^^^^^^^^^^
+
+test_1031.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =       Letter 1 Letter 2 Letter 3
+0            a        a        a
+1            a        a        b
+2            a     ...        z        z        x
+17574        z        z        y
+17575        z        z        z
+
+[17576 rows x 3 columns]
+name = 'is_sorted'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute 'is_sorted'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+=========================== short test summary info ============================
+FAILED test_1031.py::test_task_func - AttributeError: 'DataFrame' object has ...
+1 failed in 1.24s

@@ -1,0 +1,14 @@
+import math
+import numpy as np
+import matplotlib.pyplot as plt
+def task_func(list_input):
+    sorted_list = sorted(list_input, key=lambda x: (math.degrees(x), x))
+    cumsum = np.cumsum(sorted_list)
+    
+    # Plotting the line chart
+    ax = plt.plot(cumsum)[0].axes
+    ax.set_title("Cumulative Sum Plot")
+    ax.set_xlabel("Index")
+    ax.set_ylabel("Cumulative Sum")
+    
+    return cumsum, ax

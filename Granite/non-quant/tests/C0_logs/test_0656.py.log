@@ -1,0 +1,30 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        texts = ['This is a test text', 'Another test text', 'Yet another test text']
+        num_topics = 2
+        topics, _ = task_func(texts, num_topics)
+        assert len(topics) == num_topics
+        for topic in topics:
+>           assert len(topic) == num_topics
+E           AssertionError: assert 4 == 2
+E            +  where 4 = len('text')
+
+test_0656.py:10: AssertionError
+_________________________ test_task_func_all_stopwords _________________________
+
+    def test_task_func_all_stopwords():
+        texts = ['This is a test text', 'Another test text', 'Yet another test text']
+        num_topics = 2
+        for text in texts:
+>           text = ' '.join(STOPWORDS)
+                            ^^^^^^^^^
+E           NameError: name 'STOPWORDS' is not defined
+
+test_0656.py:22: NameError
+=========================== short test summary info ============================
+FAILED test_0656.py::test_task_func - AssertionError: assert 4 == 2
+FAILED test_0656.py::test_task_func_all_stopwords - NameError: name 'STOPWORD...
+2 failed, 1 passed in 3.92s

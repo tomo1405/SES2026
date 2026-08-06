@@ -1,0 +1,43 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        df = pd.DataFrame({'Title': ['How to Train Your Dragon', 'What to Wear', 'How to Cook'],
+                           'Content': ['This is a story about a dragon', 'This is a story about fashion', 'This is a story about cooking']})
+        ax = task_func(df)
+        assert ax.get_ylabel() == 'TF-IDF Score'
+>       assert ax.get_xticks() == ['how', 'what']
+E       AssertionError: assert [0, 1, 2, 3, 4, 5, ...] == ['how', 'what']
+E         
+E         At index 0 diff: 0 != 'how'
+E         Left contains 5 more items, first extra item: 2
+E         Use -v to get more diff
+
+test_0180.py:11: AssertionError
+____________________ test_task_func_no_interesting_articles ____________________
+
+    def test_task_func_no_interesting_articles():
+        df = pd.DataFrame({'Title': ['This is a story about a dragon', 'This is a story about fashion', 'This is a story about cooking'],
+                           'Content': ['This is a story about a dragon', 'This is a story about fashion', 'This is a story about cooking']})
+        ax = task_func(df)
+>       assert ax.get_ylabel() == 'TF-IDF Score'
+E       AssertionError: assert '' == 'TF-IDF Score'
+E         
+E         - TF-IDF Score
+
+test_0180.py:20: AssertionError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        df = pd.DataFrame({'Title': ['This is a story about a dragon', 'This is a story about fashion', 'This is a story about cooking'],
+                           'Content': ['This is a story about a dragon', 'This is a story about fashion', 'This is a story about cooking']})
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0180.py:29: Failed
+=========================== short test summary info ============================
+FAILED test_0180.py::test_task_func - AssertionError: assert [0, 1, 2, 3, 4, ...
+FAILED test_0180.py::test_task_func_no_interesting_articles - AssertionError:...
+FAILED test_0180.py::test_task_func_invalid_input - Failed: DID NOT RAISE Val...
+3 failed in 3.36s

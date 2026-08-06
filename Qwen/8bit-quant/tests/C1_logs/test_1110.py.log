@@ -1,0 +1,28 @@
+EF                                                                       [100%]
+==================================== ERRORS ====================================
+_______________ ERROR at setup of test_task_func_with_valid_file _______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e43743eb320>
+
+    @pytest.fixture
+    def mock_os_and_open(monkeypatch):
+>       monkeypatch.setattr(os, 'isfile', MockOsModule().isfile)
+E       AttributeError: <module 'os' (frozen)> has no attribute 'isfile'
+
+test_1110.py:30: AttributeError
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_nonexistent_file _____________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e43743eb1d0>
+
+    def test_task_func_with_nonexistent_file(monkeypatch):
+        def mock_isfile(path):
+            return False
+>       monkeypatch.setattr(os, 'isfile', mock_isfile)
+E       AttributeError: <module 'os' (frozen)> has no attribute 'isfile'
+
+test_1110.py:40: AttributeError
+=========================== short test summary info ============================
+FAILED test_1110.py::test_task_func_with_nonexistent_file - AttributeError: <...
+ERROR test_1110.py::test_task_func_with_valid_file - AttributeError: <module ...
+1 failed, 1 error in 4.02s

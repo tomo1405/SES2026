@@ -1,0 +1,66 @@
+.F..FF                                                                   [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_non_numeric_columns ______________________
+
+    def test_task_func_non_numeric_columns():
+        df = pd.DataFrame({'A': [1, 2, 3], 'B': ['a', 'b', 'c']})
+>       with pytest.raises(TypeError, match="All columns must be numeric for correlation calculation."):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'All columns must be numeric for correlation calculation.'
+E         Actual message: "Cannot interpret '<StringDtype(na_value=nan)>' as a data type"
+
+test_1024.py:30: AssertionError
+______________________ test_task_func_highest_correlation ______________________
+
+    def test_task_func_highest_correlation():
+        df = pd.DataFrame({
+            'A': [1, 2, 3, 4],
+            'B': [2, 3, 4, 5],
+            'C': [3, 4, 5, 6]
+        })
+        ax = task_func(df)
+    
+        # Check that the highest correlation is between 'A' and 'B'
+        corr_matrix = df.corr()
+        abs_corr_matrix = corr_matrix.abs()
+        highest_corr_value = abs_corr_matrix.unstack().dropna().nlargest(2).iloc[-1]
+        max_corr_pair = np.where(abs_corr_matrix == highest_corr_value)
+        column_x = df.columns[max_corr_pair[0][0]]
+        column_y = df.columns[max_corr_pair[1][0]]
+    
+>       assert column_x == 'A' and column_y == 'B'
+E       AssertionError: assert ('A' == 'A'
+E         
+E           A and 'A' == 'B'
+E         
+E         - B
+E         + A)
+
+test_1024.py:68: AssertionError
+_____________________ test_task_func_plot_title_and_labels _____________________
+
+mock_display = <test_1024.MockDisplay object at 0x7857a0a4f200>
+
+    def test_task_func_plot_title_and_labels(mock_display):
+        df = pd.DataFrame({
+            'A': [1, 2, 3, 4],
+            'B': [2, 3, 4, 5]
+        })
+        task_func(df)
+    
+        # Check that the plot title and labels are correct
+        fig = plt.gcf()
+>       assert fig.axes[0].get_title() == "Scatter plot between A and B"
+E       AssertionError: assert 'Scatter plot between A and A' == 'Scatter plot between A and B'
+E         
+E         - Scatter plot between A and B
+E         ?                            ^
+E         + Scatter plot between A and A
+E         ?                            ^
+
+test_1024.py:79: AssertionError
+=========================== short test summary info ============================
+FAILED test_1024.py::test_task_func_non_numeric_columns - AssertionError: Reg...
+FAILED test_1024.py::test_task_func_highest_correlation - AssertionError: ass...
+FAILED test_1024.py::test_task_func_plot_title_and_labels - AssertionError: a...
+3 failed, 3 passed in 2.22s

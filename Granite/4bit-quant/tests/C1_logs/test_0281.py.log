@@ -1,0 +1,72 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________ test_task_func[signal0-2-777-expected_output0] ________________
+
+signal = [1, 2, 3, 4, 5], precision = 2, seed = 777
+expected_output = ([-3.54, -1.54, 0.46, 2.46, 4.46], None)
+
+    @pytest.mark.parametrize("signal, precision, seed, expected_output", [
+        (
+            [1, 2, 3, 4, 5],  # signal
+            2,  # precision
+            777,  # seed
+            ([-3.54, -1.54, 0.46, 2.46, 4.46], None)  # expected output
+        ),
+        (
+            [5, 4, 3, 2, 1],  # signal
+            1,  # precision
+            777,  # seed
+            ([4.8, 3.2, 1.6, -0.0, -1.6], None)  # expected output
+        ),
+    ])
+    def test_task_func(signal, precision, seed, expected_output):
+        np.random.seed(seed)
+        output = task_func(signal, precision, seed)
+>       assert output == expected_output
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+test_0281.py:23: ValueError
+________________ test_task_func[signal1-1-777-expected_output1] ________________
+
+signal = [5, 4, 3, 2, 1], precision = 1, seed = 777
+expected_output = ([4.8, 3.2, 1.6, -0.0, -1.6], None)
+
+    @pytest.mark.parametrize("signal, precision, seed, expected_output", [
+        (
+            [1, 2, 3, 4, 5],  # signal
+            2,  # precision
+            777,  # seed
+            ([-3.54, -1.54, 0.46, 2.46, 4.46], None)  # expected output
+        ),
+        (
+            [5, 4, 3, 2, 1],  # signal
+            1,  # precision
+            777,  # seed
+            ([4.8, 3.2, 1.6, -0.0, -1.6], None)  # expected output
+        ),
+    ])
+    def test_task_func(signal, precision, seed, expected_output):
+        np.random.seed(seed)
+        output = task_func(signal, precision, seed)
+>       assert output == expected_output
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+test_0281.py:23: ValueError
+=============================== warnings summary ===============================
+Granite/4bit-quant/tests/test_0281.py::test_task_func[signal0-2-777-expected_output0]
+Granite/4bit-quant/tests/test_0281.py::test_task_func[signal1-1-777-expected_output1]
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/matplotlib/cbook.py:1810: ComplexWarning: Casting complex values to real discards the imaginary part
+    return math.isfinite(val)
+
+Granite/4bit-quant/tests/test_0281.py::test_task_func[signal0-2-777-expected_output0]
+Granite/4bit-quant/tests/test_0281.py::test_task_func[signal1-1-777-expected_output1]
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/matplotlib/cbook.py:1407: ComplexWarning: Casting complex values to real discards the imaginary part
+    return np.asanyarray(x, float)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0281.py::test_task_func[signal0-2-777-expected_output0] - ValueEr...
+FAILED test_0281.py::test_task_func[signal1-1-777-expected_output1] - ValueEr...
+2 failed, 4 warnings in 2.30s

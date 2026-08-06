@@ -1,0 +1,128 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_single_path ________________________
+
+mock_os_path_exists = None
+mock_open = <function mock_open_helper.<locals>.mock_open at 0x74f6c9d345e0>
+
+    def test_task_func_with_single_path(mock_os_path_exists, mock_open):
+>       config, config_file = task_func('/test/path')
+                              ^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0718.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path_to_append = '/test/path', config_file = '/path/to/config.ini'
+
+    def task_func(path_to_append=PATH_TO_APPEND, config_file=CONFIG_FILE):
+        if isinstance(path_to_append, list):
+            for path in path_to_append:
+                sys.path.append(path)
+        else:
+            sys.path.append(path_to_append)
+    
+        config = ConfigParser()
+    
+        # Create the file if it doesn't exist
+>       if not os.path.exists(config_file):
+               ^^
+E       NameError: name 'os' is not defined. Did you forget to import 'os'
+
+../../../src/src_0718.py:16: NameError
+______________________ test_task_func_with_multiple_paths ______________________
+
+mock_os_path_exists = None
+mock_open = <function mock_open_helper.<locals>.mock_open at 0x74f6c9d34ea0>
+
+    def test_task_func_with_multiple_paths(mock_os_path_exists, mock_open):
+>       config, config_file = task_func(['/test/path1', '/test/path2'])
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0718.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path_to_append = ['/test/path1', '/test/path2']
+config_file = '/path/to/config.ini'
+
+    def task_func(path_to_append=PATH_TO_APPEND, config_file=CONFIG_FILE):
+        if isinstance(path_to_append, list):
+            for path in path_to_append:
+                sys.path.append(path)
+        else:
+            sys.path.append(path_to_append)
+    
+        config = ConfigParser()
+    
+        # Create the file if it doesn't exist
+>       if not os.path.exists(config_file):
+               ^^
+E       NameError: name 'os' is not defined. Did you forget to import 'os'
+
+../../../src/src_0718.py:16: NameError
+_________________ test_task_func_with_nonexistent_config_file __________________
+
+mock_os_path_exists = None
+mock_open = <function mock_open_helper.<locals>.mock_open at 0x74f6c9d35080>
+
+    def test_task_func_with_nonexistent_config_file(mock_os_path_exists, mock_open):
+>       config, config_file = task_func('/test/path')
+                              ^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0718.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path_to_append = '/test/path', config_file = '/path/to/config.ini'
+
+    def task_func(path_to_append=PATH_TO_APPEND, config_file=CONFIG_FILE):
+        if isinstance(path_to_append, list):
+            for path in path_to_append:
+                sys.path.append(path)
+        else:
+            sys.path.append(path_to_append)
+    
+        config = ConfigParser()
+    
+        # Create the file if it doesn't exist
+>       if not os.path.exists(config_file):
+               ^^
+E       NameError: name 'os' is not defined. Did you forget to import 'os'
+
+../../../src/src_0718.py:16: NameError
+___________________ test_task_func_with_existing_config_file ___________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x74f6c9b3f3e0>
+mock_open = <function mock_open_helper.<locals>.mock_open at 0x74f6c9d353a0>
+
+    def test_task_func_with_existing_config_file(monkeypatch, mock_open):
+        def mock_exists(path):
+            return True  # Simulate existing file
+        monkeypatch.setattr(os.path, 'exists', mock_exists)
+>       config, config_file = task_func('/test/path')
+                              ^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0718.py:75: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path_to_append = '/test/path', config_file = '/path/to/config.ini'
+
+    def task_func(path_to_append=PATH_TO_APPEND, config_file=CONFIG_FILE):
+        if isinstance(path_to_append, list):
+            for path in path_to_append:
+                sys.path.append(path)
+        else:
+            sys.path.append(path_to_append)
+    
+        config = ConfigParser()
+    
+        # Create the file if it doesn't exist
+>       if not os.path.exists(config_file):
+               ^^
+E       NameError: name 'os' is not defined. Did you forget to import 'os'
+
+../../../src/src_0718.py:16: NameError
+=========================== short test summary info ============================
+FAILED test_0718.py::test_task_func_with_single_path - NameError: name 'os' i...
+FAILED test_0718.py::test_task_func_with_multiple_paths - NameError: name 'os...
+FAILED test_0718.py::test_task_func_with_nonexistent_config_file - NameError:...
+FAILED test_0718.py::test_task_func_with_existing_config_file - NameError: na...
+4 failed in 0.53s

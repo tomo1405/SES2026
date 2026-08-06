@@ -1,0 +1,32 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Prepare mock JSON content
+        mock_json_content = '{"A": {"key1": {"maindata": [{"Info": "test_info"}]}}}'
+    
+        # Call the function
+>       result = task_func("/path/to/file.json", "key1")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+/work/tomohiro-w/utg/Qwen/8bit-quant/tests/test_1129.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/work/tomohiro-w/utg/src/src_1129.py:7: in task_func
+    with open(file_path, 'r') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = '/path/to/file.json', mode = 'r'
+
+    def mock_open(file_path, mode):
+        if file_path == "/mock/path/A_hashed_1633072800.txt":
+            return MockOpen("")
+        else:
+>           raise FileNotFoundError("File not found")
+E           FileNotFoundError: File not found
+
+/work/tomohiro-w/utg/Qwen/8bit-quant/tests/test_1129.py:45: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_1129.py::test_task_func - FileNotFoundError: File not found
+1 failed in 0.50s

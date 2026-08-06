@@ -1,0 +1,22 @@
+.F                                                                       [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_with_x _____________________________
+
+    def test_task_func_with_x():
+        x = random.randint(2, 10)
+        result, card_counts = task_func(x)
+        assert isinstance(result, list)
+        assert all(isinstance(item, list) for item in result)
+        assert all(len(item) == 5 for item in result)
+        assert all(item in CARDS for item in sum(result, []))
+        assert isinstance(card_counts, Counter)
+>       assert sum(card_counts.values()) == x
+E       AssertionError: assert 40 == 8
+E        +  where 40 = sum(dict_values([7, 5, 4, 4, 2, 1, 4, 2, 4, 1, 2, 3, 1]))
+E        +    where dict_values([7, 5, 4, 4, 2, 1, 4, 2, 4, 1, 2, 3, 1]) = <built-in method values of Counter object at 0x78132d42b340>()
+E        +      where <built-in method values of Counter object at 0x78132d42b340> = Counter({'6': 7, 'K': 5, 'J': 4, '4': 4, '9': 4, '10': 4, 'Q': 3, '5': 2, 'A': 2, '3': 2, '2': 1, '8': 1, '7': 1}).values
+
+test_0280.py:26: AssertionError
+=========================== short test summary info ============================
+FAILED test_0280.py::test_task_func_with_x - AssertionError: assert 40 == 8
+1 failed, 1 passed in 0.42s

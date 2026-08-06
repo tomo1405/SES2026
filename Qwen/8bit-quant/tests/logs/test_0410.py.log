@@ -1,0 +1,32 @@
+..F                                                                      [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_column_not_found ________________________
+
+    def test_task_func_column_not_found():
+        excel_file_path = '/path/to/excel'
+        file_name = 'data.xlsx'
+        column_name = 'C'
+    
+        # Monkey patch os.path.exists and pd.read_excel
+        with pytest.MonkeyPatch.context() as mp:
+            mp.setattr(os.path, 'exists', mock_os_path_exists)
+            mp.setattr(pd, 'read_excel', mock_pd_read_excel)
+    
+        with pytest.raises(ValueError) as excinfo:
+>           task_func(excel_file_path, file_name, column_name)
+
+test_0410.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+excel_file_path = '/path/to/excel', file_name = 'data.xlsx', column_name = 'C'
+
+    def task_func(excel_file_path, file_name, column_name):
+        excel_file = os.path.join(excel_file_path, file_name)
+        if not os.path.exists(excel_file):
+>           raise FileNotFoundError(f"No file found at {excel_file}")
+E           FileNotFoundError: No file found at /path/to/excel/data.xlsx
+
+../../../src/src_0410.py:7: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0410.py::test_task_func_column_not_found - FileNotFoundError: No ...
+1 failed, 2 passed in 1.06s

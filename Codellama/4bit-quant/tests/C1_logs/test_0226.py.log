@@ -1,0 +1,39 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test 1: Test that the function raises a ValueError when the input is not a DataFrame
+        with pytest.raises(ValueError):
+            task_func(df=1, dct={})
+    
+        # Test 2: Test that the function returns a DataFrame when the input is a DataFrame
+        df = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]})
+        assert isinstance(task_func(df, {}), pd.DataFrame)
+    
+        # Test 3: Test that the function replaces values using the dictionary mapping
+        df = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]})
+        dct = {'A': 10, 'B': 20}
+        df_expected = pd.DataFrame({'A': [10, 20, 30], 'B': [40, 50, 60]})
+>       assert task_func(df, dct) == df_expected
+
+test_0226.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =        A      B
+0  False  False
+1  False  False
+2  False  False
+
+    @final
+    def __bool__(self) -> NoReturn:
+>       raise ValueError(
+            f"The truth value of a {type(self).__name__} is ambiguous. "
+            "Use a.empty, a.bool(), a.item(), a.any() or a.all()."
+        )
+E       ValueError: The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:1513: ValueError
+=========================== short test summary info ============================
+FAILED test_0226.py::test_task_func - ValueError: The truth value of a DataFr...
+1 failed in 2.22s

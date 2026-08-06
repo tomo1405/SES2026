@@ -1,0 +1,41 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        signal = np.array([1, 2, 3, 4, 5])
+        precision = 2
+        seed = 777
+        np.random.seed(seed)
+        transformed_signal = fft(signal)
+        transformed_signal_rounded = np.round(transformed_signal, precision).tolist()
+    
+        fig, ax = plt.subplots(2, 1)
+        ax[0].plot(signal)
+        ax[0].set_title('Original Signal')
+        ax[1].plot(transformed_signal_rounded)
+        ax[1].set_title('Transformed Signal')
+        plt.tight_layout()  # Adjust layout to avoid overlap
+    
+>       assert np.array_equal(task_func(signal, precision, seed), np.array(transformed_signal_rounded))
+E       AssertionError: assert False
+E        +  where False = <function array_equal at 0x753c045f7d70>((array([15. -0.j  , -2.5+3.44j, -2.5+0.81j, -2.5-0.81j, -2.5-3.44j]), array([<Axes: title={'center': 'Original Signal'}>,\n       <Axes: title={'center': 'Transformed Signal'}>], dtype=object)), array([15. -0.j  , -2.5+3.44j, -2.5+0.81j, -2.5-0.81j, -2.5-3.44j]))
+E        +    where <function array_equal at 0x753c045f7d70> = np.array_equal
+E        +    and   (array([15. -0.j  , -2.5+3.44j, -2.5+0.81j, -2.5-0.81j, -2.5-3.44j]), array([<Axes: title={'center': 'Original Signal'}>,\n       <Axes: title={'center': 'Transformed Signal'}>], dtype=object)) = task_func(array([1, 2, 3, 4, 5]), 2, 777)
+E        +    and   array([15. -0.j  , -2.5+3.44j, -2.5+0.81j, -2.5-0.81j, -2.5-3.44j]) = <built-in function array>([(15-0j), (-2.5+3.44j), (-2.5+0.81j), (-2.5-0.81j), (-2.5-3.44j)])
+E        +      where <built-in function array> = np.array
+
+test_0281.py:22: AssertionError
+=============================== warnings summary ===============================
+Codellama/non-quant/tests/test_0281.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/matplotlib/cbook.py:1810: ComplexWarning: Casting complex values to real discards the imaginary part
+    return math.isfinite(val)
+
+Codellama/non-quant/tests/test_0281.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/matplotlib/cbook.py:1407: ComplexWarning: Casting complex values to real discards the imaginary part
+    return np.asanyarray(x, float)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0281.py::test_task_func - AssertionError: assert False
+1 failed, 2 warnings in 2.36s

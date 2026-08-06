@@ -1,0 +1,7 @@
+import pytest
+from src_0314 import task_func
+
+def test_task_func():
+    directory = 'test_directory'
+    moved_files = task_func(directory)
+    assert moved_files == {'subdirectory1': ['file1_20230314123456.txt', 'file2_20230314123456.txt'], 'subdirectory2': ['file3_20230314123456.txt', 'file4_20230314123456.txt']}

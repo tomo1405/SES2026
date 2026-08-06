@@ -1,0 +1,52 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        excel_file_path = 'path/to/excel/file'
+        file_name = 'file_name.xlsx'
+        column_name = 'column_name'
+    
+>       result = task_func(excel_file_path, file_name, column_name)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0410.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+excel_file_path = 'path/to/excel/file', file_name = 'file_name.xlsx'
+column_name = 'column_name'
+
+    def task_func(excel_file_path, file_name, column_name):
+        excel_file = os.path.join(excel_file_path, file_name)
+        if not os.path.exists(excel_file):
+>           raise FileNotFoundError(f"No file found at {excel_file}")
+E           FileNotFoundError: No file found at path/to/excel/file/file_name.xlsx
+
+../../../src/src_0410.py:7: FileNotFoundError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        excel_file_path = 'path/to/excel/file'
+        file_name = 'file_name.xlsx'
+        column_name = 'invalid_column_name'
+    
+        with pytest.raises(ValueError):
+>           task_func(excel_file_path, file_name, column_name)
+
+test_0410.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+excel_file_path = 'path/to/excel/file', file_name = 'file_name.xlsx'
+column_name = 'invalid_column_name'
+
+    def task_func(excel_file_path, file_name, column_name):
+        excel_file = os.path.join(excel_file_path, file_name)
+        if not os.path.exists(excel_file):
+>           raise FileNotFoundError(f"No file found at {excel_file}")
+E           FileNotFoundError: No file found at path/to/excel/file/file_name.xlsx
+
+../../../src/src_0410.py:7: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0410.py::test_task_func_valid_input - FileNotFoundError: No file ...
+FAILED test_0410.py::test_task_func_invalid_input - FileNotFoundError: No fil...
+2 failed, 1 passed in 1.09s

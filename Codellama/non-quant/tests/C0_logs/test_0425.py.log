@@ -1,0 +1,30 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with valid input
+        img_path = 'image.jpg'
+        n_clusters = 3
+        random_seed = 42
+>       img, segmented_image = task_func(img_path, n_clusters, random_seed)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0425.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+image_path = 'image.jpg', n_clusters = 3, random_seed = 42
+
+    def task_func(image_path='image.jpg', n_clusters=3, random_seed=42):
+    
+        if not isinstance(n_clusters, int) or n_clusters <= 0:
+            raise ValueError("n_clusters must be a positive integer.")
+    
+        if not os.path.exists(image_path):
+>           raise FileNotFoundError(f"No image found at {image_path}")
+E           FileNotFoundError: No image found at image.jpg
+
+../../../src/src_0425.py:11: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0425.py::test_task_func - FileNotFoundError: No image found at im...
+1 failed in 3.33s

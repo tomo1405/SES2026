@@ -1,0 +1,66 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        matrix1 = np.array([[1, 2, 3], [4, 5, 6]])
+        matrix2 = np.array([[7, 8, 9], [10, 11, 12]])
+        expected_output = "1 2 3 7 8 9n4 5 6 10 11 12n"
+        actual_output = task_func(matrix1, matrix2)
+>       assert actual_output == expected_output
+E       AssertionError: assert '1 2 3  7  8 ... 5 6 10 11 12' == '1 2 3 7 8 9n4 5 6 10 11 12n'
+E         
+E         - 1 2 3 7 8 9n4 5 6 10 11 12n
+E         + 1 2 3  7  8  9
+E         + 4 5 6 10 11 12
+
+test_0604.py:10: AssertionError
+_______________________ test_task_func_with_empty_matrix _______________________
+
+    def test_task_func_with_empty_matrix():
+        matrix1 = np.array([])
+        matrix2 = np.array([[7, 8, 9], [10, 11, 12]])
+        expected_output = "7 8 9n10 11 12n"
+>       actual_output = task_func(matrix1, matrix2)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0604.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+matrix1 = array([], dtype=float64)
+matrix2 = array([[ 7,  8,  9],
+       [10, 11, 12]])
+
+    def task_func(matrix1, matrix2):
+>       combined_matrix = np.concatenate((matrix1, matrix2), axis=1)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       numpy.exceptions.AxisError: axis 1 is out of bounds for array of dimension 1
+
+../../../src/src_0604.py:4: AxisError
+________________________ test_task_func_with_one_matrix ________________________
+
+    def test_task_func_with_one_matrix():
+        matrix1 = np.array([[1, 2, 3], [4, 5, 6]])
+        matrix2 = np.array([])
+        expected_output = "1 2 3n4 5 6n"
+>       actual_output = task_func(matrix1, matrix2)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0604.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+matrix1 = array([[1, 2, 3],
+       [4, 5, 6]])
+matrix2 = array([], dtype=float64)
+
+    def task_func(matrix1, matrix2):
+>       combined_matrix = np.concatenate((matrix1, matrix2), axis=1)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: all the input arrays must have same number of dimensions, but the array at index 0 has 2 dimension(s) and the array at index 1 has 1 dimension(s)
+
+../../../src/src_0604.py:4: ValueError
+=========================== short test summary info ============================
+FAILED test_0604.py::test_task_func - AssertionError: assert '1 2 3  7  8 ......
+FAILED test_0604.py::test_task_func_with_empty_matrix - numpy.exceptions.Axis...
+FAILED test_0604.py::test_task_func_with_one_matrix - ValueError: all the inp...
+3 failed in 1.15s

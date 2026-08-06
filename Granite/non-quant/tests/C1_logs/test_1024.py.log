@@ -1,0 +1,29 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: DataFrame is empty
+        dataframe = pd.DataFrame()
+        with patch('matplotlib.pyplot.show') as mock_show:
+            with pytest.raises(ValueError, match="DataFrame is empty."):
+                task_func(dataframe)
+        mock_show.assert_not_called()
+    
+        # Test case 2: All columns are not numeric
+        dataframe = pd.DataFrame({
+            'column1': ['a', 'b', 'c'],
+            'column2': [1, 2, 3]
+        })
+        with patch('matplotlib.pyplot.show') as mock_show:
+>           with pytest.raises(TypeError, match="All columns must be numeric for correlation calculation."):
+E           AssertionError: Regex pattern did not match.
+E             Expected regex: 'All columns must be numeric for correlation calculation.'
+E             Actual message: "Cannot interpret '<StringDtype(na_value=nan)>' as a data type"
+
+test_1024.py:55: AssertionError
+=========================== short test summary info ============================
+FAILED test_1024.py::test_task_func - AssertionError: Regex pattern did not m...
+1 failed in 2.11s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

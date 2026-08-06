@@ -1,0 +1,57 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with default arguments
+        fig, data, plot_filename = task_func()
+        assert isinstance(fig, plt.Figure)
+        assert isinstance(data, pd.DataFrame)
+        assert isinstance(plot_filename, str)
+        assert plot_filename.endswith('.png')
+    
+        # Test with custom arguments
+        fig, data, plot_filename = task_func(num_groups=3, data_size=10, labels=['A', 'B', 'C'])
+        assert isinstance(fig, plt.Figure)
+        assert isinstance(data, pd.DataFrame)
+        assert isinstance(plot_filename, str)
+        assert plot_filename.endswith('.png')
+    
+        # Test with invalid arguments
+        with pytest.raises(ValueError):
+            task_func(num_groups=0, data_size=10, labels=['A', 'B', 'C'])
+        with pytest.raises(ValueError):
+>           task_func(num_groups=3, data_size=0, labels=['A', 'B', 'C'])
+
+test_0169.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0169.py:15: in task_func
+    data.plot(kind='bar', stacked=True, ax=ax)
+../../../.venv/lib/python3.12/site-packages/pandas/plotting/_core.py:1185: in __call__
+    return plot_backend.plot(data, kind=kind, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/plotting/_matplotlib/__init__.py:71: in plot
+    plot_obj.generate()
+../../../.venv/lib/python3.12/site-packages/pandas/plotting/_matplotlib/core.py:525: in generate
+    self._post_plot_logic(ax, self.data)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.plotting._matplotlib.core.BarPlot object at 0x79524f3895b0>
+ax = <Axes: >, data = Empty DataFrame
+Columns: [A, B, C]
+Index: []
+
+    def _post_plot_logic(self, ax: Axes, data) -> None:
+        if self.use_index:
+            str_index = [pprint_thing(key) for key in data.index]
+        else:
+            str_index = [pprint_thing(key) for key in range(data.shape[0])]
+    
+>       s_edge = self.ax_pos[0] - 0.25 + self.lim_offset
+                 ^^^^^^^^^^^^^^
+E       IndexError: index 0 is out of bounds for axis 0 with size 0
+
+../../../.venv/lib/python3.12/site-packages/pandas/plotting/_matplotlib/core.py:2049: IndexError
+=========================== short test summary info ============================
+FAILED test_0169.py::test_task_func - IndexError: index 0 is out of bounds fo...
+1 failed in 2.24s

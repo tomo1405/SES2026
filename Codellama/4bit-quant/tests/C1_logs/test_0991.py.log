@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a simple hex string
+        hex_string = "68656c6c6f2c20776f726c6421"
+        expected_encodings = {
+            "hex": "68656c6c6f2c20776f726c6421",
+            "base64": "aGVsbG8gd29ybGQh",
+            "utf-8": "hello, world!",
+            "utf-16": "hello, world!",
+            "utf-32": "hello, world!",
+            "ASCII": "Not representable in ASCII",
+            "URL": "hello%2C%20world%21",
+            "ROT13": "uryyb%20jbeyq%20gjragl"
+        }
+>       assert task_func(hex_string) == expected_encodings
+E       AssertionError: assert {'hex': '6865... world!', ...} == {'hex': '6865... world!', ...}
+E         
+E         Omitting 5 identical items, use -vv to show
+E         Differing items:
+E         {'base64': 'aGVsbG8sIHdvcmxkIQ=='} != {'base64': 'aGVsbG8gd29ybGQh'}
+E         {'ROT13': 'uryyb, jbeyq!'} != {'ROT13': 'uryyb%20jbeyq%20gjragl'}
+E         {'ASCII': 'hello, world!'} != {'ASCII': 'Not representable in ASCII'}
+E         Use -v to get more diff
+
+test_0991.py:17: AssertionError
+=========================== short test summary info ============================
+FAILED test_0991.py::test_task_func - AssertionError: assert {'hex': '6865......
+1 failed in 0.47s

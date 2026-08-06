@@ -1,0 +1,50 @@
+..FF.F                                                                   [100%]
+=================================== FAILURES ===================================
+__________________ test_task_func_with_nonexistent_source_dir __________________
+
+setup_directories = ('/tmp/tmp9cl0i1a0', '/tmp/tmpxza7iwtq')
+
+    def test_task_func_with_nonexistent_source_dir(setup_directories):
+        _, dest_dir = setup_directories
+        extensions = ['.txt', '.py']
+>       with pytest.raises(FileNotFoundError):
+E       Failed: DID NOT RAISE FileNotFoundError
+
+test_0858.py:42: Failed
+___________________ test_task_func_with_nonexistent_dest_dir ___________________
+
+setup_directories = ('/tmp/tmp5o5gin63', '/tmp/tmpe79ekscw')
+
+    def test_task_func_with_nonexistent_dest_dir(setup_directories):
+        source_dir, _ = setup_directories
+        extensions = ['.txt', '.py']
+>       with pytest.raises(FileNotFoundError):
+E       Failed: DID NOT RAISE FileNotFoundError
+
+test_0858.py:48: Failed
+____________________ test_task_func_with_invalid_extension _____________________
+
+setup_directories = ('/tmp/tmpbj4479c3', '/tmp/tmpg6hglgk8')
+
+    def test_task_func_with_invalid_extension(setup_directories):
+        source_dir, dest_dir = setup_directories
+        extensions = ['.xyz']
+        files_to_create = ['file1.xyz']
+    
+        for file_name in files_to_create:
+            with open(os.path.join(source_dir, file_name), 'w') as f:
+                f.write('Test content')
+    
+        result = task_func(source_dir, dest_dir, extensions)
+>       assert result == []
+E       AssertionError: assert ['file1.xyz'] == []
+E         
+E         Left contains one more item: 'file1.xyz'
+E         Use -v to get more diff
+
+test_0858.py:67: AssertionError
+=========================== short test summary info ============================
+FAILED test_0858.py::test_task_func_with_nonexistent_source_dir - Failed: DID...
+FAILED test_0858.py::test_task_func_with_nonexistent_dest_dir - Failed: DID N...
+FAILED test_0858.py::test_task_func_with_invalid_extension - AssertionError: ...
+3 failed, 3 passed in 6.49s

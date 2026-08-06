@@ -1,0 +1,73 @@
+F.FFF                                                                    [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_valid_hex ___________________________
+
+    def test_task_func_valid_hex():
+        hex_str = "48656c6c6f20576f726c64"
+        df, ax = task_func(hex_str)
+    
+        expected_df = pd.DataFrame({
+            'Byte Value': [72, 101, 108, 108, 111, 32, 87, 111, 114, 108, 100],
+            'Frequency': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+        })
+    
+>       pd.testing.assert_frame_equal(df, expected_df)
+E       AssertionError: DataFrame are different
+E       
+E       DataFrame shape mismatch
+E       [left]:  (8, 2)
+E       [right]: (11, 2)
+
+test_0133.py:28: AssertionError
+___________________________ test_task_func_empty_hex ___________________________
+
+    def test_task_func_empty_hex():
+        hex_str = ""
+>       with pytest.raises(binascii.Error):
+E       Failed: DID NOT RAISE Error
+
+test_0133.py:37: Failed
+__________________________ test_task_func_single_byte __________________________
+
+    def test_task_func_single_byte():
+        hex_str = "ff"
+        df, ax = task_func(hex_str)
+    
+        expected_df = pd.DataFrame({
+            'Byte Value': [255],
+            'Frequency': [1]
+        })
+    
+>       pd.testing.assert_frame_equal(df, expected_df)
+E       AssertionError: Attributes of DataFrame.iloc[:, 0] (column name="Byte Value") are different
+E       
+E       Attribute "dtype" are different
+E       [left]:  uint8
+E       [right]: int64
+
+test_0133.py:49: AssertionError
+________________________ test_task_func_repeated_bytes _________________________
+
+    def test_task_func_repeated_bytes():
+        hex_str = "aabbccdd"
+        df, ax = task_func(hex_str)
+    
+        expected_df = pd.DataFrame({
+            'Byte Value': [169, 187, 204, 221],
+            'Frequency': [2, 2, 2, 2]
+        })
+    
+>       pd.testing.assert_frame_equal(df, expected_df)
+E       AssertionError: Attributes of DataFrame.iloc[:, 0] (column name="Byte Value") are different
+E       
+E       Attribute "dtype" are different
+E       [left]:  uint8
+E       [right]: int64
+
+test_0133.py:60: AssertionError
+=========================== short test summary info ============================
+FAILED test_0133.py::test_task_func_valid_hex - AssertionError: DataFrame are...
+FAILED test_0133.py::test_task_func_empty_hex - Failed: DID NOT RAISE Error
+FAILED test_0133.py::test_task_func_single_byte - AssertionError: Attributes ...
+FAILED test_0133.py::test_task_func_repeated_bytes - AssertionError: Attribut...
+4 failed, 1 passed in 2.21s

@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+data_list = ['apple, banana, orange', 'cat, dog, mouse', 'red, green, blue, yellow']
+
+    def test_task_func(data_list):
+        df = task_func(data_list)
+        assert isinstance(df, pd.DataFrame)
+        assert "Original String" in df.columns
+        assert "Modified String" in df.columns
+        for s in data_list:
+            substrings = re.split(", ", s)
+            operation = random.choice(["remove", "replace", "shuffle", "randomize"])
+            if operation == "remove":
+                if len(substrings) > 1:
+                    assert len(df.loc[df["Original String"] == s, "Modified String"].values[0].split(", ")) < len(substrings)
+                else:
+                    assert df.loc[df["Original String"] == s, "Modified String"].values[0] == s
+            elif operation == "replace":
+                assert "random_string" in df.loc[df["Original String"] == s, "Modified String"].values[0]
+            elif operation == "shuffle":
+>               assert df.loc[df["Original String"] == s, "Modified String"].values[0] != ", ".join(substrings)
+E               AssertionError: assert 'apple, banana, orange' != 'apple, banana, orange'
+E                +  where 'apple, banana, orange' = <built-in method join of str object at 0x7335ceabeaf0>(['apple', 'banana', 'orange'])
+E                +    where <built-in method join of str object at 0x7335ceabeaf0> = ', '.join
+
+test_0483.py:28: AssertionError
+=========================== short test summary info ============================
+FAILED test_0483.py::test_task_func - AssertionError: assert 'apple, banana, ...
+1 failed in 1.06s

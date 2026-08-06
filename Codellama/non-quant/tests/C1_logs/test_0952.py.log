@@ -1,0 +1,35 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        mystrings = ['Product 1', 'Product 2', 'Product 3']
+        n_products = 3
+        seed = 0
+        expected_output = pd.DataFrame({'Product Name': ['Product_1', 'Product_2', 'Product_3'],
+                                       'Category': ['Electronics', 'Clothing', 'Home & Kitchen'],
+                                       'Price': [50.0, 50.0, 50.0]})
+        output = task_func(mystrings, n_products, seed)
+>       pd.testing.assert_frame_equal(output, expected_output)
+
+test_0952.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/_testing/asserters.py:846: in assert_extension_array_equal
+    _testing.assert_almost_equal(
+pandas/_libs/testing.pyx:53: in pandas._libs.testing.assert_almost_equal
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   AssertionError: DataFrame.iloc[:, 0] (column name="Product Name") are different
+E   
+E   DataFrame.iloc[:, 0] (column name="Product Name") values are different (66.66667 %)
+E   [index]: [0, 1, 2]
+E   [left]:  [Product_2, Product_1, Product_3]
+E   [right]: [Product_1, Product_2, Product_3]
+E   At positional index 0, first diff: Product_2 != Product_1
+
+pandas/_libs/testing.pyx:171: AssertionError
+=========================== short test summary info ============================
+FAILED test_0952.py::test_task_func - AssertionError: DataFrame.iloc[:, 0] (c...
+1 failed in 1.12s

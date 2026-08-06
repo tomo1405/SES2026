@@ -1,0 +1,57 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_check_output = <MagicMock name='check_output' id='131019165423840'>
+
+    @patch('subprocess.check_output')
+    def test_task_func(mock_check_output):
+        mock_check_output.side_effect = [
+            b'',  # Simulate successful ping
+            subprocess.CalledProcessError(1, 'ping'),  # Simulate failed ping
+            b'',  # Simulate successful ping
+        ]
+    
+        ip_range = '192.168.1.0/30'
+        expected_result = {
+            '192.168.1.0': True,
+            '192.168.1.1': False,
+            '192.168.1.2': True,
+            '192.168.1.3': None,  # This IP is not reachable in the given range
+        }
+    
+>       result = task_func(ip_range)
+                 ^^^^^^^^^^^^^^^^^^^
+
+test_0147.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0147.py:8: in task_func
+    subprocess.check_output(f'ping -c 1 {ip}', shell=True)
+/usr/lib/python3.12/unittest/mock.py:1134: in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/unittest/mock.py:1138: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='check_output' id='131019165423840'>
+args = ('ping -c 1 192.168.1.3',), kwargs = {'shell': True}
+
+    def _execute_mock_call(self, /, *args, **kwargs):
+        # separate from _increment_mock_call so that awaited functions are
+        # executed separately from their call, also AsyncMock overrides this method
+    
+        effect = self.side_effect
+        if effect is not None:
+            if _is_exception(effect):
+                raise effect
+            elif not _callable(effect):
+>               result = next(effect)
+                         ^^^^^^^^^^^^
+E               StopIteration
+
+/usr/lib/python3.12/unittest/mock.py:1195: StopIteration
+=========================== short test summary info ============================
+FAILED test_0147.py::test_task_func - StopIteration
+1 failed in 0.55s

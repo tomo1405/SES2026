@@ -1,0 +1,40 @@
+....FF.                                                                  [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_non_ascii_query ________________________
+
+    def test_task_func_non_ascii_query():
+        url = "http://example.com?q=48656c6c6f20576f726c64e298ba"
+>       assert task_func(url) == "Hello World😊"
+E       AssertionError: assert 'Hello World☺' == 'Hello World😊'
+E         
+E         - Hello World😊
+E         ?            ^
+E         + Hello World☺
+E         ?            ^
+
+test_1028.py:22: AssertionError
+_____________________ test_task_func_unicode_decode_error ______________________
+
+    def test_task_func_unicode_decode_error():
+        url = "http://example.com?q=48656c6c6f20576f726c64\x80"
+>       assert task_func(url) is None
+               ^^^^^^^^^^^^^^
+
+test_1028.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'http://example.com?q=48656c6c6f20576f726c64\x80'
+
+    def task_func(url):
+        try:
+            parsed_url = urllib.parse.urlparse(url)
+            query = urllib.parse.parse_qs(parsed_url.query).get("q", [None])[0]
+>           return binascii.unhexlify(query).decode("utf-8") if query else None
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+E           ValueError: string argument should contain only ASCII characters
+
+../../../src/src_1028.py:7: ValueError
+=========================== short test summary info ============================
+FAILED test_1028.py::test_task_func_non_ascii_query - AssertionError: assert ...
+FAILED test_1028.py::test_task_func_unicode_decode_error - ValueError: string...
+2 failed, 5 passed in 0.49s

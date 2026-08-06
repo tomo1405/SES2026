@@ -1,0 +1,27 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+data_list = ['apple, banana, orange', 'cat, dog, mouse', 'red, green, blue, yellow']
+
+    def test_task_func(data_list):
+        df = task_func(data_list)
+        assert isinstance(df, pd.DataFrame)
+        assert "Original String" in df.columns
+        assert "Modified String" in df.columns
+        for s in data_list:
+            substrings = re.split(", ", s)
+            operation = random.choice(["remove", "replace", "shuffle", "randomize"])
+            if operation == "remove":
+                if len(substrings) > 1:
+                    assert len(df.loc[df["Original String"] == s, "Modified String"].values[0].split(", ")) < len(substrings)
+                else:
+                    assert df.loc[df["Original String"] == s, "Modified String"].values[0] == s
+            elif operation == "replace":
+>               assert "random_string" in df.loc[df["Original String"] == s, "Modified String"].values[0]
+E               AssertionError: assert 'random_string' in 'orange, banana, apple'
+
+test_0483.py:26: AssertionError
+=========================== short test summary info ============================
+FAILED test_0483.py::test_task_func - AssertionError: assert 'random_string' ...
+1 failed in 1.14s

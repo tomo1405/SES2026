@@ -1,0 +1,56 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_one_process ________________________
+
+    def test_task_func_with_one_process():
+        # Test with one process
+>       assert task_func('python') == 1
+               ^^^^^^^^^^^^^^^^^^^
+
+test_0349.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+process_name = 'python'
+
+    def task_func(process_name: str) -> int:
+        # Find all processes with the given name, and get their PIDs
+        try:
+            pids = subprocess.check_output(['pgrep', '-f', process_name]).decode().split('\n')[:-1]
+        except subprocess.CalledProcessError:
+            pids = []
+    
+        # Send SIGTERM signal to each process
+        for pid in pids:
+>           os.kill(int(pid), signal.SIGTERM)
+E           PermissionError: [Errno 1] Operation not permitted
+
+../../../src/src_0349.py:14: PermissionError
+____________________ test_task_func_with_multiple_processes ____________________
+
+    def test_task_func_with_multiple_processes():
+        # Test with multiple processes
+>       assert task_func('python') == 2
+               ^^^^^^^^^^^^^^^^^^^
+
+test_0349.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+process_name = 'python'
+
+    def task_func(process_name: str) -> int:
+        # Find all processes with the given name, and get their PIDs
+        try:
+            pids = subprocess.check_output(['pgrep', '-f', process_name]).decode().split('\n')[:-1]
+        except subprocess.CalledProcessError:
+            pids = []
+    
+        # Send SIGTERM signal to each process
+        for pid in pids:
+>           os.kill(int(pid), signal.SIGTERM)
+E           PermissionError: [Errno 1] Operation not permitted
+
+../../../src/src_0349.py:14: PermissionError
+=========================== short test summary info ============================
+FAILED test_0349.py::test_task_func_with_one_process - PermissionError: [Errn...
+FAILED test_0349.py::test_task_func_with_multiple_processes - PermissionError...
+2 failed, 1 passed in 1.57s

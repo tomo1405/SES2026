@@ -1,0 +1,35 @@
+.FF..                                                                    [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        array = np.array([[1, 2, 3], [4, 5, 6]])
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0979.py:16: Failed
+__________________________ test_task_func_empty_input __________________________
+
+    def test_task_func_empty_input():
+        array = np.array([])
+>       df = task_func(array)
+             ^^^^^^^^^^^^^^^^
+
+test_0979.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+array = array([], dtype=float64), seed = None
+
+    def task_func(array, seed=None):
+        if seed is not None:
+            np.random.seed(seed)
+    
+        if not isinstance(array, np.ndarray) or len(array.shape) != 2:
+>           raise ValueError("Input must be a 2D numpy array.")
+E           ValueError: Input must be a 2D numpy array.
+
+../../../src/src_0979.py:9: ValueError
+=========================== short test summary info ============================
+FAILED test_0979.py::test_task_func_invalid_input - Failed: DID NOT RAISE Val...
+FAILED test_0979.py::test_task_func_empty_input - ValueError: Input must be a...
+2 failed, 3 passed in 3.05s

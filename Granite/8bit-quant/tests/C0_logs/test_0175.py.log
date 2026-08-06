@@ -1,0 +1,33 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_input_type ___________________________
+
+    def test_task_func_input_type():
+        data = pd.DataFrame()
+        key = "random_key"
+        min_value = 0
+        max_value = 100
+>       with pytest.raises(ValueError) as exc_info:
+E       Failed: DID NOT RAISE ValueError
+
+test_0175.py:11: Failed
+________________________ test_task_func_output_content _________________________
+
+    def test_task_func_output_content():
+        data = pd.DataFrame()
+        key = "random_key"
+        min_value = 0
+        max_value = 100
+        output = task_func(data, key, min_value, max_value)
+        assert key in output.columns
+        assert len(output) == len(data)
+>       assert output[key].min() >= min_value
+E       assert nan >= 0
+E        +  where nan = min()
+E        +    where min = Series([], Name: random_key, dtype: int64).min
+
+test_0175.py:31: AssertionError
+=========================== short test summary info ============================
+FAILED test_0175.py::test_task_func_input_type - Failed: DID NOT RAISE ValueE...
+FAILED test_0175.py::test_task_func_output_content - assert nan >= 0
+2 failed, 1 passed in 1.05s

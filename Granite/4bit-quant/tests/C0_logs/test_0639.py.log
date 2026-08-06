@@ -1,0 +1,33 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        num_teams = 5
+        num_games = 100
+        scores = np.random.randint(0, 101, size=(num_teams, num_games))
+        teams = ['Team' + str(i) for i in range(1, num_teams + 1)]
+        games = ['Game' + str(i) for i in range(1, num_games + 1)]
+        expected_df = pd.DataFrame(scores, index=teams, columns=games)
+        actual_df = task_func(num_teams, num_games)
+>       assert actual_df.equals(expected_df)
+E       assert False
+E        +  where False = equals(       Game1  Game2  Game3  Game4  ...  Game97  Game98  Game99  Game100\nTeam1     97     15     61     91  ...      86...    43      64       98\nTeam5     20     69     33     75  ...      14      55      34       42\n\n[5 rows x 100 columns])
+E        +    where equals =        Game1  Game2  Game3  Game4  ...  Game97  Game98  Game99  Game100\nTeam1     85      8      4     12  ...      96...    12      78       10\nTeam5     45     54     29     58  ...      26      19      60       56\n\n[5 rows x 100 columns].equals
+
+test_0639.py:14: AssertionError
+_______________________ test_task_func_with_default_args _______________________
+
+    def test_task_func_with_default_args():
+        expected_df = pd.DataFrame(np.random.randint(0, 101, size=(5, 100)), index=['Team' + str(i) for i in range(1, 6)], columns=['Game' + str(i) for i in range(1, 101)])
+        actual_df = task_func()
+>       assert actual_df.equals(expected_df)
+E       assert False
+E        +  where False = equals(       Game1  Game2  Game3  Game4  ...  Game97  Game98  Game99  Game100\nTeam1     99     97     74     38  ...      89...    30      71       31\nTeam5     49     32      8      3  ...      57      94      10       94\n\n[5 rows x 100 columns])
+E        +    where equals =        Game1  Game2  Game3  Game4  ...  Game97  Game98  Game99  Game100\nTeam1     19     28     94     38  ...      36...     6      77       24\nTeam5     30     16     24     60  ...      84       4      84       34\n\n[5 rows x 100 columns].equals
+
+test_0639.py:19: AssertionError
+=========================== short test summary info ============================
+FAILED test_0639.py::test_task_func - assert False
+FAILED test_0639.py::test_task_func_with_default_args - assert False
+2 failed in 1.31s

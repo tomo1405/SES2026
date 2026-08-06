@@ -1,0 +1,32 @@
+..FF.                                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_salt_length ________________________
+
+    def test_task_func_with_salt_length():
+        password = "secure_password"
+        salt, hashed_password = task_func(password, SALT_LENGTH=16)
+        assert len(base64.b64decode(salt)) == 16
+>       assert len(base64.b64decode(hashed_password)) == 64
+E       AssertionError: assert 32 == 64
+E        +  where 32 = len(b'@\x94\x06\x17\x10\x8e.\xee\x15\xde,\xf9\x88\x84J\x9d\xe6&\xcc\x15\x80\xde\xfe\xa1\x9ew\x05\xf7l\x95\x98\xdc')
+E        +    where b'@\x94\x06\x17\x10\x8e.\xee\x15\xde,\xf9\x88\x84J\x9d\xe6&\xcc\x15\x80\xde\xfe\xa1\x9ew\x05\xf7l\x95\x98\xdc' = <function b64decode at 0x777df9464e00>(b'QJQGFxCOLu4V3iz5iIRKneYmzBWA3v6hnncF92yVmNw=')
+E        +      where <function b64decode at 0x777df9464e00> = base64.b64decode
+
+test_0025.py:21: AssertionError
+___________________ test_task_func_with_default_salt_length ____________________
+
+    def test_task_func_with_default_salt_length():
+        password = "secure_password"
+        salt, hashed_password = task_func(password)
+        assert len(base64.b64decode(salt)) == 32
+>       assert len(base64.b64decode(hashed_password)) == 64
+E       AssertionError: assert 32 == 64
+E        +  where 32 = len(b'Z\x00\xda\x8a\x85\x86\xde3\xa9\x89*S\x9c\x85;\xbb\xdf\xee\xca\xde\x93\xae\xf0\x08\x11T\x88\xe9\xa0\x9d\xec\x80')
+E        +    where b'Z\x00\xda\x8a\x85\x86\xde3\xa9\x89*S\x9c\x85;\xbb\xdf\xee\xca\xde\x93\xae\xf0\x08\x11T\x88\xe9\xa0\x9d\xec\x80' = <function b64decode at 0x777df9464e00>(b'WgDaioWG3jOpiSpTnIU7u9/uyt6TrvAIEVSI6aCd7IA=')
+E        +      where <function b64decode at 0x777df9464e00> = base64.b64decode
+
+test_0025.py:27: AssertionError
+=========================== short test summary info ============================
+FAILED test_0025.py::test_task_func_with_salt_length - AssertionError: assert...
+FAILED test_0025.py::test_task_func_with_default_salt_length - AssertionError...
+2 failed, 3 passed in 0.57s

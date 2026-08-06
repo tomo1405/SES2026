@@ -1,0 +1,29 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with an empty list
+        products_list = []
+        result_df = task_func(products_list)
+        assert result_df.empty, "Expected an empty DataFrame for an empty input list"
+    
+        # Test with a list of one product
+        products_list = ["Product A"]
+        result_df = task_func(products_list)
+        assert len(result_df) == 1, "Expected one row in the DataFrame for one product"
+        assert len(result_df.columns) == 14, "Expected 14 columns in the DataFrame (1 for product name and 12 for months + 1 for average)"
+    
+        # Verify the column names
+        expected_columns = ['Product'] + [f'Month {i+1}' for i in range(12)] + ['Average Sales']
+        assert list(result_df.columns) == expected_columns, "Column names do not match expected output"
+    
+        # Verify the data types
+>       assert result_df.dtypes['Product'] == object, "Product column should be of type object"
+E       AssertionError: Product column should be of type object
+E       assert <StringDtype(na_value=nan)> == object
+
+test_0628.py:23: AssertionError
+=========================== short test summary info ============================
+FAILED test_0628.py::test_task_func - AssertionError: Product column should b...
+1 failed in 1.15s

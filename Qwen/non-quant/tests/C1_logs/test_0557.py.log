@@ -1,0 +1,41 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Mocking random and numpy functions to control their behavior
+        def mock_random_choice(letters):
+            return letters[0]  # Always choose the first letter for predictable results
+    
+        def mock_np_random_int(a, b):
+            return (a + b) // 2  # Always return the midpoint for predictable string length
+    
+        random.choice = mock_random_choice
+        np.random.randint = mock_np_random_int
+    
+        # Test case 1: Similar strings
+        s = "abcdef"
+        min_length = 6
+        max_length = 6
+        letters = "abcdef"
+        expected_generated_s = "aaaaaa"  # Since we always choose 'a'
+        expected_similarity = SequenceMatcher(None, s, expected_generated_s).ratio() >= 0.5
+        assert task_func(s, min_length, max_length, letters) == (expected_generated_s, expected_similarity)
+    
+        # Test case 2: Dissimilar strings
+        s = "abcdef"
+        min_length = 6
+        max_length = 6
+        letters = "ghijkl"
+        expected_generated_s = "gggggg"  # Since we always choose 'g'
+        expected_similarity = SequenceMatcher(None, s, expected_generated_s).ratio() >= 0.5
+>       assert task_func(s, min_length, max_length, letters) == (expected_generated_s, not expected_similarity)
+E       AssertionError: assert ('gggggg', False) == ('gggggg', True)
+E         
+E         At index 1 diff: False != True
+E         Use -v to get more diff
+
+test_0557.py:34: AssertionError
+=========================== short test summary info ============================
+FAILED test_0557.py::test_task_func - AssertionError: assert ('gggggg', False...
+1 failed in 0.57s

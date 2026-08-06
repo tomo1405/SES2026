@@ -1,0 +1,49 @@
+..F...F                                                                  [100%]
+=================================== FAILURES ===================================
+___________________ test_task_func_invalid_target_directory ____________________
+
+setup_directories = ('/tmp/pytest-of-tomohiro-w/pytest-1526/test_task_func_invalid_target_0/source', '/tmp/pytest-of-tomohiro-w/pytest-1526/test_task_func_invalid_target_0/target')
+
+    def test_task_func_invalid_target_directory(setup_directories):
+        source_directory, target_directory = setup_directories
+        invalid_directory = "/invalid/directory"
+>       os.makedirs(invalid_directory, exist_ok=True)
+
+test_0965.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<frozen os>:215: in makedirs
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = '/invalid', mode = 511, exist_ok = True
+
+>   ???
+E   PermissionError: [Errno 13] Permission denied: '/invalid'
+
+<frozen os>:225: PermissionError
+__________________________ test_task_func_convert_txt __________________________
+
+setup_directories = ('/tmp/pytest-of-tomohiro-w/pytest-1526/test_task_func_convert_txt0/source', '/tmp/pytest-of-tomohiro-w/pytest-1526/test_task_func_convert_txt0/target')
+
+    def test_task_func_convert_txt(setup_directories):
+        source_directory, target_directory = setup_directories
+        txt_file = source_directory + "/data.txt"
+        with open(txt_file, "w") as f:
+            f.write("Hello, world!\n")
+            f.write("This is a test.")
+        assert task_func(source_directory, target_directory) == 1
+        converted_txt_file = target_directory + "/data.csv"
+        assert os.path.exists(converted_txt_file)
+        converted_df = pd.read_csv(converted_txt_file)
+>       assert converted_df["Text"].iloc[0] == "Hello, world!"
+E       AssertionError: assert 'Hello, world!\n' == 'Hello, world!'
+E         
+E         - Hello, world!
+E         + Hello, world!
+E         ?              +
+
+test_0965.py:79: AssertionError
+=========================== short test summary info ============================
+FAILED test_0965.py::test_task_func_invalid_target_directory - PermissionErro...
+FAILED test_0965.py::test_task_func_convert_txt - AssertionError: assert 'Hel...
+2 failed, 5 passed in 2.04s

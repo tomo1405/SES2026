@@ -1,0 +1,22 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: timestamps is empty
+        with pytest.raises(ValueError):
+            task_func([])
+    
+        # Test case 2: timestamps is not empty
+        timestamps = [1641811200, 1641811201, 1641811202]
+        df, ax = task_func(timestamps)
+        assert isinstance(df, pd.DataFrame)
+        assert isinstance(ax, tuple)
+>       assert len(ax) == 2
+E       assert 3 == 2
+E        +  where 3 = len((array([1., 0., 0., 0., 0., 1., 0., 0., 0., 1.]), array([19002.81944444, 19002.81944676, 19002.81944907, 19002.8194513...81945833, 19002.81946065,\n       19002.81946296, 19002.81946528, 19002.81946759]), <BarContainer object of 10 artists>))
+
+test_0050.py:16: AssertionError
+=========================== short test summary info ============================
+FAILED test_0050.py::test_task_func - assert 3 == 2
+1 failed in 2.31s

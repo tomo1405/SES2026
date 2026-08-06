@@ -1,0 +1,119 @@
+F.FFF                                                                    [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        path = 'path/to/files'
+        df = task_func(path)
+        assert isinstance(df, pd.DataFrame)
+>       assert df.shape[0] > 0
+E       assert 0 > 0
+
+test_0679.py:12: AssertionError
+______________________ test_task_func_with_multiple_files ______________________
+
+    def test_task_func_with_multiple_files():
+        path = 'path/to/files'
+        data = {'key': 'value'}
+        for i in range(10):
+            with open(os.path.join(path, f'file{i}.json'), 'w') as file:
+                json.dump(data, file)
+        df = task_func(path)
+        assert isinstance(df, pd.DataFrame)
+        assert df.shape[0] == 10
+        assert 'source' in df.columns
+>       assert all(df['source'] == 'file{i}.json')
+E       AssertionError: assert False
+E        +  where False = all(0    file3.json\n0    file0.json\n0    file5.json\n0    file9.json\n0    file2.json\n0    file8.json\n0    file4.json\n0    file6.json\n0    file7.json\n0    file1.json\nName: source, dtype: str == 'file{i}.json')
+
+test_0679.py:37: AssertionError
+_______________________ test_task_func_with_invalid_file _______________________
+
+    def test_task_func_with_invalid_file():
+        path = 'path/to/files'
+        with open(os.path.join(path, 'invalid.json'), 'w') as file:
+            file.write('invalid data')
+>       df = task_func(path)
+             ^^^^^^^^^^^^^^^
+
+test_0679.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0679.py:17: in task_func
+    data = json.load(file)
+           ^^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/__init__.py:293: in load
+    return loads(fp.read(),
+/usr/lib/python3.12/json/__init__.py:346: in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/decoder.py:337: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <json.decoder.JSONDecoder object at 0x7e52d117b9b0>, s = 'invalid data'
+idx = 0
+
+    def raw_decode(self, s, idx=0):
+        """Decode a JSON document from ``s`` (a ``str`` beginning with
+        a JSON document) and return a 2-tuple of the Python
+        representation and the index in ``s`` where the document ended.
+    
+        This can be used to decode a JSON document from a string that may
+        have extraneous data at the end.
+    
+        """
+        try:
+            obj, end = self.scan_once(s, idx)
+        except StopIteration as err:
+>           raise JSONDecodeError("Expecting value", s, err.value) from None
+E           json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+/usr/lib/python3.12/json/decoder.py:355: JSONDecodeError
+_______________________ test_task_func_with_missing_file _______________________
+
+    def test_task_func_with_missing_file():
+        path = 'path/to/files'
+>       df = task_func(path)
+             ^^^^^^^^^^^^^^^
+
+test_0679.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0679.py:17: in task_func
+    data = json.load(file)
+           ^^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/__init__.py:293: in load
+    return loads(fp.read(),
+/usr/lib/python3.12/json/__init__.py:346: in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/decoder.py:337: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <json.decoder.JSONDecoder object at 0x7e52d117b9b0>, s = 'invalid data'
+idx = 0
+
+    def raw_decode(self, s, idx=0):
+        """Decode a JSON document from ``s`` (a ``str`` beginning with
+        a JSON document) and return a 2-tuple of the Python
+        representation and the index in ``s`` where the document ended.
+    
+        This can be used to decode a JSON document from a string that may
+        have extraneous data at the end.
+    
+        """
+        try:
+            obj, end = self.scan_once(s, idx)
+        except StopIteration as err:
+>           raise JSONDecodeError("Expecting value", s, err.value) from None
+E           json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+/usr/lib/python3.12/json/decoder.py:355: JSONDecodeError
+=========================== short test summary info ============================
+FAILED test_0679.py::test_task_func - assert 0 > 0
+FAILED test_0679.py::test_task_func_with_multiple_files - AssertionError: ass...
+FAILED test_0679.py::test_task_func_with_invalid_file - json.decoder.JSONDeco...
+FAILED test_0679.py::test_task_func_with_missing_file - json.decoder.JSONDeco...
+4 failed, 1 passed in 1.28s

@@ -1,0 +1,23 @@
+.F                                                                       [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_no_files ____________________________
+
+setup_files = local('/tmp/pytest-of-tomohiro-w/pytest-2063/test_task_func_no_files0')
+
+    def test_task_func_no_files(setup_files):
+        my_path = setup_files
+        days_old = 365  # Set a very high number to ensure no files are older
+        archive_dir = task_func(str(my_path), days_old)
+    
+        # Check if the archive directory exists
+        assert os.path.exists(archive_dir)
+    
+        # Check if no files are moved to the archive directory
+>       for ext in FILE_EXTENSIONS:
+                   ^^^^^^^^^^^^^^^
+E       NameError: name 'FILE_EXTENSIONS' is not defined
+
+test_0264.py:44: NameError
+=========================== short test summary info ============================
+FAILED test_0264.py::test_task_func_no_files - NameError: name 'FILE_EXTENSIO...
+1 failed, 1 passed in 0.43s

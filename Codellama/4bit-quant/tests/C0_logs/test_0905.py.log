@@ -1,0 +1,28 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Test with a list of dictionaries
+        d = [{'x': 1, 'y': 2, 'z': 3}, {'x': 4, 'y': 5, 'z': 6}]
+        keys = ['x', 'y', 'z']
+        ax = task_func(d, keys)
+        assert isinstance(ax, plt.Axes)
+        assert ax.has_data()
+        assert ax.get_legend() is not None
+    
+        # Test case 2: Test with a list of dictionaries and a single key
+        d = [{'x': 1, 'y': 2, 'z': 3}, {'x': 4, 'y': 5, 'z': 6}]
+        keys = ['x']
+        ax = task_func(d, keys)
+        assert isinstance(ax, plt.Axes)
+        assert ax.has_data()
+>       assert ax.get_legend() is None
+E       assert <matplotlib.legend.Legend object at 0x7d0ae472ee70> is None
+E        +  where <matplotlib.legend.Legend object at 0x7d0ae472ee70> = get_legend()
+E        +    where get_legend = <Axes: >.get_legend
+
+test_0905.py:21: AssertionError
+=========================== short test summary info ============================
+FAILED test_0905.py::test_task_func - assert <matplotlib.legend.Legend object...
+1 failed in 2.23s

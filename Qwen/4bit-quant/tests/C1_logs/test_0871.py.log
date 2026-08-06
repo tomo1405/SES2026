@@ -1,0 +1,76 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_default_data __________________________
+
+    def test_task_func_default_data():
+        expected_df = pd.DataFrame({
+            'Mean Value': [np.mean([1, 2, 3, 4, 5]), np.mean([2.1, 3.2, 4.3, 5.4, 6.5])]
+        }, index=['Position 0', 'Position 1'])
+        result_df = task_func()
+>       assert result_df.equals(expected_df)
+E       assert False
+E        +  where False = equals(            Mean Value\nPosition 0         3.0\nPosition 1         4.3)
+E        +    where equals =             Mean Value\nPosition 0         NaN\nPosition 1         3.0\nPosition 2         4.3.equals
+
+test_0871.py:11: AssertionError
+__________________________ test_task_func_custom_data __________________________
+
+    def test_task_func_custom_data():
+        custom_data = [('x', 10, 20.5), ('y', 20, 30.5), ('z', 30, 40.5)]
+        expected_df = pd.DataFrame({
+            'Mean Value': [np.mean([10, 20, 30]), np.mean([20.5, 30.5, 40.5])]
+        }, index=['Position 0', 'Position 1'])
+        result_df = task_func(custom_data)
+>       assert result_df.equals(expected_df)
+E       assert False
+E        +  where False = equals(            Mean Value\nPosition 0        20.0\nPosition 1        30.5)
+E        +    where equals =             Mean Value\nPosition 0         NaN\nPosition 1        20.0\nPosition 2        30.5.equals
+
+test_0871.py:19: AssertionError
+________________________ test_task_func_single_element _________________________
+
+    def test_task_func_single_element():
+        custom_data = [('single', 100, 200.5)]
+        expected_df = pd.DataFrame({
+            'Mean Value': [100, 200.5]
+        }, index=['Position 0', 'Position 1'])
+        result_df = task_func(custom_data)
+>       assert result_df.equals(expected_df)
+E       assert False
+E        +  where False = equals(            Mean Value\nPosition 0       100.0\nPosition 1       200.5)
+E        +    where equals =             Mean Value\nPosition 0         NaN\nPosition 1       100.0\nPosition 2       200.5.equals
+
+test_0871.py:27: AssertionError
+__________________________ test_task_func_empty_data ___________________________
+
+    def test_task_func_empty_data():
+        custom_data = []
+        expected_df = pd.DataFrame({'Mean Value': []}, index=[])
+        result_df = task_func(custom_data)
+>       assert result_df.equals(expected_df)
+E       assert False
+E        +  where False = equals(Empty DataFrame\nColumns: [Mean Value]\nIndex: [])
+E        +    where equals = Empty DataFrame\nColumns: [Mean Value]\nIndex: [].equals
+
+test_0871.py:33: AssertionError
+________________________ test_task_func_missing_values _________________________
+
+    def test_task_func_missing_values():
+        custom_data = [('a', 1, None), ('b', None, 3.2), ('c', 3, 4.3), ('d', 4, None), ('e', 5, 6.5)]
+        expected_df = pd.DataFrame({
+            'Mean Value': [np.mean([1, 3, 4, 5]), np.mean([3.2, 4.3, 6.5])]
+        }, index=['Position 0', 'Position 1'])
+        result_df = task_func(custom_data)
+>       assert result_df.equals(expected_df)
+E       assert False
+E        +  where False = equals(            Mean Value\nPosition 0    3.250000\nPosition 1    4.666667)
+E        +    where equals =             Mean Value\nPosition 0         NaN\nPosition 1    3.250000\nPosition 2    4.666667.equals
+
+test_0871.py:41: AssertionError
+=========================== short test summary info ============================
+FAILED test_0871.py::test_task_func_default_data - assert False
+FAILED test_0871.py::test_task_func_custom_data - assert False
+FAILED test_0871.py::test_task_func_single_element - assert False
+FAILED test_0871.py::test_task_func_empty_data - assert False
+FAILED test_0871.py::test_task_func_missing_values - assert False
+5 failed in 1.14s

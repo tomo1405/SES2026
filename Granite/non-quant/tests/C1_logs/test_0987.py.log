@@ -1,0 +1,64 @@
+F..F                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        json_data = '{"key1": {"key2": [1, 2, 3, 4, 5]}}'
+        key_path = ["key1", "key2"]
+        expected_values = np.array([1, 2, 3, 4, 5])
+        expected_df = pd.DataFrame({"Values": expected_values})
+        expected_fig, expected_ax = plt.subplots()
+        sns.boxplot(data=expected_df, ax=expected_ax)
+    
+>       actual_fig = task_func(json_data, key_path)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0987.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+json_data = '{"key1": {"key2": [1, 2, 3, 4, 5]}}', key_path = ['key1', 'key2']
+
+    def task_func(json_data: str, key_path: list):
+        try:
+            data = json.loads(json_data)
+            for key in key_path:
+                data = data[key]
+>           values = np.fromstring(data, sep=",")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           TypeError: a bytes-like object is required, not 'list'
+
+../../../src/src_0987.py:11: TypeError
+__________________________ test_task_func_value_error __________________________
+
+    def test_task_func_value_error():
+        json_data = '{"key1": {"key2": []}}'
+        key_path = ["key1", "key2"]
+    
+        try:
+>           task_func(json_data, key_path)
+
+test_0987.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+json_data = '{"key1": {"key2": []}}', key_path = ['key1', 'key2']
+
+    def task_func(json_data: str, key_path: list):
+        try:
+            data = json.loads(json_data)
+            for key in key_path:
+                data = data[key]
+>           values = np.fromstring(data, sep=",")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           TypeError: a bytes-like object is required, not 'list'
+
+../../../src/src_0987.py:11: TypeError
+=============================== warnings summary ===============================
+Granite/non-quant/tests/test_0987.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/categorical.py:700: MatplotlibDeprecationWarning: vert: bool was deprecated in Matplotlib 3.11 and will be removed in 3.13. Use orientation: {'vertical', 'horizontal'} instead.
+    artists = ax.bxp(**boxplot_kws)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0987.py::test_task_func - TypeError: a bytes-like object is requi...
+FAILED test_0987.py::test_task_func_value_error - TypeError: a bytes-like obj...
+2 failed, 2 passed, 1 warning in 3.63s

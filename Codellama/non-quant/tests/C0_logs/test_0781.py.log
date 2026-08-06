@@ -1,0 +1,46 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_value_error __________________________
+
+    def test_task_func_value_error():
+        articles = [{'category': 'sports', 'id': 1, 'published_time': '2022-01-01 12:00:00', 'title': 'Article 1', 'title_url': 'https://www.example.com/article1'},
+                    {'category': 'politics', 'id': 2, 'published_time': '2022-01-01 13:00:00', 'title': 'Article 2', 'title_url': 'https://www.example.com/article2'}]
+        timezone = 'America/New_York'
+        with pytest.raises(ValueError):
+>           task_func(articles, timezone)
+
+test_0781.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0781.py:20: in task_func
+    article['published_time'] = pd.to_datetime(article['published_time']).astimezone(tz)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   TypeError: Cannot convert tz-naive Timestamp, use tz_localize to localize
+
+pandas/_libs/tslibs/timestamps.pyx:3284: TypeError
+____________________________ test_task_func_success ____________________________
+
+    def test_task_func_success():
+        articles = [{'category': 'sports', 'id': 1, 'published_time': '2022-01-01 12:00:00', 'title': 'Article 1', 'title_url': 'https://www.example.com/article1'},
+                    {'category': 'politics', 'id': 2, 'published_time': '2022-01-01 13:00:00', 'title': 'Article 2', 'title_url': 'https://www.example.com/article2'}]
+        timezone = 'America/New_York'
+>       result = task_func(articles, timezone)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0781.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0781.py:20: in task_func
+    article['published_time'] = pd.to_datetime(article['published_time']).astimezone(tz)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   TypeError: Cannot convert tz-naive Timestamp, use tz_localize to localize
+
+pandas/_libs/tslibs/timestamps.pyx:3284: TypeError
+=========================== short test summary info ============================
+FAILED test_0781.py::test_task_func_value_error - TypeError: Cannot convert t...
+FAILED test_0781.py::test_task_func_success - TypeError: Cannot convert tz-na...
+2 failed, 1 passed in 1.33s

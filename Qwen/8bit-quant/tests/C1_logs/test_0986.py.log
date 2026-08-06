@@ -1,0 +1,30 @@
+...F..F                                                                  [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_non_string_country _______________________
+
+    def test_task_func_non_string_country():
+        json_data = '{"Countries": {123: 331002651}}'
+        with pytest.raises(ValueError) as excinfo:
+            task_func(json_data)
+>       assert "Country name must be a string" in str(excinfo.value)
+E       AssertionError: assert 'Country name must be a string' in 'Invalid JSON data provided.'
+E        +  where 'Invalid JSON data provided.' = str(ValueError('Invalid JSON data provided.'))
+E        +    where ValueError('Invalid JSON data provided.') = <ExceptionInfo ValueError('Invalid JSON data provided.') tblen=2>.value
+
+test_0986.py:35: AssertionError
+___________________________ test_task_func_io_error ____________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-2200/test_task_func_io_error0')
+
+    def test_task_func_io_error(tmpdir):
+        json_data = '{"Countries": {"USA": 331002651}}'
+        output_dir = os.path.join(str(tmpdir), "non_writable")
+>       os.chmod(output_dir, 0o000)  # Make directory non-writable
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-tomohiro-w/pytest-2200/test_task_func_io_error0/non_writable'
+
+test_0986.py:58: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0986.py::test_task_func_non_string_country - AssertionError: asse...
+FAILED test_0986.py::test_task_func_io_error - FileNotFoundError: [Errno 2] N...
+2 failed, 5 passed in 1.49s

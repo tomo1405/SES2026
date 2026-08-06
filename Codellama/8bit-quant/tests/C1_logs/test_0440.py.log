@@ -1,0 +1,544 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_input_type ___________________________
+
+    def test_task_func_input_type():
+        P = np.array([[1, 2], [3, 4]])
+        T = np.array([[5, 6], [7, 8]])
+        with pytest.raises(TypeError):
+>           task_func(P, T)
+
+test_0440.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0440.py:10: in task_func
+    heatmap = sns.heatmap(result_2D)
+              ^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/seaborn/matrix.py:446: in heatmap
+    plotter = _HeatMapper(data, vmin, vmax, cmap, center, robust, annot, fmt,
+../../../.venv/lib/python3.12/site-packages/seaborn/matrix.py:115: in __init__
+    plot_data = np.ma.masked_where(np.asarray(mask), plot_data)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = array([[False],
+       [False]]), a = array([41, 93]), copy = True
+
+    def masked_where(condition, a, copy=True):
+        """
+        Mask an array where a condition is met.
+    
+        Return `a` as an array masked where `condition` is True.
+        Any masked values of `a` or `condition` are also masked in the output.
+    
+        Parameters
+        ----------
+        condition : array_like
+            Masking condition.  When `condition` tests floating point values for
+            equality, consider using ``masked_values`` instead.
+        a : array_like
+            Array to mask.
+        copy : bool
+            If True (default) make a copy of `a` in the result.  If False modify
+            `a` in place and return a view.
+    
+        Returns
+        -------
+        result : MaskedArray
+            The result of masking `a` where `condition` is True.
+    
+        See Also
+        --------
+        masked_values : Mask using floating point equality.
+        masked_equal : Mask where equal to a given value.
+        masked_not_equal : Mask where *not* equal to a given value.
+        masked_less_equal : Mask where less than or equal to a given value.
+        masked_greater_equal : Mask where greater than or equal to a given value.
+        masked_less : Mask where less than a given value.
+        masked_greater : Mask where greater than a given value.
+        masked_inside : Mask inside a given interval.
+        masked_outside : Mask outside a given interval.
+        masked_invalid : Mask invalid values (NaNs or infs).
+    
+        Examples
+        --------
+        >>> import numpy as np
+        >>> import numpy.ma as ma
+        >>> a = np.arange(4)
+        >>> a
+        array([0, 1, 2, 3])
+        >>> ma.masked_where(a <= 2, a)
+        masked_array(data=[--, --, --, 3],
+                     mask=[ True,  True,  True, False],
+               fill_value=999999)
+    
+        Mask array `b` conditional on `a`.
+    
+        >>> b = ['a', 'b', 'c', 'd']
+        >>> ma.masked_where(a == 2, b)
+        masked_array(data=['a', 'b', --, 'd'],
+                     mask=[False, False,  True, False],
+               fill_value='N/A',
+                    dtype='<U1')
+    
+        Effect of the `copy` argument.
+    
+        >>> c = ma.masked_where(a <= 2, a)
+        >>> c
+        masked_array(data=[--, --, --, 3],
+                     mask=[ True,  True,  True, False],
+               fill_value=999999)
+        >>> c[0] = 99
+        >>> c
+        masked_array(data=[99, --, --, 3],
+                     mask=[False,  True,  True, False],
+               fill_value=999999)
+        >>> a
+        array([0, 1, 2, 3])
+        >>> c = ma.masked_where(a <= 2, a, copy=False)
+        >>> c[0] = 99
+        >>> c
+        masked_array(data=[99, --, --, 3],
+                     mask=[False,  True,  True, False],
+               fill_value=999999)
+        >>> a
+        array([99,  1,  2,  3])
+    
+        When `condition` or `a` contain masked values.
+    
+        >>> a = np.arange(4)
+        >>> a = ma.masked_where(a == 2, a)
+        >>> a
+        masked_array(data=[0, 1, --, 3],
+                     mask=[False, False,  True, False],
+               fill_value=999999)
+        >>> b = np.arange(4)
+        >>> b = ma.masked_where(b == 0, b)
+        >>> b
+        masked_array(data=[--, 1, 2, 3],
+                     mask=[ True, False, False, False],
+               fill_value=999999)
+        >>> ma.masked_where(a == 3, b)
+        masked_array(data=[--, 1, --, --],
+                     mask=[ True, False,  True,  True],
+               fill_value=999999)
+    
+        """
+        # Make sure that condition is a valid standard-type mask.
+        cond = make_mask(condition, shrink=False)
+        a = np.array(a, copy=copy, subok=True)
+    
+        (cshape, ashape) = (cond.shape, a.shape)
+        if cshape and cshape != ashape:
+>           raise IndexError("Inconsistent shape between the condition and the input"
+                             f" (got {cshape} and {ashape})")
+E           IndexError: Inconsistent shape between the condition and the input (got (2, 1) and (2,))
+
+../../../.venv/lib/python3.12/site-packages/numpy/ma/core.py:1991: IndexError
+__________________________ test_task_func_output_type __________________________
+
+    def test_task_func_output_type():
+        P = np.array([[1, 2], [3, 4]])
+        T = np.array([[5, 6], [7, 8]])
+>       result, heatmap = task_func(P, T)
+                          ^^^^^^^^^^^^^^^
+
+test_0440.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0440.py:10: in task_func
+    heatmap = sns.heatmap(result_2D)
+              ^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/seaborn/matrix.py:446: in heatmap
+    plotter = _HeatMapper(data, vmin, vmax, cmap, center, robust, annot, fmt,
+../../../.venv/lib/python3.12/site-packages/seaborn/matrix.py:115: in __init__
+    plot_data = np.ma.masked_where(np.asarray(mask), plot_data)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = array([[False],
+       [False]]), a = array([41, 93]), copy = True
+
+    def masked_where(condition, a, copy=True):
+        """
+        Mask an array where a condition is met.
+    
+        Return `a` as an array masked where `condition` is True.
+        Any masked values of `a` or `condition` are also masked in the output.
+    
+        Parameters
+        ----------
+        condition : array_like
+            Masking condition.  When `condition` tests floating point values for
+            equality, consider using ``masked_values`` instead.
+        a : array_like
+            Array to mask.
+        copy : bool
+            If True (default) make a copy of `a` in the result.  If False modify
+            `a` in place and return a view.
+    
+        Returns
+        -------
+        result : MaskedArray
+            The result of masking `a` where `condition` is True.
+    
+        See Also
+        --------
+        masked_values : Mask using floating point equality.
+        masked_equal : Mask where equal to a given value.
+        masked_not_equal : Mask where *not* equal to a given value.
+        masked_less_equal : Mask where less than or equal to a given value.
+        masked_greater_equal : Mask where greater than or equal to a given value.
+        masked_less : Mask where less than a given value.
+        masked_greater : Mask where greater than a given value.
+        masked_inside : Mask inside a given interval.
+        masked_outside : Mask outside a given interval.
+        masked_invalid : Mask invalid values (NaNs or infs).
+    
+        Examples
+        --------
+        >>> import numpy as np
+        >>> import numpy.ma as ma
+        >>> a = np.arange(4)
+        >>> a
+        array([0, 1, 2, 3])
+        >>> ma.masked_where(a <= 2, a)
+        masked_array(data=[--, --, --, 3],
+                     mask=[ True,  True,  True, False],
+               fill_value=999999)
+    
+        Mask array `b` conditional on `a`.
+    
+        >>> b = ['a', 'b', 'c', 'd']
+        >>> ma.masked_where(a == 2, b)
+        masked_array(data=['a', 'b', --, 'd'],
+                     mask=[False, False,  True, False],
+               fill_value='N/A',
+                    dtype='<U1')
+    
+        Effect of the `copy` argument.
+    
+        >>> c = ma.masked_where(a <= 2, a)
+        >>> c
+        masked_array(data=[--, --, --, 3],
+                     mask=[ True,  True,  True, False],
+               fill_value=999999)
+        >>> c[0] = 99
+        >>> c
+        masked_array(data=[99, --, --, 3],
+                     mask=[False,  True,  True, False],
+               fill_value=999999)
+        >>> a
+        array([0, 1, 2, 3])
+        >>> c = ma.masked_where(a <= 2, a, copy=False)
+        >>> c[0] = 99
+        >>> c
+        masked_array(data=[99, --, --, 3],
+                     mask=[False,  True,  True, False],
+               fill_value=999999)
+        >>> a
+        array([99,  1,  2,  3])
+    
+        When `condition` or `a` contain masked values.
+    
+        >>> a = np.arange(4)
+        >>> a = ma.masked_where(a == 2, a)
+        >>> a
+        masked_array(data=[0, 1, --, 3],
+                     mask=[False, False,  True, False],
+               fill_value=999999)
+        >>> b = np.arange(4)
+        >>> b = ma.masked_where(b == 0, b)
+        >>> b
+        masked_array(data=[--, 1, 2, 3],
+                     mask=[ True, False, False, False],
+               fill_value=999999)
+        >>> ma.masked_where(a == 3, b)
+        masked_array(data=[--, 1, --, --],
+                     mask=[ True, False,  True,  True],
+               fill_value=999999)
+    
+        """
+        # Make sure that condition is a valid standard-type mask.
+        cond = make_mask(condition, shrink=False)
+        a = np.array(a, copy=copy, subok=True)
+    
+        (cshape, ashape) = (cond.shape, a.shape)
+        if cshape and cshape != ashape:
+>           raise IndexError("Inconsistent shape between the condition and the input"
+                             f" (got {cshape} and {ashape})")
+E           IndexError: Inconsistent shape between the condition and the input (got (2, 1) and (2,))
+
+../../../.venv/lib/python3.12/site-packages/numpy/ma/core.py:1991: IndexError
+_________________________ test_task_func_output_shape __________________________
+
+    def test_task_func_output_shape():
+        P = np.array([[1, 2], [3, 4]])
+        T = np.array([[5, 6], [7, 8]])
+>       result, heatmap = task_func(P, T)
+                          ^^^^^^^^^^^^^^^
+
+test_0440.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0440.py:10: in task_func
+    heatmap = sns.heatmap(result_2D)
+              ^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/seaborn/matrix.py:446: in heatmap
+    plotter = _HeatMapper(data, vmin, vmax, cmap, center, robust, annot, fmt,
+../../../.venv/lib/python3.12/site-packages/seaborn/matrix.py:115: in __init__
+    plot_data = np.ma.masked_where(np.asarray(mask), plot_data)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = array([[False],
+       [False]]), a = array([41, 93]), copy = True
+
+    def masked_where(condition, a, copy=True):
+        """
+        Mask an array where a condition is met.
+    
+        Return `a` as an array masked where `condition` is True.
+        Any masked values of `a` or `condition` are also masked in the output.
+    
+        Parameters
+        ----------
+        condition : array_like
+            Masking condition.  When `condition` tests floating point values for
+            equality, consider using ``masked_values`` instead.
+        a : array_like
+            Array to mask.
+        copy : bool
+            If True (default) make a copy of `a` in the result.  If False modify
+            `a` in place and return a view.
+    
+        Returns
+        -------
+        result : MaskedArray
+            The result of masking `a` where `condition` is True.
+    
+        See Also
+        --------
+        masked_values : Mask using floating point equality.
+        masked_equal : Mask where equal to a given value.
+        masked_not_equal : Mask where *not* equal to a given value.
+        masked_less_equal : Mask where less than or equal to a given value.
+        masked_greater_equal : Mask where greater than or equal to a given value.
+        masked_less : Mask where less than a given value.
+        masked_greater : Mask where greater than a given value.
+        masked_inside : Mask inside a given interval.
+        masked_outside : Mask outside a given interval.
+        masked_invalid : Mask invalid values (NaNs or infs).
+    
+        Examples
+        --------
+        >>> import numpy as np
+        >>> import numpy.ma as ma
+        >>> a = np.arange(4)
+        >>> a
+        array([0, 1, 2, 3])
+        >>> ma.masked_where(a <= 2, a)
+        masked_array(data=[--, --, --, 3],
+                     mask=[ True,  True,  True, False],
+               fill_value=999999)
+    
+        Mask array `b` conditional on `a`.
+    
+        >>> b = ['a', 'b', 'c', 'd']
+        >>> ma.masked_where(a == 2, b)
+        masked_array(data=['a', 'b', --, 'd'],
+                     mask=[False, False,  True, False],
+               fill_value='N/A',
+                    dtype='<U1')
+    
+        Effect of the `copy` argument.
+    
+        >>> c = ma.masked_where(a <= 2, a)
+        >>> c
+        masked_array(data=[--, --, --, 3],
+                     mask=[ True,  True,  True, False],
+               fill_value=999999)
+        >>> c[0] = 99
+        >>> c
+        masked_array(data=[99, --, --, 3],
+                     mask=[False,  True,  True, False],
+               fill_value=999999)
+        >>> a
+        array([0, 1, 2, 3])
+        >>> c = ma.masked_where(a <= 2, a, copy=False)
+        >>> c[0] = 99
+        >>> c
+        masked_array(data=[99, --, --, 3],
+                     mask=[False,  True,  True, False],
+               fill_value=999999)
+        >>> a
+        array([99,  1,  2,  3])
+    
+        When `condition` or `a` contain masked values.
+    
+        >>> a = np.arange(4)
+        >>> a = ma.masked_where(a == 2, a)
+        >>> a
+        masked_array(data=[0, 1, --, 3],
+                     mask=[False, False,  True, False],
+               fill_value=999999)
+        >>> b = np.arange(4)
+        >>> b = ma.masked_where(b == 0, b)
+        >>> b
+        masked_array(data=[--, 1, 2, 3],
+                     mask=[ True, False, False, False],
+               fill_value=999999)
+        >>> ma.masked_where(a == 3, b)
+        masked_array(data=[--, 1, --, --],
+                     mask=[ True, False,  True,  True],
+               fill_value=999999)
+    
+        """
+        # Make sure that condition is a valid standard-type mask.
+        cond = make_mask(condition, shrink=False)
+        a = np.array(a, copy=copy, subok=True)
+    
+        (cshape, ashape) = (cond.shape, a.shape)
+        if cshape and cshape != ashape:
+>           raise IndexError("Inconsistent shape between the condition and the input"
+                             f" (got {cshape} and {ashape})")
+E           IndexError: Inconsistent shape between the condition and the input (got (2, 1) and (2,))
+
+../../../.venv/lib/python3.12/site-packages/numpy/ma/core.py:1991: IndexError
+_________________________ test_task_func_output_values _________________________
+
+    def test_task_func_output_values():
+        P = np.array([[1, 2], [3, 4]])
+        T = np.array([[5, 6], [7, 8]])
+>       result, heatmap = task_func(P, T)
+                          ^^^^^^^^^^^^^^^
+
+test_0440.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0440.py:10: in task_func
+    heatmap = sns.heatmap(result_2D)
+              ^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/seaborn/matrix.py:446: in heatmap
+    plotter = _HeatMapper(data, vmin, vmax, cmap, center, robust, annot, fmt,
+../../../.venv/lib/python3.12/site-packages/seaborn/matrix.py:115: in __init__
+    plot_data = np.ma.masked_where(np.asarray(mask), plot_data)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = array([[False],
+       [False]]), a = array([41, 93]), copy = True
+
+    def masked_where(condition, a, copy=True):
+        """
+        Mask an array where a condition is met.
+    
+        Return `a` as an array masked where `condition` is True.
+        Any masked values of `a` or `condition` are also masked in the output.
+    
+        Parameters
+        ----------
+        condition : array_like
+            Masking condition.  When `condition` tests floating point values for
+            equality, consider using ``masked_values`` instead.
+        a : array_like
+            Array to mask.
+        copy : bool
+            If True (default) make a copy of `a` in the result.  If False modify
+            `a` in place and return a view.
+    
+        Returns
+        -------
+        result : MaskedArray
+            The result of masking `a` where `condition` is True.
+    
+        See Also
+        --------
+        masked_values : Mask using floating point equality.
+        masked_equal : Mask where equal to a given value.
+        masked_not_equal : Mask where *not* equal to a given value.
+        masked_less_equal : Mask where less than or equal to a given value.
+        masked_greater_equal : Mask where greater than or equal to a given value.
+        masked_less : Mask where less than a given value.
+        masked_greater : Mask where greater than a given value.
+        masked_inside : Mask inside a given interval.
+        masked_outside : Mask outside a given interval.
+        masked_invalid : Mask invalid values (NaNs or infs).
+    
+        Examples
+        --------
+        >>> import numpy as np
+        >>> import numpy.ma as ma
+        >>> a = np.arange(4)
+        >>> a
+        array([0, 1, 2, 3])
+        >>> ma.masked_where(a <= 2, a)
+        masked_array(data=[--, --, --, 3],
+                     mask=[ True,  True,  True, False],
+               fill_value=999999)
+    
+        Mask array `b` conditional on `a`.
+    
+        >>> b = ['a', 'b', 'c', 'd']
+        >>> ma.masked_where(a == 2, b)
+        masked_array(data=['a', 'b', --, 'd'],
+                     mask=[False, False,  True, False],
+               fill_value='N/A',
+                    dtype='<U1')
+    
+        Effect of the `copy` argument.
+    
+        >>> c = ma.masked_where(a <= 2, a)
+        >>> c
+        masked_array(data=[--, --, --, 3],
+                     mask=[ True,  True,  True, False],
+               fill_value=999999)
+        >>> c[0] = 99
+        >>> c
+        masked_array(data=[99, --, --, 3],
+                     mask=[False,  True,  True, False],
+               fill_value=999999)
+        >>> a
+        array([0, 1, 2, 3])
+        >>> c = ma.masked_where(a <= 2, a, copy=False)
+        >>> c[0] = 99
+        >>> c
+        masked_array(data=[99, --, --, 3],
+                     mask=[False,  True,  True, False],
+               fill_value=999999)
+        >>> a
+        array([99,  1,  2,  3])
+    
+        When `condition` or `a` contain masked values.
+    
+        >>> a = np.arange(4)
+        >>> a = ma.masked_where(a == 2, a)
+        >>> a
+        masked_array(data=[0, 1, --, 3],
+                     mask=[False, False,  True, False],
+               fill_value=999999)
+        >>> b = np.arange(4)
+        >>> b = ma.masked_where(b == 0, b)
+        >>> b
+        masked_array(data=[--, 1, 2, 3],
+                     mask=[ True, False, False, False],
+               fill_value=999999)
+        >>> ma.masked_where(a == 3, b)
+        masked_array(data=[--, 1, --, --],
+                     mask=[ True, False,  True,  True],
+               fill_value=999999)
+    
+        """
+        # Make sure that condition is a valid standard-type mask.
+        cond = make_mask(condition, shrink=False)
+        a = np.array(a, copy=copy, subok=True)
+    
+        (cshape, ashape) = (cond.shape, a.shape)
+        if cshape and cshape != ashape:
+>           raise IndexError("Inconsistent shape between the condition and the input"
+                             f" (got {cshape} and {ashape})")
+E           IndexError: Inconsistent shape between the condition and the input (got (2, 1) and (2,))
+
+../../../.venv/lib/python3.12/site-packages/numpy/ma/core.py:1991: IndexError
+=========================== short test summary info ============================
+FAILED test_0440.py::test_task_func_input_type - IndexError: Inconsistent sha...
+FAILED test_0440.py::test_task_func_output_type - IndexError: Inconsistent sh...
+FAILED test_0440.py::test_task_func_output_shape - IndexError: Inconsistent s...
+FAILED test_0440.py::test_task_func_output_values - IndexError: Inconsistent ...
+4 failed in 4.55s

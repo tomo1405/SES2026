@@ -1,0 +1,24 @@
+...F                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_permission_error ________________________
+
+    def test_task_func_permission_error():
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Make the directory read-only
+            os.chmod(temp_dir, 0o444)
+    
+            # Define pattern and replacement
+            pattern = 'test'
+            replacement = 'new_test'
+    
+            # Run the function
+            result = task_func(pattern, replacement, temp_dir)
+    
+            # Check if the function returned False
+>           assert result is False
+E           assert True is False
+
+test_0908.py:71: AssertionError
+=========================== short test summary info ============================
+FAILED test_0908.py::test_task_func_permission_error - assert True is False
+1 failed, 3 passed in 0.47s

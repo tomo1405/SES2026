@@ -1,0 +1,26 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        directory_name = "test_directory"
+        content = "Test content"
+        file_names = ["test_file1.txt", "test_file2.txt", "test_file3.txt"]
+        encoding = "utf-8"
+    
+        zipped_file = task_func(directory_name, content, file_names, encoding)
+    
+        assert os.path.exists(zipped_file)
+        assert zipfile.is_zipfile(zipped_file)
+    
+        with zipfile.ZipFile(zipped_file, 'r') as zipf:
+>           assert all(file in zipf.namelist() for file in file_names)
+E           assert False
+E            +  where False = all(<generator object test_task_func.<locals>.<genexpr> at 0x701619238740>)
+
+test_0763.py:38: AssertionError
+=========================== short test summary info ============================
+FAILED test_0763.py::test_task_func - assert False
+1 failed in 0.54s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

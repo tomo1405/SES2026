@@ -1,0 +1,52 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_____________________________ test_task_func[df0] ______________________________
+
+df =            0         1         2  ...         7         8         9
+0   0.469916  0.954860  0.193599  ...  0.378141  0...745426  0.686448  0.785557
+99  0.670949  0.427209  0.340738  ...  0.117314  0.565162  0.527542
+
+[100 rows x 10 columns]
+
+    @pytest.mark.parametrize("df", [
+        pd.DataFrame(np.random.rand(100, 10)),
+        pd.DataFrame(np.random.randint(0, 100, size=(100, 10)))
+    ])
+    def test_task_func(df):
+        description, plots = task_func(df)
+        assert isinstance(description, pd.DataFrame)
+        assert all(isinstance(plot, plt.Axes) for plot in plots)
+>       assert all(plot.get_xlabel() == "value" for plot in plots)
+E       assert False
+E        +  where False = all(<generator object test_task_func.<locals>.<genexpr> at 0x76110bac1ff0>)
+
+test_0044.py:25: AssertionError
+_____________________________ test_task_func[df1] ______________________________
+
+df =      0   1   2   3   4   5   6   7   8   9
+0   32  94  57   2  16  42  84  92  60  73
+1   87  53  22  62  43  62  17  ...  97   7
+98  53  74  72  62  24  36  13  44  59  67
+99  68  46  98  31  93  45  47  56  83  15
+
+[100 rows x 10 columns]
+
+    @pytest.mark.parametrize("df", [
+        pd.DataFrame(np.random.rand(100, 10)),
+        pd.DataFrame(np.random.randint(0, 100, size=(100, 10)))
+    ])
+    def test_task_func(df):
+        description, plots = task_func(df)
+        assert isinstance(description, pd.DataFrame)
+        assert all(isinstance(plot, plt.Axes) for plot in plots)
+>       assert all(plot.get_xlabel() == "value" for plot in plots)
+E       assert False
+E        +  where False = all(<generator object test_task_func.<locals>.<genexpr> at 0x76110c7bbac0>)
+
+test_0044.py:25: AssertionError
+=========================== short test summary info ============================
+FAILED test_0044.py::test_task_func[df0] - assert False
+FAILED test_0044.py::test_task_func[df1] - assert False
+2 failed in 4.99s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

@@ -1,0 +1,24 @@
+F..                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        directory = "test_directory"
+        n = 5
+        expected_output = "test_directory"
+        expected_files = ["0.json", "1.json", "2.json", "3.json", "4.json"]
+    
+        output = task_func(directory, n)
+    
+        assert output == expected_output
+        assert os.path.exists(directory)
+>       assert len(os.listdir(directory)) == n
+E       AssertionError: assert 12 == 5
+E        +  where 12 = len(['0.json', 'test_file.json', 'test_file2.txt', '4.json', 'txt', 'test_file.txt', ...])
+E        +    where ['0.json', 'test_file.json', 'test_file2.txt', '4.json', 'txt', 'test_file.txt', ...] = <built-in function listdir>('test_directory')
+E        +      where <built-in function listdir> = os.listdir
+
+test_0672.py:17: AssertionError
+=========================== short test summary info ============================
+FAILED test_0672.py::test_task_func - AssertionError: assert 12 == 5
+1 failed, 2 passed in 0.47s

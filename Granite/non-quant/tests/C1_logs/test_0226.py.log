@@ -1,0 +1,55 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+_____________________________ test_replace_values ______________________________
+
+sample_df =       A    B
+0     1  101
+1     2  102
+2     3  103
+3     4  104
+4     5  105
+..  ...  ...
+95   96  196
+96   97  197
+97   98  198
+98   99  199
+99  100  200
+
+[100 rows x 2 columns]
+sample_dct = {'A': 100, 'B': 150}
+
+    def test_replace_values(sample_df, sample_dct):
+        df_replaced = task_func(sample_df, sample_dct)
+>       assert df_replaced['A'].max() != 100
+E       assert np.int64(100) != 100
+E        +  where np.int64(100) = max()
+E        +    where max = 0       1\n1       2\n2       3\n3       4\n4       5\n     ... \n95     96\n96     97\n97     98\n98     99\n99    100\nName: A, Length: 100, dtype: int64.max
+
+test_0226.py:21: AssertionError
+_____________________________ test_plot_histograms _____________________________
+
+sample_df =       A    B
+0     1  101
+1     2  102
+2     3  103
+3     4  104
+4     5  105
+..  ...  ...
+95   96  196
+96   97  197
+97   98  198
+98   99  199
+99  100  200
+
+[100 rows x 2 columns]
+sample_dct = {'A': 100, 'B': 150}
+
+    def test_plot_histograms(sample_df, sample_dct):
+>       with pytest.raises(ValueError) as excinfo:
+E       Failed: DID NOT RAISE ValueError
+
+test_0226.py:25: Failed
+=========================== short test summary info ============================
+FAILED test_0226.py::test_replace_values - assert np.int64(100) != 100
+FAILED test_0226.py::test_plot_histograms - Failed: DID NOT RAISE ValueError
+2 failed, 1 passed in 2.01s

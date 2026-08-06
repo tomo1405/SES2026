@@ -1,0 +1,25 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        text = "This is a test. $word and another $word? $word, $word!"
+        output_filename = "test_output.txt"
+        expected_output = os.path.abspath(output_filename)
+    
+        result = task_func(text, output_filename)
+    
+        assert result == expected_output
+        assert os.path.exists(output_filename)
+        with open(output_filename, 'r') as file:
+            lines = file.readlines()
+>           assert lines == ["word\n", "word\n", "word\n", "word\n"]
+E           AssertionError: assert ['$word\n', '...n', '$word\n'] == ['word\n', 'w...\n', 'word\n']
+E             
+E             At index 0 diff: '$word\n' != 'word\n'
+E             Use -v to get more diff
+
+test_1096.py:18: AssertionError
+=========================== short test summary info ============================
+FAILED test_1096.py::test_task_func - AssertionError: assert ['$word\n', '......
+1 failed in 4.80s

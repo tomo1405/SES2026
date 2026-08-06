@@ -1,0 +1,37 @@
+F..FF                                                                    [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_valid_dataframe ______________________
+
+    def test_task_func_with_valid_dataframe():
+        data = {'A': [1, 2, 3, 4, 5], 'B': [5, 4, 3, 2, 1]}
+        df = pd.DataFrame(data)
+>       expected_skewness = skew(df['B'].dropna())
+                            ^^^^
+E       NameError: name 'skew' is not defined
+
+test_0138.py:10: NameError
+______ test_task_func_with_dataframe_having_all_nan_values_in_last_column ______
+
+    def test_task_func_with_dataframe_having_all_nan_values_in_last_column():
+        data = {'A': [1, 2, 3], 'B': [np.nan, np.nan, np.nan]}
+        df = pd.DataFrame(data)
+>       expected_skewness = skew(df['B'].dropna())  # This will be NaN because there are no non-NaN values
+                            ^^^^
+E       NameError: name 'skew' is not defined
+
+test_0138.py:25: NameError
+_____ test_task_func_with_dataframe_having_some_nan_values_in_last_column ______
+
+    def test_task_func_with_dataframe_having_some_nan_values_in_last_column():
+        data = {'A': [1, 2, 3], 'B': [1, np.nan, 3]}
+        df = pd.DataFrame(data)
+>       expected_skewness = skew(df['B'].dropna())
+                            ^^^^
+E       NameError: name 'skew' is not defined
+
+test_0138.py:31: NameError
+=========================== short test summary info ============================
+FAILED test_0138.py::test_task_func_with_valid_dataframe - NameError: name 's...
+FAILED test_0138.py::test_task_func_with_dataframe_having_all_nan_values_in_last_column
+FAILED test_0138.py::test_task_func_with_dataframe_having_some_nan_values_in_last_column
+3 failed, 2 passed in 2.36s

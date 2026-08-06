@@ -1,0 +1,21 @@
+python
+import numpy as np
+import seaborn as sns
+import pytest
+
+def task_func(df):
+    df = df.fillna(df.mean(axis=0))
+    description = df.describe()
+    plots = []
+    for col in df.select_dtypes(include=[np.number]).columns:
+        plot = sns.displot(df[col], bins=10)
+        plots.append(plot.ax)
+    return description, plots
+
+def test_task_func():
+    df = pd.DataFrame({'a': [1, 2, 3], 'b': [4, 5, 6], 'c': ['x', 'y', 'z']})
+    description, plots = task_func(df)
+    assert isinstance(description, pd.DataFrame)
+    assert len(plots) == 2
+    assert isinstance(plots[0], matplotlib.axes._subplots.AxesSubplot)
+    assert isinstance(plots[1], matplotlib.axes._subplots.AxesSubplot)

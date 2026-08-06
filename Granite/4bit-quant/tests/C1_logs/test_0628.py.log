@@ -1,0 +1,38 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+products_list = ['Product 1', 'Product 2', 'Product 3']
+
+    def test_task_func(products_list):
+        sales_data = []
+    
+        for product in products_list:
+            sales = [randint(100, 500) for _ in range(12)]
+            avg_sales = mean(sales)
+            sales.append(avg_sales)
+            sales_data.append([product] + sales)
+    
+        sales_df = pd.DataFrame(sales_data, columns=['Product'] + [f'Month {i+1}' for i in range(12)] + ['Average Sales'])
+    
+>       assert task_func(products_list).equals(sales_df)
+E       AssertionError: assert False
+E        +  where False = equals(     Product  Month 1  Month 2  ...  Month 11  Month 12  Average Sales\n0  Product 1      285      405  ...       262  ...       161     303.166667\n2  Product 3      459      313  ...       150       428     316.250000\n\n[3 rows x 14 columns])
+E        +    where equals =      Product  Month 1  Month 2  ...  Month 11  Month 12  Average Sales\n0  Product 1      283      376  ...       474  ...       450     285.750000\n2  Product 3      221      445  ...       425       494     345.416667\n\n[3 rows x 14 columns].equals
+E        +      where      Product  Month 1  Month 2  ...  Month 11  Month 12  Average Sales\n0  Product 1      283      376  ...       474  ...       450     285.750000\n2  Product 3      221      445  ...       425       494     345.416667\n\n[3 rows x 14 columns] = task_func(['Product 1', 'Product 2', 'Product 3'])
+
+test_0628.py:22: AssertionError
+________________________ test_task_func_with_empty_list ________________________
+
+products_list = ['Product 1', 'Product 2', 'Product 3']
+
+    def test_task_func_with_empty_list(products_list):
+>       assert task_func([]) is None
+E       assert Empty DataFrame\nColumns: [Product, Month 1, Month 2, Month 3, Month 4, Month 5, Month 6, Month 7, Month 8, Month 9, Month 10, Month 11, Month 12, Average Sales]\nIndex: [] is None
+E        +  where Empty DataFrame\nColumns: [Product, Month 1, Month 2, Month 3, Month 4, Month 5, Month 6, Month 7, Month 8, Month 9, Month 10, Month 11, Month 12, Average Sales]\nIndex: [] = task_func([])
+
+test_0628.py:25: AssertionError
+=========================== short test summary info ============================
+FAILED test_0628.py::test_task_func - AssertionError: assert False
+FAILED test_0628.py::test_task_func_with_empty_list - assert Empty DataFrame\...
+2 failed, 1 passed in 1.39s

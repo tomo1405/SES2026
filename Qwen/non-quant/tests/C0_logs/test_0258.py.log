@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+setup_axes = <PolarAxes: >
+
+    def test_task_func(setup_axes):
+        ax = setup_axes
+        num_turns = 3
+        result_ax = task_func(ax, num_turns)
+    
+        # Check if the plot has been added to the axes
+        lines = result_ax.get_lines()
+        assert len(lines) == 1, "The plot should have exactly one line."
+    
+        # Check if the data of the plot is correct
+        xdata, ydata = lines[0].get_data()
+        expected_xdata = np.linspace(0, num_turns * 2 * np.pi, 1000)
+        expected_ydata = expected_xdata
+        np.testing.assert_array_almost_equal(xdata, expected_xdata)
+        np.testing.assert_array_almost_equal(ydata, expected_ydata)
+    
+        # Check if the rlabel position is set correctly
+>       assert result_ax.rlabel_position == num_turns * 45, "The rlabel position should be set to num_turns * 45."
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'PolarAxes' object has no attribute 'rlabel_position'. Did you mean: '_r_label_position'?
+
+test_0258.py:28: AttributeError
+=========================== short test summary info ============================
+FAILED test_0258.py::test_task_func - AttributeError: 'PolarAxes' object has ...
+1 failed in 1.55s

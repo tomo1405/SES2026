@@ -1,0 +1,28 @@
+.F...F.                                                                  [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_single_element _________________________
+
+    def test_task_func_single_element():
+        result = task_func(['a'])
+>       assert result.equals(pd.Series(['a']))
+E       AssertionError: assert False
+E        +  where False = equals(0    a\ndtype: str)
+E        +    where equals = 0    a\n1    a\n2    a\n3    a\n4    a\ndtype: str.equals
+E        +    and   0    a\ndtype: str = <class 'pandas.Series'>(['a'])
+E        +      where <class 'pandas.Series'> = pd.Series
+
+test_0577.py:11: AssertionError
+__________________________ test_task_func_large_input __________________________
+
+    def test_task_func_large_input():
+        result = task_func(['x' * 100 for _ in range(10)], n_groups=10)
+>       assert len(result) == 1000  # 10 elements * 10 groups
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert 100 == 1000
+E        +  where 100 = len(0                                   xxxxxxxxxxxxxxxxxxx\n1     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...\n2     ...xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...\n99                          xxxxxxxxxxxxxxxxxxxxxxxxxxx\nLength: 100, dtype: str)
+
+test_0577.py:28: AssertionError
+=========================== short test summary info ============================
+FAILED test_0577.py::test_task_func_single_element - AssertionError: assert F...
+FAILED test_0577.py::test_task_func_large_input - assert 100 == 1000
+2 failed, 5 passed in 1.30s

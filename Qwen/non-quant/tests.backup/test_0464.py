@@ -1,0 +1,37 @@
+import pytest
+from src_0464 import task_func
+import numpy as np
+import pandas as pd
+
+def test_task_func_with_valid_data():
+    data_str = "1,2,3,4,5"
+    data, ax = task_func(data_str)
+    assert isinstance(data, pd.Series)
+    assert data.equals(pd.Series([1, 2, 3, 4, 5], dtype='int64'))
+    assert isinstance(ax, plt.Axes)
+
+def test_task_func_with_empty_data():
+    data_str = ""
+    with pytest.raises(ValueError, match="Failed to find valid data"):
+        task_func(data_str)
+
+def test_task_func_with_custom_separator():
+    data_str = "1;2;3;4;5"
+    data, ax = task_func(data_str, separator=";")
+    assert isinstance(data, pd.Series)
+    assert data.equals(pd.Series([1, 2, 3, 4, 5], dtype='int64'))
+    assert isinstance(ax, plt.Axes)
+
+def test_task_func_with_custom_bins():
+    data_str = "1,2,3,4,5"
+    data, ax = task_func(data_str, bins=10)
+    assert isinstance(data, pd.Series)
+    assert data.equals(pd.Series([1, 2, 3, 4, 5], dtype='int64'))
+    assert isinstance(ax, plt.Axes)
+
+def test_task_func_with_single_value():
+    data_str = "42"
+    data, ax = task_func(data_str)
+    assert isinstance(data, pd.Series)
+    assert data.equals(pd.Series([42], dtype='int64'))
+    assert isinstance(ax, plt.Axes)

@@ -1,0 +1,121 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+___________________ test_task_func_with_list_path_to_append ____________________
+
+    def test_task_func_with_list_path_to_append():
+        path_to_append = ['/path/to/whatever', '/path/to/something']
+        config_file = '/path/to/config.ini'
+>       config, config_file = task_func(path_to_append, config_file)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0718.py:8: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path_to_append = ['/path/to/whatever', '/path/to/something']
+config_file = '/path/to/config.ini'
+
+    def task_func(path_to_append=PATH_TO_APPEND, config_file=CONFIG_FILE):
+        if isinstance(path_to_append, list):
+            for path in path_to_append:
+                sys.path.append(path)
+        else:
+            sys.path.append(path_to_append)
+    
+        config = ConfigParser()
+    
+        # Create the file if it doesn't exist
+>       if not os.path.exists(config_file):
+               ^^
+E       NameError: name 'os' is not defined. Did you forget to import 'os'
+
+../../../src/src_0718.py:16: NameError
+__________________ test_task_func_with_string_path_to_append ___________________
+
+    def test_task_func_with_string_path_to_append():
+        path_to_append = '/path/to/whatever'
+        config_file = '/path/to/config.ini'
+>       config, config_file = task_func(path_to_append, config_file)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0718.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path_to_append = '/path/to/whatever', config_file = '/path/to/config.ini'
+
+    def task_func(path_to_append=PATH_TO_APPEND, config_file=CONFIG_FILE):
+        if isinstance(path_to_append, list):
+            for path in path_to_append:
+                sys.path.append(path)
+        else:
+            sys.path.append(path_to_append)
+    
+        config = ConfigParser()
+    
+        # Create the file if it doesn't exist
+>       if not os.path.exists(config_file):
+               ^^
+E       NameError: name 'os' is not defined. Did you forget to import 'os'
+
+../../../src/src_0718.py:16: NameError
+__________________ test_task_func_with_invalid_path_to_append __________________
+
+    def test_task_func_with_invalid_path_to_append():
+        path_to_append = 123
+        config_file = '/path/to/config.ini'
+        with pytest.raises(TypeError):
+>           task_func(path_to_append, config_file)
+
+test_0718.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path_to_append = 123, config_file = '/path/to/config.ini'
+
+    def task_func(path_to_append=PATH_TO_APPEND, config_file=CONFIG_FILE):
+        if isinstance(path_to_append, list):
+            for path in path_to_append:
+                sys.path.append(path)
+        else:
+            sys.path.append(path_to_append)
+    
+        config = ConfigParser()
+    
+        # Create the file if it doesn't exist
+>       if not os.path.exists(config_file):
+               ^^
+E       NameError: name 'os' is not defined. Did you forget to import 'os'
+
+../../../src/src_0718.py:16: NameError
+___________________ test_task_func_with_invalid_config_file ____________________
+
+    def test_task_func_with_invalid_config_file():
+        path_to_append = '/path/to/whatever'
+        config_file = 123
+        with pytest.raises(TypeError):
+>           task_func(path_to_append, config_file)
+
+test_0718.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path_to_append = '/path/to/whatever', config_file = 123
+
+    def task_func(path_to_append=PATH_TO_APPEND, config_file=CONFIG_FILE):
+        if isinstance(path_to_append, list):
+            for path in path_to_append:
+                sys.path.append(path)
+        else:
+            sys.path.append(path_to_append)
+    
+        config = ConfigParser()
+    
+        # Create the file if it doesn't exist
+>       if not os.path.exists(config_file):
+               ^^
+E       NameError: name 'os' is not defined. Did you forget to import 'os'
+
+../../../src/src_0718.py:16: NameError
+=========================== short test summary info ============================
+FAILED test_0718.py::test_task_func_with_list_path_to_append - NameError: nam...
+FAILED test_0718.py::test_task_func_with_string_path_to_append - NameError: n...
+FAILED test_0718.py::test_task_func_with_invalid_path_to_append - NameError: ...
+FAILED test_0718.py::test_task_func_with_invalid_config_file - NameError: nam...
+4 failed in 0.47s

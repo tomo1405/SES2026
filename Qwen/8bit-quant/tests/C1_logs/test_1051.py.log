@@ -1,0 +1,36 @@
+F..                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a simple input string
+        input_string = "hello\nworld"
+        expected_filenames = [
+            hashlib.sha256("hello".encode()).hexdigest()[:10] + ".txt",
+            hashlib.sha256("world".encode()).hexdigest()[:10] + ".txt"
+        ]
+        expected_filepaths = [os.path.join(DIRECTORY, filename) for filename in expected_filenames]
+    
+        # Ensure the directory does not exist before running the test
+        if os.path.exists(DIRECTORY):
+            os.rmdir(DIRECTORY)
+    
+        # Run the function
+>       result = task_func(input_string)
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1051.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1051.py:7: in task_func
+    os.makedirs(DIRECTORY)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = './hashed_files', mode = 511, exist_ok = False
+
+>   ???
+E   FileExistsError: [Errno 17] File exists: './hashed_files'
+
+<frozen os>:225: FileExistsError
+=========================== short test summary info ============================
+FAILED test_1051.py::test_task_func - FileExistsError: [Errno 17] File exists...
+1 failed, 2 passed in 1.01s

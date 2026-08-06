@@ -1,0 +1,118 @@
+F.FFFF                                                                   [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+>       result = task_func("existing_file.json", "name")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0031.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = 'existing_file.json', attribute = 'name'
+INPUT_JSON = {'type': 'object', 'properties': {'name': {'type': <class 'str'>}, 'age': {'type': <class 'int'>}, 'email': {'type': <class 'str'>}}, 'required': ['name', 'age', 'email']}
+EMAIL_REGEX = '^[a-z0-9]+[\\._]?[a-z0-9]+[@]\\w+[.]\\w{2,3}$'
+
+    def task_func(
+        file_path,
+        attribute,
+        INPUT_JSON={
+            "type": "object",
+            "properties": {
+                "name": {"type": str},
+                "age": {"type": int},
+                "email": {"type": str}
+            },
+            "required": ["name", "age", "email"]
+        },
+        EMAIL_REGEX=r"^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$"):
+        if not os.path.isfile(file_path):
+            raise ValueError(f'{file_path} does not exist.')
+    
+>       with open(file_path, 'r') as f:
+             ^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'existing_file.json'
+
+../../../src/src_0031.py:20: FileNotFoundError
+__________________ test_task_func_missing_required_attribute ___________________
+
+    def test_task_func_missing_required_attribute():
+        def mock_json_load_missing_name(file):
+            return {
+                "age": 30,
+                "email": "john.doe@example.com"
+            }
+>       monkeypatch.setattr(json, 'load', mock_json_load_missing_name)
+        ^^^^^^^^^^^
+E       NameError: name 'monkeypatch' is not defined
+
+test_0031.py:40: NameError
+_________________________ test_task_func_invalid_type __________________________
+
+    def test_task_func_invalid_type():
+        def mock_json_load_invalid_age(file):
+            return {
+                "name": "John Doe",
+                "age": "thirty",
+                "email": "john.doe@example.com"
+            }
+>       monkeypatch.setattr(json, 'load', mock_json_load_invalid_age)
+        ^^^^^^^^^^^
+E       NameError: name 'monkeypatch' is not defined
+
+test_0031.py:51: NameError
+_________________________ test_task_func_invalid_email _________________________
+
+    def test_task_func_invalid_email():
+        def mock_json_load_invalid_email(file):
+            return {
+                "name": "John Doe",
+                "age": 30,
+                "email": "invalid-email"
+            }
+>       monkeypatch.setattr(json, 'load', mock_json_load_invalid_email)
+        ^^^^^^^^^^^
+E       NameError: name 'monkeypatch' is not defined
+
+test_0031.py:62: NameError
+_____________________ test_task_func_nonexistent_attribute _____________________
+
+    def test_task_func_nonexistent_attribute():
+        with pytest.raises(KeyError):
+>           task_func("existing_file.json", "address")
+
+test_0031.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = 'existing_file.json', attribute = 'address'
+INPUT_JSON = {'type': 'object', 'properties': {'name': {'type': <class 'str'>}, 'age': {'type': <class 'int'>}, 'email': {'type': <class 'str'>}}, 'required': ['name', 'age', 'email']}
+EMAIL_REGEX = '^[a-z0-9]+[\\._]?[a-z0-9]+[@]\\w+[.]\\w{2,3}$'
+
+    def task_func(
+        file_path,
+        attribute,
+        INPUT_JSON={
+            "type": "object",
+            "properties": {
+                "name": {"type": str},
+                "age": {"type": int},
+                "email": {"type": str}
+            },
+            "required": ["name", "age", "email"]
+        },
+        EMAIL_REGEX=r"^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$"):
+        if not os.path.isfile(file_path):
+            raise ValueError(f'{file_path} does not exist.')
+    
+>       with open(file_path, 'r') as f:
+             ^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'existing_file.json'
+
+../../../src/src_0031.py:20: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0031.py::test_task_func_valid_input - FileNotFoundError: [Errno 2...
+FAILED test_0031.py::test_task_func_missing_required_attribute - NameError: n...
+FAILED test_0031.py::test_task_func_invalid_type - NameError: name 'monkeypat...
+FAILED test_0031.py::test_task_func_invalid_email - NameError: name 'monkeypa...
+FAILED test_0031.py::test_task_func_nonexistent_attribute - FileNotFoundError...
+5 failed, 1 passed in 0.39s

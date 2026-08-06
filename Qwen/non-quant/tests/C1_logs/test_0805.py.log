@@ -1,0 +1,35 @@
+F...                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        metrics = {'accuracy': 0.95, 'loss': 0.02}
+        filename = 'test_log.txt'
+        log_dir = './logs'
+    
+        # Ensure the log directory exists
+        os.makedirs(log_dir, exist_ok=True)
+    
+        result = task_func(metrics, filename, log_dir)
+        assert result is True
+    
+        # Check if the file was created and contains the expected content
+        with open(os.path.join(log_dir, filename), 'r') as f:
+            lines = f.readlines()
+    
+        assert len(lines) >= 3  # At least timestamp, one metric, and a newline
+>       assert lines[0].strip().startswith(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+E       AssertionError: assert False
+E        +  where False = <built-in method startswith of str object at 0x7645119a1de0>('2026-07-29 01:36:44')
+E        +    where <built-in method startswith of str object at 0x7645119a1de0> = '2026-07-28 11:59:54.956261'.startswith
+E        +      where '2026-07-28 11:59:54.956261' = <built-in method strip of str object at 0x7645119a1d40>()
+E        +        where <built-in method strip of str object at 0x7645119a1d40> = '2026-07-28 11:59:54.956261\n'.strip
+E        +    and   '2026-07-29 01:36:44' = <built-in method strftime of datetime.datetime object at 0x764511bbc330>('%Y-%m-%d %H:%M:%S')
+E        +      where <built-in method strftime of datetime.datetime object at 0x764511bbc330> = datetime.datetime(2026, 7, 29, 1, 36, 44, 367313).strftime
+E        +        where datetime.datetime(2026, 7, 29, 1, 36, 44, 367313) = <built-in method now of type object at 0xa4fd20>()
+E        +          where <built-in method now of type object at 0xa4fd20> = datetime.now
+
+test_0805.py:22: AssertionError
+=========================== short test summary info ============================
+FAILED test_0805.py::test_task_func_valid_input - AssertionError: assert False
+1 failed, 3 passed in 0.51s

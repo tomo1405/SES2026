@@ -1,0 +1,27 @@
+F..                                                                      [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_success ____________________________
+
+    def test_task_func_success():
+        with tempfile.TemporaryDirectory() as temp_dir:
+            r_script_path = os.path.join(temp_dir, "test_script.R")
+            output_path = os.path.join(temp_dir, "output")
+            os.makedirs(output_path)
+    
+            # Create a simple R script that writes a CSV file
+            with open(r_script_path, 'w') as f:
+                f.write('write.csv(data.frame(a=1,b=2), file="output/test_output.csv")')
+    
+            # Call the function
+            result, message = task_func(r_script_path, output_path, 5)
+    
+            # Assert the results
+>           assert result == True
+E           assert False == True
+
+test_1106.py:22: AssertionError
+----------------------------- Captured stderr call -----------------------------
+/bin/sh: 1: /usr/bin/Rscript: not found
+=========================== short test summary info ============================
+FAILED test_1106.py::test_task_func_success - assert False == True
+1 failed, 2 passed in 7.52s

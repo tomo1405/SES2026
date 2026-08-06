@@ -1,0 +1,45 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a date in UTC and convert to Eastern Time
+        date_str = "2023-10-01T12:00:00"
+        from_tz = "UTC"
+        to_tz = "America/New_York"
+        result = task_func(date_str, from_tz, to_tz)
+        assert isinstance(result, float)
+    
+        # Test with a date in Pacific Time and convert to Central Time
+        date_str = "2023-10-01T12:00:00"
+        from_tz = "America/Los_Angeles"
+        to_tz = "America/Chicago"
+        result = task_func(date_str, from_tz, to_tz)
+        assert isinstance(result, float)
+    
+        # Test with a date in a different year
+        date_str = "1990-01-01T00:00:00"
+        from_tz = "UTC"
+        to_tz = "UTC"
+        result = task_func(date_str, from_tz, to_tz)
+        assert isinstance(result, float)
+    
+        # Test with a date on the exact moon phase year
+        date_str = "2015-01-01T00:00:00"
+        from_tz = "UTC"
+        to_tz = "UTC"
+        result = task_func(date_str, from_tz, to_tz)
+        assert math.isclose(result, 0.0)
+    
+        # Test with a date just after the moon phase year
+        date_str = "2015-01-02T00:00:00"
+        from_tz = "UTC"
+        to_tz = "UTC"
+        result = task_func(date_str, from_tz, to_tz)
+>       assert result > 0.0
+E       assert 0.0 > 0.0
+
+test_0304.py:42: AssertionError
+=========================== short test summary info ============================
+FAILED test_0304.py::test_task_func - assert 0.0 > 0.0
+1 failed in 0.74s

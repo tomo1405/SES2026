@@ -1,0 +1,150 @@
+FF.F                                                                     [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_with_seed ___________________________
+
+feature_array = array([[1, 2, 3],
+       [4, 5, 6],
+       [7, 8, 9]])
+target_array = array([0, 1, 0])
+
+    def test_task_func_with_seed(feature_array, target_array):
+        seed = 42
+>       clf = task_func(feature_array, target_array, seed=seed)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0980.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0980.py:17: in task_func
+    df = pd.DataFrame(shuffled_array, columns=feature_names)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:814: in __init__
+    mgr = ndarray_to_mgr(
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:299: in ndarray_to_mgr
+    _check_values_indices_shape_match(values, index, columns)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+values = array([[1, 2, 3],
+       [4, 5, 6],
+       [7, 8, 9]])
+index = RangeIndex(start=0, stop=3, step=1)
+columns = Index(['f1', 'f2', 'f3', 'f4', 'f5'], dtype='str')
+
+    def _check_values_indices_shape_match(
+        values: np.ndarray, index: Index, columns: Index
+    ) -> None:
+        """
+        Check that the shape implied by our axes matches the actual shape of the
+        data.
+        """
+        if values.shape[1] != len(columns) or values.shape[0] != len(index):
+            # Could let this raise in Block constructor, but we get a more
+            #  helpful exception message this way.
+            if values.shape[0] == 0 < len(index):
+                raise ValueError("Empty data passed with indices specified.")
+    
+            passed = values.shape
+            implied = (len(index), len(columns))
+>           raise ValueError(f"Shape of passed values is {passed}, indices imply {implied}")
+E           ValueError: Shape of passed values is (3, 3), indices imply (3, 5)
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:372: ValueError
+_________________________ test_task_func_without_seed __________________________
+
+feature_array = array([[1, 2, 3],
+       [4, 5, 6],
+       [7, 8, 9]])
+target_array = array([0, 1, 0])
+
+    def test_task_func_without_seed(feature_array, target_array):
+>       clf = task_func(feature_array, target_array)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0980.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0980.py:17: in task_func
+    df = pd.DataFrame(shuffled_array, columns=feature_names)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:814: in __init__
+    mgr = ndarray_to_mgr(
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:299: in ndarray_to_mgr
+    _check_values_indices_shape_match(values, index, columns)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+values = array([[2, 3, 1],
+       [5, 6, 4],
+       [8, 9, 7]])
+index = RangeIndex(start=0, stop=3, step=1)
+columns = Index(['f1', 'f2', 'f3', 'f4', 'f5'], dtype='str')
+
+    def _check_values_indices_shape_match(
+        values: np.ndarray, index: Index, columns: Index
+    ) -> None:
+        """
+        Check that the shape implied by our axes matches the actual shape of the
+        data.
+        """
+        if values.shape[1] != len(columns) or values.shape[0] != len(index):
+            # Could let this raise in Block constructor, but we get a more
+            #  helpful exception message this way.
+            if values.shape[0] == 0 < len(index):
+                raise ValueError("Empty data passed with indices specified.")
+    
+            passed = values.shape
+            implied = (len(index), len(columns))
+>           raise ValueError(f"Shape of passed values is {passed}, indices imply {implied}")
+E           ValueError: Shape of passed values is (3, 3), indices imply (3, 5)
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:372: ValueError
+____________________ test_task_func_with_custom_target_name ____________________
+
+feature_array = array([[1, 2, 3],
+       [4, 5, 6],
+       [7, 8, 9]])
+target_array = array([0, 1, 0])
+
+    def test_task_func_with_custom_target_name(feature_array, target_array):
+        target_name = "label"
+>       clf = task_func(feature_array, target_array, target_name=target_name)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0980.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0980.py:17: in task_func
+    df = pd.DataFrame(shuffled_array, columns=feature_names)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:814: in __init__
+    mgr = ndarray_to_mgr(
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:299: in ndarray_to_mgr
+    _check_values_indices_shape_match(values, index, columns)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+values = array([[1, 3, 2],
+       [4, 6, 5],
+       [7, 9, 8]])
+index = RangeIndex(start=0, stop=3, step=1)
+columns = Index(['f1', 'f2', 'f3', 'f4', 'f5'], dtype='str')
+
+    def _check_values_indices_shape_match(
+        values: np.ndarray, index: Index, columns: Index
+    ) -> None:
+        """
+        Check that the shape implied by our axes matches the actual shape of the
+        data.
+        """
+        if values.shape[1] != len(columns) or values.shape[0] != len(index):
+            # Could let this raise in Block constructor, but we get a more
+            #  helpful exception message this way.
+            if values.shape[0] == 0 < len(index):
+                raise ValueError("Empty data passed with indices specified.")
+    
+            passed = values.shape
+            implied = (len(index), len(columns))
+>           raise ValueError(f"Shape of passed values is {passed}, indices imply {implied}")
+E           ValueError: Shape of passed values is (3, 3), indices imply (3, 5)
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:372: ValueError
+=========================== short test summary info ============================
+FAILED test_0980.py::test_task_func_with_seed - ValueError: Shape of passed v...
+FAILED test_0980.py::test_task_func_without_seed - ValueError: Shape of passe...
+FAILED test_0980.py::test_task_func_with_custom_target_name - ValueError: Sha...
+3 failed, 1 passed in 3.95s

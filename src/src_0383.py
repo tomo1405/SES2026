@@ -1,0 +1,16 @@
+import numpy as np
+from scipy.stats import norm
+import matplotlib.pyplot as plt
+def task_func(length):
+
+    MU = 0
+    SIGMA = 1
+    
+    distribution = np.random.normal(MU, SIGMA, length)
+    fig, ax = plt.subplots()
+    ax.hist(distribution, 30, density=True, label='Histogram')
+    ax.plot(np.sort(distribution), norm.pdf(np.sort(distribution), MU, SIGMA), 
+            linewidth=2, color='r', label='PDF')
+    ax.legend()
+    
+    return distribution, ax

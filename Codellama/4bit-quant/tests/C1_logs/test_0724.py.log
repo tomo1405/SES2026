@@ -1,0 +1,77 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        url = 'https://www.example.com'
+>       csv_file_path = task_func(url)
+                        ^^^^^^^^^^^^^^
+
+test_0724.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'https://www.example.com'
+
+    def task_func(url):
+        html = urllib.request.urlopen(url).read()
+        soup = BeautifulSoup(html, 'html.parser')
+    
+        data = []
+        table = soup.find('table', attrs={'class':'data-table'})
+>       table_rows = table.find_all('tr')
+                     ^^^^^^^^^^^^^^
+E       AttributeError: 'NoneType' object has no attribute 'find_all'
+
+../../../src/src_0724.py:13: AttributeError
+_______________________ test_task_func_with_invalid_url ________________________
+
+    def test_task_func_with_invalid_url():
+        url = 'https://www.example.com/invalid'
+>       csv_file_path = task_func(url)
+                        ^^^^^^^^^^^^^^
+
+test_0724.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0724.py:8: in task_func
+    html = urllib.request.urlopen(url).read()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:215: in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:521: in open
+    response = meth(req, response)
+               ^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:630: in http_response
+    response = self.parent.error(
+/usr/lib/python3.12/urllib/request.py:559: in error
+    return self._call_chain(*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:492: in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <urllib.request.HTTPDefaultErrorHandler object at 0x7bc8b78afb60>
+req = <urllib.request.Request object at 0x7bc8b84d3d70>
+fp = <http.client.HTTPResponse object at 0x7bc8b71d2170>, code = 404
+msg = 'Not Found', hdrs = <http.client.HTTPMessage object at 0x7bc8b71d1bb0>
+
+    def http_error_default(self, req, fp, code, msg, hdrs):
+>       raise HTTPError(req.full_url, code, msg, hdrs, fp)
+E       urllib.error.HTTPError: HTTP Error 404: Not Found
+
+/usr/lib/python3.12/urllib/request.py:639: HTTPError
+______________________ test_task_func_with_invalid_table _______________________
+
+    def test_task_func_with_invalid_table():
+        url = 'https://www.example.com'
+>       with open(CSV_FILE_PATH, 'w') as f:
+                  ^^^^^^^^^^^^^
+E       NameError: name 'CSV_FILE_PATH' is not defined
+
+test_0724.py:24: NameError
+=========================== short test summary info ============================
+FAILED test_0724.py::test_task_func - AttributeError: 'NoneType' object has n...
+FAILED test_0724.py::test_task_func_with_invalid_url - urllib.error.HTTPError...
+FAILED test_0724.py::test_task_func_with_invalid_table - NameError: name 'CSV...
+3 failed in 1.73s

@@ -1,0 +1,58 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_valid_data ________________________
+
+    def test_task_func_with_valid_data():
+>       result = task_func('/data', 'dummy.csv')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0890.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data_dir = '/data', csv_file = 'dummy.csv'
+
+    def task_func(data_dir: str, csv_file: str) -> pd.DataFrame:
+>       file_path = os.path.join(data_dir, csv_file)
+                    ^^^^^^^^^^^^
+E       AttributeError: 'function' object has no attribute 'join'
+
+../../../src/src_0890.py:5: AttributeError
+________________________ test_task_func_with_empty_data ________________________
+
+    def test_task_func_with_empty_data():
+>       result = task_func('/data', 'empty.csv')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0890.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data_dir = '/data', csv_file = 'empty.csv'
+
+    def task_func(data_dir: str, csv_file: str) -> pd.DataFrame:
+>       file_path = os.path.join(data_dir, csv_file)
+                    ^^^^^^^^^^^^
+E       AttributeError: 'function' object has no attribute 'join'
+
+../../../src/src_0890.py:5: AttributeError
+_____________________ test_task_func_with_nonexistent_file _____________________
+
+    def test_task_func_with_nonexistent_file():
+        with pytest.raises(FileNotFoundError, match="File not found"):
+>           task_func('/data', 'nonexistent.csv')
+
+test_0890.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data_dir = '/data', csv_file = 'nonexistent.csv'
+
+    def task_func(data_dir: str, csv_file: str) -> pd.DataFrame:
+>       file_path = os.path.join(data_dir, csv_file)
+                    ^^^^^^^^^^^^
+E       AttributeError: 'function' object has no attribute 'join'
+
+../../../src/src_0890.py:5: AttributeError
+=========================== short test summary info ============================
+FAILED test_0890.py::test_task_func_with_valid_data - AttributeError: 'functi...
+FAILED test_0890.py::test_task_func_with_empty_data - AttributeError: 'functi...
+FAILED test_0890.py::test_task_func_with_nonexistent_file - AttributeError: '...
+3 failed in 1.26s

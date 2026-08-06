@@ -1,0 +1,58 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_invalid_data __________________________
+
+    def test_task_func_invalid_data():
+        data = [{"name": "John", "score": -1}]
+        with pytest.raises(ValueError):
+>           task_func(data)
+
+test_0523.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = [{'name': 'John', 'score': -1}]
+
+    def task_func(data):
+        if not data:
+            return None
+    
+        combined_dict = {}
+        for d in data:
+            for k, v in d.items():
+                if v is None:
+                    continue
+>               elif v < 0:
+                     ^^^^^
+E               TypeError: '<' not supported between instances of 'str' and 'int'
+
+../../../src/src_0523.py:12: TypeError
+__________________________ test_task_func_valid_data ___________________________
+
+    def test_task_func_valid_data():
+        data = [{"name": "John", "score": 80}, {"name": "Jane", "score": 90}]
+>       ax = task_func(data)
+             ^^^^^^^^^^^^^^^
+
+test_0523.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = [{'name': 'John', 'score': 80}, {'name': 'Jane', 'score': 90}]
+
+    def task_func(data):
+        if not data:
+            return None
+    
+        combined_dict = {}
+        for d in data:
+            for k, v in d.items():
+                if v is None:
+                    continue
+>               elif v < 0:
+                     ^^^^^
+E               TypeError: '<' not supported between instances of 'str' and 'int'
+
+../../../src/src_0523.py:12: TypeError
+=========================== short test summary info ============================
+FAILED test_0523.py::test_task_func_invalid_data - TypeError: '<' not support...
+FAILED test_0523.py::test_task_func_valid_data - TypeError: '<' not supported...
+2 failed, 1 passed in 1.57s

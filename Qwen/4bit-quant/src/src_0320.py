@@ -1,0 +1,17 @@
+import re
+import matplotlib.pyplot as plt
+from nltk.probability import FreqDist
+def task_func(example_str, top_n=30):
+    text = ' '.join(re.findall('(.*?)\\[.*?\\]', example_str))
+    words = text.split()
+    fdist = FreqDist(words)
+
+    if top_n > len(fdist):
+        top_n = len(fdist)
+    # Initialize a fresh plot for the frequency distribution but do not show it
+    plt.figure()
+    ax = fdist.plot(top_n, cumulative=False, show=False)
+    plt.close()
+
+    top_n_words = dict(fdist.most_common(top_n))
+    return ax, top_n_words

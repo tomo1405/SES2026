@@ -1,0 +1,26 @@
+.FF.                                                                     [100%]
+=================================== FAILURES ===================================
+___________________ test_task_func_with_positive_data_points ___________________
+
+    def test_task_func_with_positive_data_points():
+        n_data_points = random.randint(1, N_DATA_POINTS)
+        data = [round(random.uniform(MIN_VALUE, MAX_VALUE), 3) for _ in range(n_data_points)]
+        expected_df = pd.DataFrame(data, columns=['Value'])
+        actual_df = task_func(n_data_points)
+>       assert expected_df.equals(actual_df)
+E       assert False
+E        +  where False = equals(     Value\n0    6.167\n1    0.346\n2    2.019\n3    5.026\n4    2.987\n..     ...\n377  1.611\n378  6.674\n379  9.025\n380  2.243\n381  9.033\n\n[382 rows x 1 columns])
+E        +    where equals =      Value\n0    6.737\n1    5.493\n2    1.921\n3    6.967\n4    1.978\n..     ...\n377  4.133\n378  9.460\n379  1.183\n380  7.815\n381  8.979\n\n[382 rows x 1 columns].equals
+
+test_0244.py:21: AssertionError
+___________________ test_task_func_with_negative_data_points ___________________
+
+    def test_task_func_with_negative_data_points():
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0244.py:24: Failed
+=========================== short test summary info ============================
+FAILED test_0244.py::test_task_func_with_positive_data_points - assert False
+FAILED test_0244.py::test_task_func_with_negative_data_points - Failed: DID N...
+2 failed, 2 passed in 1.07s

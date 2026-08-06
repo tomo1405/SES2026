@@ -1,0 +1,99 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_queue = <MagicMock name='Queue' id='135059662588288'>
+mock_select = <MagicMock name='select' id='135059681982704'>
+mock_socket = <MagicMock name='socket' id='135059662597168'>
+
+    @patch('src_1041.socket')
+    @patch('src_1041.select.select')
+    @patch('src_1041.queue.Queue')
+    def test_task_func(mock_queue, mock_select, mock_socket):
+        # Mock the socket behavior
+        mock_server = MagicMock(spec=socket.socket)
+        mock_server.getsockname.return_value = ("localhost", 12345)
+        mock_socket.socket.return_value = mock_server
+    
+        # Mock the select behavior
+        mock_readable = [mock_server]
+        mock_writable = []
+        mock_select.return_value = (mock_readable, mock_writable, [])
+    
+        # Mock the queue behavior
+>       mock_queue_instance = MagicMock(spec=queue.Queue)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1041.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/unittest/mock.py:2121: in __init__
+    _safe_super(MagicMixin, self).__init__(*args, **kw)
+/usr/lib/python3.12/unittest/mock.py:1116: in __init__
+    _safe_super(CallableMixin, self).__init__(
+/usr/lib/python3.12/unittest/mock.py:460: in __init__
+    self._mock_add_spec(spec, spec_set, _spec_as_instance, _eat_self)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <[AttributeError('_mock_methods') raised in repr()] MagicMock object at 0x7ad607505b80>
+spec = <MagicMock name='Queue' id='135059662588288'>, spec_set = None
+_spec_as_instance = False, _eat_self = False
+
+    def _mock_add_spec(self, spec, spec_set, _spec_as_instance=False,
+                       _eat_self=False):
+        if _is_instance_mock(spec):
+>           raise InvalidSpecError(f'Cannot spec a Mock object. [object={spec!r}]')
+E           unittest.mock.InvalidSpecError: Cannot spec a Mock object. [object=<MagicMock name='Queue' id='135059662588288'>]
+
+/usr/lib/python3.12/unittest/mock.py:511: InvalidSpecError
+____________________ test_task_func_with_client_connection _____________________
+
+mock_queue = <MagicMock name='Queue' id='135059664304368'>
+mock_select = <MagicMock name='select' id='135059664422768'>
+mock_socket = <MagicMock name='socket' id='135059664426704'>
+
+    @patch('src_1041.socket')
+    @patch('src_1041.select.select')
+    @patch('src_1041.queue.Queue')
+    def test_task_func_with_client_connection(mock_queue, mock_select, mock_socket):
+        # Mock the socket behavior
+        mock_server = MagicMock(spec=socket.socket)
+        mock_server.getsockname.return_value = ("localhost", 12345)
+        mock_socket.socket.return_value = mock_server
+    
+        mock_connection = MagicMock(spec=socket.socket)
+        mock_server.accept.return_value = (mock_connection, None)
+    
+        # Mock the select behavior
+        mock_readable = [mock_server, mock_connection]
+        mock_writable = []
+        mock_select.return_value = (mock_readable, mock_writable, [])
+    
+        # Mock the queue behavior
+>       mock_queue_instance = MagicMock(spec=queue.Queue)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1041.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/unittest/mock.py:2121: in __init__
+    _safe_super(MagicMixin, self).__init__(*args, **kw)
+/usr/lib/python3.12/unittest/mock.py:1116: in __init__
+    _safe_super(CallableMixin, self).__init__(
+/usr/lib/python3.12/unittest/mock.py:460: in __init__
+    self._mock_add_spec(spec, spec_set, _spec_as_instance, _eat_self)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <[AttributeError('_mock_methods') raised in repr()] MagicMock object at 0x7ad608599cd0>
+spec = <MagicMock name='Queue' id='135059664304368'>, spec_set = None
+_spec_as_instance = False, _eat_self = False
+
+    def _mock_add_spec(self, spec, spec_set, _spec_as_instance=False,
+                       _eat_self=False):
+        if _is_instance_mock(spec):
+>           raise InvalidSpecError(f'Cannot spec a Mock object. [object={spec!r}]')
+E           unittest.mock.InvalidSpecError: Cannot spec a Mock object. [object=<MagicMock name='Queue' id='135059664304368'>]
+
+/usr/lib/python3.12/unittest/mock.py:511: InvalidSpecError
+=========================== short test summary info ============================
+FAILED test_1041.py::test_task_func - unittest.mock.InvalidSpecError: Cannot ...
+FAILED test_1041.py::test_task_func_with_client_connection - unittest.mock.In...
+2 failed in 0.73s

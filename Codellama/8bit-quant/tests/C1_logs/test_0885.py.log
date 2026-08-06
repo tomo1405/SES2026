@@ -1,0 +1,48 @@
+F....                                                                    [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        df = pd.DataFrame({'A': [1, 2, 3, 4, 5], 'B': [10, 20, 30, 40, 50], 'C': [100, 200, 300, 400, 500]})
+        columns = ['A', 'B', 'C']
+        larger = 50
+        equal = 900
+>       p_value = task_func(df, columns, larger, equal)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0885.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df =    A   B    C
+0  1  10  100
+1  2  20  200
+2  3  30  300
+3  4  40  400
+4  5  50  500
+columns = ['A', 'B', 'C'], larger = 50, equal = 900
+
+    def task_func(df, columns=['A', 'B', 'C'], larger=50, equal=900):
+        if len(columns) != 3:
+            raise ValueError("Exactly three columns should be specified.")
+    
+        for column in columns:
+            if column not in df.columns:
+                raise ValueError('The specified columns should exist in the DataFrame.')
+    
+        col_categorical, col_numerical, col_filter = columns
+    
+        # Filtering the data based on the specified conditions
+        selected = df[(df[col_numerical] > larger) & (df[col_filter] == equal)][[col_categorical, col_numerical]]
+    
+        # Creating a contingency table for the chi-square test
+        contingency_table = pd.crosstab(selected[col_categorical], selected[col_numerical])
+    
+        # Check if the contingency table is empty (no data meeting the criteria)
+        if contingency_table.size == 0:
+>           raise ValueError("Insufficient data - no matching data for the applied conditions.")
+E           ValueError: Insufficient data - no matching data for the applied conditions.
+
+../../../src/src_0885.py:21: ValueError
+=========================== short test summary info ============================
+FAILED test_0885.py::test_task_func_valid_input - ValueError: Insufficient da...
+1 failed, 4 passed in 2.37s

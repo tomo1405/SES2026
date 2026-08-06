@@ -1,0 +1,58 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        P = np.array([[1, 2, 3], [4, 5, 6]])
+        T = np.array([[1, 2, 3], [4, 5, 6]])
+        tensor_shape = (2, 3, 3)
+>       result, ax = task_func(P, T, tensor_shape)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0443.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+P = array([[1, 2, 3],
+       [4, 5, 6]])
+T = array([[1, 2, 3],
+       [4, 5, 6]]), tensor_shape = (2, 3, 3)
+
+    def task_func(P, T, tensor_shape=(3, 3, 3)):
+        if not (isinstance(P, np.ndarray) and isinstance(T, np.ndarray)):
+            raise TypeError("Expected inputs to be numpy arrays")
+    
+        if not T.shape == tensor_shape:
+>           raise ValueError("Provided tensor does not match the specified tensor_shape.")
+E           ValueError: Provided tensor does not match the specified tensor_shape.
+
+../../../src/src_0443.py:9: ValueError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        P = np.array([[1, 2, 3], [4, 5, 6]])
+        T = np.array([[1, 2, 3], [4, 5, 6]])
+        tensor_shape = (2, 3, 3)
+        with pytest.raises(TypeError):
+>           task_func(P, T, tensor_shape)
+
+test_0443.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+P = array([[1, 2, 3],
+       [4, 5, 6]])
+T = array([[1, 2, 3],
+       [4, 5, 6]]), tensor_shape = (2, 3, 3)
+
+    def task_func(P, T, tensor_shape=(3, 3, 3)):
+        if not (isinstance(P, np.ndarray) and isinstance(T, np.ndarray)):
+            raise TypeError("Expected inputs to be numpy arrays")
+    
+        if not T.shape == tensor_shape:
+>           raise ValueError("Provided tensor does not match the specified tensor_shape.")
+E           ValueError: Provided tensor does not match the specified tensor_shape.
+
+../../../src/src_0443.py:9: ValueError
+=========================== short test summary info ============================
+FAILED test_0443.py::test_task_func - ValueError: Provided tensor does not ma...
+FAILED test_0443.py::test_task_func_invalid_input - ValueError: Provided tens...
+2 failed, 1 passed in 3.67s

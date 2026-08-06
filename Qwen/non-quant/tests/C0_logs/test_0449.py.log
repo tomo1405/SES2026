@@ -1,0 +1,43 @@
+F..F                                                                     [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_default_parameters _______________________
+
+    def test_task_func_default_parameters():
+        ax = task_func()
+        assert isinstance(ax, plt.Axes)
+        x = np.linspace(-3, 3, 100)
+        y = np.exp(-0.5 * (x ** 2))
+>       np.testing.assert_almost_equal(ax.lines[0].get_ydata(), y)
+E       AssertionError: 
+E       Arrays are not almost equal to 7 decimals
+E       
+E       Mismatched elements: 100 / 100 (100%)
+E       First 5 mismatches are at indices:
+E        [0]: 0.0044318484119380075 (ACTUAL), 0.011108996538242306 (DESIRED)
+E        [1]: 0.005305788425287607 (ACTUAL), 0.013299639286035806 (DESIRED)
+E        [2]: 0.006328776428582762 (ACTUAL), 0.01586388993970375 (DESIRED)
+E        [3]: 0.007521325348709321 (ACTUAL), 0.01885316678177365 (DESIRED)
+E        [4]: 0.008905817513416034 (ACTUAL), 0.02232357398783258 (DESIRED)
+E       Max absolute difference among violations: 0.60078182
+E       Max relative difference among violations: 0.60105772
+E        ACTUAL: array([0.0044318, 0.0053058, 0.0063288, 0.0075213, 0.0089058, 0.0105065,
+E              0.0123494, 0.0144624, 0.0168748, 0.0196175, 0.0227222, 0.0262219,
+E              0.0301496, 0.0345386, 0.0394214, 0.0448295, 0.0507926, 0.057338 ,...
+E        DESIRED: array([0.011109 , 0.0132996, 0.0158639, 0.0188532, 0.0223236, 0.0263359,
+E              0.0309554, 0.0362519, 0.0422989, 0.0491737, 0.0569562, 0.0657285,
+E              0.0755739, 0.0865754, 0.0988147, 0.1123709, 0.1273183, 0.1437251,...
+
+test_0449.py:13: AssertionError
+_________________________ test_task_func_no_show_plot __________________________
+
+    def test_task_func_no_show_plot():
+        ax = task_func()
+        # Ensure that the plot is not shown by default
+>       with pytest.raises(AssertionError):
+E       Failed: DID NOT RAISE AssertionError
+
+test_0449.py:35: Failed
+=========================== short test summary info ============================
+FAILED test_0449.py::test_task_func_default_parameters - AssertionError: 
+FAILED test_0449.py::test_task_func_no_show_plot - Failed: DID NOT RAISE Asse...
+2 failed, 2 passed in 2.96s

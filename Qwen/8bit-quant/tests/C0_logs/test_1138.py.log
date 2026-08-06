@@ -1,0 +1,46 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_local_file ________________________
+
+sample_html_file = '/tmp/tmpfd4_nkfm.html'
+sample_output_file = '/tmp/tmpx8wzi50w.json'
+
+    def test_task_func_with_local_file(sample_html_file, sample_output_file):
+        url = f"file://{sample_html_file}"
+        expected_output = ['+1 800-555-0199', '+44 20 7946 0958']
+        result = task_func(url, sample_output_file)
+>       assert result == expected_output
+E       AssertionError: assert ['+1 800', '+44 20'] == ['+1 800-555-...20 7946 0958']
+E         
+E         At index 0 diff: '+1 800' != '+1 800-555-0199'
+E         Use -v to get more diff
+
+test_1138.py:29: AssertionError
+________________________ test_task_func_with_remote_url ________________________
+
+sample_output_file = '/tmp/tmpdr73cz8k.json'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7c6f7f02f3e0>
+
+    def test_task_func_with_remote_url(sample_output_file, monkeypatch):
+        class MockResponse:
+            def __init__(self, text):
+                self.text = text
+    
+        def mock_get(url, headers):
+            return MockResponse('<html><body><p>Contact us at +1 800-555-0199 or +44 20 7946 0958</p></body></html>')
+    
+        monkeypatch.setattr(requests, 'get', mock_get)
+        url = "http://example.com"
+        expected_output = ['+1 800-555-0199', '+44 20 7946 0958']
+        result = task_func(url, sample_output_file)
+>       assert result == expected_output
+E       AssertionError: assert ['+1 800', '+44 20'] == ['+1 800-555-...20 7946 0958']
+E         
+E         At index 0 diff: '+1 800' != '+1 800-555-0199'
+E         Use -v to get more diff
+
+test_1138.py:46: AssertionError
+=========================== short test summary info ============================
+FAILED test_1138.py::test_task_func_with_local_file - AssertionError: assert ...
+FAILED test_1138.py::test_task_func_with_remote_url - AssertionError: assert ...
+2 failed, 1 passed in 1.39s

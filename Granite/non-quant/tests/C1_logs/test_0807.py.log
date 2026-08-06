@@ -1,0 +1,65 @@
+FFF.                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        text = "This is a test sentence. It contains some words and some punctuation."
+        n = 2
+        expected_output = Counter([('this', 'is'), ('is', 'a'), ('a', 'test'), ('test', 'sentence'), ('sentence', 'contains'), ('contains', 'some'), ('some', 'words'), ('words', 'and'), ('and', 'some'), ('some', 'punctuation')])
+        actual_output = task_func(text, n)
+>       assert actual_output == expected_output, "Output does not match expected output"
+E       AssertionError: Output does not match expected output
+E       assert Counter({('te...tuation'): 1}) == Counter({('th...tuation'): 1})
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Left contains 2 more items:
+E         {('contains', 'words'): 1, ('words', 'punctuation'): 1}
+E         Right contains 8 more items:
+E         {('a', 'test'): 1,
+E          ('and', 'some'): 1,...
+E         
+E         ...Full output truncated (7 lines hidden), use '-vv' to show
+
+test_0807.py:11: AssertionError
+______________________ test_task_func_with_different_text ______________________
+
+    def test_task_func_with_different_text():
+        text = "Here is another test sentence with some different words."
+        n = 3
+        expected_output = Counter([('here', 'is', 'another'), ('is', 'another', 'test'), ('another', 'test', 'sentence'), ('test', 'sentence', 'with'), ('sentence', 'with', 'some'), ('with', 'some', 'different'), ('some', 'different', 'words')])
+        actual_output = task_func(text, n)
+>       assert actual_output == expected_output, "Output does not match expected output"
+E       AssertionError: Output does not match expected output
+E       assert Counter({('an... 'words'): 1}) == Counter({('he... 'words'): 1})
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Left contains 2 more items:
+E         {('sentence', 'different', 'words'): 1, ('test', 'sentence', 'different'): 1}
+E         Right contains 6 more items:
+E         {('here', 'is', 'another'): 1,
+E          ('is', 'another', 'test'): 1,...
+E         
+E         ...Full output truncated (5 lines hidden), use '-vv' to show
+
+test_0807.py:18: AssertionError
+_______________________ test_task_func_with_different_n ________________________
+
+    def test_task_func_with_different_n():
+        text = "This is a test sentence."
+        n = 3
+        expected_output = Counter([('this', 'is', 'a'), ('is', 'a', 'test'), ('a', 'test', 'sentence')])
+        actual_output = task_func(text, n)
+>       assert actual_output == expected_output, "Output does not match expected output"
+E       AssertionError: Output does not match expected output
+E       assert Counter() == Counter({('th...entence'): 1})
+E         
+E         Right contains 3 more items:
+E         {('a', 'test', 'sentence'): 1, ('is', 'a', 'test'): 1, ('this', 'is', 'a'): 1}
+E         Use -v to get more diff
+
+test_0807.py:25: AssertionError
+=========================== short test summary info ============================
+FAILED test_0807.py::test_task_func - AssertionError: Output does not match e...
+FAILED test_0807.py::test_task_func_with_different_text - AssertionError: Out...
+FAILED test_0807.py::test_task_func_with_different_n - AssertionError: Output...
+3 failed, 1 passed in 3.89s

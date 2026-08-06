@@ -1,0 +1,36 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        smtp_server = 'smtp.example.com'
+        smtp_port = 587
+        smtp_username = 'user@example.com'
+        smtp_password = 'password'
+    
+        handler = task_func(smtp_server, smtp_port, smtp_username, smtp_password)
+    
+        # Test with valid JSON data
+        data = {'subject': 'Test Subject', 'message': 'Test Message', 'to': 'recipient@example.com'}
+>       handler.do_POST(data)
+
+test_0275.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = {'subject': 'Test Subject', 'message': 'Test Message', 'to': 'recipient@example.com'}
+
+    def do_POST(self):
+>       ctype, pdict = cgi.parse_header(self.headers.get('content-type'))
+                                        ^^^^^^^^^^^^
+E       AttributeError: 'dict' object has no attribute 'headers'
+
+../../../src/src_0275.py:9: AttributeError
+=============================== warnings summary ===============================
+../../../src/src_0275.py:1
+  /work/tomohiro-w/utg/src/src_0275.py:1: DeprecationWarning: 'cgi' is deprecated and slated for removal in Python 3.13
+    import cgi
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0275.py::test_task_func - AttributeError: 'dict' object has no at...
+1 failed, 1 warning in 0.56s

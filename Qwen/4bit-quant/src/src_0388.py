@@ -1,0 +1,22 @@
+import numpy as np
+import matplotlib.pyplot as plt
+# Constants
+CITIES = ['New York', 'London', 'Beijing', 'Tokyo', 'Sydney', 'Paris', 'Berlin', 'Moscow', 'Madrid', 'Rome']
+def task_func(city_dict, max_range=1000000, seed=0):
+    if max_range < 1:
+        raise ValueError("max_range must be a positive integer")
+
+    np.random.seed(seed)
+    city_population = {
+        city: (np.random.randint(1, max_range) if city in CITIES else -1) 
+        for _, city in city_dict.items() if isinstance(city, str)
+    }
+
+    # Plotting the bar chart
+    plt.figure()
+    ax = plt.bar(city_population.keys(), city_population.values())
+    plt.xlabel('City')
+    plt.ylabel('Population')
+    plt.title('City Populations')
+
+    return city_population, plt.gca()

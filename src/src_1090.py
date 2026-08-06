@@ -1,0 +1,11 @@
+import numpy as np
+from collections import Counter
+def task_func(list_of_tuples):
+
+    numeric_values = [pair[0] for pair in list_of_tuples]
+    categories = [pair[1] for pair in list_of_tuples]
+
+    total_sum = np.sum(numeric_values)
+    category_counts = Counter(categories)
+
+    return total_sum, dict(category_counts)

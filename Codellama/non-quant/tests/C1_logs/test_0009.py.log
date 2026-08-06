@@ -1,0 +1,71 @@
+FF.F                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        T1 = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        RANGE = 100
+        expected_counts = Counter({1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1})
+>       assert task_func(T1, RANGE) == expected_counts
+E       AssertionError: assert Counter({78: ... 2: 1, 40: 1}) == Counter({1: 1..., 8: 1, 9: 1})
+E         
+E         Omitting 4 identical items, use -vv to show
+E         Differing items:
+E         {9: 2} != {9: 1}
+E         Left contains 32 more items:
+E         {14: 2,
+E          18: 1,...
+E         
+E         ...Full output truncated (33 lines hidden), use '-vv' to show
+
+test_0009.py:11: AssertionError
+_____________________ test_task_func_with_different_range ______________________
+
+    def test_task_func_with_different_range():
+        T1 = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        RANGE = 50
+        expected_counts = Counter({1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1})
+>       assert task_func(T1, RANGE) == expected_counts
+E       AssertionError: assert Counter({19: ...27: 1, 41: 1}) == Counter({1: 1..., 8: 1, 9: 1})
+E         
+E         Omitting 3 identical items, use -vv to show
+E         Differing items:
+E         {9: 2} != {9: 1}
+E         {4: 3} != {4: 1}
+E         Left contains 23 more items:
+E         {0: 1,...
+E         
+E         ...Full output truncated (25 lines hidden), use '-vv' to show
+
+test_0009.py:17: AssertionError
+______________________ test_task_func_with_invalid_input _______________________
+
+    def test_task_func_with_invalid_input():
+        T1 = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        RANGE = "invalid"
+        with pytest.raises(ValueError):
+>           task_func(T1, RANGE)
+
+test_0009.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0009.py:9: in task_func
+    random_nums = [randint(0, RANGE) for _ in range(total_nums)]
+                   ^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <random.Random object at 0x149a4410>, a = 0, b = 'invalid'
+
+    def randint(self, a, b):
+        """Return random integer in range [a, b], including both end points.
+        """
+    
+>       return self.randrange(a, b+1)
+                                 ^^^
+E       TypeError: can only concatenate str (not "int") to str
+
+/usr/lib/python3.12/random.py:336: TypeError
+=========================== short test summary info ============================
+FAILED test_0009.py::test_task_func - AssertionError: assert Counter({78: ......
+FAILED test_0009.py::test_task_func_with_different_range - AssertionError: as...
+FAILED test_0009.py::test_task_func_with_invalid_input - TypeError: can only ...
+3 failed, 1 passed in 0.41s

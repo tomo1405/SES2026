@@ -1,0 +1,30 @@
+.F.F                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________________ test_input_empty _______________________________
+
+    def test_input_empty():
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0076.py:14: Failed
+_______________________________ test_output_type _______________________________
+
+    def test_output_type():
+        df, plot = task_func(pd.DataFrame(), fruits=['A', 'B'], days=[datetime(2024, 1, 1)])
+        assert isinstance(df, pd.DataFrame)
+>       assert isinstance(plot, sns.axisgrid.BoxPlot)
+                                ^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'seaborn.axisgrid' has no attribute 'BoxPlot'
+
+test_0076.py:24: AttributeError
+=============================== warnings summary ===============================
+Granite/4bit-quant/tests/test_0076.py::test_input_empty
+Granite/4bit-quant/tests/test_0076.py::test_output_type
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/categorical.py:700: MatplotlibDeprecationWarning: vert: bool was deprecated in Matplotlib 3.11 and will be removed in 3.13. Use orientation: {'vertical', 'horizontal'} instead.
+    artists = ax.bxp(**boxplot_kws)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0076.py::test_input_empty - Failed: DID NOT RAISE ValueError
+FAILED test_0076.py::test_output_type - AttributeError: module 'seaborn.axisg...
+2 failed, 2 passed, 2 warnings in 3.96s

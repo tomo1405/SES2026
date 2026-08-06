@@ -1,0 +1,131 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        json_str = '{"key1": "value1", "key2": "value2", "key3": "value3"}'
+        top_n = 2
+        expected_result = {'value1': 1, 'value2': 1}
+>       assert task_func(json_str, top_n) == expected_result
+E       AssertionError: assert {} == {'value1': 1, 'value2': 1}
+E         
+E         Right contains 2 more items:
+E         {'value1': 1, 'value2': 1}
+E         Use -v to get more diff
+
+test_0203.py:8: AssertionError
+________________________ test_task_func_with_empty_json ________________________
+
+    def test_task_func_with_empty_json():
+        json_str = ''
+        top_n = 2
+        expected_result = {}
+>       assert task_func(json_str, top_n) == expected_result
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0203.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0203.py:6: in task_func
+    data = json.loads(json_str)
+           ^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/__init__.py:346: in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/decoder.py:337: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <json.decoder.JSONDecoder object at 0x75198ed77b30>, s = '', idx = 0
+
+    def raw_decode(self, s, idx=0):
+        """Decode a JSON document from ``s`` (a ``str`` beginning with
+        a JSON document) and return a 2-tuple of the Python
+        representation and the index in ``s`` where the document ended.
+    
+        This can be used to decode a JSON document from a string that may
+        have extraneous data at the end.
+    
+        """
+        try:
+            obj, end = self.scan_once(s, idx)
+        except StopIteration as err:
+>           raise JSONDecodeError("Expecting value", s, err.value) from None
+E           json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+/usr/lib/python3.12/json/decoder.py:355: JSONDecodeError
+_______________________ test_task_func_with_invalid_json _______________________
+
+    def test_task_func_with_invalid_json():
+        json_str = '{"key1": "value1", "key2": "value2", "key3": "value3"'
+        top_n = 2
+        expected_result = {}
+>       assert task_func(json_str, top_n) == expected_result
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0203.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0203.py:6: in task_func
+    data = json.loads(json_str)
+           ^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/__init__.py:346: in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/decoder.py:337: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <json.decoder.JSONDecoder object at 0x75198ed77b30>
+s = '{"key1": "value1", "key2": "value2", "key3": "value3"', idx = 0
+
+    def raw_decode(self, s, idx=0):
+        """Decode a JSON document from ``s`` (a ``str`` beginning with
+        a JSON document) and return a 2-tuple of the Python
+        representation and the index in ``s`` where the document ended.
+    
+        This can be used to decode a JSON document from a string that may
+        have extraneous data at the end.
+    
+        """
+        try:
+>           obj, end = self.scan_once(s, idx)
+                       ^^^^^^^^^^^^^^^^^^^^^^
+E           json.decoder.JSONDecodeError: Expecting ',' delimiter: line 1 column 54 (char 53)
+
+/usr/lib/python3.12/json/decoder.py:353: JSONDecodeError
+_________________ test_task_func_with_top_n_greater_than_urls __________________
+
+    def test_task_func_with_top_n_greater_than_urls():
+        json_str = '{"key1": "value1", "key2": "value2", "key3": "value3"}'
+        top_n = 4
+        expected_result = {'value1': 1, 'value2': 1, 'value3': 1}
+>       assert task_func(json_str, top_n) == expected_result
+E       AssertionError: assert {} == {'value1': 1,..., 'value3': 1}
+E         
+E         Right contains 3 more items:
+E         {'value1': 1, 'value2': 1, 'value3': 1}
+E         Use -v to get more diff
+
+test_0203.py:26: AssertionError
+___________________ test_task_func_with_top_n_less_than_urls ___________________
+
+    def test_task_func_with_top_n_less_than_urls():
+        json_str = '{"key1": "value1", "key2": "value2", "key3": "value3"}'
+        top_n = 2
+        expected_result = {'value1': 1, 'value2': 1}
+>       assert task_func(json_str, top_n) == expected_result
+E       AssertionError: assert {} == {'value1': 1, 'value2': 1}
+E         
+E         Right contains 2 more items:
+E         {'value1': 1, 'value2': 1}
+E         Use -v to get more diff
+
+test_0203.py:32: AssertionError
+=========================== short test summary info ============================
+FAILED test_0203.py::test_task_func - AssertionError: assert {} == {'value1':...
+FAILED test_0203.py::test_task_func_with_empty_json - json.decoder.JSONDecode...
+FAILED test_0203.py::test_task_func_with_invalid_json - json.decoder.JSONDeco...
+FAILED test_0203.py::test_task_func_with_top_n_greater_than_urls - AssertionE...
+FAILED test_0203.py::test_task_func_with_top_n_less_than_urls - AssertionErro...
+5 failed in 0.43s

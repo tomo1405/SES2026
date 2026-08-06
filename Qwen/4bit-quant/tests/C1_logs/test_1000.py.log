@@ -1,0 +1,60 @@
+F..F                                                                     [100%]
+=================================== FAILURES ===================================
+___________________ test_task_func_with_valid_url_and_column ___________________
+
+    def test_task_func_with_valid_url_and_column():
+        # Create a temporary CSV file
+        with tempfile.NamedTemporaryFile(delete=False, suffix='.csv') as temp_file:
+            temp_file.write(b'name,age\nAlice,30\nBob,25\nCharlie,30')
+            temp_file.flush()
+            temp_file_path = temp_file.name
+    
+        # Mock the URL to point to the temporary file
+        url = f'file://{temp_file_path}'
+        column_name = 'name'
+        result = task_func(url, column_name, 'output.csv')
+    
+        assert result == collections.Counter({'Alice': 1, 'Bob': 1, 'Charlie': 1})
+    
+        # Clean up
+        os.remove(temp_file_path)
+>       os.remove('output.csv')
+E       FileNotFoundError: [Errno 2] No such file or directory: 'output.csv'
+
+test_1000.py:25: FileNotFoundError
+________________________ test_task_func_with_empty_csv _________________________
+
+    def test_task_func_with_empty_csv():
+        # Create a temporary empty CSV file
+        with tempfile.NamedTemporaryFile(delete=False, suffix='.csv') as temp_file:
+            temp_file.write(b'')
+            temp_file.flush()
+            temp_file_path = temp_file.name
+    
+        # Mock the URL to point to the temporary file
+        url = f'file://{temp_file_path}'
+        column_name = 'name'
+    
+        with pytest.raises(ValueError) as excinfo:
+>           task_func(url, column_name, 'output.csv')
+
+test_1000.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'file:///tmp/tmpfgzwe1_9.csv', column_name = 'name'
+csv_file_path = 'output.csv'
+
+    def task_func(url, column_name, csv_file_path):
+        urllib.request.urlretrieve(url, csv_file_path)
+    
+        with open(csv_file_path, "r", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+>           if column_name not in reader.fieldnames:
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           TypeError: argument of type 'NoneType' is not iterable
+
+../../../src/src_1000.py:10: TypeError
+=========================== short test summary info ============================
+FAILED test_1000.py::test_task_func_with_valid_url_and_column - FileNotFoundE...
+FAILED test_1000.py::test_task_func_with_empty_csv - TypeError: argument of t...
+2 failed, 2 passed in 0.53s

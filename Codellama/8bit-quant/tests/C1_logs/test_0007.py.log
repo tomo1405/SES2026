@@ -1,0 +1,18 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        pattern = '^error\.log$'
+        log_dir = '/var/log/'
+        log_files = [f for f in os.listdir(log_dir) if re.match(pattern, f)]
+        log_files = sorted(log_files, key=lambda f: os.path.getmtime(os.path.join(log_dir, f)), reverse=True)
+    
+>       assert task_func(pattern, log_dir) == os.path.join(log_dir, log_files[0])
+                                                                    ^^^^^^^^^^^^
+E       IndexError: list index out of range
+
+test_0007.py:13: IndexError
+=========================== short test summary info ============================
+FAILED test_0007.py::test_task_func - IndexError: list index out of range
+1 failed, 1 passed in 0.38s

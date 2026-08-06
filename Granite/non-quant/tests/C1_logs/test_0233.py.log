@@ -1,0 +1,45 @@
+F.F..                                                                    [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+sample_df =   Customer  Sales     Category
+0        A    100  Electronics
+1        B    200     Clothing
+2        C    150  Electronics
+3        D    300     Clothing
+4        E    250  Electronics
+
+    def test_task_func_valid_input(sample_df):
+>       assert task_func(sample_df) == {'Total Sales': 900, 'Most Popular Category': 'Electronics'}
+E       AssertionError: assert {'Total Sales...'Electronics'} == {'Total Sales...'Electronics'}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'Total Sales': np.int64(1000)} != {'Total Sales': 900}
+E         Use -v to get more diff
+
+test_0233.py:14: AssertionError
+_________________________ test_task_func_no_duplicates _________________________
+
+sample_df =   Customer  Sales     Category
+0        A    100  Electronics
+1        B    200     Clothing
+2        C    150  Electronics
+3        D    300     Clothing
+4        E    250  Electronics
+
+    def test_task_func_no_duplicates(sample_df):
+        sample_df = sample_df.drop_duplicates(subset='Customer')
+>       assert task_func(sample_df) == {'Total Sales': 900, 'Most Popular Category': 'Electronics'}
+E       AssertionError: assert {'Total Sales...'Electronics'} == {'Total Sales...'Electronics'}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'Total Sales': np.int64(1000)} != {'Total Sales': 900}
+E         Use -v to get more diff
+
+test_0233.py:22: AssertionError
+=========================== short test summary info ============================
+FAILED test_0233.py::test_task_func_valid_input - AssertionError: assert {'To...
+FAILED test_0233.py::test_task_func_no_duplicates - AssertionError: assert {'...
+2 failed, 3 passed in 1.18s

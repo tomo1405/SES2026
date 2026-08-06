@@ -1,0 +1,31 @@
+.F..                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_imputation ___________________________
+
+    def test_task_func_imputation():
+        df = pd.DataFrame({
+            'A': [1, 2, np.nan],
+            'B': [4, np.nan, 6]
+        })
+        expected_df = pd.DataFrame({
+            'A': [1, 2, 1.5],
+            'B': [4, 5, 6]
+        })
+        result_df, _ = task_func(df)
+>       assert result_df.equals(expected_df)
+E       assert False
+E        +  where False = equals(     A  B\n0  1.0  4\n1  2.0  5\n2  1.5  6)
+E        +    where equals =      A    B\n0  1.0  4.0\n1  2.0  5.0\n2  NaN  6.0.equals
+
+test_0136.py:24: AssertionError
+=============================== warnings summary ===============================
+Qwen/4bit-quant/tests/test_0136.py::test_task_func_imputation
+Qwen/4bit-quant/tests/test_0136.py::test_task_func_plot
+Qwen/4bit-quant/tests/test_0136.py::test_task_func_no_missing_values
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/categorical.py:700: MatplotlibDeprecationWarning: vert: bool was deprecated in Matplotlib 3.11 and will be removed in 3.13. Use orientation: {'vertical', 'horizontal'} instead.
+    artists = ax.bxp(**boxplot_kws)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0136.py::test_task_func_imputation - assert False
+1 failed, 3 passed, 3 warnings in 3.99s

@@ -1,0 +1,120 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data = pd.DataFrame({'x': [1, 2, 3, 4, 5], 'y': [2, 3, 4, 5, 6]})
+        target_column = 'y'
+        test_size = 0.2
+        random_state = 0
+        expected_output = 0.95  # This value is obtained by running the function with the given inputs
+    
+        output = task_func(data, target_column, test_size, random_state)
+>       assert output == expected_output, "Output does not match expected output"
+E       AssertionError: Output does not match expected output
+E       assert nan == 0.95
+
+test_0753.py:44: AssertionError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        with pytest.raises(ValueError, match="data should be a DataFrame."):
+            task_func('invalid_input', 'target_column')
+    
+        with pytest.raises(ValueError, match="data should contain at least one row."):
+            task_func(pd.DataFrame(), 'target_column')
+    
+        with pytest.raises(ValueError, match="target_column should be in the provided DataFrame."):
+            task_func(pd.DataFrame({'x': [1, 2, 3, 4, 5]}), 'y')
+    
+        with pytest.raises(ValueError, match="data values should be numeric only."):
+>           task_func(pd.DataFrame({'x': ['a', 'b', 'c', 'd', 'e']}), 'x')
+
+test_0753.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test_0753.py:18: in task_func
+    if not all(np.issubdtype(dtype, np.number) for dtype in data.dtypes):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test_0753.py:18: in <genexpr>
+    if not all(np.issubdtype(dtype, np.number) for dtype in data.dtypes):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+arg1 = <StringDtype(na_value=nan)>, arg2 = <class 'numpy.number'>
+
+    @set_module('numpy')
+    def issubdtype(arg1, arg2):
+        r"""
+        Returns True if first argument is a typecode lower/equal in type hierarchy.
+    
+        This is like the builtin :func:`issubclass`, but for `dtype`\ s.
+    
+        Parameters
+        ----------
+        arg1, arg2 : dtype_like
+            `dtype` or object coercible to one
+    
+        Returns
+        -------
+        out : bool
+    
+        See Also
+        --------
+        :ref:`arrays.scalars` : Overview of the numpy type hierarchy.
+    
+        Examples
+        --------
+        `issubdtype` can be used to check the type of arrays:
+    
+        >>> ints = np.array([1, 2, 3], dtype=np.int32)
+        >>> np.issubdtype(ints.dtype, np.integer)
+        True
+        >>> np.issubdtype(ints.dtype, np.floating)
+        False
+    
+        >>> floats = np.array([1, 2, 3], dtype=np.float32)
+        >>> np.issubdtype(floats.dtype, np.integer)
+        False
+        >>> np.issubdtype(floats.dtype, np.floating)
+        True
+    
+        Similar types of different sizes are not subdtypes of each other:
+    
+        >>> np.issubdtype(np.float64, np.float32)
+        False
+        >>> np.issubdtype(np.float32, np.float64)
+        False
+    
+        but both are subtypes of `floating`:
+    
+        >>> np.issubdtype(np.float64, np.floating)
+        True
+        >>> np.issubdtype(np.float32, np.floating)
+        True
+    
+        For convenience, dtype-like objects are allowed too:
+    
+        >>> np.issubdtype('S1', np.bytes_)
+        True
+        >>> np.issubdtype('i4', np.signedinteger)
+        True
+    
+        """
+        if not issubclass_(arg1, generic):
+>           arg1 = dtype(arg1).type
+                   ^^^^^^^^^^^
+E           TypeError: Cannot interpret '<StringDtype(na_value=nan)>' as a data type
+
+../../../.venv/lib/python3.12/site-packages/numpy/_core/numerictypes.py:470: TypeError
+=============================== warnings summary ===============================
+Granite/4bit-quant/tests/test_0753.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/sklearn/metrics/_regression.py:1295: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+    warnings.warn(msg, UndefinedMetricWarning)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0753.py::test_task_func - AssertionError: Output does not match e...
+FAILED test_0753.py::test_task_func_invalid_input - TypeError: Cannot interpr...
+2 failed, 1 warning in 3.27s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

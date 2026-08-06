@@ -1,0 +1,37 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        df = task_func()
+        assert isinstance(df, pd.DataFrame)
+>       assert df.shape == (len(MONTHS), len(PRODUCTS))
+                                ^^^^^^
+E       NameError: name 'MONTHS' is not defined
+
+test_0641.py:9: NameError
+_______________________________ test_total_sales _______________________________
+
+    def test_total_sales():
+        df = task_func()
+        total_sales = df.sum()
+        assert isinstance(total_sales, pd.Series)
+>       assert total_sales.index.equals(PRODUCTS)
+                                        ^^^^^^^^
+E       NameError: name 'PRODUCTS' is not defined
+
+test_0641.py:19: NameError
+_________________________________ test_heatmap _________________________________
+
+    def test_heatmap():
+        df = task_func()
+>       heatmap = sns.heatmap(df, annot=True, fmt="d", cmap='viridis')
+                  ^^^
+E       NameError: name 'sns' is not defined
+
+test_0641.py:25: NameError
+=========================== short test summary info ============================
+FAILED test_0641.py::test_task_func - NameError: name 'MONTHS' is not defined
+FAILED test_0641.py::test_total_sales - NameError: name 'PRODUCTS' is not def...
+FAILED test_0641.py::test_heatmap - NameError: name 'sns' is not defined
+3 failed in 4.73s

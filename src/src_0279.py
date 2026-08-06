@@ -1,0 +1,15 @@
+import numpy as np
+from sympy import symbols, solve
+def task_func(precision=2, seed=0):
+    np.random.seed(seed)
+    a = np.random.uniform(-10, 10)
+    b = np.random.uniform(-10, 10)
+    c = np.random.uniform(-10, 10)
+
+    x = symbols('x')
+    equation = a * x**2 + b * x + c
+
+    solutions = solve(equation, x)
+    solutions = [complex(round(complex(solution).real, precision), round(complex(solution).imag, precision)) for solution in solutions]
+
+    return tuple(solutions)

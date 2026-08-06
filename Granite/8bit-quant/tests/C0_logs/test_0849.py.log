@@ -1,0 +1,61 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        obj_list = [1, 2, 3, 4, 5]
+        attr = 'value'
+        top_n = 3
+        seed = 123
+    
+        random.seed(seed)
+        random_value = random.choice([1, 2, 3, 4, 5])
+    
+        top_values = heapq.nlargest(top_n, [1, 2, 3, 4, 5])
+    
+>       assert task_func(obj_list, attr, top_n, seed)[0] == top_values
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0849.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+obj_list = [1, 2, 3, 4, 5], attr = 'value', top_n = 3, seed = 123
+
+    def task_func(obj_list, attr, top_n=5, seed=None):
+        random.seed(seed)
+>       attr_values = [getattr(obj, attr) for obj in obj_list]
+                       ^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'int' object has no attribute 'value'
+
+../../../src/src_0849.py:5: AttributeError
+________________________ test_task_func_with_empty_list ________________________
+
+    def test_task_func_with_empty_list():
+        obj_list = []
+        attr = 'value'
+        top_n = 3
+        seed = 123
+    
+        random.seed(seed)
+>       random_value = random.choice([])
+                       ^^^^^^^^^^^^^^^^^
+
+test_0849.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <random.Random object at 0x1549a330>, seq = []
+
+    def choice(self, seq):
+        """Choose a random element from a non-empty sequence."""
+    
+        # As an accommodation for NumPy, we don't use "if not seq"
+        # because bool(numpy.array()) raises a ValueError.
+        if not len(seq):
+>           raise IndexError('Cannot choose from an empty sequence')
+E           IndexError: Cannot choose from an empty sequence
+
+/usr/lib/python3.12/random.py:347: IndexError
+=========================== short test summary info ============================
+FAILED test_0849.py::test_task_func - AttributeError: 'int' object has no att...
+FAILED test_0849.py::test_task_func_with_empty_list - IndexError: Cannot choo...
+2 failed in 0.50s

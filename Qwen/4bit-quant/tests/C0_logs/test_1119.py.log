@@ -1,0 +1,124 @@
+FFF.                                                                     [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_default_values _________________________
+
+    def test_task_func_default_values():
+        # Test with default values
+        with patch('requests.get') as mock_get:
+            mock_response = mock_get.return_value
+            mock_response.text = "header1,header2\nvalue1,value2"
+    
+            with patch('builtins.open', mock_open()) as mock_file:
+                result = task_func()
+    
+                mock_get.assert_called_once_with('https://example.com/data.csv')
+                mock_file.assert_called_once_with('data.json', 'w')
+    
+                assert result == 'data.json'
+                expected_json_data = [{'header1': 'value1', 'header2': 'value2'}]
+>               mock_file().write.assert_called_once_with(json.dumps(expected_json_data, indent=4))
+
+test_1119.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='open().write' id='131492289304800'>
+args = ('[\n    {\n        "header1": "value1",\n        "header2": "value2"\n    }\n]',)
+kwargs = {}
+
+    def assert_called_once_with(self, /, *args, **kwargs):
+        """assert that the mock was called exactly once and that that call was
+        with the specified arguments."""
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to be called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'write' to be called once. Called 11 times.
+E           Calls: [call('['),
+E            call('{'),
+E            call('"header1"'),
+E            call(': '),
+E            call('"value1"'),
+E            call(', '),
+E            call('"header2"'),
+E            call(': '),
+E            call('"value2"'),
+E            call('}'),
+E            call(']')].
+
+/usr/lib/python3.12/unittest/mock.py:955: AssertionError
+_________________________ test_task_func_custom_values _________________________
+
+    def test_task_func_custom_values():
+        # Test with custom values
+        csv_url = 'https://test.com/custom.csv'
+        json_file_path = 'custom_data.json'
+    
+        with patch('requests.get') as mock_get:
+            mock_response = mock_get.return_value
+            mock_response.text = "name,age\nAlice,30"
+    
+            with patch('builtins.open', mock_open()) as mock_file:
+                result = task_func(csv_url, json_file_path)
+    
+                mock_get.assert_called_once_with(csv_url)
+                mock_file.assert_called_once_with(json_file_path, 'w')
+    
+                assert result == json_file_path
+                expected_json_data = [{'name': 'Alice', 'age': '30'}]
+>               mock_file().write.assert_called_once_with(json.dumps(expected_json_data, indent=4))
+
+test_1119.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='open().write' id='131492289303600'>
+args = ('[\n    {\n        "name": "Alice",\n        "age": "30"\n    }\n]',)
+kwargs = {}
+
+    def assert_called_once_with(self, /, *args, **kwargs):
+        """assert that the mock was called exactly once and that that call was
+        with the specified arguments."""
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to be called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'write' to be called once. Called 11 times.
+E           Calls: [call('['),
+E            call('{'),
+E            call('"name"'),
+E            call(': '),
+E            call('"Alice"'),
+E            call(', '),
+E            call('"age"'),
+E            call(': '),
+E            call('"30"'),
+E            call('}'),
+E            call(']')].
+
+/usr/lib/python3.12/unittest/mock.py:955: AssertionError
+_________________________ test_task_func_file_creation _________________________
+
+    def test_task_func_file_creation():
+        # Test if file is created
+        with patch('requests.get') as mock_get:
+            mock_response = mock_get.return_value
+            mock_response.text = "id,name\n1,Bob"
+    
+            with patch('builtins.open', mock_open()) as mock_file:
+                task_func()
+    
+>               assert os.path.exists('data.json')
+E               AssertionError: assert False
+E                +  where False = <function exists at 0x779772353600>('data.json')
+E                +    where <function exists at 0x779772353600> = <module 'posixpath' (frozen)>.exists
+E                +      where <module 'posixpath' (frozen)> = os.path
+
+test_1119.py:52: AssertionError
+=========================== short test summary info ============================
+FAILED test_1119.py::test_task_func_default_values - AssertionError: Expected...
+FAILED test_1119.py::test_task_func_custom_values - AssertionError: Expected ...
+FAILED test_1119.py::test_task_func_file_creation - AssertionError: assert False
+3 failed, 1 passed in 0.83s

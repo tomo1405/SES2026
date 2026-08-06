@@ -1,0 +1,91 @@
+F.FF                                                                     [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_valid_url ___________________________
+
+url = 'https://example.com/data.xml'
+
+    def task_func(url):
+        try:
+>           with urllib.request.urlopen(url) as response:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../../../src/src_1004.py:6: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/urllib/request.py:215: in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:521: in open
+    response = meth(req, response)
+               ^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:630: in http_response
+    response = self.parent.error(
+/usr/lib/python3.12/urllib/request.py:559: in error
+    return self._call_chain(*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:492: in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <urllib.request.HTTPDefaultErrorHandler object at 0x77d6d8215250>
+req = <urllib.request.Request object at 0x77d6d3b97380>
+fp = <http.client.HTTPResponse object at 0x77d6d3ac6b60>, code = 404
+msg = 'Not Found', hdrs = <http.client.HTTPMessage object at 0x77d6d8195a30>
+
+    def http_error_default(self, req, fp, code, msg, hdrs):
+>       raise HTTPError(req.full_url, code, msg, hdrs, fp)
+E       urllib.error.HTTPError: HTTP Error 404: Not Found
+
+/usr/lib/python3.12/urllib/request.py:639: HTTPError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func_valid_url():
+        url = "https://example.com/data.xml"
+        expected_df = pd.DataFrame([{"id": "1", "name": "John"}, {"id": "2", "name": "Jane"}])
+>       actual_df = task_func(url)
+                    ^^^^^^^^^^^^^^
+
+test_1004.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'https://example.com/data.xml'
+
+    def task_func(url):
+        try:
+            with urllib.request.urlopen(url) as response:
+                xml_data = response.read()
+        except Exception as e:
+>           raise ValueError(f"Error fetching the XML file: {e}")
+E           ValueError: Error fetching the XML file: HTTP Error 404: Not Found
+
+../../../src/src_1004.py:9: ValueError
+______________________ test_task_func_invalid_xml_syntax _______________________
+
+    def test_task_func_invalid_xml_syntax():
+        url = "https://example.com/invalid_syntax.xml"
+        with pytest.raises(ValueError) as exc_info:
+            task_func(url)
+>       assert "Invalid XML syntax" in str(exc_info.value)
+E       AssertionError: assert 'Invalid XML syntax' in 'Error fetching the XML file: HTTP Error 404: Not Found'
+E        +  where 'Error fetching the XML file: HTTP Error 404: Not Found' = str(ValueError('Error fetching the XML file: HTTP Error 404: Not Found'))
+E        +    where ValueError('Error fetching the XML file: HTTP Error 404: Not Found') = <ExceptionInfo ValueError('Error fetching the XML file: HTTP Error 404: Not Found') tblen=2>.value
+
+test_1004.py:22: AssertionError
+__________________________ test_task_func_empty_data ___________________________
+
+    def test_task_func_empty_data():
+        url = "https://example.com/empty.xml"
+        with pytest.raises(ValueError) as exc_info:
+            task_func(url)
+>       assert "XML structure does not match expected format" in str(exc_info.value)
+E       AssertionError: assert 'XML structure does not match expected format' in 'Error fetching the XML file: HTTP Error 404: Not Found'
+E        +  where 'Error fetching the XML file: HTTP Error 404: Not Found' = str(ValueError('Error fetching the XML file: HTTP Error 404: Not Found'))
+E        +    where ValueError('Error fetching the XML file: HTTP Error 404: Not Found') = <ExceptionInfo ValueError('Error fetching the XML file: HTTP Error 404: Not Found') tblen=2>.value
+
+test_1004.py:28: AssertionError
+=========================== short test summary info ============================
+FAILED test_1004.py::test_task_func_valid_url - ValueError: Error fetching th...
+FAILED test_1004.py::test_task_func_invalid_xml_syntax - AssertionError: asse...
+FAILED test_1004.py::test_task_func_empty_data - AssertionError: assert 'XML ...
+3 failed, 1 passed in 2.11s

@@ -1,0 +1,45 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test 1: Empty string input
+        with pytest.raises(ValueError):
+            task_func("")
+    
+        # Test 2: Incomplete data input
+        with pytest.raises(ValueError):
+            task_func("1234567890")
+    
+        # Test 3: Valid input
+>       df = task_func("1234567890\n1234567890\n1234567890\n1234567890\n1234567890")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0435.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+s = '1234567890\n1234567890\n1234567890\n1234567890\n1234567890', seed = 0
+
+    def task_func(s: str, seed: int = 0) -> pd.DataFrame:
+    
+        if not s:
+            raise ValueError("Incomplete data provided.")
+    
+        random.seed(seed)
+    
+        products = ["Apple", "Banana", "Orange", "Pear", "Grape"]
+        code_to_product = dict()
+    
+        data_list = []
+        segments = [segment.strip() for segment in s.split("\n")]
+        for segment in segments:
+            if segment:
+                elements = re.split(r"\s+", segment.strip(), 4)
+                if len(elements) < 5:
+>                   raise ValueError("Incomplete data provided.")
+E                   ValueError: Incomplete data provided.
+
+../../../src/src_0435.py:20: ValueError
+=========================== short test summary info ============================
+FAILED test_0435.py::test_task_func - ValueError: Incomplete data provided.
+1 failed in 1.05s

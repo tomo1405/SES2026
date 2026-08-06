@@ -1,0 +1,44 @@
+...FF                                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_random_seed ________________________
+
+setup_db = None, teardown_db = None
+
+    def test_task_func_with_random_seed(setup_db, teardown_db):
+        # Test with a specific random seed to ensure reproducibility
+        seed_value = 42
+        inserted_rows = task_func(DB_PATH, TABLE_NAME, NUM_ENTRIES, random_seed=seed_value)
+        assert inserted_rows == NUM_ENTRIES
+    
+        # Check the contents of the table to ensure consistency
+        conn = sqlite3.connect(DB_PATH)
+        cur = conn.cursor()
+>       cur.execute("SELECT * FROM {}".format(TABLE_NAME))
+E       sqlite3.OperationalError: no such table: test_table
+
+test_0536.py:58: OperationalError
+______________________ test_task_func_with_existing_table ______________________
+
+setup_db = None, teardown_db = None
+
+    def test_task_func_with_existing_table(setup_db, teardown_db):
+        # Test with an existing table
+        # First insert some data to create the table
+        task_func(DB_PATH, TABLE_NAME, NUM_ENTRIES)
+    
+        # Then try inserting more data
+        additional_entries = 5
+        inserted_rows = task_func(DB_PATH, TABLE_NAME, additional_entries)
+        assert inserted_rows == additional_entries
+    
+        # Check the total number of rows in the table
+        conn = sqlite3.connect(DB_PATH)
+        cur = conn.cursor()
+>       cur.execute("SELECT COUNT(*) FROM {}".format(TABLE_NAME))
+E       sqlite3.OperationalError: no such table: test_table
+
+test_0536.py:78: OperationalError
+=========================== short test summary info ============================
+FAILED test_0536.py::test_task_func_with_random_seed - sqlite3.OperationalErr...
+FAILED test_0536.py::test_task_func_with_existing_table - sqlite3.Operational...
+2 failed, 3 passed in 0.59s

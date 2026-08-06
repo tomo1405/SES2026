@@ -1,0 +1,45 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____________________________ test_task_func_plot ______________________________
+
+    def test_task_func_plot():
+        # Redirect stdout to capture any print statements
+        captured_output = io.StringIO()
+        sys.stdout = captured_output
+    
+        # Capture the current state of the figure before running the function
+        initial_figures = plt.get_fignums()
+    
+        # Run the function
+        task_func()
+    
+        # Restore stdout
+        sys.stdout = sys.__stdout__
+    
+        # Check that no print statements were made
+        assert captured_output.getvalue() == ""
+    
+        # Check that a new figure was created
+        final_figures = plt.get_fignums()
+        assert len(final_figures) == len(initial_figures) + 1
+    
+        # Get the last created figure
+        fig = plt.figure(final_figures[-1])
+        ax = fig.axes[0]
+    
+        # Check the title
+        assert ax.get_title() == 'y = x^2'
+    
+        # Check the labels
+        assert ax.get_xlabel() == 'x'
+        assert ax.get_ylabel() == 'y'
+    
+        # Check the grid
+>       assert ax.gridOn
+               ^^^^^^^^^
+E       AttributeError: 'Axes' object has no attribute 'gridOn'. Did you mean: '_gridOn'?
+
+test_0120.py:40: AttributeError
+=========================== short test summary info ============================
+FAILED test_0120.py::test_task_func_plot - AttributeError: 'Axes' object has ...
+1 failed in 1.53s

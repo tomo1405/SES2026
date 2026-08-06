@@ -1,0 +1,41 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        json_data = '{"key1": {"key2": [1, 2, 3, 4, 5]}}'
+        data_key = "key1.key2"
+        values, normalized_values, ax = task_func(json_data, data_key)
+    
+        assert values.equals(pd.Series([1, 2, 3, 4, 5], dtype=pd.Float64Dtype))
+        assert normalized_values.equals(pd.Series([0.0, 0.25, 0.5, 0.75, 1.0], dtype=pd.Float64Dtype))
+        assert ax.get_title() == "Comparison of Original and Normalized Data"
+        assert ax.get_xlabel() == "Index"
+        assert ax.get_ylabel() == "Value"
+>       assert ax.get_legend() == "Original Data"
+E       AssertionError: assert <matplotlib.legend.Legend object at 0x76573afa58b0> == 'Original Data'
+E        +  where <matplotlib.legend.Legend object at 0x76573afa58b0> = get_legend()
+E        +    where get_legend = <Axes: title={'center': 'Comparison of Original and Normalized Data'}, xlabel='Index', ylabel='Value'>.get_legend
+
+test_0988.py:15: AssertionError
+=============================== warnings summary ===============================
+Codellama/non-quant/tests/test_0988.py::test_task_func
+  /work/tomohiro-w/utg/src/src_0988.py:11: UserWarning: Instantiating Float64Dtype without any arguments.Pass a Float64Dtype instance to silence this warning.
+    values = pd.Series(data, dtype=pd.Float64Dtype)
+
+Codellama/non-quant/tests/test_0988.py::test_task_func
+  /work/tomohiro-w/utg/src/src_0988.py:19: UserWarning: Instantiating Float64Dtype without any arguments.Pass a Float64Dtype instance to silence this warning.
+    normalized_values = pd.Series(
+
+Codellama/non-quant/tests/test_0988.py::test_task_func
+  /work/tomohiro-w/utg/Codellama/non-quant/tests/test_0988.py:10: UserWarning: Instantiating Float64Dtype without any arguments.Pass a Float64Dtype instance to silence this warning.
+    assert values.equals(pd.Series([1, 2, 3, 4, 5], dtype=pd.Float64Dtype))
+
+Codellama/non-quant/tests/test_0988.py::test_task_func
+  /work/tomohiro-w/utg/Codellama/non-quant/tests/test_0988.py:11: UserWarning: Instantiating Float64Dtype without any arguments.Pass a Float64Dtype instance to silence this warning.
+    assert normalized_values.equals(pd.Series([0.0, 0.25, 0.5, 0.75, 1.0], dtype=pd.Float64Dtype))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0988.py::test_task_func - AssertionError: assert <matplotlib.lege...
+1 failed, 4 warnings in 3.63s

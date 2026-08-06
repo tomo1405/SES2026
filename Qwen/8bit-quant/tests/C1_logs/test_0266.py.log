@@ -1,0 +1,41 @@
+F..                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a temporary directory to store the JSON file
+        with tempfile.TemporaryDirectory() as temp_dir:
+            os.chdir(temp_dir)
+    
+            # Sample input data
+            data = {'b': 2, 'c': 3, 'd': 2}
+    
+            # Call the function
+            json_file_path = task_func(data)
+    
+            # Check if the file was created
+            assert os.path.exists(json_file_path)
+    
+            # Read the content of the JSON file
+            with open(json_file_path, 'r') as json_file:
+                content = json.load(json_file)
+    
+            # Check if the data was correctly written to the JSON file
+            expected_data = {'b': 2, 'c': 3, 'd': 2, 'a': 1}
+            assert content['data'] == expected_data
+    
+            # Check if the frequency was correctly calculated
+            expected_freq = {2: 2, 3: 1, 1: 1}
+>           assert content['freq'] == expected_freq
+E           AssertionError: assert {'2': 2, '3': 1, '1': 1} == {2: 2, 3: 1, 1: 1}
+E             
+E             Left contains 3 more items:
+E             {'1': 1, '2': 2, '3': 1}
+E             Right contains 3 more items:
+E             {1: 1, 2: 2, 3: 1}
+E             Use -v to get more diff
+
+/work/tomohiro-w/utg/Qwen/8bit-quant/tests/test_0266.py:31: AssertionError
+=========================== short test summary info ============================
+FAILED test_0266.py::test_task_func - AssertionError: assert {'2': 2, '3': 1,...
+1 failed, 2 passed in 0.43s

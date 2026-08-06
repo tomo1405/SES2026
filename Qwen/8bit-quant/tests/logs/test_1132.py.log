@@ -1,0 +1,77 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_valid_input ________________________
+
+    def test_task_func_with_valid_input():
+        # Arrange
+        mock_cursor = Mock()
+        mock_cursor.fetchall.return_value = [
+            (1, 'old_password1'),
+            (2, 'old_password2')
+        ]
+        mock_cursor.execute = MagicMock()
+    
+        salt = 'my_salt'
+    
+        # Act
+        result = task_func(salt, mock_cursor)
+    
+        # Assert
+        assert result == 2
+>       mock_cursor.execute.assert_called_with("SELECT id, password FROM users")
+
+test_1132.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='mock.execute' id='135855847023984'>
+args = ('SELECT id, password FROM users',), kwargs = {}
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\n  Actual: %s'
+                    % (expected, actual))
+            raise AssertionError(error_message)
+    
+        def _error_message():
+            msg = self._format_mock_failure_message(args, kwargs)
+            return msg
+        expected = self._call_matcher(_Call((args, kwargs), two=True))
+        actual = self._call_matcher(self.call_args)
+        if actual != expected:
+            cause = expected if isinstance(expected, Exception) else None
+>           raise AssertionError(_error_message()) from cause
+E           AssertionError: expected call not found.
+E           Expected: execute('SELECT id, password FROM users')
+E             Actual: execute("UPDATE users SET password = '7e1c5c33e2fe6478f460d89e8394bf56e7bc3a07e3cdc8952aae6765f20cd3e7' WHERE id = 2")
+
+/usr/lib/python3.12/unittest/mock.py:944: AssertionError
+_________________________ test_task_func_with_no_users _________________________
+
+    def test_task_func_with_no_users():
+        # Arrange
+        mock_cursor = Mock()
+        mock_cursor.fetchall.return_value = []
+        mock_cursor.execute = MagicMock()
+    
+        salt = 'my_salt'
+    
+        # Act
+        result = task_func(salt, mock_cursor)
+    
+        # Assert
+        assert result == 0
+        mock_cursor.execute.assert_called_with("SELECT id, password FROM users")
+>       mock_cursor.execute.assert_not_called("UPDATE users SET password = '...' WHERE id = ...")
+E       TypeError: NonCallableMock.assert_not_called() takes 1 positional argument but 2 were given
+
+test_1132.py:48: TypeError
+=========================== short test summary info ============================
+FAILED test_1132.py::test_task_func_with_valid_input - AssertionError: expect...
+FAILED test_1132.py::test_task_func_with_no_users - TypeError: NonCallableMoc...
+2 failed, 1 passed in 0.53s

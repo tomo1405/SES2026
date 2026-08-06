@@ -1,0 +1,32 @@
+....F.                                                                   [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_single_component ________________________
+
+    def test_task_func_single_component():
+        data = np.array([[1, 2], [3, 4]])
+>       df, ax = task_func(data, n_components=1)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0094.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = array([[1, 2],
+       [3, 4]]), n_components = 1
+
+    def task_func(data, n_components=2):
+        np.random.seed(42)
+        if not isinstance(n_components, int) or n_components <= 0:
+            raise ValueError("n_components must be a positive integer")
+    
+        pca = PCA(n_components=n_components)
+        transformed_data = pca.fit_transform(data)
+    
+        fig, ax = plt.subplots()
+>       ax.scatter(transformed_data[:, 0], transformed_data[:, 1])
+                                           ^^^^^^^^^^^^^^^^^^^^^^
+E       IndexError: index 1 is out of bounds for axis 1 with size 1
+
+../../../src/src_0094.py:14: IndexError
+=========================== short test summary info ============================
+FAILED test_0094.py::test_task_func_single_component - IndexError: index 1 is...
+1 failed, 5 passed in 4.24s

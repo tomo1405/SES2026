@@ -1,0 +1,119 @@
+F.F.F                                                                    [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+sample_df =   group        date  value
+0     A  2022-01-01     10
+1     B  2022-01-02     20
+2     C  2022-01-03     30
+3     D  2022-01-04     40
+4     E  2022-01-05     50
+
+    def test_task_func_valid_input(sample_df):
+>       assert isinstance(task_func(sample_df), plt.Axes)
+                          ^^^^^^^^^^^^^^^^^^^^
+
+test_0108.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df =   group        date  value
+0     A  2022-01-01     10
+1     B  2022-01-02     20
+2     C  2022-01-03     30
+3     D  2022-01-04     40
+4     E  2022-01-05     50
+n_clusters = 3, random_state = 0
+
+    def task_func(df, n_clusters=3, random_state=0):
+        if df.empty or not all(col in df.columns for col in ['group', 'date', 'value']):
+            raise ValueError("DataFrame must be non-empty and contain 'group', 'date', and 'value' columns.")
+    
+        if not pd.api.types.is_datetime64_any_dtype(df['date']):
+>           raise ValueError("'date' column must be in datetime format.")
+E           ValueError: 'date' column must be in datetime format.
+
+../../../src/src_0108.py:9: ValueError
+________________________ test_task_func_missing_columns ________________________
+
+sample_df =          date  value
+0  2022-01-01     10
+1  2022-01-02     20
+2  2022-01-03     30
+3  2022-01-04     40
+4  2022-01-05     50
+
+    def test_task_func_missing_columns(sample_df):
+        sample_df = sample_df.drop('group', axis=1)
+        with pytest.raises(ValueError) as exc_info:
+            task_func(sample_df)
+>       assert "DataFrame must contain 'group', 'date', and 'value' columns" in str(exc_info.value)
+E       assert "DataFrame must contain 'group', 'date', and 'value' columns" in "DataFrame must be non-empty and contain 'group', 'date', and 'value' columns."
+E        +  where "DataFrame must be non-empty and contain 'group', 'date', and 'value' columns." = str(ValueError("DataFrame must be non-empty and contain 'group', 'date', and 'value' columns."))
+E        +    where ValueError("DataFrame must be non-empty and contain 'group', 'date', and 'value' columns.") = <ExceptionInfo ValueError("DataFrame must be non-empty and contain 'group', 'date', and 'value' columns.") tblen=2>.value
+
+test_0108.py:28: AssertionError
+_________________________ test_task_func_kmeans_params _________________________
+
+sample_df =   group        date  value
+0     A  2022-01-01     10
+1     B  2022-01-02     20
+2     C  2022-01-03     30
+3     D  2022-01-04     40
+4     E  2022-01-05     50
+
+    def test_task_func_kmeans_params(sample_df):
+        kmeans = KMeans(n_clusters=5, random_state=42)
+>       y_kmeans = kmeans.fit_predict(sample_df[['date', 'value']])
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0108.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/sklearn/cluster/_kmeans.py:1073: in fit_predict
+    return self.fit(X, sample_weight=sample_weight).labels_
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/base.py:1403: in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/cluster/_kmeans.py:1463: in fit
+    X = validate_data(
+../../../.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:3038: in validate_data
+    out = check_array(X, input_name="X", **check_params)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:1035: in check_array
+    array = _asarray_with_order(array, order=order, dtype=dtype, xp=xp)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/utils/_array_api.py:976: in _asarray_with_order
+    array = numpy.asarray(array, order=order, dtype=dtype)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =          date  value
+0  2022-01-01     10
+1  2022-01-02     20
+2  2022-01-03     30
+3  2022-01-04     40
+4  2022-01-05     50
+dtype = dtype('float64'), copy = None
+
+    def __array__(
+        self, dtype: npt.DTypeLike | None = None, copy: bool | None = None
+    ) -> np.ndarray:
+        if copy is False and not self._mgr.is_single_block and not self.empty:
+            # check this manually, otherwise ._values will already return a copy
+            # and np.array(values, copy=False) will not raise an error
+            raise ValueError(
+                "Unable to avoid copy while creating an array as requested."
+            )
+        values = self._values
+        if copy is None:
+            # Note: branch avoids `copy=None` for NumPy 1.x support
+>           arr = np.asarray(values, dtype=dtype)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           ValueError: could not convert string to float: '2022-01-01'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:2039: ValueError
+=========================== short test summary info ============================
+FAILED test_0108.py::test_task_func_valid_input - ValueError: 'date' column m...
+FAILED test_0108.py::test_task_func_missing_columns - assert "DataFrame must ...
+FAILED test_0108.py::test_task_func_kmeans_params - ValueError: could not con...
+3 failed, 2 passed in 3.75s

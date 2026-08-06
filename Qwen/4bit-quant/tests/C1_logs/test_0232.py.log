@@ -1,0 +1,26 @@
+.F..                                                                     [100%]
+=================================== FAILURES ===================================
+___________________ test_task_func_with_single_value_object ____________________
+
+    def test_task_func_with_single_value_object():
+        obj = ValueObject(mu=5, std=2)
+        ax = task_func([obj])
+        assert isinstance(ax, plt.Axes)
+>       assert ax.get_title().startswith("Fit results: mu = 5.00")
+E       AssertionError: assert False
+E        +  where False = <built-in method startswith of str object at 0x76df1c4df9b0>('Fit results: mu = 5.00')
+E        +    where <built-in method startswith of str object at 0x76df1c4df9b0> = 'Fit results: mu = 5.54,  std = 0.00'.startswith
+E        +      where 'Fit results: mu = 5.54,  std = 0.00' = get_title()
+E        +        where get_title = <Axes: title={'center': 'Fit results: mu = 5.54,  std = 0.00'}>.get_title
+
+test_0232.py:14: AssertionError
+=============================== warnings summary ===============================
+Qwen/4bit-quant/tests/test_0232.py::test_task_func_with_empty_list
+Qwen/4bit-quant/tests/test_0232.py::test_task_func_with_single_value_object
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/scipy/stats/_distn_infrastructure.py:2079: RuntimeWarning: divide by zero encountered in divide
+    x = np.asarray((x - loc)/scale, dtype=dtyp)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0232.py::test_task_func_with_single_value_object - AssertionError...
+1 failed, 3 passed, 2 warnings in 2.72s

@@ -1,0 +1,101 @@
+F.FFF                                                                    [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_valid_csv ___________________________
+
+    def test_task_func_valid_csv():
+>       duplicates, ax = task_func("test.csv")
+                         ^^^^^^^^^^^^^^^^^^^^^
+
+test_0529.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = 'test.csv'
+
+    def task_func(file_path):
+        # Strip the file_path and then check its extension
+        file_path = file_path.strip()
+        if not file_path.lower().endswith(".csv"):
+            raise ValueError("Invalid file format. Only .csv files are accepted.")
+    
+        # Read the CSV file
+        with open(file_path, "r") as f:
+>           reader = csv.reader(f)
+                     ^^^^^^^^^^^^^
+E           TypeError: 'MockFile' object is not iterable
+
+../../../src/src_0529.py:13: TypeError
+_________________________ test_task_func_no_duplicates _________________________
+
+    def test_task_func_no_duplicates():
+>       duplicates, ax = task_func("test_no_duplicates.csv")
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0529.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0529.py:12: in task_func
+    with open(file_path, "r") as f:
+         ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = 'test_no_duplicates.csv', mode = 'r'
+
+    def mock_open(file_path, mode):
+        if file_path == "test.csv":
+            return MockFile("col1,col2\nvalue1,value2\nvalue1,value2\nvalue3,value4")
+        else:
+>           raise FileNotFoundError("File not found")
+E           FileNotFoundError: File not found
+
+test_0529.py:28: FileNotFoundError
+__________________________ test_task_func_empty_file ___________________________
+
+    def test_task_func_empty_file():
+>       duplicates, ax = task_func("empty.csv")
+                         ^^^^^^^^^^^^^^^^^^^^^^
+
+test_0529.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0529.py:12: in task_func
+    with open(file_path, "r") as f:
+         ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = 'empty.csv', mode = 'r'
+
+    def mock_open(file_path, mode):
+        if file_path == "test.csv":
+            return MockFile("col1,col2\nvalue1,value2\nvalue1,value2\nvalue3,value4")
+        else:
+>           raise FileNotFoundError("File not found")
+E           FileNotFoundError: File not found
+
+test_0529.py:28: FileNotFoundError
+__________________________ test_task_func_single_row ___________________________
+
+    def test_task_func_single_row():
+>       duplicates, ax = task_func("single_row.csv")
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0529.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0529.py:12: in task_func
+    with open(file_path, "r") as f:
+         ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = 'single_row.csv', mode = 'r'
+
+    def mock_open(file_path, mode):
+        if file_path == "test.csv":
+            return MockFile("col1,col2\nvalue1,value2\nvalue1,value2\nvalue3,value4")
+        else:
+>           raise FileNotFoundError("File not found")
+E           FileNotFoundError: File not found
+
+test_0529.py:28: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0529.py::test_task_func_valid_csv - TypeError: 'MockFile' object ...
+FAILED test_0529.py::test_task_func_no_duplicates - FileNotFoundError: File n...
+FAILED test_0529.py::test_task_func_empty_file - FileNotFoundError: File not ...
+FAILED test_0529.py::test_task_func_single_row - FileNotFoundError: File not ...
+4 failed, 1 passed in 2.13s

@@ -1,0 +1,30 @@
+......F.                                                                 [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_custom_object _______________________
+
+    def test_task_func_with_custom_object():
+        class CustomObject:
+            def __init__(self, value):
+                self.value = value
+    
+            def __eq__(self, other):
+                return self.value == other.value
+    
+        data = CustomObject(42)
+>       result = task_func(data)
+                 ^^^^^^^^^^^^^^^
+
+test_0731.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dt = <test_0731.test_task_func_with_custom_object.<locals>.CustomObject object at 0x76b98e0557f0>
+
+    def task_func(dt):
+        with open(FILE_NAME, 'wb') as file:
+>           pickle.dump(dt, file)
+E           AttributeError: Can't pickle local object 'test_task_func_with_custom_object.<locals>.CustomObject'
+
+../../../src/src_0731.py:7: AttributeError
+=========================== short test summary info ============================
+FAILED test_0731.py::test_task_func_with_custom_object - AttributeError: Can'...
+1 failed, 7 passed in 0.48s

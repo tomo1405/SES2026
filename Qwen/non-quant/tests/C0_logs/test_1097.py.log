@@ -1,0 +1,28 @@
+F...                                                                     [100%]
+=================================== FAILURES ===================================
+__________________ test_task_func_with_dollar_prefixed_words ___________________
+
+temp_file = '/tmp/tmp7j3ypjb6'
+
+    def test_task_func_with_dollar_prefixed_words(temp_file):
+        text = "This is a test $word with some $other words and $punctuation!"
+        expected_output = [os.path.abspath(temp_file), ["$word", "$other"]]
+    
+        result = task_func(text, temp_file)
+    
+        assert result == expected_output[0]
+    
+        with open(temp_file, 'r') as f:
+            reader = csv.reader(f)
+            rows = list(reader)
+    
+>       assert rows == [["Word"], ["$word"], ["$other"]]
+E       AssertionError: assert [['Word'], ['...punctuation']] == [['Word'], ['...], ['$other']]
+E         
+E         Left contains one more item: ['$punctuation']
+E         Use -v to get more diff
+
+test_1097.py:28: AssertionError
+=========================== short test summary info ============================
+FAILED test_1097.py::test_task_func_with_dollar_prefixed_words - AssertionErr...
+1 failed, 3 passed in 3.54s

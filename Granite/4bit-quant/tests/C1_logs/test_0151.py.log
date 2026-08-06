@@ -1,0 +1,28 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        product_dict = {'A': (10, 10), 'B': (5, 20), 'C': (8, 15)}
+        product_keys = list(product_dict.keys())
+        df, ax = task_func(product_dict, product_keys)
+    
+        assert isinstance(df, pd.DataFrame)
+        assert isinstance(ax, object) or ax is None
+        if df is not None:
+            assert 'Product' in df.columns
+            assert 'Quantity' in df.columns
+            assert 'Price' in df.columns
+            assert 'Profit' in df.columns
+            assert 'Average Price' in df.columns
+            assert 'Average Profit' in df.columns
+>           assert df.shape == (len(product_dict), 5)
+E           assert (3, 6) == (3, 5)
+E             
+E             At index 1 diff: 6 != 5
+E             Use -v to get more diff
+
+test_0151.py:19: AssertionError
+=========================== short test summary info ============================
+FAILED test_0151.py::test_task_func - assert (3, 6) == (3, 5)
+1 failed in 2.29s

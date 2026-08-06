@@ -1,0 +1,50 @@
+..F.F..                                                                  [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_custom_seed ________________________
+
+    def test_task_func_with_custom_seed():
+        animal_dict = {'a': 'Cat', 'b': 'Dog', 'c': 'Elephant', 'd': 'Lion', 'e': 'Tiger'}
+        reversed_dict, animal_counter = task_func(animal_dict, seed=42)
+        assert reversed_dict == {
+            'Cat': ['a'],
+            'Dog': ['b'],
+            'Elephant': ['c'],
+            'Lion': ['d'],
+            'Tiger': ['e']
+        }
+>       assert animal_counter == collections.Counter({'Cat': 3, 'Dog': 3, 'Elephant': 3, 'Lion': 3, 'Tiger': 3, 'Bear': 2, 'Giraffe': 2, 'Horse': 2, 'Rabbit': 2, 'Snake': 2, 'Zebra': 2})
+E       AssertionError: assert Counter({'Sna... 2, 'Dog': 1}) == Counter({'Cat..., 'Zebra': 2})
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Differing items:
+E         {'Horse': 9} != {'Horse': 2}
+E         {'Bear': 3} != {'Bear': 2}
+E         {'Elephant': 5} != {'Elephant': 3}
+E         {'Dog': 1} != {'Dog': 3}...
+E         
+E         ...Full output truncated (6 lines hidden), use '-vv' to show
+
+test_0385.py:42: AssertionError
+________________________ test_task_func_with_empty_dict ________________________
+
+    def test_task_func_with_empty_dict():
+        animal_dict = {}
+        reversed_dict, animal_counter = task_func(animal_dict)
+        assert reversed_dict == {}
+>       assert animal_counter == collections.Counter()
+E       AssertionError: assert Counter({'Zeb...Elephant': 1}) == Counter()
+E         
+E         Left contains 11 more items:
+E         {'Bear': 8,
+E          'Cat': 7,
+E          'Dog': 7,
+E          'Elephant': 1,
+E          'Giraffe': 7,...
+E         
+E         ...Full output truncated (7 lines hidden), use '-vv' to show
+
+test_0385.py:59: AssertionError
+=========================== short test summary info ============================
+FAILED test_0385.py::test_task_func_with_custom_seed - AssertionError: assert...
+FAILED test_0385.py::test_task_func_with_empty_dict - AssertionError: assert ...
+2 failed, 5 passed in 0.45s

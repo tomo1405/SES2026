@@ -1,0 +1,56 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+setup_directories = ('/tmp/pytest-of-tomohiro-w/pytest-2196/test_task_func0/source', '/tmp/pytest-of-tomohiro-w/pytest-2196/test_task_func0/target')
+
+    def test_task_func(setup_directories):
+        source_dir, target_dir = setup_directories
+    
+        # Run the function
+        converted_files = task_func(source_dir, target_dir)
+    
+        # Check that the correct number of files were converted
+        assert converted_files == 4
+    
+        # Check that the target directory contains the converted files
+        target_files = os.listdir(target_dir)
+>       assert len(target_files) == 4
+E       AssertionError: assert 1 == 4
+E        +  where 1 = len(['test.csv'])
+
+test_0965.py:43: AssertionError
+_________________ test_task_func_nonexistent_target_directory __________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-2196/test_task_func_nonexistent_tar0')
+
+    def test_task_func_nonexistent_target_directory(tmpdir):
+        source_dir = tmpdir.mkdir("source")
+        target_dir = "/nonexistent/target"
+    
+        # Create a test file in the source directory
+        txt_file = source_dir.join("test.txt")
+        txt_file.write("Line 1\nLine 2")
+    
+        # Run the function
+>       converted_files = task_func(str(source_dir), target_dir)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0965.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0965.py:12: in task_func
+    os.makedirs(target_directory, exist_ok=True)
+<frozen os>:215: in makedirs
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = '/nonexistent', mode = 511, exist_ok = True
+
+>   ???
+E   PermissionError: [Errno 13] Permission denied: '/nonexistent'
+
+<frozen os>:225: PermissionError
+=========================== short test summary info ============================
+FAILED test_0965.py::test_task_func - AssertionError: assert 1 == 4
+FAILED test_0965.py::test_task_func_nonexistent_target_directory - Permission...
+2 failed, 1 passed in 2.21s

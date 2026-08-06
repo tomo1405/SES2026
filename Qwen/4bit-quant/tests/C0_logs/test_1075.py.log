@@ -1,0 +1,65 @@
+FFF.F                                                                    [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_same_timezone _________________________
+
+    def test_task_func_same_timezone():
+        time_string = "25/12/23 14:30:00.000"
+        from_tz = "America/New_York"
+        to_tz = "America/New_York"
+        expected_output = "25/12/23 14:30:00.000"
+>       assert task_func(time_string, from_tz, to_tz) == expected_output
+E       AssertionError: assert '25/12/23 14:30:00.000000' == '25/12/23 14:30:00.000'
+E         
+E         - 25/12/23 14:30:00.000
+E         + 25/12/23 14:30:00.000000
+E         ?                      +++
+
+test_1075.py:11: AssertionError
+______________________ test_task_func_different_timezones ______________________
+
+    def test_task_func_different_timezones():
+        time_string = "25/12/23 14:30:00.000"
+        from_tz = "America/New_York"
+        to_tz = "Europe/London"
+        expected_output = "25/12/23 20:30:00.000"  # New York is 6 hours behind London
+>       assert task_func(time_string, from_tz, to_tz) == expected_output
+E       AssertionError: assert '25/12/23 19:30:00.000000' == '25/12/23 20:30:00.000'
+E         
+E         - 25/12/23 20:30:00.000
+E         ?          ^^
+E         + 25/12/23 19:30:00.000000
+E         ?          ^^          +++
+
+test_1075.py:18: AssertionError
+_______________________ test_task_func_dayfirst_parsing ________________________
+
+    def test_task_func_dayfirst_parsing():
+        time_string = "12/25/23 14:30:00.000"
+        from_tz = "America/New_York"
+        to_tz = "Europe/London"
+        expected_output = "25/12/23 20:30:00.000"  # Day first should be respected
+>       assert task_func(time_string, from_tz, to_tz) == expected_output
+E       AssertionError: assert '25/12/23 19:30:00.000000' == '25/12/23 20:30:00.000'
+E         
+E         - 25/12/23 20:30:00.000
+E         ?          ^^
+E         + 25/12/23 19:30:00.000000
+E         ?          ^^          +++
+
+test_1075.py:25: AssertionError
+______________________ test_task_func_invalid_time_string ______________________
+
+    def test_task_func_invalid_time_string():
+        time_string = "25-12-23 14:30:00.000"
+        from_tz = "America/New_York"
+        to_tz = "Europe/London"
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_1075.py:38: Failed
+=========================== short test summary info ============================
+FAILED test_1075.py::test_task_func_same_timezone - AssertionError: assert '2...
+FAILED test_1075.py::test_task_func_different_timezones - AssertionError: ass...
+FAILED test_1075.py::test_task_func_dayfirst_parsing - AssertionError: assert...
+FAILED test_1075.py::test_task_func_invalid_time_string - Failed: DID NOT RAI...
+4 failed, 1 passed in 0.70s

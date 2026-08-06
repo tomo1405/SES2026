@@ -1,0 +1,86 @@
+..FF                                                                     [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_url_error ___________________________
+
+url = 'https://example.com/invalid'
+
+    def task_func(url):
+        try:
+            (pub_key, priv_key) = rsa.newkeys(512)
+    
+>           response = urllib.request.urlopen(url)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../../../src/src_0585.py:8: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/urllib/request.py:215: in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:521: in open
+    response = meth(req, response)
+               ^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:630: in http_response
+    response = self.parent.error(
+/usr/lib/python3.12/urllib/request.py:559: in error
+    return self._call_chain(*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:492: in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <urllib.request.HTTPDefaultErrorHandler object at 0x776d3ec2f470>
+req = <urllib.request.Request object at 0x776d3ec75250>
+fp = <http.client.HTTPResponse object at 0x776d3ec75300>, code = 404
+msg = 'Not Found', hdrs = <http.client.HTTPMessage object at 0x776d3ec75550>
+
+    def http_error_default(self, req, fp, code, msg, hdrs):
+>       raise HTTPError(req.full_url, code, msg, hdrs, fp)
+E       urllib.error.HTTPError: HTTP Error 404: Not Found
+
+/usr/lib/python3.12/urllib/request.py:639: HTTPError
+
+The above exception was the direct cause of the following exception:
+
+    def test_task_func_url_error():
+        url = "https://example.com"
+        with pytest.raises(urllib.error.URLError) as exc_info:
+>           task_func(url + "/invalid")
+
+test_0585.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'https://example.com/invalid'
+
+    def task_func(url):
+        try:
+            (pub_key, priv_key) = rsa.newkeys(512)
+    
+            response = urllib.request.urlopen(url)
+            content = response.read()
+            hash_value = sha256(content).digest()
+    
+            signed_hash = rsa.sign(hash_value, priv_key, 'SHA-256').hex()
+    
+            return pub_key, signed_hash, hash_value
+        except urllib.error.HTTPError as e:
+>           raise ValueError(f"Server returned an HTTP error: {e.code} {e.reason}") from e
+E           ValueError: Server returned an HTTP error: 404 Not Found
+
+../../../src/src_0585.py:16: ValueError
+______________________ test_task_func_verification_error _______________________
+
+    def test_task_func_verification_error():
+        url = "https://example.com"
+        pub_key, priv_key = rsa.newkeys(512)
+        hash_value = b"example"
+        signed_hash = rsa.sign(hash_value, priv_key, 'SHA-256').hex()
+        with pytest.raises(rsa.pkcs1.VerificationError) as exc_info:
+>           task_func(url, pub_key, signed_hash, hash_value + b"1")
+E           TypeError: task_func() takes 1 positional argument but 4 were given
+
+test_0585.py:33: TypeError
+=========================== short test summary info ============================
+FAILED test_0585.py::test_task_func_url_error - ValueError: Server returned a...
+FAILED test_0585.py::test_task_func_verification_error - TypeError: task_func...
+2 failed, 2 passed in 0.95s

@@ -1,0 +1,30 @@
+EF.                                                                      [100%]
+==================================== ERRORS ====================================
+_______________________ ERROR at setup of test_task_func _______________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-2168/test_task_func0')
+
+    @pytest.fixture
+    def setup_test_directory(tmpdir):
+        # Create a temporary directory
+        temp_dir = tmpdir.mkdir("test_dir")
+        # Create some test files
+>       (temp_dir / "file1-1.csv").write_text("col1,col2\nval1,val2")
+E       TypeError: LocalPath.write_text() missing 1 required positional argument: 'encoding'
+
+test_0772.py:12: TypeError
+=================================== FAILURES ===================================
+_______________________ test_task_func_no_matching_files _______________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-2168/test_task_func_no_matching_fil0')
+
+    def test_task_func_no_matching_files(tmpdir):
+        temp_dir = tmpdir.mkdir("no_match_dir")
+>       (temp_dir / "file1.txt").write_text("This is a text file.")
+E       TypeError: LocalPath.write_text() missing 1 required positional argument: 'encoding'
+
+test_0772.py:39: TypeError
+=========================== short test summary info ============================
+FAILED test_0772.py::test_task_func_no_matching_files - TypeError: LocalPath....
+ERROR test_0772.py::test_task_func - TypeError: LocalPath.write_text() missin...
+1 failed, 1 passed, 1 error in 0.56s

@@ -1,0 +1,43 @@
+..FFF                                                                    [100%]
+=================================== FAILURES ===================================
+____________________ test_task_func_with_client_connection _____________________
+
+    def test_task_func_with_client_connection():
+        # This test is more complex and requires mocking the socket and select modules
+        # to simulate a client connection and data exchange.
+        # For simplicity, we'll just check if the function runs without errors.
+        result = task_func(run_duration=1)
+        assert "Server started on localhost:12345" in result
+>       assert "Ran for 1 second." in result
+E       AssertionError: assert 'Ran for 1 second.' in 'Server started on localhost:12345. Ran for 1 seconds.'
+
+test_1041.py:24: AssertionError
+_______________________ test_task_func_with_client_data ________________________
+
+    def test_task_func_with_client_data():
+        # Similar to the above test, this would require detailed mocking to simulate
+        # a client sending data and receiving responses.
+        result = task_func(run_duration=1)
+        assert "Server started on localhost:12345" in result
+>       assert "Ran for 1 second." in result
+E       AssertionError: assert 'Ran for 1 second.' in 'Server started on localhost:12345. Ran for 1 seconds.'
+
+test_1041.py:31: AssertionError
+_________________________ test_task_func_with_timeout __________________________
+
+    def test_task_func_with_timeout():
+        # Test that the server stops after the specified run duration.
+        start_time = datetime.now()
+        result = task_func(run_duration=1)
+        end_time = datetime.now()
+        assert (end_time - start_time) >= timedelta(seconds=1)
+        assert "Server started on localhost:12345" in result
+>       assert "Ran for 1 second." in result
+E       AssertionError: assert 'Ran for 1 second.' in 'Server started on localhost:12345. Ran for 1 seconds.'
+
+test_1041.py:40: AssertionError
+=========================== short test summary info ============================
+FAILED test_1041.py::test_task_func_with_client_connection - AssertionError: ...
+FAILED test_1041.py::test_task_func_with_client_data - AssertionError: assert...
+FAILED test_1041.py::test_task_func_with_timeout - AssertionError: assert 'Ra...
+3 failed, 2 passed in 18.50s

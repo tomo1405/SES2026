@@ -1,0 +1,31 @@
+.FFF                                                                     [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_test_size_too_small ______________________
+
+    def test_task_func_test_size_too_small():
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0771.py:11: Failed
+________________________ test_task_func_random_seed_set ________________________
+
+    def test_task_func_random_seed_set():
+        np.random.seed(42)
+        r_squared, model = task_func(num_samples=500, noise_strength=1, random_seed=42, test_size=0.2)
+>       assert r_squared > 0.9
+E       assert 0.2879619027348813 > 0.9
+
+test_0771.py:17: AssertionError
+______________________ test_task_func_random_seed_not_set ______________________
+
+    def test_task_func_random_seed_not_set():
+        r_squared, model = task_func(num_samples=500, noise_strength=1, random_seed=None, test_size=0.2)
+>       assert r_squared > 0.9
+E       assert 0.21124923735752366 > 0.9
+
+test_0771.py:22: AssertionError
+=========================== short test summary info ============================
+FAILED test_0771.py::test_task_func_test_size_too_small - Failed: DID NOT RAI...
+FAILED test_0771.py::test_task_func_random_seed_set - assert 0.28796190273488...
+FAILED test_0771.py::test_task_func_random_seed_not_set - assert 0.2112492373...
+3 failed, 1 passed in 2.92s

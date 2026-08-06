@@ -1,0 +1,37 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test 1: Empty input
+        df = pd.DataFrame()
+        with pytest.raises(ValueError):
+            task_func(df)
+    
+        # Test 2: Invalid age
+        df = pd.DataFrame({"name": ["Alice", "Bob"], "age": [-1, 20]})
+        with pytest.raises(ValueError):
+            task_func(df)
+    
+        # Test 3: Valid input
+        df = pd.DataFrame({"name": ["Alice", "Bob"], "age": [20, 30]})
+        duplicates_counter, ax = task_func(df)
+        assert duplicates_counter == Counter()
+        assert ax is None
+    
+        # Test 4: Valid input with duplicates
+        df = pd.DataFrame({"name": ["Alice", "Bob", "Alice"], "age": [20, 30, 40]})
+        duplicates_counter, ax = task_func(df)
+>       assert duplicates_counter == Counter({20: 2})
+E       assert Counter({20: 1, 40: 1}) == Counter({20: 2})
+E         
+E         Differing items:
+E         {20: 1} != {20: 2}
+E         Left contains 1 more item:
+E         {40: 1}
+E         Use -v to get more diff
+
+test_0531.py:28: AssertionError
+=========================== short test summary info ============================
+FAILED test_0531.py::test_task_func - assert Counter({20: 1, 40: 1}) == Count...
+1 failed in 3.52s

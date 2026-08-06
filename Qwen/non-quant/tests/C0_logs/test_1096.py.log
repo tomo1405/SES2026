@@ -1,0 +1,28 @@
+F...                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+setup_and_teardown = ('This is a test $word with some $punctuation! and $validWord.', '/tmp/pytest-of-tomohiro-w/pytest-1328/test_task_func0/output.txt')
+
+    def test_task_func(setup_and_teardown):
+        input_text, output_filename = setup_and_teardown
+        result = task_func(input_text, output_filename)
+    
+        assert os.path.exists(output_filename)
+        assert os.path.abspath(output_filename) == result
+    
+        with open(output_filename, 'r') as file:
+            content = file.read().strip()
+    
+        expected_output = "$word\n$validWord"
+>       assert content == expected_output
+E       AssertionError: assert '$word\n$punc...n\n$validWord' == '$word\n$validWord'
+E         
+E           $word
+E         + $punctuation
+E           $validWord
+
+test_1096.py:25: AssertionError
+=========================== short test summary info ============================
+FAILED test_1096.py::test_task_func - AssertionError: assert '$word\n$punc......
+1 failed, 3 passed in 3.31s

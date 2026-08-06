@@ -1,0 +1,33 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        date_str = '2023-01-01 12:00:00'
+        from_tz = 'America/New_York'
+        converted_date, to_tz = task_func(date_str, from_tz)
+        assert isinstance(converted_date, str)
+        assert isinstance(to_tz, str)
+        assert pytz.timezone(to_tz) in [pytz.timezone(tz) for tz in TIMEZONES]
+>       assert converted_date == '2023-01-02 00:00:00'
+E       AssertionError: assert '2023-01-01 12:00:00' == '2023-01-02 00:00:00'
+E         
+E         - 2023-01-02 00:00:00
+E         ?           ---
+E         + 2023-01-01 12:00:00
+E         ?          +++
+
+test_0627.py:15: AssertionError
+_____________________ test_task_func_with_invalid_date_str _____________________
+
+    def test_task_func_with_invalid_date_str():
+        date_str = '2023-01-01'
+        from_tz = 'America/New_York'
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0627.py:20: Failed
+=========================== short test summary info ============================
+FAILED test_0627.py::test_task_func - AssertionError: assert '2023-01-01 12:0...
+FAILED test_0627.py::test_task_func_with_invalid_date_str - Failed: DID NOT R...
+2 failed, 1 passed in 0.62s

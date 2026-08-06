@@ -1,0 +1,32 @@
+.F.                                                                      [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_non_ascii ___________________________
+
+    def test_task_func_non_ascii():
+        hex_string = "c3a9206c61206d656c616e6365"  # "é la mélancie" in hex
+        expected_output = {
+            "hex": "c3a9206c61206d656c616e6365",
+            "base64": "w6kgbGEgbWVsYW5jaWU=",
+            "utf-8": "é la mélancie",
+            "utf-16": "é la mélancie",
+            "utf-32": "é la mélancie",
+            "ASCII": "Not representable in ASCII",
+            "URL": "%C3%A9%20la%20m%C3%A9lancie",
+            "ROT13": "r y nyr zravatrq"
+        }
+>       assert task_func(hex_string) == expected_output
+E       AssertionError: assert {'hex': 'c3a9...melance', ...} == {'hex': 'c3a9...élancie', ...}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Differing items:
+E         {'URL': '%C3%A9%20la%20melance'} != {'URL': '%C3%A9%20la%20m%C3%A9lancie'}
+E         {'base64': 'w6kgbGEgbWVsYW5jZQ=='} != {'base64': 'w6kgbGEgbWVsYW5jaWU='}
+E         {'utf-8': 'é la melance'} != {'utf-8': 'é la mélancie'}
+E         {'utf-32': 'é la melance'} != {'utf-32': 'é la mélancie'}...
+E         
+E         ...Full output truncated (3 lines hidden), use '-vv' to show
+
+test_0991.py:30: AssertionError
+=========================== short test summary info ============================
+FAILED test_0991.py::test_task_func_non_ascii - AssertionError: assert {'hex'...
+1 failed, 2 passed in 0.48s

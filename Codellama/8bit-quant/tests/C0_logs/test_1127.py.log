@@ -1,0 +1,72 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        input_str = "Hello World!"
+        expected_output = "5eb63bbbe01eeed093cb22bb8f5acdc3"
+>       assert task_func(input_str) == expected_output
+E       AssertionError: assert '872e4e50ce99...a8584e9bb12c4' == '5eb63bbbe01e...b22bb8f5acdc3'
+E         
+E         - 5eb63bbbe01eeed093cb22bb8f5acdc3
+E         + 872e4e50ce9990d8b041330c47c9ddd11bec6b503ae9386a99da8584e9bb12c4
+
+test_1127.py:7: AssertionError
+______________________ test_task_func_with_special_chars _______________________
+
+    def test_task_func_with_special_chars():
+        input_str = "Hello World!@#$%^&*()_+-=[]{}|;':\"<>,./?"
+        expected_output = "5eb63bbbe01eeed093cb22bb8f5acdc3"
+>       assert task_func(input_str) == expected_output
+E       AssertionError: assert '872e4e50ce99...a8584e9bb12c4' == '5eb63bbbe01e...b22bb8f5acdc3'
+E         
+E         - 5eb63bbbe01eeed093cb22bb8f5acdc3
+E         + 872e4e50ce9990d8b041330c47c9ddd11bec6b503ae9386a99da8584e9bb12c4
+
+test_1127.py:12: AssertionError
+_______________________ test_task_func_with_empty_string _______________________
+
+    def test_task_func_with_empty_string():
+        input_str = ""
+        expected_output = ""
+>       assert task_func(input_str) == expected_output
+E       AssertionError: assert 'e3b0c44298fc...5991b7852b855' == ''
+E         
+E         + e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+
+test_1127.py:17: AssertionError
+___________________________ test_task_func_with_none ___________________________
+
+    def test_task_func_with_none():
+        input_str = None
+        expected_output = None
+>       assert task_func(input_str) == expected_output
+               ^^^^^^^^^^^^^^^^^^^^
+
+test_1127.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1127.py:4: in task_func
+    cleaned_str = re.sub('[^A-Za-z0-9]+', '', input_str)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pattern = '[^A-Za-z0-9]+', repl = '', string = None, count = 0, flags = 0
+
+    def sub(pattern, repl, string, count=0, flags=0):
+        """Return the string obtained by replacing the leftmost
+        non-overlapping occurrences of the pattern in string by the
+        replacement repl.  repl can be either a string or a callable;
+        if a string, backslash escapes in it are processed.  If it is
+        a callable, it's passed the Match object and must return
+        a replacement string to be used."""
+>       return _compile(pattern, flags).sub(repl, string, count)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: expected string or bytes-like object, got 'NoneType'
+
+/usr/lib/python3.12/re/__init__.py:186: TypeError
+=========================== short test summary info ============================
+FAILED test_1127.py::test_task_func - AssertionError: assert '872e4e50ce99......
+FAILED test_1127.py::test_task_func_with_special_chars - AssertionError: asse...
+FAILED test_1127.py::test_task_func_with_empty_string - AssertionError: asser...
+FAILED test_1127.py::test_task_func_with_none - TypeError: expected string or...
+4 failed in 0.52s

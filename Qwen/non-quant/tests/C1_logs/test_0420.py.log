@@ -1,0 +1,36 @@
+.F                                                                       [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_model_training _________________________
+
+data = (array([[0.5488135 , 0.71518937, 0.60276338, 0.54488318, 0.4236548 ],
+       [0.64589411, 0.43758721, 0.891773  , 0.96...,
+       1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0,
+       1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0]))
+
+    def test_task_func_model_training(data):
+        X, Y = data
+        model, _ = task_func(X, Y)
+    
+        # Check if the model has been trained with the correct number of epochs
+        assert model.history.epoch[-1] == 199
+    
+        # Check if the model has the correct architecture
+        layers = model.layers
+        assert len(layers) == 1
+        assert isinstance(layers[0], tf.keras.layers.Dense)
+        assert layers[0].units == 1
+>       assert layers[0].input_dim == X.shape[1]
+               ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Dense' object has no attribute 'input_dim'
+
+test_0420.py:47: AttributeError
+=============================== warnings summary ===============================
+Qwen/non-quant/tests/test_0420.py::test_task_func_output
+Qwen/non-quant/tests/test_0420.py::test_task_func_model_training
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/keras/src/layers/core/dense.py:107: UserWarning: Do not pass an `input_shape`/`input_dim` argument to a layer. When using Sequential models, prefer using an `Input(shape)` object as the first layer in the model instead.
+    super().__init__(activity_regularizer=activity_regularizer, **kwargs)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0420.py::test_task_func_model_training - AttributeError: 'Dense' ...
+1 failed, 1 passed, 2 warnings in 33.86s

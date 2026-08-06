@@ -1,0 +1,65 @@
+.F..FF.FFF                                                               [100%]
+=================================== FAILURES ===================================
+____________________ test_task_func_returns_correct_columns ____________________
+
+    def test_task_func_returns_correct_columns():
+        df = task_func()
+>       assert set(df.columns) == set(FIELDS + ['Average Grade'])
+                                      ^^^^^^
+E       NameError: name 'FIELDS' is not defined
+
+test_0309.py:11: NameError
+________________ test_task_func_returns_correct_average_grades _________________
+
+    def test_task_func_returns_correct_average_grades():
+        df = task_func()
+>       assert all(df.loc['Average', FIELDS] == df[FIELDS].mean())
+                                     ^^^^^^
+E       NameError: name 'FIELDS' is not defined
+
+test_0309.py:23: NameError
+__________ test_task_func_returns_correct_data_with_additional_fields __________
+
+    def test_task_func_returns_correct_data_with_additional_fields():
+        df = task_func(['Additional Field'])
+>       assert set(df.columns) == set(FIELDS + ['Average Grade', 'Additional Field'])
+                                      ^^^^^^
+E       NameError: name 'FIELDS' is not defined
+
+test_0309.py:27: NameError
+_____ test_task_func_returns_correct_average_grade_with_additional_fields ______
+
+    def test_task_func_returns_correct_average_grade_with_additional_fields():
+        df = task_func(['Additional Field'])
+>       assert df.loc['Average', 'Average Grade'] == df['Average Grade'].mean()
+E       assert np.float64(47.50714285714286) == np.float64(47.50714285714285)
+E        +  where np.float64(47.50714285714285) = mean()
+E        +    where mean = Student_1      67.285714\nStudent_2      33.428571\nStudent_3      65.142857\nStudent_4      48.428571\nStudent_5      38....ent_99     42.571429\nStudent_100    50.000000\nAverage        47.507143\nName: Average Grade, Length: 101, dtype: float64.mean
+
+test_0309.py:35: AssertionError
+_____ test_task_func_returns_correct_average_grades_with_additional_fields _____
+
+    def test_task_func_returns_correct_average_grades_with_additional_fields():
+        df = task_func(['Additional Field'])
+>       assert all(df.loc['Average', FIELDS] == df[FIELDS].mean())
+                                     ^^^^^^
+E       NameError: name 'FIELDS' is not defined
+
+test_0309.py:39: NameError
+_ test_task_func_returns_correct_average_grades_with_additional_fields_and_grades _
+
+    def test_task_func_returns_correct_average_grades_with_additional_fields_and_grades():
+        df = task_func(['Additional Field'])
+>       assert all(df.loc['Average', FIELDS + ['Additional Field']] == df[FIELDS + ['Additional Field']].mean())
+                                     ^^^^^^
+E       NameError: name 'FIELDS' is not defined
+
+test_0309.py:43: NameError
+=========================== short test summary info ============================
+FAILED test_0309.py::test_task_func_returns_correct_columns - NameError: name...
+FAILED test_0309.py::test_task_func_returns_correct_average_grades - NameErro...
+FAILED test_0309.py::test_task_func_returns_correct_data_with_additional_fields
+FAILED test_0309.py::test_task_func_returns_correct_average_grade_with_additional_fields
+FAILED test_0309.py::test_task_func_returns_correct_average_grades_with_additional_fields
+FAILED test_0309.py::test_task_func_returns_correct_average_grades_with_additional_fields_and_grades
+6 failed, 4 passed in 1.15s

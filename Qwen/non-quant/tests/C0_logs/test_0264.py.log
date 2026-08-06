@@ -1,0 +1,25 @@
+.F                                                                       [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_no_files ____________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1219/test_task_func_no_files0')
+
+    def test_task_func_no_files(tmpdir):
+        my_path = str(tmpdir.mkdir("empty_dir"))
+        days_old = 1
+    
+        archive_dir = task_func(my_path, days_old)
+    
+        # Check if archive directory exists
+        assert os.path.exists(archive_dir)
+    
+        # Check if no files are moved
+        for ext in ['.txt', '.csv', '.xlsx', '.docx', '.pdf']:
+>           assert not os.listdir(os.path.join(archive_dir, f"*{ext}"))
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-tomohiro-w/pytest-1219/test_task_func_no_files0/empty_dir/archive/*.txt'
+
+test_0264.py:56: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0264.py::test_task_func_no_files - FileNotFoundError: [Errno 2] N...
+1 failed, 1 passed in 0.46s

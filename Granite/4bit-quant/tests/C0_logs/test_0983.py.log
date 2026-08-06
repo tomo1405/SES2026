@@ -1,0 +1,29 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Test with default parameters
+        df = pd.DataFrame({'column': np.random.normal(size=100)})
+        ax = task_func(df, 'column')
+        assert ax.get_title() == "Normal Fit for 'column'"
+        assert ax.get_xlabel() == 'column'
+        assert ax.get_ylabel() == 'Density'
+    
+        # Test case 2: Test with custom parameters
+        df = pd.DataFrame({'column': np.random.normal(size=100)})
+        ax = task_func(df, 'column', bins=50, density=False, alpha=0.8, color='r', seed=42)
+        assert ax.get_title() == "Normal Fit for 'column'"
+        assert ax.get_xlabel() == 'column'
+>       assert ax.get_ylabel() == 'Frequency'
+E       AssertionError: assert 'Density' == 'Frequency'
+E         
+E         - Frequency
+E         + Density
+
+test_0983.py:43: AssertionError
+=========================== short test summary info ============================
+FAILED test_0983.py::test_task_func - AssertionError: assert 'Density' == 'Fr...
+1 failed in 4.34s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

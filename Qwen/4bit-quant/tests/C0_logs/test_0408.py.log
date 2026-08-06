@@ -1,0 +1,66 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1359/test_task_func0')
+
+    def test_task_func(tmpdir):
+        # Create a temporary Excel file
+        excel_dir = tmpdir.mkdir("excel")
+        excel_file_path = str(excel_dir)
+        excel_file_name = "test.xlsx"
+        wb = Workbook()
+        ws = wb.active
+        ws.append([1, 2, 3])
+        ws.append([4, 5, 6])
+        wb.save(os.path.join(excel_file_path, excel_file_name))
+    
+        # Create a temporary CSV directory
+        csv_dir = tmpdir.mkdir("csv")
+        csv_file_path = str(csv_dir)
+    
+        # Call the function
+        result = task_func(excel_file_name, excel_file_path, csv_file_path)
+    
+        # Check if the CSV file is created
+        expected_csv_file_name = "test.csv"
+        assert result == expected_csv_file_name
+        assert os.path.isfile(os.path.join(csv_file_path, expected_csv_file_name))
+    
+        # Check the content of the CSV file
+        with open(os.path.join(csv_file_path, expected_csv_file_name), 'r', encoding='utf-8') as file:
+            reader = csv.reader(file)
+            rows = list(reader)
+>           assert rows == [[1, 2, 3], [4, 5, 6]]
+E           AssertionError: assert [['1', '2', '...4', '5', '6']] == [[1, 2, 3], [4, 5, 6]]
+E             
+E             At index 0 diff: ['1', '2', '3'] != [1, 2, 3]
+E             Use -v to get more diff
+
+test_0408.py:34: AssertionError
+________________________ test_task_func_file_not_found _________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1359/test_task_func_file_not_found0')
+
+    def test_task_func_file_not_found(tmpdir):
+        # Create a temporary Excel directory without any files
+        excel_dir = tmpdir.mkdir("excel")
+        excel_file_path = str(excel_dir)
+    
+        # Create a temporary CSV directory
+        csv_dir = tmpdir.mkdir("csv")
+        csv_file_path = str(csv_dir)
+    
+        # Call the function and expect a FileNotFoundError
+        with pytest.raises(FileNotFoundError) as excinfo:
+            task_func("non_existent_file.xlsx", excel_file_path, csv_file_path)
+>       assert "[Errno 2] No such file or directory: '/tmp/pytest-of-user/pytest-0/test_task_func_file_not_found0/excel/non_existent_file.xlsx'" in str(excinfo.value)
+E       assert "[Errno 2] No such file or directory: '/tmp/pytest-of-user/pytest-0/test_task_func_file_not_found0/excel/non_existent_file.xlsx'" in "[Errno 2] No such file or directory: '/tmp/pytest-of-tomohiro-w/pytest-1359/test_task_func_file_not_found0/excel/non_existent_file.xlsx'"
+E        +  where "[Errno 2] No such file or directory: '/tmp/pytest-of-tomohiro-w/pytest-1359/test_task_func_file_not_found0/excel/non_existent_file.xlsx'" = str(FileNotFoundError("[Errno 2] No such file or directory: '/tmp/pytest-of-tomohiro-w/pytest-1359/test_task_func_file_not_found0/excel/non_existent_file.xlsx'"))
+E        +    where FileNotFoundError("[Errno 2] No such file or directory: '/tmp/pytest-of-tomohiro-w/pytest-1359/test_task_func_file_not_found0/excel/non_existent_file.xlsx'") = <ExceptionInfo FileNotFoundError("[Errno 2] No such file or directory: '/tmp/pytest-of-tomohiro-w/pytest-1359/test_task_func_file_not_found0/excel/non_existent_file.xlsx'") tblen=2>.value
+
+test_0408.py:48: AssertionError
+=========================== short test summary info ============================
+FAILED test_0408.py::test_task_func - AssertionError: assert [['1', '2', '......
+FAILED test_0408.py::test_task_func_file_not_found - assert "[Errno 2] No suc...
+2 failed in 0.87s

@@ -1,0 +1,28 @@
+..FF                                                                     [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_uniform_distribution ______________________
+
+    def test_task_func_uniform_distribution():
+        data_list = ["A", "B", "C", "D", "E", "A", "B", "C", "D", "E"]
+        ax = task_func(data_list)
+        bar_heights = ax.patches[0].get_height()
+>       assert all(h == bar_heights[0] for h in bar_heights)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: 'numpy.int64' object is not iterable
+
+test_1044.py:22: TypeError
+_______________________ test_task_func_extra_categories ________________________
+
+    def test_task_func_extra_categories():
+        data_list = ["A", "B", "C", "D", "E", "A", "B", "C", "D", "E", "F", "G"]
+        ax = task_func(data_list)
+        bar_heights = ax.patches[0].get_height()
+>       assert len(bar_heights) == len( ax.patches)
+               ^^^^^^^^^^^^^^^^
+E       TypeError: object of type 'numpy.int64' has no len()
+
+test_1044.py:28: TypeError
+=========================== short test summary info ============================
+FAILED test_1044.py::test_task_func_uniform_distribution - TypeError: 'numpy....
+FAILED test_1044.py::test_task_func_extra_categories - TypeError: object of t...
+2 failed, 2 passed in 2.24s

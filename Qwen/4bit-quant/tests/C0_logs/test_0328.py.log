@@ -1,0 +1,62 @@
+FF..                                                                     [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_default_pattern ______________________
+
+create_temp_csv_file = '/tmp/pytest-of-tomohiro-w/pytest-1349/test_task_func_with_default_pa0/test.csv'
+
+    def test_task_func_with_default_pattern(create_temp_csv_file):
+        result = task_func(create_temp_csv_file)
+        expected = {
+            'Hello': 1,
+            ',': 1,
+            'world': 1,
+            '!': 1,
+            'This': 1,
+            'is': 1,
+            'a': 1,
+            'test': 1,
+            '.': 1,
+            'Another': 1,
+            'line': 1
+        }
+>       assert result == expected
+E       AssertionError: assert {'Hello': 1, ... 'is': 1, ...} == {'Hello': 1, ..., '!': 1, ...}
+E         
+E         Omitting 7 identical items, use -vv to show
+E         Left contains 3 more items:
+E         {' ': 5, ')': 1, '. (': 1}
+E         Right contains 4 more items:
+E         {'!': 1, ',': 1, '.': 1, 'world': 1}
+E         Use -v to get more diff
+
+test_0328.py:28: AssertionError
+______________________ test_task_func_with_custom_pattern ______________________
+
+create_temp_csv_file = '/tmp/pytest-of-tomohiro-w/pytest-1349/test_task_func_with_custom_pat0/test.csv'
+
+    def test_task_func_with_custom_pattern(create_temp_csv_file):
+        custom_pattern = r'\b\w+\b'
+        result = task_func(create_temp_csv_file, custom_pattern)
+        expected = {
+            'Hello': 1,
+            'world': 1,
+            'This': 1,
+            'is': 1,
+            'a': 1,
+            'test': 1,
+            'Another': 1,
+            'line': 1
+        }
+>       assert result == expected
+E       AssertionError: assert {'Hello': 1, ..., 'a': 1, ...} == {'Hello': 1, ... 'is': 1, ...}
+E         
+E         Omitting 7 identical items, use -vv to show
+E         Right contains 1 more item:
+E         {'world': 1}
+E         Use -v to get more diff
+
+test_0328.py:43: AssertionError
+=========================== short test summary info ============================
+FAILED test_0328.py::test_task_func_with_default_pattern - AssertionError: as...
+FAILED test_0328.py::test_task_func_with_custom_pattern - AssertionError: ass...
+2 failed, 2 passed in 0.44s

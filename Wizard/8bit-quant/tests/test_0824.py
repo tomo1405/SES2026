@@ -1,0 +1,27 @@
+python
+import time
+import numpy as np
+import pytest
+
+def task_func(samples=10, delay=0.1):
+    delay_times = []
+
+    for _ in range(samples):
+        t1 = time.time()
+        time.sleep(delay)
+        t2 = time.time()
+        delay_times.append(t2 - t1)
+
+    delay_times = np.array(delay_times)
+
+    mean = np.mean(delay_times)
+    std = np.std(delay_times)
+
+    return mean, std
+
+def test_task_func():
+    mean, std = task_func()
+    assert isinstance(mean, float)
+    assert isinstance(std, float)
+    assert mean > 0
+    assert std > 0

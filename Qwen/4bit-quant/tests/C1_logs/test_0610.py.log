@@ -1,0 +1,99 @@
+FFF.F                                                                    [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_no_tuples _________________________
+
+sample_df =    A  B  C   D   E
+0  1  4  7  10  13
+1  2  5  8  11  14
+2  3  6  9  12  15
+
+    def test_task_func_with_no_tuples(sample_df):
+        tuples_to_drop = []
+        n_plots = 3
+        df, plots = task_func(sample_df, tuples_to_drop, n_plots)
+        assert len(plots) == n_plots
+>       assert all(isinstance(plot[1], pd.plotting._matplotlib.backend.PlotBase) for plot in plots)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0610.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <list_iterator object at 0x763dd8bfcfa0>
+
+>   assert all(isinstance(plot[1], pd.plotting._matplotlib.backend.PlotBase) for plot in plots)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'pandas.plotting._matplotlib' has no attribute 'backend'
+
+test_0610.py:22: AttributeError
+__________________________ test_task_func_with_tuples __________________________
+
+sample_df =    A  B  C   D   E
+0  1  4  7  10  13
+1  2  5  8  11  14
+2  3  6  9  12  15
+
+    def test_task_func_with_tuples(sample_df):
+        tuples_to_drop = [('A', 1), ('B', 5)]
+        n_plots = 2
+        df, plots = task_func(sample_df, tuples_to_drop, n_plots)
+        assert len(plots) == n_plots
+>       assert all(isinstance(plot[1], pd.plotting._matplotlib.backend.PlotBase) for plot in plots)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0610.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <list_iterator object at 0x763d8ef32e00>
+
+>   assert all(isinstance(plot[1], pd.plotting._matplotlib.backend.PlotBase) for plot in plots)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'pandas.plotting._matplotlib' has no attribute 'backend'
+
+test_0610.py:29: AttributeError
+_________________ test_task_func_with_more_plots_than_possible _________________
+
+sample_df =    A  B  C   D   E
+0  1  4  7  10  13
+1  2  5  8  11  14
+2  3  6  9  12  15
+
+    def test_task_func_with_more_plots_than_possible(sample_df):
+        tuples_to_drop = []
+        n_plots = 10  # More than possible combinations (10)
+        df, plots = task_func(sample_df, tuples_to_drop, n_plots)
+>       assert len(plots) == len(list(combinations(['A', 'B', 'C', 'D', 'E'], 2)))
+                                      ^^^^^^^^^^^^
+E       NameError: name 'combinations' is not defined
+
+test_0610.py:35: NameError
+______________________ test_task_func_with_invalid_tuples ______________________
+
+sample_df =    A  B  C   D   E
+0  1  4  7  10  13
+1  2  5  8  11  14
+2  3  6  9  12  15
+
+    def test_task_func_with_invalid_tuples(sample_df):
+        tuples_to_drop = [('X', 1), ('Y', 5)]  # Invalid tuples
+        n_plots = 2
+        df, plots = task_func(sample_df, tuples_to_drop, n_plots)
+        assert len(plots) == n_plots
+>       assert all(isinstance(plot[1], pd.plotting._matplotlib.backend.PlotBase) for plot in plots)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0610.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <list_iterator object at 0x763d911d5e70>
+
+>   assert all(isinstance(plot[1], pd.plotting._matplotlib.backend.PlotBase) for plot in plots)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'pandas.plotting._matplotlib' has no attribute 'backend'
+
+test_0610.py:50: AttributeError
+=========================== short test summary info ============================
+FAILED test_0610.py::test_task_func_with_no_tuples - AttributeError: module '...
+FAILED test_0610.py::test_task_func_with_tuples - AttributeError: module 'pan...
+FAILED test_0610.py::test_task_func_with_more_plots_than_possible - NameError...
+FAILED test_0610.py::test_task_func_with_invalid_tuples - AttributeError: mod...
+4 failed, 1 passed in 2.39s

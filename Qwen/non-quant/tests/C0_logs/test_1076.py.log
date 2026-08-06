@@ -1,0 +1,80 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a list of time strings
+        time_strings = [
+            "01/01/23 12:00:00.000000",
+            "01/01/23 12:01:00.000000",
+            "01/01/23 12:02:30.000000"
+        ]
+    
+        # Expected differences in seconds
+        expected_differences = [60, 90]
+    
+        # Capture the plot output
+        captured_output = io.BytesIO()
+        plt.switch_backend('Agg')  # Use Agg backend to prevent showing the plot
+        plt.ioff()  # Turn off interactive mode
+    
+        # Call the function
+        ax = task_func(time_strings)
+    
+        # Check if the plot has the correct number of bars
+        assert len(ax.patches) == len(expected_differences)
+    
+        # Check if the differences are correctly calculated
+        for i, bar in enumerate(ax.patches):
+            assert bar.get_height() == expected_differences[i]
+    
+        # Check if the labels and title are set correctly
+        assert ax.get_xlabel() == "Index"
+        assert ax.get_ylabel() == "Time Difference (seconds)"
+        assert ax.get_title() == "Time Differences Between Consecutive Timestamps"
+    
+        # Reset the backend and interactive mode
+>       plt.switch_backend('TkAgg')
+
+test_1076.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/matplotlib/pyplot.py:445: in switch_backend
+    module = backend_registry.load_backend_module(newbackend)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/matplotlib/backends/registry.py:317: in load_backend_module
+    return importlib.import_module(module_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1331: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:935: in _load_unlocked
+    ???
+<frozen importlib._bootstrap_external>:995: in exec_module
+    ???
+<frozen importlib._bootstrap>:488: in _call_with_frames_removed
+    ???
+../../../.venv/lib/python3.12/site-packages/matplotlib/backends/backend_tkagg.py:1: in <module>
+    from . import _backend_tk
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    import uuid
+    import weakref
+    from contextlib import contextmanager
+    import logging
+    import math
+    import os.path
+    import pathlib
+    import sys
+>   import tkinter as tk
+E   ModuleNotFoundError: No module named 'tkinter'
+
+../../../.venv/lib/python3.12/site-packages/matplotlib/backends/_backend_tk.py:9: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED test_1076.py::test_task_func - ModuleNotFoundError: No module named 't...
+1 failed in 1.88s

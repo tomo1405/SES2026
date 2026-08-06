@@ -1,0 +1,26 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+df =    Name  Age  Score
+0  John   25     80
+1  Jane   30     90
+2  John   25     85
+
+    def test_task_func(df):
+        df_result, ax_result = task_func(df)
+        assert isinstance(df_result, pd.DataFrame)
+        assert isinstance(ax_result, matplotlib.axes.Axes)
+        assert df_result.duplicated('Name').sum() == 0
+        scaler = StandardScaler()
+        df_standardized = df[['Age', 'Score']].copy()
+        df_standardized[['Age', 'Score']] = scaler.fit_transform(df_standardized[['Age', 'Score']])
+>       assert df_result[['Age', 'Score']].equals(df_standardized)
+E       assert False
+E        +  where False = equals(        Age     Score\n0 -0.707107 -1.224745\n1  1.414214  1.224745\n2 -0.707107  0.000000)
+E        +    where equals =    Age  Score\n0 -1.0   -1.0\n1  1.0    1.0.equals
+
+test_0239.py:24: AssertionError
+=========================== short test summary info ============================
+FAILED test_0239.py::test_task_func - assert False
+1 failed in 3.71s

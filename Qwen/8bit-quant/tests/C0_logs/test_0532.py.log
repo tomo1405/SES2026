@@ -1,0 +1,108 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sample_data =    x  y
+0  1  1
+1  2  2
+2  2  2
+3  3  3
+4  4  4
+5  4  4
+6  5  5
+
+    def test_task_func(sample_data):
+        duplicates_counter, unique_df, ax = task_func(sample_data, n_clusters=3, random_state=0, n_init=10)
+    
+        # Check duplicates counter
+        expected_duplicates_counter = Counter({(2, 2): 2, (4, 4): 2})
+        assert duplicates_counter == expected_duplicates_counter
+    
+        # Check unique DataFrame
+        expected_unique_data = {
+            "x": [1, 2, 3, 4, 5],
+            "y": [1, 2, 3, 4, 5]
+        }
+        expected_unique_df = pd.DataFrame(expected_unique_data)
+>       pd.testing.assert_frame_equal(unique_df[["x", "y"]], expected_unique_df)
+
+test_0532.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pandas/_libs/testing.pyx:53: in pandas._libs.testing.assert_almost_equal
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   AssertionError: DataFrame.index are different
+E   
+E   DataFrame.index values are different (60.0 %)
+E   [left]:  Index([0, 1, 3, 4, 6], dtype='int64')
+E   [right]: RangeIndex(start=0, stop=5, step=1)
+E   At positional index 2, first diff: 3 != 2
+
+pandas/_libs/testing.pyx:171: AssertionError
+_________________________ test_task_func_no_duplicates _________________________
+
+    def test_task_func_no_duplicates():
+        data = {
+            "x": [1, 2, 3, 4, 5],
+            "y": [1, 2, 3, 4, 5]
+        }
+        df = pd.DataFrame(data)
+        duplicates_counter, unique_df, ax = task_func(df, n_clusters=3, random_state=0, n_init=10)
+    
+        # Check duplicates counter
+        expected_duplicates_counter = Counter()
+        assert duplicates_counter == expected_duplicates_counter
+    
+        # Check unique DataFrame
+>       pd.testing.assert_frame_equal(unique_df, df)
+E       AssertionError: DataFrame are different
+E       
+E       DataFrame shape mismatch
+E       [left]:  (5, 3)
+E       [right]: (5, 2)
+
+test_0532.py:47: AssertionError
+_______________ test_task_func_fewer_unique_points_than_clusters _______________
+
+    def test_task_func_fewer_unique_points_than_clusters():
+        data = {
+            "x": [1, 1, 2, 2],
+            "y": [1, 1, 2, 2]
+        }
+        df = pd.DataFrame(data)
+        duplicates_counter, unique_df, ax = task_func(df, n_clusters=5, random_state=0, n_init=10)
+    
+        # Check duplicates counter
+        expected_duplicates_counter = Counter({(1, 1): 2, (2, 2): 2})
+        assert duplicates_counter == expected_duplicates_counter
+    
+        # Check unique DataFrame
+        expected_unique_data = {
+            "x": [1, 2],
+            "y": [1, 2]
+        }
+        expected_unique_df = pd.DataFrame(expected_unique_data)
+>       pd.testing.assert_frame_equal(unique_df[["x", "y"]], expected_unique_df)
+
+test_0532.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pandas/_libs/testing.pyx:53: in pandas._libs.testing.assert_almost_equal
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   AssertionError: DataFrame.index are different
+E   
+E   DataFrame.index values are different (50.0 %)
+E   [left]:  RangeIndex(start=0, stop=4, step=2)
+E   [right]: RangeIndex(start=0, stop=2, step=1)
+E   At positional index 1, first diff: 2 != 1
+
+pandas/_libs/testing.pyx:171: AssertionError
+=========================== short test summary info ============================
+FAILED test_0532.py::test_task_func - AssertionError: DataFrame.index are dif...
+FAILED test_0532.py::test_task_func_no_duplicates - AssertionError: DataFrame...
+FAILED test_0532.py::test_task_func_fewer_unique_points_than_clusters - Asser...
+3 failed in 5.17s

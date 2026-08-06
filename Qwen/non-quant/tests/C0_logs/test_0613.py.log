@@ -1,0 +1,49 @@
+FFF.F..                                                                  [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_no_teams ____________________________
+
+    def test_task_func_no_teams():
+        goals = {}
+        penalties = {}
+        result = task_func(goals, penalties)
+>       assert result.empty
+E       assert False
+E        +  where False =      Team  Goals  Penalties  Penalties Cost  Performance Score\n0  Team A      0          0               0            ...m D      0          0               0                  0\n4  Team E      0          0               0                  0.empty
+
+test_0613.py:8: AssertionError
+__________________________ test_task_func_single_team __________________________
+
+    def test_task_func_single_team():
+        goals = {'Team A': 5}
+        penalties = {'Team A': 2}
+        result = task_func(goals, penalties)
+>       assert len(result) == 1
+E       assert 5 == 1
+E        +  where 5 = len(     Team  Goals  Penalties  Penalties Cost  Performance Score\n0  Team A      5          2            1000            ...m D      0          0               0                  0\n4  Team E      0          0               0                  0)
+
+test_0613.py:14: AssertionError
+________________________ test_task_func_multiple_teams _________________________
+
+    def test_task_func_multiple_teams():
+        goals = {'Team A': 5, 'Team B': 3}
+        penalties = {'Team A': 2, 'Team B': 4}
+        result = task_func(goals, penalties)
+>       assert len(result) == 2
+E       assert 5 == 2
+E        +  where 5 = len(     Team  Goals  Penalties  Penalties Cost  Performance Score\n0  Team A      5          2             600            ...m D      0          0               0                  0\n4  Team E      0          0               0                  0)
+
+test_0613.py:26: AssertionError
+___________________________ test_task_func_all_teams ___________________________
+
+    def test_task_func_all_teams():
+>       goals = {team: i for i, team in enumerate(TEAMS)}
+                                                  ^^^^^
+E       NameError: name 'TEAMS' is not defined
+
+test_0613.py:43: NameError
+=========================== short test summary info ============================
+FAILED test_0613.py::test_task_func_no_teams - assert False
+FAILED test_0613.py::test_task_func_single_team - assert 5 == 1
+FAILED test_0613.py::test_task_func_multiple_teams - assert 5 == 2
+FAILED test_0613.py::test_task_func_all_teams - NameError: name 'TEAMS' is no...
+4 failed, 3 passed in 1.07s

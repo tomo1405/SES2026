@@ -1,0 +1,38 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        L = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        expected_common_rows = pd.DataFrame([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+        expected_dataframes = [pd.DataFrame([[1, 2, 3], [4, 5, 6], [7, 8, 9]])]
+    
+        common_rows, dataframes = task_func(L)
+    
+>       assert common_rows.equals(expected_common_rows)
+E       assert False
+E        +  where False = equals(   0  1  2\n0  1  2  3\n1  4  5  6\n2  7  8  9)
+E        +    where equals =    s  r  n\n0  1  2  3\n1  4  5  6\n6  7  8  9.equals
+
+test_0800.py:12: AssertionError
+___________________________ test_task_func_with_seed ___________________________
+
+    def test_task_func_with_seed():
+        L = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        random_seed = 42
+        seed(random_seed)
+        expected_common_rows = pd.DataFrame([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+        expected_dataframes = [pd.DataFrame([[1, 2, 3], [4, 5, 6], [7, 8, 9]])]
+    
+        common_rows, dataframes = task_func(L, random_seed=random_seed)
+    
+>       assert common_rows.equals(expected_common_rows)
+E       assert False
+E        +  where False = equals(   0  1  2\n0  1  2  3\n1  4  5  6\n2  7  8  9)
+E        +    where equals =    q  a  h\n0  1  2  3\n1  7  8  9\n5  4  5  6.equals
+
+test_0800.py:24: AssertionError
+=========================== short test summary info ============================
+FAILED test_0800.py::test_task_func - assert False
+FAILED test_0800.py::test_task_func_with_seed - assert False
+2 failed, 1 passed in 1.35s

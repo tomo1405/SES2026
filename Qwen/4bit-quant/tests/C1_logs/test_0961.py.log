@@ -1,0 +1,27 @@
+....F.F                                                                  [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_space_characters _____________________
+
+    def test_task_func_with_space_characters():
+        result = task_func("Hello World!")
+        spaces = [i for i, c in enumerate(result) if c in string.ascii_lowercase + string.digits]
+>       assert len(spaces) == 1
+E       assert 11 == 1
+E        +  where 11 = len([0, 1, 2, 3, 4, 5, ...])
+
+test_0961.py:28: AssertionError
+_____________________ test_task_func_with_mixed_characters _____________________
+
+    def test_task_func_with_mixed_characters():
+        result = task_func("H3llo W0rld!")
+        assert all(c.islower() for c in result if c in string.ascii_lowercase)
+        assert all(c.isdigit() for c in result if c in string.digits)
+>       assert len([c for c in result if c in string.ascii_lowercase + string.digits]) == 1
+E       AssertionError: assert 11 == 1
+E        +  where 11 = len(['r', '7', 'm', 'u', 'h', 'y', ...])
+
+test_0961.py:39: AssertionError
+=========================== short test summary info ============================
+FAILED test_0961.py::test_task_func_with_space_characters - assert 11 == 1
+FAILED test_0961.py::test_task_func_with_mixed_characters - AssertionError: a...
+2 failed, 5 passed in 0.49s

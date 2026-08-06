@@ -1,0 +1,35 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        cpu_usage = psutil.cpu_percent(interval=1)
+        memory_info = psutil.virtual_memory()
+        disk_usage = psutil.disk_usage(os.sep)
+    
+        table = Texttable()
+        table.add_rows([
+            ['Item', 'Value'],
+            ['CPU Usage (%)', cpu_usage],
+            ['Memory Usage (%)', memory_info.percent],
+            ['Disk Usage (%)', disk_usage.percent]
+        ])
+        expected_output = table.draw()
+    
+        actual_output = task_func()
+    
+>       assert actual_output == expected_output
+E       AssertionError: assert '+-----------...---+--------+' == '+-----------...---+--------+'
+E         
+E         Skipping 102 identical leading characters in diff, use -v to show
+E         Skipping 144 identical trailing characters in diff, use -v to show
+E         - (%)    | 0      |
+E         ?           ^^^^
+E         + (%)    | 0.200  |
+E         ?           ^^^^
+E           +----
+
+test_0378.py:23: AssertionError
+=========================== short test summary info ============================
+FAILED test_0378.py::test_task_func - AssertionError: assert '+-----------......
+1 failed in 2.51s

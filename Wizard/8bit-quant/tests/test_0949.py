@@ -1,0 +1,23 @@
+python
+import numpy as np
+import pytest
+from sklearn.preprocessing import MinMaxScaler
+
+def task_func(rows=3, columns=2, seed=42):
+    np.random.seed(seed) # Ensure reproducibility for consistent outputs across different runs
+    matrix = np.random.rand(rows, columns)
+    scaler = MinMaxScaler()
+    scaled_matrix = scaler.fit_transform(matrix)
+
+    return scaled_matrix
+
+def test_task_func():
+    # Test case 1: Test with default arguments
+    assert task_func().shape == (3, 2)
+
+    # Test case 2: Test with custom arguments
+    assert task_func(rows=5, columns=3, seed=10).shape == (5, 3)
+
+    # Test case 3: Test with invalid arguments
+    with pytest.raises(ValueError):
+        task_func(rows=0, columns=2, seed=42)

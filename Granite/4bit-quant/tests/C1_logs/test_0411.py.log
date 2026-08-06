@@ -1,0 +1,87 @@
+F.FF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        excel_directory = "path/to/excel/directory"
+        file_name = "example.xlsx"
+        column_name = "Date"
+        start_date = "2022-01-01"
+        end_date = "2022-01-31"
+        expected_output = pd.DataFrame({
+            "Date": ["2022-01-01", "2022-01-02", "2022-01-03"],
+            "Value": [10, 20, 30]
+        })
+    
+>       actual_output = task_func(excel_directory, file_name, column_name, start_date, end_date)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0411.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+excel_directory = 'path/to/excel/directory', file_name = 'example.xlsx'
+column_name = 'Date', start_date = '2022-01-01', end_date = '2022-01-31'
+
+    def task_func(excel_directory: str, file_name: str, column_name: str, start_date: str, end_date: str) -> pd.DataFrame:
+        excel_file = os.path.join(excel_directory, file_name)
+        if not os.path.exists(excel_file):
+>           raise FileNotFoundError(f"The file {excel_file} does not exist.")
+E           FileNotFoundError: The file path/to/excel/directory/example.xlsx does not exist.
+
+../../../src/src_0411.py:7: FileNotFoundError
+_________________________ test_column_not_found_error __________________________
+
+    def test_column_not_found_error():
+        excel_directory = "path/to/excel/directory"
+        file_name = "example.xlsx"
+        column_name = "Invalid Column"
+        start_date = "2022-01-01"
+        end_date = "2022-01-31"
+    
+        with pytest.raises(ValueError) as e:
+>           task_func(excel_directory, file_name, column_name, start_date, end_date)
+
+test_0411.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+excel_directory = 'path/to/excel/directory', file_name = 'example.xlsx'
+column_name = 'Invalid Column', start_date = '2022-01-01'
+end_date = '2022-01-31'
+
+    def task_func(excel_directory: str, file_name: str, column_name: str, start_date: str, end_date: str) -> pd.DataFrame:
+        excel_file = os.path.join(excel_directory, file_name)
+        if not os.path.exists(excel_file):
+>           raise FileNotFoundError(f"The file {excel_file} does not exist.")
+E           FileNotFoundError: The file path/to/excel/directory/example.xlsx does not exist.
+
+../../../src/src_0411.py:7: FileNotFoundError
+____________________________ test_date_format_error ____________________________
+
+    def test_date_format_error():
+        excel_directory = "path/to/excel/directory"
+        file_name = "example.xlsx"
+        column_name = "Date"
+        start_date = "2022/01/01"
+        end_date = "2022/01/31"
+    
+        with pytest.raises(ValueError) as e:
+>           task_func(excel_directory, file_name, column_name, start_date, end_date)
+
+test_0411.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+excel_directory = 'path/to/excel/directory', file_name = 'example.xlsx'
+column_name = 'Date', start_date = '2022/01/01', end_date = '2022/01/31'
+
+    def task_func(excel_directory: str, file_name: str, column_name: str, start_date: str, end_date: str) -> pd.DataFrame:
+        excel_file = os.path.join(excel_directory, file_name)
+        if not os.path.exists(excel_file):
+>           raise FileNotFoundError(f"The file {excel_file} does not exist.")
+E           FileNotFoundError: The file path/to/excel/directory/example.xlsx does not exist.
+
+../../../src/src_0411.py:7: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0411.py::test_task_func - FileNotFoundError: The file path/to/exc...
+FAILED test_0411.py::test_column_not_found_error - FileNotFoundError: The fil...
+FAILED test_0411.py::test_date_format_error - FileNotFoundError: The file pat...
+3 failed, 1 passed in 1.21s

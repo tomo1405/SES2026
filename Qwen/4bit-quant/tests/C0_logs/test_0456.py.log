@@ -1,0 +1,63 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_plot = <test_0456.MockPlot object at 0x7a13c2701e50>
+
+    def test_task_func(mock_plot):
+        mean = 0
+        std_dev = 1
+        n = 1000
+        samples = task_func(mean, std_dev, n)
+    
+        # Check if the number of samples is correct
+        assert len(samples) == n
+    
+        # Check if the samples are approximately normally distributed
+>       _, p_value = stats.kstest(samples, 'norm', args=(mean, std_dev))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0456.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:601: in axis_nan_policy_wrapper
+    res = hypotest_fun_out(*samples, **kwds)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/scipy/_lib/_util.py:880: in wrapper
+    return fun(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/scipy/stats/_stats_py.py:8413: in kstest
+    return ks_1samp(xvals, cdf, args=args, alternative=alternative,
+../../../.venv/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:431: in axis_nan_policy_wrapper
+    return hypotest_fun_in(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/scipy/_lib/_util.py:880: in wrapper
+    return fun(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/scipy/stats/_stats_py.py:7660: in ks_1samp
+    cdfvals = _masked_apply(cdf, args=(x, *args), xp=xp)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+f = <ufunc 'ndtr'>
+args = (array([-3.35982331e+00, -3.21835354e+00, -3.17542992e+00, -3.16744312e+00,
+       -3.02261800e+00, -2.91930239e+00, -...0,  2.44358464e+00,  2.52108036e+00,
+        2.56070994e+00,  2.61171627e+00,  3.02087046e+00,  3.34914977e+00]), 0, 1)
+kwargs = {}
+xp = <module 'scipy._external.array_api_compat.numpy' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/scipy/_external/array_api_compat/numpy/__init__.py'>
+
+    def _masked_apply(f, *, args, kwargs=None, xp):
+        # Unmask array arguments, evaluate function, and apply result mask to outputs.
+        # Assumes that when `xp` is an MArray namespace, there is at least one MArray
+        # in `args`/`kwargs` and MArrays are the only objects in `args`/`kwargs` with
+        # `data` and `mask` attributes. Could/should combine with `xpx.lazy_apply`.
+        kwargs = {} if kwargs is None else kwargs
+    
+        if not is_marray(xp):
+>           return f(*args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^
+E           TypeError: ndtr() takes from 1 to 2 positional arguments but 3 were given
+
+../../../.venv/lib/python3.12/site-packages/scipy/_lib/_array_api.py:695: TypeError
+=========================== short test summary info ============================
+FAILED test_0456.py::test_task_func - TypeError: ndtr() takes from 1 to 2 pos...
+1 failed in 3.22s

@@ -1,0 +1,45 @@
+.F..F                                                                    [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_empty_arrays __________________________
+
+    def test_task_func_empty_arrays():
+        result = task_func(np.array([]), np.array([]))
+>       assert result == (None, np.array([]))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: The truth value of an empty array is ambiguous. Use `array.size > 0` to check that an array is not empty.
+
+test_0357.py:15: ValueError
+----------------------------- Captured stdout call -----------------------------
+Empty x or y array provided.
+_______________________ test_task_func_phase_calculation _______________________
+
+    def test_task_func_phase_calculation():
+        x = np.array([0, 1])
+        y = np.array([0, 1])
+        _, Z = task_func(x, y)
+        expected_Z = np.array([
+            [0., np.pi],
+            [np.pi/2, np.pi/2]
+        ])
+>       np.testing.assert_almost_equal(Z, expected_Z, decimal=6)
+E       AssertionError: 
+E       Arrays are not almost equal to 6 decimals
+E       
+E       Mismatched elements: 4 / 4 (100%)
+E       Mismatch at indices:
+E        [0, 0]: 3.141592653589793 (ACTUAL), 0.0 (DESIRED)
+E        [0, 1]: 0.0 (ACTUAL), 3.141592653589793 (DESIRED)
+E        [1, 0]: 3.141592653589793 (ACTUAL), 1.5707963267948966 (DESIRED)
+E        [1, 1]: 2.0344439357957027 (ACTUAL), 1.5707963267948966 (DESIRED)
+E       Max absolute difference among violations: 3.14159265
+E       Max relative difference among violations: 1.
+E        ACTUAL: array([[3.141593, 0.      ],
+E              [3.141593, 2.034444]])
+E        DESIRED: array([[0.      , 3.141593],
+E              [1.570796, 1.570796]])
+
+test_0357.py:37: AssertionError
+=========================== short test summary info ============================
+FAILED test_0357.py::test_task_func_empty_arrays - ValueError: The truth valu...
+FAILED test_0357.py::test_task_func_phase_calculation - AssertionError: 
+2 failed, 3 passed in 1.58s

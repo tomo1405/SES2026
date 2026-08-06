@@ -1,0 +1,42 @@
+F.FF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data = {'column': ['This is a test sentence with some stopwords']}
+        df = task_func(data, 'column')
+        assert isinstance(df, pd.DataFrame)
+>       assert df['column'][0] == 'test sentence some'
+E       AssertionError: assert 'test sentence stopwords' == 'test sentence some'
+E         
+E         - test sentence some
+E         ?                 ^^
+E         + test sentence stopwords
+E         ?                + ^^^^^^
+
+test_0923.py:24: AssertionError
+_________________________ test_task_func_no_stopwords __________________________
+
+    def test_task_func_no_stopwords():
+        data = {'column': ['This is a test sentence without any stopwords']}
+        df = task_func(data, 'column')
+        assert isinstance(df, pd.DataFrame)
+>       assert df['column'][0] == 'This is a test sentence without any'
+E       AssertionError: assert 'test sentenc...out stopwords' == 'This is a te...e without any'
+E         
+E         - This is a test sentence without any
+E         + test sentence without stopwords
+
+test_0923.py:36: AssertionError
+________________________ test_task_func_invalid_column _________________________
+
+    def test_task_func_invalid_column():
+>       with pytest.raises(KeyError):
+E       Failed: DID NOT RAISE KeyError
+
+test_0923.py:39: Failed
+=========================== short test summary info ============================
+FAILED test_0923.py::test_task_func - AssertionError: assert 'test sentence s...
+FAILED test_0923.py::test_task_func_no_stopwords - AssertionError: assert 'te...
+FAILED test_0923.py::test_task_func_invalid_column - Failed: DID NOT RAISE Ke...
+3 failed, 1 passed in 1.13s

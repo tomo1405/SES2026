@@ -1,0 +1,177 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_with_empty_df _________________________
+
+    def test_task_func_with_empty_df():
+        # Create an empty DataFrame
+        df = pd.DataFrame()
+    
+        # Specify the column to drop (doesn't matter since the DF is empty)
+        col_to_drop = 'A'
+    
+        # Expected result after dropping column 'A' and adding 'IsEvenIndex'
+        expected_data = {'IsEvenIndex': []}
+        expected_df = pd.DataFrame(expected_data)
+    
+        # Call the function
+>       result_df = task_func(df, col_to_drop)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0685.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0685.py:5: in task_func
+    updated_df = pd.DataFrame(df).drop(col, axis=1)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:6300: in drop
+    return super().drop(
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:4644: in drop
+    obj = obj._drop_axis(labels, axis, level=level, errors=errors)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:4686: in _drop_axis
+    new_axis = axis.drop(labels, errors=errors)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = RangeIndex(start=0, stop=0, step=1), labels = array(['A'], dtype=object)
+errors = 'raise'
+
+    def drop(
+        self,
+        labels: Index | np.ndarray | Iterable[Hashable],
+        errors: IgnoreRaise = "raise",
+    ) -> Index:
+        """
+        Make new Index with passed list of labels deleted.
+    
+        Parameters
+        ----------
+        labels : array-like or scalar
+            Array-like object or a scalar value, representing the labels to be removed
+            from the Index.
+        errors : {'ignore', 'raise'}, default 'raise'
+            If 'ignore', suppress error and existing labels are dropped.
+    
+        Returns
+        -------
+        Index
+            Will be same type as self, except for RangeIndex.
+    
+        Raises
+        ------
+        KeyError
+            If not all of the labels are found in the selected axis
+    
+        See Also
+        --------
+        Index.dropna : Return Index without NA/NaN values.
+        Index.drop_duplicates : Return Index with duplicate values removed.
+    
+        Examples
+        --------
+        >>> idx = pd.Index(["a", "b", "c"])
+        >>> idx.drop(["a"])
+        Index(['b', 'c'], dtype='str')
+        """
+        if not isinstance(labels, Index):
+            # avoid materializing e.g. RangeIndex
+            arr_dtype = "object" if self.dtype == "object" else None
+            labels = com.index_labels_to_array(labels, dtype=arr_dtype)
+    
+        indexer = self.get_indexer_for(labels)
+        mask = indexer == -1
+        if mask.any():
+            if errors != "ignore":
+>               raise KeyError(f"{labels[mask].tolist()} not found in axis")
+E               KeyError: "['A'] not found in axis"
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py:7268: KeyError
+____________________ test_task_func_with_nonexistent_column ____________________
+
+    def test_task_func_with_nonexistent_column():
+        # Create a sample DataFrame
+        data = {'A': [1, 2, 3], 'B': [4, 5, 6]}
+        df = pd.DataFrame(data)
+    
+        # Specify a non-existent column to drop
+        col_to_drop = 'C'
+    
+        # Expected result after trying to drop non-existent column 'C' and adding 'IsEvenIndex'
+        expected_data = {'A': [1, 2, 3], 'B': [4, 5, 6], 'IsEvenIndex': [True, False, True]}
+        expected_df = pd.DataFrame(expected_data)
+    
+        # Call the function
+>       result_df = task_func(df, col_to_drop)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0685.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0685.py:5: in task_func
+    updated_df = pd.DataFrame(df).drop(col, axis=1)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:6300: in drop
+    return super().drop(
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:4644: in drop
+    obj = obj._drop_axis(labels, axis, level=level, errors=errors)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:4686: in _drop_axis
+    new_axis = axis.drop(labels, errors=errors)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Index(['A', 'B'], dtype='str'), labels = array(['C'], dtype=object)
+errors = 'raise'
+
+    def drop(
+        self,
+        labels: Index | np.ndarray | Iterable[Hashable],
+        errors: IgnoreRaise = "raise",
+    ) -> Index:
+        """
+        Make new Index with passed list of labels deleted.
+    
+        Parameters
+        ----------
+        labels : array-like or scalar
+            Array-like object or a scalar value, representing the labels to be removed
+            from the Index.
+        errors : {'ignore', 'raise'}, default 'raise'
+            If 'ignore', suppress error and existing labels are dropped.
+    
+        Returns
+        -------
+        Index
+            Will be same type as self, except for RangeIndex.
+    
+        Raises
+        ------
+        KeyError
+            If not all of the labels are found in the selected axis
+    
+        See Also
+        --------
+        Index.dropna : Return Index without NA/NaN values.
+        Index.drop_duplicates : Return Index with duplicate values removed.
+    
+        Examples
+        --------
+        >>> idx = pd.Index(["a", "b", "c"])
+        >>> idx.drop(["a"])
+        Index(['b', 'c'], dtype='str')
+        """
+        if not isinstance(labels, Index):
+            # avoid materializing e.g. RangeIndex
+            arr_dtype = "object" if self.dtype == "object" else None
+            labels = com.index_labels_to_array(labels, dtype=arr_dtype)
+    
+        indexer = self.get_indexer_for(labels)
+        mask = indexer == -1
+        if mask.any():
+            if errors != "ignore":
+>               raise KeyError(f"{labels[mask].tolist()} not found in axis")
+E               KeyError: "['C'] not found in axis"
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py:7268: KeyError
+=========================== short test summary info ============================
+FAILED test_0685.py::test_task_func_with_empty_df - KeyError: "['A'] not foun...
+FAILED test_0685.py::test_task_func_with_nonexistent_column - KeyError: "['C'...
+2 failed, 1 passed in 1.68s

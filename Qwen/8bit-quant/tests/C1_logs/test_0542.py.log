@@ -1,0 +1,29 @@
+F..                                                                      [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_existing_package ________________________
+
+    def test_task_func_existing_package():
+        # Assuming 'os' is a package that exists and is always available
+>       result = task_func('os')
+                 ^^^^^^^^^^^^^^^
+
+test_0542.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+package_name = 'os'
+
+    def task_func(package_name):
+        added_modules = []
+        try:
+            package = importlib.import_module(package_name)
+        except ImportError:
+            raise ImportError(f"The package '{package_name}' is not installed! Please install the package first using 'pip install {package_name}'")
+    
+>       for _, module_name, _ in iter_modules(package.__path__):
+                                              ^^^^^^^^^^^^^^^^
+E       AttributeError: module 'os' has no attribute '__path__'. Did you mean: '__all__'?
+
+../../../src/src_0542.py:12: AttributeError
+=========================== short test summary info ============================
+FAILED test_0542.py::test_task_func_existing_package - AttributeError: module...
+1 failed, 2 passed in 0.50s

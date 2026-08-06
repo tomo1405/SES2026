@@ -1,0 +1,84 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_show = <MagicMock name='show' id='139454713878704'>
+mock_sample = <MagicMock name='sample' id='139454617080640'>
+sample_df =    A  B   C   D   E
+0  1  5   9  13  17
+1  2  6  10  14  18
+2  3  7  11  15  19
+3  4  8  12  16  20
+sample_tuples = [(1, 5), (3, 7)]
+
+    @patch('src_0612.sample')
+    @patch('matplotlib.pyplot.show')
+    def test_task_func(mock_show, mock_sample, sample_df, sample_tuples):
+        mock_sample.return_value = ['A', 'B']
+    
+        result_df, plot_details = task_func(sample_df, sample_tuples, 2)
+    
+        # Check that the correct number of rows are removed
+>       assert len(result_df) == 2
+E       assert 4 == 2
+E        +  where 4 = len(   A  B   C   D   E\n0  1  5   9  13  17\n1  2  6  10  14  18\n2  3  7  11  15  19\n3  4  8  12  16  20)
+
+test_0612.py:29: AssertionError
+________________________ test_task_func_no_rows_removed ________________________
+
+mock_show = <MagicMock name='show' id='139453542214896'>
+mock_sample = <MagicMock name='sample' id='139453542212064'>
+sample_df =    A  B   C   D   E
+0  1  5   9  13  17
+1  2  6  10  14  18
+2  3  7  11  15  19
+3  4  8  12  16  20
+sample_tuples = [(1, 5), (3, 7)]
+
+    @patch('src_0612.sample')
+    @patch('matplotlib.pyplot.show')
+    def test_task_func_no_rows_removed(mock_show, mock_sample, sample_df, sample_tuples):
+        mock_sample.return_value = ['A', 'B']
+    
+        result_df, plot_details = task_func(sample_df, [(5, 6), (7, 8)], 2)
+    
+        # Check that no rows are removed
+        assert len(result_df) == 4
+    
+        # Check that the correct columns are plotted
+>       assert plot_details == [('A', 'B')]
+E       AssertionError: assert [('A', 'B'), ('A', 'B')] == [('A', 'B')]
+E         
+E         Left contains one more item: ('A', 'B')
+E         Use -v to get more diff
+
+test_0612.py:51: AssertionError
+__________________________ test_task_func_zero_plots ___________________________
+
+mock_show = <MagicMock name='show' id='139453506706880'>
+mock_sample = <MagicMock name='sample' id='139453506713600'>
+sample_df =    A  B   C   D   E
+0  1  5   9  13  17
+1  2  6  10  14  18
+2  3  7  11  15  19
+3  4  8  12  16  20
+sample_tuples = [(1, 5), (3, 7)]
+
+    @patch('src_0612.sample')
+    @patch('matplotlib.pyplot.show')
+    def test_task_func_zero_plots(mock_show, mock_sample, sample_df, sample_tuples):
+        mock_sample.return_value = ['A', 'B']
+    
+        result_df, plot_details = task_func(sample_df, sample_tuples, 0)
+    
+        # Check that the correct number of rows are removed
+>       assert len(result_df) == 2
+E       assert 4 == 2
+E        +  where 4 = len(   A  B   C   D   E\n0  1  5   9  13  17\n1  2  6  10  14  18\n2  3  7  11  15  19\n3  4  8  12  16  20)
+
+test_0612.py:67: AssertionError
+=========================== short test summary info ============================
+FAILED test_0612.py::test_task_func - assert 4 == 2
+FAILED test_0612.py::test_task_func_no_rows_removed - AssertionError: assert ...
+FAILED test_0612.py::test_task_func_zero_plots - assert 4 == 2
+3 failed in 2.13s

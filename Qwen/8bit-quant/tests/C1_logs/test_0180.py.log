@@ -1,0 +1,27 @@
+...FF                                                                    [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_tfidf_scores __________________________
+
+    def test_task_func_tfidf_scores():
+        df = create_mock_df()
+        ax = task_func(df)
+>       assert len(ax.patches) == len(TfidfVectorizer().fit_transform(df['Content']).get_feature_names_out())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'csr_matrix' object has no attribute 'get_feature_names_out'
+
+test_0180.py:42: AttributeError
+_______________________ test_task_func_labels_and_ticks ________________________
+
+    def test_task_func_labels_and_ticks():
+        df = create_mock_df()
+        ax = task_func(df)
+        assert ax.get_ylabel() == 'TF-IDF Score'
+>       assert all([tick.get_rotation() == 'vertical' for tick in ax.get_xticklabels()])
+E       assert False
+E        +  where False = all([False, False, False, False, False, False, ...])
+
+test_0180.py:48: AssertionError
+=========================== short test summary info ============================
+FAILED test_0180.py::test_task_func_tfidf_scores - AttributeError: 'csr_matri...
+FAILED test_0180.py::test_task_func_labels_and_ticks - assert False
+2 failed, 3 passed in 4.07s

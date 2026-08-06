@@ -1,0 +1,63 @@
+F.FF                                                                     [100%]
+=================================== FAILURES ===================================
+____________________ test_task_func_with_existing_directory ____________________
+
+    def test_task_func_with_existing_directory():
+        directory = "/fake/directory"
+>       os.makedirs(directory)
+
+test_0780.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<frozen os>:215: in makedirs
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = '/fake', mode = 511, exist_ok = False
+
+>   ???
+E   PermissionError: [Errno 13] Permission denied: '/fake'
+
+<frozen os>:225: PermissionError
+_____________________ test_task_func_with_permission_error _____________________
+
+    def test_task_func_with_permission_error():
+        directory = "/permission/denied/directory"
+>       os.makedirs(directory)
+
+test_0780.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<frozen os>:215: in makedirs
+    ???
+<frozen os>:215: in makedirs
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = '/permission', mode = 511, exist_ok = False
+
+>   ???
+E   PermissionError: [Errno 13] Permission denied: '/permission'
+
+<frozen os>:225: PermissionError
+________________________ test_task_func_with_exception _________________________
+
+    def test_task_func_with_exception():
+        directory = "/exception/directory"
+>       os.makedirs(directory)
+
+test_0780.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<frozen os>:215: in makedirs
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = '/exception', mode = 511, exist_ok = False
+
+>   ???
+E   PermissionError: [Errno 13] Permission denied: '/exception'
+
+<frozen os>:225: PermissionError
+=========================== short test summary info ============================
+FAILED test_0780.py::test_task_func_with_existing_directory - PermissionError...
+FAILED test_0780.py::test_task_func_with_permission_error - PermissionError: ...
+FAILED test_0780.py::test_task_func_with_exception - PermissionError: [Errno ...
+3 failed, 1 passed in 0.52s

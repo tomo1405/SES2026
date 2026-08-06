@@ -1,0 +1,66 @@
+F.F..F                                                                   [100%]
+=================================== FAILURES ===================================
+_____________________________ test_task_func_basic _____________________________
+
+    def test_task_func_basic():
+        data = {
+            'col1': [1, 2, 3, 4, 5],
+            'col2': [5, 4, 3, 2, 1]
+        }
+        df = pd.DataFrame(data)
+        result = task_func(df, 'col1', 'col2')
+>       assert len(result) == 10  # Since N=10 and there are only 5 elements, it should return all indices
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert 5 == 10
+E        +  where 5 = len([0, 4, 1, 3, 2])
+
+test_0791.py:13: AssertionError
+_____________________ test_task_func_with_identical_values _____________________
+
+    def test_task_func_with_identical_values():
+        data = {
+            'col1': [1, 1, 1, 1, 1],
+            'col2': [1, 1, 1, 1, 1]
+        }
+        df = pd.DataFrame(data)
+        result = task_func(df, 'col1', 'col2')
+>       assert len(result) == 10  # Since N=10 and there are only 5 elements, it should return all indices
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert 5 == 10
+E        +  where 5 = len([0, 1, 2, 3, 4])
+
+test_0791.py:33: AssertionError
+______________________ test_task_func_with_all_nan_values ______________________
+
+    def test_task_func_with_all_nan_values():
+        data = {
+            'col1': [np.nan, np.nan, np.nan, np.nan, np.nan],
+            'col2': [np.nan, np.nan, np.nan, np.nan, np.nan]
+        }
+        df = pd.DataFrame(data)
+        result = task_func(df, 'col1', 'col2')
+>       assert len(result) == 10  # Since N=10 and there are only 5 elements, it should return all indices
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert 5 == 10
+E        +  where 5 = len([0, 1, 2, 3, 4])
+
+test_0791.py:58: AssertionError
+=============================== warnings summary ===============================
+Qwen/non-quant/tests/test_0791.py::test_task_func_with_all_nan_values
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/sklearn/utils/extmath.py:1211: RuntimeWarning: invalid value encountered in divide
+    updated_mean = (last_sum + new_sum) / updated_sample_count
+
+Qwen/non-quant/tests/test_0791.py::test_task_func_with_all_nan_values
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/sklearn/utils/extmath.py:1216: RuntimeWarning: invalid value encountered in divide
+    T = new_sum / new_sample_count
+
+Qwen/non-quant/tests/test_0791.py::test_task_func_with_all_nan_values
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/sklearn/utils/extmath.py:1240: RuntimeWarning: invalid value encountered in divide
+    new_unnormalized_variance -= correction**2 / new_sample_count
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0791.py::test_task_func_basic - assert 5 == 10
+FAILED test_0791.py::test_task_func_with_identical_values - assert 5 == 10
+FAILED test_0791.py::test_task_func_with_all_nan_values - assert 5 == 10
+3 failed, 3 passed, 3 warnings in 2.65s

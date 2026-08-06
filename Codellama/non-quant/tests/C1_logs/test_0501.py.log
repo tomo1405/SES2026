@@ -1,0 +1,35 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        values = [
+            {'ID': 1, 'Name': 'John', 'Age': 25},
+            {'ID': 2, 'Name': 'Jane', 'Age': 30},
+            {'ID': 3, 'Name': 'Jim', 'Age': 35},
+        ]
+        filename = 'test_data.xls'
+    
+        # Test that the function returns the correct file path
+        assert task_func(values, filename) == os.path.abspath(filename)
+    
+        # Test that the file is created and has the correct contents
+        assert os.path.exists(filename)
+        with open(filename, 'r') as f:
+>           lines = f.readlines()
+                    ^^^^^^^^^^^^^
+
+test_0501.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <encodings.utf_8.IncrementalDecoder object at 0x79e611ed0a40>
+input = b'\xd0\xcf\x11\xe0\xa1\xb1\x1a\xe1\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00>\x00\x03\x00\xfe\xf...00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xfe\xff\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00'
+final = False
+
+>   ???
+E   UnicodeDecodeError: 'utf-8' codec can't decode byte 0xd0 in position 0: invalid continuation byte
+
+<frozen codecs>:322: UnicodeDecodeError
+=========================== short test summary info ============================
+FAILED test_0501.py::test_task_func - UnicodeDecodeError: 'utf-8' codec can't...
+1 failed in 0.48s

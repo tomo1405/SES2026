@@ -1,0 +1,70 @@
+.FF.F                                                                    [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_single_file __________________________
+
+mock_directory = '/tmp/pytest-of-tomohiro-w/pytest-2069/test_task_func_single_file0/test_dir'
+
+    def test_task_func_single_file(mock_directory):
+        # Test case with a single .txt file
+        result = task_func(mock_directory)
+        expected = {
+            "file1.txt": ['h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd']
+        }
+>       assert result == expected
+E       AssertionError: assert {'file2.txt':...ile1.txt': []} == {'file1.txt':...o', ' ', ...]}
+E         
+E         Differing items:
+E         {'file1.txt': []} != {'file1.txt': ['h', 'e', 'l', 'l', 'o', ' ', ...]}
+E         Left contains 1 more item:
+E         {'file2.txt': []}
+E         Use -v to get more diff
+
+test_0326.py:32: AssertionError
+________________________ test_task_func_multiple_files _________________________
+
+mock_directory = '/tmp/pytest-of-tomohiro-w/pytest-2069/test_task_func_multiple_files0/test_dir'
+
+    def test_task_func_multiple_files(mock_directory):
+        # Test case with multiple .txt files
+        result = task_func(mock_directory)
+        expected = {
+            "file1.txt": ['h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd'],
+            "file2.txt": ['f', 'o', 'o', ' ', 'b', 'a', 'r', ' ', 'b', 'a', 'z']
+        }
+>       assert result == expected
+E       AssertionError: assert {'file2.txt':...ile1.txt': []} == {'file1.txt':...b', 'a', ...]}
+E         
+E         Differing items:
+E         {'file1.txt': []} != {'file1.txt': ['h', 'e', 'l', 'l', 'o', ' ', ...]}
+E         {'file2.txt': []} != {'file2.txt': ['f', 'o', 'o', ' ', 'b', 'a', ...]}
+E         Use -v to get more diff
+
+test_0326.py:41: AssertionError
+_________________________ test_task_func_custom_regex __________________________
+
+mock_file = <MagicMock name='open' id='140538392701712'>
+mock_directory = '/tmp/pytest-of-tomohiro-w/pytest-2069/test_task_func_custom_regex0/test_dir'
+
+    @patch('builtins.open', new_callable=mock_open, read_data="test data")
+    def test_task_func_custom_regex(mock_file, mock_directory):
+        # Test case with a custom regex pattern
+        regex_pattern = r'\b\w+\b'
+        result = task_func(mock_directory, regex_pattern)
+        expected = {
+            "file1.txt": ['hello', 'world'],
+            "file2.txt": ['foo', 'bar', 'baz']
+        }
+>       assert result == expected
+E       AssertionError: assert {'file2.txt':...est', 'data']} == {'file1.txt':...'bar', 'baz']}
+E         
+E         Differing items:
+E         {'file1.txt': ['test', 'data']} != {'file1.txt': ['hello', 'world']}
+E         {'file2.txt': ['test', 'data']} != {'file2.txt': ['foo', 'bar', 'baz']}
+E         Use -v to get more diff
+
+test_0326.py:59: AssertionError
+=========================== short test summary info ============================
+FAILED test_0326.py::test_task_func_single_file - AssertionError: assert {'fi...
+FAILED test_0326.py::test_task_func_multiple_files - AssertionError: assert {...
+FAILED test_0326.py::test_task_func_custom_regex - AssertionError: assert {'f...
+3 failed, 2 passed in 0.44s

@@ -1,0 +1,165 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_valid_compression _______________________
+
+    def test_task_func_valid_compression():
+        # Test with a valid gzip compressed hexadecimal string
+        compressed_hex = '1f8b08000000000000ff04002b492d2e010000'
+        expected_output = 'test'
+>       assert task_func(compressed_hex) == expected_output
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0835.py:8: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0835.py:7: in task_func
+    decompressed_bytes = gzip.GzipFile(fileobj=io.BytesIO(compressed_bytes)).read()
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/gzip.py:324: in read
+    return self._buffer.read(size)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/_compression.py:118: in readall
+    while data := self.read(sys.maxsize):
+                  ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <gzip._GzipReader object at 0x7bf037509ae0>, size = 9223372036854775807
+
+    def read(self, size=-1):
+        if size < 0:
+            return self.readall()
+        # size=0 is special because decompress(max_length=0) is not supported
+        if not size:
+            return b""
+    
+        # For certain input data, a single
+        # call to decompress() may not return
+        # any data. In this case, retry until we get some data or reach EOF.
+        while True:
+            if self._decompressor.eof:
+                # Ending case: we've come to the end of a member in the file,
+                # so finish up this member, and read a new gzip header.
+                # Check the CRC and file size, and set the flag so we read
+                # a new member
+                self._read_eof()
+                self._new_member = True
+                self._decompressor = self._decomp_factory(
+                    **self._decomp_args)
+    
+            if self._new_member:
+                # If the _new_member flag is set, we have to
+                # jump to the next member, if there is one.
+                self._init_read()
+                if not self._read_gzip_header():
+                    self._size = self._pos
+                    return b""
+                self._new_member = False
+    
+            # Read a chunk of data from the file
+            if self._decompressor.needs_input:
+                buf = self._fp.read(READ_BUFFER_SIZE)
+>               uncompress = self._decompressor.decompress(buf, size)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               zlib.error: Error -3 while decompressing data: invalid code lengths set
+
+/usr/lib/python3.12/gzip.py:535: error
+______________________ test_task_func_invalid_compression ______________________
+
+    def test_task_func_invalid_compression():
+        # Test with an invalid gzip compressed hexadecimal string
+        compressed_hex = 'invalid_hex'
+        expected_output = "Error during decompression: Not a gzipped file"
+>       assert task_func(compressed_hex) == expected_output
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0835.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+compressed_hex = 'invalid_hex'
+
+    def task_func(compressed_hex):
+        try:
+>           compressed_bytes = binascii.unhexlify(compressed_hex)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           binascii.Error: Odd-length string
+
+../../../src/src_0835.py:6: Error
+__________________________ test_task_func_empty_input __________________________
+
+    def test_task_func_empty_input():
+        # Test with an empty input
+        compressed_hex = ''
+        expected_output = "Error during decompression: Error -3 while decompressing data: invalid code (missing end-of-block marker)"
+>       assert task_func(compressed_hex) == expected_output
+E       AssertionError: assert '' == 'Error during...block marker)'
+E         
+E         - Error during decompression: Error -3 while decompressing data: invalid code (missing end-of-block marker)
+
+test_0835.py:20: AssertionError
+_______________________ test_task_func_non_utf8_encoding _______________________
+
+    def test_task_func_non_utf8_encoding():
+        # Test with a gzip compressed hexadecimal string that cannot be decoded to utf-8
+        compressed_hex = '1f8b0800000000000003002b56c92fca070000ffff'
+        expected_output = "Error during decompression: 'utf-8' codec can't decode byte 0x9c in position 1: invalid start byte"
+>       assert task_func(compressed_hex) == expected_output
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0835.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0835.py:7: in task_func
+    decompressed_bytes = gzip.GzipFile(fileobj=io.BytesIO(compressed_bytes)).read()
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/gzip.py:324: in read
+    return self._buffer.read(size)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/_compression.py:118: in readall
+    while data := self.read(sys.maxsize):
+                  ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <gzip._GzipReader object at 0x7bf03750b160>, size = 9223372036854775807
+
+    def read(self, size=-1):
+        if size < 0:
+            return self.readall()
+        # size=0 is special because decompress(max_length=0) is not supported
+        if not size:
+            return b""
+    
+        # For certain input data, a single
+        # call to decompress() may not return
+        # any data. In this case, retry until we get some data or reach EOF.
+        while True:
+            if self._decompressor.eof:
+                # Ending case: we've come to the end of a member in the file,
+                # so finish up this member, and read a new gzip header.
+                # Check the CRC and file size, and set the flag so we read
+                # a new member
+                self._read_eof()
+                self._new_member = True
+                self._decompressor = self._decomp_factory(
+                    **self._decomp_args)
+    
+            if self._new_member:
+                # If the _new_member flag is set, we have to
+                # jump to the next member, if there is one.
+                self._init_read()
+                if not self._read_gzip_header():
+                    self._size = self._pos
+                    return b""
+                self._new_member = False
+    
+            # Read a chunk of data from the file
+            if self._decompressor.needs_input:
+                buf = self._fp.read(READ_BUFFER_SIZE)
+>               uncompress = self._decompressor.decompress(buf, size)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               zlib.error: Error -3 while decompressing data: invalid stored block lengths
+
+/usr/lib/python3.12/gzip.py:535: error
+=========================== short test summary info ============================
+FAILED test_0835.py::test_task_func_valid_compression - zlib.error: Error -3 ...
+FAILED test_0835.py::test_task_func_invalid_compression - binascii.Error: Odd...
+FAILED test_0835.py::test_task_func_empty_input - AssertionError: assert '' =...
+FAILED test_0835.py::test_task_func_non_utf8_encoding - zlib.error: Error -3 ...
+4 failed in 0.53s

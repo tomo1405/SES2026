@@ -1,0 +1,44 @@
+..F...                                                                   [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_multiple_json_files ______________________
+
+    def test_task_func_multiple_json_files():
+        with tempfile.TemporaryDirectory() as temp_dir:
+            data1 = {"key1": "value1"}
+            data2 = [{"key2": "value2"}, {"key3": "value3"}]
+    
+            json_file_path1 = os.path.join(temp_dir, "test1.json")
+            json_file_path2 = os.path.join(temp_dir, "test2.json")
+    
+            with open(json_file_path1, 'w') as json_file1:
+                json.dump(data1, json_file1)
+    
+            with open(json_file_path2, 'w') as json_file2:
+                json.dump(data2, json_file2)
+    
+            result_df = task_func(temp_dir)
+            expected_df = pd.DataFrame([
+                {"key1": "value1", "source": "test1.json"},
+                {"key2": "value2", "source": "test2.json"},
+                {"key3": "value3", "source": "test2.json"}
+            ])
+>           pd.testing.assert_frame_equal(result_df.reset_index(drop=True), expected_df)
+
+test_0679.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pandas/_libs/testing.pyx:53: in pandas._libs.testing.assert_almost_equal
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   AssertionError: DataFrame.columns are different
+E   
+E   DataFrame.columns values are different (100.0 %)
+E   [left]:  Index(['key2', 'key3', 'source', 'key1'], dtype='str')
+E   [right]: Index(['key1', 'source', 'key2', 'key3'], dtype='str')
+E   At positional index 0, first diff: key2 != key1
+
+pandas/_libs/testing.pyx:171: AssertionError
+=========================== short test summary info ============================
+FAILED test_0679.py::test_task_func_multiple_json_files - AssertionError: Dat...
+1 failed, 5 passed in 1.10s

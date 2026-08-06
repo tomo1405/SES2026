@@ -1,0 +1,57 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+_______________ test_task_func[SGVsbG8gV29ybGQh-10-Hello World!] _______________
+
+raw_string = b'SGVsbG8gV29ybGQh', line_length = 10
+expected_output = 'Hello World!'
+
+    @pytest.mark.parametrize("raw_string, line_length, expected_output", [
+        (b"SGVsbG8gV29ybGQh", 10, "Hello World!"),
+        (b"SGVsbG8gV29ybGQh", 20, "Hello World!"),
+        (b"SGVsbG8gV29ybGQh", 1, "H\ne\nl\nl\no\n \nW\no\nr\nl\nd\n!"),
+    ])
+    def test_task_func(raw_string, line_length, expected_output):
+        decoded_string = base64.b64decode(raw_string).decode('utf-8')
+        unescaped_string = unescape(decoded_string)
+        cleaned_string = re.sub(' +', ' ', unescaped_string).strip()
+        wrapped_text = textwrap.fill(cleaned_string, line_length)
+>       assert wrapped_text == expected_output
+E       AssertionError: assert 'Hello\nWorld!' == 'Hello World!'
+E         
+E         - Hello World!
+E         + Hello
+E         + World!
+
+test_0710.py:18: AssertionError
+____ test_task_func[SGVsbG8gV29ybGQh-1-H\ne\nl\nl\no\n \nW\no\nr\nl\nd\n!] _____
+
+raw_string = b'SGVsbG8gV29ybGQh', line_length = 1
+expected_output = 'H\ne\nl\nl\no\n \nW\no\nr\nl\nd\n!'
+
+    @pytest.mark.parametrize("raw_string, line_length, expected_output", [
+        (b"SGVsbG8gV29ybGQh", 10, "Hello World!"),
+        (b"SGVsbG8gV29ybGQh", 20, "Hello World!"),
+        (b"SGVsbG8gV29ybGQh", 1, "H\ne\nl\nl\no\n \nW\no\nr\nl\nd\n!"),
+    ])
+    def test_task_func(raw_string, line_length, expected_output):
+        decoded_string = base64.b64decode(raw_string).decode('utf-8')
+        unescaped_string = unescape(decoded_string)
+        cleaned_string = re.sub(' +', ' ', unescaped_string).strip()
+        wrapped_text = textwrap.fill(cleaned_string, line_length)
+>       assert wrapped_text == expected_output
+E       AssertionError: assert 'H\ne\nl\nl\n...o\nr\nl\nd\n!' == 'H\ne\nl\nl\n...o\nr\nl\nd\n!'
+E         
+E           H
+E           e
+E           l
+E           l
+E           o
+E         -  ...
+E         
+E         ...Full output truncated (6 lines hidden), use '-vv' to show
+
+test_0710.py:18: AssertionError
+=========================== short test summary info ============================
+FAILED test_0710.py::test_task_func[SGVsbG8gV29ybGQh-10-Hello World!] - Asser...
+FAILED test_0710.py::test_task_func[SGVsbG8gV29ybGQh-1-H\ne\nl\nl\no\n \nW\no\nr\nl\nd\n!]
+2 failed, 1 passed in 0.63s

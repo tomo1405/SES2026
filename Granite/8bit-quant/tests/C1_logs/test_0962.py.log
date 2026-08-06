@@ -1,0 +1,43 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_valid_directory ______________________
+
+mock_os_path_exists = <MagicMock name='exists' id='135094981730352'>
+mock_glob_glob = <MagicMock name='glob' id='135094981735728'>
+
+    def test_task_func_with_valid_directory(mock_os_path_exists, mock_glob_glob):
+        directory = "/path/to/directory"
+        extensions = [".txt", ".docx", ".xlsx", ".csv"]
+        keep_zero = True
+    
+        result = task_func(directory, extensions, keep_zero)
+    
+>       assert result == Counter({".txt": 3, ".docx": 0, ".xlsx": 0, ".csv": 0})
+E       AssertionError: assert Counter({'.tx...3, '.csv': 3}) == Counter({'.tx...0, '.csv': 0})
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'.docx': 3} != {'.docx': 0}
+E         {'.xlsx': 3} != {'.xlsx': 0}
+E         {'.csv': 3} != {'.csv': 0}
+E         Use -v to get more diff
+
+test_0962.py:29: AssertionError
+____________________ test_task_func_with_invalid_directory _____________________
+
+mock_os_path_exists = <MagicMock name='exists' id='135094983604464'>
+mock_glob_glob = <MagicMock name='glob' id='135094979921824'>
+
+    def test_task_func_with_invalid_directory(mock_os_path_exists, mock_glob_glob):
+        directory = "/path/to/invalid_directory"
+        extensions = [".txt", ".docx", ".xlsx", ".csv"]
+        keep_zero = True
+    
+>       with pytest.raises(OSError) as exc_info:
+E       Failed: DID NOT RAISE OSError
+
+test_0962.py:43: Failed
+=========================== short test summary info ============================
+FAILED test_0962.py::test_task_func_with_valid_directory - AssertionError: as...
+FAILED test_0962.py::test_task_func_with_invalid_directory - Failed: DID NOT ...
+2 failed in 0.49s

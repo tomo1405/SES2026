@@ -1,0 +1,24 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_valid_input ________________________
+
+    def test_task_func_with_valid_input():
+        conn = sqlite3.connect("test.db")
+        df = pd.DataFrame({"age": [20, 30, 40, 50]})
+>       conn.execute("CREATE TABLE People (age INTEGER)")
+E       sqlite3.OperationalError: table People already exists
+
+test_0538.py:10: OperationalError
+______________________ test_task_func_with_invalid_input _______________________
+
+    def test_task_func_with_invalid_input():
+        conn = sqlite3.connect("test.db")
+        df = pd.DataFrame({"age": [-10, 20, 30, 40, 50]})
+>       conn.execute("CREATE TABLE People (age INTEGER)")
+E       sqlite3.OperationalError: table People already exists
+
+test_0538.py:18: OperationalError
+=========================== short test summary info ============================
+FAILED test_0538.py::test_task_func_with_valid_input - sqlite3.OperationalErr...
+FAILED test_0538.py::test_task_func_with_invalid_input - sqlite3.OperationalE...
+2 failed in 3.64s

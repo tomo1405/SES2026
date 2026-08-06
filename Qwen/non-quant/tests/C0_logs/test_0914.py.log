@@ -1,0 +1,81 @@
+.....FF                                                                  [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_with_strings __________________________
+
+    def test_task_func_with_strings():
+>       result = task_func(['a', 'b', 'b', 'c'])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0914.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0914.py:28: in task_func
+    return {'mode': np.sort(mode), 'count': count, 'fft': scipy.fft.fft(data)}
+                                                          ^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/scipy/fft/_backend.py:29: in __ua_function__
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/scipy/fft/_basic_backend.py:79: in fft
+    return _execute_1D('fft', _duccfft.fft, x, n=n, axis=axis, norm=norm,
+../../../.venv/lib/python3.12/site-packages/scipy/fft/_basic_backend.py:32: in _execute_1D
+    return duccfft_func(x, n=n, axis=axis, norm=norm,
+../../../.venv/lib/python3.12/site-packages/scipy/fft/_duccfft/basic.py:17: in c2c
+    tmp = _asfarray(x)
+          ^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+x = array(['a', 'b', 'b', 'c'], dtype='<U1')
+
+    def _asfarray(x):
+        """
+        Convert to array with floating or complex dtype.
+    
+        float16 values are also promoted to float32.
+        """
+        if not hasattr(x, "dtype"):
+            x = np.asarray(x)
+    
+        if x.dtype == np.float16:
+            return np.asarray(x, np.float32)
+        elif x.dtype.kind not in 'fc':
+>           return np.asarray(x, np.float64)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+E           ValueError: could not convert string to float: np.str_('a')
+
+../../../.venv/lib/python3.12/site-packages/scipy/fft/_duccfft/helper.py:126: ValueError
+__________________________ test_task_func_mixed_types __________________________
+
+    def test_task_func_mixed_types():
+        result = task_func([1, '1', 2, '2', 2, '2'])
+        assert np.array_equal(result['mode'], np.array([2, '2']))
+        assert np.array_equal(result['count'], np.array([2, 2]))
+>       assert np.allclose(result['fft'], np.fft.fft([1, '1', 2, '2', 2, '2']))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0914.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/numpy/fft/_pocketfft.py:215: in fft
+    output = _raw_fft(a, n, axis, False, True, norm, out)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = array(['1', '1', '2', '2', '2', '2'], dtype='<U21'), n = 6, axis = -1
+is_real = False, is_forward = True, norm = None, out = None
+
+    def _raw_fft(a, n, axis, is_real, is_forward, norm, out=None):
+        if n < 1:
+            raise ValueError(f"Invalid number of FFT data points ({n}) specified.")
+    
+        # Calculate the normalization factor, passing in the array dtype to
+        # avoid precision loss in the possible sqrt or reciprocal.
+        if not is_forward:
+            norm = _swap_direction(norm)
+    
+>       real_dtype = result_type(a.real.dtype, 1.0)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       numpy.exceptions.DTypePromotionError: The DType <class 'numpy.dtypes.StrDType'> could not be promoted by <class 'numpy.dtypes._PyFloatDType'>. This means that no common DType exists for the given inputs. For example they cannot be stored in a single array unless the dtype is `object`. The full list of DTypes is: (<class 'numpy.dtypes.StrDType'>, <class 'numpy.dtypes._PyFloatDType'>)
+
+../../../.venv/lib/python3.12/site-packages/numpy/fft/_pocketfft.py:67: DTypePromotionError
+=========================== short test summary info ============================
+FAILED test_0914.py::test_task_func_with_strings - ValueError: could not conv...
+FAILED test_0914.py::test_task_func_mixed_types - numpy.exceptions.DTypePromo...
+2 failed, 5 passed in 1.28s

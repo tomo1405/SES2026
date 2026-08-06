@@ -1,0 +1,187 @@
+EEE                                                                      [100%]
+==================================== ERRORS ====================================
+_____ ERROR at setup of TestPostRequestHandler.test_non_json_content_type ______
+
+self = <test_0273.TestPostRequestHandler object at 0x758096eaff50>
+
+    @pytest.fixture
+    def request_handler(self):
+        class Request:
+            headers = {}
+            rfile = None
+    
+        class Response:
+            status_code = None
+            headers = {}
+            body = None
+    
+        class MockServer:
+            def handle_error(self, request, client_address):
+                pass
+    
+        request = Request()
+        response = Response()
+    
+        def write(data):
+            response.body = data
+    
+        def send_response(code):
+            response.status_code = code
+    
+        def send_header(key, value):
+            response.headers[key] = value
+    
+        def end_headers():
+            pass
+    
+        request_handler_class = task_func()
+>       handler = request_handler_class(request, None, MockServer())
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0273.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/socketserver.py:759: in __init__
+    self.setup()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <src_0273.task_func.<locals>.PostRequestHandler object at 0x758096ed0860>
+
+    def setup(self):
+        self.connection = self.request
+        if self.timeout is not None:
+            self.connection.settimeout(self.timeout)
+        if self.disable_nagle_algorithm:
+            self.connection.setsockopt(socket.IPPROTO_TCP,
+                                       socket.TCP_NODELAY, True)
+>       self.rfile = self.connection.makefile('rb', self.rbufsize)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Request' object has no attribute 'makefile'
+
+/usr/lib/python3.12/socketserver.py:811: AttributeError
+________ ERROR at setup of TestPostRequestHandler.test_no_data_received ________
+
+self = <test_0273.TestPostRequestHandler object at 0x758096ed0170>
+
+    @pytest.fixture
+    def request_handler(self):
+        class Request:
+            headers = {}
+            rfile = None
+    
+        class Response:
+            status_code = None
+            headers = {}
+            body = None
+    
+        class MockServer:
+            def handle_error(self, request, client_address):
+                pass
+    
+        request = Request()
+        response = Response()
+    
+        def write(data):
+            response.body = data
+    
+        def send_response(code):
+            response.status_code = code
+    
+        def send_header(key, value):
+            response.headers[key] = value
+    
+        def end_headers():
+            pass
+    
+        request_handler_class = task_func()
+>       handler = request_handler_class(request, None, MockServer())
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0273.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/socketserver.py:759: in __init__
+    self.setup()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <src_0273.task_func.<locals>.PostRequestHandler object at 0x758096ed0080>
+
+    def setup(self):
+        self.connection = self.request
+        if self.timeout is not None:
+            self.connection.settimeout(self.timeout)
+        if self.disable_nagle_algorithm:
+            self.connection.setsockopt(socket.IPPROTO_TCP,
+                                       socket.TCP_NODELAY, True)
+>       self.rfile = self.connection.makefile('rb', self.rbufsize)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Request' object has no attribute 'makefile'
+
+/usr/lib/python3.12/socketserver.py:811: AttributeError
+____ ERROR at setup of TestPostRequestHandler.test_successful_data_received ____
+
+self = <test_0273.TestPostRequestHandler object at 0x758096ed0410>
+
+    @pytest.fixture
+    def request_handler(self):
+        class Request:
+            headers = {}
+            rfile = None
+    
+        class Response:
+            status_code = None
+            headers = {}
+            body = None
+    
+        class MockServer:
+            def handle_error(self, request, client_address):
+                pass
+    
+        request = Request()
+        response = Response()
+    
+        def write(data):
+            response.body = data
+    
+        def send_response(code):
+            response.status_code = code
+    
+        def send_header(key, value):
+            response.headers[key] = value
+    
+        def end_headers():
+            pass
+    
+        request_handler_class = task_func()
+>       handler = request_handler_class(request, None, MockServer())
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0273.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/socketserver.py:759: in __init__
+    self.setup()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <src_0273.task_func.<locals>.PostRequestHandler object at 0x758096ed1d90>
+
+    def setup(self):
+        self.connection = self.request
+        if self.timeout is not None:
+            self.connection.settimeout(self.timeout)
+        if self.disable_nagle_algorithm:
+            self.connection.setsockopt(socket.IPPROTO_TCP,
+                                       socket.TCP_NODELAY, True)
+>       self.rfile = self.connection.makefile('rb', self.rbufsize)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Request' object has no attribute 'makefile'
+
+/usr/lib/python3.12/socketserver.py:811: AttributeError
+=============================== warnings summary ===============================
+../../../src/src_0273.py:1
+  /work/tomohiro-w/utg/src/src_0273.py:1: DeprecationWarning: 'cgi' is deprecated and slated for removal in Python 3.13
+    import cgi
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+ERROR test_0273.py::TestPostRequestHandler::test_non_json_content_type - Attr...
+ERROR test_0273.py::TestPostRequestHandler::test_no_data_received - Attribute...
+ERROR test_0273.py::TestPostRequestHandler::test_successful_data_received - A...
+1 warning, 3 errors in 0.57s

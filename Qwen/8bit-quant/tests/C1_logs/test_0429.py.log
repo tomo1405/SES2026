@@ -1,0 +1,107 @@
+.F...F                                                                   [100%]
+=================================== FAILURES ===================================
+____________________ test_task_func_scales_numeric_features ____________________
+
+df1 =    id  feature1  feature2
+0   1        10       100
+1   2        20       200
+2   3        30       300
+df2 =    id  feature3
+0   1      1000
+1   2      2000
+2   4      4000
+
+    def test_task_func_scales_numeric_features(df1, df2):
+        _, _ = task_func(df1, df2)
+        # Assuming the scaling is correct if the mean is close to 0 and std is close to 1
+        # This is a simplified check and may need more robust testing
+>       assert np.isclose(df1["feature1"].mean(), 0)
+E       assert np.False_
+E        +  where np.False_ = <function isclose at 0x7853c2d20070>(np.float64(20.0), 0)
+E        +    where <function isclose at 0x7853c2d20070> = np.isclose
+E        +    and   np.float64(20.0) = mean()
+E        +      where mean = 0    10\n1    20\n2    30\nName: feature1, dtype: int64.mean
+
+test_0429.py:34: AssertionError
+_______________________ test_task_func_no_common_columns _______________________
+
+    def test_task_func_no_common_columns():
+        df1 = pd.DataFrame({"id": [1, 2, 3], "feature1": [10, 20, 30]})
+        df2 = pd.DataFrame({"id2": [1, 2, 4], "feature3": [1000, 2000, 4000]})
+        with pytest.raises(ValueError):
+>           task_func(df1, df2)
+
+test_0429.py:60: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0429.py:5: in task_func
+    merged_df = pd.merge(df1, df2, on="id", how="outer")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/reshape/merge.py:385: in merge
+    op = _MergeOperation(
+../../../.venv/lib/python3.12/site-packages/pandas/core/reshape/merge.py:1018: in __init__
+    ) = self._get_merge_keys()
+        ^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/reshape/merge.py:1620: in _get_merge_keys
+    right_keys.append(right._get_label_or_level_values(rk))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =    id2  feature3
+0    1      1000
+1    2      2000
+2    4      4000
+key = 'id', axis = 0
+
+    @final
+    def _get_label_or_level_values(self, key: Level, axis: AxisInt = 0) -> ArrayLike:
+        """
+        Return a 1-D array of values associated with `key`, a label or level
+        from the given `axis`.
+    
+        Retrieval logic:
+          - (axis=0): Return column values if `key` matches a column label.
+            Otherwise return index level values if `key` matches an index
+            level.
+          - (axis=1): Return row values if `key` matches an index label.
+            Otherwise return column level values if 'key' matches a column
+            level
+    
+        Parameters
+        ----------
+        key : Hashable
+            Label or level name.
+        axis : int, default 0
+            Axis that levels are associated with (0 for index, 1 for columns)
+    
+        Returns
+        -------
+        np.ndarray or ExtensionArray
+    
+        Raises
+        ------
+        KeyError
+            if `key` matches neither a label nor a level
+        ValueError
+            if `key` matches multiple labels
+        """
+        axis = self._get_axis_number(axis)
+        first_other_axes = next(
+            (ax for ax in range(self._AXIS_LEN) if ax != axis), None
+        )
+    
+        if self._is_label_reference(key, axis=axis):
+            self._check_label_or_level_ambiguity(key, axis=axis)
+            if first_other_axes is None:
+                raise ValueError("axis matched all axes")
+            values = self.xs(key, axis=first_other_axes)._values
+        elif self._is_level_reference(key, axis=axis):
+            values = self.axes[axis].get_level_values(key)._values
+        else:
+>           raise KeyError(key)
+E           KeyError: 'id'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:1776: KeyError
+=========================== short test summary info ============================
+FAILED test_0429.py::test_task_func_scales_numeric_features - assert np.False_
+FAILED test_0429.py::test_task_func_no_common_columns - KeyError: 'id'
+2 failed, 4 passed in 5.76s

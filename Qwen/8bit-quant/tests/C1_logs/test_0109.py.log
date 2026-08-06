@@ -1,0 +1,87 @@
+....FF                                                                   [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_non_numeric_value _______________________
+
+    def test_task_func_non_numeric_value():
+        with pytest.raises(ValueError, match="Non-numeric or missing values found in 'value' column."):
+>           task_func(pd.DataFrame({'group': [1], 'date': ['2023-01-01'], 'value': ['a']}))
+
+test_0109.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0109.py:16: in task_func
+    df = df.asfreq(freq, method='pad')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:8901: in asfreq
+    return asfreq(
+../../../.venv/lib/python3.12/site-packages/pandas/core/resample.py:3117: in asfreq
+    new_obj = obj.reindex(dti, method=method, fill_value=fill_value)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:6090: in reindex
+    return super().reindex(
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:5476: in reindex
+    return self._reindex_axes(
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:5498: in _reindex_axes
+    new_index, indexer = ax.reindex(
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py:4246: in reindex
+    indexer = self.get_indexer(
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py:3792: in get_indexer
+    return this._get_indexer(
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py:3809: in _get_indexer
+    indexer = self._get_fill_indexer(target, method, limit, tolerance)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py:3926: in _get_fill_indexer
+    indexer = libalgos.pad(own_values, target_values, limit=limit)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   TypeError: '<' not supported between instances of 'Timestamp' and 'str'
+
+pandas/_libs/algos.pyx:585: TypeError
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        df = pd.DataFrame({
+            'group': [1, 1],
+            'date': ['2023-01-01', '2023-01-02'],
+            'value': [10, 20]
+        })
+>       result, ax = task_func(df)
+                     ^^^^^^^^^^^^^
+
+test_0109.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0109.py:16: in task_func
+    df = df.asfreq(freq, method='pad')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:8901: in asfreq
+    return asfreq(
+../../../.venv/lib/python3.12/site-packages/pandas/core/resample.py:3117: in asfreq
+    new_obj = obj.reindex(dti, method=method, fill_value=fill_value)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:6090: in reindex
+    return super().reindex(
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:5476: in reindex
+    return self._reindex_axes(
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:5498: in _reindex_axes
+    new_index, indexer = ax.reindex(
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py:4246: in reindex
+    indexer = self.get_indexer(
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py:3792: in get_indexer
+    return this._get_indexer(
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py:3809: in _get_indexer
+    indexer = self._get_fill_indexer(target, method, limit, tolerance)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py:3926: in _get_fill_indexer
+    indexer = libalgos.pad(own_values, target_values, limit=limit)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   TypeError: '<' not supported between instances of 'Timestamp' and 'str'
+
+pandas/_libs/algos.pyx:585: TypeError
+=========================== short test summary info ============================
+FAILED test_0109.py::test_task_func_non_numeric_value - TypeError: '<' not su...
+FAILED test_0109.py::test_task_func_valid_input - TypeError: '<' not supporte...
+2 failed, 4 passed in 4.98s

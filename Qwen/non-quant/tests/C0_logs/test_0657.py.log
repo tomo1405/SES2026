@@ -1,0 +1,133 @@
+FFFFFFF                                                                  [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_positive_text _______________________
+
+sia = <nltk.sentiment.vader.SentimentIntensityAnalyzer object at 0x7e22324f6bd0>
+
+    def test_task_func_with_positive_text(sia):
+        text = "I love this product!"
+        expected_output = {'neg': 0.0, 'neu': 0.125, 'pos': 0.875, 'compound': 0.663}
+>       assert task_func(text, sia) == expected_output
+E       AssertionError: assert {'neg': 0.0, ...ound': 0.6369} == {'neg': 0.0, ...pound': 0.663}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'neu': 0.323} != {'neu': 0.125}
+E         {'pos': 0.677} != {'pos': 0.875}
+E         {'compound': 0.6369} != {'compound': 0.663}
+E         Use -v to get more diff
+
+test_0657.py:12: AssertionError
+______________________ test_task_func_with_negative_text _______________________
+
+sia = <nltk.sentiment.vader.SentimentIntensityAnalyzer object at 0x7e22322a5c70>
+
+    def test_task_func_with_negative_text(sia):
+        text = "This is the worst experience ever."
+        expected_output = {'neg': 0.814, 'neu': 0.186, 'pos': 0.0, 'compound': -0.782}
+>       assert task_func(text, sia) == expected_output
+E       AssertionError: assert {'neg': 0.451...und': -0.6249} == {'neg': 0.814...ound': -0.782}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'neu': 0.549} != {'neu': 0.186}
+E         {'compound': -0.6249} != {'compound': -0.782}
+E         {'neg': 0.451} != {'neg': 0.814}
+E         Use -v to get more diff
+
+test_0657.py:17: AssertionError
+_______________________ test_task_func_with_neutral_text _______________________
+
+sia = <nltk.sentiment.vader.SentimentIntensityAnalyzer object at 0x7e22321b6ae0>
+
+    def test_task_func_with_neutral_text(sia):
+        text = "It's just okay."
+        expected_output = {'neg': 0.2, 'neu': 0.6, 'pos': 0.2, 'compound': 0.0}
+>       assert task_func(text, sia) == expected_output
+E       AssertionError: assert {'neg': 0.0, ...ound': 0.2263} == {'neg': 0.2, ...ompound': 0.0}
+E         
+E         Differing items:
+E         {'neu': 0.513} != {'neu': 0.6}
+E         {'pos': 0.487} != {'pos': 0.2}
+E         {'compound': 0.2263} != {'compound': 0.0}
+E         {'neg': 0.0} != {'neg': 0.2}
+E         Use -v to get more diff
+
+test_0657.py:22: AssertionError
+________________________ test_task_func_with_mixed_text ________________________
+
+sia = <nltk.sentiment.vader.SentimentIntensityAnalyzer object at 0x7e22321b6750>
+
+    def test_task_func_with_mixed_text(sia):
+        text = "The food was good, but the service was terrible."
+        expected_output = {'neg': 0.359, 'neu': 0.344, 'pos': 0.297, 'compound': -0.216}
+>       assert task_func(text, sia) == expected_output
+E       AssertionError: assert {'neg': 0.317...und': -0.4939} == {'neg': 0.359...ound': -0.216}
+E         
+E         Differing items:
+E         {'neu': 0.534} != {'neu': 0.344}
+E         {'pos': 0.149} != {'pos': 0.297}
+E         {'compound': -0.4939} != {'compound': -0.216}
+E         {'neg': 0.317} != {'neg': 0.359}
+E         Use -v to get more diff
+
+test_0657.py:27: AssertionError
+________________________ test_task_func_with_empty_text ________________________
+
+sia = <nltk.sentiment.vader.SentimentIntensityAnalyzer object at 0x7e2232311b80>
+
+    def test_task_func_with_empty_text(sia):
+        text = ""
+        expected_output = {'neg': 0.0, 'neu': 1.0, 'pos': 0.0, 'compound': 0.0}
+>       assert task_func(text, sia) == expected_output
+E       AssertionError: assert {'neg': 0.0, ...ompound': 0.0} == {'neg': 0.0, ...ompound': 0.0}
+E         
+E         Omitting 3 identical items, use -vv to show
+E         Differing items:
+E         {'neu': 0.0} != {'neu': 1.0}
+E         Use -v to get more diff
+
+test_0657.py:32: AssertionError
+_____________________ test_task_func_with_punctuation_only _____________________
+
+sia = <nltk.sentiment.vader.SentimentIntensityAnalyzer object at 0x7e2232311460>
+
+    def test_task_func_with_punctuation_only(sia):
+        text = "!@#$%^&*()_+"
+        expected_output = {'neg': 0.0, 'neu': 1.0, 'pos': 0.0, 'compound': 0.0}
+>       assert task_func(text, sia) == expected_output
+E       AssertionError: assert {'neg': 0.0, ...ompound': 0.0} == {'neg': 0.0, ...ompound': 0.0}
+E         
+E         Omitting 3 identical items, use -vv to show
+E         Differing items:
+E         {'neu': 0.0} != {'neu': 1.0}
+E         Use -v to get more diff
+
+test_0657.py:37: AssertionError
+_________________________ test_task_func_with_numbers __________________________
+
+sia = <nltk.sentiment.vader.SentimentIntensityAnalyzer object at 0x7e22322d7aa0>
+
+    def test_task_func_with_numbers(sia):
+        text = "I have 100 dollars."
+        expected_output = {'neg': 0.0, 'neu': 0.75, 'pos': 0.25, 'compound': 0.162}
+>       assert task_func(text, sia) == expected_output
+E       AssertionError: assert {'neg': 0.0, ...ompound': 0.0} == {'neg': 0.0, ...pound': 0.162}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'neu': 1.0} != {'neu': 0.75}
+E         {'pos': 0.0} != {'pos': 0.25}
+E         {'compound': 0.0} != {'compound': 0.162}
+E         Use -v to get more diff
+
+test_0657.py:42: AssertionError
+=========================== short test summary info ============================
+FAILED test_0657.py::test_task_func_with_positive_text - AssertionError: asse...
+FAILED test_0657.py::test_task_func_with_negative_text - AssertionError: asse...
+FAILED test_0657.py::test_task_func_with_neutral_text - AssertionError: asser...
+FAILED test_0657.py::test_task_func_with_mixed_text - AssertionError: assert ...
+FAILED test_0657.py::test_task_func_with_empty_text - AssertionError: assert ...
+FAILED test_0657.py::test_task_func_with_punctuation_only - AssertionError: a...
+FAILED test_0657.py::test_task_func_with_numbers - AssertionError: assert {'n...
+7 failed in 3.29s

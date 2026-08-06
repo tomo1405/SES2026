@@ -1,0 +1,85 @@
+FFFF.F                                                                   [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_remove_operation _____________________
+
+    def test_task_func_with_remove_operation():
+        data_list = ["apple, banana, cherry"]
+        random.seed(0)
+        result_df = task_func(data_list, seed=0)
+        expected_df = pd.DataFrame({
+            "Original String": ["apple, banana, cherry"],
+            "Modified String": ["banana, cherry"]
+        })
+>       assert result_df.equals(expected_df)
+E       assert False
+E        +  where False = equals(         Original String Modified String\n0  apple, banana, cherry  banana, cherry)
+E        +    where equals =          Original String        Modified String\n0  apple, banana, cherry  banana, apple, cherry.equals
+
+test_0483.py:14: AssertionError
+____________________ test_task_func_with_replace_operation _____________________
+
+    def test_task_func_with_replace_operation():
+        data_list = ["apple, banana, cherry"]
+        random.seed(1)
+        result_df = task_func(data_list, seed=1)
+        expected_df = pd.DataFrame({
+            "Original String": ["apple, banana, cherry"],
+            "Modified String": ["random_string, banana, cherry"]
+        })
+>       assert result_df.equals(expected_df)
+E       assert False
+E        +  where False = equals(         Original String                Modified String\n0  apple, banana, cherry  random_string, banana, cherry)
+E        +    where equals =          Original String               Modified String\n0  apple, banana, cherry  apple, banana, random_string.equals
+
+test_0483.py:24: AssertionError
+____________________ test_task_func_with_shuffle_operation _____________________
+
+    def test_task_func_with_shuffle_operation():
+        data_list = ["apple, banana, cherry"]
+        random.seed(2)
+        result_df = task_func(data_list, seed=2)
+        expected_df = pd.DataFrame({
+            "Original String": ["apple, banana, cherry"],
+            "Modified String": ["cherry, apple, banana"]
+        })
+>       assert result_df.equals(expected_df)
+E       assert False
+E        +  where False = equals(         Original String        Modified String\n0  apple, banana, cherry  cherry, apple, banana)
+E        +    where equals =          Original String Modified String\n0  apple, banana, cherry  banana, cherry.equals
+
+test_0483.py:34: AssertionError
+___________________ test_task_func_with_randomize_operation ____________________
+
+    def test_task_func_with_randomize_operation():
+        data_list = ["apple, banana, cherry"]
+        random.seed(3)
+        result_df = task_func(data_list, seed=3)
+        expected_df = pd.DataFrame({
+            "Original String": ["apple, banana, cherry"],
+            "Modified String": ["banana, cherry, apple"]
+        })
+>       assert result_df.equals(expected_df)
+E       assert False
+E        +  where False = equals(         Original String        Modified String\n0  apple, banana, cherry  banana, cherry, apple)
+E        +    where equals =          Original String               Modified String\n0  apple, banana, cherry  apple, banana, random_string.equals
+
+test_0483.py:44: AssertionError
+________________________ test_task_func_with_empty_list ________________________
+
+    def test_task_func_with_empty_list():
+        data_list = []
+        result_df = task_func(data_list)
+        expected_df = pd.DataFrame(columns=["Original String", "Modified String"])
+>       assert result_df.equals(expected_df)
+E       assert False
+E        +  where False = equals(Empty DataFrame\nColumns: [Original String, Modified String]\nIndex: [])
+E        +    where equals = Empty DataFrame\nColumns: [Original String, Modified String]\nIndex: [].equals
+
+test_0483.py:60: AssertionError
+=========================== short test summary info ============================
+FAILED test_0483.py::test_task_func_with_remove_operation - assert False
+FAILED test_0483.py::test_task_func_with_replace_operation - assert False
+FAILED test_0483.py::test_task_func_with_shuffle_operation - assert False
+FAILED test_0483.py::test_task_func_with_randomize_operation - assert False
+FAILED test_0483.py::test_task_func_with_empty_list - assert False
+5 failed, 1 passed in 1.10s

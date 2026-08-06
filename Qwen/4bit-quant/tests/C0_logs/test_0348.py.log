@@ -1,0 +1,103 @@
+.FFF.F                                                                   [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_single_match __________________________
+
+    def test_task_func_single_match():
+        data = {'id': [1, 2, 3], 'text': ['aabbccddeeff00112233445566778899', 'no hex here', 'nor here']}
+        df = pd.DataFrame(data)
+        result = task_func(df, 'text')
+        expected = pd.Series([1], index=['aabbccddeeff00112233445566778899'])
+>       pd.testing.assert_series_equal(result, expected)
+E       AssertionError: Series are different
+E       
+E       Attribute "name" are different
+E       [left]:  count
+E       [right]: None
+
+test_0348.py:16: AssertionError
+_______________________ test_task_func_multiple_matches ________________________
+
+    def test_task_func_multiple_matches():
+        data = {'id': [1, 2, 3], 'text': ['aabbccddeeff00112233445566778899', 'aabbccddeeff00112233445566778899', 'aabbccddeeff00112233445566778899']}
+        df = pd.DataFrame(data)
+        result = task_func(df, 'text')
+        expected = pd.Series([3], index=['aabbccddeeff00112233445566778899'])
+>       pd.testing.assert_series_equal(result, expected)
+E       AssertionError: Series are different
+E       
+E       Attribute "name" are different
+E       [left]:  count
+E       [right]: None
+
+test_0348.py:23: AssertionError
+_________________________ test_task_func_mixed_matches _________________________
+
+    def test_task_func_mixed_matches():
+        data = {'id': [1, 2, 3], 'text': ['aabbccddeeff00112233445566778899', '1234567890abcdef1234567890abcdef', 'no hex here']}
+        df = pd.DataFrame(data)
+        result = task_func(df, 'text')
+        expected = pd.Series([1, 1], index=['aabbccddeeff00112233445566778899', '1234567890abcdef1234567890abcdef'])
+>       pd.testing.assert_series_equal(result, expected)
+E       AssertionError: Series are different
+E       
+E       Attribute "name" are different
+E       [left]:  count
+E       [right]: None
+
+test_0348.py:30: AssertionError
+_______________________ test_task_func_non_string_column _______________________
+
+    def test_task_func_non_string_column():
+        data = {'id': [1, 2, 3], 'text': [123456, 789012, 345678]}
+        df = pd.DataFrame(data)
+        with pytest.raises(AttributeError):
+>           task_func(df, 'text')
+
+test_0348.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0348.py:8: in task_func
+    matches = df[column].apply(lambda x: re.findall(PATTERN, x))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/series.py:5084: in apply
+    ).apply()
+      ^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/apply.py:1520: in apply
+    return self.apply_standard()
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/apply.py:1578: in apply_standard
+    mapped = obj._map_values(mapper=curried)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/base.py:1022: in _map_values
+    return algorithms.map_array(arr, mapper, na_action=na_action)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/algorithms.py:1715: in map_array
+    return lib.map_infer(values, mapper)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pandas/_libs/lib.pyx:3071: in pandas._libs.lib.map_infer
+    ???
+../../../src/src_0348.py:8: in <lambda>
+    matches = df[column].apply(lambda x: re.findall(PATTERN, x))
+                                         ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pattern = '([a-fA-F\\d]{32})', string = 123456, flags = 0
+
+    def findall(pattern, string, flags=0):
+        """Return a list of all non-overlapping matches in the string.
+    
+        If one or more capturing groups are present in the pattern, return
+        a list of groups; this will be a list of tuples if the pattern
+        has more than one group.
+    
+        Empty matches are included in the result."""
+>       return _compile(pattern, flags).findall(string)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: expected string or bytes-like object, got 'int'
+
+/usr/lib/python3.12/re/__init__.py:217: TypeError
+=========================== short test summary info ============================
+FAILED test_0348.py::test_task_func_single_match - AssertionError: Series are...
+FAILED test_0348.py::test_task_func_multiple_matches - AssertionError: Series...
+FAILED test_0348.py::test_task_func_mixed_matches - AssertionError: Series ar...
+FAILED test_0348.py::test_task_func_non_string_column - TypeError: expected s...
+4 failed, 2 passed in 1.29s

@@ -1,0 +1,32 @@
+.F.F.                                                                    [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_single_column _______________________
+
+    def test_task_func_with_single_column():
+        data_list = [[1, 2, 3]]
+        ax = task_func(data_list)
+        assert isinstance(ax, plt.Axes)
+>       assert len(ax.lines) == 0  # No lines for a single column of data
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert 2 == 0
+E        +  where 2 = len(<Axes.ArtistList of 2 lines>)
+E        +    where <Axes.ArtistList of 2 lines> = <Axes: >.lines
+
+test_0249.py:18: AssertionError
+______________________ test_task_func_with_missing_values ______________________
+
+    def test_task_func_with_missing_values():
+        data_list = [[1, 2], [3, 4, 5]]
+        ax = task_func(data_list)
+        assert isinstance(ax, plt.Axes)
+>       assert len(ax.lines) == 1  # One line for one column of data
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert 2 == 1
+E        +  where 2 = len(<Axes.ArtistList of 2 lines>)
+E        +    where <Axes.ArtistList of 2 lines> = <Axes: >.lines
+
+test_0249.py:29: AssertionError
+=========================== short test summary info ============================
+FAILED test_0249.py::test_task_func_with_single_column - assert 2 == 0
+FAILED test_0249.py::test_task_func_with_missing_values - assert 2 == 1
+2 failed, 3 passed in 1.57s

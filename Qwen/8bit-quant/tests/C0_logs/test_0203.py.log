@@ -1,0 +1,32 @@
+..FF....                                                                 [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_multiple_urls _________________________
+
+    def test_task_func_multiple_urls():
+        json_str = '{"name": "John", "websites": ["http://example.com", "http://test.com", "http://example.com"]}'
+        result = task_func(json_str)
+>       assert result == {'http://example.com': 2, 'http://test.com': 1}
+E       AssertionError: assert {} == {'http://exam.../test.com': 1}
+E         
+E         Right contains 2 more items:
+E         {'http://example.com': 2, 'http://test.com': 1}
+E         Use -v to get more diff
+
+test_0203.py:20: AssertionError
+_____________________________ test_task_func_top_n _____________________________
+
+    def test_task_func_top_n():
+        json_str = '{"websites": ["http://a.com", "http://b.com", "http://a.com", "http://c.com", "http://b.com", "http://d.com"]}'
+        result = task_func(json_str, top_n=3)
+>       assert result == {'http://a.com': 2, 'http://b.com': 2, 'http://c.com': 1}
+E       AssertionError: assert {} == {'http://a.co...p://c.com': 1}
+E         
+E         Right contains 3 more items:
+E         {'http://a.com': 2, 'http://b.com': 2, 'http://c.com': 1}
+E         Use -v to get more diff
+
+test_0203.py:25: AssertionError
+=========================== short test summary info ============================
+FAILED test_0203.py::test_task_func_multiple_urls - AssertionError: assert {}...
+FAILED test_0203.py::test_task_func_top_n - AssertionError: assert {} == {'ht...
+2 failed, 6 passed in 0.42s

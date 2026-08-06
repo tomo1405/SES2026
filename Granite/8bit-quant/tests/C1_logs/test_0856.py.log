@@ -1,0 +1,48 @@
+F..FF                                                                    [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        n_strings = 10
+        string_length = 5
+        expected_result = collections.Counter(''.join(
+            random.choice(string.ascii_letters + string.digits) for _ in range(string_length)
+            for _ in range(n_strings)
+        ))
+        actual_result = task_func(n_strings, string_length)
+>       assert actual_result == expected_result
+E       AssertionError: assert {'u': 3, 'B':..., 'Y': 2, ...} == Counter({'u':...': 1, 'T': 1})
+E         
+E         Omitting 10 identical items, use -vv to show
+E         Differing items:
+E         {'i': 5} != {'i': 2}
+E         {'Z': 1} != {'Z': 3}
+E         {'y': 2} != {'y': 1}
+E         {'q': 1} != {'q': 2}...
+E         
+E         ...Full output truncated (40 lines hidden), use '-vv' to show
+
+test_0856.py:15: AssertionError
+_____________________ test_task_func_with_negative_strings _____________________
+
+    def test_task_func_with_negative_strings():
+        n_strings = -10
+        string_length = 5
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0856.py:34: Failed
+_____________________ test_task_func_with_negative_length ______________________
+
+    def test_task_func_with_negative_length():
+        n_strings = 10
+        string_length = -5
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0856.py:40: Failed
+=========================== short test summary info ============================
+FAILED test_0856.py::test_task_func - AssertionError: assert {'u': 3, 'B':......
+FAILED test_0856.py::test_task_func_with_negative_strings - Failed: DID NOT R...
+FAILED test_0856.py::test_task_func_with_negative_length - Failed: DID NOT RA...
+3 failed, 2 passed in 0.48s

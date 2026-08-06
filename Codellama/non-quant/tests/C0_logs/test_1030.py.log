@@ -1,0 +1,39 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        rows = 100
+        columns = 3
+        column_names = [chr(97 + i) for i in range(columns)]
+        values = list("abcdefghijklmnopqrstuvwxyz")
+        data = np.random.choice(values, size=(rows, columns))
+        df = pd.DataFrame(data, columns=column_names)
+>       assert task_func(rows, columns) == df
+
+test_1030.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =         a      b      c
+0   False  False  False
+1   False  False  False
+2   False  False  False
+3   False  False  Fals...96  False  False  False
+97  False  False  False
+98  False  False  False
+99  False  False  False
+
+[100 rows x 3 columns]
+
+    @final
+    def __bool__(self) -> NoReturn:
+>       raise ValueError(
+            f"The truth value of a {type(self).__name__} is ambiguous. "
+            "Use a.empty, a.bool(), a.item(), a.any() or a.all()."
+        )
+E       ValueError: The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:1513: ValueError
+=========================== short test summary info ============================
+FAILED test_1030.py::test_task_func - ValueError: The truth value of a DataFr...
+1 failed in 1.34s

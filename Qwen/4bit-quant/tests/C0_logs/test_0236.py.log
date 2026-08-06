@@ -1,0 +1,39 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with default parameters
+        ax = task_func(mu=0, sigma=1)
+        assert isinstance(ax, plt.Axes), "The function should return a matplotlib Axes object"
+    
+        # Test with custom parameters
+        ax = task_func(mu=5, sigma=2, seed=42, num_samples=500, num_bins=20)
+        assert isinstance(ax, plt.Axes), "The function should return a matplotlib Axes object"
+    
+        # Test with zero sigma, which should raise a warning due to division by zero in the Gaussian plot
+        with pytest.warns(RuntimeWarning):
+            ax = task_func(mu=0, sigma=0)
+    
+        # Test with negative sigma, which is not physically meaningful but should still run
+>       ax = task_func(mu=0, sigma=-1)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0236.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0236.py:6: in task_func
+    samples = np.random.normal(mu, sigma, num_samples)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+numpy/random/mtrand.pyx:1579: in numpy.random.mtrand.RandomState.normal
+    ???
+numpy/random/_common.pyx:634: in numpy.random._common.cont
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   ValueError: scale < 0
+
+numpy/random/_common.pyx:432: ValueError
+=========================== short test summary info ============================
+FAILED test_0236.py::test_task_func - ValueError: scale < 0
+1 failed in 3.67s

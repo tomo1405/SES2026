@@ -1,0 +1,44 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        db_name = "test.db"
+        table_name = "test_table"
+        num_entries = 5
+        random_seed = 42
+        seed(random_seed)
+        expected_num_entries = 5
+        expected_table_name = "test_table"
+        expected_db_name = "test.db"
+>       result = task_func(db_name, table_name, num_entries, random_seed)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0540.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+db_name = 'test.db', table_name = 'test_table', num_entries = 5
+random_seed = 42
+
+    def task_func(db_name, table_name, num_entries, random_seed=None):
+        NAMES = ["John", "Jane", "Steve", "Emma", "Liam", "Olivia"]
+        AGES = range(18, 65)
+        HEIGHTS = range(150, 200)
+    
+        if random_seed:
+            seed(random_seed)
+    
+        if num_entries < 0:
+            raise ValueError("num_entries must not be negative")
+    
+        conn = sqlite3.connect(db_name)
+        cur = conn.cursor()
+>       cur.execute(f"CREATE TABLE {table_name} (name TEXT, age INTEGER, height INTEGER)")
+E       sqlite3.OperationalError: table test_table already exists
+
+test_0540.py:19: OperationalError
+=========================== short test summary info ============================
+FAILED test_0540.py::test_task_func - sqlite3.OperationalError: table test_ta...
+1 failed in 0.48s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

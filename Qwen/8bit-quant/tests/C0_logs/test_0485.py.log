@@ -1,0 +1,43 @@
+..F.F..                                                                  [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        df = task_func(start_time=1000, end_time=2000, step=100)
+        assert isinstance(df, pd.DataFrame)
+        assert list(df.columns) == ["Timestamp", "Sensor1", "Sensor2", "Sensor3", "SensorStatus"]
+>       assert len(df) == 11  # (2000 - 1000) / 100 + 1
+        ^^^^^^^^^^^^^^^^^^^^
+E       assert 10 == 11
+E        +  where 10 = len(                    Timestamp   Sensor1  ...    Sensor3          SensorStatus\n0  1970-01-01 00:00:01.000000  0.891142 ...             ERROR\n9  1970-01-01 00:00:01.900000  1.104385  ...  -3.042975  MAINTENANCE_REQUIRED\n\n[10 rows x 5 columns])
+
+test_0485.py:22: AssertionError
+_________________________ test_task_func_sensor_values _________________________
+
+    def test_task_func_sensor_values():
+        df = task_func(start_time=1000, end_time=2000, step=1000)
+        for index, row in df.iterrows():
+            sensor1 = row["Sensor1"]
+            sensor2 = row["Sensor2"]
+            sensor3 = row["Sensor3"]
+            ts = int(datetime.strptime(row["Timestamp"], "%Y-%m-%d %H:%M:%S.%f").timestamp() * 1000)
+>           assert abs(sensor1 - (math.sin(ts / 1000) + np.random.normal(0, 0.1))) < 0.2
+E           AssertionError: assert 0.9814311214954516 < 0.2
+E            +  where 0.9814311214954516 = abs((0.8911424001090198 - (-0.2425917070272344 + 0.15230298564080255)))
+E            +    where -0.2425917070272344 = <built-in function sin>((-32399000 / 1000))
+E            +      where <built-in function sin> = math.sin
+E            +    and   0.15230298564080255 = normal(0, 0.1)
+E            +      where normal = <module 'numpy.random' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/random/__init__.py'>.normal
+E            +        where <module 'numpy.random' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/random/__init__.py'> = np.random
+
+test_0485.py:37: AssertionError
+=============================== warnings summary ===============================
+Qwen/8bit-quant/tests/test_0485.py: 33 warnings
+  /work/tomohiro-w/utg/src/src_0485.py:24: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+    dt = datetime.utcfromtimestamp(ts / 1000).strftime("%Y-%m-%d %H:%M:%S.%f")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0485.py::test_task_func_valid_input - assert 10 == 11
+FAILED test_0485.py::test_task_func_sensor_values - AssertionError: assert 0....
+2 failed, 5 passed, 33 warnings in 1.32s

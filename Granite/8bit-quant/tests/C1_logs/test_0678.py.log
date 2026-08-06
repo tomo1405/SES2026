@@ -1,0 +1,91 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+input_df =         var1      var2  predicted
+0   0.937153  0.037998   0.412571
+1   0.884258  0.206665   0.417323
+2   0.235094  0....455804  0.471665   0.455808
+98  0.397125  0.163855   0.461079
+99  0.562027  0.026973   0.446267
+
+[100 rows x 3 columns]
+
+    def test_task_func(input_df):
+        output_df = task_func(input_df)
+        assert 'predicted' in output_df.columns
+        assert len(output_df) == len(input_df)
+>       assert all(output_df['predicted'] == pytest.approx(
+            input_df['var1'] * output_df['var1'].iloc[0] + output_df['var2'].iloc[0]))
+E       AssertionError: assert False
+E        +  where False = all(0     0.41257...dtype: float64 == approx([0.916...33 ± 5.6e-07])
+E           
+E           comparison failed. Mismatched elements: 100 / 100:
+E           Max absolute difference: 0.5625289435875553
+E           Max relative difference: 1.380695603784957
+E           Index | Obtained            | Expected                      
+E           (0,)  | 0.41257141582061396 | 0.9162524454154746 ± 9.2e-07  
+E           (1,)  | 0.4173226190790344  | 0.8666822469174724 ± 8.7e-07  ...
+E           
+E           ...Full output truncated (98 lines hidden), use '-vv' to show)
+
+test_0678.py:18: AssertionError
+________________________ test_task_func_with_zero_slope ________________________
+
+input_df =     var1      var2  predicted
+0      0  0.302391        NaN
+1      0  0.378666        NaN
+2      0  0.018511        Na...  NaN
+97     0  0.348360        NaN
+98     0  0.588501        NaN
+99     0  0.239320        NaN
+
+[100 rows x 3 columns]
+
+    def test_task_func_with_zero_slope(input_df):
+        input_df['var1'] = 0
+        output_df = task_func(input_df)
+>       assert all(output_df['predicted'] == pytest.approx(output_df['var2'].iloc[0]))
+E       assert False
+E        +  where False = all(0    NaN\n1   ...dtype: float64 == 0.3023908353472792 ± 3.0e-07
+E           
+E           comparison failed
+E           Obtained: 0    NaN\n1    NaN\n2    NaN\n3    NaN\n4    NaN\n      ..\n95   NaN\n96   NaN\n97   NaN\n98   NaN\n99   NaN\nName: predicted, Length: 100, dtype: float64
+E           Expected: 0.3023908353472792 ± 3.0e-07)
+
+test_0678.py:24: AssertionError
+______________________ test_task_func_with_zero_intercept ______________________
+
+input_df =         var1  var2  predicted
+0   0.895854     0        0.0
+1   0.709232     0        0.0
+2   0.124567     0        0....  0.0
+97  0.527208     0        0.0
+98  0.193299     0        0.0
+99  0.313898     0        0.0
+
+[100 rows x 3 columns]
+
+    def test_task_func_with_zero_intercept(input_df):
+        input_df['var2'] = 0
+        output_df = task_func(input_df)
+>       assert all(output_df['predicted'] == pytest.approx(0))
+E       assert False
+E        +  where False = all(0     0.0\n1  ...dtype: float64 == 0 ± 1.0e-12
+E           
+E           comparison failed
+E           Obtained: 0     0.0\n1     0.0\n2     0.0\n3     0.0\n4     0.0\n     ... \n95    0.0\n96    0.0\n97    0.0\n98    0.0\n99    0.0\nName: predicted, Length: 100, dtype: float64
+E           Expected: 0 ± 1.0e-12)
+
+test_0678.py:29: AssertionError
+=============================== warnings summary ===============================
+Granite/8bit-quant/tests/test_0678.py::test_task_func_with_zero_slope
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/scipy/stats/_stats_py.py:10940: RuntimeWarning: invalid value encountered in scalar divide
+    slope = ssxym / ssxm
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0678.py::test_task_func - AssertionError: assert False
+FAILED test_0678.py::test_task_func_with_zero_slope - assert False
+FAILED test_0678.py::test_task_func_with_zero_intercept - assert False
+3 failed, 1 warning in 2.39s

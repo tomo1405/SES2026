@@ -1,0 +1,39 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        array = np.array([[1, 2], [3, 4], [5, 6]])
+        target_value = 2
+        with pytest.raises(ValueError):
+            task_func(array, target_value)
+    
+        array = np.array([[1, 2], [3, 4], [2, 5], [2, 6]])
+        target_value = 2
+>       popt, _ = task_func(array, target_value)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0655.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+array = array([[1, 2],
+       [3, 4],
+       [2, 5],
+       [2, 6]])
+target_value = 2
+
+    def task_func(array, target_value):
+        def func(x, a, b, c):
+            return a * np.exp(-b * x) + c
+    
+        indices = np.where(array[:, 0] == target_value)[0]
+        if indices.size < 3:
+>           raise ValueError("Not enough points to perform the fitting.")
+E           ValueError: Not enough points to perform the fitting.
+
+test_0655.py:10: ValueError
+=========================== short test summary info ============================
+FAILED test_0655.py::test_task_func - ValueError: Not enough points to perfor...
+1 failed in 2.54s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

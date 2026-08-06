@@ -1,0 +1,64 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_file_not_found _________________________
+
+    def test_task_func_file_not_found():
+        with pytest.raises(FileNotFoundError) as excinfo:
+            task_func(csv_path='./non_existent_file.csv')
+>       assert str(excinfo.value) == "'./non_existent_file.csv' does not exist"
+E       assert './non_existe...oes not exist' == "'./non_exist...oes not exist"
+E         
+E         - './non_existent_file.csv' does not exist
+E         ? -                       -
+E         + ./non_existent_file.csv does not exist
+
+test_0647.py:9: AssertionError
+__________________________ test_task_func_valid_file ___________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1704/test_task_func_valid_file0')
+
+    def test_task_func_valid_file(tmpdir):
+        # Create a temporary CSV file
+        temp_dir = tmpdir.mkdir("temp")
+        csv_file = temp_dir.join("data.csv")
+        data = {'date': ['2020-01-01', '2021-02-02', '2022-03-03']}
+        df = pd.DataFrame(data)
+        df.to_csv(csv_file, index=False)
+    
+        # Call the function with the temporary CSV file
+        result = task_func(csv_path=str(csv_file))
+    
+        # Assert the result is a Series with counts of years
+>       assert isinstance(result, pd.Series)
+E       AssertionError: assert False
+E        +  where False = isinstance(<Axes: >, <class 'pandas.Series'>)
+E        +    where <class 'pandas.Series'> = pd.Series
+
+test_0647.py:23: AssertionError
+______________________ test_task_func_custom_date_column _______________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1704/test_task_func_custom_date_col0')
+
+    def test_task_func_custom_date_column(tmpdir):
+        # Create a temporary CSV file with a custom date column
+        temp_dir = tmpdir.mkdir("temp")
+        csv_file = temp_dir.join("data.csv")
+        data = {'custom_date': ['2020-01-01', '2021-02-02', '2022-03-03']}
+        df = pd.DataFrame(data)
+        df.to_csv(csv_file, index=False)
+    
+        # Call the function with the custom date column
+        result = task_func(csv_path=str(csv_file), date_column='custom_date')
+    
+        # Assert the result is a Series with counts of years
+>       assert isinstance(result, pd.Series)
+E       AssertionError: assert False
+E        +  where False = isinstance(<Axes: >, <class 'pandas.Series'>)
+E        +    where <class 'pandas.Series'> = pd.Series
+
+test_0647.py:41: AssertionError
+=========================== short test summary info ============================
+FAILED test_0647.py::test_task_func_file_not_found - assert './non_existe...o...
+FAILED test_0647.py::test_task_func_valid_file - AssertionError: assert False
+FAILED test_0647.py::test_task_func_custom_date_column - AssertionError: asse...
+3 failed in 2.16s

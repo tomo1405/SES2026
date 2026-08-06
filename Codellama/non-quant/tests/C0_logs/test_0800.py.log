@@ -1,0 +1,58 @@
+.FFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_non_empty_list _________________________
+
+    def test_task_func_non_empty_list():
+        L = ['a', 'b', 'c', 'd', 'e']
+        num_dataframes = 5
+        random_seed = None
+        expected_common_rows = pd.DataFrame()
+        expected_dataframes = []
+    
+        common_rows, dataframes = task_func(L, num_dataframes, random_seed)
+    
+>       assert common_rows.equals(expected_common_rows)
+E       assert False
+E        +  where False = equals(Empty DataFrame\nColumns: []\nIndex: [])
+E        +    where equals =    u\n0  c\n1  a\n2  e\n8  d.equals
+
+test_0800.py:26: AssertionError
+__________________________ test_task_func_random_seed __________________________
+
+    def test_task_func_random_seed():
+        L = ['a', 'b', 'c', 'd', 'e']
+        num_dataframes = 5
+        random_seed = 1234
+        expected_common_rows = pd.DataFrame()
+        expected_dataframes = []
+    
+        common_rows, dataframes = task_func(L, num_dataframes, random_seed)
+    
+>       assert common_rows.equals(expected_common_rows)
+E       assert False
+E        +  where False = equals(Empty DataFrame\nColumns: []\nIndex: [])
+E        +    where equals =    z\n0  c\n1  a\n2  e\n5  d\n8  b.equals
+
+test_0800.py:38: AssertionError
+________________________ test_task_func_num_dataframes _________________________
+
+    def test_task_func_num_dataframes():
+        L = ['a', 'b', 'c', 'd', 'e']
+        num_dataframes = 10
+        random_seed = None
+        expected_common_rows = pd.DataFrame()
+        expected_dataframes = []
+    
+        common_rows, dataframes = task_func(L, num_dataframes, random_seed)
+    
+>       assert common_rows.equals(expected_common_rows)
+E       assert False
+E        +  where False = equals(Empty DataFrame\nColumns: []\nIndex: [])
+E        +    where equals =     e\n0   a\n2   c\n3   e\n7   d\n10  b.equals
+
+test_0800.py:50: AssertionError
+=========================== short test summary info ============================
+FAILED test_0800.py::test_task_func_non_empty_list - assert False
+FAILED test_0800.py::test_task_func_random_seed - assert False
+FAILED test_0800.py::test_task_func_num_dataframes - assert False
+3 failed, 1 passed in 1.16s

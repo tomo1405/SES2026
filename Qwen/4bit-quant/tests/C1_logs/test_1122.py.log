@@ -1,0 +1,182 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_get = <MagicMock name='get' id='140265594089072'>
+
+    @patch('requests.get')
+    def test_task_func(mock_get):
+        # Mock response data
+        mock_response = MagicMock()
+        mock_response.json.return_value = {
+            "status": "success",
+            "country": "United States",
+            "regionName": "California",
+            "city": "San Francisco",
+            "lat": 37.7749,
+            "lon": -122.4194,
+            "timezone": "America/Los_Angeles"
+        }
+    
+        # Configure the mock to return the mock response
+        mock_get.return_value = mock_response
+    
+        # Test input
+        myString = "Check out this website: https://www.example.com and also visit http://another-example.org"
+        API_KEY = "your_api_key_here"
+    
+        # Expected output
+        expected_output = {
+            "www.example.com": mock_response.json.return_value,
+            "another-example.org": mock_response.json.return_value
+        }
+    
+        # Run the function
+>       result = task_func(myString, API_KEY)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1122.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1122.py:12: in task_func
+    geo_data[domain] = json.loads(response.text)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+s = <MagicMock name='get().text' id='140265594082112'>, cls = None
+object_hook = None, parse_float = None, parse_int = None, parse_constant = None
+object_pairs_hook = None, kw = {}
+
+    def loads(s, *, cls=None, object_hook=None, parse_float=None,
+            parse_int=None, parse_constant=None, object_pairs_hook=None, **kw):
+        """Deserialize ``s`` (a ``str``, ``bytes`` or ``bytearray`` instance
+        containing a JSON document) to a Python object.
+    
+        ``object_hook`` is an optional function that will be called with the
+        result of any object literal decode (a ``dict``). The return value of
+        ``object_hook`` will be used instead of the ``dict``. This feature
+        can be used to implement custom decoders (e.g. JSON-RPC class hinting).
+    
+        ``object_pairs_hook`` is an optional function that will be called with the
+        result of any object literal decoded with an ordered list of pairs.  The
+        return value of ``object_pairs_hook`` will be used instead of the ``dict``.
+        This feature can be used to implement custom decoders.  If ``object_hook``
+        is also defined, the ``object_pairs_hook`` takes priority.
+    
+        ``parse_float``, if specified, will be called with the string
+        of every JSON float to be decoded. By default this is equivalent to
+        float(num_str). This can be used to use another datatype or parser
+        for JSON floats (e.g. decimal.Decimal).
+    
+        ``parse_int``, if specified, will be called with the string
+        of every JSON int to be decoded. By default this is equivalent to
+        int(num_str). This can be used to use another datatype or parser
+        for JSON integers (e.g. float).
+    
+        ``parse_constant``, if specified, will be called with one of the
+        following strings: -Infinity, Infinity, NaN.
+        This can be used to raise an exception if invalid JSON numbers
+        are encountered.
+    
+        To use a custom ``JSONDecoder`` subclass, specify it with the ``cls``
+        kwarg; otherwise ``JSONDecoder`` is used.
+        """
+        if isinstance(s, str):
+            if s.startswith('\ufeff'):
+                raise JSONDecodeError("Unexpected UTF-8 BOM (decode using utf-8-sig)",
+                                      s, 0)
+        else:
+            if not isinstance(s, (bytes, bytearray)):
+>               raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                                f'not {s.__class__.__name__}')
+E               TypeError: the JSON object must be str, bytes or bytearray, not MagicMock
+
+/usr/lib/python3.12/json/__init__.py:339: TypeError
+__________________________ test_task_func_invalid_url __________________________
+
+mock_get = <MagicMock name='get' id='140265593243984'>
+
+    @patch('requests.get')
+    def test_task_func_invalid_url(mock_get):
+        # Invalid URL in the input string
+        myString = "Check out this website: https://invalid-url"
+        API_KEY = "your_api_key_here"
+    
+        # Mock response data for invalid URL
+        mock_response = MagicMock()
+        mock_response.json.return_value = {
+            "status": "fail",
+            "message": "Invalid IP address"
+        }
+    
+        # Configure the mock to return the mock response
+        mock_get.return_value = mock_response
+    
+        # Expected output
+        expected_output = {
+            "invalid-url": mock_response.json.return_value
+        }
+    
+        # Run the function
+>       result = task_func(myString, API_KEY)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1122.py:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1122.py:12: in task_func
+    geo_data[domain] = json.loads(response.text)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+s = <MagicMock name='get().text' id='140265593255600'>, cls = None
+object_hook = None, parse_float = None, parse_int = None, parse_constant = None
+object_pairs_hook = None, kw = {}
+
+    def loads(s, *, cls=None, object_hook=None, parse_float=None,
+            parse_int=None, parse_constant=None, object_pairs_hook=None, **kw):
+        """Deserialize ``s`` (a ``str``, ``bytes`` or ``bytearray`` instance
+        containing a JSON document) to a Python object.
+    
+        ``object_hook`` is an optional function that will be called with the
+        result of any object literal decode (a ``dict``). The return value of
+        ``object_hook`` will be used instead of the ``dict``. This feature
+        can be used to implement custom decoders (e.g. JSON-RPC class hinting).
+    
+        ``object_pairs_hook`` is an optional function that will be called with the
+        result of any object literal decoded with an ordered list of pairs.  The
+        return value of ``object_pairs_hook`` will be used instead of the ``dict``.
+        This feature can be used to implement custom decoders.  If ``object_hook``
+        is also defined, the ``object_pairs_hook`` takes priority.
+    
+        ``parse_float``, if specified, will be called with the string
+        of every JSON float to be decoded. By default this is equivalent to
+        float(num_str). This can be used to use another datatype or parser
+        for JSON floats (e.g. decimal.Decimal).
+    
+        ``parse_int``, if specified, will be called with the string
+        of every JSON int to be decoded. By default this is equivalent to
+        int(num_str). This can be used to use another datatype or parser
+        for JSON integers (e.g. float).
+    
+        ``parse_constant``, if specified, will be called with one of the
+        following strings: -Infinity, Infinity, NaN.
+        This can be used to raise an exception if invalid JSON numbers
+        are encountered.
+    
+        To use a custom ``JSONDecoder`` subclass, specify it with the ``cls``
+        kwarg; otherwise ``JSONDecoder`` is used.
+        """
+        if isinstance(s, str):
+            if s.startswith('\ufeff'):
+                raise JSONDecodeError("Unexpected UTF-8 BOM (decode using utf-8-sig)",
+                                      s, 0)
+        else:
+            if not isinstance(s, (bytes, bytearray)):
+>               raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                                f'not {s.__class__.__name__}')
+E               TypeError: the JSON object must be str, bytes or bytearray, not MagicMock
+
+/usr/lib/python3.12/json/__init__.py:339: TypeError
+=========================== short test summary info ============================
+FAILED test_1122.py::test_task_func - TypeError: the JSON object must be str,...
+FAILED test_1122.py::test_task_func_invalid_url - TypeError: the JSON object ...
+2 failed, 1 passed in 0.78s

@@ -1,0 +1,40 @@
+F...                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a sample DataFrame
+        data = {
+            'a': [1, 2, 3, 4],
+            'b': [5, 6, 7, 8],
+            'c': [9, 10, 11, 12],
+            'target': [13, 14, 15, 16]
+        }
+        df = pd.DataFrame(data)
+    
+        # Expected output after removing column 'c' and splitting
+        expected_columns = ['a', 'b']
+        expected_target = 'target'
+        test_size = 0.2
+    
+        # Call the function
+        X_train, X_test, y_train, y_test = task_func(df, target_column='target')
+    
+        # Check if the correct columns are present in the split datasets
+        assert list(X_train.columns) == expected_columns
+        assert list(X_test.columns) == expected_columns
+        assert y_train.name == expected_target
+        assert y_test.name == expected_target
+    
+        # Check if the split is correct
+        assert len(X_train) + len(X_test) == len(df)
+>       assert len(X_test) == int(len(df) * test_size)
+E       assert 1 == 0
+E        +  where 1 = len(   a  b\n2  3  7)
+E        +  and   0 = int((4 * 0.2))
+E        +    where 4 = len(   a  b   c  target\n0  1  5   9      13\n1  2  6  10      14\n2  3  7  11      15\n3  4  8  12      16)
+
+test_0423.py:32: AssertionError
+=========================== short test summary info ============================
+FAILED test_0423.py::test_task_func - assert 1 == 0
+1 failed, 3 passed in 2.88s

@@ -1,0 +1,83 @@
+FF.F                                                                     [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_valid_request _________________________
+
+    def test_task_func_valid_request():
+        # Create a temporary file and write some data to it
+        with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+            temp_file.write(b"Hello, World!")
+            temp_file_name = temp_file.name
+    
+        # Construct a valid HTTP GET request
+        request = f"GET {temp_file_name} HTTP/1.1"
+    
+        # Call the function with the request
+        response = task_func(request)
+    
+        # Check that the response is correct
+        expected_response = (
+            f"HTTP/1.1 200 OK\r\nContent-Length: 13\r\n\r\nHello, World!"
+        )
+>       assert response == expected_response
+E       AssertionError: assert 'HTTP/1.1 400...\nBad Request' == 'HTTP/1.1 200...Hello, World!'
+E         
+E         + HTTP/1.1 400 BAD REQUEST
+E         - HTTP/1.1 200 OK
+E         - Content-Length: 13
+E           
+E         - Hello, World!
+E         + Bad Request
+
+test_1042.py:22: AssertionError
+________________________ test_task_func_file_not_found _________________________
+
+    def test_task_func_file_not_found():
+        # Construct a request for a non-existent file
+        request = "GET non_existent_file.txt HTTP/1.1"
+    
+        # Call the function with the request
+        response = task_func(request)
+    
+        # Check that the response is correct
+        expected_response = "HTTP/1.1 404 NOT FOUND\r\n\r\nFile Not Found"
+>       assert response == expected_response
+E       AssertionError: assert 'HTTP/1.1 400...\nBad Request' == 'HTTP/1.1 404...ile Not Found'
+E         
+E         - HTTP/1.1 404 NOT FOUND
+E         + HTTP/1.1 400 BAD REQUEST
+E           
+E         - File Not Found
+E         + Bad Request
+
+test_1042.py:36: AssertionError
+_____________________ test_task_func_internal_server_error _____________________
+
+    def test_task_func_internal_server_error():
+        # Create a temporary file that cannot be read
+        temp_file_name = "/path/to/non_readable_file"
+    
+        # Construct a valid HTTP GET request
+        request = f"GET {temp_file_name} HTTP/1.1"
+    
+        # Call the function with the request
+        response = task_func(request)
+    
+        # Check that the response is correct
+        expected_response = (
+            "HTTP/1.1 500 INTERNAL SERVER ERROR\r\n\r\nInternal Server Error"
+        )
+>       assert response == expected_response
+E       AssertionError: assert 'HTTP/1.1 400...\nBad Request' == 'HTTP/1.1 500... Server Error'
+E         
+E         - HTTP/1.1 500 INTERNAL SERVER ERROR
+E         + HTTP/1.1 400 BAD REQUEST
+E           
+E         - Internal Server Error
+E         + Bad Request
+
+test_1042.py:63: AssertionError
+=========================== short test summary info ============================
+FAILED test_1042.py::test_task_func_valid_request - AssertionError: assert 'H...
+FAILED test_1042.py::test_task_func_file_not_found - AssertionError: assert '...
+FAILED test_1042.py::test_task_func_internal_server_error - AssertionError: a...
+3 failed, 1 passed in 0.49s

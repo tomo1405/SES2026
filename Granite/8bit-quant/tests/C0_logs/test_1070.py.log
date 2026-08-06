@@ -1,0 +1,31 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_uniform_distribution ___________________________
+
+data_dict = {'column1': [1, 2, 3, 4, 5], 'column2': ['a', 'b', 'c', 'd', 'e']}
+
+    def test_uniform_distribution(data_dict):
+        axes_list = task_func(data_dict)
+        for ax in axes_list:
+            ax.figure.canvas.draw()
+            lines = ax.get_lines()
+>           counts = lines[0].get_ydata()
+                     ^^^^^^^^
+E           IndexError: list index out of range
+
+test_1070.py:22: IndexError
+________________________ test_non_uniform_distribution _________________________
+
+data_dict = {'column1': [1, 2, 3, 4, 5], 'column2': ['a', 'a', 'a', 'a', 'a']}
+
+    def test_non_uniform_distribution(data_dict):
+        data_dict['column2'] = ['a', 'a', 'a', 'a', 'a']
+>       with pytest.warns(UserWarning, match="not uniform"):
+E       Failed: DID NOT WARN. No warnings of type (<class 'UserWarning'>,) were emitted.
+E        Emitted warnings: [].
+
+test_1070.py:27: Failed
+=========================== short test summary info ============================
+FAILED test_1070.py::test_uniform_distribution - IndexError: list index out o...
+FAILED test_1070.py::test_non_uniform_distribution - Failed: DID NOT WARN. No...
+2 failed, 1 passed in 2.42s

@@ -1,0 +1,23 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with default arguments
+        df = task_func(days=10)
+        assert isinstance(df, pd.DataFrame)
+        assert len(df) == 10
+        assert "Groceries" in df.columns
+    
+        # Test with custom arguments
+        df = task_func(days=20, random_seed=42)
+        assert isinstance(df, pd.DataFrame)
+        assert len(df) == 20
+        assert "Rent" in df.columns
+>       assert df["Rent"].iloc[0] == 82
+E       assert np.int64(61) == 82
+
+test_0496.py:18: AssertionError
+=========================== short test summary info ============================
+FAILED test_0496.py::test_task_func - assert np.int64(61) == 82
+1 failed in 1.08s

@@ -1,0 +1,13 @@
+import pandas as pd
+import seaborn as sns
+def task_func(data, column="c"):
+    df = pd.DataFrame(data)
+    if column in df.columns:
+        df = df.drop(columns=column)
+
+    df = df.select_dtypes(include=["number"])
+
+    if df.empty:
+        return None
+
+    return sns.heatmap(df.corr())

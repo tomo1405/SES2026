@@ -1,0 +1,8 @@
+from collections import Counter
+import pandas as pd
+def task_func(myList):
+    words = [w.lower().strip() for w in myList]
+    word_counts = dict(Counter(words))
+    report_df = pd.DataFrame.from_dict(word_counts, orient="index", columns=["Count"])
+
+    return report_df

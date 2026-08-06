@@ -1,0 +1,37 @@
+F..F                                                                     [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_valid_request _________________________
+
+    def test_task_func_valid_request():
+        request = "GET /index.html HTTP/1.1"
+        expected_response = "HTTP/1.1 200 OK\r\nContent-Length: 12\r\n\r\nHello, world!"
+>       assert task_func(request) == expected_response
+E       AssertionError: assert 'HTTP/1.1 404...ile Not Found' == 'HTTP/1.1 200...Hello, world!'
+E         
+E         + HTTP/1.1 404 NOT FOUND
+E         - HTTP/1.1 200 OK
+E         - Content-Length: 12
+E           
+E         - Hello, world!
+E         + File Not Found
+
+test_1042.py:7: AssertionError
+_____________________ test_task_func_internal_server_error _____________________
+
+    def test_task_func_internal_server_error():
+        request = "GET /index.html HTTP/1.1"
+        expected_response = "HTTP/1.1 500 INTERNAL SERVER ERROR\r\n\r\nInternal Server Error"
+>       assert task_func(request) == expected_response
+E       AssertionError: assert 'HTTP/1.1 404...ile Not Found' == 'HTTP/1.1 500... Server Error'
+E         
+E         - HTTP/1.1 500 INTERNAL SERVER ERROR
+E         + HTTP/1.1 404 NOT FOUND
+E           
+E         - Internal Server Error
+E         + File Not Found
+
+test_1042.py:22: AssertionError
+=========================== short test summary info ============================
+FAILED test_1042.py::test_task_func_valid_request - AssertionError: assert 'H...
+FAILED test_1042.py::test_task_func_internal_server_error - AssertionError: a...
+2 failed, 2 passed in 0.50s

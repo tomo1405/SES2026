@@ -1,0 +1,28 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        import pandas as pd
+    
+        # Test case 1: Empty DataFrame
+        df = pd.DataFrame()
+        with pytest.raises(ValueError) as exc_info:
+            task_func(df)
+        assert "DataFrame is empty. Non-empty DataFrame required." in str(exc_info.value)
+    
+        # Test case 2: Non-numeric data
+        df = pd.DataFrame({'A': ['a', 'b', 'c'], 'B': [1, 2, 3]})
+        with pytest.raises(TypeError) as exc_info:
+            task_func(df)
+>       assert "DataFrame contains non-numeric data. Only numeric data types are supported." in str(exc_info.value)
+E       assert 'DataFrame contains non-numeric data. Only numeric data types are supported.' in "Cannot interpret '<StringDtype(na_value=nan)>' as a data type"
+E        +  where "Cannot interpret '<StringDtype(na_value=nan)>' as a data type" = str(TypeError("Cannot interpret '<StringDtype(na_value=nan)>' as a data type"))
+E        +    where TypeError("Cannot interpret '<StringDtype(na_value=nan)>' as a data type") = <ExceptionInfo TypeError("Cannot interpret '<StringDtype(na_value=nan)>' as a data type") tblen=10>.value
+
+test_0984.py:30: AssertionError
+=========================== short test summary info ============================
+FAILED test_0984.py::test_task_func - assert 'DataFrame contains non-numeric ...
+1 failed in 3.97s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

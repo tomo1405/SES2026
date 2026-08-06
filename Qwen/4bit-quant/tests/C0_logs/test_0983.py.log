@@ -1,0 +1,53 @@
+.F.F...                                                                  [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_with_seed ___________________________
+
+sample_df =            A         B
+0   0.089404  8.650185
+1   0.373440  7.232830
+2   0.752890  4.049335
+3   1.356565  3.896403
+4  ...544
+96  0.332297  4.127964
+97  0.575330  3.102492
+98 -1.365377  4.782838
+99  0.904730  1.690737
+
+[100 rows x 2 columns]
+
+    def test_task_func_with_seed(sample_df):
+        ax1 = task_func(sample_df, 'A', seed=42)
+        ax2 = task_func(sample_df, 'A', seed=42)
+>       assert ax1 == ax2, "With the same seed, the function should produce the same plot."
+E       AssertionError: With the same seed, the function should produce the same plot.
+E       assert <Axes: title={'center': "Normal Fit for 'A'"}, xlabel='A', ylabel='Density'> == <Axes: title={'center': "Normal Fit for 'A'"}, xlabel='A', ylabel='Density'>
+
+test_0983.py:23: AssertionError
+______________________ test_task_func_non_default_density ______________________
+
+sample_df =            A         B
+0   0.357787  3.342010
+1   0.560785  3.879638
+2   1.083051  6.494587
+3   1.053802  6.220741
+4  ...649
+96  0.899600  1.573731
+97  0.307300  7.707745
+98  0.812862  4.770920
+99  0.629629  7.475633
+
+[100 rows x 2 columns]
+
+    def test_task_func_non_default_density(sample_df):
+        ax = task_func(sample_df, 'A', density=False)
+>       assert not ax.get_yaxis().get_label_text() == "Density", "Y-axis label should not be 'Density' when density is False."
+E       AssertionError: Y-axis label should not be 'Density' when density is False.
+E       assert not 'Density' == 'Density'
+E         
+E           Density
+
+test_0983.py:31: AssertionError
+=========================== short test summary info ============================
+FAILED test_0983.py::test_task_func_with_seed - AssertionError: With the same...
+FAILED test_0983.py::test_task_func_non_default_density - AssertionError: Y-a...
+2 failed, 5 passed in 3.75s

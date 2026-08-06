@@ -1,0 +1,52 @@
+.F..FF                                                                   [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_with_seed ___________________________
+
+    def test_task_func_with_seed():
+        text = "hello world"
+        seed = 42
+        result = task_func(text, seed=seed)
+        expected_result = "hlelo wrold"  # Known scrambled result with seed 42
+>       assert result == expected_result, f"Expected '{expected_result}', but got '{result}'"
+E       AssertionError: Expected 'hlelo wrold', but got 'hlelo wlrod'
+E       assert 'hlelo wlrod' == 'hlelo wrold'
+E         
+E         - hlelo wrold
+E         ?          -
+E         + hlelo wlrod
+E         ?        +
+
+test_0959.py:14: AssertionError
+__________________________ test_task_func_punctuation __________________________
+
+    def test_task_func_punctuation():
+        text = "hello, world!"
+        result = task_func(text)
+>       assert result == "hlelo, wrold!", "Punctuation should remain in place"
+E       AssertionError: Punctuation should remain in place
+E       assert 'hlleo, wrlod!' == 'hlelo, wrold!'
+E         
+E         - hlelo, wrold!
+E         + hlleo, wrlod!
+
+test_0959.py:29: AssertionError
+____________________________ test_task_func_numbers ____________________________
+
+    def test_task_func_numbers():
+        text = "hello123 world456"
+        result = task_func(text)
+>       assert result == "hlelo123 wrold456", "Numbers should remain in place"
+E       AssertionError: Numbers should remain in place
+E       assert 'holle123 wrld45o6' == 'hlelo123 wrold456'
+E         
+E         - hlelo123 wrold456
+E         ?    --      -
+E         + holle123 wrld45o6
+E         ?  ++            +
+
+test_0959.py:34: AssertionError
+=========================== short test summary info ============================
+FAILED test_0959.py::test_task_func_with_seed - AssertionError: Expected 'hle...
+FAILED test_0959.py::test_task_func_punctuation - AssertionError: Punctuation...
+FAILED test_0959.py::test_task_func_numbers - AssertionError: Numbers should ...
+3 failed, 3 passed in 0.50s

@@ -1,0 +1,36 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data_list = [(1, 2, 3), (4, 5, 6), (7, 8, 9)]
+        file_name = 'mean_values.txt'
+        expected_mean_values = [2, 5, 8]
+    
+        # Mocking the open function to avoid file operations during testing
+        def mock_open(file, mode):
+            mock_file = MagicMock(spec=file)
+            return mock_file
+    
+        with patch('src_0872.open', mock_open) as mock_file:
+>           mean_values = task_func(data_list, file_name)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0872.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0872.py:16: in task_func
+    with open(file_name, 'w') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = 'mean_values.txt', mode = 'w'
+
+    def mock_open(file, mode):
+>       mock_file = MagicMock(spec=file)
+                    ^^^^^^^^^
+E       NameError: name 'MagicMock' is not defined
+
+test_0872.py:13: NameError
+=========================== short test summary info ============================
+FAILED test_0872.py::test_task_func - NameError: name 'MagicMock' is not defined
+1 failed in 0.72s

@@ -1,0 +1,64 @@
+FFF...                                                                   [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_default_behavior ________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1488/test_task_func_default_behavio0')
+
+    def test_task_func_default_behavior(tmp_path):
+        csv_file_path = tmp_path / "test_names.csv"
+        result = task_func(str(csv_file_path))
+        assert result == str(csv_file_path)
+        assert os.path.exists(csv_file_path)
+    
+        with open(csv_file_path, mode='r', newline='', encoding='latin-1') as file:
+            reader = csv.DictReader(file)
+            rows = list(reader)
+>           assert len(rows) == 50
+E           AssertionError: assert 100 == 50
+E            +  where 100 = len([{'Name': 'Sopetón', 'Age': '45'}, {'Name': 'Smith', 'Age': '38'}, {'Name': 'Gómez', 'Age': '45'}, {'Name': 'Brown', 'Age': '44'}, {'Name': 'Pérez', 'Age': '28'}, {'Name': 'Jones', 'Age': '50'}, ...])
+
+test_0765.py:15: AssertionError
+_______________ test_task_func_with_custom_names_and_latin_names _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1488/test_task_func_with_custom_nam0')
+
+    def test_task_func_with_custom_names_and_latin_names(tmp_path):
+        csv_file_path = tmp_path / "custom_names.csv"
+        custom_names = ['Doe', 'Smith', 'Brown']
+        custom_latin_names = ['Martínez', 'Rodríguez', 'Hernández']
+        result = task_func(str(csv_file_path), names=custom_names, latin_names=custom_latin_names)
+        assert result == str(csv_file_path)
+        assert os.path.exists(csv_file_path)
+    
+        with open(csv_file_path, mode='r', newline='', encoding='latin-1') as file:
+            reader = csv.DictReader(file)
+            rows = list(reader)
+>           assert len(rows) == 50
+E           AssertionError: assert 100 == 50
+E            +  where 100 = len([{'Name': 'Martínez', 'Age': '31'}, {'Name': 'Smith', 'Age': '26'}, {'Name': 'Rodríguez', 'Age': '32'}, {'Name': 'Brown', 'Age': '37'}, {'Name': 'Martínez', 'Age': '40'}, {'Name': 'Doe', 'Age': '26'}, ...])
+
+test_0765.py:32: AssertionError
+_________________________ test_task_func_with_rng_seed _________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1488/test_task_func_with_rng_seed0')
+
+    def test_task_func_with_rng_seed(tmp_path):
+        csv_file_path = tmp_path / "seeded_names.csv"
+        seed_value = 42
+        result = task_func(str(csv_file_path), rng_seed=seed_value)
+        assert result == str(csv_file_path)
+        assert os.path.exists(csv_file_path)
+    
+        with open(csv_file_path, mode='r', newline='', encoding='latin-1') as file:
+            reader = csv.DictReader(file)
+            rows = list(reader)
+>           assert len(rows) == 50
+E           AssertionError: assert 100 == 50
+E            +  where 100 = len([{'Name': 'Sopetón', 'Age': '20'}, {'Name': 'Williams', 'Age': '27'}, {'Name': 'Méndez', 'Age': '24'}, {'Name': 'Smith', 'Age': '41'}, {'Name': 'Muñoz', 'Age': '22'}, {'Name': 'Jones', 'Age': '33'}, ...])
+
+test_0765.py:47: AssertionError
+=========================== short test summary info ============================
+FAILED test_0765.py::test_task_func_default_behavior - AssertionError: assert...
+FAILED test_0765.py::test_task_func_with_custom_names_and_latin_names - Asser...
+FAILED test_0765.py::test_task_func_with_rng_seed - AssertionError: assert 10...
+3 failed, 3 passed in 0.47s

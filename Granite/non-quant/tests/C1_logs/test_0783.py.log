@@ -1,0 +1,30 @@
+...FF                                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_seed_consistency ________________________
+
+input_args = {'n': 10, 'domain': 'samplewebsite.com', 'categories': ['Sports', 'Technology', 'Health', 'Science', 'Business'], 'random_seed': 42}
+
+    def test_task_func_seed_consistency(input_args):
+        output_1 = task_func(**input_args)
+        input_args["random_seed"] = 42
+        output_2 = task_func(**input_args)
+>       assert output_1.equals(output_2)
+E       assert False
+E        +  where False = equals(       title                    title_url  id    category  views\n0  Article 0  samplewebsite.com/Article_0   0      Sp... 8  samplewebsite.com/Article_8   8      Sports   1010\n9  Article 9  samplewebsite.com/Article_9   9    Business    980)
+E        +    where equals =        title                    title_url  id    category  views\n0  Article 0  samplewebsite.com/Article_0   0    Busi... 8  samplewebsite.com/Article_8   8    Business   1054\n9  Article 9  samplewebsite.com/Article_9   9      Health    941.equals
+
+test_0783.py:36: AssertionError
+_________________________ test_task_func_invalid_input _________________________
+
+input_args = {'n': 10, 'domain': 'samplewebsite.com', 'categories': ['Sports', 'Technology', 'Health', 'Science', 'Business'], 'random_seed': None}
+
+    def test_task_func_invalid_input(input_args):
+        with pytest.raises(ValueError):
+>           task_func(n=-1, **input_args)
+E           TypeError: src_0783.task_func() got multiple values for keyword argument 'n'
+
+test_0783.py:40: TypeError
+=========================== short test summary info ============================
+FAILED test_0783.py::test_task_func_seed_consistency - assert False
+FAILED test_0783.py::test_task_func_invalid_input - TypeError: src_0783.task_...
+2 failed, 3 passed in 1.15s

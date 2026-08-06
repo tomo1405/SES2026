@@ -1,0 +1,59 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that the function returns the expected tar path
+>       tar_path = task_func()
+                   ^^^^^^^^^^^
+
+test_0813.py:6: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0813.py:9: in task_func
+    with tarfile.open(tar_path, 'w') as tar:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/tarfile.py:1897: in open
+    return cls.taropen(name, mode, fileobj, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/tarfile.py:1907: in taropen
+    return cls(name, mode, fileobj, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tarfile.TarFile object at 0x747d5f7497c0>
+name = PosixPath('C:\\\\SomeDir\\\\/archive.tar'), mode = 'w', fileobj = None
+format = None, tarinfo = None, dereference = None, ignore_zeros = None
+encoding = None, errors = 'surrogateescape', pax_headers = None, debug = None
+errorlevel = None, copybufsize = None
+
+    def __init__(self, name=None, mode="r", fileobj=None, format=None,
+            tarinfo=None, dereference=None, ignore_zeros=None, encoding=None,
+            errors="surrogateescape", pax_headers=None, debug=None,
+            errorlevel=None, copybufsize=None):
+        """Open an (uncompressed) tar archive `name'. `mode' is either 'r' to
+           read from an existing archive, 'a' to append data to an existing
+           file or 'w' to create a new file overwriting an existing one. `mode'
+           defaults to 'r'.
+           If `fileobj' is given, it is used for reading or writing data. If it
+           can be determined, `mode' is overridden by `fileobj's mode.
+           `fileobj' is not closed, when TarFile is closed.
+        """
+        modes = {"r": "rb", "a": "r+b", "w": "wb", "x": "xb"}
+        if mode not in modes:
+            raise ValueError("mode must be 'r', 'a', 'w' or 'x'")
+        self.mode = mode
+        self._mode = modes[mode]
+    
+        if not fileobj:
+            if self.mode == "a" and not os.path.exists(name):
+                # Create nonexistent files in append mode.
+                self.mode = "w"
+                self._mode = "wb"
+>           fileobj = bltn_open(name, self._mode)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           FileNotFoundError: [Errno 2] No such file or directory: 'C:\\\\SomeDir\\\\/archive.tar'
+
+/usr/lib/python3.12/tarfile.py:1717: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0813.py::test_task_func - FileNotFoundError: [Errno 2] No such fi...
+1 failed in 0.72s

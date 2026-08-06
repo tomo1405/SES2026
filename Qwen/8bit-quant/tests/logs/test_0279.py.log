@@ -1,0 +1,74 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_with_seed ___________________________
+
+    def test_task_func_with_seed():
+        # Test with a fixed seed to ensure reproducibility
+        seed = 42
+        expected_solutions = ((-0.35+0j), (0.85+0j))
+>       assert task_func(precision=2, seed=seed) == expected_solutions
+E       assert ((-0.46+0j), (4.05+0j)) == ((-0.35+0j), (0.85+0j))
+E         
+E         At index 0 diff: (-0.46+0j) != (-0.35+0j)
+E         Use -v to get more diff
+
+test_0279.py:8: AssertionError
+___________________ test_task_func_with_different_precision ____________________
+
+    def test_task_func_with_different_precision():
+        # Test with a different precision
+        seed = 42
+        expected_solutions = ((-0.351+0j), (0.851+0j))
+>       assert task_func(precision=3, seed=seed) == expected_solutions
+E       assert ((-0.457+0j), (4.049+0j)) == ((-0.351+0j), (0.851+0j))
+E         
+E         At index 0 diff: (-0.457+0j) != (-0.351+0j)
+E         Use -v to get more diff
+
+test_0279.py:14: AssertionError
+______________________ test_task_func_with_no_real_roots _______________________
+
+    def test_task_func_with_no_real_roots():
+        # Test with a seed that results in no real roots
+        seed = 100
+        expected_solutions = ((-1.5+0.5j), (-1.5-0.5j))
+>       assert task_func(precision=1, seed=seed) == expected_solutions
+E       assert ((-0.3+0j), (5.4+0j)) == ((-1.5+0.5j), (-1.5-0.5j))
+E         
+E         At index 0 diff: (-0.3+0j) != (-1.5+0.5j)
+E         Use -v to get more diff
+
+test_0279.py:20: AssertionError
+____________________ test_task_func_with_zero_coefficients _____________________
+
+    def test_task_func_with_zero_coefficients():
+        # Test with a seed that results in zero coefficients
+        seed = 1
+        expected_solutions = ((-0.05+0j), (-0.05+0j))
+>       assert task_func(precision=2, seed=seed) == expected_solutions
+E       assert ((1.33-2.06j), (1.33+2.06j)) == ((-0.05+0j), (-0.05+0j))
+E         
+E         At index 0 diff: (1.33-2.06j) != (-0.05+0j)
+E         Use -v to get more diff
+
+test_0279.py:26: AssertionError
+____________________ test_task_func_with_large_coefficients ____________________
+
+    def test_task_func_with_large_coefficients():
+        # Test with a seed that results in large coefficients
+        seed = 200
+        expected_solutions = ((-0.05+0j), (-0.05+0j))
+>       assert task_func(precision=2, seed=seed) == expected_solutions
+E       assert ((0.31-0.34j), (0.31+0.34j)) == ((-0.05+0j), (-0.05+0j))
+E         
+E         At index 0 diff: (0.31-0.34j) != (-0.05+0j)
+E         Use -v to get more diff
+
+test_0279.py:32: AssertionError
+=========================== short test summary info ============================
+FAILED test_0279.py::test_task_func_with_seed - assert ((-0.46+0j), (4.05+0j)...
+FAILED test_0279.py::test_task_func_with_different_precision - assert ((-0.45...
+FAILED test_0279.py::test_task_func_with_no_real_roots - assert ((-0.3+0j), (...
+FAILED test_0279.py::test_task_func_with_zero_coefficients - assert ((1.33-2....
+FAILED test_0279.py::test_task_func_with_large_coefficients - assert ((0.31-0...
+5 failed in 5.22s

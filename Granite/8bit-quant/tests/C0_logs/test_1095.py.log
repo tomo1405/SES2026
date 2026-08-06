@@ -1,0 +1,45 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        text = "I have $$100 and $200 in my bank account. $100 is from my salary and the rest is from my savings account."
+        expected_output = [('100', 1), ('200', 1), ('my', 1), ('in', 1), ('bank', 1)]
+    
+        tokenizer = RegexpTokenizer(r'\$\$+\w*|\$\w+')
+        dollar_prefixed_words = tokenizer.tokenize(text)
+        normalized_words = [word.lstrip("$") if len(word.lstrip("$")) > 0 else word for word in dollar_prefixed_words]
+        word_counts = Counter(normalized_words)
+        actual_output = word_counts.most_common(5)
+    
+>       assert actual_output == expected_output
+E       AssertionError: assert [('100', 2), ('200', 1)] == [('100', 1), ..., ('bank', 1)]
+E         
+E         At index 0 diff: ('100', 2) != ('100', 1)
+E         Right contains 3 more items, first extra item: ('my', 1)
+E         Use -v to get more diff
+
+test_1095.py:16: AssertionError
+_____________________ test_task_func_with_no_dollar_signs ______________________
+
+    def test_task_func_with_no_dollar_signs():
+        text = "I have 100 and 200 in my bank account. 100 is from my salary and the rest is from my savings account."
+        expected_output = [('100', 1), ('200', 1), ('my', 1), ('in', 1), ('bank', 1)]
+    
+        tokenizer = RegexpTokenizer(r'\$\$+\w*|\$\w+')
+        dollar_prefixed_words = tokenizer.tokenize(text)
+        normalized_words = [word.lstrip("$") if len(word.lstrip("$")) > 0 else word for word in dollar_prefixed_words]
+        word_counts = Counter(normalized_words)
+        actual_output = word_counts.most_common(5)
+    
+>       assert actual_output == expected_output
+E       AssertionError: assert [] == [('100', 1), ..., ('bank', 1)]
+E         
+E         Right contains 5 more items, first extra item: ('100', 1)
+E         Use -v to get more diff
+
+test_1095.py:40: AssertionError
+=========================== short test summary info ============================
+FAILED test_1095.py::test_task_func - AssertionError: assert [('100', 2), ('2...
+FAILED test_1095.py::test_task_func_with_no_dollar_signs - AssertionError: as...
+2 failed, 1 passed in 4.29s

@@ -1,0 +1,77 @@
+.FFF.                                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_single_word ________________________
+
+setup = None
+
+    def test_task_func_with_single_word(setup):
+        ax = task_func("hello")
+        assert isinstance(ax, plt.Axes)
+>       assert len(ax.patches) == 1  # One bar for the word "hello"
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert 30 == 1
+E        +  where 30 = len(<Axes.ArtistList of 30 patches>)
+E        +    where <Axes.ArtistList of 30 patches> = <Axes: >.patches
+
+test_0994.py:19: AssertionError
+______________________ test_task_func_with_multiple_words ______________________
+
+setup = None
+
+    def test_task_func_with_multiple_words(setup):
+>       ax = task_func("hello world this is a test")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0994.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = 'hello world this is a test'
+
+    def task_func(text):
+        words = re.split(r"\W+", text)
+        word_counts = [len(word) for word in words if word]
+    
+        _, ax = plt.subplots()
+    
+        if word_counts:  # Check if word_counts is not empty
+            ax.hist(word_counts, bins=30, edgecolor='black', alpha=0.7)
+    
+            # Add KDE plot if applicable
+>           if len(word_counts) > 1 and np.var(word_counts) != 0:
+                                        ^^
+E           NameError: name 'np' is not defined
+
+../../../src/src_0994.py:15: NameError
+______________________ test_task_func_with_variance_zero _______________________
+
+setup = None
+
+    def test_task_func_with_variance_zero(setup):
+>       ax = task_func("aaaaa aaaaa aaaaa")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0994.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = 'aaaaa aaaaa aaaaa'
+
+    def task_func(text):
+        words = re.split(r"\W+", text)
+        word_counts = [len(word) for word in words if word]
+    
+        _, ax = plt.subplots()
+    
+        if word_counts:  # Check if word_counts is not empty
+            ax.hist(word_counts, bins=30, edgecolor='black', alpha=0.7)
+    
+            # Add KDE plot if applicable
+>           if len(word_counts) > 1 and np.var(word_counts) != 0:
+                                        ^^
+E           NameError: name 'np' is not defined
+
+../../../src/src_0994.py:15: NameError
+=========================== short test summary info ============================
+FAILED test_0994.py::test_task_func_with_single_word - assert 30 == 1
+FAILED test_0994.py::test_task_func_with_multiple_words - NameError: name 'np...
+FAILED test_0994.py::test_task_func_with_variance_zero - NameError: name 'np'...
+3 failed, 2 passed in 3.13s

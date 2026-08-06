@@ -1,0 +1,47 @@
+F...F..                                                                  [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_valid_input ________________________
+
+    def test_task_func_with_valid_input():
+        epoch_milliseconds = int(datetime.now().timestamp() * 1000) - 86400000  # One day ago
+        df = task_func(epoch_milliseconds)
+        assert isinstance(df, pd.DataFrame)
+        assert df.shape[1] == 3
+        assert df.columns.tolist() == ["Product", "Date", "Sales"]
+>       assert len(df) == 5 * (datetime.now().date() - datetime.fromtimestamp(epoch_milliseconds / 1000).date()).days + 1
+E       assert 10 == ((5 * 1) + 1)
+E        +  where 10 = len(    Product                    Date  Sales\n0  Product4 2026-07-28 01:24:38.581     34\n1  Product5 2026-07-28 01:24:38....t3 2026-07-29 01:24:38.581     29\n8  Product2 2026-07-29 01:24:38.581     40\n9  Product1 2026-07-29 01:24:38.581     32)
+E        +  and   1 = (datetime.date(2026, 7, 29) - datetime.date(2026, 7, 28)).days
+E        +    where datetime.date(2026, 7, 29) = <built-in method date of datetime.datetime object at 0x7e06b44f6be0>()
+E        +      where <built-in method date of datetime.datetime object at 0x7e06b44f6be0> = datetime.datetime(2026, 7, 29, 1, 24, 38, 591720).date
+E        +        where datetime.datetime(2026, 7, 29, 1, 24, 38, 591720) = <built-in method now of type object at 0xa4fd20>()
+E        +          where <built-in method now of type object at 0xa4fd20> = datetime.now
+E        +    and   datetime.date(2026, 7, 28) = <built-in method date of datetime.datetime object at 0x7e061d0561f0>()
+E        +      where <built-in method date of datetime.datetime object at 0x7e061d0561f0> = datetime.datetime(2026, 7, 28, 1, 24, 38, 581000).date
+E        +        where datetime.datetime(2026, 7, 28, 1, 24, 38, 581000) = <built-in method fromtimestamp of type object at 0xa4fd20>((1785169478581 / 1000))
+E        +          where <built-in method fromtimestamp of type object at 0xa4fd20> = datetime.fromtimestamp
+
+test_0493.py:12: AssertionError
+_____________________ test_task_func_with_unique_products ______________________
+
+    def test_task_func_with_unique_products():
+        epoch_milliseconds = int(datetime.now().timestamp() * 1000) - 86400000  # One day ago
+        df = task_func(epoch_milliseconds, products=["ProductA", "ProductB", "ProductC", "ProductD", "ProductE"])
+>       assert len(df) == 5 * (datetime.now().date() - datetime.fromtimestamp(epoch_milliseconds / 1000).date()).days + 1
+E       assert 10 == ((5 * 1) + 1)
+E        +  where 10 = len(    Product                    Date  Sales\n0  ProductC 2026-07-28 01:24:38.653     34\n1  ProductA 2026-07-28 01:24:38....tB 2026-07-29 01:24:38.653     29\n8  ProductD 2026-07-29 01:24:38.653     40\n9  ProductE 2026-07-29 01:24:38.653     32)
+E        +  and   1 = (datetime.date(2026, 7, 29) - datetime.date(2026, 7, 28)).days
+E        +    where datetime.date(2026, 7, 29) = <built-in method date of datetime.datetime object at 0x7e061d198db0>()
+E        +      where <built-in method date of datetime.datetime object at 0x7e061d198db0> = datetime.datetime(2026, 7, 29, 1, 24, 38, 653934).date
+E        +        where datetime.datetime(2026, 7, 29, 1, 24, 38, 653934) = <built-in method now of type object at 0xa4fd20>()
+E        +          where <built-in method now of type object at 0xa4fd20> = datetime.now
+E        +    and   datetime.date(2026, 7, 28) = <built-in method date of datetime.datetime object at 0x7e061d0a0f60>()
+E        +      where <built-in method date of datetime.datetime object at 0x7e061d0a0f60> = datetime.datetime(2026, 7, 28, 1, 24, 38, 653000).date
+E        +        where datetime.datetime(2026, 7, 28, 1, 24, 38, 653000) = <built-in method fromtimestamp of type object at 0xa4fd20>((1785169478653 / 1000))
+E        +          where <built-in method fromtimestamp of type object at 0xa4fd20> = datetime.fromtimestamp
+
+test_0493.py:35: AssertionError
+=========================== short test summary info ============================
+FAILED test_0493.py::test_task_func_with_valid_input - assert 10 == ((5 * 1) ...
+FAILED test_0493.py::test_task_func_with_unique_products - assert 10 == ((5 *...
+2 failed, 5 passed in 1.18s

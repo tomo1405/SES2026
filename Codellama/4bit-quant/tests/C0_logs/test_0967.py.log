@@ -1,0 +1,21 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        df = pd.DataFrame({"A": [1, 2, 3], "B": [4, 5, 6]})
+        cumsum_df, fig = task_func(df)
+        assert cumsum_df.equals(pd.DataFrame({"A": [1, 3, 6], "B": [4, 9, 15]}))
+        assert isinstance(fig, plt.Figure)
+        assert fig.axes[0].get_title() == "Cumulative Sum per Column"
+        assert fig.axes[0].get_xlabel() == "Index"
+        assert fig.axes[0].get_ylabel() == "Cumulative Sum"
+>       assert fig.axes[0].get_legend() == "Cumulative Sum per Column"
+E       AssertionError: assert <matplotlib.legend.Legend object at 0x71f312d16de0> == 'Cumulative Sum per Column'
+E        +  where <matplotlib.legend.Legend object at 0x71f312d16de0> = get_legend()
+E        +    where get_legend = <Axes: title={'center': 'Cumulative Sum per Column'}, xlabel='Index', ylabel='Cumulative Sum'>.get_legend
+
+test_0967.py:14: AssertionError
+=========================== short test summary info ============================
+FAILED test_0967.py::test_task_func - AssertionError: assert <matplotlib.lege...
+1 failed in 2.23s

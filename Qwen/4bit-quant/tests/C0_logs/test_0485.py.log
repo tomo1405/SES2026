@@ -1,0 +1,35 @@
+F.F....                                                                  [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_start_after_end ________________________
+
+    def test_task_func_start_after_end():
+        with pytest.raises(ValueError, match="start_time cannot be after end_time"):
+>           task_func(end_time=1609459200000, start_time=1609459260000)
+E           TypeError: task_func() missing 1 required positional argument: 'step'
+
+test_0485.py:8: TypeError
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        df = task_func(start_time=1609459200000, end_time=1609459260000, step=60000)
+        assert isinstance(df, pd.DataFrame)
+>       assert len(df) == 10
+E       assert 1 == 10
+E        +  where 1 = len(                    Timestamp   Sensor1   Sensor2   Sensor3 SensorStatus\n0  2021-01-01 00:00:00.000000  0.712267 -0.762804 -0.819898        ERROR)
+
+test_0485.py:17: AssertionError
+=============================== warnings summary ===============================
+Qwen/4bit-quant/tests/test_0485.py::test_task_func_valid_input
+Qwen/4bit-quant/tests/test_0485.py::test_task_func_timestamp_format
+Qwen/4bit-quant/tests/test_0485.py::test_task_func_sensor_values
+Qwen/4bit-quant/tests/test_0485.py::test_task_func_sensor_status
+Qwen/4bit-quant/tests/test_0485.py::test_task_func_random_seed
+Qwen/4bit-quant/tests/test_0485.py::test_task_func_random_seed
+  /work/tomohiro-w/utg/src/src_0485.py:24: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+    dt = datetime.utcfromtimestamp(ts / 1000).strftime("%Y-%m-%d %H:%M:%S.%f")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0485.py::test_task_func_start_after_end - TypeError: task_func() ...
+FAILED test_0485.py::test_task_func_valid_input - assert 1 == 10
+2 failed, 5 passed, 6 warnings in 1.17s

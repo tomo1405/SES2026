@@ -1,0 +1,29 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        L = np.random.rand(100)
+        result = task_func(L)
+        assert isinstance(result, dict)
+        assert 'mean' in result and 'median' in result and 'mode' in result and 'std_dev' in result and 'plot' in result
+>       assert isinstance(result['mean'], float) and isinstance(result['median'], float) and isinstance(result['mode'], int) and isinstance(result['std_dev'], float)
+E       assert (True and True and False)
+E        +  where True = isinstance(np.float64(0.4920056344802565), float)
+E        +  and   True = isinstance(np.float64(0.49014121583986536), float)
+E        +  and   False = isinstance(np.float64(0.3356323126273073), int)
+
+test_0205.py:11: AssertionError
+_______________________ test_task_func_with_zero_std_dev _______________________
+
+    def test_task_func_with_zero_std_dev():
+        L = np.random.randint(0, 10, size=100)
+        result = task_func(L)
+>       assert result['std_dev'] == 0
+E       assert np.float64(2.9223962770302045) == 0
+
+test_0205.py:17: AssertionError
+=========================== short test summary info ============================
+FAILED test_0205.py::test_task_func - assert (True and True and False)
+FAILED test_0205.py::test_task_func_with_zero_std_dev - assert np.float64(2.9...
+2 failed, 1 passed in 1.56s

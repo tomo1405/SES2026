@@ -1,0 +1,123 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+src = '/path/to/dummy.dll', dst = '/tmp/tmpth1qlwa_'
+copy_function = <function copy2 at 0x747243ea9da0>
+
+    def move(src, dst, copy_function=copy2):
+        """Recursively move a file or directory to another location. This is
+        similar to the Unix "mv" command. Return the file or directory's
+        destination.
+    
+        If dst is an existing directory or a symlink to a directory, then src is
+        moved inside that directory. The destination path in that directory must
+        not already exist.
+    
+        If dst already exists but is not a directory, it may be overwritten
+        depending on os.rename() semantics.
+    
+        If the destination is on our current filesystem, then rename() is used.
+        Otherwise, src is copied to the destination and then removed. Symlinks are
+        recreated under the new name if os.rename() fails because of cross
+        filesystem renames.
+    
+        The optional `copy_function` argument is a callable that will be used
+        to copy the source or it will be delegated to `copytree`.
+        By default, copy2() is used, but any function that supports the same
+        signature (like copy()) can be used.
+    
+        A lot more could be done here...  A look at a mv.c shows a lot of
+        the issues this implementation glosses over.
+    
+        """
+        sys.audit("shutil.move", src, dst)
+        real_dst = dst
+        if os.path.isdir(dst):
+            if _samefile(src, dst) and not os.path.islink(src):
+                # We might be on a case insensitive filesystem,
+                # perform the rename anyway.
+                os.rename(src, dst)
+                return
+    
+            # Using _basename instead of os.path.basename is important, as we must
+            # ignore any trailing slash to avoid the basename returning ''
+            real_dst = os.path.join(dst, _basename(src))
+    
+            if os.path.exists(real_dst):
+                raise Error("Destination path '%s' already exists" % real_dst)
+        try:
+>           os.rename(src, real_dst)
+E           FileNotFoundError: [Errno 2] No such file or directory: '/path/to/dummy.dll' -> '/tmp/tmpth1qlwa_/dummy.dll'
+
+/usr/lib/python3.12/shutil.py:886: FileNotFoundError
+
+During handling of the above exception, another exception occurred:
+
+setup_files = ('/tmp/tmpqpr9a_60', '/tmp/tmpqpr9a_60/dummy.dll')
+
+    def test_task_func(setup_files):
+        temp_dir, dll_path = setup_files
+        destination_dir = tempfile.mkdtemp()
+    
+        # Patching ctypes.CDLL and glob.glob
+        original_cdll = ctypes.CDLL
+        ctypes.CDLL = MockCDLL
+        original_glob = glob.glob
+        glob.glob = mock_glob
+    
+        try:
+>           result = task_func(dll_path, destination_dir)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0564.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0564.py:12: in task_func
+    shutil.move(dll_file, destination_dir)
+/usr/lib/python3.12/shutil.py:906: in move
+    copy_function(src, real_dst)
+/usr/lib/python3.12/shutil.py:475: in copy2
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+src = '/path/to/dummy.dll', dst = '/tmp/tmpth1qlwa_/dummy.dll'
+follow_symlinks = True
+
+    def copyfile(src, dst, *, follow_symlinks=True):
+        """Copy data from src to dst in the most efficient way possible.
+    
+        If follow_symlinks is not set and src is a symbolic link, a new
+        symlink will be created instead of copying the file it points to.
+    
+        """
+        sys.audit("shutil.copyfile", src, dst)
+    
+        if _samefile(src, dst):
+            raise SameFileError("{!r} and {!r} are the same file".format(src, dst))
+    
+        file_size = 0
+        for i, fn in enumerate([src, dst]):
+            try:
+                st = _stat(fn)
+            except OSError:
+                # File most likely does not exist
+                pass
+            else:
+                # XXX What about other special files? (sockets, devices...)
+                if stat.S_ISFIFO(st.st_mode):
+                    fn = fn.path if isinstance(fn, os.DirEntry) else fn
+                    raise SpecialFileError("`%s` is a named pipe" % fn)
+                if _WINDOWS and i == 0:
+                    file_size = st.st_size
+    
+        if not follow_symlinks and _islink(src):
+            os.symlink(os.readlink(src), dst)
+        else:
+>           with open(src, 'rb') as fsrc:
+                 ^^^^^^^^^^^^^^^
+E           FileNotFoundError: [Errno 2] No such file or directory: '/path/to/dummy.dll'
+
+/usr/lib/python3.12/shutil.py:260: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0564.py::test_task_func - FileNotFoundError: [Errno 2] No such fi...
+1 failed, 1 passed in 0.51s

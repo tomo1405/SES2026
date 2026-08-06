@@ -1,0 +1,75 @@
+FF..F                                                                    [100%]
+=================================== FAILURES ===================================
+_____________________________ test_task_func_basic _____________________________
+
+    def test_task_func_basic():
+        data = {
+            'feature': [1, 2, 3, 4, 5],
+            'target': [2, 4, 6, 8, 10]
+        }
+        df = pd.DataFrame(data)
+        feature = 'feature'
+        target = 'target'
+        indices, model = task_func(df, feature, target)
+>       assert len(indices) == 10
+E       assert 5 == 10
+E        +  where 5 = len([0, 1, 2, 3, 4])
+
+test_0793.py:15: AssertionError
+____________________________ test_task_func_with_n _____________________________
+
+    def test_task_func_with_n():
+        data = {
+            'feature': [1, 2, 3, 4, 5],
+            'target': [2, 4, 6, 8, 10]
+        }
+        df = pd.DataFrame(data)
+        feature = 'feature'
+        target = 'target'
+        n = 3
+        indices, model = task_func(df, feature, target, n=n)
+        assert len(indices) == n
+        assert all(isinstance(i, int) for i in indices)
+>       assert isinstance(model, LinearRegression)
+                                 ^^^^^^^^^^^^^^^^
+E       NameError: name 'LinearRegression' is not defined
+
+test_0793.py:31: NameError
+_______________________ test_task_func_non_numeric_data ________________________
+
+    def test_task_func_non_numeric_data():
+        data = {
+            'feature': ['a', 'b', 'c', 'd', 'e'],
+            'target': [2, 4, 6, 8, 10]
+        }
+        df = pd.DataFrame(data)
+        feature = 'feature'
+        target = 'target'
+        with pytest.raises(ValueError) as excinfo:
+>           task_func(df, feature, target)
+
+test_0793.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0793.py:9: in task_func
+    X = df[feature].values.reshape(-1, 1)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <ArrowStringArray>
+['a', 'b', 'c', 'd', 'e']
+Length: 5, dtype: str
+args = (-1, 1), kwargs = {}
+
+    def reshape(self, *args, **kwargs):
+>       raise NotImplementedError(
+            f"{type(self)} does not support reshape "
+            f"as backed by a 1D pyarrow.ChunkedArray."
+        )
+E       NotImplementedError: <class 'pandas.arrays.ArrowStringArray'> does not support reshape as backed by a 1D pyarrow.ChunkedArray.
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/arrow/array.py:1496: NotImplementedError
+=========================== short test summary info ============================
+FAILED test_0793.py::test_task_func_basic - assert 5 == 10
+FAILED test_0793.py::test_task_func_with_n - NameError: name 'LinearRegressio...
+FAILED test_0793.py::test_task_func_non_numeric_data - NotImplementedError: <...
+3 failed, 2 passed in 3.39s

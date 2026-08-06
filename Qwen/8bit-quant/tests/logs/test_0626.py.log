@@ -1,0 +1,29 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a list of cities
+        cities = ['New York', 'Los Angeles', 'Chicago']
+        df = task_func(cities)
+    
+        # Check if the DataFrame has the correct shape
+        assert df.shape == (3, 2), "DataFrame should have 3 rows and 2 columns"
+    
+        # Check if the DataFrame has the correct columns
+        assert list(df.columns) == ['City', 'Population'], "DataFrame columns should be 'City' and 'Population'"
+    
+        # Check if the 'City' column contains the correct values
+        assert all(city in df['City'].values for city in cities), "All cities should be present in the 'City' column"
+    
+        # Check if the 'Population' column contains valid population values
+        for population in df['Population']:
+            assert isinstance(population, int), "Population should be an integer"
+>           assert 1000 <= population <= 20000, "Population should be between 1000 and 20000"
+E           AssertionError: Population should be between 1000 and 20000
+E           assert 7644000 <= 20000
+
+test_0626.py:22: AssertionError
+=========================== short test summary info ============================
+FAILED test_0626.py::test_task_func - AssertionError: Population should be be...
+1 failed in 1.14s

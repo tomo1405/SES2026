@@ -1,0 +1,31 @@
+..F.                                                                     [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_standardization ________________________
+
+    def test_task_func_standardization():
+        # Create a sample DataFrame
+        data = {
+            'Age': [25, 30, 35],
+            'Weight': [60, 70, 80]
+        }
+        df = pd.DataFrame(data)
+    
+        # Test with age and weight that result in a non-empty selection
+        result = task_func(df, 36, 65)
+    
+        # Manually standardize the selected data to compare
+        scaler = StandardScaler()
+        expected_result = pd.DataFrame(scaler.fit_transform(df[['Age', 'Weight']]), columns=['Age', 'Weight'])
+    
+        # Check if the result is standardized correctly
+>       pd.testing.assert_frame_equal(result, expected_result)
+E       AssertionError: DataFrame are different
+E       
+E       DataFrame shape mismatch
+E       [left]:  (2, 2)
+E       [right]: (3, 2)
+
+test_0749.py:46: AssertionError
+=========================== short test summary info ============================
+FAILED test_0749.py::test_task_func_standardization - AssertionError: DataFra...
+1 failed, 3 passed in 2.80s

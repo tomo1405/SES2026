@@ -1,0 +1,67 @@
+....FF.                                                                  [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_negative_samples _____________________
+
+    def test_task_func_with_negative_samples():
+        values = [1, 2, 3]
+        weights = [1, 1, 1]
+        n_samples = -10
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0752.py:47: Failed
+_______________________ test_task_func_with_empty_values _______________________
+
+    def test_task_func_with_empty_values():
+        values = []
+        weights = []
+        n_samples = 10
+        with pytest.raises(ValueError):
+>           task_func(values, weights, n_samples)
+
+test_0752.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0752.py:5: in task_func
+    samples = random.choices(values, weights=weights, k=n_samples)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <random.Random object at 0x2c68b410>, population = [], weights = []
+cum_weights = [], k = 10
+
+    def choices(self, population, weights=None, *, cum_weights=None, k=1):
+        """Return a k sized list of population elements chosen with replacement.
+    
+        If the relative weights or cumulative weights are not specified,
+        the selections are made with equal probability.
+    
+        """
+        random = self.random
+        n = len(population)
+        if cum_weights is None:
+            if weights is None:
+                floor = _floor
+                n += 0.0    # convert to float for a small speed improvement
+                return [population[floor(random() * n)] for i in _repeat(None, k)]
+            try:
+                cum_weights = list(_accumulate(weights))
+            except TypeError:
+                if not isinstance(weights, int):
+                    raise
+                k = weights
+                raise TypeError(
+                    f'The number of choices must be a keyword argument: {k=}'
+                ) from None
+        elif weights is not None:
+            raise TypeError('Cannot specify both weights and cumulative weights')
+        if len(cum_weights) != n:
+            raise ValueError('The number of weights does not match the population')
+>       total = cum_weights[-1] + 0.0   # convert to float
+                ^^^^^^^^^^^^^^^
+E       IndexError: list index out of range
+
+/usr/lib/python3.12/random.py:481: IndexError
+=========================== short test summary info ============================
+FAILED test_0752.py::test_task_func_with_negative_samples - Failed: DID NOT R...
+FAILED test_0752.py::test_task_func_with_empty_values - IndexError: list inde...
+2 failed, 5 passed in 0.46s

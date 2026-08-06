@@ -1,0 +1,78 @@
+FFF.F                                                                    [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        text = "This is a sample text for testing the task function."
+        expected_output = {'this': 1, 'is': 1, 'a': 1, 'sample': 1, 'text': 1, 'for': 1, 'testing': 1, 'the': 1, 'task': 1, 'function': 1}
+>       assert task_func(text) == expected_output
+E       AssertionError: assert {'sample': 1,...task': 1, ...} == {'this': 1, '...mple': 1, ...}
+E         
+E         Omitting 5 identical items, use -vv to show
+E         Right contains 5 more items:
+E         {'a': 1, 'for': 1, 'is': 1, 'the': 1, 'this': 1}
+E         Use -v to get more diff
+
+test_0634.py:7: AssertionError
+_____________________ test_task_func_with_duplicate_words ______________________
+
+    def test_task_func_with_duplicate_words():
+        text = "This is a sample text for testing the task function. This is a sample text for testing the task function."
+        expected_output = {'this': 2, 'is': 2, 'a': 2, 'sample': 2, 'text': 2, 'for': 2, 'testing': 2, 'the': 2, 'task': 2, 'function': 2}
+>       assert task_func(text) == expected_output
+E       AssertionError: assert {'sample': 1,...task': 1, ...} == {'this': 2, '...mple': 2, ...}
+E         
+E         Differing items:
+E         {'function': 1} != {'function': 2}
+E         {'testing': 1} != {'testing': 2}
+E         {'text': 1} != {'text': 2}
+E         {'sample': 1} != {'sample': 2}
+E         {'task': 1} != {'task': 2}...
+E         
+E         ...Full output truncated (3 lines hidden), use '-vv' to show
+
+test_0634.py:12: AssertionError
+________________________ test_task_func_with_stop_words ________________________
+
+    def test_task_func_with_stop_words():
+        text = "This is a sample text for testing the task function. The task function is a sample text."
+        expected_output = {'this': 1, 'is': 1, 'a': 1, 'sample': 1, 'text': 1, 'for': 1, 'testing': 1, 'task': 1, 'function': 1}
+>       assert task_func(text) == expected_output
+E       AssertionError: assert {'sample': 1,...task': 1, ...} == {'this': 1, '...mple': 1, ...}
+E         
+E         Omitting 3 identical items, use -vv to show
+E         Differing items:
+E         {'function': 2} != {'function': 1}
+E         {'text': 2} != {'text': 1}
+E         Right contains 4 more items:
+E         {'a': 1, 'for': 1, 'is': 1, 'this': 1}
+E         Use -v to get more diff
+
+test_0634.py:17: AssertionError
+___________________________ test_task_func_with_none ___________________________
+
+    def test_task_func_with_none():
+        text = None
+        expected_output = {}
+>       assert task_func(text) == expected_output
+               ^^^^^^^^^^^^^^^
+
+test_0634.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = None
+
+    def task_func(text: str) -> dict:
+        # Remove duplicate words
+        stop_words = set(stopwords.words('english'))
+>       text = ' '.join(sorted(set(text.split()), key=text.index))
+                                   ^^^^^^^^^^
+E       AttributeError: 'NoneType' object has no attribute 'split'
+
+../../../src/src_0634.py:6: AttributeError
+=========================== short test summary info ============================
+FAILED test_0634.py::test_task_func - AssertionError: assert {'sample': 1,......
+FAILED test_0634.py::test_task_func_with_duplicate_words - AssertionError: as...
+FAILED test_0634.py::test_task_func_with_stop_words - AssertionError: assert ...
+FAILED test_0634.py::test_task_func_with_none - AttributeError: 'NoneType' ob...
+4 failed, 1 passed in 3.31s

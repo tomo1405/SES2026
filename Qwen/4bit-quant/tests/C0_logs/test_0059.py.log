@@ -1,0 +1,33 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Mocking the plt.show() to prevent GUI display during testing
+        plt.show = lambda: None
+    
+        # Define test parameters
+        mu = 0
+        sigma = 1
+        num_samples = 1000
+    
+        # Call the function
+        fig = task_func(mu, sigma, num_samples)
+    
+        # Check if the figure is created
+        assert isinstance(fig, plt.Figure), "The function should return a matplotlib Figure object."
+    
+        # Check if the histogram is plotted correctly
+        ax = fig.axes[0]
+        hist_data, _ = ax.get_lines()[0].get_data()
+        assert len(hist_data) > 0, "The histogram data should not be empty."
+    
+        # Check if the normal distribution curve is plotted correctly
+>       line_data, _ = ax.get_lines()[1].get_data()
+                       ^^^^^^^^^^^^^^^^^
+E       IndexError: list index out of range
+
+test_0059.py:27: IndexError
+=========================== short test summary info ============================
+FAILED test_0059.py::test_task_func - IndexError: list index out of range
+1 failed in 2.92s

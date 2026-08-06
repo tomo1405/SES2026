@@ -1,0 +1,309 @@
+FF.FFFFF                                                                 [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_empty_dataframe ______________________
+
+    def test_task_func_with_empty_dataframe():
+        df = pd.DataFrame({'Word': []})
+        letter = 'a'
+>       result = task_func(df, letter)
+                 ^^^^^^^^^^^^^^^^^^^^^
+
+test_0601.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0601.py:6: in task_func
+    filtered_df = df[df['Word'].str.contains(regex, regex=True)]
+                     ^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: in __getattr__
+    return object.__getattribute__(self, name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/accessor.py:230: in __get__
+    return self._accessor(obj)
+           ^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/strings/accessor.py:194: in __init__
+    self._inferred_dtype = self._validate(data)
+                           ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = array([], dtype=float64)
+
+    @staticmethod
+    def _validate(data):
+        """
+        Auxiliary function for StringMethods, infers and checks dtype of data.
+    
+        This is a "first line of defence" at the creation of the StringMethods-
+        object, and just checks that the dtype is in the
+        *union* of the allowed types over all string methods below; this
+        restriction is then refined on a per-method basis using the decorator
+        @forbid_nonstring_types (more info in the corresponding docstring).
+    
+        This really should exclude all series/index with any non-string values,
+        but that isn't practical for performance reasons until we have a str
+        dtype (GH 9343 / 13877)
+    
+        Parameters
+        ----------
+        data : The content of the Series
+    
+        Returns
+        -------
+        dtype : inferred dtype of data
+        """
+        if isinstance(data, ABCMultiIndex):
+            raise AttributeError(
+                "Can only use .str accessor with Index, not MultiIndex"
+            )
+    
+        # see _libs/lib.pyx for list of inferred types
+        allowed_types = ["string", "empty", "bytes", "mixed", "mixed-integer"]
+    
+        data = extract_array(data)
+    
+        values = getattr(data, "categories", data)  # categorical / normal
+    
+        inferred_dtype = lib.infer_dtype(values, skipna=True)
+    
+        if inferred_dtype not in allowed_types:
+>           raise AttributeError(
+                f"Can only use .str accessor with string values, not {inferred_dtype}"
+            )
+E           AttributeError: Can only use .str accessor with string values, not floating. Did you mean: 'std'?
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/strings/accessor.py:248: AttributeError
+____________________ test_task_func_with_no_matching_words _____________________
+
+    def test_task_func_with_no_matching_words():
+        df = pd.DataFrame({'Word': ['apple', 'banana', 'cherry']})
+        letter = 'z'
+>       result = task_func(df, letter)
+                 ^^^^^^^^^^^^^^^^^^^^^
+
+test_0601.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df =      Word
+0   apple
+1  banana
+2  cherry, letter = 'z'
+
+    def task_func(df, letter):
+        df = pd.DataFrame(df)
+        regex = '^' + letter
+        filtered_df = df[df['Word'].str.contains(regex, regex=True)]
+        word_lengths = filtered_df['Word'].str.len()
+>       statistics = {'mean': np.mean(word_lengths), 'median': np.median(word_lengths), 'mode': word_lengths.mode().values[0]}
+                                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       IndexError: index 0 is out of bounds for axis 0 with size 0
+
+../../../src/src_0601.py:8: IndexError
+______________________ test_task_func_with_multiple_words ______________________
+
+    def test_task_func_with_multiple_words():
+        df = pd.DataFrame({'Word': ['apple', 'apricot', 'banana', 'avocado']})
+        letter = 'a'
+        result = task_func(df, letter)
+>       assert result == {'mean': 6.25, 'median': 6.0, 'mode': 5}
+E       AssertionError: assert {'mean': np.f...: np.int64(7)} == {'mean': 6.25....0, 'mode': 5}
+E         
+E         Differing items:
+E         {'mode': np.int64(7)} != {'mode': 5}
+E         {'median': np.float64(7.0)} != {'median': 6.0}
+E         {'mean': np.float64(6.333333333333333)} != {'mean': 6.25}
+E         Use -v to get more diff
+
+test_0601.py:28: AssertionError
+______________________ test_task_func_with_repeated_words ______________________
+
+    def test_task_func_with_repeated_words():
+        df = pd.DataFrame({'Word': ['apple', 'apple', 'banana', 'avocado']})
+        letter = 'a'
+        result = task_func(df, letter)
+>       assert result == {'mean': 6.0, 'median': 6.0, 'mode': 5}
+E       AssertionError: assert {'mean': np.f...: np.int64(5)} == {'mean': 6.0,....0, 'mode': 5}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'median': np.float64(5.0)} != {'median': 6.0}
+E         {'mean': np.float64(5.666666666666667)} != {'mean': 6.0}
+E         Use -v to get more diff
+
+test_0601.py:34: AssertionError
+_________________ test_task_func_with_case_sensitive_matching __________________
+
+    def test_task_func_with_case_sensitive_matching():
+        df = pd.DataFrame({'Word': ['Apple', 'apricot', 'Banana', 'Avocado']})
+        letter = 'a'
+        result = task_func(df, letter)
+>       assert result == {'mean': 6.25, 'median': 6.0, 'mode': 5}
+E       AssertionError: assert {'mean': np.f...: np.int64(7)} == {'mean': 6.25....0, 'mode': 5}
+E         
+E         Differing items:
+E         {'mode': np.int64(7)} != {'mode': 5}
+E         {'median': np.float64(7.0)} != {'median': 6.0}
+E         {'mean': np.float64(7.0)} != {'mean': 6.25}
+E         Use -v to get more diff
+
+test_0601.py:40: AssertionError
+_____________________ test_task_func_with_non_string_data ______________________
+
+    def test_task_func_with_non_string_data():
+        df = pd.DataFrame({'Word': [123, 'apple', 'banana', 'cherry']})
+        letter = 'a'
+        with pytest.raises(AttributeError):
+>           task_func(df, letter)
+
+test_0601.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0601.py:6: in task_func
+    filtered_df = df[df['Word'].str.contains(regex, regex=True)]
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:4368: in __getitem__
+    if com.is_bool_indexer(key):
+       ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+key = 0      NaN
+1     True
+2    False
+3    False
+Name: Word, dtype: object
+
+    def is_bool_indexer(key: Any) -> bool:
+        """
+        Check whether `key` is a valid boolean indexer.
+    
+        Parameters
+        ----------
+        key : Any
+            Only list-likes may be considered boolean indexers.
+            All other types are not considered a boolean indexer.
+            For array-like input, boolean ndarrays or ExtensionArrays
+            with ``_is_boolean`` set are considered boolean indexers.
+    
+        Returns
+        -------
+        bool
+            Whether `key` is a valid boolean indexer.
+    
+        Raises
+        ------
+        ValueError
+            When the array is an object-dtype ndarray or ExtensionArray
+            and contains missing values.
+    
+        See Also
+        --------
+        check_array_indexer : Check that `key` is a valid array to index,
+            and convert to an ndarray.
+        """
+        if isinstance(
+            key,
+            (ABCSeries, np.ndarray, ABCIndex, ABCExtensionArray, ABCNumpyExtensionArray),
+        ) and not isinstance(key, ABCMultiIndex):
+            if key.dtype == np.object_:
+                key_array = np.asarray(key)
+    
+                if not lib.is_bool_array(key_array):
+                    na_msg = "Cannot mask with non-boolean array containing NA / NaN values"
+                    if lib.is_bool_array(key_array, skipna=True):
+                        # Don't raise on e.g. ["A", "B", np.nan], see
+                        #  test_loc_getitem_list_of_labels_categoricalindex_with_na
+>                       raise ValueError(na_msg)
+E                       ValueError: Cannot mask with non-boolean array containing NA / NaN values
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/common.py:145: ValueError
+___________________ test_task_func_with_non_dataframe_input ____________________
+
+    def test_task_func_with_non_dataframe_input():
+        df = [1, 2, 3]
+        letter = 'a'
+        with pytest.raises(TypeError):
+>           task_func(df, letter)
+
+test_0601.py:52: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0601.py:6: in task_func
+    filtered_df = df[df['Word'].str.contains(regex, regex=True)]
+                     ^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:4378: in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = RangeIndex(start=0, stop=1, step=1), key = 'Word'
+
+    def get_loc(self, key) -> int:
+        """
+        Get integer location for requested label.
+    
+        Parameters
+        ----------
+        key : int or float
+            Label to locate. Integer-like floats (e.g. 3.0) are accepted and
+            treated as the corresponding integer. Non-integer floats and other
+            non-integer labels are not valid and will raise KeyError or
+            InvalidIndexError.
+    
+        Returns
+        -------
+        int
+            Integer location of the label within the RangeIndex.
+    
+        Raises
+        ------
+        KeyError
+            If the label is not present in the RangeIndex or the label is a
+            non-integer value.
+        InvalidIndexError
+            If the label is of an invalid type for the RangeIndex.
+    
+        See Also
+        --------
+        RangeIndex.get_slice_bound : Calculate slice bound that corresponds to
+            given label.
+        RangeIndex.get_indexer : Computes indexer and mask for new index given
+            the current index.
+        RangeIndex.get_non_unique : Returns indexer and masks for new index given
+            the current index.
+        RangeIndex.get_indexer_for : Returns an indexer even when non-unique.
+    
+        Examples
+        --------
+        >>> idx = pd.RangeIndex(5)
+        >>> idx.get_loc(3)
+        3
+    
+        >>> idx = pd.RangeIndex(2, 10, 2)  # values [2, 4, 6, 8]
+        >>> idx.get_loc(6)
+        2
+        """
+        if is_integer(key) or (is_float(key) and key.is_integer()):
+            new_key = int(key)
+            try:
+                return self._range.index(new_key)
+            except ValueError as err:
+                raise KeyError(key) from err
+        if isinstance(key, Hashable):
+>           raise KeyError(key)
+E           KeyError: 'Word'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/range.py:525: KeyError
+=============================== warnings summary ===============================
+Qwen/4bit-quant/tests/test_0601.py::test_task_func_with_no_matching_words
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:3862: RuntimeWarning: Mean of empty slice
+    return _methods._mean(a, axis=axis, dtype=dtype,
+
+Qwen/4bit-quant/tests/test_0601.py::test_task_func_with_no_matching_words
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/_methods.py:142: RuntimeWarning: invalid value encountered in scalar divide
+    ret = ret.dtype.type(ret / rcount)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0601.py::test_task_func_with_empty_dataframe - AttributeError: Ca...
+FAILED test_0601.py::test_task_func_with_no_matching_words - IndexError: inde...
+FAILED test_0601.py::test_task_func_with_multiple_words - AssertionError: ass...
+FAILED test_0601.py::test_task_func_with_repeated_words - AssertionError: ass...
+FAILED test_0601.py::test_task_func_with_case_sensitive_matching - AssertionE...
+FAILED test_0601.py::test_task_func_with_non_string_data - ValueError: Cannot...
+FAILED test_0601.py::test_task_func_with_non_dataframe_input - KeyError: 'Word'
+7 failed, 1 passed, 2 warnings in 1.55s

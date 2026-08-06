@@ -1,0 +1,77 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+self = psutil.Process(pid=15147, name='python', status='sleeping')
+sig = <Signals.SIGTERM: 15>
+
+    def _send_signal(self, sig):
+        assert not self.pid < 0, self.pid
+        self._raise_if_pid_reused()
+    
+        pid, ppid, name = self.pid, self._ppid, self._name
+        if pid == 0:
+            # see "man 2 kill"
+            msg = (
+                "preventing sending signal to process with PID 0 as it "
+                "would affect every process in the process group of the "
+                "calling process (os.getpid()) instead of PID 0"
+            )
+            raise ValueError(msg)
+        try:
+>           os.kill(pid, sig)
+E           PermissionError: [Errno 1] Operation not permitted
+
+../../../.venv/lib/python3.12/site-packages/psutil/__init__.py:1273: PermissionError
+
+The above exception was the direct cause of the following exception:
+
+    def test_task_func():
+        # Test case 1: Process is running
+        process_name = "python"
+        is_running = any([proc for proc in psutil.process_iter() if proc.name() == process_name])
+        assert is_running
+>       result = task_func(process_name)
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0018.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0018.py:12: in task_func
+    proc.terminate()
+../../../.venv/lib/python3.12/site-packages/psutil/__init__.py:1327: in terminate
+    self._send_signal(signal.SIGTERM)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = psutil.Process(pid=15147, name='python', status='sleeping')
+sig = <Signals.SIGTERM: 15>
+
+    def _send_signal(self, sig):
+        assert not self.pid < 0, self.pid
+        self._raise_if_pid_reused()
+    
+        pid, ppid, name = self.pid, self._ppid, self._name
+        if pid == 0:
+            # see "man 2 kill"
+            msg = (
+                "preventing sending signal to process with PID 0 as it "
+                "would affect every process in the process group of the "
+                "calling process (os.getpid()) instead of PID 0"
+            )
+            raise ValueError(msg)
+        try:
+            os.kill(pid, sig)
+        except ProcessLookupError as err:
+            if OPENBSD and pid_exists(pid):
+                # We do this because os.kill() lies in case of
+                # zombie processes.
+                raise ZombieProcess(pid, name, ppid) from err
+            self._gone = True
+            raise NoSuchProcess(pid, name) from err
+        except PermissionError as err:
+>           raise AccessDenied(pid, name) from err
+E           psutil.AccessDenied: (pid=15147, name='python')
+
+../../../.venv/lib/python3.12/site-packages/psutil/__init__.py:1282: AccessDenied
+=========================== short test summary info ============================
+FAILED test_0018.py::test_task_func - psutil.AccessDenied: (pid=15147, name='...
+1 failed in 0.72s

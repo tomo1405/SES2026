@@ -1,0 +1,37 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+setup_test_files = '/tmp/pytest-of-tomohiro-w/pytest-1381/test_task_func0'
+
+    def test_task_func(setup_test_files):
+        path = setup_test_files
+        result_df = task_func(path)
+    
+        expected_data = {
+            "name": ["Alice", "Bob", "Charlie"],
+            "age": [30, 25, 35],
+            "source": ["data1.json", "data1.json", "data2.json"]
+        }
+        expected_df = pd.DataFrame(expected_data)
+    
+>       pd.testing.assert_frame_equal(result_df, expected_df)
+
+test_0679.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pandas/_libs/testing.pyx:53: in pandas._libs.testing.assert_almost_equal
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   AssertionError: DataFrame.index are different
+E   
+E   DataFrame.index values are different (66.66667 %)
+E   [left]:  Index([0, 0, 1], dtype='int64')
+E   [right]: RangeIndex(start=0, stop=3, step=1)
+E   At positional index 1, first diff: 0 != 1
+
+pandas/_libs/testing.pyx:171: AssertionError
+=========================== short test summary info ============================
+FAILED test_0679.py::test_task_func - AssertionError: DataFrame.index are dif...
+1 failed in 1.12s

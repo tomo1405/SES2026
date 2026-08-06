@@ -1,0 +1,37 @@
+F..                                                                      [100%]
+=================================== FAILURES ===================================
+___________________ test_task_func_valid_image_and_threshold ___________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7088e3354c80>
+
+    def test_task_func_valid_image_and_threshold(monkeypatch):
+        # Mocking image data
+        mock_image_data = np.array([[100, 150], [200, 250]], dtype=np.uint8)
+        monkeypatch.setattr(cv2, 'imread', MockCv2Imread(mock_image_data))
+    
+        # Define test parameters
+        image_path = 'test_image.jpg'
+        threshold = 128
+    
+        # Call the function
+>       original_img, binary_img = task_func(image_path, threshold)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0424.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+image_path = 'test_image.jpg', threshold = 128
+
+    def task_func(image_path='image.jpg', threshold=128):
+    
+        if not isinstance(threshold, int) or not (0 <= threshold <= 255):
+            raise ValueError("Threshold must be an integer between 0 and 255.")
+    
+        if not os.path.exists(image_path):
+>           raise FileNotFoundError(f"No image found at {image_path}")
+E           FileNotFoundError: No image found at test_image.jpg
+
+../../../src/src_0424.py:10: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0424.py::test_task_func_valid_image_and_threshold - FileNotFoundE...
+1 failed, 2 passed in 0.67s

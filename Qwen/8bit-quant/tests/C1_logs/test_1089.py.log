@@ -1,0 +1,60 @@
+.FF..                                                                    [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_custom_input __________________________
+
+    def test_task_func_custom_input():
+        custom_data = np.array([[0.1, 0.6, 0.2, 0.8, 0.4],
+                                [0.9, 0.3, 0.7, 0.5, 0.0]])
+        expected_output = np.array([[0., 0., 0., 0.84162123, 0.],
+                                    [1.78885438, 0., 1.16189501, 0., -0.84162123]])
+        result = task_func(custom_data).values
+>       np.testing.assert_array_almost_equal(result, expected_output, decimal=6)
+E       AssertionError: 
+E       Arrays are not almost equal to 6 decimals
+E       
+E       Mismatched elements: 9 / 10 (90%)
+E       First 5 mismatches are at indices:
+E        [0, 0]: -1.0 (ACTUAL), 0.0 (DESIRED)
+E        [0, 1]: 1.0 (ACTUAL), 0.0 (DESIRED)
+E        [0, 2]: -1.0 (ACTUAL), 0.0 (DESIRED)
+E        [0, 3]: 1.0 (ACTUAL), 0.84162123 (DESIRED)
+E        [1, 0]: 1.0 (ACTUAL), 1.78885438 (DESIRED)
+E       Max absolute difference among violations: 1.
+E       Max relative difference among violations: 1.
+E        ACTUAL: array([[-1.,  1., -1.,  1.,  0.],
+E              [ 1., -1.,  1., -1.,  0.]])
+E        DESIRED: array([[ 0.      ,  0.      ,  0.      ,  0.841621,  0.      ],
+E              [ 1.788854,  0.      ,  1.161895,  0.      , -0.841621]])
+
+test_1089.py:18: AssertionError
+________________________ test_task_func_negative_values ________________________
+
+    def test_task_func_negative_values():
+        custom_data = np.array([[-0.1, 0.6, -0.2, 0.8, 0.4],
+                                [0.9, -0.3, 0.7, 0.5, -0.0]])
+        expected_output = np.array([[0., 0., 0., 0.84162123, 0.],
+                                    [1.78885438, 0., 1.16189501, 0., -0.84162123]])
+        result = task_func(custom_data).values
+>       np.testing.assert_array_almost_equal(result, expected_output, decimal=6)
+E       AssertionError: 
+E       Arrays are not almost equal to 6 decimals
+E       
+E       Mismatched elements: 9 / 10 (90%)
+E       First 5 mismatches are at indices:
+E        [0, 0]: -1.0 (ACTUAL), 0.0 (DESIRED)
+E        [0, 1]: 1.0 (ACTUAL), 0.0 (DESIRED)
+E        [0, 2]: -1.0 (ACTUAL), 0.0 (DESIRED)
+E        [0, 3]: 1.0 (ACTUAL), 0.84162123 (DESIRED)
+E        [1, 0]: 1.0 (ACTUAL), 1.78885438 (DESIRED)
+E       Max absolute difference among violations: 1.
+E       Max relative difference among violations: 1.
+E        ACTUAL: array([[-1.,  1., -1.,  1.,  0.],
+E              [ 1., -1.,  1., -1.,  0.]])
+E        DESIRED: array([[ 0.      ,  0.      ,  0.      ,  0.841621,  0.      ],
+E              [ 1.788854,  0.      ,  1.161895,  0.      , -0.841621]])
+
+test_1089.py:26: AssertionError
+=========================== short test summary info ============================
+FAILED test_1089.py::test_task_func_custom_input - AssertionError: 
+FAILED test_1089.py::test_task_func_negative_values - AssertionError: 
+2 failed, 3 passed in 3.42s

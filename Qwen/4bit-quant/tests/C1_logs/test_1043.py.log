@@ -1,0 +1,52 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_smtp = <MagicMock name='SMTP' id='137252986958720'>
+mock_getpass = <MagicMock name='getpass' id='137252986831696'>
+
+    @patch('src_1043.getpass.getpass')
+    @patch('src_1043.smtplib.SMTP')
+    def test_task_func(mock_smtp, mock_getpass):
+        # Mocking the input values for getpass
+        mock_getpass.side_effect = ["test@example.com", "recipient@example.com", "password"]
+    
+        # Mocking the client socket
+        client_socket = MagicMock()
+        client_socket.recv.return_value = b"Hello, this is a test message."
+    
+        # Call the function
+        task_func(client_socket)
+    
+        # Assertions
+        client_socket.recv.assert_called_once_with(1024)
+        client_socket.send.assert_called_once_with(b"Message sent.")
+        client_socket.close.assert_called_once()
+    
+        # Check if SMTP was used correctly
+        mock_smtp.assert_called_once_with("smtp.gmail.com", 587)
+        smtp_instance = mock_smtp.return_value
+>       smtp_instance.starttls.assert_called_once()
+
+test_1043.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='SMTP().starttls' id='137252983549264'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'starttls' to have been called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:923: AssertionError
+----------------------------- Captured stdout call -----------------------------
+Received: Hello, this is a test message.
+=========================== short test summary info ============================
+FAILED test_1043.py::test_task_func - AssertionError: Expected 'starttls' to ...
+1 failed in 0.53s

@@ -1,0 +1,112 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________ TestPostRequestHandler.test_do_POST_with_invalid_content_type _________
+
+self = <test_0273.TestPostRequestHandler object at 0x7dca9e73c830>
+
+    def test_do_POST_with_invalid_content_type(self):
+        class MockRequest:
+            headers = {'content-type': 'text/plain'}
+            method = 'POST'
+            rfile = BytesIO(b'{}')
+    
+        class MockResponse:
+            def __init__(self):
+                self.status_code = None
+                self.headers = {}
+                self.body = b''
+    
+            def send_response(self, status_code):
+                self.status_code = status_code
+    
+            def send_header(self, key, value):
+                self.headers[key] = value
+    
+            def end_headers(self):
+                pass
+    
+            def write(self, body):
+                self.body = body
+    
+>       handler = task_func()(MockRequest(), MockResponse())
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: BaseRequestHandler.__init__() missing 1 required positional argument: 'server'
+
+test_0273.py:30: TypeError
+_________ TestPostRequestHandler.test_do_POST_with_missing_data_field __________
+
+self = <test_0273.TestPostRequestHandler object at 0x7dca9e7637a0>
+
+    def test_do_POST_with_missing_data_field(self):
+        class MockRequest:
+            headers = {'content-type': 'application/json', 'content-length': '10'}
+            method = 'POST'
+            rfile = BytesIO(b'{"key": "value"}')
+    
+        class MockResponse:
+            def __init__(self):
+                self.status_code = None
+                self.headers = {}
+                self.body = b''
+    
+            def send_response(self, status_code):
+                self.status_code = status_code
+    
+            def send_header(self, key, value):
+                self.headers[key] = value
+    
+            def end_headers(self):
+                pass
+    
+            def write(self, body):
+                self.body = body
+    
+>       handler = task_func()(MockRequest(), MockResponse())
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: BaseRequestHandler.__init__() missing 1 required positional argument: 'server'
+
+test_0273.py:61: TypeError
+_____________ TestPostRequestHandler.test_do_POST_with_valid_data ______________
+
+self = <test_0273.TestPostRequestHandler object at 0x7dca9e7639e0>
+
+    def test_do_POST_with_valid_data(self):
+        class MockRequest:
+            headers = {'content-type': 'application/json', 'content-length': '15'}
+            method = 'POST'
+            rfile = BytesIO(b'{"data": "valid"}')
+    
+        class MockResponse:
+            def __init__(self):
+                self.status_code = None
+                self.headers = {}
+                self.body = b''
+    
+            def send_response(self, status_code):
+                self.status_code = status_code
+    
+            def send_header(self, key, value):
+                self.headers[key] = value
+    
+            def end_headers(self):
+                pass
+    
+            def write(self, body):
+                self.body = body
+    
+>       handler = task_func()(MockRequest(), MockResponse())
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: BaseRequestHandler.__init__() missing 1 required positional argument: 'server'
+
+test_0273.py:92: TypeError
+=============================== warnings summary ===============================
+../../../src/src_0273.py:1
+  /work/tomohiro-w/utg/src/src_0273.py:1: DeprecationWarning: 'cgi' is deprecated and slated for removal in Python 3.13
+    import cgi
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0273.py::TestPostRequestHandler::test_do_POST_with_invalid_content_type
+FAILED test_0273.py::TestPostRequestHandler::test_do_POST_with_missing_data_field
+FAILED test_0273.py::TestPostRequestHandler::test_do_POST_with_valid_data - T...
+3 failed, 1 warning in 0.60s

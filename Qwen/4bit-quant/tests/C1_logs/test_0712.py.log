@@ -1,0 +1,38 @@
+F..                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1710/test_task_func0')
+
+    def test_task_func(tmpdir):
+        # Create a temporary JSON file
+        json_file = tmpdir.join("test.json")
+        json_data = {"name": "John", "age": 30, "city": "New York"}
+        json_file.write(json.dumps(json_data))
+    
+        # Create a temporary CSV file path
+        csv_file = str(tmpdir.join("test.csv"))
+    
+        # Call the function
+        result = task_func(str(json_file), csv_file)
+    
+        # Check if the function returns the correct CSV file path
+        assert result == csv_file
+    
+        # Check if the CSV file was created and contains the correct data
+        assert os.path.exists(csv_file)
+        with open(csv_file, 'r') as f:
+            reader = csv.reader(f)
+            headers = next(reader)
+            values = next(reader)
+            assert headers == list(json_data.keys())
+>           assert values == list(json_data.values())
+E           AssertionError: assert ['John', '30', 'New York'] == ['John', 30, 'New York']
+E             
+E             At index 1 diff: '30' != 30
+E             Use -v to get more diff
+
+test_0712.py:31: AssertionError
+=========================== short test summary info ============================
+FAILED test_0712.py::test_task_func - AssertionError: assert ['John', '30', '...
+1 failed, 2 passed in 0.45s

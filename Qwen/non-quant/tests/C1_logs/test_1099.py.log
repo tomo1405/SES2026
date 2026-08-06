@@ -1,0 +1,60 @@
+FF..FF..                                                                 [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_no_urls ____________________________
+
+    def test_task_func_no_urls():
+        text = "Hello world! This is a test."
+        top_n = 2
+        expected = [('test', 1), ('This', 1)]
+>       assert task_func(text, top_n) == expected
+E       AssertionError: assert [('Hello', 1), ('world', 1)] == [('test', 1), ('This', 1)]
+E         
+E         At index 0 diff: ('Hello', 1) != ('test', 1)
+E         Use -v to get more diff
+
+test_1099.py:8: AssertionError
+___________________________ test_task_func_with_urls ___________________________
+
+    def test_task_func_with_urls():
+        text = "Check out this link http://example.com and see the results!"
+        top_n = 3
+        expected = [('link', 1), ('this', 1), ('see', 1)]
+>       assert task_func(text, top_n) == expected
+E       AssertionError: assert [('Check', 1)..., ('this', 1)] == [('link', 1),...), ('see', 1)]
+E         
+E         At index 0 diff: ('Check', 1) != ('link', 1)
+E         Use -v to get more diff
+
+test_1099.py:14: AssertionError
+__________________________ test_task_func_punctuation __________________________
+
+    def test_task_func_punctuation():
+        text = "Hello, world! Hello... world?"
+        top_n = 2
+        expected = [('world', 2), ('Hello', 2)]
+>       assert task_func(text, top_n) == expected
+E       AssertionError: assert [('Hello', 2), ('world', 2)] == [('world', 2), ('Hello', 2)]
+E         
+E         At index 0 diff: ('Hello', 2) != ('world', 2)
+E         Use -v to get more diff
+
+test_1099.py:32: AssertionError
+______________________ test_task_func_case_insensitivity _______________________
+
+    def test_task_func_case_insensitivity():
+        text = "Hello hello HELLO"
+        top_n = 1
+        expected = [('Hello', 3)]
+>       assert task_func(text, top_n) == expected
+E       AssertionError: assert [('Hello', 1)] == [('Hello', 3)]
+E         
+E         At index 0 diff: ('Hello', 1) != ('Hello', 3)
+E         Use -v to get more diff
+
+test_1099.py:38: AssertionError
+=========================== short test summary info ============================
+FAILED test_1099.py::test_task_func_no_urls - AssertionError: assert [('Hello...
+FAILED test_1099.py::test_task_func_with_urls - AssertionError: assert [('Che...
+FAILED test_1099.py::test_task_func_punctuation - AssertionError: assert [('H...
+FAILED test_1099.py::test_task_func_case_insensitivity - AssertionError: asse...
+4 failed, 4 passed in 0.50s

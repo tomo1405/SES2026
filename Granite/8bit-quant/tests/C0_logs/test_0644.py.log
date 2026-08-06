@@ -1,0 +1,130 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test the function with the sample input data
+        output_df = task_func(df, data_pattern=DATA_PATTERN)
+    
+        # Check if the output DataFrame matches the expected DataFrame
+>       assert output_df.equals(expected_df)
+E       assert False
+E        +  where False = equals(   col1  col2  col3  col4\n0   1.2   1.2   1.2   1.2\n1   2.3   2.3   2.3   2.3\n2   3.4   NaN   3.4   3.4\n3   4.5   4.5   NaN   4.5\n4   5.6   5.6   5.6   NaN)
+E        +    where equals =    col1  col2  col3  col4\n0   1.2   1.2   1.2   1.2\n1   NaN   NaN   NaN   NaN\n2   NaN   NaN   NaN   NaN\n3   NaN   NaN   NaN   NaN\n4   NaN   NaN   NaN   NaN.equals
+
+test_0644.py:36: AssertionError
+___________________________ test_task_func_with_nan ____________________________
+
+    def test_task_func_with_nan():
+        # Test the function with a NaN value in the input data
+        df['col1'][2] = np.nan
+        expected_df['col1'][2] = np.nan
+>       output_df = task_func(df, data_pattern=DATA_PATTERN)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0644.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0644.py:8: in task_func
+    dataframe[col] = dataframe[col].apply(lambda x: float(re.search(data_pattern, x).group(0)[1:-1])
+../../../.venv/lib/python3.12/site-packages/pandas/core/series.py:5084: in apply
+    ).apply()
+      ^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/apply.py:1520: in apply
+    return self.apply_standard()
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/apply.py:1578: in apply_standard
+    mapped = obj._map_values(mapper=curried)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/base.py:1022: in _map_values
+    return algorithms.map_array(arr, mapper, na_action=na_action)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/algorithms.py:1715: in map_array
+    return lib.map_infer(values, mapper)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pandas/_libs/lib.pyx:3071: in pandas._libs.lib.map_infer
+    ???
+../../../src/src_0644.py:9: in <lambda>
+    if pd.notnull(x) and re.search(data_pattern, x) else np.nan)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pattern = '>\\d+\\.\\d+<', string = 1.2, flags = 0
+
+    def search(pattern, string, flags=0):
+        """Scan through string looking for a match to the pattern, returning
+        a Match object, or None if no match was found."""
+>       return _compile(pattern, flags).search(string)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: expected string or bytes-like object, got 'float'
+
+/usr/lib/python3.12/re/__init__.py:177: TypeError
+_________________________ test_task_func_with_no_match _________________________
+
+    def test_task_func_with_no_match():
+        # Test the function with input data that does not match the data pattern
+        df['col5'] = ['abc', 'def', 'ghi', 'jkl', 'mno']
+        expected_df['col5'] = [np.nan, np.nan, np.nan, np.nan, np.nan]
+>       output_df = task_func(df, data_pattern=DATA_PATTERN)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0644.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0644.py:8: in task_func
+    dataframe[col] = dataframe[col].apply(lambda x: float(re.search(data_pattern, x).group(0)[1:-1])
+../../../.venv/lib/python3.12/site-packages/pandas/core/series.py:5084: in apply
+    ).apply()
+      ^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/apply.py:1520: in apply
+    return self.apply_standard()
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/apply.py:1578: in apply_standard
+    mapped = obj._map_values(mapper=curried)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/base.py:1022: in _map_values
+    return algorithms.map_array(arr, mapper, na_action=na_action)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/algorithms.py:1715: in map_array
+    return lib.map_infer(values, mapper)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pandas/_libs/lib.pyx:3071: in pandas._libs.lib.map_infer
+    ???
+../../../src/src_0644.py:9: in <lambda>
+    if pd.notnull(x) and re.search(data_pattern, x) else np.nan)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pattern = '>\\d+\\.\\d+<', string = 1.2, flags = 0
+
+    def search(pattern, string, flags=0):
+        """Scan through string looking for a match to the pattern, returning
+        a Match object, or None if no match was found."""
+>       return _compile(pattern, flags).search(string)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: expected string or bytes-like object, got 'float'
+
+/usr/lib/python3.12/re/__init__.py:177: TypeError
+=============================== warnings summary ===============================
+Granite/8bit-quant/tests/test_0644.py::test_task_func_with_nan
+  /work/tomohiro-w/utg/Granite/8bit-quant/tests/test_0644.py:40: ChainedAssignmentError: A value is being set on a copy of a DataFrame or Series through chained assignment.
+  Such chained assignment never works to update the original DataFrame or Series, because the intermediate object on which we are setting values always behaves as a copy (due to Copy-on-Write).
+  
+  Try using '.loc[row_indexer, col_indexer] = value' instead, to perform the assignment in a single step.
+  
+  See the documentation for a more detailed explanation: https://pandas.pydata.org/pandas-docs/stable/user_guide/copy_on_write.html#chained-assignment
+    df['col1'][2] = np.nan
+
+Granite/8bit-quant/tests/test_0644.py::test_task_func_with_nan
+  /work/tomohiro-w/utg/Granite/8bit-quant/tests/test_0644.py:41: ChainedAssignmentError: A value is being set on a copy of a DataFrame or Series through chained assignment.
+  Such chained assignment never works to update the original DataFrame or Series, because the intermediate object on which we are setting values always behaves as a copy (due to Copy-on-Write).
+  
+  Try using '.loc[row_indexer, col_indexer] = value' instead, to perform the assignment in a single step.
+  
+  See the documentation for a more detailed explanation: https://pandas.pydata.org/pandas-docs/stable/user_guide/copy_on_write.html#chained-assignment
+    expected_df['col1'][2] = np.nan
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0644.py::test_task_func - assert False
+FAILED test_0644.py::test_task_func_with_nan - TypeError: expected string or ...
+FAILED test_0644.py::test_task_func_with_no_match - TypeError: expected strin...
+3 failed, 2 warnings in 1.45s

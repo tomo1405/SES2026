@@ -1,0 +1,23 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        start_date = '2022-01-01'
+        periods = 10
+        freq = 'D'
+        random_seed = 0
+        forecast_df, ax = task_func(start_date, periods, freq, random_seed)
+    
+        assert isinstance(forecast_df, pd.DataFrame)
+        assert isinstance(ax, plt.Axes)
+        assert len(forecast_df) == periods
+>       assert forecast_df.index.freq == freq
+E       AssertionError: assert None == 'D'
+E        +  where None = DatetimeIndex(['2022-01-01', '2022-01-02', '2022-01-03', '2022-01-04',\n               '2022-01-05', '2022-01-06', '202...'2022-01-08',\n               '2022-01-09', '2022-01-10'],\n              dtype='datetime64[us]', name='Date', freq=None).freq
+E        +    where DatetimeIndex(['2022-01-01', '2022-01-02', '2022-01-03', '2022-01-04',\n               '2022-01-05', '2022-01-06', '202...'2022-01-08',\n               '2022-01-09', '2022-01-10'],\n              dtype='datetime64[us]', name='Date', freq=None) =             Sales\nDate             \n2022-01-01    272\n2022-01-02    147\n2022-01-03    217\n2022-01-04    292\n2022-01-05    423\n2022-01-06    351\n2022-01-07    295\n2022-01-08    459\n2022-01-09    109\n2022-01-10    311.index
+
+test_0942.py:17: AssertionError
+=========================== short test summary info ============================
+FAILED test_0942.py::test_task_func - AssertionError: assert None == 'D'
+1 failed in 2.10s

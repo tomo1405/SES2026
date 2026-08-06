@@ -1,0 +1,39 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        df = pd.DataFrame({
+            'Date': ['2023-01-01', '2023-01-02', '2023-02-01', '2023-02-02'],
+            'Time': ['01:00', '02:00', '01:00', '02:00'],
+            'Temperature': [20, 22, 25, 27]
+        })
+    
+        ax = task_func(df)
+>       assert isinstance(ax, sns.axisgrid.FacetGrid)
+E       AssertionError: assert False
+E        +  where False = isinstance(<Axes: title={'center': 'Temperature Heatmap'}, xlabel='Day', ylabel='Month'>, <class 'seaborn.axisgrid.FacetGrid'>)
+E        +    where <class 'seaborn.axisgrid.FacetGrid'> = <module 'seaborn.axisgrid' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/axisgrid.py'>.FacetGrid
+E        +      where <module 'seaborn.axisgrid' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/axisgrid.py'> = sns.axisgrid
+
+test_0112.py:48: AssertionError
+_______________________ test_task_func_pivot_correctness _______________________
+
+    def test_task_func_pivot_correctness():
+        df = pd.DataFrame({
+            'Date': ['2023-01-01', '2023-01-02', '2023-02-01', '2023-02-02'],
+            'Time': ['01:00', '02:00', '01:00', '02:00'],
+            'Temperature': [20, 22, 25, 27]
+        })
+    
+        ax = task_func(df)
+        df_pivot = df.pivot(index="Month", columns="Day", values="Temperature")
+>       assert df_pivot.equals(ax.data)
+                               ^^^^^^^
+E       AttributeError: 'Axes' object has no attribute 'data'
+
+test_0112.py:63: AttributeError
+=========================== short test summary info ============================
+FAILED test_0112.py::test_task_func_valid_input - AssertionError: assert False
+FAILED test_0112.py::test_task_func_pivot_correctness - AttributeError: 'Axes...
+2 failed, 1 passed in 3.73s

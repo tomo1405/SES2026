@@ -1,0 +1,30 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        list_of_lists = [["A", "B", "C"], ["D", "E", "F"], ["G", "H", "I"]]
+        dataframes = task_func(list_of_lists)
+    
+        assert len(dataframes) == 3
+        for df in dataframes:
+            assert len(df.columns) == 3
+>           assert len(df.index) == 3
+E           assert 10 == 3
+E            +  where 10 = len(RangeIndex(start=0, stop=10, step=1))
+E            +    where RangeIndex(start=0, stop=10, step=1) =    A  B  C\n0  B  B  D\n1  E  H  H\n2  C  F  B\n3  F  D  C\n4  I  G  G\n5  D  E  I\n6  H  J  F\n7  A  C  J\n8  J  I  E\n9  G  A  A.index
+
+test_1071.py:11: AssertionError
+______________________ test_task_func_with_invalid_input _______________________
+
+    def test_task_func_with_invalid_input():
+        list_of_lists = [["A", "B", "C"], ["D", "E", "F"], ["G", "H", "I"]]
+        with pytest.raises(ValueError):
+>           task_func(list_of_lists, invalid_input=True)
+E           TypeError: task_func() got an unexpected keyword argument 'invalid_input'
+
+test_1071.py:25: TypeError
+=========================== short test summary info ============================
+FAILED test_1071.py::test_task_func - assert 10 == 3
+FAILED test_1071.py::test_task_func_with_invalid_input - TypeError: task_func...
+2 failed, 1 passed in 1.22s

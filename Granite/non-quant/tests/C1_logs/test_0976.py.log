@@ -1,0 +1,23 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with default arguments
+        df = task_func(10)
+        assert isinstance(df, pd.DataFrame)
+        assert df.shape == (10, 5)
+        assert set(df.columns) == set(["A", "B", "C", "D", "E"])
+    
+        # Test with custom arguments
+        df = task_func(5, columns=["X", "Y", "Z"], seed=42)
+        assert isinstance(df, pd.DataFrame)
+        assert df.shape == (5, 3)
+        assert set(df.columns) == set(["X", "Y", "Z"])
+>       assert df.loc[0, "X"] == 0.3745401188470954
+E       assert np.float64(0.7319939418114051) == 0.3745401188470954
+
+test_0976.py:18: AssertionError
+=========================== short test summary info ============================
+FAILED test_0976.py::test_task_func - assert np.float64(0.7319939418114051) =...
+1 failed in 1.21s

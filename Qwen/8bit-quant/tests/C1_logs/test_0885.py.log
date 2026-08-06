@@ -1,0 +1,61 @@
+F....F                                                                   [100%]
+=================================== FAILURES ===================================
+_____________________________ test_task_func_basic _____________________________
+
+    def test_task_func_basic():
+        data = {
+            'A': ['X', 'Y', 'X', 'Z', 'Y'],
+            'B': [10, 20, 30, 40, 50],
+            'C': [500, 900, 500, 900, 500]
+        }
+        df = pd.DataFrame(data)
+>       p_value = task_func(df)
+                  ^^^^^^^^^^^^^
+
+test_0885.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df =    A   B    C
+0  X  10  500
+1  Y  20  900
+2  X  30  500
+3  Z  40  900
+4  Y  50  500
+columns = ['A', 'B', 'C'], larger = 50, equal = 900
+
+    def task_func(df, columns=['A', 'B', 'C'], larger=50, equal=900):
+        if len(columns) != 3:
+            raise ValueError("Exactly three columns should be specified.")
+    
+        for column in columns:
+            if column not in df.columns:
+                raise ValueError('The specified columns should exist in the DataFrame.')
+    
+        col_categorical, col_numerical, col_filter = columns
+    
+        # Filtering the data based on the specified conditions
+        selected = df[(df[col_numerical] > larger) & (df[col_filter] == equal)][[col_categorical, col_numerical]]
+    
+        # Creating a contingency table for the chi-square test
+        contingency_table = pd.crosstab(selected[col_categorical], selected[col_numerical])
+    
+        # Check if the contingency table is empty (no data meeting the criteria)
+        if contingency_table.size == 0:
+>           raise ValueError("Insufficient data - no matching data for the applied conditions.")
+E           ValueError: Insufficient data - no matching data for the applied conditions.
+
+../../../src/src_0885.py:21: ValueError
+________________________ test_task_func_empty_dataframe ________________________
+
+    def test_task_func_empty_dataframe():
+        df = pd.DataFrame()
+>       with pytest.raises(ValueError, match="Exactly three columns should be specified."):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'Exactly three columns should be specified.'
+E         Actual message: 'The specified columns should exist in the DataFrame.'
+
+test_0885.py:63: AssertionError
+=========================== short test summary info ============================
+FAILED test_0885.py::test_task_func_basic - ValueError: Insufficient data - n...
+FAILED test_0885.py::test_task_func_empty_dataframe - AssertionError: Regex p...
+2 failed, 4 passed in 2.69s

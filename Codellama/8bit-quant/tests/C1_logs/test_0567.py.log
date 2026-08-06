@@ -1,0 +1,54 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_with_lambda __________________________
+
+    def test_task_func_with_lambda():
+        f = lambda x: x + 1
+        result = task_func(f)
+>       assert result['function_name'] == 'lambda'
+E       AssertionError: assert '<lambda>' == 'lambda'
+E         
+E         - lambda
+E         + <lambda>
+E         ? +      +
+
+test_0567.py:7: AssertionError
+_________________________ test_task_func_with_function _________________________
+
+    def test_task_func_with_function():
+        def f(x):
+            return x + 1
+        result = task_func(f)
+        assert result['function_name'] == 'f'
+>       assert result['is_lambda'] == False
+E       assert True == False
+
+test_0567.py:18: AssertionError
+_______________________ test_task_func_with_default_args _______________________
+
+    def test_task_func_with_default_args():
+        def f(x, y=1):
+            return x + y
+        result = task_func(f)
+        assert result['function_name'] == 'f'
+>       assert result['is_lambda'] == False
+E       assert True == False
+
+test_0567.py:28: AssertionError
+_______________________ test_task_func_with_annotations ________________________
+
+    def test_task_func_with_annotations():
+        def f(x: int, y: str) -> int:
+            return x + 1
+        result = task_func(f)
+        assert result['function_name'] == 'f'
+>       assert result['is_lambda'] == False
+E       assert True == False
+
+test_0567.py:38: AssertionError
+=========================== short test summary info ============================
+FAILED test_0567.py::test_task_func_with_lambda - AssertionError: assert '<la...
+FAILED test_0567.py::test_task_func_with_function - assert True == False
+FAILED test_0567.py::test_task_func_with_default_args - assert True == False
+FAILED test_0567.py::test_task_func_with_annotations - assert True == False
+4 failed in 0.45s

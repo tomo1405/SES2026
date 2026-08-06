@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Mock input data
+        df = {'closing_price': [1, 2, 3, 4, 5]}
+    
+        # Call the function with the mock data
+>       outliers, ax = task_func(df)
+                       ^^^^^^^^^^^^^
+
+test_0916.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df = {'closing_price': [1, 2, 3, 4, 5], 'Z_score': array([-1.41421356, -0.70710678,  0.        ,  0.70710678,  1.41421356])}
+z_threshold = 2
+
+    def task_func(df, z_threshold=2):
+        # Calculate Z-Scores for the 'closing_price' column
+        df['Z_score'] = zscore(df['closing_price'])
+    
+        # Identify outliers based on Z-Score threshold
+>       outliers = df[np.abs(df['Z_score']) > z_threshold]
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: unhashable type: 'numpy.ndarray'
+
+../../../src/src_0916.py:9: TypeError
+=========================== short test summary info ============================
+FAILED test_0916.py::test_task_func - TypeError: unhashable type: 'numpy.ndar...
+1 failed in 2.97s

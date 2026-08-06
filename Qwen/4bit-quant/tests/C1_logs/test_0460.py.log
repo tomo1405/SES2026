@@ -1,0 +1,39 @@
+F...                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        script_dir = "/path/to/scripts"
+        scripts = ["script1.sh", "script2.sh"]
+        delay = 1
+>       start_times = task_func(script_dir, scripts, delay)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0460.py:8: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+script_dir = '/path/to/scripts', scripts = ['script1.sh', 'script2.sh']
+delay = 1
+
+    def task_func(script_dir, scripts, delay):
+        if delay < 0:
+            raise ValueError("delay cannot be negative.")
+        if not scripts:
+            raise ValueError("No scripts provided.")
+        start_times = []
+        for script in scripts:
+            script_path = os.path.join(script_dir, script)
+            start_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            start_times.append(start_time)
+    
+            result = subprocess.call(script_path, shell=True)
+            if result != 0:
+>               raise FileNotFoundError(f"Script not found: {script_path}")
+E               FileNotFoundError: Script not found: /path/to/scripts/script1.sh
+
+../../../src/src_0460.py:18: FileNotFoundError
+----------------------------- Captured stderr call -----------------------------
+/bin/sh: 1: /path/to/scripts/script1.sh: not found
+=========================== short test summary info ============================
+FAILED test_0460.py::test_task_func_valid_input - FileNotFoundError: Script n...
+1 failed, 3 passed in 0.44s

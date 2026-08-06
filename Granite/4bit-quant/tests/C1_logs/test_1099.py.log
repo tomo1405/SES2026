@@ -1,0 +1,63 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+___________ test_task_func[This is a sample text-2-expected_output0] ___________
+
+text = 'This is a sample text', top_n = 2
+expected_output = [('a', 1), ('is', 1)]
+
+    @mark.parametrize("text, top_n, expected_output", [
+        ("This is a sample text", 2, [("a", 1), ("is", 1)]),
+        ("This is another sample text", 3, [("a", 1), ("is", 1), ("another", 1)]),
+        ("This is a sample text with some URLs http://example.com and http://test.com", 1, [("a", 1)]),
+    ])
+    def test_task_func(text, top_n, expected_output):
+>       assert task_func(text, top_n) == expected_output
+E       AssertionError: assert [('This', 1), ('is', 1)] == [('a', 1), ('is', 1)]
+E         
+E         At index 0 diff: ('This', 1) != ('a', 1)
+E         Use -v to get more diff
+
+test_1099.py:23: AssertionError
+________ test_task_func[This is another sample text-3-expected_output1] ________
+
+text = 'This is another sample text', top_n = 3
+expected_output = [('a', 1), ('is', 1), ('another', 1)]
+
+    @mark.parametrize("text, top_n, expected_output", [
+        ("This is a sample text", 2, [("a", 1), ("is", 1)]),
+        ("This is another sample text", 3, [("a", 1), ("is", 1), ("another", 1)]),
+        ("This is a sample text with some URLs http://example.com and http://test.com", 1, [("a", 1)]),
+    ])
+    def test_task_func(text, top_n, expected_output):
+>       assert task_func(text, top_n) == expected_output
+E       AssertionError: assert [('This', 1),...'another', 1)] == [('a', 1), ('...'another', 1)]
+E         
+E         At index 0 diff: ('This', 1) != ('a', 1)
+E         Use -v to get more diff
+
+test_1099.py:23: AssertionError
+_ test_task_func[This is a sample text with some URLs http://example.com and http://test.com-1-expected_output2] _
+
+text = 'This is a sample text with some URLs http://example.com and http://test.com'
+top_n = 1, expected_output = [('a', 1)]
+
+    @mark.parametrize("text, top_n, expected_output", [
+        ("This is a sample text", 2, [("a", 1), ("is", 1)]),
+        ("This is another sample text", 3, [("a", 1), ("is", 1), ("another", 1)]),
+        ("This is a sample text with some URLs http://example.com and http://test.com", 1, [("a", 1)]),
+    ])
+    def test_task_func(text, top_n, expected_output):
+>       assert task_func(text, top_n) == expected_output
+E       AssertionError: assert [('This', 1)] == [('a', 1)]
+E         
+E         At index 0 diff: ('This', 1) != ('a', 1)
+E         Use -v to get more diff
+
+test_1099.py:23: AssertionError
+=========================== short test summary info ============================
+FAILED test_1099.py::test_task_func[This is a sample text-2-expected_output0]
+FAILED test_1099.py::test_task_func[This is another sample text-3-expected_output1]
+FAILED test_1099.py::test_task_func[This is a sample text with some URLs http://example.com and http://test.com-1-expected_output2]
+3 failed in 0.61s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

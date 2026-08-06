@@ -1,0 +1,30 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        ROOT_DIR = 'tests/test_data'
+        DEST_DIR = 'tests/test_data/dest'
+        SPECIFIC_HASH = '00000000000000000000000000000000'
+    
+        files_moved = task_func(ROOT_DIR, DEST_DIR, SPECIFIC_HASH)
+    
+        assert files_moved == 0
+    
+        for filename in glob.glob(os.path.join(ROOT_DIR, '*')):
+            if not os.path.exists(filename) or os.path.isdir(filename):
+                continue
+            with open(filename, 'rb') as f:
+                file_hash = hashlib.md5(f.read()).hexdigest()
+            assert file_hash != SPECIFIC_HASH
+    
+>       assert not os.path.exists(DEST_DIR)
+E       AssertionError: assert not True
+E        +  where True = <function exists at 0x79317eff3600>('tests/test_data/dest')
+E        +    where <function exists at 0x79317eff3600> = <module 'posixpath' (frozen)>.exists
+E        +      where <module 'posixpath' (frozen)> = os.path
+
+test_0128.py:24: AssertionError
+=========================== short test summary info ============================
+FAILED test_0128.py::test_task_func - AssertionError: assert not True
+1 failed in 0.38s

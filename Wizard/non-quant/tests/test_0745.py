@@ -1,0 +1,20 @@
+python
+import nltk
+from string import punctuation
+import pandas as pd
+
+def task_func(text):
+    if not isinstance(text, str):
+        raise ValueError("The input should be a string.")
+
+    tk = nltk.WhitespaceTokenizer()
+    words = tk.tokenize(text)    
+    dollar_words = [word for word in words if word.startswith('$') and not all(c in set(punctuation) for c in word)]
+    freq = nltk.FreqDist(dollar_words)
+    df = pd.DataFrame(list(freq.items()), columns=["Word", "Frequency"])
+    return df
+
+# Test the function with a sample input
+text = "The quick brown $fox jumps over the lazy dog. The $cat in the hat."
+result = task_func(text)
+print(result)

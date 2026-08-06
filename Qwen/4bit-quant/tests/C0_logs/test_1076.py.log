@@ -1,0 +1,42 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_plot = None
+
+    def test_task_func(mock_plot):
+        time_strings = [
+            "01/01/23 12:00:00.000000",
+            "01/01/23 12:01:00.000000",
+            "01/01/23 12:02:00.000000"
+        ]
+>       ax = task_func(time_strings)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1076.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1076.py:16: in task_func
+    plt.xlabel("Index")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+xlabel = 'Index', fontdict = None, labelpad = None, loc = None, kwargs = {}
+
+    @_copy_docstring_and_deprecators(Axes.set_xlabel)
+    def xlabel(
+        xlabel: str,
+        fontdict: dict[str, Any] | None = None,
+        labelpad: float | None = None,
+        *,
+        loc: Literal["left", "center", "right"] | None = None,
+        **kwargs,
+    ) -> Text:
+>       return gca().set_xlabel(
+               ^^^^^^^^^^^^^^^^
+            xlabel, fontdict=fontdict, labelpad=labelpad, loc=loc, **kwargs
+        )
+E       AttributeError: 'MockGca' object has no attribute 'set_xlabel'
+
+../../../.venv/lib/python3.12/site-packages/matplotlib/pyplot.py:4593: AttributeError
+=========================== short test summary info ============================
+FAILED test_1076.py::test_task_func - AttributeError: 'MockGca' object has no...
+1 failed in 1.59s

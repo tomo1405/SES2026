@@ -1,0 +1,26 @@
+import numpy as np
+import base64
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.asymmetric import padding
+def task_func(num, from_base, to_base, private_key, alphabet):
+    base64_table = np.array(list(alphabet))
+    n = int(num, from_base)
+    
+    new_num = ''
+    while n > 0:
+        n, m = divmod(n, to_base)
+        new_num += base64_table[m]
+
+    num = new_num[::-1]
+    data = bytes(num, 'utf-8')
+    signed_num = private_key.sign(
+        data,
+        padding.PSS(
+            mgf=padding.MGF1(hashes.SHA256()),
+            salt_length=padding.PSS.MAX_LENGTH
+        ),
+        hashes.SHA256()
+    )
+    base64_encoded = base64.b64encode(signed_num)
+
+    return base64_encoded.decode()

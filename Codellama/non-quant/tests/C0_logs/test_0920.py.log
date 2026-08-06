@@ -1,0 +1,23 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data = {'A': [1, 2, 3, 4, 5], 'B': [2, 4, 6, 8, 10], 'C': [3, 6, 9, 12, 15]}
+        column = 'A'
+        ax = task_func(data, column)
+        assert isinstance(ax, plt.Axes)
+        assert ax.get_xlabel() == 'Category'
+        assert ax.get_ylabel() == 'Count'
+        assert ax.get_title() == f'Distribution of {column}'
+        assert len(ax.get_xticklabels()) == 5
+>       assert len(ax.get_yticklabels()) == 5
+E       AssertionError: assert 7 == 5
+E        +  where 7 = len([Text(0, -0.06, '−0.06'), Text(0, -0.039999999999999994, '−0.04'), Text(0, -0.019999999999999997, '−0.02'), Text(0, 0.0, '0.00'), Text(0, 0.020000000000000004, '0.02'), Text(0, 0.04000000000000001, '0.04'), ...])
+E        +    where [Text(0, -0.06, '−0.06'), Text(0, -0.039999999999999994, '−0.04'), Text(0, -0.019999999999999997, '−0.02'), Text(0, 0.0, '0.00'), Text(0, 0.020000000000000004, '0.02'), Text(0, 0.04000000000000001, '0.04'), ...] = get_yticklabels()
+E        +      where get_yticklabels = <Axes: title={'center': 'Distribution of A'}, xlabel='Category', ylabel='Count'>.get_yticklabels
+
+test_0920.py:15: AssertionError
+=========================== short test summary info ============================
+FAILED test_0920.py::test_task_func - AssertionError: assert 7 == 5
+1 failed in 2.23s

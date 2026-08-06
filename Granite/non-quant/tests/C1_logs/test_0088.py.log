@@ -1,0 +1,22 @@
+F..                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+products = ['Product1', 'Product2', 'Product3'], ratings = [1, 2, 3, 4, 5]
+weights = [0.2, 0.2, 0.2, 0.2, 0.2]
+
+    def test_task_func(products, ratings, weights):
+        df = task_func(products, ratings, weights)
+        assert isinstance(df, pd.DataFrame)
+        assert df.shape == (len(products), 2)
+        assert df.columns.tolist() == ["Product", "Rating"]
+>       assert df["Product"].tolist() == products
+E       AssertionError: assert ['Product1', ...', 'Product2'] == ['Product1', ...', 'Product3']
+E         
+E         At index 1 diff: 'Product3' != 'Product2'
+E         Use -v to get more diff
+
+test_0088.py:23: AssertionError
+=========================== short test summary info ============================
+FAILED test_0088.py::test_task_func - AssertionError: assert ['Product1', ......
+1 failed, 2 passed in 1.18s

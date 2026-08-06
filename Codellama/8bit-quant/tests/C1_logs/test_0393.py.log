@@ -1,0 +1,35 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Test with valid input
+        df = pd.DataFrame({'A': ['a', 'b', 'c'], 'B': [1, 2, 3]})
+        group_col = 'A'
+        value_col = 'B'
+        group_name = 'a'
+        ax = task_func(df, group_col, value_col, group_name)
+        assert ax.get_xlabel() == 'A'
+        assert ax.get_ylabel() == 'B'
+        assert ax.get_title() == 'Bar chart of B for a'
+        assert ax.get_xticks() == np.arange(len(df[df[group_col] == group_name]))
+>       assert ax.get_xticklabels() == df[df[group_col] == group_name][group_col]
+
+test_0393.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = 0    False
+Name: A, dtype: bool
+
+    @final
+    def __bool__(self) -> NoReturn:
+>       raise ValueError(
+            f"The truth value of a {type(self).__name__} is ambiguous. "
+            "Use a.empty, a.bool(), a.item(), a.any() or a.all()."
+        )
+E       ValueError: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:1513: ValueError
+=========================== short test summary info ============================
+FAILED test_0393.py::test_task_func - ValueError: The truth value of a Series...
+1 failed in 2.23s

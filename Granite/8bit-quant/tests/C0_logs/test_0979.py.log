@@ -1,0 +1,54 @@
+.F.FF                                                                    [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_empty_array __________________________
+
+    def test_task_func_empty_array():
+        array = np.array([])
+        expected_output = pd.DataFrame(columns=["PC1", "PC2"])
+>       actual_output = task_func(array)
+                        ^^^^^^^^^^^^^^^^
+
+test_0979.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+array = array([], dtype=float64), seed = None
+
+    def task_func(array, seed=None):
+        if seed is not None:
+            np.random.seed(seed)
+    
+        if not isinstance(array, np.ndarray) or len(array.shape) != 2:
+>           raise ValueError("Input must be a 2D numpy array.")
+E           ValueError: Input must be a 2D numpy array.
+
+../../../src/src_0979.py:9: ValueError
+___________________________ test_task_func_2d_array ____________________________
+
+    def test_task_func_2d_array():
+        array = np.array([[1, 2, 3], [4, 5, 6]])
+        expected_output = pd.DataFrame(data=[[3.5, 6.5], [3.5, 6.5]], columns=["PC1", "PC2"])
+        actual_output = task_func(array)
+>       assert actual_output.equals(expected_output)
+E       assert False
+E        +  where False = equals(   PC1  PC2\n0  3.5  6.5\n1  3.5  6.5)
+E        +    where equals =         PC1           PC2\n0 -2.598076 -3.225485e-17\n1  2.598076 -3.225485e-17.equals
+
+test_0979.py:26: AssertionError
+______________________ test_task_func_2d_array_with_seed _______________________
+
+    def test_task_func_2d_array_with_seed():
+        array = np.array([[1, 2, 3], [4, 5, 6]])
+        seed = 42
+        expected_output = pd.DataFrame(data=[[3.5, 6.5], [3.5, 6.5]], columns=["PC1", "PC2"])
+        actual_output = task_func(array, seed=seed)
+>       assert actual_output.equals(expected_output)
+E       assert False
+E        +  where False = equals(   PC1  PC2\n0  3.5  6.5\n1  3.5  6.5)
+E        +    where equals =         PC1           PC2\n0 -2.598076 -3.225485e-17\n1  2.598076 -3.225485e-17.equals
+
+test_0979.py:33: AssertionError
+=========================== short test summary info ============================
+FAILED test_0979.py::test_task_func_empty_array - ValueError: Input must be a...
+FAILED test_0979.py::test_task_func_2d_array - assert False
+FAILED test_0979.py::test_task_func_2d_array_with_seed - assert False
+3 failed, 2 passed in 3.30s

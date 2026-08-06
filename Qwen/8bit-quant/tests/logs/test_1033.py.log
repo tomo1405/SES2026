@@ -1,0 +1,72 @@
+....FF.                                                                  [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_letter_frequency ________________________
+
+    def test_task_func_letter_frequency():
+        # Test if the letter frequency is correctly computed
+        ax = task_func(rows=10, string_length=2)
+>       df = pd.get_dummies(ax.get_figure().get_axes()[0].collections[0].get_offsets())
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1033.py:30: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/reshape/encoding.py:230: in get_dummies
+    result = _get_dummies_1d(
+../../../.venv/lib/python3.12/site-packages/pandas/core/reshape/encoding.py:254: in _get_dummies_1d
+    codes, levels = factorize_from_iterable(Series(data, copy=False))
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/series.py:514: in __init__
+    data = sanitize_array(data, index, dtype, copy)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/construction.py:681: in sanitize_array
+    subarr = _sanitize_ndim(subarr, data, dtype, index, allow_2d=allow_2d)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = array([[0., 0.]]), data = array([[0., 0.]]), dtype = None
+index = RangeIndex(start=0, stop=1, step=1), allow_2d = False
+
+    def _sanitize_ndim(
+        result: ArrayLike,
+        data,
+        dtype: DtypeObj | None,
+        index: Index | None,
+        *,
+        allow_2d: bool = False,
+    ) -> ArrayLike:
+        """
+        Ensure we have a 1-dimensional result array.
+        """
+        if getattr(result, "ndim", 0) == 0:
+            raise ValueError("result should be arraylike with ndim > 0")
+    
+        if result.ndim == 1:
+            # the result that we want
+            result = _maybe_repeat(result, index)
+    
+        elif result.ndim > 1:
+            if isinstance(data, np.ndarray):
+                if allow_2d:
+                    return result
+>               raise ValueError(
+                    f"Data must be 1-dimensional, got ndarray of shape {data.shape} instead"
+                )
+E               ValueError: Data must be 1-dimensional, got ndarray of shape (1, 2) instead
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/construction.py:740: ValueError
+______________________ test_task_func_correlation_matrix _______________________
+
+    def test_task_func_correlation_matrix():
+        # Test if the correlation matrix is correctly computed
+        ax = task_func(rows=10, string_length=2)
+        corr = ax.get_figure().get_axes()[0].collections[0].get_array()
+        assert isinstance(corr, np.ndarray), "The correlation matrix should be a NumPy array."
+>       assert corr.shape[0] == 26 and corr.shape[1] == 26, "The correlation matrix should be 26x26."
+E       AssertionError: The correlation matrix should be 26x26.
+E       assert (12 == 26)
+
+test_1033.py:38: AssertionError
+=========================== short test summary info ============================
+FAILED test_1033.py::test_task_func_letter_frequency - ValueError: Data must ...
+FAILED test_1033.py::test_task_func_correlation_matrix - AssertionError: The ...
+2 failed, 5 passed in 6.74s

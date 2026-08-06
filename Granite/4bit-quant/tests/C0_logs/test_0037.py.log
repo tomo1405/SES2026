@@ -1,0 +1,222 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+self = <ArrowStringArray>
+['a', 'b', 'c']
+Length: 3, dtype: str, other = 0
+op = <built-in function le>
+
+    def _cmp_method(self, other, op) -> ArrowExtensionArray:
+        pc_func = ARROW_CMP_FUNCS[op.__name__]
+        ltype = self._pa_array.type
+    
+        if isinstance(other, (ExtensionArray, np.ndarray, list, range)):
+            try:
+                boxed = self._box_pa(other)
+            except pa.lib.ArrowInvalid:
+                # e.g. GH#60228 [1, "b"] we have to operate pointwise
+                res_values = [op(x, y) for x, y in zip(self, other, strict=True)]
+                result = pa.array(res_values, type=pa.bool_(), from_pandas=True)
+            else:
+                rtype = boxed.type
+                if (
+                    (pa.types.is_timestamp(ltype) and pa.types.is_date(rtype))
+                    or (pa.types.is_timestamp(rtype) and pa.types.is_date(ltype))
+                    or isinstance(other, range)
+                ):
+                    # GH#62157 match non-pyarrow behavior
+                    result = ops.invalid_comparison(self, other, op)
+                    result = pa.array(result, type=pa.bool_())
+                else:
+                    try:
+                        result = pc_func(self._pa_array, boxed)
+                    except pa.ArrowNotImplementedError:
+                        result = ops.invalid_comparison(self, other, op)
+                        result = pa.array(result, type=pa.bool_())
+    
+        elif is_scalar(other):
+            if (isinstance(other, datetime) and pa.types.is_date(ltype)) or (
+                type(other) is date and pa.types.is_timestamp(ltype)
+            ):
+                # GH#62157 match non-pyarrow behavior
+                result = ops.invalid_comparison(self, other, op)
+                result = pa.array(result, type=pa.bool_())
+            else:
+                try:
+>                   result = pc_func(self._pa_array, self._box_pa(other))
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/arrow/array.py:944: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pyarrow/compute.py:254: in wrapper
+    return func.call(args, None, memory_pool)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pyarrow/_compute.pyx:399: in pyarrow._compute.Function.call
+    ???
+pyarrow/error.pxi:155: in pyarrow.lib.pyarrow_internal_check_status
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   pyarrow.lib.ArrowNotImplementedError: Function 'less_equal' has no kernel matching input types (large_string, int64)
+
+pyarrow/error.pxi:92: ArrowNotImplementedError
+
+During handling of the above exception, another exception occurred:
+
+self = <ArrowStringArray>
+['a', 'b', 'c']
+Length: 3, dtype: str, other = 0
+op = <built-in function le>
+
+    def _cmp_method(self, other, op) -> ArrowExtensionArray:
+        pc_func = ARROW_CMP_FUNCS[op.__name__]
+        ltype = self._pa_array.type
+    
+        if isinstance(other, (ExtensionArray, np.ndarray, list, range)):
+            try:
+                boxed = self._box_pa(other)
+            except pa.lib.ArrowInvalid:
+                # e.g. GH#60228 [1, "b"] we have to operate pointwise
+                res_values = [op(x, y) for x, y in zip(self, other, strict=True)]
+                result = pa.array(res_values, type=pa.bool_(), from_pandas=True)
+            else:
+                rtype = boxed.type
+                if (
+                    (pa.types.is_timestamp(ltype) and pa.types.is_date(rtype))
+                    or (pa.types.is_timestamp(rtype) and pa.types.is_date(ltype))
+                    or isinstance(other, range)
+                ):
+                    # GH#62157 match non-pyarrow behavior
+                    result = ops.invalid_comparison(self, other, op)
+                    result = pa.array(result, type=pa.bool_())
+                else:
+                    try:
+                        result = pc_func(self._pa_array, boxed)
+                    except pa.ArrowNotImplementedError:
+                        result = ops.invalid_comparison(self, other, op)
+                        result = pa.array(result, type=pa.bool_())
+    
+        elif is_scalar(other):
+            if (isinstance(other, datetime) and pa.types.is_date(ltype)) or (
+                type(other) is date and pa.types.is_timestamp(ltype)
+            ):
+                # GH#62157 match non-pyarrow behavior
+                result = ops.invalid_comparison(self, other, op)
+                result = pa.array(result, type=pa.bool_())
+            else:
+                try:
+                    result = pc_func(self._pa_array, self._box_pa(other))
+                except (pa.lib.ArrowNotImplementedError, pa.lib.ArrowInvalid):
+                    mask = isna(self) | isna(other)
+                    valid = ~mask
+                    result = np.zeros(len(self), dtype="bool")
+                    np_array = np.array(self)
+                    try:
+>                       result[valid] = op(np_array[valid], other)
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E                       TypeError: '<=' not supported between instances of 'str' and 'int'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/arrow/array.py:951: TypeError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func():
+        # Test if the function raises a ValueError when the DataFrame contains negative values
+        df_neg = pd.DataFrame({
+            'A': [-1, 2, 3],
+            'B': [4, 5, 6]
+        })
+        with pytest.raises(ValueError):
+            task_func(df_neg)
+    
+        # Test if the function raises a ValueError when the DataFrame contains non-numeric values
+        df_non_numeric = pd.DataFrame({
+            'A': ['a', 'b', 'c'],
+            'B': [4, 5, 6]
+        })
+        with pytest.raises(ValueError):
+>           task_func(df_non_numeric)
+
+test_0037.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0037.py:7: in task_func
+    if (df <= 0).any().any():
+        ^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/ops/common.py:85: in new_method
+    return method(self, other)
+           ^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/arraylike.py:54: in __le__
+    return self._cmp_method(other, operator.le)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:9138: in _cmp_method
+    new_data = self._dispatch_frame_op(other, op, axis=axis)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:9183: in _dispatch_frame_op
+    bm = self._mgr.apply(array_op, right=right)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/managers.py:443: in apply
+    applied = b.apply(f, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/blocks.py:347: in apply
+    result = func(self.values, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/ops/array_ops.py:341: in comparison_op
+    res_values = op(lvalues, rvalues)
+                 ^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/ops/common.py:85: in new_method
+    return method(self, other)
+           ^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/arraylike.py:54: in __le__
+    return self._cmp_method(other, operator.le)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/string_arrow.py:590: in _cmp_method
+    result = super()._cmp_method(other, op)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/arrow/array.py:953: in _cmp_method
+    result = ops.invalid_comparison(self, other, op)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+left = <ArrowStringArray>
+['a', 'b', 'c']
+Length: 3, dtype: str, right = 0
+op = <built-in function le>
+
+    def invalid_comparison(
+        left: ArrayLike,
+        right: ArrayLike | list | range | Scalar,
+        op: Callable[[Any, Any], bool],
+    ) -> npt.NDArray[np.bool_]:
+        """
+        If a comparison has mismatched types and is not necessarily meaningful,
+        follow python3 conventions by:
+    
+            - returning all-False for equality
+            - returning all-True for inequality
+            - raising TypeError otherwise
+    
+        Parameters
+        ----------
+        left : array-like
+        right : scalar, array-like
+        op : operator.{eq, ne, lt, le, gt}
+    
+        Raises
+        ------
+        TypeError : on inequality comparisons
+        """
+        if op is operator.eq:
+            res_values = np.zeros(left.shape, dtype=bool)
+        elif op is operator.ne:
+            res_values = np.ones(left.shape, dtype=bool)
+        else:
+            typ = type(right).__name__
+>           raise TypeError(f"Invalid comparison between dtype={left.dtype} and {typ}")
+E           TypeError: Invalid comparison between dtype=str and int
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/ops/invalid.py:55: TypeError
+=========================== short test summary info ============================
+FAILED test_0037.py::test_task_func - TypeError: Invalid comparison between d...
+1 failed in 3.90s

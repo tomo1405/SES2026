@@ -1,0 +1,39 @@
+.F                                                                       [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_pie_chart ___________________________
+
+    def test_task_func_pie_chart():
+        # Create a sample DataFrame
+        df = pd.DataFrame({
+            'Status': ['Active', 'Inactive', 'Active', 'Pending', 'Inactive']
+        })
+    
+        # Call the function and capture the plot
+        ax = task_func(df)
+    
+        # Check if the plot is created correctly
+        assert isinstance(ax, plt.Axes)
+        assert ax.get_title() == 'Status Distribution'
+    
+        # Capture the plot to a buffer
+        buf = BytesIO()
+        plt.savefig(buf, format='png')
+        buf.seek(0)
+        image_base64 = base64.b64encode(buf.read()).decode('utf-8')
+    
+        # Define the expected base64 string (this should be pre-defined or generated once)
+        expected_image_base64 = "your_expected_base64_string_here"
+    
+        # Assert that the generated image matches the expected one
+>       assert image_base64 == expected_image_base64
+E       AssertionError: assert 'iVBORw0KGgoA...ASUVORK5CYII=' == 'your_expecte...4_string_here'
+E         
+E         - your_expected_base64_string_here
+E         + iVBORw0KGgoAAAANSUhEUgAAAoAAAAHgCAYAAAA10dzkAAAAOnRFWHRTb2Z0d2FyZQBNYXRwbG90bGliIHZlcnNpb24zLjExLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5vcmcvlcelbwAAAAlwSFlzAAAPYQAAD2EBqD+naQAATklJREFUeJzt3Xd8VfXhxvHn3uxFyGQFEvbeAoIIColAK0VRiggqripWW6xapK62zp+TKm5RFFHb4ihaRaWCisjeyjCQQEIYCQnZ8977+yNyNRIg+3tzz+f9evlqc+4Zz73G5Mn3nPM9NpfL5RIAAAAsw246AAAAAJoWBRAAAMBiKIAAAAAWQwEEAACwGAogAACAxVAAAQAALIYCCAAAYDEUQAAAAIuhAAIAAFgMBRAAAMBiKIAAAAAWQwEEAACwGAogAACAxVAAAQAALIYCCAAAYDEUQAAAAIuhAAIAAFgMBRAAAMBiKIAAAAAWQwEEAACwGAogAACAxVAAAQAALIYCCAAAYDEUQAAAAIuhAAIAAFgMBRAA...
+E         
+E         ...Full output truncated (1 line hidden), use '-vv' to show
+
+test_0113.py:41: AssertionError
+=========================== short test summary info ============================
+FAILED test_0113.py::test_task_func_pie_chart - AssertionError: assert 'iVBOR...
+1 failed, 1 passed in 1.97s

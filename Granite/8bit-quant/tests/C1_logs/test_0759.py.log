@@ -1,0 +1,24 @@
+..F                                                                      [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_output_values _________________________
+
+input_args = {'num_samples': 100, 'countries': ['Russia', 'China', 'USA', 'India', 'Brazil'], 'ages': array([18, 19, 20, 21, 22, 23...1, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51,
+       52, 53, 54, 55, 56, 57, 58, 59]), 'genders': ['Male', 'Female'], ...}
+
+    def test_task_func_output_values(input_args):
+        result = task_func(**input_args)
+        assert len(result) == input_args['num_samples']
+        assert set(result['Country'].unique()) == set(input_args['countries'])
+>       assert set(result['Age'].unique()) == set(input_args['ages'])
+E       assert {np.int64(18)...nt64(23), ...} == {np.int64(18)...nt64(23), ...}
+E         
+E         Extra items in the right set:
+E         np.int64(40)
+E         np.int64(49)
+E         np.int64(54)
+E         Use -v to get more diff
+
+test_0759.py:32: AssertionError
+=========================== short test summary info ============================
+FAILED test_0759.py::test_task_func_output_values - assert {np.int64(18)...nt...
+1 failed, 2 passed in 2.76s

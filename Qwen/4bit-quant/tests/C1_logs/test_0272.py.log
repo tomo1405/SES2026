@@ -1,0 +1,92 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_default_seed _______________________
+
+    def test_task_func_with_default_seed():
+        input_data = {'b': 2, 'c': 3}
+        expected_output = {
+            'a': '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08',
+            'b': '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08',
+            'c': '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08',
+            'timestamp': pytest.approx(time.time(), abs=1)
+        }
+        result = task_func(input_data, seed=0)
+>       assert result == expected_output
+E       AssertionError: assert {'b': '417739...58173.2812536} == {'a': '9f86d0...3.2810953 ± 1}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'b': '41773904295de9118410891232b279dc73389ddf35acd92441eae103d932d2e8'} != {'b': '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08'}
+E         {'a': '373f3d39a5d5075dfb4503ebe44f70eed8a48e1a32be02d182b2a26695c6f694'} != {'a': '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08'}
+E         {'c': 'd44102d8228e6bb8d7b2c965e87e9abb3305455eabd7ee1e732ac3a922d67168'} != {'c': '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08'}
+E         Use -v to get more diff
+
+test_0272.py:16: AssertionError
+_______________________ test_task_func_with_custom_seed ________________________
+
+    def test_task_func_with_custom_seed():
+        input_data = {'x': 10, 'y': 20}
+        expected_output = {
+            'a': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+            'x': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+            'y': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+            'timestamp': pytest.approx(time.time(), abs=1)
+        }
+        result = task_func(input_data, seed=42)
+>       assert result == expected_output
+E       AssertionError: assert {'x': '38a927...258173.300523} == {'a': 'e3b0c4...3.3004692 ± 1}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'a': 'b925c3013a69fe5608d1fbcaebdcf2ac8ff3d1050b85bd2fb9abcd22636257d0'} != {'a': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'}
+E         {'y': '4bdea89ae3d5abb396f81b6e5828f4f5673673d463130c7a265cded241ad52e2'} != {'y': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'}
+E         {'x': '38a927f6b74338ce909c457b4190036eb2c6c779daf3e4b401f7633bacbc767c'} != {'x': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'}
+E         Use -v to get more diff
+
+test_0272.py:27: AssertionError
+_______________________ test_task_func_with_empty_input ________________________
+
+    def test_task_func_with_empty_input():
+        input_data = {}
+        expected_output = {
+            'a': '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08',
+            'timestamp': pytest.approx(time.time(), abs=1)
+        }
+        result = task_func(input_data, seed=0)
+>       assert result == expected_output
+E       AssertionError: assert {'a': '373f3d...258173.304092} == {'a': '9f86d0...73.304057 ± 1}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'a': '373f3d39a5d5075dfb4503ebe44f70eed8a48e1a32be02d182b2a26695c6f694'} != {'a': '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08'}
+E         Use -v to get more diff
+
+test_0272.py:36: AssertionError
+____________________ test_task_func_with_non_string_values _____________________
+
+    def test_task_func_with_non_string_values():
+        input_data = {'z': 123, 'w': 456}
+        expected_output = {
+            'a': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+            'z': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+            'w': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+            'timestamp': pytest.approx(time.time(), abs=1)
+        }
+        result = task_func(input_data, seed=0)
+>       assert result == expected_output
+E       AssertionError: assert {'z': '71b579...258173.306774} == {'a': 'e3b0c4...3.3067384 ± 1}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'a': '373f3d39a5d5075dfb4503ebe44f70eed8a48e1a32be02d182b2a26695c6f694'} != {'a': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'}
+E         {'w': '0df858edb7de2d2dd74133a7fec797f2dd8fa4c29fcb3451bf821355ebf814f5'} != {'w': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'}
+E         {'z': '71b579218959bcb22abc8e254bdaf8f926c3c4330f6aa0543c3fcea3e7d17b32'} != {'z': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'}
+E         Use -v to get more diff
+
+test_0272.py:47: AssertionError
+=========================== short test summary info ============================
+FAILED test_0272.py::test_task_func_with_default_seed - AssertionError: asser...
+FAILED test_0272.py::test_task_func_with_custom_seed - AssertionError: assert...
+FAILED test_0272.py::test_task_func_with_empty_input - AssertionError: assert...
+FAILED test_0272.py::test_task_func_with_non_string_values - AssertionError: ...
+4 failed in 0.41s

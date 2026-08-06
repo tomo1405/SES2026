@@ -1,0 +1,42 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_valid_data ________________________
+
+    def test_task_func_with_valid_data():
+        # Create a sample DataFrame with 100 rows and columns 'X' and 'Y'
+>       data = {'X': range(ROWS), 'Y': [2 * x + 1 for x in range(ROWS)]}
+                           ^^^^
+E       NameError: name 'ROWS' is not defined
+
+test_0691.py:9: NameError
+_____________________ test_task_func_with_empty_dataframe ______________________
+
+    def test_task_func_with_empty_dataframe():
+        # Create an empty DataFrame
+        df = pd.DataFrame(columns=['X', 'Y'])
+    
+        # Call the task_func
+        with pytest.raises(ValueError) as excinfo:
+            task_func(df)
+    
+        # Check if the error message indicates that the input data is empty
+>       assert "Input data must contain at least one row" in str(excinfo.value)
+E       AssertionError: assert 'Input data must contain at least one row' in 'Found array with 0 sample(s) (shape=(0, 1)) while a minimum of 1 is required by LinearRegression.'
+E        +  where 'Found array with 0 sample(s) (shape=(0, 1)) while a minimum of 1 is required by LinearRegression.' = str(ValueError('Found array with 0 sample(s) (shape=(0, 1)) while a minimum of 1 is required by LinearRegression.'))
+E        +    where ValueError('Found array with 0 sample(s) (shape=(0, 1)) while a minimum of 1 is required by LinearRegression.') = <ExceptionInfo ValueError('Found array with 0 sample(s) (shape=(0, 1)) while a minimum of 1 is required by LinearRegression.') tblen=7>.value
+
+test_0691.py:31: AssertionError
+_____________________ test_task_func_with_missing_columns ______________________
+
+    def test_task_func_with_missing_columns():
+        # Create a DataFrame with missing columns 'X' or 'Y'
+>       df = pd.DataFrame({'X': range(ROWS)})
+                                      ^^^^
+E       NameError: name 'ROWS' is not defined
+
+test_0691.py:35: NameError
+=========================== short test summary info ============================
+FAILED test_0691.py::test_task_func_with_valid_data - NameError: name 'ROWS' ...
+FAILED test_0691.py::test_task_func_with_empty_dataframe - AssertionError: as...
+FAILED test_0691.py::test_task_func_with_missing_columns - NameError: name 'R...
+3 failed in 2.77s

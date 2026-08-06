@@ -1,0 +1,27 @@
+.F.                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_http_error ___________________________
+
+mock_get = <MagicMock name='get' id='132927460912656'>
+
+    @patch('src_0579.requests.get')
+    def test_task_func_http_error(mock_get):
+        # Prepare mock data
+        mock_response = MockResponse({}, 404)
+        mock_get.return_value = mock_response
+    
+        # Call the function and expect an exception
+        with pytest.raises(Exception) as exc_info:
+            task_func("nonexistentuser")
+    
+        # Assertions
+>       assert str(exc_info.value) == "Failed to fetch user data for 'nonexistentuser'. HTTP status: 404 - Not Found."
+E       assert "'NoneType' o...'status_code'" == 'Failed to fe... - Not Found.'
+E         
+E         - Failed to fetch user data for 'nonexistentuser'. HTTP status: 404 - Not Found.
+E         + 'NoneType' object has no attribute 'status_code'
+
+test_0579.py:62: AssertionError
+=========================== short test summary info ============================
+FAILED test_0579.py::test_task_func_http_error - assert "'NoneType' o...'stat...
+1 failed, 2 passed in 0.75s

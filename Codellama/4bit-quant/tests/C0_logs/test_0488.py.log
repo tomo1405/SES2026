@@ -1,0 +1,46 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_file ___________________________
+
+    def test_task_func_valid_file():
+        file_path = "path/to/valid/file.txt"
+>       df = task_func(file_path)
+             ^^^^^^^^^^^^^^^^^^^^
+
+test_0488.py:6: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = 'path/to/valid/file.txt'
+
+    def task_func(file_path: str) -> pd.DataFrame:
+        LOG_REGEX = r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d{6}) - (\w+) - (.+)$"
+    
+        if not os.path.exists(file_path):
+>           raise FileNotFoundError(f"The file {file_path} does not exist.")
+E           FileNotFoundError: The file path/to/valid/file.txt does not exist.
+
+../../../src/src_0488.py:8: FileNotFoundError
+__________________________ test_task_func_empty_file ___________________________
+
+    def test_task_func_empty_file():
+        file_path = "path/to/empty/file.txt"
+>       df = task_func(file_path)
+             ^^^^^^^^^^^^^^^^^^^^
+
+test_0488.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = 'path/to/empty/file.txt'
+
+    def task_func(file_path: str) -> pd.DataFrame:
+        LOG_REGEX = r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d{6}) - (\w+) - (.+)$"
+    
+        if not os.path.exists(file_path):
+>           raise FileNotFoundError(f"The file {file_path} does not exist.")
+E           FileNotFoundError: The file path/to/empty/file.txt does not exist.
+
+../../../src/src_0488.py:8: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0488.py::test_task_func_valid_file - FileNotFoundError: The file ...
+FAILED test_0488.py::test_task_func_empty_file - FileNotFoundError: The file ...
+2 failed, 1 passed in 1.15s

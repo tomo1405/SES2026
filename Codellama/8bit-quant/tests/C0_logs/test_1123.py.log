@@ -1,0 +1,51 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        myString = "https://www.example.com, https://www.example2.com"
+        expected_result = {"www.example.com": "127.0.0.1", "www.example2.com": "127.0.0.2"}
+>       assert task_func(myString) == expected_result
+E       AssertionError: assert {'www.example...104.21.44.49'} == {'www.example...: '127.0.0.2'}
+E         
+E         Differing items:
+E         {'www.example2.com': '104.21.44.49'} != {'www.example2.com': '127.0.0.2'}
+E         {'www.example.com': '104.20.23.154'} != {'www.example.com': '127.0.0.1'}
+E         Use -v to get more diff
+
+test_1123.py:7: AssertionError
+_______________________ test_task_func_with_invalid_url ________________________
+
+    def test_task_func_with_invalid_url():
+        myString = "https://www.example.com, https://www.example2.com, https://www.example3.com"
+        expected_result = {"www.example.com": "127.0.0.1", "www.example2.com": "127.0.0.2", "www.example3.com": None}
+>       assert task_func(myString) == expected_result
+E       AssertionError: assert {'www.example...04.26.15.194'} == {'www.example...e3.com': None}
+E         
+E         Differing items:
+E         {'www.example.com': '172.66.147.243'} != {'www.example.com': '127.0.0.1'}
+E         {'www.example2.com': '104.21.44.49'} != {'www.example2.com': '127.0.0.2'}
+E         {'www.example3.com': '104.26.15.194'} != {'www.example3.com': None}
+E         Use -v to get more diff
+
+test_1123.py:12: AssertionError
+______________________ test_task_func_with_invalid_domain ______________________
+
+    def test_task_func_with_invalid_domain():
+        myString = "https://www.example.com, https://www.example2.com, https://www.example3.com"
+        expected_result = {"www.example.com": "127.0.0.1", "www.example2.com": "127.0.0.2", "www.example3.com": None}
+>       assert task_func(myString) == expected_result
+E       AssertionError: assert {'www.example...72.67.72.248'} == {'www.example...e3.com': None}
+E         
+E         Differing items:
+E         {'www.example.com': '172.66.147.243'} != {'www.example.com': '127.0.0.1'}
+E         {'www.example2.com': '104.21.44.49'} != {'www.example2.com': '127.0.0.2'}
+E         {'www.example3.com': '172.67.72.248'} != {'www.example3.com': None}
+E         Use -v to get more diff
+
+test_1123.py:17: AssertionError
+=========================== short test summary info ============================
+FAILED test_1123.py::test_task_func - AssertionError: assert {'www.example......
+FAILED test_1123.py::test_task_func_with_invalid_url - AssertionError: assert...
+FAILED test_1123.py::test_task_func_with_invalid_domain - AssertionError: ass...
+3 failed in 0.55s

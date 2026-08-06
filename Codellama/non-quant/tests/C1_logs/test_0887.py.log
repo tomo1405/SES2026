@@ -1,0 +1,50 @@
+FFF.F                                                                    [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data = {'Name': ['Alice', 'Bob', 'Charlie'], 'Age': [25, 30, 35], 'Score': [90, 80, 70]}
+        df, avg_scores, most_common_age = task_func(data)
+    
+        assert df.equals(pd.DataFrame({'Name': ['Alice', 'Bob', 'Charlie'], 'Age': [25, 30, 35], 'Score': [90, 80, 70]}).sort_values(['Name', 'Age']))
+>       assert avg_scores.equals(pd.Series([90, 80, 70], index=['Alice', 'Bob', 'Charlie']))
+E       AssertionError: assert False
+E        +  where False = equals(Alice      90\nBob        80\nCharlie    70\ndtype: int64)
+E        +    where equals = Name\nAlice      90.0\nBob        80.0\nCharlie    70.0\nName: Score, dtype: float64.equals
+E        +    and   Alice      90\nBob        80\nCharlie    70\ndtype: int64 = <class 'pandas.Series'>([90, 80, 70], index=['Alice', 'Bob', 'Charlie'])
+E        +      where <class 'pandas.Series'> = pd.Series
+
+test_0887.py:11: AssertionError
+__________________________ test_task_func_missing_key __________________________
+
+    def test_task_func_missing_key():
+        data = {'Name': ['Alice', 'Bob', 'Charlie'], 'Age': [25, 30, 35], 'Score': [90, 80, 70]}
+        with pytest.raises(ValueError):
+>           task_func(data, 'Name')
+E           TypeError: task_func() takes 1 positional argument but 2 were given
+
+test_0887.py:17: TypeError
+__________________________ test_task_func_invalid_key __________________________
+
+    def test_task_func_invalid_key():
+        data = {'Name': ['Alice', 'Bob', 'Charlie'], 'Age': [25, 30, 35], 'Score': [90, 80, 70]}
+        with pytest.raises(ValueError):
+>           task_func(data, 'Invalid')
+E           TypeError: task_func() takes 1 positional argument but 2 were given
+
+test_0887.py:22: TypeError
+_________________________ test_task_func_invalid_data __________________________
+
+    def test_task_func_invalid_data():
+        data = {'Name': ['Alice', 'Bob', 'Charlie'], 'Age': [25, 30, 35], 'Score': [90, 80, 70]}
+        with pytest.raises(ValueError):
+>           task_func(data, 'Invalid')
+E           TypeError: task_func() takes 1 positional argument but 2 were given
+
+test_0887.py:32: TypeError
+=========================== short test summary info ============================
+FAILED test_0887.py::test_task_func - AssertionError: assert False
+FAILED test_0887.py::test_task_func_missing_key - TypeError: task_func() take...
+FAILED test_0887.py::test_task_func_invalid_key - TypeError: task_func() take...
+FAILED test_0887.py::test_task_func_invalid_data - TypeError: task_func() tak...
+4 failed, 1 passed in 1.22s

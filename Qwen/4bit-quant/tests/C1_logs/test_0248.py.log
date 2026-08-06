@@ -1,0 +1,40 @@
+F..FF                                                                    [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_default_parameters _______________________
+
+    def test_task_func_default_parameters():
+        result = task_func()
+        assert isinstance(result, pd.DataFrame)
+>       assert result.shape == (N_DATA_POINTS, 1)
+                                ^^^^^^^^^^^^^
+E       NameError: name 'N_DATA_POINTS' is not defined
+
+test_0248.py:9: NameError
+_______________________ test_task_func_min_equal_to_max ________________________
+
+    def test_task_func_min_equal_to_max():
+        result = task_func(min_value=5.0, max_value=5.0)
+        assert isinstance(result, pd.DataFrame)
+>       assert result.shape == (N_DATA_POINTS, 1)
+                                ^^^^^^^^^^^^^
+E       NameError: name 'N_DATA_POINTS' is not defined
+
+test_0248.py:28: NameError
+_______________________ test_task_func_data_distribution _______________________
+
+    def test_task_func_data_distribution():
+        result = task_func()
+        mean = result['Normalized Value'].mean()
+        std_dev = result['Normalized Value'].std()
+        assert abs(mean) < 1e-6, f"Mean is not close to 0: {mean}"
+>       assert abs(std_dev - 1.0) < 1e-6, f"Standard deviation is not close to 1: {std_dev}"
+E       AssertionError: Standard deviation is not close to 1: 1.0001000150025003
+E       assert np.float64(0.00010001500250034212) < 1e-06
+E        +  where np.float64(0.00010001500250034212) = abs((np.float64(1.0001000150025003) - 1.0))
+
+test_0248.py:37: AssertionError
+=========================== short test summary info ============================
+FAILED test_0248.py::test_task_func_default_parameters - NameError: name 'N_D...
+FAILED test_0248.py::test_task_func_min_equal_to_max - NameError: name 'N_DAT...
+FAILED test_0248.py::test_task_func_data_distribution - AssertionError: Stand...
+3 failed, 2 passed in 2.66s

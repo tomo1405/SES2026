@@ -1,0 +1,60 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a simple list and small n
+        t = [1, 2, 3, 4]
+        n = 2
+        result = task_func(t, n)
+        assert len(result) == n
+        assert set(result).issubset(set(t))
+    
+        # Test with n equal to 1
+        t = [1, 2, 3, 4]
+        n = 1
+        result = task_func(t, n)
+        assert len(result) == n
+        assert result[0] in t
+    
+        # Test with n equal to the length of t
+        t = [1, 2, 3, 4]
+        n = len(t)
+        result = task_func(t, n)
+        assert len(result) == n
+        assert set(result) == set(t)
+    
+        # Test with an empty list
+        t = []
+        n = 0
+        result = task_func(t, n)
+        assert len(result) == n
+    
+        # Test with n greater than the length of t (should return an empty list)
+        t = [1, 2, 3]
+        n = 5
+>       result = task_func(t, n)
+                 ^^^^^^^^^^^^^^^
+
+test_0695.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0695.py:5: in task_func
+    selected_combination = random.choice(combinations)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <random.Random object at 0x314cd410>, seq = []
+
+    def choice(self, seq):
+        """Choose a random element from a non-empty sequence."""
+    
+        # As an accommodation for NumPy, we don't use "if not seq"
+        # because bool(numpy.array()) raises a ValueError.
+        if not len(seq):
+>           raise IndexError('Cannot choose from an empty sequence')
+E           IndexError: Cannot choose from an empty sequence
+
+/usr/lib/python3.12/random.py:347: IndexError
+=========================== short test summary info ============================
+FAILED test_0695.py::test_task_func - IndexError: Cannot choose from an empty...
+1 failed in 0.47s

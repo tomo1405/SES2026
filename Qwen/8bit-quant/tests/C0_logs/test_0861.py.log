@@ -1,0 +1,52 @@
+.F..FF.                                                                  [100%]
+=================================== FAILURES ===================================
+__________________ test_task_func_with_fixed_seed_and_pattern __________________
+
+    def test_task_func_with_fixed_seed_and_pattern():
+        # Test with a fixed seed and a pattern that should match
+        n = 20
+        pattern = r'[A-Z]{2}'  # Pattern for exactly 2 uppercase letters
+        seed = 42
+        result = task_func(n, pattern, seed)
+        expected_matches = ['JH', 'WU', 'VQ']
+>       assert result == expected_matches
+E       AssertionError: assert ['RV', 'LB'] == ['JH', 'WU', 'VQ']
+E         
+E         At index 0 diff: 'RV' != 'JH'
+E         Right contains one more item: 'VQ'
+E         Use -v to get more diff
+
+test_0861.py:19: AssertionError
+____________________ test_task_func_with_special_characters ____________________
+
+    def test_task_func_with_special_characters():
+        # Test with a pattern including special characters
+        n = 20
+        pattern = r'[^a-zA-Z0-9]'  # Pattern for any non-alphanumeric character
+        seed = 42
+        result = task_func(n, pattern, seed)
+>       assert len(result) > 0  # There should be at least one match
+        ^^^^^^^^^^^^^^^^^^^^^^
+E       assert 0 > 0
+E        +  where 0 = len([])
+
+test_0861.py:43: AssertionError
+______________________ test_task_func_with_empty_pattern _______________________
+
+    def test_task_func_with_empty_pattern():
+        # Test with an empty pattern, which should match the entire string
+        n = 10
+        pattern = r''  # Empty pattern
+        seed = 42
+        result = task_func(n, pattern, seed)
+>       assert len(result) == n  # Each character should be matched individually
+        ^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 11 == 10
+E        +  where 11 = len(['', '', '', '', '', '', ...])
+
+test_0861.py:51: AssertionError
+=========================== short test summary info ============================
+FAILED test_0861.py::test_task_func_with_fixed_seed_and_pattern - AssertionEr...
+FAILED test_0861.py::test_task_func_with_special_characters - assert 0 > 0
+FAILED test_0861.py::test_task_func_with_empty_pattern - AssertionError: asse...
+3 failed, 4 passed in 0.57s

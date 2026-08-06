@@ -1,0 +1,60 @@
+..FEEEE                                                                  [100%]
+==================================== ERRORS ====================================
+_________________ ERROR at setup of test_task_func_split_data __________________
+file /work/tomohiro-w/utg/Granite/non-quant/tests/test_0879.py, line 29
+  def test_task_func_split_data(data, random_state):
+E       fixture 'random_state' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, cov, data, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, no_cover, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/work/tomohiro-w/utg/Granite/non-quant/tests/test_0879.py:29
+_________________ ERROR at setup of test_task_func_train_model _________________
+file /work/tomohiro-w/utg/Granite/non-quant/tests/test_0879.py, line 38
+  def test_task_func_train_model(data, random_state):
+E       fixture 'random_state' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, cov, data, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, no_cover, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/work/tomohiro-w/utg/Granite/non-quant/tests/test_0879.py:38
+______________ ERROR at setup of test_task_func_make_predictions _______________
+file /work/tomohiro-w/utg/Granite/non-quant/tests/test_0879.py, line 43
+  def test_task_func_make_predictions(data, random_state):
+E       fixture 'random_state' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, cov, data, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, no_cover, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/work/tomohiro-w/utg/Granite/non-quant/tests/test_0879.py:43
+_________________ ERROR at setup of test_task_func_return_mse __________________
+file /work/tomohiro-w/utg/Granite/non-quant/tests/test_0879.py, line 52
+  def test_task_func_return_mse(data, random_state):
+E       fixture 'random_state' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, cov, data, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, no_cover, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/work/tomohiro-w/utg/Granite/non-quant/tests/test_0879.py:52
+=================================== FAILURES ===================================
+________________________ test_task_func_invalid_target _________________________
+
+data =    feature_1  feature_2  target
+0          1          6      11
+1          2          7      12
+2          3          8      13
+3          4          9      14
+4          5         10      15
+
+    def test_task_func_invalid_target(data):
+        with pytest.raises(ValueError) as excinfo:
+            task_func(data, 'invalid_target')
+>       assert 'Target column must exist in the DataFrame' in str(excinfo.value)
+E       AssertionError: assert 'Target column must exist in the DataFrame' in 'Data must not be empty and target column must exist in the DataFrame.'
+E        +  where 'Data must not be empty and target column must exist in the DataFrame.' = str(ValueError('Data must not be empty and target column must exist in the DataFrame.'))
+E        +    where ValueError('Data must not be empty and target column must exist in the DataFrame.') = <ExceptionInfo ValueError('Data must not be empty and target column must exist in the DataFrame.') tblen=2>.value
+
+test_0879.py:27: AssertionError
+=========================== short test summary info ============================
+FAILED test_0879.py::test_task_func_invalid_target - AssertionError: assert '...
+ERROR test_0879.py::test_task_func_split_data
+ERROR test_0879.py::test_task_func_train_model
+ERROR test_0879.py::test_task_func_make_predictions
+ERROR test_0879.py::test_task_func_return_mse
+1 failed, 2 passed, 4 errors in 3.03s

@@ -1,0 +1,27 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        input_dict = {'location1': {'Lat': 37.7749, 'Lon': -122.4194}, 'location2': {'Lat': 37.7972, 'Lon': -122.3963}}
+        expected_output = folium.Map(location=[37.7749, -122.4194], zoom_start=4)
+        expected_output.add_child(folium.Marker([37.7749, -122.4194], popup='location1'))
+        expected_output.add_child(folium.Marker([37.7972, -122.3963], popup='location2'))
+    
+>       assert task_func(input_dict) == expected_output
+E       AssertionError: assert <folium.folium.Map object at 0x7a88096748f0> == <folium.folium.Map object at 0x7a8809802c90>
+E        +  where <folium.folium.Map object at 0x7a88096748f0> = task_func({'location1': {'Lat': 37.7749, 'Lon': -122.4194}, 'location2': {'Lat': 37.7972, 'Lon': -122.3963}})
+
+test_0189.py:12: AssertionError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        input_dict = {'location1': {'Lat': 37.7749, 'Lon': -122.4194}, 'location2': {'Lat': 37.7972, 'Lon': -122.3963}, 'location3': 'invalid'}
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0189.py:16: Failed
+=========================== short test summary info ============================
+FAILED test_0189.py::test_task_func_valid_input - AssertionError: assert <fol...
+FAILED test_0189.py::test_task_func_invalid_input - Failed: DID NOT RAISE Val...
+2 failed in 3.20s

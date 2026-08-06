@@ -1,0 +1,75 @@
+..FFFFF.                                                                 [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_single_item __________________________
+
+    def test_task_func_single_item():
+        ax = task_func([['item1']])
+>       assert isinstance(ax, sns.axisgrid.BarPlotter)
+                              ^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'seaborn.axisgrid' has no attribute 'BarPlotter'
+
+test_0552.py:18: AttributeError
+________________________ test_task_func_multiple_items _________________________
+
+    def test_task_func_multiple_items():
+        ax = task_func([['item1', 'item2'], ['item1']])
+>       assert isinstance(ax, sns.axisgrid.BarPlotter)
+                              ^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'seaborn.axisgrid' has no attribute 'BarPlotter'
+
+test_0552.py:24: AttributeError
+__________________________ test_task_func_duplicates ___________________________
+
+    def test_task_func_duplicates():
+        ax = task_func([['item1', 'item1'], ['item2', 'item2', 'item2']])
+>       assert isinstance(ax, sns.axisgrid.BarPlotter)
+                              ^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'seaborn.axisgrid' has no attribute 'BarPlotter'
+
+test_0552.py:30: AttributeError
+_______________________ test_task_func_with_none_values ________________________
+
+    def test_task_func_with_none_values():
+        ax = task_func([['item1', None], ['item2']])
+>       assert isinstance(ax, sns.axisgrid.BarPlotter)
+                              ^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'seaborn.axisgrid' has no attribute 'BarPlotter'
+
+test_0552.py:36: AttributeError
+_____________________ test_task_func_with_non_string_items _____________________
+
+    def test_task_func_with_non_string_items():
+        ax = task_func([[1, 2], [2, 3]])
+>       assert isinstance(ax, sns.axisgrid.BarPlotter)
+                              ^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'seaborn.axisgrid' has no attribute 'BarPlotter'
+
+test_0552.py:42: AttributeError
+=============================== warnings summary ===============================
+Qwen/8bit-quant/tests/test_0552.py::test_task_func_empty_sublists
+Qwen/8bit-quant/tests/test_0552.py::test_task_func_single_item
+Qwen/8bit-quant/tests/test_0552.py::test_task_func_multiple_items
+Qwen/8bit-quant/tests/test_0552.py::test_task_func_duplicates
+Qwen/8bit-quant/tests/test_0552.py::test_task_func_with_none_values
+Qwen/8bit-quant/tests/test_0552.py::test_task_func_plot_layout
+  /work/tomohiro-w/utg/src/src_0552.py:29: FutureWarning: 
+  
+  Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `y` variable to `hue` and set `legend=False` for the same effect.
+  
+    ax = sns.barplot(x="Count", y="Item", data=df, palette="viridis")
+
+Qwen/8bit-quant/tests/test_0552.py::test_task_func_with_non_string_items
+  /work/tomohiro-w/utg/src/src_0552.py:29: FutureWarning: 
+  
+  Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+  
+    ax = sns.barplot(x="Count", y="Item", data=df, palette="viridis")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0552.py::test_task_func_single_item - AttributeError: module 'sea...
+FAILED test_0552.py::test_task_func_multiple_items - AttributeError: module '...
+FAILED test_0552.py::test_task_func_duplicates - AttributeError: module 'seab...
+FAILED test_0552.py::test_task_func_with_none_values - AttributeError: module...
+FAILED test_0552.py::test_task_func_with_non_string_items - AttributeError: m...
+5 failed, 3 passed, 7 warnings in 3.99s

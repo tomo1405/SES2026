@@ -1,0 +1,39 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        import pandas as pd
+        import numpy as np
+        from scipy.stats import zscore
+        import matplotlib.pyplot as plt
+    
+        # Create a sample dataframe with missing values
+        df = pd.DataFrame({
+            'A': [1, 2, np.nan, 4, 5],
+            'B': [np.nan, 2, 3, 4, 5],
+            'C': [1, 2, 3, 4, 5]
+        })
+    
+        # Call the function
+        df_transformed, axes = task_func(df)
+    
+        # Check if the returned values are of the expected type
+        assert isinstance(df_transformed, pd.DataFrame)
+        assert isinstance(axes, np.ndarray)
+    
+        # Check if the dataframe has been modified in place
+        assert df_transformed is not df
+    
+        # Check if the missing values have been filled with the column's average
+>       assert df_transformed['A'].isna().sum() == 1
+E       assert np.int64(0) == 1
+E        +  where np.int64(0) = sum()
+E        +    where sum = 0    False\n1    False\n2    False\n3    False\n4    False\nName: A, dtype: bool.sum
+E        +      where 0    False\n1    False\n2    False\n3    False\n4    False\nName: A, dtype: bool = isna()
+E        +        where isna = 0   -1.414214\n1   -0.707107\n2    0.000000\n3    0.707107\n4    1.414214\nName: A, dtype: float64.isna
+
+test_0047.py:28: AssertionError
+=========================== short test summary info ============================
+FAILED test_0047.py::test_task_func - assert np.int64(0) == 1
+1 failed in 3.70s

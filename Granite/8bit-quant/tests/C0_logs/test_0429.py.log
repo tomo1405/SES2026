@@ -1,0 +1,87 @@
+.F.                                                                      [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_empty_df ____________________________
+
+    def test_task_func_empty_df():
+        df1 = pd.DataFrame({
+            'id': [1, 2, 3],
+            'feature1': [4.5, 6.7, 8.9],
+            'feature2': [10, 11, 12]
+        })
+        df2 = pd.DataFrame()
+>       merged_df, pair_plot = task_func(df1, df2)
+                               ^^^^^^^^^^^^^^^^^^^
+
+test_0429.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test_0429.py:7: in task_func
+    merged_df = pd.merge(df1, df2, on="id", how="outer")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/reshape/merge.py:385: in merge
+    op = _MergeOperation(
+../../../.venv/lib/python3.12/site-packages/pandas/core/reshape/merge.py:1018: in __init__
+    ) = self._get_merge_keys()
+        ^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/reshape/merge.py:1620: in _get_merge_keys
+    right_keys.append(right._get_label_or_level_values(rk))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Empty DataFrame
+Columns: []
+Index: [], key = 'id', axis = 0
+
+    @final
+    def _get_label_or_level_values(self, key: Level, axis: AxisInt = 0) -> ArrayLike:
+        """
+        Return a 1-D array of values associated with `key`, a label or level
+        from the given `axis`.
+    
+        Retrieval logic:
+          - (axis=0): Return column values if `key` matches a column label.
+            Otherwise return index level values if `key` matches an index
+            level.
+          - (axis=1): Return row values if `key` matches an index label.
+            Otherwise return column level values if 'key' matches a column
+            level
+    
+        Parameters
+        ----------
+        key : Hashable
+            Label or level name.
+        axis : int, default 0
+            Axis that levels are associated with (0 for index, 1 for columns)
+    
+        Returns
+        -------
+        np.ndarray or ExtensionArray
+    
+        Raises
+        ------
+        KeyError
+            if `key` matches neither a label nor a level
+        ValueError
+            if `key` matches multiple labels
+        """
+        axis = self._get_axis_number(axis)
+        first_other_axes = next(
+            (ax for ax in range(self._AXIS_LEN) if ax != axis), None
+        )
+    
+        if self._is_label_reference(key, axis=axis):
+            self._check_label_or_level_ambiguity(key, axis=axis)
+            if first_other_axes is None:
+                raise ValueError("axis matched all axes")
+            values = self.xs(key, axis=first_other_axes)._values
+        elif self._is_level_reference(key, axis=axis):
+            values = self.axes[axis].get_level_values(key)._values
+        else:
+>           raise KeyError(key)
+E           KeyError: 'id'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:1776: KeyError
+=========================== short test summary info ============================
+FAILED test_0429.py::test_task_func_empty_df - KeyError: 'id'
+1 failed, 2 passed in 4.28s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

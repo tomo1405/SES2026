@@ -1,0 +1,43 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        db_name = "test.db"
+        table_name = "test_table"
+        num_entries = 10
+        random_seed = 42
+    
+        # Test that the function raises a ValueError when num_entries is negative
+        with pytest.raises(ValueError):
+            task_func(db_name, table_name, -1, random_seed)
+    
+        # Test that the function creates a database file with the correct name
+>       task_func(db_name, table_name, num_entries, random_seed)
+
+test_0540.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+db_name = 'test.db', table_name = 'test_table', num_entries = 10
+random_seed = 42
+
+    def task_func(db_name, table_name, num_entries, random_seed=None):
+        NAMES = ["John", "Jane", "Steve", "Emma", "Liam", "Olivia"]
+        AGES = range(18, 65)
+        HEIGHTS = range(150, 200)
+    
+        if random_seed:
+            seed(random_seed)
+    
+        if num_entries < 0:
+            raise ValueError("num_entries must not be negative")
+    
+        conn = sqlite3.connect(db_name)
+        cur = conn.cursor()
+>       cur.execute(f"CREATE TABLE {table_name} (name TEXT, age INTEGER, height INTEGER)")
+E       sqlite3.OperationalError: table test_table already exists
+
+../../../src/src_0540.py:17: OperationalError
+=========================== short test summary info ============================
+FAILED test_0540.py::test_task_func - sqlite3.OperationalError: table test_ta...
+1 failed in 0.44s

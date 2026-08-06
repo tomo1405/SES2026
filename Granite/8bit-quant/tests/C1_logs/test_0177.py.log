@@ -1,0 +1,41 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        ip_addresses = ['127.0.0.1', '8.8.8.8', 'localhost']
+        expected_hostnames = {
+            '127.0.0.1': 'localhost',
+            '8.8.8.8': 'google-public-dns-a.google.com',
+            'localhost': None
+        }
+        actual_hostnames = task_func(ip_addresses)
+>       assert actual_hostnames == expected_hostnames
+E       AssertionError: assert {'127.0.0.1':... 'dns.google'} == {'127.0.0.1':...alhost': None}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'8.8.8.8': 'dns.google'} != {'8.8.8.8': 'google-public-dns-a.google.com'}
+E         Right contains 1 more item:
+E         {'localhost': None}
+E         Use -v to get more diff
+
+test_0177.py:12: AssertionError
+__________________________ test_task_func_invalid_ip ___________________________
+
+    def test_task_func_invalid_ip():
+        ip_addresses = ['not_an_ip']
+        expected_hostnames = {'not_an_ip': None}
+        actual_hostnames = task_func(ip_addresses)
+>       assert actual_hostnames == expected_hostnames
+E       AssertionError: assert {} == {'not_an_ip': None}
+E         
+E         Right contains 1 more item:
+E         {'not_an_ip': None}
+E         Use -v to get more diff
+
+test_0177.py:24: AssertionError
+=========================== short test summary info ============================
+FAILED test_0177.py::test_task_func - AssertionError: assert {'127.0.0.1':......
+FAILED test_0177.py::test_task_func_invalid_ip - AssertionError: assert {} ==...
+2 failed, 1 passed in 0.41s

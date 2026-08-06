@@ -1,0 +1,18 @@
+import pandas as pd
+import time
+def task_func(df, target_value):
+    start_time = time.time()
+    # Convert dataframe to string type for uniform comparison
+    dataframe = pd.DataFrame(df)
+    dataframe = dataframe.astype(str)
+    
+    counts = dataframe.apply(lambda x: (x == target_value).sum())
+
+    # Check if DataFrame is empty
+    if not dataframe.empty:
+        ax = counts.plot(kind='bar')
+    else:
+        ax = None
+    end_time = time.time()  # End timing
+    cost = f"Operation completed in {end_time - start_time} seconds."
+    return counts, ax

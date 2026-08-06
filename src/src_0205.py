@@ -1,0 +1,15 @@
+import numpy as np
+from collections import Counter
+import matplotlib.pyplot as plt
+def task_func(L):
+    mean = np.mean(L)
+    median = np.median(L)
+    mode = Counter(L).most_common(1)[0][0]
+    std_dev = np.std(L)
+    
+    plt.hist(L, bins='auto')
+    plt.title('Histogram of Data')
+    plt.xlabel('Value')
+    plt.ylabel('Frequency')
+    
+    return {'mean': mean, 'median': median, 'mode': mode, 'std_dev': std_dev, 'plot': plt.gca()}

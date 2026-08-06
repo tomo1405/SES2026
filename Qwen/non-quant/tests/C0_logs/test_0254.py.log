@@ -1,0 +1,30 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+setup_ax = <PolarAxes: >
+
+    def test_task_func(setup_ax):
+        ax = setup_ax
+        color = task_func(ax)
+    
+        # Check if the returned color is in the COLORS list
+        assert color in ['b', 'g', 'r', 'c', 'm', 'y', 'k']
+    
+        # Check if the plot has been added to the axes
+        lines = ax.get_lines()
+        assert len(lines) == 1
+    
+        # Check if the line has the correct color
+        assert lines[0].get_color() == color
+    
+        # Check if the rlabel position is set correctly
+        rlabel_position = ax.get_rlabel_position()
+>       assert isinstance(rlabel_position, int)
+E       assert False
+E        +  where False = isinstance(np.float64(99.0), int)
+
+test_0254.py:28: AssertionError
+=========================== short test summary info ============================
+FAILED test_0254.py::test_task_func - assert False
+1 failed in 1.61s

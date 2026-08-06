@@ -1,0 +1,74 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        csv_path = task_func()
+        with open(csv_path, 'r', newline='') as f:
+            reader = csv.reader(f)
+            rows = list(reader)
+            assert rows[0] == ['Emails']
+>           assert len(rows) > 1
+E           AssertionError: assert 1 > 1
+E            +  where 1 = len([['Emails']])
+
+test_1137.py:12: AssertionError
+________________________ test_task_func_with_custom_url ________________________
+
+    def test_task_func_with_custom_url():
+        csv_path = task_func(url="https://example.com")
+        with open(csv_path, 'r', newline='') as f:
+            reader = csv.reader(f)
+            rows = list(reader)
+            assert rows[0] == ['Emails']
+>           assert len(rows) > 1
+E           AssertionError: assert 1 > 1
+E            +  where 1 = len([['Emails']])
+
+test_1137.py:20: AssertionError
+_____________________ test_task_func_with_custom_csv_path ______________________
+
+    def test_task_func_with_custom_csv_path():
+        csv_path = task_func(csv_path="custom_emails.csv")
+        with open(csv_path, 'r', newline='') as f:
+            reader = csv.reader(f)
+            rows = list(reader)
+            assert rows[0] == ['Emails']
+>           assert len(rows) > 1
+E           AssertionError: assert 1 > 1
+E            +  where 1 = len([['Emails']])
+
+test_1137.py:28: AssertionError
+_______________________ test_task_func_with_custom_regex _______________________
+
+    def test_task_func_with_custom_regex():
+        csv_path = task_func(regex=r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b")
+        with open(csv_path, 'r', newline='') as f:
+            reader = csv.reader(f)
+            rows = list(reader)
+            assert rows[0] == ['Emails']
+>           assert len(rows) > 1
+E           AssertionError: assert 1 > 1
+E            +  where 1 = len([['Emails']])
+
+test_1137.py:36: AssertionError
+______________________ test_task_func_with_custom_headers ______________________
+
+    def test_task_func_with_custom_headers():
+        csv_path = task_func(headers={'User-Agent': 'Custom'})
+        with open(csv_path, 'r', newline='') as f:
+            reader = csv.reader(f)
+            rows = list(reader)
+            assert rows[0] == ['Emails']
+>           assert len(rows) > 1
+E           AssertionError: assert 1 > 1
+E            +  where 1 = len([['Emails']])
+
+test_1137.py:44: AssertionError
+=========================== short test summary info ============================
+FAILED test_1137.py::test_task_func - AssertionError: assert 1 > 1
+FAILED test_1137.py::test_task_func_with_custom_url - AssertionError: assert ...
+FAILED test_1137.py::test_task_func_with_custom_csv_path - AssertionError: as...
+FAILED test_1137.py::test_task_func_with_custom_regex - AssertionError: asser...
+FAILED test_1137.py::test_task_func_with_custom_headers - AssertionError: ass...
+5 failed in 1.37s

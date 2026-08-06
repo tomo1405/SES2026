@@ -1,0 +1,33 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test invalid filepath type
+        with pytest.raises(TypeError):
+            task_func(123)
+    
+        # Test invalid filepath
+        with pytest.raises(OSError):
+            task_func("")
+    
+        # Test valid filepath
+>       lib = task_func("valid_filepath.so")
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0563.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+filepath = 'valid_filepath.so'
+
+    def task_func(filepath):
+        if not isinstance(filepath, str):
+            raise TypeError("Invalid filepath type")
+        elif filepath == "" or not os.path.exists(filepath):
+>           raise OSError("Invalid filepath")
+E           OSError: Invalid filepath
+
+../../../src/src_0563.py:9: OSError
+=========================== short test summary info ============================
+FAILED test_0563.py::test_task_func - OSError: Invalid filepath
+1 failed in 0.46s

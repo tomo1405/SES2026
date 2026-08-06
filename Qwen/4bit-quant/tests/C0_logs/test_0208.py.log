@@ -1,0 +1,44 @@
+..F..                                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_non_json_response _______________________
+
+    def test_task_func_non_json_response():
+        # Arrange
+        input_data = "Here is a URL: https://example.com/invalid-json"
+        expected_response = {"error": "Invalid JSON"}
+    
+        with patch('requests.get') as mock_get:
+            mock_get.return_value.json.side_effect = ValueError("Invalid JSON")
+>           result = task_func(input_data)
+                     ^^^^^^^^^^^^^^^^^^^^^
+
+test_0208.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0208.py:9: in task_func
+    return response.json()
+           ^^^^^^^^^^^^^^^
+/usr/lib/python3.12/unittest/mock.py:1134: in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/unittest/mock.py:1138: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='get().json' id='128690096939824'>, args = ()
+kwargs = {}
+
+    def _execute_mock_call(self, /, *args, **kwargs):
+        # separate from _increment_mock_call so that awaited functions are
+        # executed separately from their call, also AsyncMock overrides this method
+    
+        effect = self.side_effect
+        if effect is not None:
+            if _is_exception(effect):
+>               raise effect
+E               ValueError: Invalid JSON
+
+/usr/lib/python3.12/unittest/mock.py:1193: ValueError
+=========================== short test summary info ============================
+FAILED test_0208.py::test_task_func_non_json_response - ValueError: Invalid JSON
+1 failed, 4 passed in 0.81s

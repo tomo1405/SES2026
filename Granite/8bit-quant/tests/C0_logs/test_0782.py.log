@@ -1,0 +1,53 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+filepath = '/path/to/file1.txt'
+
+    def task_func(filepath: str) -> dict:
+        try:
+>           size = os.path.getsize(filepath)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0782.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+filename = '/path/to/file1.txt'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/path/to/file1.txt'
+
+<frozen genericpath>:62: FileNotFoundError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func():
+        test_data = [
+            ("/path/to/file1.txt", {'size': '1024 bytes', 'last_modified': '2023-01-01 12:00:00'}),
+            ("/path/to/file2.txt", {'size': '2048 bytes', 'last_modified': '2023-01-02 13:00:00'})
+        ]
+    
+        for filepath, expected_output in test_data:
+>           output = task_func(filepath)
+                     ^^^^^^^^^^^^^^^^^^^
+
+test_0782.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+filepath = '/path/to/file1.txt'
+
+    def task_func(filepath: str) -> dict:
+        try:
+            size = os.path.getsize(filepath)
+            mtime = os.path.getmtime(filepath)
+            mtime = datetime.fromtimestamp(mtime).strftime('%Y-%m-%d %H:%M:%S')
+        except OSError as e:
+>           raise Exception(f"Error: {e}")
+E           Exception: Error: [Errno 2] No such file or directory: '/path/to/file1.txt'
+
+test_0782.py:11: Exception
+=========================== short test summary info ============================
+FAILED test_0782.py::test_task_func - Exception: Error: [Errno 2] No such fil...
+1 failed in 0.48s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

@@ -1,0 +1,86 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+temp_dir = '/tmp/tmpo1be_o7w'
+
+    def test_task_func(temp_dir):
+        # Create some test files with special characters in their names
+        test_files = [
+            "file1@name.txt",
+            "file2#name.docx",
+            "file3$name.pdf",
+            "file4 name.jpg"
+        ]
+    
+        for file in test_files:
+            open(os.path.join(temp_dir, file), 'a').close()
+    
+        # Call the function to be tested
+        result = task_func(temp_dir)
+    
+        # Check if the files have been renamed correctly
+        expected_new_names = [
+            "file1name.txt",
+            "file2name.docx",
+            "file3name.pdf",
+            "file4name.jpg"
+        ]
+    
+>       assert set(result) == set(expected_new_names)
+E       AssertionError: assert {'file1nametx...file4namejpg'} == {'file1name.t...ile4name.jpg'}
+E         
+E         Extra items in the left set:
+E         'file2namedocx'
+E         'file4namejpg'
+E         'file3namepdf'
+E         'file1nametxt'
+E         Extra items in the right set:...
+E         
+E         ...Full output truncated (5 lines hidden), use '-vv' to show
+
+test_0940.py:36: AssertionError
+_____________________ test_task_func_no_special_characters _____________________
+
+temp_dir = '/tmp/tmpy7rtydks'
+
+    def test_task_func_no_special_characters(temp_dir):
+        # Create some test files with no special characters in their names
+        test_files = [
+            "file1name.txt",
+            "file2name.docx",
+            "file3name.pdf",
+            "file4name.jpg"
+        ]
+    
+        for file in test_files:
+            open(os.path.join(temp_dir, file), 'a').close()
+    
+        # Call the function to be tested
+        result = task_func(temp_dir)
+    
+        # Check if the files have been renamed correctly (no change expected)
+        expected_new_names = [
+            "file1name.txt",
+            "file2name.docx",
+            "file3name.pdf",
+            "file4name.jpg"
+        ]
+    
+>       assert set(result) == set(expected_new_names)
+E       AssertionError: assert {'file1nametx...file4namejpg'} == {'file1name.t...ile4name.jpg'}
+E         
+E         Extra items in the left set:
+E         'file2namedocx'
+E         'file4namejpg'
+E         'file3namepdf'
+E         'file1nametxt'
+E         Extra items in the right set:...
+E         
+E         ...Full output truncated (5 lines hidden), use '-vv' to show
+
+test_0940.py:75: AssertionError
+=========================== short test summary info ============================
+FAILED test_0940.py::test_task_func - AssertionError: assert {'file1nametx......
+FAILED test_0940.py::test_task_func_no_special_characters - AssertionError: a...
+2 failed, 1 passed in 0.47s

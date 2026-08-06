@@ -1,0 +1,49 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that the function returns a DataFrame and a list of two plots
+        results, plots = task_func(10, 5)
+        assert isinstance(results, pd.DataFrame)
+        assert isinstance(plots, list)
+        assert len(plots) == 2
+    
+        # Test that the DataFrame has the correct columns
+        assert 'Team' in results.columns
+        assert 'Goals' in results.columns
+        assert 'Penalty Cost' in results.columns
+    
+        # Test that the plots have the correct x-axis labels
+        assert plots[0].get_xlabel() == 'Team'
+        assert plots[1].get_xlabel() == 'Team'
+    
+        # Test that the plots have the correct y-axis labels
+        assert plots[0].get_ylabel() == 'Goals'
+        assert plots[1].get_ylabel() == 'Penalty Cost'
+    
+        # Test that the plots have the correct colors
+>       assert plots[0].get_color() == 'viridis'
+               ^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Axes' object has no attribute 'get_color'. Did you mean: 'get_facecolor'?
+
+test_0619.py:26: AttributeError
+=============================== warnings summary ===============================
+Codellama/4bit-quant/tests/test_0619.py::test_task_func
+  /work/tomohiro-w/utg/src/src_0619.py:19: FutureWarning: 
+  
+  Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+  
+    plot1 = sns.barplot(x='Team', y='Goals', data=results_df, palette='viridis')
+
+Codellama/4bit-quant/tests/test_0619.py::test_task_func
+  /work/tomohiro-w/utg/src/src_0619.py:21: FutureWarning: 
+  
+  Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+  
+    plot2 = sns.barplot(x='Team', y='Penalty Cost', data=results_df, palette='viridis')
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0619.py::test_task_func - AttributeError: 'Axes' object has no at...
+1 failed, 2 warnings in 6.04s

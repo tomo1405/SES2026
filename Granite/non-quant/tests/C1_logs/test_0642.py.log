@@ -1,0 +1,64 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: pattern matches one file
+        pattern = r'example\.txt'
+        directory = '/path/to/directory'
+        output_csv = '/path/to/output.csv'
+        expected_df = pd.DataFrame({'File Path': ['/path/to/directory/example.txt']})
+    
+        with pytest.warns(UserWarning, match='No files matched the pattern'):
+>           actual_df = task_func(pattern, directory, output_csv)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0642.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0642.py:12: in task_func
+    df.to_csv(output_csv, index=False)
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:3988: in to_csv
+    return DataFrameRenderer(formatter).to_csv(
+../../../.venv/lib/python3.12/site-packages/pandas/io/formats/format.py:1025: in to_csv
+    csv_formatter.save()
+../../../.venv/lib/python3.12/site-packages/pandas/io/formats/csvs.py:251: in save
+    with get_handle(
+../../../.venv/lib/python3.12/site-packages/pandas/io/common.py:797: in get_handle
+    check_parent_directory(str(handle))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = '/path/to/output.csv'
+
+    def check_parent_directory(path: Path | str) -> None:
+        """
+        Check if parent directory of a file exists, raise OSError if it does not
+    
+        Parameters
+        ----------
+        path: Path or str
+            Path to check parent directory of
+        """
+        parent = Path(path).parent
+        if not parent.is_dir():
+>           raise OSError(rf"Cannot save file into a non-existent directory: '{parent}'")
+E           OSError: Cannot save file into a non-existent directory: '/path/to'
+
+../../../.venv/lib/python3.12/site-packages/pandas/io/common.py:656: OSError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func():
+        # Test case 1: pattern matches one file
+        pattern = r'example\.txt'
+        directory = '/path/to/directory'
+        output_csv = '/path/to/output.csv'
+        expected_df = pd.DataFrame({'File Path': ['/path/to/directory/example.txt']})
+    
+>       with pytest.warns(UserWarning, match='No files matched the pattern'):
+E       Failed: DID NOT WARN. No warnings of type (<class 'UserWarning'>,) were emitted.
+E        Emitted warnings: [].
+
+test_0642.py:14: Failed
+=========================== short test summary info ============================
+FAILED test_0642.py::test_task_func - Failed: DID NOT WARN. No warnings of ty...
+1 failed in 1.31s

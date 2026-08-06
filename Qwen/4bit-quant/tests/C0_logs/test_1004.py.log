@@ -1,0 +1,99 @@
+FFF.                                                                     [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_success ____________________________
+
+mock_urlopen = <MagicMock name='urlopen' id='137465257805440'>
+
+    @patch('urllib.request.urlopen')
+    def test_task_func_success(mock_urlopen):
+        mock_response = mock_urlopen.return_value
+        mock_response.read.return_value = MOCK_XML_DATA
+    
+        expected_df = pd.DataFrame({
+            'title': ['Item 1', 'Item 2'],
+            'description': ['Description 1', 'Description 2']
+        })
+    
+>       result_df = task_func('http://example.com/xml')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1004.py:30: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1004.py:12: in task_func
+    xml_tree = etree.XML(xml_data)
+               ^^^^^^^^^^^^^^^^^^^
+src/lxml/etree.pyx:3412: in lxml.etree.XML
+    ???
+src/lxml/parser.pxi:2079: in lxml.etree._parseMemoryDocument
+    ???
+src/lxml/parser.pxi:1926: in lxml.etree._parseDoc
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   TypeError: memoryview: a bytes-like object is required, not 'MagicMock'
+
+src/lxml/parser.pxi:1951: TypeError
+__________________________ test_task_func_invalid_xml __________________________
+
+mock_urlopen = <MagicMock name='urlopen' id='137465224651376'>
+
+    @patch('urllib.request.urlopen')
+    def test_task_func_invalid_xml(mock_urlopen):
+        mock_response = mock_urlopen.return_value
+        mock_response.read.return_value = b"<invalid-xml>"
+    
+        with pytest.raises(ValueError, match="Invalid XML syntax"):
+>           task_func('http://example.com/xml')
+
+test_1004.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1004.py:12: in task_func
+    xml_tree = etree.XML(xml_data)
+               ^^^^^^^^^^^^^^^^^^^
+src/lxml/etree.pyx:3412: in lxml.etree.XML
+    ???
+src/lxml/parser.pxi:2079: in lxml.etree._parseMemoryDocument
+    ???
+src/lxml/parser.pxi:1926: in lxml.etree._parseDoc
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   TypeError: memoryview: a bytes-like object is required, not 'MagicMock'
+
+src/lxml/parser.pxi:1951: TypeError
+__________________________ test_task_func_empty_data ___________________________
+
+mock_urlopen = <MagicMock name='urlopen' id='137465224913520'>
+
+    @patch('urllib.request.urlopen')
+    def test_task_func_empty_data(mock_urlopen):
+        mock_response = mock_urlopen.return_value
+        mock_response.read.return_value = b"<root></root>"
+    
+        with pytest.raises(ValueError, match="XML structure does not match expected format."):
+>           task_func('http://example.com/xml')
+
+test_1004.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1004.py:12: in task_func
+    xml_tree = etree.XML(xml_data)
+               ^^^^^^^^^^^^^^^^^^^
+src/lxml/etree.pyx:3412: in lxml.etree.XML
+    ???
+src/lxml/parser.pxi:2079: in lxml.etree._parseMemoryDocument
+    ???
+src/lxml/parser.pxi:1926: in lxml.etree._parseDoc
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   TypeError: memoryview: a bytes-like object is required, not 'MagicMock'
+
+src/lxml/parser.pxi:1951: TypeError
+=========================== short test summary info ============================
+FAILED test_1004.py::test_task_func_success - TypeError: memoryview: a bytes-...
+FAILED test_1004.py::test_task_func_invalid_xml - TypeError: memoryview: a by...
+FAILED test_1004.py::test_task_func_empty_data - TypeError: memoryview: a byt...
+3 failed, 1 passed in 1.16s

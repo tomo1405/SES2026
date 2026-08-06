@@ -1,0 +1,30 @@
+....F                                                                    [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_file_already_exists ______________________
+
+    def test_task_func_file_already_exists():
+        with tempfile.TemporaryDirectory() as src_dir, tempfile.TemporaryDirectory() as dest_dir:
+            ext = 'txt'
+            file1 = os.path.join(src_dir, f'test1.{ext}')
+            file2 = os.path.join(dest_dir, f'test1.{ext}')
+            with open(file1, 'w') as f:
+                f.write('content1')
+            with open(file2, 'w') as f:
+                f.write('content2')
+    
+            moved_files = task_func(src_dir, dest_dir, ext)
+            assert len(moved_files) == 0
+            assert os.path.exists(os.path.join(dest_dir, f'test1.{ext}'))
+>           assert not os.path.exists(os.path.join(src_dir, f'test1.{ext}'))
+E           AssertionError: assert not True
+E            +  where True = <function exists at 0x7f9632d9b600>('/tmp/tmp4uxo0l26/test1.txt')
+E            +    where <function exists at 0x7f9632d9b600> = <module 'posixpath' (frozen)>.exists
+E            +      where <module 'posixpath' (frozen)> = os.path
+E            +    and   '/tmp/tmp4uxo0l26/test1.txt' = <function join at 0x7f9632b80cc0>('/tmp/tmp4uxo0l26', 'test1.txt')
+E            +      where <function join at 0x7f9632b80cc0> = <module 'posixpath' (frozen)>.join
+E            +        where <module 'posixpath' (frozen)> = os.path
+
+test_0455.py:56: AssertionError
+=========================== short test summary info ============================
+FAILED test_0455.py::test_task_func_file_already_exists - AssertionError: ass...
+1 failed, 4 passed in 0.59s

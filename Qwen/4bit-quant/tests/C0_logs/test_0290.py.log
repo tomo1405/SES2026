@@ -1,0 +1,44 @@
+..FF                                                                     [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_invalid_n_splits _____________________
+
+sample_data = (array([[1, 2],
+       [3, 4],
+       [5, 6],
+       [7, 8]]), array([0, 1, 0, 1]))
+
+    def test_task_func_with_invalid_n_splits(sample_data):
+        X, y = sample_data
+        n_splits = 1
+        batch_size = 2
+        epochs = 2
+    
+        with pytest.raises(ValueError) as excinfo:
+            task_func(X, y, n_splits, batch_size, epochs)
+>       assert "n_splits must be at least 2" in str(excinfo.value)
+E       AssertionError: assert 'n_splits must be at least 2' in 'k-fold cross-validation requires at least one train/test split by setting n_splits=2 or more, got n_splits=1.'
+E        +  where 'k-fold cross-validation requires at least one train/test split by setting n_splits=2 or more, got n_splits=1.' = str(ValueError('k-fold cross-validation requires at least one train/test split by setting n_splits=2 or more, got n_splits=1.'))
+E        +    where ValueError('k-fold cross-validation requires at least one train/test split by setting n_splits=2 or more, got n_splits=1.') = <ExceptionInfo ValueError('k-fold cross-validation requires at least one train/test split by setting n_splits=2 or more, got n_splits=1.') tblen=4>.value
+
+test_0290.py:53: AssertionError
+_______________________ test_task_func_with_zero_epochs ________________________
+
+sample_data = (array([[1, 2],
+       [3, 4],
+       [5, 6],
+       [7, 8]]), array([0, 1, 0, 1]))
+
+    def test_task_func_with_zero_epochs(sample_data):
+        X, y = sample_data
+        n_splits = 2
+        batch_size = 2
+        epochs = 0
+    
+>       with pytest.raises(ValueError) as excinfo:
+E       Failed: DID NOT RAISE ValueError
+
+test_0290.py:61: Failed
+=========================== short test summary info ============================
+FAILED test_0290.py::test_task_func_with_invalid_n_splits - AssertionError: a...
+FAILED test_0290.py::test_task_func_with_zero_epochs - Failed: DID NOT RAISE ...
+2 failed, 2 passed in 27.97s

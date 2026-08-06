@@ -1,0 +1,100 @@
+FFF.F                                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_coordinates ________________________
+
+    def test_task_func_with_coordinates():
+        input_data = {
+            'Location1': {'Lat': 40.7128, 'Lon': -74.0060},
+            'Location2': {'Lat': 34.0522, 'Lon': -118.2437}
+        }
+        result_map = task_func(input_data)
+        assert isinstance(result_map, folium.folium.Map)
+>       assert len(result_map._children) == 2  # 1 map object + 2 markers
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 3 == 2
+E        +  where 3 = len(OrderedDict({'openstreetmap': <folium.raster_layers.TileLayer object at 0x7f71017c8e00>, 'marker_a450cf28538bba20022cc...er object at 0x7f71017c8c80>, 'marker_28c276f209120720f6cb4935b0c6e58c': <folium.map.Marker object at 0x7f71017c8a70>}))
+E        +    where OrderedDict({'openstreetmap': <folium.raster_layers.TileLayer object at 0x7f71017c8e00>, 'marker_a450cf28538bba20022cc...er object at 0x7f71017c8c80>, 'marker_28c276f209120720f6cb4935b0c6e58c': <folium.map.Marker object at 0x7f71017c8a70>}) = <folium.folium.Map object at 0x7f71017c8860>._children
+
+test_0189.py:14: AssertionError
+________________________ test_task_func_with_addresses _________________________
+
+    def test_task_func_with_addresses():
+        input_data = {
+            'New York': 'New York, USA',
+            'Los Angeles': 'Los Angeles, USA'
+        }
+        result_map = task_func(input_data)
+        assert isinstance(result_map, folium.folium.Map)
+>       assert len(result_map._children) == 2  # 1 map object + 2 markers
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 3 == 2
+E        +  where 3 = len(OrderedDict({'openstreetmap': <folium.raster_layers.TileLayer object at 0x7f71017c9b20>, 'marker_e31aa06e51cebdf91f4fc...er object at 0x7f71017c9d60>, 'marker_99b4d342d67aa8e2b2ac0e14730f9504': <folium.map.Marker object at 0x7f71017c9fa0>}))
+E        +    where OrderedDict({'openstreetmap': <folium.raster_layers.TileLayer object at 0x7f71017c9b20>, 'marker_e31aa06e51cebdf91f4fc...er object at 0x7f71017c9d60>, 'marker_99b4d342d67aa8e2b2ac0e14730f9504': <folium.map.Marker object at 0x7f71017c9fa0>}) = <folium.folium.Map object at 0x7f71017c9ac0>._children
+
+test_0189.py:23: AssertionError
+__________________________ test_task_func_mixed_input __________________________
+
+    def test_task_func_mixed_input():
+        input_data = {
+            'Location1': {'Lat': 40.7128, 'Lon': -74.0060},
+            'New York': 'New York, USA'
+        }
+        result_map = task_func(input_data)
+        assert isinstance(result_map, folium.folium.Map)
+>       assert len(result_map._children) == 2  # 1 map object + 2 markers
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 3 == 2
+E        +  where 3 = len(OrderedDict({'openstreetmap': <folium.raster_layers.TileLayer object at 0x7f71017cb170>, 'marker_25f23bc93f826d5b5bd27...er object at 0x7f71017cb020>, 'marker_f2f5a53bb012274c0eddcb8898f7459d': <folium.map.Marker object at 0x7f71017cb1a0>}))
+E        +    where OrderedDict({'openstreetmap': <folium.raster_layers.TileLayer object at 0x7f71017cb170>, 'marker_25f23bc93f826d5b5bd27...er object at 0x7f71017cb020>, 'marker_f2f5a53bb012274c0eddcb8898f7459d': <folium.map.Marker object at 0x7f71017cb1a0>}) = <folium.folium.Map object at 0x7f71017ca960>._children
+
+test_0189.py:32: AssertionError
+__________________________ test_task_func_empty_input __________________________
+
+    def test_task_func_empty_input():
+        input_data = {}
+        with pytest.raises(ValueError):
+>           task_func(input_data)
+
+test_0189.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0189.py:21: in task_func
+    first_row = locations_df.iloc[0]
+                ^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexing.py:1207: in __getitem__
+    return self._getitem_axis(maybe_callable, axis=axis)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexing.py:1773: in _getitem_axis
+    self._validate_integer(key, axis)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.indexing._iLocIndexer object at 0x7f7101846620>, key = 0
+axis = 0
+
+    def _validate_integer(self, key: int | np.integer, axis: AxisInt) -> None:
+        """
+        Check that 'key' is a valid position in the desired axis.
+    
+        Parameters
+        ----------
+        key : int
+            Requested position.
+        axis : int
+            Desired axis.
+    
+        Raises
+        ------
+        IndexError
+            If 'key' is not a valid position in axis 'axis'.
+        """
+        len_axis = len(self.obj._get_axis(axis))
+        if key >= len_axis or key < -len_axis:
+>           raise IndexError("single positional indexer is out-of-bounds")
+E           IndexError: single positional indexer is out-of-bounds
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexing.py:1706: IndexError
+=========================== short test summary info ============================
+FAILED test_0189.py::test_task_func_with_coordinates - AssertionError: assert...
+FAILED test_0189.py::test_task_func_with_addresses - AssertionError: assert 3...
+FAILED test_0189.py::test_task_func_mixed_input - AssertionError: assert 3 == 2
+FAILED test_0189.py::test_task_func_empty_input - IndexError: single position...
+4 failed, 1 passed in 5.33s

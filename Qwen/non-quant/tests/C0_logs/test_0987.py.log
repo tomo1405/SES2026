@@ -1,0 +1,114 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_json ___________________________
+
+    def test_task_func_valid_json():
+        json_data = '{"data": "1,2,3,4,5"}'
+        key_path = ["data"]
+>       fig = task_func(json_data, key_path)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0987.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0987.py:8: in task_func
+    data = json.loads(json_data)
+           ^^^^^^^^^^^^^^^^^^^^^
+test_0987.py:12: in loads
+    return json.loads(json_data)
+           ^^^^^^^^^^^^^^^^^^^^^
+test_0987.py:12: in loads
+    return json.loads(json_data)
+           ^^^^^^^^^^^^^^^^^^^^^
+E   RecursionError: maximum recursion depth exceeded
+!!! Recursion detected (same locals & position)
+__________________________ test_task_func_empty_data ___________________________
+
+    def test_task_func_empty_data():
+        json_data = '{"data": ""}'
+        key_path = ["data"]
+        with pytest.raises(ValueError) as excinfo:
+>           task_func(json_data, key_path)
+
+test_0987.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0987.py:8: in task_func
+    data = json.loads(json_data)
+           ^^^^^^^^^^^^^^^^^^^^^
+test_0987.py:12: in loads
+    return json.loads(json_data)
+           ^^^^^^^^^^^^^^^^^^^^^
+test_0987.py:12: in loads
+    return json.loads(json_data)
+           ^^^^^^^^^^^^^^^^^^^^^
+E   RecursionError: maximum recursion depth exceeded
+!!! Recursion detected (same locals & position)
+________________________ test_task_func_malformed_json _________________________
+
+    def test_task_func_malformed_json():
+        json_data = '{"data": "1,2,3,4,5"'
+        key_path = ["data"]
+        with pytest.raises(ValueError) as excinfo:
+>           task_func(json_data, key_path)
+
+test_0987.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0987.py:8: in task_func
+    data = json.loads(json_data)
+           ^^^^^^^^^^^^^^^^^^^^^
+test_0987.py:12: in loads
+    return json.loads(json_data)
+           ^^^^^^^^^^^^^^^^^^^^^
+test_0987.py:12: in loads
+    return json.loads(json_data)
+           ^^^^^^^^^^^^^^^^^^^^^
+E   RecursionError: maximum recursion depth exceeded
+!!! Recursion detected (same locals & position)
+___________________________ test_task_func_key_error ___________________________
+
+    def test_task_func_key_error():
+        json_data = '{"data": {"nested": "1,2,3,4,5"}}'
+        key_path = ["non_existent_key"]
+        with pytest.raises(KeyError) as excinfo:
+>           task_func(json_data, key_path)
+
+test_0987.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0987.py:8: in task_func
+    data = json.loads(json_data)
+           ^^^^^^^^^^^^^^^^^^^^^
+test_0987.py:12: in loads
+    return json.loads(json_data)
+           ^^^^^^^^^^^^^^^^^^^^^
+test_0987.py:12: in loads
+    return json.loads(json_data)
+           ^^^^^^^^^^^^^^^^^^^^^
+E   RecursionError: maximum recursion depth exceeded
+!!! Recursion detected (same locals & position)
+_______________________ test_task_func_non_numeric_data ________________________
+
+    def test_task_func_non_numeric_data():
+        json_data = '{"data": "a,b,c,d,e"}'
+        key_path = ["data"]
+        with pytest.raises(ValueError) as excinfo:
+>           task_func(json_data, key_path)
+
+test_0987.py:70: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0987.py:8: in task_func
+    data = json.loads(json_data)
+           ^^^^^^^^^^^^^^^^^^^^^
+test_0987.py:12: in loads
+    return json.loads(json_data)
+           ^^^^^^^^^^^^^^^^^^^^^
+test_0987.py:12: in loads
+    return json.loads(json_data)
+           ^^^^^^^^^^^^^^^^^^^^^
+E   RecursionError: maximum recursion depth exceeded
+!!! Recursion detected (same locals & position)
+=========================== short test summary info ============================
+FAILED test_0987.py::test_task_func_valid_json - RecursionError: maximum recu...
+FAILED test_0987.py::test_task_func_empty_data - RecursionError: maximum recu...
+FAILED test_0987.py::test_task_func_malformed_json - RecursionError: maximum ...
+FAILED test_0987.py::test_task_func_key_error - RecursionError: maximum recur...
+FAILED test_0987.py::test_task_func_non_numeric_data - RecursionError: maximu...
+5 failed in 3.46s

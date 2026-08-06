@@ -1,0 +1,52 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_with_no_input _________________________
+
+    def test_task_func_with_no_input():
+        """
+        Test the function with no input data
+        """
+        expected_output = pd.DataFrame(np.random.rand(100, 5))
+        output = task_func()
+>       assert output.equals(expected_output)
+E       assert False
+E        +  where False = equals(           0         1         2         3         4\n0   0.380635  0.053264  0.505299  0.816497  0.555706\n1   0.283910...67  0.808386  0.384455  0.469281  0.665615\n99  0.371518  0.112293  0.764166  0.756667  0.171533\n\n[100 rows x 5 columns])
+E        +    where equals =            0         1         2         3         4\n0   0.489021  1.518832  1.264334  1.462061 -0.926096\n1   0.624776...74  0.834835 -1.084402 -0.926391 -0.926096\n99 -0.979591 -0.912518  1.332873 -0.926391 -0.926096\n\n[100 rows x 5 columns].equals
+
+test_1089.py:13: AssertionError
+__________________________ test_task_func_with_input ___________________________
+
+    def test_task_func_with_input():
+        """
+        Test the function with input data
+        """
+        input_data = np.random.rand(100, 5)
+        expected_output = pd.DataFrame(StandardScaler().fit_transform(input_data))
+        output = task_func(input_data)
+>       assert output.equals(expected_output)
+E       assert False
+E        +  where False = equals(           0         1         2         3         4\n0  -1.243447  1.590252  1.315399 -0.499868 -0.434823\n1  -1.740172...45 -0.701578  0.542318  0.963396  0.361212\n99 -1.817537  0.249774 -1.704242  1.543609  1.097762\n\n[100 rows x 5 columns])
+E        +    where equals =            0         1         2         3         4\n0  -0.940779  1.541032  1.258363 -0.930086 -0.939461\n1  -0.940779...79 -0.845839  0.671128  1.060849  0.618976\n99 -0.940779  0.557924 -1.079919  1.493482  1.156854\n\n[100 rows x 5 columns].equals
+
+test_1089.py:22: AssertionError
+_____________________ test_task_func_with_negative_values ______________________
+
+    def test_task_func_with_negative_values():
+        """
+        Test the function with negative values in the input data
+        """
+        input_data = np.random.rand(100, 5)
+        input_data[input_data < 0.5] = -1
+        expected_output = pd.DataFrame(StandardScaler().fit_transform(input_data))
+        output = task_func(input_data)
+>       assert output.equals(expected_output)
+E       assert False
+E        +  where False = equals(           0         1         2         3         4\n0  -0.863892 -0.973961  0.709835 -0.974068 -1.075694\n1   1.221381...92  0.908533  0.936970  0.950303  1.152245\n99 -0.863892 -0.973961  0.719489 -0.974068  0.844394\n\n[100 rows x 5 columns])
+E        +    where equals =            0         1         2         3         4\n0  -0.843737 -0.946649  0.456379 -0.947973 -1.039943\n1   1.293270...37  0.743015  0.980701  0.841984  1.439314\n99 -0.843737 -0.946649  0.478665 -0.947973  0.717115\n\n[100 rows x 5 columns].equals
+
+test_1089.py:32: AssertionError
+=========================== short test summary info ============================
+FAILED test_1089.py::test_task_func_with_no_input - assert False
+FAILED test_1089.py::test_task_func_with_input - assert False
+FAILED test_1089.py::test_task_func_with_negative_values - assert False
+3 failed in 2.88s

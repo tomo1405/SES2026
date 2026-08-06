@@ -1,0 +1,39 @@
+F.F.F                                                                    [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_valid_timezones ________________________
+
+    def test_task_func_valid_timezones():
+>       assert task_func("2023-10-01 12:00:00", "America/New_York", "Europe/London") == "2023-10-01 17:00:00"
+E       AssertionError: assert '2023-10-01 17:56:00' == '2023-10-01 17:00:00'
+E         
+E         - 2023-10-01 17:00:00
+E         ?               ^^
+E         + 2023-10-01 17:56:00
+E         ?               ^^
+
+test_0562.py:7: AssertionError
+______________________ test_task_func_invalid_date_format ______________________
+
+    def test_task_func_invalid_date_format():
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0562.py:13: Failed
+________________________ test_task_func_dst_transition _________________________
+
+    def test_task_func_dst_transition():
+        # Example of daylight saving time transition
+>       assert task_func("2023-03-12 02:00:00", "America/New_York", "UTC") == "2023-03-12 07:00:00"
+E       AssertionError: assert '2023-03-12 06:56:00' == '2023-03-12 07:00:00'
+E         
+E         - 2023-03-12 07:00:00
+E         ?             ^   ---
+E         + 2023-03-12 06:56:00
+E         ?             ^^^^
+
+test_0562.py:22: AssertionError
+=========================== short test summary info ============================
+FAILED test_0562.py::test_task_func_valid_timezones - AssertionError: assert ...
+FAILED test_0562.py::test_task_func_invalid_date_format - Failed: DID NOT RAI...
+FAILED test_0562.py::test_task_func_dst_transition - AssertionError: assert '...
+3 failed, 2 passed in 0.68s

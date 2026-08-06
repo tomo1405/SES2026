@@ -1,0 +1,26 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        df = pd.DataFrame({'Status': ['A', 'B', 'C', 'A', 'B', 'C']})
+        ax = task_func(df)
+        assert isinstance(ax, plt.Axes)
+        assert ax.get_title() == 'Status Distribution'
+>       assert len(ax.get_legend().get_texts()) == 3
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'NoneType' object has no attribute 'get_texts'
+
+test_0113.py:11: AttributeError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        df = pd.DataFrame({'Status': ['A', 'B', 'C', 'A', 'B', 'C']})
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0113.py:18: Failed
+=========================== short test summary info ============================
+FAILED test_0113.py::test_task_func_valid_input - AttributeError: 'NoneType' ...
+FAILED test_0113.py::test_task_func_invalid_input - Failed: DID NOT RAISE Val...
+2 failed in 2.04s

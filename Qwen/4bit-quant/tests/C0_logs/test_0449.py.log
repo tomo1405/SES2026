@@ -1,0 +1,36 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_default ____________________________
+
+    def test_task_func_default():
+        ax = task_func()
+        assert isinstance(ax, plt.Axes)
+        x, y = ax.lines[0].get_data()
+        assert len(x) == 100
+        assert len(y) == 100
+        assert np.isclose(x[0], -3)
+        assert np.isclose(x[-1], 3)
+>       assert np.allclose(y, norm.pdf(x))
+                              ^^^^
+E       NameError: name 'norm' is not defined
+
+test_0449.py:14: NameError
+_______________________ test_task_func_custom_parameters _______________________
+
+    def test_task_func_custom_parameters():
+        ax = task_func(mu=5, sigma=2)
+        assert isinstance(ax, plt.Axes)
+        x, y = ax.lines[0].get_data()
+        assert len(x) == 100
+        assert len(y) == 100
+        assert np.isclose(x[0], 5 - 3 * 2)
+        assert np.isclose(x[-1], 5 + 3 * 2)
+>       assert np.allclose(y, norm.pdf(x, 5, 2))
+                              ^^^^
+E       NameError: name 'norm' is not defined
+
+test_0449.py:24: NameError
+=========================== short test summary info ============================
+FAILED test_0449.py::test_task_func_default - NameError: name 'norm' is not d...
+FAILED test_0449.py::test_task_func_custom_parameters - NameError: name 'norm...
+2 failed in 2.90s

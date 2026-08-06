@@ -1,0 +1,30 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        def func(x, y):
+            return x + y
+    
+        info = task_func(func)
+        assert info['function_name'] == 'func'
+>       assert info['sqrt_args'] == 2
+E       assert 1.4142135623730951 == 2
+
+test_0570.py:10: AssertionError
+_________________________ test_task_func_with_defaults _________________________
+
+    def test_task_func_with_defaults():
+        def func(x, y=lambda x: x**2):
+            return x + y
+    
+        info = task_func(func)
+        assert info['function_name'] == 'func'
+>       assert info['sqrt_args'] == 2
+E       assert 1.4142135623730951 == 2
+
+test_0570.py:19: AssertionError
+=========================== short test summary info ============================
+FAILED test_0570.py::test_task_func - assert 1.4142135623730951 == 2
+FAILED test_0570.py::test_task_func_with_defaults - assert 1.4142135623730951...
+2 failed in 0.45s

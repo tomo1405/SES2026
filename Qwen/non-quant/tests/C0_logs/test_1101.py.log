@@ -1,0 +1,23 @@
+..F...                                                                   [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_with_urls ___________________________
+
+    def test_task_func_with_urls():
+        texts = ["Check out this link http://example.com", "No links here", "http://another-example.org"]
+        dense_matrix, feature_names = task_func(texts)
+        assert isinstance(dense_matrix, list)
+        assert isinstance(feature_names, list)
+        assert len(dense_matrix) == len(texts)
+        assert all(isinstance(row, tuple) for row in dense_matrix)
+        assert all(isinstance(name, str) for name in feature_names)
+>       assert "http" not in " ".join(texts)
+E       AssertionError: assert 'http' not in 'Check out t...-example.org'
+E         
+E         'http' is contained here:
+E           Check out this link http://example.com No links here http://another-example.org
+E         ?                     ++++
+
+test_1101.py:27: AssertionError
+=========================== short test summary info ============================
+FAILED test_1101.py::test_task_func_with_urls - AssertionError: assert 'http'...
+1 failed, 5 passed in 2.74s

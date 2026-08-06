@@ -1,0 +1,28 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        hours = 10
+        output_dir = './output'
+        FILE_PATH = os.path.join(output_dir, 'sensor_data.csv')
+    
+        # Test that the function returns the correct file path
+        assert task_func(hours, output_dir) == FILE_PATH
+    
+        # Test that the file is created in the correct directory
+        assert os.path.exists(FILE_PATH)
+    
+        # Test that the file contains the correct data
+        with open(FILE_PATH, 'r') as f:
+            reader = csv.reader(f)
+            data = list(reader)
+    
+>       assert data[0] == ['Time'] + SENSORS
+                                     ^^^^^^^
+E       NameError: name 'SENSORS' is not defined
+
+test_0593.py:24: NameError
+=========================== short test summary info ============================
+FAILED test_0593.py::test_task_func - NameError: name 'SENSORS' is not defined
+1 failed in 0.44s

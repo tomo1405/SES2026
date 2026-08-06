@@ -1,0 +1,44 @@
+..F.                                                                     [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_with_logs ___________________________
+
+    def test_task_func_with_logs():
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Create some log files
+            log_files = [os.path.join(temp_dir, f'log_{i}.log') for i in range(3)]
+            for log_file in log_files:
+                with open(log_file, 'w') as f:
+                    f.write('Log content')
+    
+            # Define backup directory
+            backup_dir = os.path.join(temp_dir, 'backup')
+    
+            # Run the function
+            result = task_func(temp_dir, backup_dir=backup_dir)
+    
+            # Check if backup file exists
+            assert os.path.isfile(result)
+    
+            # Check if original log files are removed
+            for log_file in log_files:
+                assert not os.path.isfile(log_file)
+    
+            # Check if backup file contains all log files
+            with tarfile.open(result, 'r:gz') as tar:
+                tar_contents = tar.getnames()
+                for log_file in log_files:
+                    relative_path = os.path.relpath(log_file, temp_dir)
+>                   assert relative_path in tar_contents
+E                   AssertionError: assert 'log_0.log' in ['tmp/tmpk_al6v33/log_2.log', 'tmp/tmpk_al6v33/log_1.log', 'tmp/tmpk_al6v33/log_0.log']
+
+test_0017.py:44: AssertionError
+----------------------------- Captured stdout call -----------------------------
+/tmp/tmpk_al6v33/log_2.log
+/tmp/tmpk_al6v33/log_1.log
+/tmp/tmpk_al6v33/log_0.log
+----------------------------- Captured stderr call -----------------------------
+tar: Removing leading `/' from member names
+tar: Removing leading `/' from hard link targets
+=========================== short test summary info ============================
+FAILED test_0017.py::test_task_func_with_logs - AssertionError: assert 'log_0...
+1 failed, 3 passed in 0.38s

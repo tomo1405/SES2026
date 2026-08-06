@@ -1,0 +1,27 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        n = 100  # Number of timestamps to generate
+        output_path = "output.png"  # Path to save the histogram plot
+    
+        timestamps = task_func(n, output_path)
+    
+        assert len(timestamps) == n  # Check if the number of timestamps is correct
+        assert isinstance(timestamps[0], str)  # Check if the timestamps are strings
+>       assert any(output_path in timestamp for timestamp in timestamps)  # Check if the output path is included in the timestamps
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert False
+E        +  where False = any(<generator object test_task_func.<locals>.<genexpr> at 0x7a2e7281d2f0>)
+
+test_0049.py:12: AssertionError
+=============================== warnings summary ===============================
+Granite/4bit-quant/tests/test_0049.py: 100 warnings
+  /work/tomohiro-w/utg/src/src_0049.py:11: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+    formatted_time = datetime.utcfromtimestamp(timestamp).strftime(DATE_FORMAT)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0049.py::test_task_func - assert False
+1 failed, 100 warnings in 1.67s

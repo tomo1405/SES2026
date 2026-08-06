@@ -1,0 +1,25 @@
+..F..F                                                                   [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_random_values _______________________
+
+    def test_task_func_with_random_values():
+        result = task_func(10, 0.5)
+        assert isinstance(result[0], list)
+        assert isinstance(result[1], int)
+>       assert all(x > statistics.mean(result[0]) for x in result[0])
+E       assert False
+E        +  where False = all(<generator object test_task_func_with_random_values.<locals>.<genexpr> at 0x7dca6aaf6b60>)
+
+test_0201.py:18: AssertionError
+__________________ test_task_func_with_value_equal_to_average __________________
+
+    def test_task_func_with_value_equal_to_average():
+        result = task_func(10, statistics.mean([0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]))
+>       assert result[1] == 5
+E       assert 3 == 5
+
+test_0201.py:30: AssertionError
+=========================== short test summary info ============================
+FAILED test_0201.py::test_task_func_with_random_values - assert False
+FAILED test_0201.py::test_task_func_with_value_equal_to_average - assert 3 == 5
+2 failed, 4 passed in 1.49s

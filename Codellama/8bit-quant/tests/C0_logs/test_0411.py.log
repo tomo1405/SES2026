@@ -1,0 +1,84 @@
+F.FF                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        excel_directory = "path/to/excel/directory"
+        file_name = "file_name.xlsx"
+        column_name = "date"
+        start_date = "2022-01-01"
+        end_date = "2022-01-31"
+    
+        expected_output = pd.DataFrame({"date": ["2022-01-01", "2022-01-02", "2022-01-03"]})
+    
+>       output = task_func(excel_directory, file_name, column_name, start_date, end_date)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0411.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+excel_directory = 'path/to/excel/directory', file_name = 'file_name.xlsx'
+column_name = 'date', start_date = '2022-01-01', end_date = '2022-01-31'
+
+    def task_func(excel_directory: str, file_name: str, column_name: str, start_date: str, end_date: str) -> pd.DataFrame:
+        excel_file = os.path.join(excel_directory, file_name)
+        if not os.path.exists(excel_file):
+>           raise FileNotFoundError(f"The file {excel_file} does not exist.")
+E           FileNotFoundError: The file path/to/excel/directory/file_name.xlsx does not exist.
+
+../../../src/src_0411.py:7: FileNotFoundError
+________________ test_task_func_invalid_input_column_not_found _________________
+
+    def test_task_func_invalid_input_column_not_found():
+        excel_directory = "path/to/excel/directory"
+        file_name = "file_name.xlsx"
+        column_name = "date"
+        start_date = "2022-01-01"
+        end_date = "2022-01-31"
+    
+        with pytest.raises(ValueError):
+>           task_func(excel_directory, file_name, column_name, start_date, end_date)
+
+test_0411.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+excel_directory = 'path/to/excel/directory', file_name = 'file_name.xlsx'
+column_name = 'date', start_date = '2022-01-01', end_date = '2022-01-31'
+
+    def task_func(excel_directory: str, file_name: str, column_name: str, start_date: str, end_date: str) -> pd.DataFrame:
+        excel_file = os.path.join(excel_directory, file_name)
+        if not os.path.exists(excel_file):
+>           raise FileNotFoundError(f"The file {excel_file} does not exist.")
+E           FileNotFoundError: The file path/to/excel/directory/file_name.xlsx does not exist.
+
+../../../src/src_0411.py:7: FileNotFoundError
+___________________ test_task_func_invalid_input_date_format ___________________
+
+    def test_task_func_invalid_input_date_format():
+        excel_directory = "path/to/excel/directory"
+        file_name = "file_name.xlsx"
+        column_name = "date"
+        start_date = "2022-01-01"
+        end_date = "2022-01-31"
+    
+        with pytest.raises(ValueError):
+>           task_func(excel_directory, file_name, column_name, start_date, end_date)
+
+test_0411.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+excel_directory = 'path/to/excel/directory', file_name = 'file_name.xlsx'
+column_name = 'date', start_date = '2022-01-01', end_date = '2022-01-31'
+
+    def task_func(excel_directory: str, file_name: str, column_name: str, start_date: str, end_date: str) -> pd.DataFrame:
+        excel_file = os.path.join(excel_directory, file_name)
+        if not os.path.exists(excel_file):
+>           raise FileNotFoundError(f"The file {excel_file} does not exist.")
+E           FileNotFoundError: The file path/to/excel/directory/file_name.xlsx does not exist.
+
+../../../src/src_0411.py:7: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0411.py::test_task_func_valid_input - FileNotFoundError: The file...
+FAILED test_0411.py::test_task_func_invalid_input_column_not_found - FileNotF...
+FAILED test_0411.py::test_task_func_invalid_input_date_format - FileNotFoundE...
+3 failed, 1 passed in 1.15s

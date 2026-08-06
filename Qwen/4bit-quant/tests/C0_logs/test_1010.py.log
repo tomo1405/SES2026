@@ -1,0 +1,46 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_valid_xml _________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1408/test_task_func_with_valid_xml0')
+
+    def test_task_func_with_valid_xml(tmp_path):
+        xml_content = "<root><child1>text1</child1><child2>text2</child2></root>"
+        output_csv_path = tmp_path / "output.csv"
+        task_func(xml_content, output_csv_path)
+    
+        assert output_csv_path.exists()
+    
+        with open(output_csv_path, "r", encoding="utf-8") as f:
+            reader = csv.reader(f)
+            rows = list(reader)
+    
+        expected_rows = [
+            ["root", None],
+            ["child1", "text1"],
+            ["child2", "text2"]
+        ]
+>       assert rows == expected_rows
+E       AssertionError: assert [['root', '']...d2', 'text2']] == [['root', Non...d2', 'text2']]
+E         
+E         At index 0 diff: ['root', ''] != ['root', None]
+E         Use -v to get more diff
+
+test_1010.py:23: AssertionError
+_______________________ test_task_func_with_invalid_xml ________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1408/test_task_func_with_invalid_xm0')
+
+    def test_task_func_with_invalid_xml(tmp_path):
+        xml_content = "<root><child1>text1</child2></root>"  # Missing closing tag
+        output_csv_path = tmp_path / "output.csv"
+    
+>       with pytest.raises(ET.ParseError) as excinfo:
+                           ^^
+E       NameError: name 'ET' is not defined
+
+test_1010.py:29: NameError
+=========================== short test summary info ============================
+FAILED test_1010.py::test_task_func_with_valid_xml - AssertionError: assert [...
+FAILED test_1010.py::test_task_func_with_invalid_xml - NameError: name 'ET' i...
+2 failed, 1 passed in 0.50s

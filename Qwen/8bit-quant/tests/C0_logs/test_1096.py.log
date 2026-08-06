@@ -1,0 +1,38 @@
+F..                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test data
+        text = "This is a test $word with some $punctuation! and $validWord."
+        expected_output = ["$word", "$validWord"]
+    
+        # Create a temporary file to use as output
+        with NamedTemporaryFile(delete=False) as temp_file:
+            output_filename = temp_file.name
+    
+        # Call the function
+        result = task_func(text, output_filename)
+    
+        # Check if the result is the absolute path of the temporary file
+        assert os.path.abspath(output_filename) == result
+    
+        # Read the content of the output file
+        with open(output_filename, 'r') as file:
+            content = file.readlines()
+    
+        # Clean up the temporary file
+        os.remove(output_filename)
+    
+        # Check if the content matches the expected output
+>       assert [line.strip() for line in content] == expected_output
+E       AssertionError: assert ['$word', '$p... '$validWord'] == ['$word', '$validWord']
+E         
+E         At index 1 diff: '$punctuation' != '$validWord'
+E         Left contains one more item: '$validWord'
+E         Use -v to get more diff
+
+test_1096.py:30: AssertionError
+=========================== short test summary info ============================
+FAILED test_1096.py::test_task_func - AssertionError: assert ['$word', '$p......
+1 failed, 2 passed in 4.04s

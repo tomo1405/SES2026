@@ -1,0 +1,66 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: empty DataFrame
+        df = pd.DataFrame()
+        with pytest.raises(ValueError, match="Input data cannot be empty."):
+            task_func(df)
+    
+        # Test case 2: negative age
+        df = pd.DataFrame({"name": ["Alice", "Bob"], "age": [25, -1]})
+        with pytest.raises(ValueError, match="Invalid age: age cannot be less than 0."):
+            task_func(df)
+    
+        # Test case 3: no duplicates
+        df = pd.DataFrame({"name": ["Alice", "Bob"], "age": [25, 30]})
+        duplicates_counter, ax = task_func(df)
+        assert duplicates_counter == Counter()
+        assert ax is None
+    
+        # Test case 4: duplicates with a single age
+        df = pd.DataFrame({"name": ["Alice", "Bob", "Alice"], "age": [25, 25, 30]})
+        duplicates_counter, ax = task_func(df)
+>       assert duplicates_counter == Counter({25: 2})
+E       assert Counter({25: 1, 30: 1}) == Counter({25: 2})
+E         
+E         Differing items:
+E         {25: 1} != {25: 2}
+E         Left contains 1 more item:
+E         {30: 1}
+E         Use -v to get more diff
+
+test_0531.py:58: AssertionError
+__________________________________ test_plot ___________________________________
+
+    def test_plot():
+        with patch("matplotlib.pyplot.show") as mock_show:
+            df = pd.DataFrame({"name": ["Alice", "Bob", "Charlie", "Alice", "Bob"], "age": [20, 25, 25, 30, 30]})
+            duplicates_counter, ax = task_func(df)
+            assert ax is not None
+>           mock_show.assert_called_once()
+
+test_0531.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='show' id='128614213838768'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'show' to have been called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:923: AssertionError
+=========================== short test summary info ============================
+FAILED test_0531.py::test_task_func - assert Counter({25: 1, 30: 1}) == Count...
+FAILED test_0531.py::test_plot - AssertionError: Expected 'show' to have been...
+2 failed in 3.58s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

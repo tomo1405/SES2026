@@ -1,0 +1,71 @@
+.FF.F.                                                                   [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_single_file __________________________
+
+    def test_task_func_single_file():
+        with tempfile.TemporaryDirectory() as temp_dir:
+            file_path = os.path.join(temp_dir, 'test.txt')
+            with open(file_path, 'w') as f:
+                f.write('Test content')
+    
+            result = task_func(temp_dir, '*.txt', 'txt')
+            expected = {file_path: 'text/plain'}
+>           assert result == expected
+E           AssertionError: assert {'test.txt': 'text/plain'} == {'/tmp/tmp5y_... 'text/plain'}
+E             
+E             Left contains 1 more item:
+E             {'test.txt': 'text/plain'}
+E             Right contains 1 more item:
+E             {'/tmp/tmp5y_r4plj/test.txt': 'text/plain'}
+E             Use -v to get more diff
+
+/work/tomohiro-w/utg/Qwen/non-quant/tests/test_0155.py:21: AssertionError
+________________________ test_task_func_multiple_files _________________________
+
+    def test_task_func_multiple_files():
+        with tempfile.TemporaryDirectory() as temp_dir:
+            file_paths = [os.path.join(temp_dir, f'test{i}.txt') for i in range(3)]
+            for file_path in file_paths:
+                with open(file_path, 'w') as f:
+                    f.write(f'Test content {file_path}')
+    
+            result = task_func(temp_dir, '*.txt', 'txt')
+            expected = {file_path: 'text/plain' for file_path in file_paths}
+>           assert result == expected
+E           AssertionError: assert {'test2.txt':... 'text/plain'} == {'/tmp/tmpdpc... 'text/plain'}
+E             
+E             Left contains 3 more items:
+E             {'test0.txt': 'text/plain',
+E              'test1.txt': 'text/plain',
+E              'test2.txt': 'text/plain'}
+E             Right contains 3 more items:
+E             {'/tmp/tmpdpcuhryn/test0.txt': 'text/plain',...
+E             
+E             ...Full output truncated (3 lines hidden), use '-vv' to show
+
+/work/tomohiro-w/utg/Qwen/non-quant/tests/test_0155.py:32: AssertionError
+_________________________ test_task_func_non_text_file _________________________
+
+    def test_task_func_non_text_file():
+        with tempfile.TemporaryDirectory() as temp_dir:
+            file_path = os.path.join(temp_dir, 'test.bin')
+            with open(file_path, 'wb') as f:
+                f.write(b'\x00\x01\x02\x03')
+    
+            result = task_func(temp_dir, '*.bin', 'bin')
+            expected = {file_path: 'application/octet-stream'}
+>           assert result == expected
+E           AssertionError: assert {'test.bin': ...octet-stream'} == {'/tmp/tmp6wz...octet-stream'}
+E             
+E             Left contains 1 more item:
+E             {'test.bin': 'application/octet-stream'}
+E             Right contains 1 more item:
+E             {'/tmp/tmp6wzjy_k9/test.bin': 'application/octet-stream'}
+E             Use -v to get more diff
+
+/work/tomohiro-w/utg/Qwen/non-quant/tests/test_0155.py:51: AssertionError
+=========================== short test summary info ============================
+FAILED test_0155.py::test_task_func_single_file - AssertionError: assert {'te...
+FAILED test_0155.py::test_task_func_multiple_files - AssertionError: assert {...
+FAILED test_0155.py::test_task_func_non_text_file - AssertionError: assert {'...
+3 failed, 3 passed in 0.45s

@@ -1,0 +1,27 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        rows = 100
+        columns = 3
+        expected_column_names = [
+            chr(97 + i) for i in range(columns)
+        ]
+        expected_values = list("abcdefghijklmnopqrstuvwxyz")
+        expected_data = np.random.choice(expected_values, size=(rows, columns))
+        expected_df = pd.DataFrame(expected_data, columns=expected_column_names)
+    
+        actual_df = task_func(rows, columns)
+    
+        assert actual_df.columns.tolist() == expected_column_names
+>       assert actual_df.values.tolist() == expected_data.tolist()
+E       AssertionError: assert [['w', 'p', '...d', 'c'], ...] == [['q', 'k', '...o', 'e'], ...]
+E         
+E         At index 0 diff: ['w', 'p', 'w'] != ['q', 'k', 'r']
+E         Use -v to get more diff
+
+test_1030.py:19: AssertionError
+=========================== short test summary info ============================
+FAILED test_1030.py::test_task_func - AssertionError: assert [['w', 'p', '......
+1 failed in 1.19s

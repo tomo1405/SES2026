@@ -1,0 +1,23 @@
+..F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_nonexistent_url ________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-2209/test_task_func_nonexistent_url0')
+
+    def test_task_func_nonexistent_url(tmpdir):
+        url = 'http://nonexistent.com/data.csv'
+        column_name = 'Name'
+        csv_file_path = str(tmpdir / 'data.csv')
+    
+        with pytest.raises(Exception) as excinfo:
+            task_func(url, column_name, csv_file_path)
+    
+>       assert "Failed to retrieve the URL" in str(excinfo.value)
+E       AssertionError: assert 'Failed to retrieve the URL' in '<urlopen error [Errno -3] Temporary failure in name resolution>'
+E        +  where '<urlopen error [Errno -3] Temporary failure in name resolution>' = str(URLError(gaierror(-3, 'Temporary failure in name resolution')))
+E        +    where URLError(gaierror(-3, 'Temporary failure in name resolution')) = <ExceptionInfo URLError(gaierror(-3, 'Temporary failure in name resolution')) tblen=9>.value
+
+test_1000.py:51: AssertionError
+=========================== short test summary info ============================
+FAILED test_1000.py::test_task_func_nonexistent_url - AssertionError: assert ...
+1 failed, 2 passed in 10.65s

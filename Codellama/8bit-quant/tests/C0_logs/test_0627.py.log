@@ -1,0 +1,117 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        date_str = '2022-01-01 12:00:00'
+        from_tz = 'America/New_York'
+        expected_date = '2022-01-01 17:00:00'
+        expected_tz = 'Asia/Shanghai'
+    
+>       assert task_func(date_str, from_tz) == (expected_date, expected_tz)
+E       AssertionError: assert ('2022-01-01 ...ica/New_York') == ('2022-01-01 ...sia/Shanghai')
+E         
+E         At index 0 diff: '2022-01-01 12:00:00' != '2022-01-01 17:00:00'
+E         Use -v to get more diff
+
+test_0627.py:10: AssertionError
+____________________ test_task_func_with_different_timezone ____________________
+
+    def test_task_func_with_different_timezone():
+        date_str = '2022-01-01 12:00:00'
+        from_tz = 'Europe/London'
+        expected_date = '2022-01-01 13:00:00'
+        expected_tz = 'Asia/Tokyo'
+    
+>       assert task_func(date_str, from_tz) == (expected_date, expected_tz)
+E       AssertionError: assert ('2022-01-01 ...sia/Shanghai') == ('2022-01-01 ... 'Asia/Tokyo')
+E         
+E         At index 0 diff: '2022-01-01 20:01:00' != '2022-01-01 13:00:00'
+E         Use -v to get more diff
+
+test_0627.py:18: AssertionError
+_____________________ test_task_func_with_invalid_timezone _____________________
+
+    def test_task_func_with_invalid_timezone():
+        date_str = '2022-01-01 12:00:00'
+        from_tz = 'Invalid/Timezone'
+    
+        with pytest.raises(ValueError):
+>           task_func(date_str, from_tz)
+
+test_0627.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0627.py:7: in task_func
+    from_tz = pytz.timezone(from_tz)
+              ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+zone = 'Invalid/Timezone'
+
+    def timezone(zone):
+        r''' Return a datetime.tzinfo implementation for the given timezone
+    
+        >>> from datetime import datetime, timedelta
+        >>> utc = timezone('UTC')
+        >>> eastern = timezone('US/Eastern')
+        >>> eastern.zone
+        'US/Eastern'
+        >>> timezone(unicode('US/Eastern')) is eastern
+        True
+        >>> utc_dt = datetime(2002, 10, 27, 6, 0, 0, tzinfo=utc)
+        >>> loc_dt = utc_dt.astimezone(eastern)
+        >>> fmt = '%Y-%m-%d %H:%M:%S %Z (%z)'
+        >>> loc_dt.strftime(fmt)
+        '2002-10-27 01:00:00 EST (-0500)'
+        >>> (loc_dt - timedelta(minutes=10)).strftime(fmt)
+        '2002-10-27 00:50:00 EST (-0500)'
+        >>> eastern.normalize(loc_dt - timedelta(minutes=10)).strftime(fmt)
+        '2002-10-27 01:50:00 EDT (-0400)'
+        >>> (loc_dt + timedelta(minutes=10)).strftime(fmt)
+        '2002-10-27 01:10:00 EST (-0500)'
+    
+        Raises UnknownTimeZoneError if passed an unknown zone.
+    
+        >>> try:
+        ...     timezone('Asia/Shangri-La')
+        ... except UnknownTimeZoneError:
+        ...     print('Unknown')
+        Unknown
+    
+        >>> try:
+        ...     timezone(unicode('\N{TRADE MARK SIGN}'))
+        ... except UnknownTimeZoneError:
+        ...     print('Unknown')
+        Unknown
+    
+        '''
+        if zone is None:
+            raise UnknownTimeZoneError(None)
+    
+        if zone.upper() == 'UTC':
+            return utc
+    
+        try:
+            zone = ascii(zone)
+        except UnicodeEncodeError:
+            # All valid timezones are ASCII
+            raise UnknownTimeZoneError(zone)
+    
+        zone = _case_insensitive_zone_lookup(_unmunge_zone(zone))
+        if zone not in _tzinfo_cache:
+            if zone in all_timezones_set:  # noqa
+                fp = open_resource(zone)
+                try:
+                    _tzinfo_cache[zone] = build_tzinfo(zone, fp)
+                finally:
+                    fp.close()
+            else:
+>               raise UnknownTimeZoneError(zone)
+E               pytz.exceptions.UnknownTimeZoneError: 'Invalid/Timezone'
+
+../../../.venv/lib/python3.12/site-packages/pytz/__init__.py:198: UnknownTimeZoneError
+=========================== short test summary info ============================
+FAILED test_0627.py::test_task_func - AssertionError: assert ('2022-01-01 ......
+FAILED test_0627.py::test_task_func_with_different_timezone - AssertionError:...
+FAILED test_0627.py::test_task_func_with_invalid_timezone - pytz.exceptions.U...
+3 failed in 0.64s

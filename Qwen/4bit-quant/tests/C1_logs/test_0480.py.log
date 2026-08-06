@@ -1,0 +1,86 @@
+.FFFFF.                                                                  [100%]
+=================================== FAILURES ===================================
+___________________ test_task_func_with_single_empty_string ____________________
+
+    def test_task_func_with_single_empty_string():
+        data_list = ["   "]
+        result_df = task_func(data_list)
+>       assert result_df.equals(pd.DataFrame({"Original String": ["   "], "Modified String": ["   "]}))
+E       AssertionError: assert False
+E        +  where False = equals(  Original String Modified String\n0                                )
+E        +    where equals =   Original String Modified String\n0                                .equals
+E        +    and     Original String Modified String\n0                                 = <class 'pandas.DataFrame'>({'Original String': ['   '], 'Modified String': ['   ']})
+E        +      where <class 'pandas.DataFrame'> = pd.DataFrame
+
+test_0480.py:14: AssertionError
+__________________ test_task_func_with_single_string_no_comma __________________
+
+    def test_task_func_with_single_string_no_comma():
+        data_list = ["hello"]
+        result_df = task_func(data_list)
+>       assert result_df.equals(pd.DataFrame({"Original String": ["hello"], "Modified String": ["hello"]}))
+E       AssertionError: assert False
+E        +  where False = equals(  Original String Modified String\n0           hello           hello)
+E        +    where equals =   Original String Modified String\n0           hello           tkgnk.equals
+E        +    and     Original String Modified String\n0           hello           hello = <class 'pandas.DataFrame'>({'Original String': ['hello'], 'Modified String': ['hello']})
+E        +      where <class 'pandas.DataFrame'> = pd.DataFrame
+
+test_0480.py:19: AssertionError
+_________________ test_task_func_with_single_string_with_comma _________________
+
+    def test_task_func_with_single_string_with_comma():
+        data_list = ["hello, world"]
+        result_df = task_func(data_list)
+>       assert result_df.equals(pd.DataFrame({"Original String": ["hello, world"], "Modified String": ["hello, world"]}))
+E       AssertionError: assert False
+E        +  where False = equals(  Original String Modified String\n0    hello, world    hello, world)
+E        +    where equals =   Original String Modified String\n0    hello, world    hello, tkgnk.equals
+E        +    and     Original String Modified String\n0    hello, world    hello, world = <class 'pandas.DataFrame'>({'Original String': ['hello, world'], 'Modified String': ['hello, world']})
+E        +      where <class 'pandas.DataFrame'> = pd.DataFrame
+
+test_0480.py:24: AssertionError
+_____________________ test_task_func_with_multiple_strings _____________________
+
+    def test_task_func_with_multiple_strings():
+        data_list = ["apple, banana", "cherry, date", "elderberry"]
+        result_df = task_func(data_list)
+        expected_df = pd.DataFrame({
+            "Original String": ["apple, banana", "cherry, date", "elderberry"],
+            "Modified String": [
+                "apple, banana",
+                "cherry, date",
+                "elderberry"
+            ]
+        })
+>       assert result_df.equals(expected_df)
+E       assert False
+E        +  where False = equals(  Original String Modified String\n0   apple, banana   apple, banana\n1    cherry, date    cherry, date\n2      elderberry      elderberry)
+E        +    where equals =   Original String Modified String\n0   apple, banana   apple, tkgnku\n1    cherry, date    cherry, zjxf\n2      elderberry      htqgxzvxis.equals
+
+test_0480.py:37: AssertionError
+____________________ test_task_func_with_random_replacement ____________________
+
+    def test_task_func_with_random_replacement():
+        data_list = ["apple, banana", "cherry, date", "elderberry"]
+        result_df = task_func(data_list, seed=42)
+        expected_df = pd.DataFrame({
+            "Original String": ["apple, banana", "cherry, date", "elderberry"],
+            "Modified String": [
+                "apple, banana",
+                "cherry, date",
+                "elderberry"
+            ]
+        })
+>       assert result_df.equals(expected_df)
+E       assert False
+E        +  where False = equals(  Original String Modified String\n0   apple, banana   apple, banana\n1    cherry, date    cherry, date\n2      elderberry      elderberry)
+E        +    where equals =   Original String Modified String\n0   apple, banana   ahftr, banana\n1    cherry, date    pacgpo, date\n2      elderberry      fpvausieyi.equals
+
+test_0480.py:50: AssertionError
+=========================== short test summary info ============================
+FAILED test_0480.py::test_task_func_with_single_empty_string - AssertionError...
+FAILED test_0480.py::test_task_func_with_single_string_no_comma - AssertionEr...
+FAILED test_0480.py::test_task_func_with_single_string_with_comma - Assertion...
+FAILED test_0480.py::test_task_func_with_multiple_strings - assert False
+FAILED test_0480.py::test_task_func_with_random_replacement - assert False
+5 failed, 2 passed in 1.17s

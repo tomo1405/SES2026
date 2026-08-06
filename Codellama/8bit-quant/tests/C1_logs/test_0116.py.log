@@ -1,0 +1,49 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        numbers = [1, 2, 3, 4, 5]
+        expected_output = {'array': np.array(numbers), 'mode': 3, 'entropy': 1.3862943611198906}
+>       assert task_func(numbers) == expected_output
+               ^^^^^^^^^^^^^^^^^^
+
+test_0116.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+numbers = [1, 2, 3, 4, 5]
+
+    def task_func(numbers):
+        if len(numbers) == 0:
+            raise ValueError
+        my_dict = {'array': np.array(numbers)}
+>       mode_value = mode(my_dict['array']).mode[0]
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       IndexError: invalid index to scalar variable.
+
+../../../src/src_0116.py:8: IndexError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        numbers = [1, 2, 3, 4, 5, 6]
+        with pytest.raises(ValueError):
+>           task_func(numbers)
+
+test_0116.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+numbers = [1, 2, 3, 4, 5, 6]
+
+    def task_func(numbers):
+        if len(numbers) == 0:
+            raise ValueError
+        my_dict = {'array': np.array(numbers)}
+>       mode_value = mode(my_dict['array']).mode[0]
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       IndexError: invalid index to scalar variable.
+
+../../../src/src_0116.py:8: IndexError
+=========================== short test summary info ============================
+FAILED test_0116.py::test_task_func_valid_input - IndexError: invalid index t...
+FAILED test_0116.py::test_task_func_invalid_input - IndexError: invalid index...
+2 failed, 1 passed in 1.81s

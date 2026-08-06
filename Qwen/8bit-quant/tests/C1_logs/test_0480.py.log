@@ -1,0 +1,93 @@
+F.FFFFF                                                                  [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_empty_list ________________________
+
+    def test_task_func_with_empty_list():
+        result = task_func([])
+        expected_columns = ["Original String", "Modified String"]
+>       assert result.equals(pd.DataFrame(columns=expected_columns))
+E       AssertionError: assert False
+E        +  where False = equals(Empty DataFrame\nColumns: [Original String, Modified String]\nIndex: [])
+E        +    where equals = Empty DataFrame\nColumns: [Original String, Modified String]\nIndex: [].equals
+E        +    and   Empty DataFrame\nColumns: [Original String, Modified String]\nIndex: [] = <class 'pandas.DataFrame'>(columns=['Original String', 'Modified String'])
+E        +      where <class 'pandas.DataFrame'> = pd.DataFrame
+
+test_0480.py:8: AssertionError
+_________________ test_task_func_with_single_string_no_commas __________________
+
+    def test_task_func_with_single_string_no_commas():
+        result = task_func(["hello"], seed=0)
+        expected_df = pd.DataFrame({
+            "Original String": ["hello"],
+            "Modified String": ["hello"]
+        })
+>       assert result.equals(expected_df)
+E       assert False
+E        +  where False = equals(  Original String Modified String\n0           hello           hello)
+E        +    where equals =   Original String Modified String\n0           hello           tkgnk.equals
+
+test_0480.py:24: AssertionError
+________________ test_task_func_with_single_string_with_commas _________________
+
+    def test_task_func_with_single_string_with_commas():
+        result = task_func(["a, b, c"], seed=0)
+        expected_df = pd.DataFrame({
+            "Original String": ["a, b, c"],
+            "Modified String": ["a, b, c"]
+        })
+>       assert result.equals(expected_df)
+E       assert False
+E        +  where False = equals(  Original String Modified String\n0         a, b, c         a, b, c)
+E        +    where equals =   Original String Modified String\n0         a, b, c         a, t, c.equals
+
+test_0480.py:32: AssertionError
+_____________________ test_task_func_with_multiple_strings _____________________
+
+    def test_task_func_with_multiple_strings():
+        result = task_func(["apple, banana", "cherry"], seed=0)
+        expected_df = pd.DataFrame({
+            "Original String": ["apple, banana", "cherry"],
+            "Modified String": ["apple, banana", "cherry"]
+        })
+>       assert result.equals(expected_df)
+E       assert False
+E        +  where False = equals(  Original String Modified String\n0   apple, banana   apple, banana\n1          cherry          cherry)
+E        +    where equals =   Original String Modified String\n0   apple, banana   apple, tkgnku\n1          cherry          zjxfdd.equals
+
+test_0480.py:40: AssertionError
+____________________ test_task_func_with_random_replacement ____________________
+
+    def test_task_func_with_random_replacement():
+        result = task_func(["apple, banana, cherry"], seed=42)
+        expected_df = pd.DataFrame({
+            "Original String": ["apple, banana, cherry"],
+            "Modified String": ["apple, banana, xkcdj"]
+        })
+>       assert result.equals(expected_df)
+E       assert False
+E        +  where False = equals(         Original String       Modified String\n0  apple, banana, cherry  apple, banana, xkcdj)
+E        +    where equals =          Original String        Modified String\n0  apple, banana, cherry  apple, banana, ctgdct.equals
+
+test_0480.py:48: AssertionError
+________________________ test_task_func_with_whitespace ________________________
+
+    def test_task_func_with_whitespace():
+        result = task_func(["  apple ,  banana  "], seed=0)
+        expected_df = pd.DataFrame({
+            "Original String": ["  apple ,  banana  "],
+            "Modified String": ["  apple ,  banana  "]
+        })
+>       assert result.equals(expected_df)
+E       assert False
+E        +  where False = equals(       Original String      Modified String\n0    apple ,  banana      apple ,  banana  )
+E        +    where equals =        Original String Modified String\n0    apple ,  banana     apple, tkgnku.equals
+
+test_0480.py:56: AssertionError
+=========================== short test summary info ============================
+FAILED test_0480.py::test_task_func_with_empty_list - AssertionError: assert ...
+FAILED test_0480.py::test_task_func_with_single_string_no_commas - assert False
+FAILED test_0480.py::test_task_func_with_single_string_with_commas - assert F...
+FAILED test_0480.py::test_task_func_with_multiple_strings - assert False
+FAILED test_0480.py::test_task_func_with_random_replacement - assert False
+FAILED test_0480.py::test_task_func_with_whitespace - assert False
+6 failed, 1 passed in 1.77s

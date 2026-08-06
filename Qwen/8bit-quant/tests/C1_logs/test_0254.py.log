@@ -1,0 +1,45 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+ax = <PolarAxes: >
+
+    def test_task_func(ax):
+        color = task_func(ax)
+        assert color in ['b', 'g', 'r', 'c', 'm', 'y', 'k']
+    
+        # Check that the plot has been added to the axes
+        lines = ax.get_lines()
+        assert len(lines) == 1
+    
+        # Check that the x data is as expected
+        x_data = lines[0].get_xdata()
+        np.testing.assert_array_equal(x_data, np.linspace(0, 2 * np.pi, 1000))
+    
+        # Check that the y data is a sine wave with a random frequency between 1 and 10
+        y_data = lines[0].get_ydata()
+        freq = random.randint(1, 10)
+>       np.testing.assert_almost_equal(y_data, np.sin(freq * x_data), decimal=5)
+E       AssertionError: 
+E       Arrays are not almost equal to 5 decimals
+E       
+E       Mismatched elements: 996 / 1000 (99.6%)
+E       First 5 mismatches are at indices:
+E        [1]: 0.06285329004448194 (ACTUAL), 0.025155245389375847 (DESIRED)
+E        [2]: 0.12545803018029603 (ACTUAL), 0.05029457036336618 (DESIRED)
+E        [3]: 0.18756665337583714 (ACTUAL), 0.07540206458240159 (DESIRED)
+E        [4]: 0.2489335544668916 (ACTUAL), 0.10046183785216795 (DESIRED)
+E        [5]: 0.30931606138886886 (ACTUAL), 0.12545803018029603 (DESIRED)
+E       Max absolute difference among violations: 1.95758066
+E       Max relative difference among violations: 318.98227315
+E        ACTUAL: array([ 0.00000e+00,  6.28533e-02,  1.25458e-01,  1.87567e-01,
+E               2.48934e-01,  3.09316e-01,  3.68475e-01,  4.26178e-01,
+E               4.82195e-01,  5.36305e-01,  5.88294e-01,  6.37957e-01,...
+E        DESIRED: array([ 0.00000e+00,  2.51552e-02,  5.02946e-02,  7.54021e-02,
+E               1.00462e-01,  1.25458e-01,  1.50375e-01,  1.75196e-01,
+E               1.99907e-01,  2.24491e-01,  2.48934e-01,  2.73218e-01,...
+
+test_0254.py:29: AssertionError
+=========================== short test summary info ============================
+FAILED test_0254.py::test_task_func - AssertionError: 
+1 failed in 1.67s

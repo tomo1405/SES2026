@@ -1,0 +1,44 @@
+....FF                                                                   [100%]
+=================================== FAILURES ===================================
+______________ test_task_func_with_more_topics_than_unique_words _______________
+
+sample_texts = ['The quick brown fox jumps over the lazy dog', 'Never jump over the lazy dog quickly', 'A quick movement of the enemy will jeopardize five gunboats']
+
+    def test_task_func_with_more_topics_than_unique_words(sample_texts):
+        num_topics = 10
+        topics = task_func(sample_texts, num_topics)
+>       assert len(topics) == len(set().union(*topics))
+E       AssertionError: assert 10 == 12
+E        +  where 10 = len([['dog', 'lazy', 'quickly', 'jump', 'movement', 'quick', ...], ['quick', 'gunboats', 'enemy', 'jeopardize', 'movement'...azy', 'jump', 'quickly', 'dog', 'movement', 'quick', ...], ['lazy', 'dog', 'jumps', 'quick', 'brown', 'fox', ...], ...])
+E        +  and   12 = len({'brown', 'dog', 'enemy', 'fox', 'gunboats', 'jeopardize', ...})
+E        +    where {'brown', 'dog', 'enemy', 'fox', 'gunboats', 'jeopardize', ...} = <built-in method union of set object at 0x7805371e26c0>(*[['dog', 'lazy', 'quickly', 'jump', 'movement', 'quick', ...], ['quick', 'gunboats', 'enemy', 'jeopardize', 'movement'...azy', 'jump', 'quickly', 'dog', 'movement', 'quick', ...], ['lazy', 'dog', 'jumps', 'quick', 'brown', 'fox', ...], ...])
+E        +      where <built-in method union of set object at 0x7805371e26c0> = set().union
+E        +        where set() = set()
+
+test_0656.py:45: AssertionError
+_____________________ test_task_func_with_large_num_topics _____________________
+
+sample_texts = ['The quick brown fox jumps over the lazy dog', 'Never jump over the lazy dog quickly', 'A quick movement of the enemy will jeopardize five gunboats']
+
+    def test_task_func_with_large_num_topics(sample_texts):
+        num_topics = 100
+        topics = task_func(sample_texts, num_topics)
+>       assert len(topics) == len(set().union(*topics))
+E       AssertionError: assert 100 == 12
+E        +  where 100 = len([['lazy', 'dog', 'jump', 'quickly', 'quick', 'fox', ...], ['quick', 'enemy', 'jeopardize', 'gunboats', 'movement', 'do..., 'lazy', 'dog', 'jump', 'movement', 'quick', ...], ['lazy', 'dog', 'jumps', 'quickly', 'movement', 'quick', ...], ...])
+E        +  and   12 = len({'brown', 'dog', 'enemy', 'fox', 'gunboats', 'jeopardize', ...})
+E        +    where {'brown', 'dog', 'enemy', 'fox', 'gunboats', 'jeopardize', ...} = <built-in method union of set object at 0x7805371e3060>(*[['lazy', 'dog', 'jump', 'quickly', 'quick', 'fox', ...], ['quick', 'enemy', 'jeopardize', 'gunboats', 'movement', 'do..., 'lazy', 'dog', 'jump', 'movement', 'quick', ...], ['lazy', 'dog', 'jumps', 'quickly', 'movement', 'quick', ...], ...])
+E        +      where <built-in method union of set object at 0x7805371e3060> = set().union
+E        +        where set() = set()
+
+test_0656.py:50: AssertionError
+=============================== warnings summary ===============================
+Qwen/non-quant/tests/test_0656.py::test_task_func_with_single_topic
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/sklearn/decomposition/_nmf.py:1723: ConvergenceWarning: Maximum number of iterations 200 reached. Increase it to improve convergence.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0656.py::test_task_func_with_more_topics_than_unique_words - Asse...
+FAILED test_0656.py::test_task_func_with_large_num_topics - AssertionError: a...
+2 failed, 4 passed, 1 warning in 3.29s

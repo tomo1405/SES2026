@@ -1,0 +1,26 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: No outliers
+        data = np.array([[1, 2], [3, 4], [5, 6]])
+        column = 0
+        outlier_z_score = 3
+        expected_data_copy = np.array([[1, 2], [3, 4], [5, 6]])
+        expected_data_without_outliers = np.array([[1, 2], [3, 4], [5, 6]])
+        expected_outliers = np.array([])
+    
+        data_copy, data_without_outliers, outliers = task_func(data, column, outlier_z_score)
+    
+        assert np.array_equal(data_copy, expected_data_copy)
+        assert np.array_equal(data_without_outliers, expected_data_without_outliers)
+>       assert np.array_equal(outliers, expected_outliers)
+E       assert False
+E        +  where False = <function array_equal at 0x7224c601b570>((array([], dtype=int64), array([], dtype=int64)), array([], dtype=float64))
+E        +    where <function array_equal at 0x7224c601b570> = np.array_equal
+
+test_0090.py:19: AssertionError
+=========================== short test summary info ============================
+FAILED test_0090.py::test_task_func - assert False
+1 failed in 3.61s

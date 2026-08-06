@@ -1,0 +1,43 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        source_dir = "source_dir"
+        target_dir = "target_dir"
+        file_pattern = r'\b[A-Za-z0-9]+\.(txt|doc|docx)\b'
+    
+        # Test case 1: source directory does not exist
+        with pytest.raises(FileNotFoundError):
+            task_func(source_dir, target_dir, file_pattern)
+    
+        # Test case 2: target directory does not exist
+        with pytest.raises(FileNotFoundError):
+            task_func(source_dir, target_dir, file_pattern)
+    
+        # Test case 3: source directory exists, target directory does not exist
+        with pytest.raises(FileNotFoundError):
+            task_func(source_dir, target_dir, file_pattern)
+    
+        # Test case 4: source directory exists, target directory exists, file pattern matches
+        source_dir = "source_dir"
+        target_dir = "target_dir"
+        file_pattern = r'\b[A-Za-z0-9]+\.(txt|doc|docx)\b'
+>       moved_files_count = task_func(source_dir, target_dir, file_pattern)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0815.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+source_dir = 'source_dir', target_dir = 'target_dir'
+file_pattern = '\\b[A-Za-z0-9]+\\.(txt|doc|docx)\\b'
+
+    def task_func(source_dir, target_dir, file_pattern=r'\b[A-Za-z0-9]+\.(txt|doc|docx)\b'):
+        if not os.path.exists(source_dir):
+>           raise FileNotFoundError("The source directory does not exist.")
+E           FileNotFoundError: The source directory does not exist.
+
+../../../src/src_0815.py:6: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0815.py::test_task_func - FileNotFoundError: The source directory...
+1 failed in 0.46s

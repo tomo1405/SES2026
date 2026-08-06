@@ -1,0 +1,26 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data_list = ["apple, banana, carrot", "dog, cat, mouse", ""]
+        seed = 0
+        df = task_func(data_list, seed)
+        assert isinstance(df, pd.DataFrame)
+        assert df.shape == (3, 2)
+        assert df.columns.tolist() == ["Original String", "Modified String"]
+        expected_modified_strings = [
+            "apple, banana, carrot",
+            "dog, cat, mouse",
+            "",
+        ]
+>       assert df["Modified String"].tolist() == expected_modified_strings
+E       AssertionError: assert ['apple, tkgn...x, mouse', ''] == ['apple, bana...t, mouse', '']
+E         
+E         At index 0 diff: 'apple, tkgnku, carrot' != 'apple, banana, carrot'
+E         Use -v to get more diff
+
+test_0480.py:17: AssertionError
+=========================== short test summary info ============================
+FAILED test_0480.py::test_task_func - AssertionError: assert ['apple, tkgn......
+1 failed in 1.13s

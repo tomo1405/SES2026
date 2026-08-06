@@ -1,0 +1,26 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_non_numeric_values _______________________
+
+    def test_task_func_non_numeric_values():
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0743.py:9: Failed
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        df = task_func([('a', 1), ('b', 2), ('c', 3)])
+        assert df.shape == (3, 2)
+        assert df.columns.tolist() == ['Category', 'Value']
+>       assert df.dtypes.tolist() == ['object', 'float64']
+E       AssertionError: assert [<StringDtype...pe('float64')] == ['object', 'float64']
+E         
+E         At index 0 diff: <StringDtype(na_value=nan)> != 'object'
+E         Use -v to get more diff
+
+test_0743.py:16: AssertionError
+=========================== short test summary info ============================
+FAILED test_0743.py::test_task_func_non_numeric_values - Failed: DID NOT RAIS...
+FAILED test_0743.py::test_task_func_valid_input - AssertionError: assert [<St...
+2 failed, 1 passed in 2.89s

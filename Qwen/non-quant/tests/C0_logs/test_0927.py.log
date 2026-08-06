@@ -1,0 +1,208 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+self = <pandas.io.sql.SQLiteDatabase object at 0x79a9e623b440>
+sql = 'SELECT * FROM test_table', params = None
+
+    def execute(self, sql: str | Select | TextClause, params=None):
+        from sqlite3 import Error
+    
+        if not isinstance(sql, str):
+            raise TypeError("Query must be a string unless using sqlalchemy.")
+        args = [] if params is None else [params]
+        cur = self.con.cursor()
+        try:
+>           cur.execute(sql, *args)
+E           sqlite3.OperationalError: no such table: test_table
+
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:2702: OperationalError
+
+The above exception was the direct cause of the following exception:
+
+    def test_task_func():
+        db_path = create_temp_db()
+        table_name = 'test_table'
+        column_name = 'text_column'
+    
+>       df = task_func(db_path, table_name, column_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0927.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0927.py:6: in task_func
+    df = pd.read_sql_query(f"SELECT * FROM {table_name}", conn)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:497: in read_sql_query
+    return pandas_sql.read_query(
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:2766: in read_query
+    cursor = self.execute(sql, params)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.io.sql.SQLiteDatabase object at 0x79a9e623b440>
+sql = 'SELECT * FROM test_table', params = None
+
+    def execute(self, sql: str | Select | TextClause, params=None):
+        from sqlite3 import Error
+    
+        if not isinstance(sql, str):
+            raise TypeError("Query must be a string unless using sqlalchemy.")
+        args = [] if params is None else [params]
+        cur = self.con.cursor()
+        try:
+            cur.execute(sql, *args)
+            return cur
+        except Error as exc:
+            try:
+                self.con.rollback()
+            except Error as inner_exc:  # pragma: no cover
+                ex = DatabaseError(
+                    f"Execution failed on sql: {sql}\n{exc}\nunable to rollback"
+                )
+                raise ex from inner_exc
+    
+            ex = DatabaseError(f"Execution failed on sql '{sql}': {exc}")
+>           raise ex from exc
+E           pandas.errors.DatabaseError: Execution failed on sql 'SELECT * FROM test_table': no such table: test_table
+
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:2714: DatabaseError
+_______________________ test_task_func_nonexistent_table _______________________
+
+self = <pandas.io.sql.SQLiteDatabase object at 0x79a94ada2150>
+sql = 'SELECT * FROM nonexistent_table', params = None
+
+    def execute(self, sql: str | Select | TextClause, params=None):
+        from sqlite3 import Error
+    
+        if not isinstance(sql, str):
+            raise TypeError("Query must be a string unless using sqlalchemy.")
+        args = [] if params is None else [params]
+        cur = self.con.cursor()
+        try:
+>           cur.execute(sql, *args)
+E           sqlite3.OperationalError: no such table: nonexistent_table
+
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:2702: OperationalError
+
+The above exception was the direct cause of the following exception:
+
+    def test_task_func_nonexistent_table():
+        db_path = create_temp_db()
+        table_name = 'nonexistent_table'
+        column_name = 'text_column'
+    
+        with pytest.raises(sqlite3.OperationalError):
+>           task_func(db_path, table_name, column_name)
+
+test_0927.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0927.py:6: in task_func
+    df = pd.read_sql_query(f"SELECT * FROM {table_name}", conn)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:497: in read_sql_query
+    return pandas_sql.read_query(
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:2766: in read_query
+    cursor = self.execute(sql, params)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.io.sql.SQLiteDatabase object at 0x79a94ada2150>
+sql = 'SELECT * FROM nonexistent_table', params = None
+
+    def execute(self, sql: str | Select | TextClause, params=None):
+        from sqlite3 import Error
+    
+        if not isinstance(sql, str):
+            raise TypeError("Query must be a string unless using sqlalchemy.")
+        args = [] if params is None else [params]
+        cur = self.con.cursor()
+        try:
+            cur.execute(sql, *args)
+            return cur
+        except Error as exc:
+            try:
+                self.con.rollback()
+            except Error as inner_exc:  # pragma: no cover
+                ex = DatabaseError(
+                    f"Execution failed on sql: {sql}\n{exc}\nunable to rollback"
+                )
+                raise ex from inner_exc
+    
+            ex = DatabaseError(f"Execution failed on sql '{sql}': {exc}")
+>           raise ex from exc
+E           pandas.errors.DatabaseError: Execution failed on sql 'SELECT * FROM nonexistent_table': no such table: nonexistent_table
+
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:2714: DatabaseError
+______________________ test_task_func_nonexistent_column _______________________
+
+self = <pandas.io.sql.SQLiteDatabase object at 0x79a94ada2c60>
+sql = 'SELECT * FROM test_table', params = None
+
+    def execute(self, sql: str | Select | TextClause, params=None):
+        from sqlite3 import Error
+    
+        if not isinstance(sql, str):
+            raise TypeError("Query must be a string unless using sqlalchemy.")
+        args = [] if params is None else [params]
+        cur = self.con.cursor()
+        try:
+>           cur.execute(sql, *args)
+E           sqlite3.OperationalError: no such table: test_table
+
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:2702: OperationalError
+
+The above exception was the direct cause of the following exception:
+
+    def test_task_func_nonexistent_column():
+        db_path = create_temp_db()
+        table_name = 'test_table'
+        column_name = 'nonexistent_column'
+    
+        with pytest.raises(KeyError):
+>           task_func(db_path, table_name, column_name)
+
+test_0927.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0927.py:6: in task_func
+    df = pd.read_sql_query(f"SELECT * FROM {table_name}", conn)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:497: in read_sql_query
+    return pandas_sql.read_query(
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:2766: in read_query
+    cursor = self.execute(sql, params)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.io.sql.SQLiteDatabase object at 0x79a94ada2c60>
+sql = 'SELECT * FROM test_table', params = None
+
+    def execute(self, sql: str | Select | TextClause, params=None):
+        from sqlite3 import Error
+    
+        if not isinstance(sql, str):
+            raise TypeError("Query must be a string unless using sqlalchemy.")
+        args = [] if params is None else [params]
+        cur = self.con.cursor()
+        try:
+            cur.execute(sql, *args)
+            return cur
+        except Error as exc:
+            try:
+                self.con.rollback()
+            except Error as inner_exc:  # pragma: no cover
+                ex = DatabaseError(
+                    f"Execution failed on sql: {sql}\n{exc}\nunable to rollback"
+                )
+                raise ex from inner_exc
+    
+            ex = DatabaseError(f"Execution failed on sql '{sql}': {exc}")
+>           raise ex from exc
+E           pandas.errors.DatabaseError: Execution failed on sql 'SELECT * FROM test_table': no such table: test_table
+
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:2714: DatabaseError
+=========================== short test summary info ============================
+FAILED test_0927.py::test_task_func - pandas.errors.DatabaseError: Execution ...
+FAILED test_0927.py::test_task_func_nonexistent_table - pandas.errors.Databas...
+FAILED test_0927.py::test_task_func_nonexistent_column - pandas.errors.Databa...
+3 failed in 1.37s

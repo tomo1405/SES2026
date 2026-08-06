@@ -1,0 +1,42 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a simple signal
+        signal = np.array([0, 1, 2, 3])
+        expected_transformed_signal = np.array([6, -2+2j, -2, -2-2j])
+    
+        transformed_signal, ax = task_func(signal)
+    
+        # Check if the transformed signal is as expected
+        assert np.allclose(transformed_signal, expected_transformed_signal, atol=1e-2)
+    
+        # Check if the plot has two subplots
+        assert len(ax) == 2
+    
+        # Check if the first subplot title is correct
+        assert ax[0].get_title() == 'Original Signal'
+    
+        # Check if the second subplot title is correct
+        assert ax[1].get_title() == 'Transformed Signal'
+    
+        # Close the plot to prevent it from displaying
+>       plt.close(fig)
+                  ^^^
+E       NameError: name 'fig' is not defined
+
+test_0281.py:26: NameError
+=============================== warnings summary ===============================
+Qwen/4bit-quant/tests/test_0281.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/matplotlib/cbook.py:1810: ComplexWarning: Casting complex values to real discards the imaginary part
+    return math.isfinite(val)
+
+Qwen/4bit-quant/tests/test_0281.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/matplotlib/cbook.py:1407: ComplexWarning: Casting complex values to real discards the imaginary part
+    return np.asanyarray(x, float)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0281.py::test_task_func - NameError: name 'fig' is not defined
+1 failed, 2 warnings in 2.23s

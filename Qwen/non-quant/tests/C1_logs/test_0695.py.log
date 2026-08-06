@@ -1,0 +1,63 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a simple list and n=1
+        t = [1, 2, 3]
+        n = 1
+        result = task_func(t, n)
+        assert result in list(itertools.combinations(t, n)), "The result should be one of the combinations"
+    
+        # Test with a list of strings and n=2
+        t = ['a', 'b', 'c']
+        n = 2
+        result = task_func(t, n)
+        assert result in list(itertools.combinations(t, n)), "The result should be one of the combinations"
+    
+        # Test with an empty list
+        t = []
+        n = 0
+        result = task_func(t, n)
+        assert result == (), "The result should be an empty tuple"
+    
+        # Test with a list and n=0
+        t = [1, 2, 3]
+        n = 0
+        result = task_func(t, n)
+        assert result == (), "The result should be an empty tuple"
+    
+        # Test with a list and n equal to the length of the list
+        t = [1, 2, 3]
+        n = len(t)
+        result = task_func(t, n)
+        assert result in list(itertools.combinations(t, n)), "The result should be one of the combinations"
+    
+        # Test with a list and n greater than the length of the list (should return an empty list)
+        t = [1, 2, 3]
+        n = 4
+>       result = task_func(t, n)
+                 ^^^^^^^^^^^^^^^
+
+test_0695.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0695.py:5: in task_func
+    selected_combination = random.choice(combinations)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <random.Random object at 0x2e785410>, seq = []
+
+    def choice(self, seq):
+        """Choose a random element from a non-empty sequence."""
+    
+        # As an accommodation for NumPy, we don't use "if not seq"
+        # because bool(numpy.array()) raises a ValueError.
+        if not len(seq):
+>           raise IndexError('Cannot choose from an empty sequence')
+E           IndexError: Cannot choose from an empty sequence
+
+/usr/lib/python3.12/random.py:347: IndexError
+=========================== short test summary info ============================
+FAILED test_0695.py::test_task_func - IndexError: Cannot choose from an empty...
+1 failed, 1 passed in 0.45s

@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        directory = 'path/to/directory'
+        expected_hashes = {
+            'path/to/directory/file1.txt': 'hash1',
+            'path/to/directory/file2.txt': 'hash2',
+            'path/to/directory/file3.txt': 'hash3'
+        }
+        expected_json_file = 'path/to/directory/hashes.json'
+    
+        # Mock the os.walk function to return the expected files and directories
+        with patch('os.walk') as mock_walk:
+            mock_walk.return_value = [
+                (directory, [], ['file1.txt', 'file2.txt', 'file3.txt']),
+                (directory + '/file1.txt', [], []),
+                (directory + '/file2.txt', [], []),
+                (directory + '/file3.txt', [], [])
+            ]
+    
+            # Mock the open function to return a mock file object
+>           with patch('builtins.open', mock_open()) as mock_file:
+                                        ^^^^^^^^^
+E           NameError: name 'mock_open' is not defined
+
+test_1131.py:26: NameError
+=========================== short test summary info ============================
+FAILED test_1131.py::test_task_func - NameError: name 'mock_open' is not defined
+1 failed in 0.50s

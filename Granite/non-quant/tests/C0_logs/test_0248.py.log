@@ -1,0 +1,19 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Normal input
+        data = [round(random.uniform(MIN_VALUE, MAX_VALUE), 3) for _ in range(N_DATA_POINTS)]
+        data_df = pd.DataFrame(data, columns=['Value'])
+        expected_output = pd.DataFrame(StandardScaler().fit_transform(data_df[['Value']]), columns=['Normalized Value'])
+        actual_output = task_func(n_data_points=N_DATA_POINTS, min_value=MIN_VALUE, max_value=MAX_VALUE)
+>       assert actual_output.equals(expected_output)
+E       assert False
+E        +  where False = equals(      Normalized Value\n0             0.907020\n1             1.701332\n2            -0.808526\n3             0.271362\n4  ...00\n4996         -1.713720\n4997         -0.258993\n4998          1.657049\n4999         -0.437870\n\n[5000 rows x 1 columns])
+E        +    where equals =       Normalized Value\n0             0.437448\n1            -1.084637\n2             0.390164\n3             1.366921\n4  ...72\n4996          0.245203\n4997         -0.822328\n4998         -1.328309\n4999         -0.544832\n\n[5000 rows x 1 columns].equals
+
+test_0248.py:18: AssertionError
+=========================== short test summary info ============================
+FAILED test_0248.py::test_task_func - assert False
+1 failed in 3.01s

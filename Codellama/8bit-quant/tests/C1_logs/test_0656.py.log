@@ -1,0 +1,40 @@
+.FF.F.                                                                   [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_single_text __________________________
+
+    def test_task_func_single_text():
+        """Test that task_func returns a list of topics when given a single text."""
+        text = "This is a test text."
+        topics = task_func([text], 10)
+>       assert len(topics) == 1
+E       AssertionError: assert 10 == 1
+E        +  where 10 = len([['test', 'text'], ['text', 'test'], ['text', 'test'], ['test', 'text'], ['test', 'text'], ['text', 'test'], ...])
+
+test_0656.py:14: AssertionError
+________________________ test_task_func_multiple_texts _________________________
+
+    def test_task_func_multiple_texts():
+        """Test that task_func returns a list of topics when given multiple texts."""
+        texts = ["This is a test text.", "This is another test text."]
+        topics = task_func(texts, 10)
+>       assert len(topics) == 2
+E       AssertionError: assert 10 == 2
+E        +  where 10 = len([['test', 'text'], ['text', 'test'], ['text', 'test'], ['test', 'text'], ['test', 'text'], ['text', 'test'], ...])
+
+test_0656.py:22: AssertionError
+__________________________ test_task_func_num_topics ___________________________
+
+    def test_task_func_num_topics():
+        """Test that task_func returns the correct number of topics."""
+        text = "This is a test text."
+        topics = task_func([text], 10)
+>       assert len(topics[0]) == 10
+E       AssertionError: assert 2 == 10
+E        +  where 2 = len(['test', 'text'])
+
+test_0656.py:38: AssertionError
+=========================== short test summary info ============================
+FAILED test_0656.py::test_task_func_single_text - AssertionError: assert 10 == 1
+FAILED test_0656.py::test_task_func_multiple_texts - AssertionError: assert 1...
+FAILED test_0656.py::test_task_func_num_topics - AssertionError: assert 2 == 10
+3 failed, 3 passed in 3.39s

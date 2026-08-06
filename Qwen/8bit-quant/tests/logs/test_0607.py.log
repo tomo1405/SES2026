@@ -1,0 +1,143 @@
+FFF.F                                                                    [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_valid_data ________________________
+
+    def test_task_func_with_valid_data():
+        matrix = [
+            [1, 2, 3],
+            [4, 5, 6],
+            [7, 8, 9]
+        ]
+        expected_output = pd.DataFrame({
+            0: [0.0, 0.0, 0.0],
+            1: [0.0, 0.0, 0.0],
+            2: [0.0, 0.0, 0.0]
+        })
+        result = task_func(matrix)
+>       pd.testing.assert_frame_equal(result, expected_output)
+
+test_0607.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pandas/_libs/testing.pyx:53: in pandas._libs.testing.assert_almost_equal
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   AssertionError: DataFrame.iloc[:, 0] (column name="0") are different
+E   
+E   DataFrame.iloc[:, 0] (column name="0") values are different (66.66667 %)
+E   [index]: [0, 1, 2]
+E   [left]:  [-1.2247448713915892, 0.0, 1.2247448713915892]
+E   [right]: [0.0, 0.0, 0.0]
+E   At positional index 0, first diff: -1.2247448713915892 != 0.0
+
+pandas/_libs/testing.pyx:171: AssertionError
+________________________ test_task_func_with_nan_values ________________________
+
+    def test_task_func_with_nan_values():
+        matrix = [
+            [1, 2, np.nan],
+            [4, 5, 6],
+            [7, 8, 9]
+        ]
+        expected_output = pd.DataFrame({
+            0: [0.0, 0.0, 0.0],
+            1: [0.0, 0.0, 0.0],
+            2: [0.0, 0.0, 0.0]
+        })
+        result = task_func(matrix)
+>       pd.testing.assert_frame_equal(result, expected_output)
+
+test_0607.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pandas/_libs/testing.pyx:53: in pandas._libs.testing.assert_almost_equal
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   AssertionError: DataFrame.iloc[:, 0] (column name="0") are different
+E   
+E   DataFrame.iloc[:, 0] (column name="0") values are different (66.66667 %)
+E   [index]: [0, 1, 2]
+E   [left]:  [-1.2247448713915892, 0.0, 1.2247448713915892]
+E   [right]: [0.0, 0.0, 0.0]
+E   At positional index 0, first diff: -1.2247448713915892 != 0.0
+
+pandas/_libs/testing.pyx:171: AssertionError
+_______________________ test_task_func_with_empty_matrix _______________________
+
+    def test_task_func_with_empty_matrix():
+        matrix = []
+        expected_output = pd.DataFrame()
+        result = task_func(matrix)
+>       pd.testing.assert_frame_equal(result, expected_output)
+
+test_0607.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+left = Series([], dtype: float64), right = Empty DataFrame
+Columns: []
+Index: []
+cls = <class 'pandas.DataFrame'>
+
+    def _check_isinstance(left, right, cls) -> None:
+        """
+        Helper method for our assert_* methods that ensures that
+        the two objects being compared have the right type before
+        proceeding with the comparison.
+    
+        Parameters
+        ----------
+        left : The first object being compared.
+        right : The second object being compared.
+        cls : The class type to check against.
+    
+        Raises
+        ------
+        AssertionError : Either `left` or `right` is not an instance of `cls`.
+        """
+        cls_name = cls.__name__
+    
+        if not isinstance(left, cls):
+>           raise AssertionError(
+                f"{cls_name} Expected type {cls}, found {type(left)} instead"
+            )
+E           AssertionError: DataFrame Expected type <class 'pandas.DataFrame'>, found <class 'pandas.Series'> instead
+
+../../../.venv/lib/python3.12/site-packages/pandas/_testing/asserters.py:173: AssertionError
+______________________ test_task_func_with_single_column _______________________
+
+    def test_task_func_with_single_column():
+        matrix = [
+            [1],
+            [2],
+            [3]
+        ]
+        expected_output = pd.DataFrame({
+            0: [0.0, 0.0, 0.0]
+        })
+        result = task_func(matrix)
+>       pd.testing.assert_frame_equal(result, expected_output)
+
+test_0607.py:60: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pandas/_libs/testing.pyx:53: in pandas._libs.testing.assert_almost_equal
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   AssertionError: DataFrame.iloc[:, 0] (column name="0") are different
+E   
+E   DataFrame.iloc[:, 0] (column name="0") values are different (66.66667 %)
+E   [index]: [0, 1, 2]
+E   [left]:  [-1.224744871391589, 0.0, 1.224744871391589]
+E   [right]: [0.0, 0.0, 0.0]
+E   At positional index 0, first diff: -1.224744871391589 != 0.0
+
+pandas/_libs/testing.pyx:171: AssertionError
+=========================== short test summary info ============================
+FAILED test_0607.py::test_task_func_with_valid_data - AssertionError: DataFra...
+FAILED test_0607.py::test_task_func_with_nan_values - AssertionError: DataFra...
+FAILED test_0607.py::test_task_func_with_empty_matrix - AssertionError: DataF...
+FAILED test_0607.py::test_task_func_with_single_column - AssertionError: Data...
+4 failed, 1 passed in 2.53s

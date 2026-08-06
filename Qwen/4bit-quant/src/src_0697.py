@@ -1,0 +1,15 @@
+import numpy as np
+import math
+import random
+from random import uniform
+def task_func(radius, num_points):
+    out = []
+    
+    for _ in range(num_points):
+        theta = uniform(0, 2*np.pi)
+        r = radius * math.sqrt(uniform(0, 1))
+        x = r * math.cos(theta)
+        y = r * math.sin(theta)
+        out.append((x, y))
+        
+    return out

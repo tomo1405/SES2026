@@ -1,0 +1,47 @@
+python
+import pandas as pd
+import matplotlib.pyplot as plt
+import pytest
+
+def task_func(data, column):
+    df = pd.DataFrame(data)
+    # Define the categories
+    CATEGORIES = ['A', 'B', 'C', 'D', 'E']
+    
+    # Count occurrences of each category
+    counts = df[column].value_counts()
+    missing_categories = list(set(CATEGORIES) - set(counts.index))
+    for category in missing_categories:
+        counts[category] = 0
+
+    counts = counts.reindex(CATEGORIES)
+    
+    # Plotting
+    ax = counts.plot(kind='bar')
+    ax.set_xlabel('Category')
+    ax.set_ylabel('Count')
+    ax.set_title(f'Distribution of {column}')
+    plt.show()
+    
+    return ax
+
+# Test case 1
+data = {'col1': ['A', 'B', 'C', 'D', 'E', 'A', 'B', 'C', 'D', 'E'],
+        'col2': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+column = 'col1'
+ax = task_func(data, column)
+assert ax is not None
+
+# Test case 2
+data = {'col1': ['A', 'B', 'C', 'D', 'E', 'A', 'B', 'C', 'D', 'E'],
+        'col2': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+column = 'col2'
+ax = task_func(data, column)
+assert ax is not None
+
+# Test case 3
+data = {'col1': ['A', 'B', 'C', 'D', 'E', 'A', 'B', 'C', 'D', 'E'],
+        'col2': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+column = 'col3'
+ax = task_func(data, column)
+assert ax is None

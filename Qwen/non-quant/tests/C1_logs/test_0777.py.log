@@ -1,0 +1,62 @@
+...F.                                                                    [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_missing_columns ________________________
+
+file_path = '/tmp/pytest-of-tomohiro-w/pytest-1628/test_task_func_missing_columns0/temp.csv'
+output_path = None, sort_key = 'title', linear_regression = True
+x_column = 'nonexistent', y_column = 'value'
+
+    def task_func(file_path, output_path=None, sort_key='title', linear_regression=False, x_column=None, y_column=None):
+        try:
+            df = pd.read_csv(file_path)
+            df.sort_values(by=[sort_key], inplace=True)
+    
+            if linear_regression:
+                if x_column not in df.columns or y_column not in df.columns:
+>                   raise ValueError("Specified columns for linear regression do not exist in the dataframe")
+E                   ValueError: Specified columns for linear regression do not exist in the dataframe
+
+../../../src/src_0777.py:10: ValueError
+
+During handling of the above exception, another exception occurred:
+
+temp_csv_file = '/tmp/pytest-of-tomohiro-w/pytest-1628/test_task_func_missing_columns0/temp.csv'
+
+    def test_task_func_missing_columns(temp_csv_file):
+        with pytest.raises(ValueError) as excinfo:
+>           task_func(temp_csv_file, linear_regression=True, x_column='nonexistent', y_column='value')
+
+test_0777.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = '/tmp/pytest-of-tomohiro-w/pytest-1628/test_task_func_missing_columns0/temp.csv'
+output_path = None, sort_key = 'title', linear_regression = True
+x_column = 'nonexistent', y_column = 'value'
+
+    def task_func(file_path, output_path=None, sort_key='title', linear_regression=False, x_column=None, y_column=None):
+        try:
+            df = pd.read_csv(file_path)
+            df.sort_values(by=[sort_key], inplace=True)
+    
+            if linear_regression:
+                if x_column not in df.columns or y_column not in df.columns:
+                    raise ValueError("Specified columns for linear regression do not exist in the dataframe")
+    
+                X = df[[x_column]]
+                y = df[y_column]
+                model = LinearRegression().fit(X, y)
+                return model
+    
+            if output_path:
+                df.to_csv(output_path, index=False)
+                return output_path
+            else:
+                return df
+        except Exception as e:
+>           raise Exception(f"Error while processing the file: {str(e)}")
+E           Exception: Error while processing the file: Specified columns for linear regression do not exist in the dataframe
+
+../../../src/src_0777.py:23: Exception
+=========================== short test summary info ============================
+FAILED test_0777.py::test_task_func_missing_columns - Exception: Error while ...
+1 failed, 4 passed in 3.07s

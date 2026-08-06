@@ -1,0 +1,66 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        sia = SentimentIntensityAnalyzer()
+        text = "This is a test sentence."
+        expected_output = {'neg': 0.0, 'neu': 0.444, 'pos': 0.556, 'compound': 0.5714}
+        actual_output = task_func(text, sia)
+>       assert actual_output == expected_output, "Task function output does not match expected output"
+E       AssertionError: Task function output does not match expected output
+E       assert {'neg': 0.0, ...ound': 0.0772} == {'neg': 0.0, ...ound': 0.5714}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'neu': 0.698} != {'neu': 0.444}
+E         {'compound': 0.0772} != {'compound': 0.5714}
+E         {'pos': 0.302} != {'pos': 0.556}
+E         Use -v to get more diff
+
+test_0657.py:20: AssertionError
+_______________________ test_task_func_with_punctuation ________________________
+
+    def test_task_func_with_punctuation():
+        sia = SentimentIntensityAnalyzer()
+        text = "This, is a test! sentence."
+        expected_output = {'neg': 0.0, 'neu': 0.429, 'pos': 0.571, 'compound': 0.5357}
+        actual_output = task_func(text, sia)
+>       assert actual_output == expected_output, "Task function output does not match expected output"
+E       AssertionError: Task function output does not match expected output
+E       assert {'neg': 0.0, ...ound': 0.0772} == {'neg': 0.0, ...ound': 0.5357}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'neu': 0.698} != {'neu': 0.429}
+E         {'compound': 0.0772} != {'compound': 0.5357}
+E         {'pos': 0.302} != {'pos': 0.571}
+E         Use -v to get more diff
+
+test_0657.py:26: AssertionError
+____________________ test_task_func_with_special_characters ____________________
+
+    def test_task_func_with_special_characters():
+        sia = SentimentIntensityAnalyzer()
+        text = "This #is a $ test^ sentence."
+        expected_output = {'neg': 0.0, 'neu': 0.429, 'pos': 0.571, 'compound': 0.5357}
+        actual_output = task_func(text, sia)
+>       assert actual_output == expected_output, "Task function output does not match expected output"
+E       AssertionError: Task function output does not match expected output
+E       assert {'neg': 0.0, ...ound': 0.0772} == {'neg': 0.0, ...ound': 0.5357}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'neu': 0.698} != {'neu': 0.429}
+E         {'compound': 0.0772} != {'compound': 0.5357}
+E         {'pos': 0.302} != {'pos': 0.571}
+E         Use -v to get more diff
+
+test_0657.py:32: AssertionError
+=========================== short test summary info ============================
+FAILED test_0657.py::test_task_func - AssertionError: Task function output do...
+FAILED test_0657.py::test_task_func_with_punctuation - AssertionError: Task f...
+FAILED test_0657.py::test_task_func_with_special_characters - AssertionError:...
+3 failed in 3.88s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

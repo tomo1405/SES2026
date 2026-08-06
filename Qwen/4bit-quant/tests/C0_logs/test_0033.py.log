@@ -1,0 +1,123 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_nonexistent_url ______________________
+
+mock_get = <MagicMock name='get' id='128048799294448'>
+
+    @patch('requests.get')
+    def test_task_func_with_nonexistent_url(mock_get):
+        # Mock the response from requests.get to simulate a non-existent URL
+        mock_response = mock_get.return_value
+        mock_response.status_code = 404
+    
+        # Test case: URL returns a 404 error
+>       result = task_func("http://nonexistent-url.com", "h1")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0033.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0033.py:5: in task_func
+    soup = BeautifulSoup(response.text, 'html.parser')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/bs4/__init__.py:465: in __init__
+    for (
+../../../.venv/lib/python3.12/site-packages/bs4/builder/_htmlparser.py:462: in prepare_markup
+    dammit = UnicodeDammit(
+../../../.venv/lib/python3.12/site-packages/bs4/dammit.py:820: in __init__
+    for encoding in self.detector.encodings:
+../../../.venv/lib/python3.12/site-packages/bs4/dammit.py:632: in encodings
+    self.declared_encoding = self.find_declared_encoding(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cls = <class 'bs4.dammit.EncodingDetector'>
+markup = <MagicMock name='get().text.read()' id='128048799299728'>
+is_html = True, search_entire_document = False
+
+    @classmethod
+    def find_declared_encoding(
+        cls,
+        markup: Union[bytes, str],
+        is_html: bool = False,
+        search_entire_document: bool = False,
+    ) -> Optional[_Encoding]:
+        """Given a document, tries to find an encoding declared within the
+        text of the document itself.
+    
+        An XML encoding is declared at the beginning of the document.
+    
+        An HTML encoding is declared in a <meta> tag, hopefully near the
+        beginning of the document.
+    
+        :param markup: Some markup.
+        :param is_html: If True, this markup is considered to be HTML. Otherwise
+            it's assumed to be XML.
+        :param search_entire_document: Since an encoding is supposed
+            to declared near the beginning of the document, most of
+            the time it's only necessary to search a few kilobytes of
+            data.  Set this to True to force this method to search the
+            entire document.
+        :return: The declared encoding, if one is found.
+        """
+        if search_entire_document:
+            xml_endpos = html_endpos = len(markup)
+        else:
+            xml_endpos = 1024
+            html_endpos = max(2048, int(len(markup) * 0.05))
+    
+        if isinstance(markup, bytes):
+            res = encoding_res[bytes]
+        else:
+            res = encoding_res[str]
+    
+        xml_re = res["xml"]
+        html_re = res["html"]
+        declared_encoding: Optional[_Encoding] = None
+>       declared_encoding_match = xml_re.search(markup, endpos=xml_endpos)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: expected string or bytes-like object, got 'MagicMock'
+
+../../../.venv/lib/python3.12/site-packages/bs4/dammit.py:731: TypeError
+__________________ test_task_func_with_no_internet_connection __________________
+
+mock_get = <MagicMock name='get' id='128048791828240'>
+
+    @patch('requests.get')
+    def test_task_func_with_no_internet_connection(mock_get):
+        # Mock the response from requests.get to simulate no internet connection
+        mock_get.side_effect = requests.exceptions.RequestException
+    
+        # Test case: No internet connection
+>       result = task_func("http://example.com", "h1")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0033.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0033.py:4: in task_func
+    response = requests.get(url)
+               ^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/unittest/mock.py:1134: in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/unittest/mock.py:1138: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='get' id='128048791828240'>
+args = ('http://example.com',), kwargs = {}
+
+    def _execute_mock_call(self, /, *args, **kwargs):
+        # separate from _increment_mock_call so that awaited functions are
+        # executed separately from their call, also AsyncMock overrides this method
+    
+        effect = self.side_effect
+        if effect is not None:
+            if _is_exception(effect):
+>               raise effect
+E               requests.exceptions.RequestException
+
+/usr/lib/python3.12/unittest/mock.py:1193: RequestException
+=========================== short test summary info ============================
+FAILED test_0033.py::test_task_func_with_nonexistent_url - TypeError: expecte...
+FAILED test_0033.py::test_task_func_with_no_internet_connection - requests.ex...
+2 failed, 1 passed in 1.50s

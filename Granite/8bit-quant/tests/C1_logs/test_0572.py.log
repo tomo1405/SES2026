@@ -1,0 +1,41 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_______________________________ test_valid_input _______________________________
+
+    def test_valid_input():
+        f_list = [print, len, sum]
+        file_path = "test.csv"
+        task_func(f_list, file_path)
+        df = pd.read_csv(file_path)
+        assert df.shape == (3, 5)
+        assert df['Function Name'].tolist() == ['print', 'len', 'sum']
+>       assert df['Number of Arguments'].tolist() == [0, 1, 1]
+E       assert [0, 1, 2] == [0, 1, 1]
+E         
+E         At index 2 diff: 2 != 1
+E         Use -v to get more diff
+
+test_0572.py:12: AssertionError
+______________________________ test_invalid_input ______________________________
+
+    def test_invalid_input():
+        with pytest.raises(ValueError) as excinfo:
+            task_func([], "test.csv")
+        assert "f_list should not be empty." in str(excinfo.value)
+    
+        with pytest.raises(ValueError) as excinfo:
+            task_func([print, len, sum, "invalid"], "test.csv")
+        assert "All elements in f_list must be callable functions." in str(excinfo.value)
+    
+        with pytest.raises(ValueError) as excinfo:
+            task_func([print, len, sum], 123)
+        assert "file_path must be a string." in str(excinfo.value)
+    
+>       with pytest.raises(IOError) as excinfo:
+E       Failed: DID NOT RAISE OSError
+
+test_0572.py:30: Failed
+=========================== short test summary info ============================
+FAILED test_0572.py::test_valid_input - assert [0, 1, 2] == [0, 1, 1]
+FAILED test_0572.py::test_invalid_input - Failed: DID NOT RAISE OSError
+2 failed in 1.12s

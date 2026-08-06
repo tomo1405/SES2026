@@ -1,0 +1,50 @@
+FF..                                                                     [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_valid_pattern _______________________
+
+mock_os = None, mock_re = None
+
+    def test_task_func_with_valid_pattern(mock_os, mock_re):
+>       assert task_func(r'^log\d+\.txt$') == '/var/log/log1.txt'
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0007.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0007.py:5: in task_func
+    log_files = sorted(log_files, key=lambda f: os.path.getmtime(os.path.join(log_dir, f)), reverse=True)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+f = 'log1.txt'
+
+>   log_files = sorted(log_files, key=lambda f: os.path.getmtime(os.path.join(log_dir, f)), reverse=True)
+                                                ^^^^^^^^^^^^^^^^
+E   AttributeError: 'function' object has no attribute 'getmtime'
+
+../../../src/src_0007.py:5: AttributeError
+__________________ test_task_func_with_another_valid_pattern ___________________
+
+mock_os = None, mock_re = None
+
+    def test_task_func_with_another_valid_pattern(mock_os, mock_re):
+>       assert task_func(r'^log\d+\.log$') == '/var/log/log3.log'
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0007.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0007.py:5: in task_func
+    log_files = sorted(log_files, key=lambda f: os.path.getmtime(os.path.join(log_dir, f)), reverse=True)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+f = 'log2.log'
+
+>   log_files = sorted(log_files, key=lambda f: os.path.getmtime(os.path.join(log_dir, f)), reverse=True)
+                                                ^^^^^^^^^^^^^^^^
+E   AttributeError: 'function' object has no attribute 'getmtime'
+
+../../../src/src_0007.py:5: AttributeError
+=========================== short test summary info ============================
+FAILED test_0007.py::test_task_func_with_valid_pattern - AttributeError: 'fun...
+FAILED test_0007.py::test_task_func_with_another_valid_pattern - AttributeErr...
+2 failed, 2 passed in 0.40s

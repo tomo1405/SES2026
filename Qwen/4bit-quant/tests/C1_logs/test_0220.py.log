@@ -1,0 +1,101 @@
+F.FFFF                                                                   [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_empty_list ________________________
+
+    def test_task_func_with_empty_list():
+>       assert task_func([]) == (0, 0, 0, 0, 0, 0)
+               ^^^^^^^^^^^^^
+
+test_0220.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0220.py:5: in task_func
+    fft = np.abs(np.fft.fft([math.degrees(x) for x in input_list]))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/numpy/fft/_pocketfft.py:215: in fft
+    output = _raw_fft(a, n, axis, False, True, norm, out)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = array([], dtype=float64), n = 0, axis = -1, is_real = False
+is_forward = True, norm = None, out = None
+
+    def _raw_fft(a, n, axis, is_real, is_forward, norm, out=None):
+        if n < 1:
+>           raise ValueError(f"Invalid number of FFT data points ({n}) specified.")
+E           ValueError: Invalid number of FFT data points (0) specified.
+
+../../../.venv/lib/python3.12/site-packages/numpy/fft/_pocketfft.py:60: ValueError
+_______________________ test_task_func_with_two_elements _______________________
+
+    def test_task_func_with_two_elements():
+>       assert task_func([0, math.pi/2]) == (0.7853981633974483, 0.7853981633974483, 0.7853981633974483, 0, 0, 0)
+E       assert (0.7853981633...0, 90, 90, 90) == (0.7853981633...4483, 0, 0, 0)
+E         
+E         At index 2 diff: 0 != 0.7853981633974483
+E         Use -v to get more diff
+
+test_0220.py:15: AssertionError
+____________________ test_task_func_with_multiple_elements _____________________
+
+    def test_task_func_with_multiple_elements():
+        input_list = [0, math.pi/4, math.pi/2, math.pi]
+        result = task_func(input_list)
+        expected_mean = statistics.mean([0, 45, 90, 180])
+        expected_median = statistics.median([0, 45, 90, 180])
+        expected_mode = statistics.mode([0, 45, 90, 180])
+        fft = np.abs(np.fft.fft([math.degrees(x) for x in input_list]))
+        expected_mean_fft = round(statistics.mean(fft))
+        expected_median_fft = round(statistics.median(fft))
+        expected_mode_fft = round(statistics.mode(fft))
+>       assert result == (expected_mean, expected_median, expected_mode, expected_mean_fft, expected_median_fft, expected_mode_fft)
+E       assert (1.3744467859...194, 162, 162) == (78.75, 67.5,...194, 162, 162)
+E         
+E         At index 0 diff: 1.3744467859455345 != 78.75
+E         Use -v to get more diff
+
+test_0220.py:27: AssertionError
+____________________ test_task_func_with_repeated_elements _____________________
+
+    def test_task_func_with_repeated_elements():
+        input_list = [math.pi/4, math.pi/4, math.pi/2, math.pi/2]
+        result = task_func(input_list)
+        expected_mean = statistics.mean([45, 45, 90, 90])
+        expected_median = statistics.median([45, 45, 90, 90])
+        expected_mode = statistics.mode([45, 45, 90, 90])
+        fft = np.abs(np.fft.fft([math.degrees(x) for x in input_list]))
+        expected_mean_fft = round(statistics.mean(fft))
+        expected_median_fft = round(statistics.median(fft))
+        expected_mode_fft = round(statistics.mode(fft))
+>       assert result == (expected_mean, expected_median, expected_mode, expected_mean_fft, expected_median_fft, expected_mode_fft)
+E       assert (1.1780972450...3, 99, 64, 64) == (67.5, 67.5, 45, 99, 64, 64)
+E         
+E         At index 0 diff: 1.1780972450961724 != 67.5
+E         Use -v to get more diff
+
+test_0220.py:39: AssertionError
+_____________________ test_task_func_with_negative_angles ______________________
+
+    def test_task_func_with_negative_angles():
+        input_list = [-math.pi/2, -math.pi/4, 0, math.pi/4]
+        result = task_func(input_list)
+        expected_mean = statistics.mean([-90, -45, 0, 45])
+        expected_median = statistics.median([-90, -45, 0, 45])
+        expected_mode = statistics.mode([-90, -45, 0, 45])
+        fft = np.abs(np.fft.fft([math.degrees(x) for x in input_list]))
+        expected_mean_fft = round(statistics.mean(fft))
+        expected_median_fft = round(statistics.median(fft))
+        expected_mode_fft = round(statistics.mode(fft))
+>       assert result == (expected_mean, expected_median, expected_mode, expected_mean_fft, expected_median_fft, expected_mode_fft)
+E       assert (-0.392699081... 109, 109, 90) == (-22.5, -22.5... 109, 109, 90)
+E         
+E         At index 0 diff: -0.39269908169872414 != -22.5
+E         Use -v to get more diff
+
+test_0220.py:51: AssertionError
+=========================== short test summary info ============================
+FAILED test_0220.py::test_task_func_with_empty_list - ValueError: Invalid num...
+FAILED test_0220.py::test_task_func_with_two_elements - assert (0.7853981633....
+FAILED test_0220.py::test_task_func_with_multiple_elements - assert (1.374446...
+FAILED test_0220.py::test_task_func_with_repeated_elements - assert (1.178097...
+FAILED test_0220.py::test_task_func_with_negative_angles - assert (-0.3926990...
+5 failed, 1 passed in 0.59s

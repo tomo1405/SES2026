@@ -1,0 +1,33 @@
+..F.F..                                                                  [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_no_correlation ______________________
+
+    def test_task_func_with_no_correlation():
+        data = [
+            [1, 2, 3],
+            [4, 1, 6],
+            [7, 8, 1]
+        ]
+        cols = ['A', 'B', 'C']
+        result = task_func(data, cols)
+>       assert np.isclose(result.loc['A', 'B'], 0.0)
+E       assert np.False_
+E        +  where np.False_ = <function isclose at 0x70a2fb9bc070>(np.float64(0.7924058156930615), 0.0)
+E        +    where <function isclose at 0x70a2fb9bc070> = np.isclose
+
+test_0701.py:36: AssertionError
+________________________ test_task_func_with_empty_data ________________________
+
+    def test_task_func_with_empty_data():
+        data = []
+        cols = ['A', 'B', 'C']
+        result = task_func(data, cols)
+>       assert result.empty
+E       assert False
+E        +  where False =     A   B   C\nA NaN NaN NaN\nB NaN NaN NaN\nC NaN NaN NaN.empty
+
+test_0701.py:53: AssertionError
+=========================== short test summary info ============================
+FAILED test_0701.py::test_task_func_with_no_correlation - assert np.False_
+FAILED test_0701.py::test_task_func_with_empty_data - assert False
+2 failed, 5 passed in 1.34s

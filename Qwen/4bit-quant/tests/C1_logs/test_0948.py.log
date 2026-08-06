@@ -1,0 +1,63 @@
+FFF.FF.                                                                  [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_default ____________________________
+
+    def test_task_func_default():
+        result = task_func()
+        assert result.shape == (3, 2)
+        assert isinstance(result, np.ndarray)
+>       assert result.dtype == 'datetime64[D]'
+E       AssertionError: assert dtype('<M8[us]') == 'datetime64[D]'
+E        +  where dtype('<M8[us]') = array([['2021-01-21T00:00:00.000000', '2021-05-13T00:00:00.000000'],\n       ['2021-07-17T00:00:00.000000', '2021-08-04T00:00:00.000000'],\n       ['2021-09-06T00:00:00.000000', '2021-09-19T00:00:00.000000']],\n      dtype='datetime64[us]').dtype
+
+test_0948.py:10: AssertionError
+_______________________ test_task_func_custom_dimensions _______________________
+
+    def test_task_func_custom_dimensions():
+        result = task_func(rows=2, columns=3)
+        assert result.shape == (2, 3)
+        assert isinstance(result, np.ndarray)
+>       assert result.dtype == 'datetime64[D]'
+E       AssertionError: assert dtype('<M8[us]') == 'datetime64[D]'
+E        +  where dtype('<M8[us]') = array([['2021-01-21T00:00:00.000000', '2021-05-13T00:00:00.000000',\n        '2021-07-17T00:00:00.000000'],\n       ['2021-08-04T00:00:00.000000', '2021-09-06T00:00:00.000000',\n        '2021-09-19T00:00:00.000000']], dtype='datetime64[us]').dtype
+
+test_0948.py:16: AssertionError
+_________________________ test_task_func_custom_dates __________________________
+
+    def test_task_func_custom_dates():
+        start_date = datetime(2022, 1, 1)
+        end_date = datetime(2022, 12, 31)
+        result = task_func(start_date=start_date, end_date=end_date)
+        assert result[0, 0] >= np.datetime64(start_date)
+        assert result[-1, -1] <= np.datetime64(end_date)
+        assert isinstance(result, np.ndarray)
+>       assert result.dtype == 'datetime64[D]'
+E       AssertionError: assert dtype('<M8[us]') == 'datetime64[D]'
+E        +  where dtype('<M8[us]') = array([['2022-01-21T00:00:00.000000', '2022-05-13T00:00:00.000000'],\n       ['2022-07-17T00:00:00.000000', '2022-08-04T00:00:00.000000'],\n       ['2022-09-06T00:00:00.000000', '2022-09-19T00:00:00.000000']],\n      dtype='datetime64[us]').dtype
+
+test_0948.py:25: AssertionError
+__________________________ test_task_func_single_date __________________________
+
+    def test_task_func_single_date():
+        result = task_func(rows=1, columns=1)
+        assert result.shape == (1, 1)
+        assert isinstance(result, np.ndarray)
+>       assert result.dtype == 'datetime64[D]'
+E       AssertionError: assert dtype('<M8[us]') == 'datetime64[D]'
+E        +  where dtype('<M8[us]') = array([['2021-07-17T00:00:00.000000']], dtype='datetime64[us]').dtype
+
+test_0948.py:37: AssertionError
+___________________________ test_task_func_no_dates ____________________________
+
+    def test_task_func_no_dates():
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0948.py:40: Failed
+=========================== short test summary info ============================
+FAILED test_0948.py::test_task_func_default - AssertionError: assert dtype('<...
+FAILED test_0948.py::test_task_func_custom_dimensions - AssertionError: asser...
+FAILED test_0948.py::test_task_func_custom_dates - AssertionError: assert dty...
+FAILED test_0948.py::test_task_func_single_date - AssertionError: assert dtyp...
+FAILED test_0948.py::test_task_func_no_dates - Failed: DID NOT RAISE ValueError
+5 failed, 2 passed in 0.65s

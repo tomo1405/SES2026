@@ -1,0 +1,30 @@
+....F                                                                    [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_single_column _________________________
+
+    def test_task_func_single_column():
+        df = pd.DataFrame({
+            'A': [1, 2, np.nan]
+        })
+        df_imputed, ax = task_func(df)
+        assert df_imputed['A'].isnull().sum() == 0
+>       assert df_imputed['A'].mean() == pytest.approx(2.0)
+E       assert np.float64(1.5) == 2.0 ± 2.0e-06
+E         
+E         comparison failed
+E         Obtained: 1.5
+E         Expected: 2.0 ± 2.0e-06
+
+test_0136.py:48: AssertionError
+=============================== warnings summary ===============================
+Qwen/non-quant/tests/test_0136.py::test_task_func_imputation
+Qwen/non-quant/tests/test_0136.py::test_task_func_boxplot
+Qwen/non-quant/tests/test_0136.py::test_task_func_no_missing_values
+Qwen/non-quant/tests/test_0136.py::test_task_func_single_column
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/categorical.py:700: MatplotlibDeprecationWarning: vert: bool was deprecated in Matplotlib 3.11 and will be removed in 3.13. Use orientation: {'vertical', 'horizontal'} instead.
+    artists = ax.bxp(**boxplot_kws)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0136.py::test_task_func_single_column - assert np.float64(1.5) ==...
+1 failed, 4 passed, 4 warnings in 4.10s

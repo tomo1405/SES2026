@@ -1,0 +1,62 @@
+.FF.FF                                                                   [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_zero_components ______________________
+
+    def test_task_func_with_zero_components():
+        tuples_list = [(1, 2), (3, 4), (5, 6)]
+        n_components = 0
+>       with pytest.raises(ValueError) as excinfo:
+E       Failed: DID NOT RAISE ValueError
+
+test_0696.py:16: Failed
+______________ test_task_func_with_more_components_than_features _______________
+
+    def test_task_func_with_more_components_than_features():
+        tuples_list = [(1, 2), (3, 4), (5, 6)]
+        n_components = 3
+        with pytest.raises(ValueError) as excinfo:
+            task_func(tuples_list, n_components)
+>       assert "n_components must be between 0 and min(n_samples, n_features)" in str(excinfo.value)
+E       assert 'n_components must be between 0 and min(n_samples, n_features)' in "n_components=3 must be between 0 and min(n_samples, n_features)=2 with svd_solver='full'"
+E        +  where "n_components=3 must be between 0 and min(n_samples, n_features)=2 with svd_solver='full'" = str(ValueError("n_components=3 must be between 0 and min(n_samples, n_features)=2 with svd_solver='full'"))
+E        +    where ValueError("n_components=3 must be between 0 and min(n_samples, n_features)=2 with svd_solver='full'") = <ExceptionInfo ValueError("n_components=3 must be between 0 and min(n_samples, n_features)=2 with svd_solver='full'") tblen=7>.value
+
+test_0696.py:25: AssertionError
+___________________ test_task_func_with_negative_components ____________________
+
+    def test_task_func_with_negative_components():
+        tuples_list = [(1, 2), (3, 4), (5, 6)]
+        n_components = -1
+        with pytest.raises(ValueError) as excinfo:
+            task_func(tuples_list, n_components)
+>       assert "n_components must be between 0 and min(n_samples, n_features)" in str(excinfo.value)
+E       assert 'n_components must be between 0 and min(n_samples, n_features)' in "The 'n_components' parameter of PCA must be an int in the range [0, inf), a float in the range (0.0, 1.0), a str among {'mle'} or None. Got -1 instead."
+E        +  where "The 'n_components' parameter of PCA must be an int in the range [0, inf), a float in the range (0.0, 1.0), a str among {'mle'} or None. Got -1 instead." = str(InvalidParameterError("The 'n_components' parameter of PCA must be an int in the range [0, inf), a float in the range (0.0, 1.0), a str among {'mle'} or None. Got -1 instead."))
+E        +    where InvalidParameterError("The 'n_components' parameter of PCA must be an int in the range [0, inf), a float in the range (0.0, 1.0), a str among {'mle'} or None. Got -1 instead.") = <ExceptionInfo InvalidParameterError("The 'n_components' parameter of PCA must be an int in the range [0, inf), a float in the range (0.0, 1.0), a str among {'mle'} or None. Got -1 instead.") tblen=6>.value
+
+test_0696.py:39: AssertionError
+_____________________ test_task_func_with_non_numeric_data _____________________
+
+    def test_task_func_with_non_numeric_data():
+        tuples_list = [("a", "b"), ("c", "d"), ("e", "f")]
+        n_components = 1
+        with pytest.raises(ValueError) as excinfo:
+            task_func(tuples_list, n_components)
+>       assert "Input data contains non-numeric values" in str(excinfo.value)
+E       assert 'Input data contains non-numeric values' in "could not convert string to float: np.str_('a')"
+E        +  where "could not convert string to float: np.str_('a')" = str(ValueError("could not convert string to float: np.str_('a')"))
+E        +    where ValueError("could not convert string to float: np.str_('a')") = <ExceptionInfo ValueError("could not convert string to float: np.str_('a')") tblen=9>.value
+
+test_0696.py:46: AssertionError
+=============================== warnings summary ===============================
+Qwen/8bit-quant/tests/test_0696.py::test_task_func_with_single_sample
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/sklearn/decomposition/_pca.py:584: RuntimeWarning: invalid value encountered in divide
+    explained_variance_ = (S**2) / (n_samples - 1)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0696.py::test_task_func_with_zero_components - Failed: DID NOT RA...
+FAILED test_0696.py::test_task_func_with_more_components_than_features - asse...
+FAILED test_0696.py::test_task_func_with_negative_components - assert 'n_comp...
+FAILED test_0696.py::test_task_func_with_non_numeric_data - assert 'Input dat...
+4 failed, 2 passed, 1 warning in 3.13s

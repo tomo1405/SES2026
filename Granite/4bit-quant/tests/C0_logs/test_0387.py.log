@@ -1,0 +1,33 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+_____________________________ test_task_func_shape _____________________________
+
+    def test_task_func_shape():
+        length = 100
+        df = task_func(length)
+>       assert df.shape == (length, len(COLUMNS))
+E       assert (99, 5) == (100, 5)
+E         
+E         At index 0 diff: 99 != 100
+E         Use -v to get more diff
+
+test_0387.py:11: AssertionError
+____________________________ test_task_func_min_max ____________________________
+
+    def test_task_func_min_max():
+        length = 100
+        min_value = 50
+        max_value = 150
+        df = task_func(length, min_value, max_value)
+>       assert (df >= min_value).all().all() and (df <= max_value).all().all()
+E       assert (np.False_)
+E        +  where np.False_ = all()
+E        +    where all = Column1    False\nColumn2    False\nColumn3    False\nColumn4    False\nColumn5    False\ndtype: bool.all
+E        +      where Column1    False\nColumn2    False\nColumn3    False\nColumn4    False\nColumn5    False\ndtype: bool = all()
+E        +        where all =      Column1  Column2  Column3  Column4  Column5\n50       2.0      2.0      1.0      2.0      4.0\n51       3.0      6....8      NaN     99.0      NaN    100.0      NaN\n149    100.0    100.0    100.0      NaN      NaN\n\n[100 rows x 5 columns] >= 50.all
+
+test_0387.py:18: AssertionError
+=========================== short test summary info ============================
+FAILED test_0387.py::test_task_func_shape - assert (99, 5) == (100, 5)
+FAILED test_0387.py::test_task_func_min_max - assert (np.False_)
+2 failed, 1 passed in 1.40s

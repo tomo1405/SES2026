@@ -1,0 +1,27 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test 1: Validate that the function raises an error when weights are not strings
+        data = {
+            "Weight_String": [60.5, 65.7, 70.2, 75.9, 80.1],
+            "Height": [160, 165, 170, 175, 180],
+        }
+        with pytest.raises(ValueError):
+            task_func(data)
+    
+        # Test 2: Validate that the function converts string weights to floats
+        data = {
+            "Weight_String": ["60.5", "65.7", "70.2", "75.9", "80.1"],
+            "Height": [160, 165, 170, 175, 180],
+        }
+        df = task_func(data)
+>       assert all(isinstance(weight, float) for weight in df["Weight_Float"])
+                                                           ^^^^^^^^^^^^^^^^^^
+E       TypeError: 'Axes' object is not subscriptable
+
+test_1082.py:19: TypeError
+=========================== short test summary info ============================
+FAILED test_1082.py::test_task_func - TypeError: 'Axes' object is not subscri...
+1 failed in 3.68s

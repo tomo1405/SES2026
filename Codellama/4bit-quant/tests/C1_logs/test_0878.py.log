@@ -1,0 +1,30 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]})
+        n_components = 2
+        result = task_func(data, n_components)
+        assert isinstance(result, pd.DataFrame)
+        assert result.shape == (3, 2)
+>       assert result.columns.to_list() == ['A', 'B']
+E       AssertionError: assert [0, 1] == ['A', 'B']
+E         
+E         At index 0 diff: 0 != 'A'
+E         Use -v to get more diff
+
+test_0878.py:12: AssertionError
+_________________________ test_task_func_invalid_data __________________________
+
+    def test_task_func_invalid_data():
+        data = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]})
+        n_components = 2
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0878.py:17: Failed
+=========================== short test summary info ============================
+FAILED test_0878.py::test_task_func - AssertionError: assert [0, 1] == ['A', ...
+FAILED test_0878.py::test_task_func_invalid_data - Failed: DID NOT RAISE Valu...
+2 failed, 1 passed in 3.45s

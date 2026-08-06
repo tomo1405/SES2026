@@ -1,0 +1,64 @@
+.F..                                                                     [100%]
+=================================== FAILURES ===================================
+____________________ test_task_func_api_rate_limit_exceeded ____________________
+
+repo_url = 'https://api.github.com/repos/test-user/test-repo'
+
+    def task_func(repo_url: str) -> dict:
+        try:
+            response = requests.get(repo_url, timeout=2)
+            response.raise_for_status()  # Raises HTTPError for bad requests
+            repo_info = response.json()
+            if (
+                response.status_code == 403
+                and repo_info.get("message") == "API rate limit exceeded"
+            ):
+>               raise requests.exceptions.HTTPError("API rate limit exceeded")
+E               requests.exceptions.HTTPError: API rate limit exceeded
+
+../../../src/src_1068.py:12: HTTPError
+
+The above exception was the direct cause of the following exception:
+
+    def test_task_func_api_rate_limit_exceeded():
+        mock_response = MagicMock()
+        mock_response.status_code = 403
+        mock_response.json.return_value = {
+            "message": "API rate limit exceeded"
+        }
+    
+        with patch('requests.get', return_value=mock_response):
+            with pytest.raises(requests.exceptions.HTTPError) as excinfo:
+>               task_func("https://api.github.com/repos/test-user/test-repo")
+
+test_1068.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+repo_url = 'https://api.github.com/repos/test-user/test-repo'
+
+    def task_func(repo_url: str) -> dict:
+        try:
+            response = requests.get(repo_url, timeout=2)
+            response.raise_for_status()  # Raises HTTPError for bad requests
+            repo_info = response.json()
+            if (
+                response.status_code == 403
+                and repo_info.get("message") == "API rate limit exceeded"
+            ):
+                raise requests.exceptions.HTTPError("API rate limit exceeded")
+    
+            if repo_info.get("open_issues_count", 0) > 10000:
+                logging.warning("The repository has more than 10000 open issues.")
+    
+            return repo_info
+    
+        except requests.exceptions.RequestException as e:
+>           raise requests.exceptions.RequestException(
+                f"Error fetching repo info: {e}"
+            ) from e
+E           requests.exceptions.RequestException: Error fetching repo info: API rate limit exceeded
+
+../../../src/src_1068.py:20: RequestException
+=========================== short test summary info ============================
+FAILED test_1068.py::test_task_func_api_rate_limit_exceeded - requests.except...
+1 failed, 3 passed in 0.93s

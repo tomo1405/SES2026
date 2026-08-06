@@ -1,0 +1,50 @@
+F..F..F                                                                  [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_no_emp_prefix _________________________
+
+    def test_task_func_no_emp_prefix():
+        input_dict = {'HR': 5, 'EMP$$': 3}
+        result = task_func(input_dict)
+>       assert result == (0, 0, [])
+E       assert (39.666666666... [50, 38, 31]) == (0, 0, [])
+E         
+E         At index 0 diff: 39.666666666666664 != 0
+E         Use -v to get more diff
+
+test_1117.py:10: AssertionError
+______________________ test_task_func_multiple_employees _______________________
+
+    def test_task_func_multiple_employees():
+        input_dict = {'EMP$$': 5}
+        with patch.object(random, 'randint', side_effect=[25, 30, 35, 40, 45]):
+            result = task_func(input_dict)
+>           assert result == (35, 35, [35])
+E           assert (35, 35, [25, 30, 35, 40, 45]) == (35, 35, [35])
+E             
+E             At index 2 diff: [25, 30, 35, 40, 45] != [35]
+E             Use -v to get more diff
+
+test_1117.py:27: AssertionError
+___________________ test_task_func_random_ages_within_range ____________________
+
+    def test_task_func_random_ages_within_range():
+        input_dict = {'EMP$$': 10}
+        result = task_func(input_dict)
+>       assert all(AGE_RANGE[0] <= age <= AGE_RANGE[1] for age in result[2])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1117.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <list_iterator object at 0x758c3cf6abc0>
+
+>   assert all(AGE_RANGE[0] <= age <= AGE_RANGE[1] for age in result[2])
+               ^^^^^^^^^
+E   NameError: name 'AGE_RANGE' is not defined
+
+test_1117.py:45: NameError
+=========================== short test summary info ============================
+FAILED test_1117.py::test_task_func_no_emp_prefix - assert (39.666666666... [...
+FAILED test_1117.py::test_task_func_multiple_employees - assert (35, 35, [25,...
+FAILED test_1117.py::test_task_func_random_ages_within_range - NameError: nam...
+3 failed, 4 passed in 0.50s

@@ -1,0 +1,41 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_default_args __________________________
+
+    def test_task_func_default_args():
+        """Test the function with default arguments."""
+        df = task_func()
+        assert isinstance(df, pd.DataFrame)
+        assert df.shape == (1000, 5)
+        assert df.columns.tolist() == ['A', 'B', 'C', 'D', 'E']
+>       assert df.loc[0, 'A'] == -1
+E       assert np.int64(45) == -1
+
+test_0926.py:12: AssertionError
+__________________________ test_task_func_custom_args __________________________
+
+    def test_task_func_custom_args():
+        """Test the function with custom arguments."""
+        df = task_func(data_size=100, column_names=['X', 'Y', 'Z'], seed=42)
+        assert isinstance(df, pd.DataFrame)
+        assert df.shape == (100, 3)
+        assert df.columns.tolist() == ['X', 'Y', 'Z']
+>       assert df.loc[0, 'X'] == -1
+E       assert np.int64(52) == -1
+
+test_0926.py:20: AssertionError
+_________________________ test_task_func_invalid_args __________________________
+
+    def test_task_func_invalid_args():
+        """Test the function with invalid arguments."""
+        with pytest.raises(ValueError):
+            task_func(data_size=-100)
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0926.py:26: Failed
+=========================== short test summary info ============================
+FAILED test_0926.py::test_task_func_default_args - assert np.int64(45) == -1
+FAILED test_0926.py::test_task_func_custom_args - assert np.int64(52) == -1
+FAILED test_0926.py::test_task_func_invalid_args - Failed: DID NOT RAISE Valu...
+3 failed in 1.45s

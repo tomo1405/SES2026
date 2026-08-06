@@ -1,0 +1,61 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+csv_file = 'example.csv'
+
+    def task_func(csv_file):
+        try:
+            words = []
+>           with open(csv_file, 'r') as file:
+                 ^^^^^^^^^^^^^^^^^^^
+E           FileNotFoundError: [Errno 2] No such file or directory: 'example.csv'
+
+../../../src/src_0580.py:8: FileNotFoundError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func():
+        csv_file = "example.csv"
+>       ax, most_common_words = task_func(csv_file)
+                                ^^^^^^^^^^^^^^^^^^^
+
+test_0580.py:6: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+csv_file = 'example.csv'
+
+    def task_func(csv_file):
+        try:
+            words = []
+            with open(csv_file, 'r') as file:
+                reader = csv.reader(file)
+                for row in reader:
+                    for word in row:
+                        normalized_word = unicodedata.normalize('NFKD', word).encode('ascii', 'ignore').decode()
+                        words.append(normalized_word)
+    
+            word_counter = Counter(words)
+            most_common_words = word_counter.most_common(10)
+            labels, values = zip(*most_common_words)
+            fig, ax = plt.subplots()
+            ax.bar(labels, values)
+            return ax, most_common_words
+    
+        except FileNotFoundError:
+>           raise FileNotFoundError(f"The file {csv_file} was not found.")
+E           FileNotFoundError: The file example.csv was not found.
+
+../../../src/src_0580.py:23: FileNotFoundError
+___________________________ test_task_func_io_error ____________________________
+
+    def test_task_func_io_error():
+        csv_file = "invalid_file.csv"
+>       with pytest.raises(IOError):
+E       Failed: DID NOT RAISE OSError
+
+test_0580.py:18: Failed
+=========================== short test summary info ============================
+FAILED test_0580.py::test_task_func - FileNotFoundError: The file example.csv...
+FAILED test_0580.py::test_task_func_io_error - Failed: DID NOT RAISE OSError
+2 failed, 1 passed in 1.61s

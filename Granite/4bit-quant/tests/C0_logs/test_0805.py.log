@@ -1,0 +1,30 @@
+F..F                                                                     [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_valid_metrics _________________________
+
+    def test_task_func_valid_metrics():
+        metrics = {'accuracy': 0.85, 'precision': 0.9, 'recall': 0.8}
+        filename = 'test_metrics.log'
+        result = task_func(metrics, filename, log_dir=LOG_DIR)
+>       assert result is True
+E       assert False is True
+
+test_0805.py:12: AssertionError
+----------------------------- Captured stdout call -----------------------------
+An error occurred: [Errno 2] No such file or directory: './logs/test_metrics.log'
+___________________________ test_task_func_io_error ____________________________
+
+    def test_task_func_io_error():
+        metrics = {'accuracy': 0.85, 'precision': 0.9, 'recall': 0.8}
+        filename = 'test_io_error.log'
+        log_dir = '/invalid/path'
+>       with pytest.raises(IOError) as excinfo:
+E       Failed: DID NOT RAISE OSError
+
+test_0805.py:39: Failed
+----------------------------- Captured stdout call -----------------------------
+An error occurred: [Errno 2] No such file or directory: '/invalid/path/test_io_error.log'
+=========================== short test summary info ============================
+FAILED test_0805.py::test_task_func_valid_metrics - assert False is True
+FAILED test_0805.py::test_task_func_io_error - Failed: DID NOT RAISE OSError
+2 failed, 2 passed in 0.51s

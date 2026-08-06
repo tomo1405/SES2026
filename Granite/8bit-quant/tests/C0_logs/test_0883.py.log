@@ -1,0 +1,32 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_valid_input ________________________
+
+    def test_task_func_with_valid_input():
+        db_file = 'test.db'
+        table_name = 'test_table'
+        column_name = 'test_column'
+        pattern = '\d+[xX]'
+        conn = sqlite3.connect(db_file)
+        c = conn.cursor()
+>       c.execute(f"CREATE TABLE {table_name} ({column_name} TEXT)")
+E       sqlite3.OperationalError: table test_table already exists
+
+test_0883.py:14: OperationalError
+___________________ test_task_func_with_invalid_column_type ____________________
+
+    def test_task_func_with_invalid_column_type():
+        db_file = 'test.db'
+        table_name = 'test_table'
+        column_name = 'test_column'
+        pattern = '\d+[xX]'
+        conn = sqlite3.connect(db_file)
+        c = conn.cursor()
+>       c.execute(f"CREATE TABLE {table_name} ({column_name} INTEGER)")
+E       sqlite3.OperationalError: table test_table already exists
+
+test_0883.py:42: OperationalError
+=========================== short test summary info ============================
+FAILED test_0883.py::test_task_func_with_valid_input - sqlite3.OperationalErr...
+FAILED test_0883.py::test_task_func_with_invalid_column_type - sqlite3.Operat...
+2 failed, 1 passed in 1.20s

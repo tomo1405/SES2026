@@ -1,0 +1,41 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        def sample_function(x, y):
+            return x + y
+    
+        expected_output = '{"function_name": "sample_function", "args": ["x", "y"], "defaults": None, "annotations": {"x": "int", "y": "int"}, "is_lambda": false}'
+        actual_output = task_func(sample_function)
+>       assert actual_output == expected_output
+E       assert '{"function_n...ambda": true}' == '{"function_n...mbda": false}'
+E         
+E         Skipping 59 identical leading characters in diff, use -v to show
+E         - efaults": None, "annotations": {"x": "int", "y": "int"}, "is_lambda": false}
+E         + efaults": null, "annotations": {}, "is_lambda": true}
+
+test_0571.py:26: AssertionError
+__________________________ test_task_func_with_lambda __________________________
+
+    def test_task_func_with_lambda():
+        lambda_func = lambda x, y: x + y
+    
+        expected_output = '{"function_name": "<lambda>", "args": ["x", "y"], "defaults": None, "annotations": {"x": "int", "y": "int"}, "is_lambda": true}'
+        actual_output = task_func(lambda_func)
+>       assert actual_output == expected_output
+E       assert '{"function_n...ambda": true}' == '{"function_n...ambda": true}'
+E         
+E         Skipping 52 identical leading characters in diff, use -v to show
+E         - efaults": None, "annotations": {"x": "int", "y": "int"}, "is_lambda": true}
+E         ?           -- ^                  ----------------------
+E         + efaults": null, "annotations": {}, "is_lambda": true}
+E         ?            ^^^
+
+test_0571.py:33: AssertionError
+=========================== short test summary info ============================
+FAILED test_0571.py::test_task_func - assert '{"function_n...ambda": true}' =...
+FAILED test_0571.py::test_task_func_with_lambda - assert '{"function_n...ambd...
+2 failed in 0.52s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

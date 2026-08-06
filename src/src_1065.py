@@ -1,0 +1,12 @@
+import numpy as np
+import seaborn as sns
+def task_func(arr):
+    row_sums = arr.sum(axis=1)
+    vmax = np.max(arr)  # Set vmax to the maximum value in the array
+    vmin = np.min(arr)  # Set vmin to the minimum value in the array
+    ax = sns.heatmap(
+        arr, annot=True, vmax=vmax, vmin=vmin
+    )  # Include both vmin and vmax in the heatmap call
+    ax.set_title("Heatmap of the 2D Array")
+
+    return ax

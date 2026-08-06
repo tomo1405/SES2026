@@ -1,0 +1,57 @@
+...FF                                                                    [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_one_empty_file _________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1695/test_task_func_one_empty_file0')
+
+    def test_task_func_one_empty_file(tmpdir):
+        # Create one empty and one non-empty compressed file
+        content = "This is a test file.\nIt contains some text.\n"
+        file1 = tmpdir.join("file1.txt.gz")
+        file2 = tmpdir.join("file2.txt.gz")
+    
+        with gzip.open(file1, 'wt') as f1:
+            f1.write(content)
+        with gzip.open(file2, 'wt') as f2:
+            pass
+    
+        result = task_func(str(file1), str(file2))
+        expected_diff = "- It contains some text.\n"
+>       assert result == expected_diff
+E       AssertionError: assert '- This is a ... some text.\n' == '- It contains some text.\n'
+E         
+E         + - This is a test file.
+E           - It contains some text.
+
+test_0511.py:62: AssertionError
+_____________________ test_task_func_line_order_difference _____________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1695/test_task_func_line_order_diff0')
+
+    def test_task_func_line_order_difference(tmpdir):
+        # Create two files with the same content but in different order
+        content1 = "Line 1\nLine 2\n"
+        content2 = "Line 2\nLine 1\n"
+        file1 = tmpdir.join("file1.txt.gz")
+        file2 = tmpdir.join("file2.txt.gz")
+    
+        with gzip.open(file1, 'wt') as f1:
+            f1.write(content1)
+        with gzip.open(file2, 'wt') as f2:
+            f2.write(content2)
+    
+        result = task_func(str(file1), str(file2))
+        expected_diff = "- Line 1\n+ Line 2\n- Line 2\n+ Line 1\n"
+>       assert result == expected_diff
+E       AssertionError: assert '+ Line 2\n- Line 2\n' == '- Line 1\n+ ...2\n+ Line 1\n'
+E         
+E         - - Line 1
+E           + Line 2
+E           - Line 2
+E         - + Line 1
+
+test_0511.py:78: AssertionError
+=========================== short test summary info ============================
+FAILED test_0511.py::test_task_func_one_empty_file - AssertionError: assert '...
+FAILED test_0511.py::test_task_func_line_order_difference - AssertionError: a...
+2 failed, 3 passed in 0.43s

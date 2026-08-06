@@ -1,0 +1,22 @@
+python
+import numpy as np
+import scipy.stats as stats
+import matplotlib.pyplot as plt
+
+def task_func(l):
+    fig, ax = plt.subplots()
+    ax.hist(l, bins='auto', density=True, alpha=0.6, color='g')
+
+    mu, std = stats.norm.fit(l)
+    xmin, xmax = plt.xlim()
+    x = np.linspace(xmin, xmax, 100)
+    p = stats.norm.pdf(x, mu, std)
+    ax.plot(x, p, 'k', linewidth=2)
+    title = "Fit results: mu = %.2f,  std = %.2f" % (mu, std)
+    ax.set_title(title)
+    return ax
+
+def test_task_func():
+    l = [1, 2, 3, 4, 5]
+    ax = task_func(l)
+    assert ax.get_title() == "Fit results: mu = 3.00,  std = 1.29"

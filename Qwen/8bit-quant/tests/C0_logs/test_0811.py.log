@@ -1,0 +1,38 @@
+FF...                                                                    [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_walk = <MagicMock name='walk' id='128438811113472'>
+
+    @patch('os.walk')
+    def test_task_func(mock_walk):
+        # Mock directory structure
+        mock_walk.return_value = [
+            ('/root', ['dir1'], ['file1.txt', 'file2.exe']),
+            ('/root/dir1', [], ['file3.exe', 'file4.txt'])
+        ]
+    
+        # Mock subprocess.run to simulate execution of files
+        with patch.object(subprocess, 'run') as mock_run:
+            mock_run.return_value = subprocess.CompletedProcess(args=[], returncode=0, stdout=b'Output of file2.exe')
+    
+            # Test case where files are executed
+            results = task_func('/root', r'\.exe$', True)
+>           assert results == ['Output of file2.exe']
+E           AssertionError: assert ['Output of f...of file2.exe'] == ['Output of file2.exe']
+E             
+E             Left contains one more item: 'Output of file2.exe'
+E             Use -v to get more diff
+
+test_0811.py:22: AssertionError
+____________________ test_task_func_non_existent_directory _____________________
+
+    def test_task_func_non_existent_directory():
+>       with pytest.raises(FileNotFoundError):
+E       Failed: DID NOT RAISE FileNotFoundError
+
+test_0811.py:30: Failed
+=========================== short test summary info ============================
+FAILED test_0811.py::test_task_func - AssertionError: assert ['Output of f......
+FAILED test_0811.py::test_task_func_non_existent_directory - Failed: DID NOT ...
+2 failed, 3 passed in 0.54s

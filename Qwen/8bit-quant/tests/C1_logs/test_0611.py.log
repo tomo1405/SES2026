@@ -1,0 +1,47 @@
+..F.F                                                                    [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_with_tuples __________________________
+
+    def test_task_func_with_tuples():
+        df = pd.DataFrame({
+            'A': [1, 2, 3],
+            'B': [4, 5, 6],
+            'C': [7, 8, 9],
+            'D': [10, 11, 12],
+            'E': [13, 14, 15]
+        })
+        tuples = [(1, 2, 3, 4, 5)]
+        n_plots = 2
+    
+        result_df, plots = task_func(df, tuples, n_plots)
+    
+>       assert not result_df.equals(df)
+E       assert not True
+E        +  where True = equals(   A  B  C   D   E\n0  1  4  7  10  13\n1  2  5  8  11  14\n2  3  6  9  12  15)
+E        +    where equals =    A  B  C   D   E\n0  1  4  7  10  13\n1  2  5  8  11  14\n2  3  6  9  12  15.equals
+
+test_0611.py:44: AssertionError
+_______________________ test_task_func_all_rows_dropped ________________________
+
+    def test_task_func_all_rows_dropped():
+        df = pd.DataFrame({
+            'A': [1, 2, 3],
+            'B': [4, 5, 6],
+            'C': [7, 8, 9],
+            'D': [10, 11, 12],
+            'E': [13, 14, 15]
+        })
+        tuples = [(1, 2, 3, 4, 5), (2, 3, 4, 5, 6), (3, 4, 5, 6, 7)]
+        n_plots = 2
+    
+        result_df, plots = task_func(df, tuples, n_plots)
+    
+>       assert result_df.empty
+E       assert False
+E        +  where False =    A  B  C   D   E\n0  1  4  7  10  13\n1  2  5  8  11  14\n2  3  6  9  12  15.empty
+
+test_0611.py:76: AssertionError
+=========================== short test summary info ============================
+FAILED test_0611.py::test_task_func_with_tuples - assert not True
+FAILED test_0611.py::test_task_func_all_rows_dropped - assert False
+2 failed, 3 passed in 4.49s

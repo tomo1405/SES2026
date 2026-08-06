@@ -1,0 +1,40 @@
+....FF                                                                   [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_single_color __________________________
+
+    def test_task_func_single_color():
+        # Create a sample DataFrame with a single unique value
+        data = {'Category': ['A', 'A', 'A', 'A', 'A', 'A']}
+        df = pd.DataFrame(data)
+    
+        # Call the function
+        ax = task_func(df, 'Category')
+    
+        # Check if only one color is used
+>       assert len(ax.patches) == 1
+E       AssertionError: assert 7 == 1
+E        +  where 7 = len(<Axes.ArtistList of 7 patches>)
+E        +    where <Axes.ArtistList of 7 patches> = <Axes: title={'center': 'Test Pie Chart'}>.patches
+
+test_0344.py:57: AssertionError
+________________________ test_task_func_multiple_colors ________________________
+
+    def test_task_func_multiple_colors():
+        # Create a sample DataFrame with multiple unique values
+        data = {'Category': ['A', 'B', 'C', 'D', 'E', 'F']}
+        df = pd.DataFrame(data)
+    
+        # Call the function
+        ax = task_func(df, 'Category')
+    
+        # Check if the correct number of colors is used
+>       assert len(ax.patches) == 6
+E       AssertionError: assert 13 == 6
+E        +  where 13 = len(<Axes.ArtistList of 13 patches>)
+E        +    where <Axes.ArtistList of 13 patches> = <Axes: title={'center': 'Test Pie Chart'}>.patches
+
+test_0344.py:69: AssertionError
+=========================== short test summary info ============================
+FAILED test_0344.py::test_task_func_single_color - AssertionError: assert 7 == 1
+FAILED test_0344.py::test_task_func_multiple_colors - AssertionError: assert ...
+2 failed, 4 passed in 2.23s

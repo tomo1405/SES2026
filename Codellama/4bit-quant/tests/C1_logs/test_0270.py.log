@@ -1,0 +1,26 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that the function returns a dictionary
+        data_dict = {"a": 1, "b": 2, "c": 3}
+        result, stats, ax = task_func(data_dict)
+        assert isinstance(result, dict)
+    
+        # Test that the function adds the key 'a' with value 1
+        assert result["a"] == 1
+    
+        # Test that the function converts the values to a numpy array
+        values = np.array(list(data_dict.values()))
+>       assert np.array_equal(values, result.values())
+E       AssertionError: assert False
+E        +  where False = <function array_equal at 0x79314f356970>(array([1, 2, 3]), dict_values([1, 2, 3]))
+E        +    where <function array_equal at 0x79314f356970> = np.array_equal
+E        +    and   dict_values([1, 2, 3]) = <built-in method values of dict object at 0x793022ea88c0>()
+E        +      where <built-in method values of dict object at 0x793022ea88c0> = {'a': 1, 'b': 2, 'c': 3}.values
+
+test_0270.py:16: AssertionError
+=========================== short test summary info ============================
+FAILED test_0270.py::test_task_func - AssertionError: assert False
+1 failed in 3.67s

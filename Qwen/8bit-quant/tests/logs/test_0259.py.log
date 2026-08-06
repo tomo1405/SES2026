@@ -1,0 +1,53 @@
+FF..                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_default_seed _______________________
+
+    def test_task_func_with_default_seed():
+        utc_datetime = datetime.now(timezone.utc)
+        expected_person = {
+            'name': 'John',
+            'age': 30,
+            'city': 'New York',
+            'timestamp': utc_datetime.isoformat()
+        }
+        expected_json_str = json.dumps(expected_person)
+    
+        result = task_func(utc_datetime)
+    
+>       assert result == expected_json_str
+E       assert '{"name": "Da...30397+00:00"}' == '{"name": "Jo...30397+00:00"}'
+E         
+E         - {"name": "John", "age": 30, "city": "New York", "timestamp": "2026-07-28T04:22:45.030397+00:00"}
+E         ?           ^^^^           ^           ^^^^^^^^
+E         + {"name": "David", "age": 33, "city": "Mumbai", "timestamp": "2026-07-28T04:22:45.030397+00:00"}
+E         ?           ^^^^^           ^           ^^^^^^
+
+test_0259.py:19: AssertionError
+_______________________ test_task_func_with_custom_seed ________________________
+
+    def test_task_func_with_custom_seed():
+        utc_datetime = datetime.now(timezone.utc)
+        custom_seed = 42
+        expected_person = {
+            'name': 'Alice',
+            'age': 28,
+            'city': 'Paris',
+            'timestamp': utc_datetime.isoformat()
+        }
+        expected_json_str = json.dumps(expected_person)
+    
+        result = task_func(utc_datetime, seed=custom_seed)
+    
+>       assert result == expected_json_str
+E       assert '{"name": "Pe...49635+00:00"}' == '{"name": "Al...49635+00:00"}'
+E         
+E         - {"name": "Alice", "age": 28, "city": "Paris", "timestamp": "2026-07-28T04:22:45.049635+00:00"}
+E         ?           ^^^^           ^^           ^^^^^
+E         + {"name": "Peter", "age": 35, "city": "London", "timestamp": "2026-07-28T04:22:45.049635+00:00"}
+E         ?           ^ +++          ^^           ^^^^^^
+
+test_0259.py:34: AssertionError
+=========================== short test summary info ============================
+FAILED test_0259.py::test_task_func_with_default_seed - assert '{"name": "Da....
+FAILED test_0259.py::test_task_func_with_custom_seed - assert '{"name": "Pe.....
+2 failed, 2 passed in 0.42s

@@ -1,0 +1,33 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that the function raises an error when value is not a number
+        with pytest.raises(ValueError):
+            task_func({}, "key", "value")
+    
+        # Test that the function updates the dictionary correctly
+        dictionary = {}
+        key = "key"
+        value = 10
+        n = 100
+        bins = 30
+        seed = 0
+        task_func(dictionary, key, value, n, bins, seed)
+        assert dictionary[key] == value
+    
+        # Test that the function generates the correct dataset
+        data = np.random.normal(loc=float(value), scale=float(value), size=n)
+        _, ax = plt.subplots()
+        ax.hist(data, bins=bins, density=True)
+        data = pd.Series(data)
+>       assert np.allclose(data, task_func(dictionary, key, value, n, bins, seed)[1])
+E       assert False
+E        +  where False = <function allclose at 0x7734abb6c430>(0     28.831507\n1     -3.477591\n2     -2.704850\n3     19.693967\n4     -1.731234\n        ...    \n95     8.284537\n96    17.717906\n97    18.235042\n98    31.632359\n99    23.365279\nLength: 100, dtype: float64, 0     27.640523\n1     14.001572\n2     19.787380\n3     32.408932\n4     28.675580\n        ...    \n95    17.065732\n96    10.105000\n97    27.858705\n98    11.269121\n99    14.019894\nLength: 100, dtype: float64)
+E        +    where <function allclose at 0x7734abb6c430> = np.allclose
+
+test_0265.py:28: AssertionError
+=========================== short test summary info ============================
+FAILED test_0265.py::test_task_func - assert False
+1 failed in 2.14s

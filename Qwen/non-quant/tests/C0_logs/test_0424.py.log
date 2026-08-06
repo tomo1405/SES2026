@@ -1,0 +1,31 @@
+..F                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_image __________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1268/test_task_func_valid_image0')
+
+    def test_task_func_valid_image(tmpdir):
+        # Create a temporary image file
+        image_path = str(tmpdir.join('test_image.png'))
+        img = np.zeros((100, 100), dtype=np.uint8)
+        cv2.imwrite(image_path, img)
+    
+        original_img, binary_img = task_func(image_path=image_path, threshold=127)
+    
+        assert np.array_equal(original_img, img)
+        assert np.array_equal(binary_img, np.zeros((100, 100), dtype=np.uint8))
+    
+        # Test with a different threshold
+        binary_img_high_threshold = task_func(image_path=image_path, threshold=1)[1]
+>       assert np.array_equal(binary_img_high_threshold, np.ones((100, 100), dtype=np.uint8))
+E       AssertionError: assert False
+E        +  where False = <function array_equal at 0x777b2e7cc330>(array([[0, 0, 0, ..., 0, 0, 0],\n       [0, 0, 0, ..., 0, 0, 0],\n       [0, 0, 0, ..., 0, 0, 0],\n       ...,\n       [0, 0, 0, ..., 0, 0, 0],\n       [0, 0, 0, ..., 0, 0, 0],\n       [0, 0, 0, ..., 0, 0, 0]], shape=(100, 100), dtype=uint8), array([[1, 1, 1, ..., 1, 1, 1],\n       [1, 1, 1, ..., 1, 1, 1],\n       [1, 1, 1, ..., 1, 1, 1],\n       ...,\n       [1, 1, 1, ..., 1, 1, 1],\n       [1, 1, 1, ..., 1, 1, 1],\n       [1, 1, 1, ..., 1, 1, 1]], shape=(100, 100), dtype=uint8))
+E        +    where <function array_equal at 0x777b2e7cc330> = np.array_equal
+E        +    and   array([[1, 1, 1, ..., 1, 1, 1],\n       [1, 1, 1, ..., 1, 1, 1],\n       [1, 1, 1, ..., 1, 1, 1],\n       ...,\n       [1, 1, 1, ..., 1, 1, 1],\n       [1, 1, 1, ..., 1, 1, 1],\n       [1, 1, 1, ..., 1, 1, 1]], shape=(100, 100), dtype=uint8) = <function ones at 0x777b2e7c5ee0>((100, 100), dtype=<class 'numpy.uint8'>)
+E        +      where <function ones at 0x777b2e7c5ee0> = np.ones
+E        +      and   <class 'numpy.uint8'> = np.uint8
+
+test_0424.py:34: AssertionError
+=========================== short test summary info ============================
+FAILED test_0424.py::test_task_func_valid_image - AssertionError: assert False
+1 failed, 2 passed in 1.00s

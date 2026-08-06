@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        time_strings = [
+            "01/01/22 00:00:00.000000",
+            "01/01/22 00:00:01.000000",
+            "01/01/22 00:00:02.000000",
+            "01/01/22 00:00:03.000000",
+            "01/01/22 00:00:04.000000",
+        ]
+        expected_differences = [1, 1, 1, 1]
+        expected_xlabel = "Index"
+        expected_ylabel = "Time Difference (seconds)"
+        expected_title = "Time Differences Between Consecutive Timestamps"
+    
+        result = task_func(time_strings)
+    
+        assert isinstance(result, plt.Axes)
+>       assert np.array_equal(result.patches[0].get_height(), expected_differences)
+E       assert False
+E        +  where False = <function array_equal at 0x7424d7f1e8b0>(np.int64(1), [1, 1, 1, 1])
+E        +    where <function array_equal at 0x7424d7f1e8b0> = np.array_equal
+E        +    and   np.int64(1) = get_height()
+E        +      where get_height = <matplotlib.patches.Rectangle object at 0x74244a3ceb70>.get_height
+
+test_1076.py:25: AssertionError
+=========================== short test summary info ============================
+FAILED test_1076.py::test_task_func - assert False
+1 failed in 1.53s

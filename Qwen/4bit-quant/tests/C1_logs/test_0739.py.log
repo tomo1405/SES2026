@@ -1,0 +1,35 @@
+.F.F....                                                                 [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_nested_list ________________________
+
+    def test_task_func_with_nested_list():
+        L = [[1, 2], [3, 4], [5]]
+>       expected_iqr = iqr(np.array(L).flatten())
+                           ^^^^^^^^^^^
+E       ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (3,) + inhomogeneous part.
+
+test_0739.py:13: ValueError
+________________________ test_task_func_with_empty_list ________________________
+
+    def test_task_func_with_empty_list():
+        L = []
+        expected_iqr = iqr([])
+>       assert task_func(L) == expected_iqr
+E       assert np.float64(nan) == np.float64(nan)
+E        +  where np.float64(nan) = task_func([])
+
+test_0739.py:24: AssertionError
+=============================== warnings summary ===============================
+Qwen/4bit-quant/tests/test_0739.py::test_task_func_with_empty_list
+  /work/tomohiro-w/utg/Qwen/4bit-quant/tests/test_0739.py:23: SmallSampleWarning: One or more sample arguments is too small; all returned values will be NaN. See documentation for sample size requirements.
+    expected_iqr = iqr([])
+
+Qwen/4bit-quant/tests/test_0739.py::test_task_func_with_empty_list
+  /work/tomohiro-w/utg/src/src_0739.py:5: SmallSampleWarning: One or more sample arguments is too small; all returned values will be NaN. See documentation for sample size requirements.
+    iqr_value = iqr(flattened)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0739.py::test_task_func_with_nested_list - ValueError: setting an...
+FAILED test_0739.py::test_task_func_with_empty_list - assert np.float64(nan) ...
+2 failed, 6 passed, 2 warnings in 1.72s

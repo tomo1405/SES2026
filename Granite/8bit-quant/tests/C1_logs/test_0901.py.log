@@ -1,0 +1,100 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        input_data = [
+            {'x': 1, 'y': 2, 'z': 3},
+            {'x': 4, 'y': 5, 'z': 6},
+            {'x': 7, 'y': 8, 'z': 9}
+        ]
+        expected_output = {
+            'x': {
+                'mean': 5,
+                'sum': 15,
+                'max': 7,
+                'min': 4,
+                'std': 2.1602468994692868
+            },
+            'y': {
+                'mean': 5.333333333333333,
+                'sum': 16,
+                'max': 8,
+                'min': 5,
+                'std': 2.1602468994692868
+            },
+            'z': {
+                'mean': 6,
+                'sum': 18,
+                'max': 9,
+                'min': 3,
+                'std': 2.1602468994692868
+            }
+        }
+>       assert task_func(input_data) == expected_output
+E       AssertionError: assert {'x': {'mean'...nt64(3), ...}} == {'x': {'mean'...min': 3, ...}}
+E         
+E         Differing items:
+E         {'y': {'mean': np.float64(5.0), 'sum': np.int64(15), 'max': np.int64(8), 'min': np.int64(2), ...}} != {'y': {'mean': 5.333333333333333, 'sum': 16, 'max': 8, 'min': 5, ...}}
+E         {'z': {'mean': np.float64(6.0), 'sum': np.int64(18), 'max': np.int64(9), 'min': np.int64(3), ...}} != {'z': {'mean': 6, 'sum': 18, 'max': 9, 'min': 3, ...}}
+E         {'x': {'mean': np.float64(4.0), 'sum': np.int64(12), 'max': np.int64(7), 'min': np.int64(1), ...}} != {'x': {'mean': 5, 'sum': 15, 'max': 7, 'min': 4, ...}}
+E         Use -v to get more diff
+
+test_0901.py:34: AssertionError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        input_data = [
+            {'x': 1, 'y': 2, 'z': 3},
+            {'x': 4, 'y': 5, 'z': 6},
+            {'x': 7, 'y': 8, 'z': 9},
+            {'x': 'a', 'y': 'b', 'z': 'c'}
+        ]
+        with pytest.raises(ValueError) as exc_info:
+>           task_func(input_data)
+
+test_0901.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0901.py:16: in task_func
+    'mean': np.mean(df[key]),
+            ^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:3860: in mean
+    return mean(axis=axis, dtype=dtype, out=out, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/util/_decorators.py:336: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/series.py:8113: in mean
+    return NDFrame.mean(
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:11831: in mean
+    return self._stat_function(
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:11785: in _stat_function
+    return self._reduce(
+../../../.venv/lib/python3.12/site-packages/pandas/core/series.py:7494: in _reduce
+    result = op(delegate, skipna=skipna, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/nanops.py:149: in f
+    result = alt(values, axis=axis, skipna=skipna, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/nanops.py:408: in new_func
+    result = func(values, axis=axis, skipna=skipna, mask=mask, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/nanops.py:713: in nanmean
+    the_sum = values.sum(axis, dtype=dtype_sum)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = array([1, 4, 7, 'a'], dtype=object), axis = None, dtype = dtype('O')
+out = None, keepdims = False, initial = <no value>, where = True
+
+    def _sum(a, axis=None, dtype=None, out=None, keepdims=False,
+             initial=_NoValue, where=True):
+>       return umr_sum(a, axis, dtype, out, keepdims, initial, where)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: unsupported operand type(s) for +: 'int' and 'str'
+
+../../../.venv/lib/python3.12/site-packages/numpy/_core/_methods.py:49: TypeError
+=========================== short test summary info ============================
+FAILED test_0901.py::test_task_func_valid_input - AssertionError: assert {'x'...
+FAILED test_0901.py::test_task_func_invalid_input - TypeError: unsupported op...
+2 failed, 1 passed in 1.45s

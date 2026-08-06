@@ -1,0 +1,28 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        days = 10
+        random_seed = 0
+        expected_output = pd.DataFrame({
+            "date": pd.date_range(start="2023-01-01", periods=days, freq="D"),
+            "Groceries": np.random.randint(0, 100, size=(days)),
+            "Entertainment": np.random.randint(0, 100, size=(days)),
+            "Rent": np.random.randint(0, 100, size=(days)),
+            "Utilities": np.random.randint(0, 100, size=(days)),
+            "Miscellaneous": np.random.randint(0, 100, size=(days))
+        })
+        expected_output.set_index("date", inplace=True)
+    
+        output = task_func(days, random_seed)
+    
+>       assert output.equals(expected_output)
+E       assert False
+E        +  where False = equals(            Groceries  Entertainment  Rent  Utilities  Miscellaneous\ndate                                             ... 18             26    67         64             50\n2023-01-10         61             38    72         13             67)
+E        +    where equals =             Groceries  Entertainment  Rent  Utilities  Miscellaneous\ndate                                             ... 36             46    69         19             23\n2023-01-10         87             88    79         14             35.equals
+
+test_0496.py:21: AssertionError
+=========================== short test summary info ============================
+FAILED test_0496.py::test_task_func - assert False
+1 failed in 1.09s

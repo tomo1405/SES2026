@@ -1,0 +1,105 @@
+.EFEE.                                                                   [100%]
+==================================== ERRORS ====================================
+________________ ERROR at setup of test_task_func_with_http_url ________________
+file /work/tomohiro-w/utg/Qwen/4bit-quant/tests/test_1016.py, line 33
+  def test_task_func_with_http_url(mocker, mock_webpage_url, mock_database):
+E       fixture 'mocker' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, cov, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, mock_database, mock_webpage_file, mock_webpage_url, monkeypatch, no_cover, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/work/tomohiro-w/utg/Qwen/4bit-quant/tests/test_1016.py:33
+______________ ERROR at setup of test_task_func_request_exception ______________
+file /work/tomohiro-w/utg/Qwen/4bit-quant/tests/test_1016.py, line 61
+  def test_task_func_request_exception(mocker, mock_webpage_url, mock_database):
+E       fixture 'mocker' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, cov, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, mock_database, mock_webpage_file, mock_webpage_url, monkeypatch, no_cover, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/work/tomohiro-w/utg/Qwen/4bit-quant/tests/test_1016.py:61
+_______________ ERROR at setup of test_task_func_database_error ________________
+file /work/tomohiro-w/utg/Qwen/4bit-quant/tests/test_1016.py, line 68
+  def test_task_func_database_error(mocker, mock_webpage_file, mock_database):
+E       fixture 'mocker' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, cov, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, mock_database, mock_webpage_file, mock_webpage_url, monkeypatch, no_cover, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/work/tomohiro-w/utg/Qwen/4bit-quant/tests/test_1016.py:68
+=================================== FAILURES ===================================
+__________________________ test_task_func_empty_data ___________________________
+
+self = <pandas.io.sql.SQLiteDatabase object at 0x70cc8ee1eae0>
+sql = 'SELECT * FROM my_table', params = None
+
+    def execute(self, sql: str | Select | TextClause, params=None):
+        from sqlite3 import Error
+    
+        if not isinstance(sql, str):
+            raise TypeError("Query must be a string unless using sqlalchemy.")
+        args = [] if params is None else [params]
+        cur = self.con.cursor()
+        try:
+>           cur.execute(sql, *args)
+E           sqlite3.OperationalError: no such table: my_table
+
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:2702: OperationalError
+
+The above exception was the direct cause of the following exception:
+
+mock_webpage_file = 'file:///tmp/pytest-of-tomohiro-w/pytest-1410/test_task_func_empty_data0/test.html'
+mock_database = '/tmp/pytest-of-tomohiro-w/pytest-1410/test_task_func_empty_data0/test.db'
+
+    def test_task_func_empty_data(mock_webpage_file, mock_database):
+        empty_html_content = "<html><body><table></table></body></html>"
+        with open(mock_webpage_file[7:], "w", encoding="utf-8") as file:
+            file.write(empty_html_content)
+    
+        result = task_func(mock_webpage_file, mock_database)
+        assert result == 0
+    
+        # Check if no data is stored in the database
+        conn = sqlite3.connect(mock_database)
+>       df = pd.read_sql_query("SELECT * FROM my_table", conn)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1016.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:497: in read_sql_query
+    return pandas_sql.read_query(
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:2766: in read_query
+    cursor = self.execute(sql, params)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.io.sql.SQLiteDatabase object at 0x70cc8ee1eae0>
+sql = 'SELECT * FROM my_table', params = None
+
+    def execute(self, sql: str | Select | TextClause, params=None):
+        from sqlite3 import Error
+    
+        if not isinstance(sql, str):
+            raise TypeError("Query must be a string unless using sqlalchemy.")
+        args = [] if params is None else [params]
+        cur = self.con.cursor()
+        try:
+            cur.execute(sql, *args)
+            return cur
+        except Error as exc:
+            try:
+                self.con.rollback()
+            except Error as inner_exc:  # pragma: no cover
+                ex = DatabaseError(
+                    f"Execution failed on sql: {sql}\n{exc}\nunable to rollback"
+                )
+                raise ex from inner_exc
+    
+            ex = DatabaseError(f"Execution failed on sql '{sql}': {exc}")
+>           raise ex from exc
+E           pandas.errors.DatabaseError: Execution failed on sql 'SELECT * FROM my_table': no such table: my_table
+
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:2714: DatabaseError
+=========================== short test summary info ============================
+FAILED test_1016.py::test_task_func_empty_data - pandas.errors.DatabaseError:...
+ERROR test_1016.py::test_task_func_with_http_url
+ERROR test_1016.py::test_task_func_request_exception
+ERROR test_1016.py::test_task_func_database_error
+1 failed, 2 passed, 3 errors in 1.58s

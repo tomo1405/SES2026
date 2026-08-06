@@ -1,0 +1,24 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data = [('a', 1), ('b', 2), ('c', 3), ('d', 4), ('e', 5)]
+        result = task_func(data)
+    
+        assert isinstance(result, matplotlib.axes.Axes)
+        assert result.get_xlabel() == 'Letter'
+        assert result.get_ylabel() == 'Count'
+        assert result.get_title() == 'Letter Counts with Max Value Letter Highlighted'
+        assert len(result.get_legend_handles_labels()[0]) == 2
+        assert len(result.get_legend_handles_labels()[1]) == 2
+        assert result.get_legend_handles_labels()[0][0].get_label() == 'Letter Counts'
+        assert result.get_legend_handles_labels()[0][1].get_label() == 'Max Value Letter'
+>       assert result.get_legend_handles_labels()[1][0].get_label() == 'Letter Counts'
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'str' object has no attribute 'get_label'
+
+test_0211.py:17: AttributeError
+=========================== short test summary info ============================
+FAILED test_0211.py::test_task_func - AttributeError: 'str' object has no att...
+1 failed in 1.57s

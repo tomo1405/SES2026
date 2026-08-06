@@ -1,0 +1,109 @@
+.F.F                                                                     [100%]
+=================================== FAILURES ===================================
+___________________ test_task_func_with_non_existing_letter ____________________
+
+sample_data =       Word
+0    apple
+1   banana
+2  apricot
+3   cherry
+4  avocado
+capsys = <_pytest.capture.CaptureFixture object at 0x7b534663fd40>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b5346546c30>
+
+    def test_task_func_with_non_existing_letter(sample_data, capsys, monkeypatch):
+        letter = 'z'
+    
+        # Mocking the print statement
+        monkeypatch.setattr('builtins.print', lambda x: None)
+    
+        result = task_func(sample_data, letter)
+    
+        captured = capsys.readouterr()
+>       assert captured.out.strip() == f"No words start with the letter '{letter}'."
+E       assert '' == "No words sta...e letter 'z'."
+E         
+E         - No words start with the letter 'z'.
+
+test_0600.py:36: AssertionError
+______________________ test_task_func_with_invalid_input _______________________
+
+    def test_task_func_with_invalid_input():
+        df = [1, 2, 3]  # Invalid input, not a DataFrame
+        letter = 'a'
+    
+        with pytest.raises(AttributeError) as excinfo:
+>           task_func(df, letter)
+
+test_0600.py:52: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0600.py:7: in task_func
+    filtered_df = df[df['Word'].str.match(regex)]
+                     ^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:4378: in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = RangeIndex(start=0, stop=1, step=1), key = 'Word'
+
+    def get_loc(self, key) -> int:
+        """
+        Get integer location for requested label.
+    
+        Parameters
+        ----------
+        key : int or float
+            Label to locate. Integer-like floats (e.g. 3.0) are accepted and
+            treated as the corresponding integer. Non-integer floats and other
+            non-integer labels are not valid and will raise KeyError or
+            InvalidIndexError.
+    
+        Returns
+        -------
+        int
+            Integer location of the label within the RangeIndex.
+    
+        Raises
+        ------
+        KeyError
+            If the label is not present in the RangeIndex or the label is a
+            non-integer value.
+        InvalidIndexError
+            If the label is of an invalid type for the RangeIndex.
+    
+        See Also
+        --------
+        RangeIndex.get_slice_bound : Calculate slice bound that corresponds to
+            given label.
+        RangeIndex.get_indexer : Computes indexer and mask for new index given
+            the current index.
+        RangeIndex.get_non_unique : Returns indexer and masks for new index given
+            the current index.
+        RangeIndex.get_indexer_for : Returns an indexer even when non-unique.
+    
+        Examples
+        --------
+        >>> idx = pd.RangeIndex(5)
+        >>> idx.get_loc(3)
+        3
+    
+        >>> idx = pd.RangeIndex(2, 10, 2)  # values [2, 4, 6, 8]
+        >>> idx.get_loc(6)
+        2
+        """
+        if is_integer(key) or (is_float(key) and key.is_integer()):
+            new_key = int(key)
+            try:
+                return self._range.index(new_key)
+            except ValueError as err:
+                raise KeyError(key) from err
+        if isinstance(key, Hashable):
+>           raise KeyError(key)
+E           KeyError: 'Word'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/range.py:525: KeyError
+=========================== short test summary info ============================
+FAILED test_0600.py::test_task_func_with_non_existing_letter - assert '' == "...
+FAILED test_0600.py::test_task_func_with_invalid_input - KeyError: 'Word'
+2 failed, 2 passed in 2.14s

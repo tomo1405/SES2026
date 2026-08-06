@@ -1,0 +1,56 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        future_sales = task_func()
+        assert isinstance(future_sales, np.ndarray), "The function should return a numpy array"
+>       assert future_sales.shape[0] == 2 * len(sales_df), "The function should return future sales for the next 2 periods"
+                                                ^^^^^^^^
+E       NameError: name 'sales_df' is not defined
+
+test_0946.py:8: NameError
+______________________ test_task_func_with_custom_inputs _______________________
+
+>   ???
+
+pandas/_libs/tslibs/offsets.pyx:6313: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   ValueError: 'M' is no longer supported for offsets. Please use 'ME' instead.
+
+pandas/_libs/tslibs/offsets.pyx:6180: ValueError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func_with_custom_inputs():
+        start_date = '2022-01-01'
+        periods = 5
+        freq = 'M'
+        sales_data = np.random.randint(low=100, high=500, size=periods)
+>       future_sales = task_func(start_date, periods, freq, sales_data)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0946.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0946.py:7: in task_func
+    date_range = pd.date_range(start=start_date, freq=freq, periods=periods)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/datetimes.py:1442: in date_range
+    freq = to_offset(freq)
+           ^^^^^^^^^^^^^^^
+pandas/_libs/tslibs/offsets.pyx:6229: in pandas._libs.tslibs.offsets.to_offset
+    ???
+pandas/_libs/tslibs/offsets.pyx:6352: in pandas._libs.tslibs.offsets.to_offset
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   ValueError: Invalid frequency: M. Failed to parse with error message: ValueError("'M' is no longer supported for offsets. Please use 'ME' instead.")
+
+pandas/_libs/tslibs/offsets.pyx:6137: ValueError
+=========================== short test summary info ============================
+FAILED test_0946.py::test_task_func - NameError: name 'sales_df' is not defined
+FAILED test_0946.py::test_task_func_with_custom_inputs - ValueError: Invalid ...
+2 failed in 3.41s

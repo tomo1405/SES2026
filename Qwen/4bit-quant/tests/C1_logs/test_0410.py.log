@@ -1,0 +1,48 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_valid_file_and_column _____________________
+
+setup_data = (<test_0410.MockOs object at 0x73fd0bcf6a20>, <test_0410.MockPd object at 0x73fd0bcf6e70>)
+
+    def test_task_func_valid_file_and_column(setup_data):
+        mock_os, mock_pd = setup_data
+>       result = task_func('/path/to', 'file.xlsx', 'A')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0410.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+excel_file_path = '/path/to', file_name = 'file.xlsx', column_name = 'A'
+
+    def task_func(excel_file_path, file_name, column_name):
+        excel_file = os.path.join(excel_file_path, file_name)
+        if not os.path.exists(excel_file):
+>           raise FileNotFoundError(f"No file found at {excel_file}")
+E           FileNotFoundError: No file found at /path/to/file.xlsx
+
+../../../src/src_0410.py:7: FileNotFoundError
+________________________ test_task_func_missing_column _________________________
+
+setup_data = (<test_0410.MockOs object at 0x73fd0bcf6a20>, <test_0410.MockPd object at 0x73fd0bcf6e70>)
+
+    def test_task_func_missing_column(setup_data):
+        mock_os, mock_pd = setup_data
+        with pytest.raises(ValueError) as excinfo:
+>           task_func('/path/to', 'file.xlsx', 'C')
+
+test_0410.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+excel_file_path = '/path/to', file_name = 'file.xlsx', column_name = 'C'
+
+    def task_func(excel_file_path, file_name, column_name):
+        excel_file = os.path.join(excel_file_path, file_name)
+        if not os.path.exists(excel_file):
+>           raise FileNotFoundError(f"No file found at {excel_file}")
+E           FileNotFoundError: No file found at /path/to/file.xlsx
+
+../../../src/src_0410.py:7: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0410.py::test_task_func_valid_file_and_column - FileNotFoundError...
+FAILED test_0410.py::test_task_func_missing_column - FileNotFoundError: No fi...
+2 failed, 1 passed in 1.07s

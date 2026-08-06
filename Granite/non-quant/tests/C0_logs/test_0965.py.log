@@ -1,0 +1,56 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        with TemporaryDirectory() as temp_dir:
+            source_dir = os.path.join(temp_dir, "source")
+            os.makedirs(source_dir)
+            target_dir = os.path.join(temp_dir, "target")
+            with open(os.path.join(source_dir, "test.txt"), "w") as f:
+                f.write("Hello, world!")
+            with open(os.path.join(source_dir, "test.csv"), "w") as f:
+                f.write("Name,Age,GendernJohn,25,Males")
+            with open(os.path.join(source_dir, "test.xlsx"), "wb") as f:
+                f.write(b"Hello, world!")
+            with open(os.path.join(source_dir, "test.docx"), "wb") as f:
+                f.write(b"Hello, world!")
+>           converted_files = task_func(source_dir, target_dir)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0965.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test_0965.py:29: in task_func
+    doc = docx.Document(filepath)
+          ^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/docx/api.py:27: in Document
+    document_part = cast("DocumentPart", Package.open(docx).main_document_part)
+                                         ^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/docx/opc/package.py:126: in open
+    pkg_reader = PackageReader.from_file(pkg_file)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/docx/opc/pkgreader.py:22: in from_file
+    phys_reader = PhysPkgReader(pkg_file)
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cls = <class 'docx.opc.phys_pkg.PhysPkgReader'>
+pkg_file = '/tmp/tmp0wk9u1ic/source/test.docx'
+
+    def __new__(cls, pkg_file):
+        # if `pkg_file` is a string, treat it as a path
+        if isinstance(pkg_file, str):
+            if os.path.isdir(pkg_file):
+                reader_cls = _DirPkgReader
+            elif is_zipfile(pkg_file):
+                reader_cls = _ZipPkgReader
+            else:
+>               raise PackageNotFoundError("Package not found at '%s'" % pkg_file)
+E               docx.opc.exceptions.PackageNotFoundError: Package not found at '/tmp/tmp0wk9u1ic/source/test.docx'
+
+../../../.venv/lib/python3.12/site-packages/docx/opc/phys_pkg.py:21: PackageNotFoundError
+=========================== short test summary info ============================
+FAILED test_0965.py::test_task_func - docx.opc.exceptions.PackageNotFoundErro...
+1 failed in 1.63s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

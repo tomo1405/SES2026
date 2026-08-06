@@ -1,0 +1,129 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_default_parameters _______________________
+
+>   ???
+
+pandas/_libs/tslibs/offsets.pyx:6313: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   ValueError: 'M' is no longer supported for offsets. Please use 'ME' instead.
+
+pandas/_libs/tslibs/offsets.pyx:6180: ValueError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func_default_parameters():
+>       result = task_func()
+                 ^^^^^^^^^^^
+
+test_0944.py:5: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0944.py:5: in task_func
+    date_range = pd.date_range(start=start_date, periods=periods, freq=freq)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/datetimes.py:1442: in date_range
+    freq = to_offset(freq)
+           ^^^^^^^^^^^^^^^
+pandas/_libs/tslibs/offsets.pyx:6229: in pandas._libs.tslibs.offsets.to_offset
+    ???
+pandas/_libs/tslibs/offsets.pyx:6352: in pandas._libs.tslibs.offsets.to_offset
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   ValueError: Invalid frequency: M. Failed to parse with error message: ValueError("'M' is no longer supported for offsets. Please use 'ME' instead.")
+
+pandas/_libs/tslibs/offsets.pyx:6137: ValueError
+_______________________ test_task_func_custom_parameters _______________________
+
+>   ???
+
+pandas/_libs/tslibs/offsets.pyx:6313: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   ValueError: 'Q' is no longer supported for offsets. Please use 'QE' instead.
+
+pandas/_libs/tslibs/offsets.pyx:6180: ValueError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func_custom_parameters():
+        start_date = '2020-01-01'
+        periods = 36
+        freq = 'Q'
+        model = 'multiplicative'
+>       result = task_func(start_date=start_date, periods=periods, freq=freq, model=model)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0944.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0944.py:5: in task_func
+    date_range = pd.date_range(start=start_date, periods=periods, freq=freq)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/datetimes.py:1442: in date_range
+    freq = to_offset(freq)
+           ^^^^^^^^^^^^^^^
+pandas/_libs/tslibs/offsets.pyx:6229: in pandas._libs.tslibs.offsets.to_offset
+    ???
+pandas/_libs/tslibs/offsets.pyx:6352: in pandas._libs.tslibs.offsets.to_offset
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   ValueError: Invalid frequency: Q. Failed to parse with error message: ValueError("'Q' is no longer supported for offsets. Please use 'QE' instead.")
+
+pandas/_libs/tslibs/offsets.pyx:6137: ValueError
+_________________________ test_task_func_invalid_model _________________________
+
+>   ???
+
+pandas/_libs/tslibs/offsets.pyx:6313: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   ValueError: 'M' is no longer supported for offsets. Please use 'ME' instead.
+
+pandas/_libs/tslibs/offsets.pyx:6180: ValueError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func_invalid_model():
+>       result = task_func(model='invalid')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0944.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0944.py:5: in task_func
+    date_range = pd.date_range(start=start_date, periods=periods, freq=freq)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/datetimes.py:1442: in date_range
+    freq = to_offset(freq)
+           ^^^^^^^^^^^^^^^
+pandas/_libs/tslibs/offsets.pyx:6229: in pandas._libs.tslibs.offsets.to_offset
+    ???
+pandas/_libs/tslibs/offsets.pyx:6352: in pandas._libs.tslibs.offsets.to_offset
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   ValueError: Invalid frequency: M. Failed to parse with error message: ValueError("'M' is no longer supported for offsets. Please use 'ME' instead.")
+
+pandas/_libs/tslibs/offsets.pyx:6137: ValueError
+_______________________ test_task_func_invalid_frequency _______________________
+
+    def test_task_func_invalid_frequency():
+        result = task_func(freq='W')
+        assert isinstance(result, dict)
+>       assert 'error' in result
+E       AssertionError: assert 'error' in {'trend': 2016-01-03        NaN\n2016-01-10        NaN\n2016-01-17    378.250\n2016-01-24    360.500\n2016-01-31    386.25... 59.5875\n2016-05-29     50.9875\n2016-06-05         NaN\n2016-06-12         NaN\nFreq: W-SUN, Name: resid, dtype: float64}
+
+test_0944.py:37: AssertionError
+=========================== short test summary info ============================
+FAILED test_0944.py::test_task_func_default_parameters - ValueError: Invalid ...
+FAILED test_0944.py::test_task_func_custom_parameters - ValueError: Invalid f...
+FAILED test_0944.py::test_task_func_invalid_model - ValueError: Invalid frequ...
+FAILED test_0944.py::test_task_func_invalid_frequency - AssertionError: asser...
+4 failed in 3.23s

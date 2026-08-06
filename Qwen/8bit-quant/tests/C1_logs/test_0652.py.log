@@ -1,0 +1,37 @@
+.F..F                                                                    [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_empty_dataframe ______________________
+
+    def test_task_func_with_empty_dataframe():
+        df = pd.DataFrame()
+        target_value = '1'
+        counts, ax = task_func(df, target_value)
+    
+        expected_counts = pd.Series(dtype=int)
+>       assert counts.equals(expected_counts)
+E       assert False
+E        +  where False = equals(Series([], dtype: int64))
+E        +    where equals = Series([], dtype: float64).equals
+
+test_0652.py:24: AssertionError
+_____________________ test_task_func_with_mixed_data_types _____________________
+
+    def test_task_func_with_mixed_data_types():
+        df = pd.DataFrame({
+            'A': [1, '2', 3],
+            'B': ['1', 1, '1']
+        })
+        target_value = '1'
+        counts, ax = task_func(df, target_value)
+    
+        expected_counts = pd.Series({'A': 1, 'B': 2})
+>       assert counts.equals(expected_counts)
+E       assert False
+E        +  where False = equals(A    1\nB    2\ndtype: int64)
+E        +    where equals = A    1\nB    3\ndtype: int64.equals
+
+test_0652.py:60: AssertionError
+=========================== short test summary info ============================
+FAILED test_0652.py::test_task_func_with_empty_dataframe - assert False
+FAILED test_0652.py::test_task_func_with_mixed_data_types - assert False
+2 failed, 3 passed in 2.32s

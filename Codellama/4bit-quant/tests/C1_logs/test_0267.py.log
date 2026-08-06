@@ -1,0 +1,32 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that the function returns the correct file path
+        my_path = 'path/to/directory'
+>       file_path = task_func(my_path)
+                    ^^^^^^^^^^^^^^^^^^
+
+test_0267.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+my_path = 'path/to/directory'
+
+    def task_func(my_path):
+    
+        file_sizes = collections.defaultdict(int)
+    
+        for dirpath, dirnames, filenames in os.walk(my_path):
+            for f in filenames:
+                fp = os.path.join(dirpath, f)
+                file_sizes[f] += os.path.getsize(fp)
+    
+>       with open(os.path.join(my_path, FILE_NAME), 'w', newline='') as csvfile:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'path/to/directory/file_sizes.csv'
+
+../../../src/src_0267.py:16: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0267.py::test_task_func - FileNotFoundError: [Errno 2] No such fi...
+1 failed in 0.41s

@@ -1,0 +1,42 @@
+F.FF                                                                     [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_valid_url ___________________________
+
+    def test_task_func_valid_url():
+        url = "https://example.com/file.zip"
+        expected_result = "/path/to/extracted/files"
+        result = task_func(url)
+>       assert result == expected_result
+E       AssertionError: assert 'Error: Unabl...provided URL.' == '/path/to/extracted/files'
+E         
+E         - /path/to/extracted/files
+E         + Error: Unable to download the file from the provided URL.
+
+test_1007.py:11: AssertionError
+_________________________ test_task_func_bad_zip_file __________________________
+
+    def test_task_func_bad_zip_file():
+        url = "https://example.com/bad_file.zip"
+        expected_result = "Error: The downloaded file is not a valid ZIP file."
+        result = task_func(url)
+>       assert result == expected_result
+E       AssertionError: assert 'Error: Unabl...provided URL.' == 'Error: The d...lid ZIP file.'
+E         
+E         - Error: The downloaded file is not a valid ZIP file.
+E         + Error: Unable to download the file from the provided URL.
+
+test_1007.py:23: AssertionError
+_________________________ test_task_func_runtime_error _________________________
+
+    def test_task_func_runtime_error():
+        url = "https://example.com/file.zip"
+        expected_result = "Error: Some error message"
+>       with pytest.raises(RuntimeError) as exc_info:
+E       Failed: DID NOT RAISE RuntimeError
+
+test_1007.py:28: Failed
+=========================== short test summary info ============================
+FAILED test_1007.py::test_task_func_valid_url - AssertionError: assert 'Error...
+FAILED test_1007.py::test_task_func_bad_zip_file - AssertionError: assert 'Er...
+FAILED test_1007.py::test_task_func_runtime_error - Failed: DID NOT RAISE Run...
+3 failed, 1 passed in 1.36s

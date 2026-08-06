@@ -1,0 +1,30 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        file_path1 = 'file1.txt.gz'
+        file_path2 = 'file2.txt.gz'
+        expected_diff = '+ line 1\n- line 2\n+ line 3\n- line 4\n'
+    
+        with gzip.open(file_path1, 'wt') as file1, gzip.open(file_path2, 'wt') as file2:
+            file1.write('line 1\nline 2\nline 3\n')
+            file2.write('line 1\nline 4\nline 3\n')
+    
+        diff = task_func(file_path1, file_path2)
+    
+>       assert diff == expected_diff
+E       AssertionError: assert '- line 2\n+ line 4\n' == '+ line 1\n- ...3\n- line 4\n'
+E         
+E         - + line 1
+E           - line 2
+E         - + line 3
+E         ?        ^
+E         + + line 4
+E         ?        ^
+E         - - line 4
+
+test_0511.py:17: AssertionError
+=========================== short test summary info ============================
+FAILED test_0511.py::test_task_func - AssertionError: assert '- line 2\n+ lin...
+1 failed in 0.45s

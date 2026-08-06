@@ -1,0 +1,26 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: n_data_points = 0
+        expected_output = pd.DataFrame(columns=['Value'])
+        actual_output = task_func(0)
+        assert actual_output.equals(expected_output)
+    
+        # Test case 2: n_data_points > 0
+        n_data_points = 100
+        data = [round(random.uniform(MIN_VALUE, MAX_VALUE), 3) for _ in range(n_data_points)]
+        expected_output = pd.DataFrame(data, columns=['Value'])
+        actual_output = task_func(n_data_points)
+>       assert actual_output.equals(expected_output)
+E       assert False
+E        +  where False = equals(    Value\n0   9.674\n1   9.277\n2   7.817\n3   2.486\n4   2.822\n..    ...\n95  7.776\n96  0.444\n97  2.531\n98  7.565\n99  7.301\n\n[100 rows x 1 columns])
+E        +    where equals =     Value\n0   5.745\n1   8.932\n2   4.770\n3   6.571\n4   8.931\n..    ...\n95  4.298\n96  1.538\n97  6.342\n98  6.552\n99  3.568\n\n[100 rows x 1 columns].equals
+
+test_0244.py:30: AssertionError
+=========================== short test summary info ============================
+FAILED test_0244.py::test_task_func - assert False
+1 failed in 1.12s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

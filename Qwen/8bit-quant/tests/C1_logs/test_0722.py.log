@@ -1,0 +1,19 @@
+....F.                                                                   [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_case_insensitivity _______________________
+
+    def test_task_func_case_insensitivity():
+        with tempfile.NamedTemporaryFile(delete=False, mode='w', newline='') as temp_file:
+            writer = csv.writer(temp_file)
+            writer.writerow(['Apple', 'Banana', 'apple'])
+            temp_file.close()
+>           assert task_func(temp_file.name) == ('apple', 2)
+E           AssertionError: assert ('Apple', 1) == ('apple', 2)
+E             
+E             At index 0 diff: 'Apple' != 'apple'
+E             Use -v to get more diff
+
+test_0722.py:38: AssertionError
+=========================== short test summary info ============================
+FAILED test_0722.py::test_task_func_case_insensitivity - AssertionError: asse...
+1 failed, 5 passed in 0.53s

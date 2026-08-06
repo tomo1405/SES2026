@@ -1,0 +1,36 @@
+..F.F                                                                    [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_single_column _______________________
+
+    def test_task_func_with_single_column():
+        data_list = [[1, 2, 3]]
+        ax = task_func(data_list)
+        assert isinstance(ax, plt.Axes)
+>       assert len(ax.lines) == 0  # No lines plotted (only one column)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert 2 == 0
+E        +  where 2 = len(<Axes.ArtistList of 2 lines>)
+E        +    where <Axes.ArtistList of 2 lines> = <Axes: >.lines
+
+test_0249.py:24: AssertionError
+______________________ test_task_func_with_nan_fillvalue _______________________
+
+    def test_task_func_with_nan_fillvalue():
+        data_list = [
+            [1, 2, 3],
+            [4, 5],
+            [6, 7, 8, 9]
+        ]
+        ax = task_func(data_list)
+        assert isinstance(ax, plt.Axes)
+>       assert len(ax.lines) == 2  # Two lines plotted (ignoring the first column)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert 3 == 2
+E        +  where 3 = len(<Axes.ArtistList of 3 lines>)
+E        +    where <Axes.ArtistList of 3 lines> = <Axes: >.lines
+
+test_0249.py:44: AssertionError
+=========================== short test summary info ============================
+FAILED test_0249.py::test_task_func_with_single_column - assert 2 == 0
+FAILED test_0249.py::test_task_func_with_nan_fillvalue - assert 3 == 2
+2 failed, 3 passed in 1.58s

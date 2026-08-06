@@ -1,0 +1,37 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_with_data ___________________________
+
+    def test_task_func_with_data():
+        product_dict = {
+            'A': (10, 20),
+            'B': (15, 25),
+            'C': (20, 30)
+        }
+        product_keys = ['A', 'B', 'C']
+    
+        df, ax = task_func(product_dict, product_keys)
+    
+        # Check if DataFrame is not empty
+        assert not df.empty
+    
+        # Check if DataFrame has the correct columns
+        expected_columns = ['Product', 'Quantity', 'Price', 'Profit', 'Average Price', 'Average Profit']
+        assert list(df.columns) == expected_columns
+    
+        # Check if DataFrame has the correct data
+        expected_data = [
+            ['A', 10, 20, 200],
+            ['B', 15, 25, 375],
+            ['C', 20, 30, 600]
+        ]
+>       assert df.to_numpy().tolist() == expected_data
+E       AssertionError: assert [['A', 10, 20...666666666667]] == [['A', 10, 20... 20, 30, 600]]
+E         
+E         At index 0 diff: ['A', 10, 20, 200, 25.0, 391.6666666666667] != ['A', 10, 20, 200]
+E         Use -v to get more diff
+
+test_0151.py:30: AssertionError
+=========================== short test summary info ============================
+FAILED test_0151.py::test_task_func_with_data - AssertionError: assert [['A',...
+1 failed, 1 passed in 2.05s

@@ -1,0 +1,30 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        products = ["Product1", "Product2", "Product3"]
+        ratings = [1, 2, 3, 4, 5]
+        weights = [1, 1, 1, 1, 1]
+        random_seed = 42
+        df = task_func(products, ratings, weights, random_seed)
+        assert isinstance(df, pd.DataFrame)
+        assert df.columns.tolist() == ["Product", "Rating"]
+>       assert df["Product"].tolist() == products
+E       AssertionError: assert ['Product1', ...', 'Product2'] == ['Product1', ...', 'Product3']
+E         
+E         At index 1 diff: 'Product3' != 'Product2'
+E         Use -v to get more diff
+
+test_0088.py:14: AssertionError
+______________________ test_task_func_with_invalid_input _______________________
+
+    def test_task_func_with_invalid_input():
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0088.py:18: Failed
+=========================== short test summary info ============================
+FAILED test_0088.py::test_task_func - AssertionError: assert ['Product1', ......
+FAILED test_0088.py::test_task_func_with_invalid_input - Failed: DID NOT RAIS...
+2 failed in 1.28s

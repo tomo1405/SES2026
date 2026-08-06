@@ -1,0 +1,154 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_mocked_requests ______________________
+
+    def test_task_func_with_mocked_requests():
+        # Mocking the requests.get call
+        mock_response = mock_open(read_data="<html><body><a href='/test'>Test</a></body></html>")
+    
+        with patch('src_1014.requests.get', return_value=mock_response):
+            with patch('src_1014.csv.writer') as mock_csv_writer:
+>               result = task_func("/path/to/page")
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1014.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1014.py:12: in task_func
+    soup = BeautifulSoup(response.text, "html.parser")
+                         ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='open' id='129066794092064'>, name = 'text'
+
+    def __getattr__(self, name):
+        if name in {'_mock_methods', '_mock_unsafe'}:
+            raise AttributeError(name)
+        elif self._mock_methods is not None:
+            if name not in self._mock_methods or name in _all_magics:
+>               raise AttributeError("Mock object has no attribute %r" % name)
+E               AttributeError: Mock object has no attribute 'text'
+
+/usr/lib/python3.12/unittest/mock.py:658: AttributeError
+_________________________ test_task_func_with_no_links _________________________
+
+    def test_task_func_with_no_links():
+        # Mocking the requests.get call with no links
+        mock_response = mock_open(read_data="<html><body></body></html>")
+    
+        with patch('src_1014.requests.get', return_value=mock_response):
+            with patch('src_1014.csv.writer') as mock_csv_writer:
+>               result = task_func("/path/to/empty_page")
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1014.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1014.py:12: in task_func
+    soup = BeautifulSoup(response.text, "html.parser")
+                         ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='open' id='129066789988608'>, name = 'text'
+
+    def __getattr__(self, name):
+        if name in {'_mock_methods', '_mock_unsafe'}:
+            raise AttributeError(name)
+        elif self._mock_methods is not None:
+            if name not in self._mock_methods or name in _all_magics:
+>               raise AttributeError("Mock object has no attribute %r" % name)
+E               AttributeError: Mock object has no attribute 'text'
+
+/usr/lib/python3.12/unittest/mock.py:658: AttributeError
+______________________ test_task_func_with_multiple_links ______________________
+
+    def test_task_func_with_multiple_links():
+        # Mocking the requests.get call with multiple links
+        mock_response = mock_open(read_data="<html><body><a href='/test1'>Test 1</a><a href='/test2'>Test 2</a></body></html>")
+    
+        with patch('src_1014.requests.get', return_value=mock_response):
+            with patch('src_1014.csv.writer') as mock_csv_writer:
+>               result = task_func("/path/to/multiple_links_page")
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1014.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1014.py:12: in task_func
+    soup = BeautifulSoup(response.text, "html.parser")
+                         ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='open' id='129066782963424'>, name = 'text'
+
+    def __getattr__(self, name):
+        if name in {'_mock_methods', '_mock_unsafe'}:
+            raise AttributeError(name)
+        elif self._mock_methods is not None:
+            if name not in self._mock_methods or name in _all_magics:
+>               raise AttributeError("Mock object has no attribute %r" % name)
+E               AttributeError: Mock object has no attribute 'text'
+
+/usr/lib/python3.12/unittest/mock.py:658: AttributeError
+_________________________ test_task_func_with_base_url _________________________
+
+    def test_task_func_with_base_url():
+        # Mocking the requests.get call with a custom base URL
+        mock_response = mock_open(read_data="<html><body><a href='/test'>Test</a></body></html>")
+    
+        with patch('src_1014.requests.get', return_value=mock_response):
+            with patch('src_1014.csv.writer') as mock_csv_writer:
+>               result = task_func("/path/to/page", base_url="https://custom-base-url.com")
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1014.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1014.py:12: in task_func
+    soup = BeautifulSoup(response.text, "html.parser")
+                         ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='open' id='129066783111696'>, name = 'text'
+
+    def __getattr__(self, name):
+        if name in {'_mock_methods', '_mock_unsafe'}:
+            raise AttributeError(name)
+        elif self._mock_methods is not None:
+            if name not in self._mock_methods or name in _all_magics:
+>               raise AttributeError("Mock object has no attribute %r" % name)
+E               AttributeError: Mock object has no attribute 'text'
+
+/usr/lib/python3.12/unittest/mock.py:658: AttributeError
+_____________________ test_task_func_with_custom_csv_file ______________________
+
+    def test_task_func_with_custom_csv_file():
+        # Mocking the requests.get call and specifying a custom CSV file
+        mock_response = mock_open(read_data="<html><body><a href='/test'>Test</a></body></html>")
+    
+        with patch('src_1014.requests.get', return_value=mock_response):
+            with patch('src_1014.csv.writer') as mock_csv_writer:
+>               result = task_func("/path/to/page", csv_file="custom_scraped_data.csv")
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1014.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1014.py:12: in task_func
+    soup = BeautifulSoup(response.text, "html.parser")
+                         ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='open' id='129066783131360'>, name = 'text'
+
+    def __getattr__(self, name):
+        if name in {'_mock_methods', '_mock_unsafe'}:
+            raise AttributeError(name)
+        elif self._mock_methods is not None:
+            if name not in self._mock_methods or name in _all_magics:
+>               raise AttributeError("Mock object has no attribute %r" % name)
+E               AttributeError: Mock object has no attribute 'text'
+
+/usr/lib/python3.12/unittest/mock.py:658: AttributeError
+=========================== short test summary info ============================
+FAILED test_1014.py::test_task_func_with_mocked_requests - AttributeError: Mo...
+FAILED test_1014.py::test_task_func_with_no_links - AttributeError: Mock obje...
+FAILED test_1014.py::test_task_func_with_multiple_links - AttributeError: Moc...
+FAILED test_1014.py::test_task_func_with_base_url - AttributeError: Mock obje...
+FAILED test_1014.py::test_task_func_with_custom_csv_file - AttributeError: Mo...
+5 failed in 1.42s

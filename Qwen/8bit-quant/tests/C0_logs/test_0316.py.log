@@ -1,0 +1,52 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_success ____________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-2066/test_task_func_success0')
+mock_sendgrid_client = <class 'test_0316.MockSendGridAPIClient'>
+mock_mail = <class 'test_0316.MockMail'>
+
+    def test_task_func_success(tmp_path, mock_sendgrid_client, mock_mail):
+        # Create a temporary directory and add some files to it
+        dir_path = tmp_path / "test_dir"
+        dir_path.mkdir()
+        (dir_path / "file1.txt").touch()
+        (dir_path / "file2.txt").touch()
+    
+        api_key = "fake_api_key"
+        recipient_email = "test@example.com"
+    
+        result = task_func(str(dir_path), api_key, recipient_email)
+    
+        assert result is True
+>       mock_sendgrid_client.assert_called_once_with(api_key)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: type object 'MockSendGridAPIClient' has no attribute 'assert_called_once_with'
+
+test_0316.py:47: AttributeError
+________________________ test_task_func_sendgrid_error _________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-2066/test_task_func_sendgrid_error0')
+mock_sendgrid_client = <class 'test_0316.MockSendGridAPIClient'>
+mock_mail = <class 'test_0316.MockMail'>
+
+    def test_task_func_sendgrid_error(tmp_path, mock_sendgrid_client, mock_mail):
+        # Create a temporary directory and add some files to it
+        dir_path = tmp_path / "test_dir"
+        dir_path.mkdir()
+        (dir_path / "file1.txt").touch()
+        (dir_path / "file2.txt").touch()
+    
+        api_key = "fake_api_key"
+        recipient_email = "test@example.com"
+    
+        # Simulate an HTTP error
+>       mock_sendgrid_client.return_value.send.side_effect = HTTPError(response="Simulated HTTP Error")
+                                                             ^^^^^^^^^
+E       NameError: name 'HTTPError' is not defined
+
+test_0316.py:76: NameError
+=========================== short test summary info ============================
+FAILED test_0316.py::test_task_func_success - AttributeError: type object 'Mo...
+FAILED test_0316.py::test_task_func_sendgrid_error - NameError: name 'HTTPErr...
+2 failed, 1 passed in 0.83s

@@ -1,0 +1,34 @@
+..FF                                                                     [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_invalid_date_format ______________________
+
+    def test_task_func_invalid_date_format():
+        date_str = "2023-13-01"
+        booking_data = {"Room1": "Booked", "Room3": "Available"}
+    
+>       with pytest.raises(ValueError, match="Invalid date: day is out of range for month"):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'Invalid date: day is out of range for month'
+E         Actual message: "Invalid date: time data '2023-13-01' does not match format '%Y-%m-%d'"
+
+test_1045.py:34: AssertionError
+________________________ test_task_func_no_booking_data ________________________
+
+    def test_task_func_no_booking_data():
+        date_str = (datetime.now() + pd.Timedelta(days=1)).strftime("%Y-%m-%d")
+        booking_data = {}
+        report_df, ax = task_func(date_str, booking_data)
+    
+        assert isinstance(report_df, pd.DataFrame)
+        assert list(report_df.columns) == ["Room", "Booking Status"]
+        assert len(report_df) == 5
+        for i in range(5):
+>           assert report_df.iloc[i]["Room"] == ROOMS[i]
+                                                ^^^^^
+E           NameError: name 'ROOMS' is not defined
+
+test_1045.py:46: NameError
+=========================== short test summary info ============================
+FAILED test_1045.py::test_task_func_invalid_date_format - AssertionError: Reg...
+FAILED test_1045.py::test_task_func_no_booking_data - NameError: name 'ROOMS'...
+2 failed, 2 passed in 2.91s

@@ -1,0 +1,29 @@
+..F.F                                                                    [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_empty_extension ________________________
+
+    def test_task_func_empty_extension():
+        with tempfile.TemporaryDirectory() as src_dir, tempfile.TemporaryDirectory() as dest_dir:
+            with open(os.path.join(src_dir, 'file1.txt'), 'w') as f:
+                f.write('content')
+            with open(os.path.join(src_dir, 'file2.log'), 'w') as f:
+                f.write('content')
+    
+            # Attempt to move files with an empty extension
+>           assert task_func(src_dir, dest_dir, '') == 0
+E           AssertionError: assert 2 == 0
+E            +  where 2 = task_func('/tmp/tmpu1ibg4s7', '/tmp/tmpn9wc_qe1', '')
+
+test_0784.py:40: AssertionError
+_____________________ test_task_func_non_existent_dest_dir _____________________
+
+    def test_task_func_non_existent_dest_dir():
+        with tempfile.TemporaryDirectory() as src_dir:
+>           with pytest.raises(FileNotFoundError):
+E           Failed: DID NOT RAISE FileNotFoundError
+
+test_0784.py:53: Failed
+=========================== short test summary info ============================
+FAILED test_0784.py::test_task_func_empty_extension - AssertionError: assert ...
+FAILED test_0784.py::test_task_func_non_existent_dest_dir - Failed: DID NOT R...
+2 failed, 3 passed in 0.47s

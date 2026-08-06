@@ -1,0 +1,54 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_________________________ TestTaskFunc.test_valid_json _________________________
+
+self = <test_0274.TestTaskFunc object at 0x775d8cbc0f20>
+
+    def test_valid_json(self):
+        """Test valid JSON request."""
+        request_data = {'data': 'example'}
+        request_json = json.dumps(request_data)
+        handler = task_func()
+>       handler.rfile.read.return_value = request_json
+        ^^^^^^^^^^^^^
+E       AttributeError: type object 'PostRequestHandler' has no attribute 'rfile'
+
+test_0274.py:14: AttributeError
+________________________ TestTaskFunc.test_invalid_json ________________________
+
+self = <test_0274.TestTaskFunc object at 0x775d8c2e2390>
+
+    def test_invalid_json(self):
+        """Test invalid JSON request."""
+        request_data = 'not json'
+        handler = task_func()
+>       handler.rfile.read.return_value = request_data
+        ^^^^^^^^^^^^^
+E       AttributeError: type object 'PostRequestHandler' has no attribute 'rfile'
+
+test_0274.py:23: AttributeError
+________________________ TestTaskFunc.test_no_data_key _________________________
+
+self = <test_0274.TestTaskFunc object at 0x775d8c2e2600>
+
+    def test_no_data_key(self):
+        """Test request without 'data' key."""
+        request_data = {}
+        request_json = json.dumps(request_data)
+        handler = task_func()
+>       handler.rfile.read.return_value = request_json
+        ^^^^^^^^^^^^^
+E       AttributeError: type object 'PostRequestHandler' has no attribute 'rfile'
+
+test_0274.py:34: AttributeError
+=============================== warnings summary ===============================
+../../../src/src_0274.py:1
+  /work/tomohiro-w/utg/src/src_0274.py:1: DeprecationWarning: 'cgi' is deprecated and slated for removal in Python 3.13
+    import cgi
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0274.py::TestTaskFunc::test_valid_json - AttributeError: type obj...
+FAILED test_0274.py::TestTaskFunc::test_invalid_json - AttributeError: type o...
+FAILED test_0274.py::TestTaskFunc::test_no_data_key - AttributeError: type ob...
+3 failed, 1 warning in 0.53s

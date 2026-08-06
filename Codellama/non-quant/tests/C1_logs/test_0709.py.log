@@ -1,0 +1,32 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a valid input
+        raw_string = "eyJ0ZXN0IjoiYWJjIiwiY29kZSI6Ik1hbmtzIiwiZXhwaXJ5IjoxNjIwMjM5OTk5fQ=="
+        filename = "test_file"
+        output_dir = "output"
+        expected_file_path = os.path.join(output_dir, f'{filename}.csv')
+    
+        # Call the function and check the output
+        file_path = task_func(raw_string, filename, output_dir)
+        assert file_path == expected_file_path
+    
+        # Check that the file was created and has the correct contents
+        with open(file_path, 'r') as f:
+            reader = csv.reader(f)
+            data = {row[0]: row[1] for row in reader}
+>           assert data == {'key1': 'value1', 'key2': 'value2'}
+E           AssertionError: assert {'test': 'abc... '1620239999'} == {'key1': 'val...y2': 'value2'}
+E             
+E             Left contains 3 more items:
+E             {'code': 'Manks', 'expiry': '1620239999', 'test': 'abc'}
+E             Right contains 2 more items:
+E             {'key1': 'value1', 'key2': 'value2'}
+E             Use -v to get more diff
+
+test_0709.py:22: AssertionError
+=========================== short test summary info ============================
+FAILED test_0709.py::test_task_func - AssertionError: assert {'test': 'abc......
+1 failed in 0.44s

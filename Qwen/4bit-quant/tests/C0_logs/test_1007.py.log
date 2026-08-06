@@ -1,0 +1,96 @@
+F.FF                                                                     [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_success ____________________________
+
+mock_zipfile = <MagicMock name='ZipFile' id='132553400253904'>
+mock_makedirs = <MagicMock name='makedirs' id='132553399256800'>
+mock_get = <MagicMock name='get' id='132553399258768'>
+
+    @patch('src_1007.requests.get')
+    @patch('src_1007.os.makedirs')
+    @patch('src_1007.ZipFile')
+    def test_task_func_success(mock_zipfile, mock_makedirs, mock_get):
+        url = "http://example.com/file.zip"
+        download_path = "/tmp/downloads/"
+        file_name = os.path.join(download_path, "file.zip")
+        extract_path = os.path.splitext(file_name)[0]
+    
+        mock_response = mock_get.return_value
+        mock_response.status_code = 200
+        mock_response.headers = {"Content-Type": "application/zip"}
+        mock_response.content = b"zip_content"
+    
+        mock_zipfile.return_value.extractall.return_value = None
+    
+        result = task_func(url, download_path)
+    
+        assert result == extract_path
+        mock_get.assert_called_once_with(url, timeout=5)
+>       mock_makedirs.assert_any_call(download_path)
+
+test_1007.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='makedirs' id='132553399256800'>
+args = ('/tmp/downloads/',), kwargs = {}
+
+    def assert_any_call(self, /, *args, **kwargs):
+        """assert the mock has been called with the specified arguments.
+    
+        The assert passes if the mock has *ever* been called, unlike
+        `assert_called_with` and `assert_called_once_with` that only pass if
+        the call is the most recent one."""
+        expected = self._call_matcher(_Call((args, kwargs), two=True))
+        cause = expected if isinstance(expected, Exception) else None
+        actual = [self._call_matcher(c) for c in self.call_args_list]
+        if cause or expected not in _AnyComparer(actual):
+            expected_string = self._format_mock_call_signature(args, kwargs)
+>           raise AssertionError(
+                '%s call not found' % expected_string
+            ) from cause
+E           AssertionError: makedirs('/tmp/downloads/') call not found
+
+/usr/lib/python3.12/unittest/mock.py:1015: AssertionError
+_______________________ test_task_func_download_failure ________________________
+
+mock_get = <MagicMock name='get' id='132553400528016'>
+
+    @patch('src_1007.requests.get')
+    def test_task_func_download_failure(mock_get):
+        url = "http://example.com/file.zip"
+        mock_response = mock_get.return_value
+        mock_response.status_code = 404
+    
+        result = task_func(url)
+    
+>       assert result == "Error: Unable to download the file from the provided URL."
+E       AssertionError: assert 'Error: The U...o a ZIP file.' == 'Error: Unabl...provided URL.'
+E         
+E         - Error: Unable to download the file from the provided URL.
+E         + Error: The URL does not point to a ZIP file.
+
+test_1007.py:50: AssertionError
+_________________________ test_task_func_bad_zip_file __________________________
+
+mock_zipfile = <MagicMock name='ZipFile' id='132553398534752'>
+mock_get = <MagicMock name='get' id='132553398538640'>
+
+    @patch('src_1007.requests.get')
+    @patch('src_1007.ZipFile')
+    def test_task_func_bad_zip_file(mock_zipfile, mock_get):
+        url = "http://example.com/file.zip"
+        mock_response = mock_get.return_value
+        mock_response.status_code = 200
+        mock_response.headers = {"Content-Type": "application/zip"}
+        mock_response.content = b"zip_content"
+    
+>       mock_zipfile.side_effect = BadZipFile
+                                   ^^^^^^^^^^
+E       NameError: name 'BadZipFile' is not defined
+
+test_1007.py:61: NameError
+=========================== short test summary info ============================
+FAILED test_1007.py::test_task_func_success - AssertionError: makedirs('/tmp/...
+FAILED test_1007.py::test_task_func_download_failure - AssertionError: assert...
+FAILED test_1007.py::test_task_func_bad_zip_file - NameError: name 'BadZipFil...
+3 failed, 1 passed in 0.81s

@@ -1,0 +1,45 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sample_data = {'data1': array([1, 2, 3, 4, 5]), 'data2': array([ 2,  4,  6,  8, 10])}
+
+    def test_task_func(sample_data):
+        data_keys = ['data1', 'data2']
+        correlation, ax = task_func(sample_data, data_keys)
+    
+        # Check if the correlation is 1.0 (perfect positive correlation)
+        assert np.isclose(correlation, 1.0), "Correlation should be 1.0 for perfectly correlated data"
+    
+        # Check if the scatter plot has the correct number of points
+        lines = ax.get_lines()
+>       assert len(lines) == 1, "There should be exactly one line in the scatter plot"
+E       AssertionError: There should be exactly one line in the scatter plot
+E       assert 0 == 1
+E        +  where 0 = len(<a list of 0 Line2D objects>)
+
+test_0360.py:21: AssertionError
+______________________ test_task_func_with_unrelated_data ______________________
+
+sample_data = {'data1': array([1, 2, 3, 4, 5]), 'data2': array([ 2,  4,  6,  8, 10])}
+
+    def test_task_func_with_unrelated_data(sample_data):
+        unrelated_data = {
+            'data1': np.array([1, 2, 3, 4, 5]),
+            'data2': np.array([5, 3, 1, 4, 2])
+        }
+        data_keys = ['data1', 'data2']
+        correlation, ax = task_func(unrelated_data, data_keys)
+    
+        # Check if the correlation is close to 0.0 (no correlation)
+>       assert np.isclose(correlation, 0.0), "Correlation should be close to 0.0 for unrelated data"
+E       AssertionError: Correlation should be close to 0.0 for unrelated data
+E       assert np.False_
+E        +  where np.False_ = <function isclose at 0x7aa782920d30>(np.float64(-0.5), 0.0)
+E        +    where <function isclose at 0x7aa782920d30> = np.isclose
+
+test_0360.py:34: AssertionError
+=========================== short test summary info ============================
+FAILED test_0360.py::test_task_func - AssertionError: There should be exactly...
+FAILED test_0360.py::test_task_func_with_unrelated_data - AssertionError: Cor...
+2 failed in 3.16s

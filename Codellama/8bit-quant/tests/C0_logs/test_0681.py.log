@@ -1,0 +1,221 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+self = <pandas.core.indexing._iLocIndexer object at 0x70c4792dcb90>
+loc = np.int64(0)
+value = 0   -1.224745
+1    0.000000
+2    1.224745
+Name: a, dtype: float64
+plane_indexer = slice(None, None, None)
+
+    def _setitem_single_column(self, loc: int, value, plane_indexer) -> None:
+        """
+    
+        Parameters
+        ----------
+        loc : int
+            Indexer for column position
+        plane_indexer : int, slice, listlike[int]
+            The indexer we use for setitem along axis=0.
+        """
+        pi = plane_indexer
+    
+        is_full_setter = com.is_null_slice(pi) or com.is_full_slice(pi, len(self.obj))
+    
+        is_null_setter = com.is_empty_slice(pi) or (is_array_like(pi) and len(pi) == 0)
+    
+        if is_null_setter:
+            # no-op, don't cast dtype later
+            return
+    
+        elif is_full_setter:
+            try:
+>               self.obj._mgr.column_setitem(
+                    loc, plane_indexer, value, inplace_only=True
+                )
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexing.py:2144: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/managers.py:1526: in column_setitem
+    col_mgr.setitem_inplace(idx, value)
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/managers.py:2228: in setitem_inplace
+    value = np_can_hold_element(arr.dtype, value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dtype = dtype('int64')
+element = 0   -1.224745
+1    0.000000
+2    1.224745
+Name: a, dtype: float64
+
+    def np_can_hold_element(dtype: np.dtype, element: Any) -> Any:
+        """
+        Raise if we cannot losslessly set this element into an ndarray with this dtype.
+    
+        Specifically about places where we disagree with numpy.  i.e. there are
+        cases where numpy will raise in doing the setitem that we do not check
+        for here, e.g. setting str "X" into a numeric ndarray.
+    
+        Returns
+        -------
+        Any
+            The element, potentially cast to the dtype.
+    
+        Raises
+        ------
+        ValueError : If we cannot losslessly store this element with this dtype.
+        """
+        if dtype == _dtype_obj:
+            return element
+    
+        tipo = _maybe_infer_dtype_type(element)
+    
+        if dtype.kind in "iu":
+            if isinstance(element, range):
+                if _dtype_can_hold_range(element, dtype):
+                    return element
+                raise LossySetitemError
+    
+            if is_integer(element) or (is_float(element) and element.is_integer()):
+                # e.g. test_setitem_series_int8 if we have a python int 1
+                #  tipo may be np.int32, despite the fact that it will fit
+                #  in smaller int dtypes.
+                info = np.iinfo(dtype)
+                if info.min <= element <= info.max:
+                    return dtype.type(element)
+                raise LossySetitemError
+    
+            if tipo is not None:
+                if tipo.kind not in "iu":
+                    if isinstance(element, np.ndarray) and element.dtype.kind == "f":
+                        # If all can be losslessly cast to integers, then we can hold them
+                        with np.errstate(invalid="ignore"):
+                            # We check afterwards if cast was losslessly, so no need to show
+                            # the warning
+                            casted = element.astype(dtype)
+                        comp = casted == element
+                        if comp.all():
+                            # Return the casted values bc they can be passed to
+                            #  np.putmask, whereas the raw values cannot.
+                            #  see TestSetitemFloatNDarrayIntoIntegerSeries
+                            return casted
+                        raise LossySetitemError
+    
+                    elif isinstance(element, ABCExtensionArray) and isinstance(
+                        element.dtype, CategoricalDtype
+                    ):
+                        # GH#52927 setting Categorical value into non-EA frame
+                        # TODO: general-case for EAs?
+                        try:
+                            casted = element.astype(dtype)
+                        except (ValueError, TypeError) as err:
+                            raise LossySetitemError from err
+                        # Check for cases of either
+                        #  a) lossy overflow/rounding or
+                        #  b) semantic changes like dt64->int64
+                        comp = casted == element
+                        if not comp.all():
+                            raise LossySetitemError
+                        return casted
+    
+                    # Anything other than integer we cannot hold
+>                   raise LossySetitemError
+E                   pandas.errors.LossySetitemError
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/dtypes/cast.py:1725: LossySetitemError
+
+The above exception was the direct cause of the following exception:
+
+    def test_task_func():
+        # Test case 1: No features specified
+        df = pd.DataFrame({'a': [1, 2, 3], 'b': [4, 5, 6]})
+        features = []
+        expected_output = df
+        assert task_func(df, features).equals(expected_output)
+    
+        # Test case 2: Features specified
+        df = pd.DataFrame({'a': [1, 2, 3], 'b': [4, 5, 6]})
+        features = ['a', 'b']
+        expected_output = pd.DataFrame({'a': [0, 0, 0], 'b': [0, 0, 0]})
+>       assert task_func(df, features).equals(expected_output)
+               ^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0681.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0681.py:13: in task_func
+    df.loc[:, features] = pd.DataFrame(scaler.fit_transform(df.loc[:, features]), columns=features, index=df.index)
+    ^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexing.py:938: in __setitem__
+    iloc._setitem_with_indexer(indexer, value, self.name)
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexing.py:1953: in _setitem_with_indexer
+    self._setitem_with_indexer_split_path(indexer, value, name)
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexing.py:1988: in _setitem_with_indexer_split_path
+    self._setitem_with_indexer_frame_value(indexer, value, name)
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexing.py:2120: in _setitem_with_indexer_frame_value
+    self._setitem_single_column(loc, val, pi)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.indexing._iLocIndexer object at 0x70c4792dcb90>
+loc = np.int64(0)
+value = 0   -1.224745
+1    0.000000
+2    1.224745
+Name: a, dtype: float64
+plane_indexer = slice(None, None, None)
+
+    def _setitem_single_column(self, loc: int, value, plane_indexer) -> None:
+        """
+    
+        Parameters
+        ----------
+        loc : int
+            Indexer for column position
+        plane_indexer : int, slice, listlike[int]
+            The indexer we use for setitem along axis=0.
+        """
+        pi = plane_indexer
+    
+        is_full_setter = com.is_null_slice(pi) or com.is_full_slice(pi, len(self.obj))
+    
+        is_null_setter = com.is_empty_slice(pi) or (is_array_like(pi) and len(pi) == 0)
+    
+        if is_null_setter:
+            # no-op, don't cast dtype later
+            return
+    
+        elif is_full_setter:
+            try:
+                self.obj._mgr.column_setitem(
+                    loc, plane_indexer, value, inplace_only=True
+                )
+            except (ValueError, TypeError, LossySetitemError) as exc:
+                # If we're setting an entire column and we can't do it inplace,
+                #  then we can use value's dtype (or inferred dtype)
+                #  instead of object
+                dtype = self.obj.dtypes.iloc[loc]
+                if dtype not in (np.void, object) and not self.obj.empty:
+                    # - Exclude np.void, as that is a special case for expansion.
+                    #   We want to raise for
+                    #       df = pd.DataFrame({'a': [1, 2]})
+                    #       df.loc[:, 'a'] = .3
+                    #   but not for
+                    #       df = pd.DataFrame({'a': [1, 2]})
+                    #       df.loc[:, 'b'] = .3
+                    # - Exclude `object`, as then no upcasting happens.
+                    # - Exclude empty initial object with enlargement,
+                    #   as then there's nothing to be inconsistent with.
+>                   raise TypeError(
+                        f"Invalid value '{value}' for dtype '{dtype}'"
+                    ) from exc
+E                   TypeError: Invalid value '0   -1.224745
+E                   1    0.000000
+E                   2    1.224745
+E                   Name: a, dtype: float64' for dtype 'int64'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexing.py:2163: TypeError
+=========================== short test summary info ============================
+FAILED test_0681.py::test_task_func - TypeError: Invalid value '0   -1.224745
+1 failed in 3.01s

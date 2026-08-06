@@ -1,0 +1,39 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a simple input
+        data = "1-2-3-4-5"
+        result = task_func(data)
+    
+        # Check if the returned object is an Axes instance
+        assert isinstance(result, plt.Axes)
+    
+        # Check if the DataFrame is created correctly
+        expected_df = pd.DataFrame([1, 2, 3, 4, 5], columns=['Values'])
+>       assert result.get_lines()[0].get_data()[1][0] == expected_df['Values'].value_counts().iloc[0]
+               ^^^^^^^^^^^^^^^^^^^^^
+E       IndexError: list index out of range
+
+test_0568.py:26: IndexError
+_____________________ test_task_func_with_different_input ______________________
+
+    def test_task_func_with_different_input():
+        data = "10-20-30-40-50"
+        result = task_func(data)
+    
+        # Check if the returned object is an Axes instance
+        assert isinstance(result, plt.Axes)
+    
+        # Check if the DataFrame is created correctly
+        expected_df = pd.DataFrame([10, 20, 30, 40, 50], columns=['Values'])
+>       assert result.get_lines()[0].get_data()[1][0] == expected_df['Values'].value_counts().iloc[0]
+               ^^^^^^^^^^^^^^^^^^^^^
+E       IndexError: list index out of range
+
+test_0568.py:42: IndexError
+=========================== short test summary info ============================
+FAILED test_0568.py::test_task_func - IndexError: list index out of range
+FAILED test_0568.py::test_task_func_with_different_input - IndexError: list i...
+2 failed in 2.18s

@@ -1,0 +1,35 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that the function returns a pandas DataFrame
+        df = task_func(n=10)
+        assert isinstance(df, pd.DataFrame)
+    
+        # Test that the DataFrame has the correct columns
+        expected_columns = ['Site', 'Category', 'Response', 'Value']
+        assert list(df.columns) == expected_columns
+    
+        # Test that the DataFrame has the correct number of rows
+        assert len(df) == 10
+    
+        # Test that the DataFrame contains the correct data
+        expected_data = [
+            {'Site': 'New York Times', 'Category': 'Sports', 'Response': 'Strongly Disagree', 'Value': 1},
+            {'Site': 'USA Today', 'Category': 'Technology', 'Response': 'Disagree', 'Value': 2},
+            {'Site': 'Apple News', 'Category': 'Business', 'Response': 'Neither Agree nor Disagree', 'Value': 3},
+            {'Site': 'CNN', 'Category': 'Politics', 'Response': 'Agree', 'Value': 4},
+            {'Site': 'BBC', 'Category': 'Entertainment', 'Response': 'Strongly Agree', 'Value': 5}
+        ]
+>       assert df.to_dict(orient='records') == expected_data
+E       AssertionError: assert [{'Site': 'Ne...lue': 5}, ...] == [{'Site': 'Ne..., 'Value': 5}]
+E         
+E         At index 0 diff: {'Site': 'New York Times', 'Category': 'Politics', 'Response': 'Strongly Agree', 'Value': 5} != {'Site': 'New York Times', 'Category': 'Sports', 'Response': 'Strongly Disagree', 'Value': 1}
+E         Left contains 5 more items, first extra item: {'Site': 'BBC', 'Category': 'Technology', 'Response': 'Strongly Agree', 'Value': 5}
+E         Use -v to get more diff
+
+test_0785.py:25: AssertionError
+=========================== short test summary info ============================
+FAILED test_0785.py::test_task_func - AssertionError: assert [{'Site': 'Ne......
+1 failed in 1.12s

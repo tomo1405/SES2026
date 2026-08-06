@@ -1,0 +1,44 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        test_cases = [
+            (
+                "/path/to/directory",
+                [
+                    ("file1.txt", 1024, "2022-01-01T00:00:00+00:00", "2022-01-02T00:00:00+00:00"),
+                    ("file2.txt", 2048, "2022-01-03T00:00:00+00:00", "2022-01-04T00:00:00+00:00"),
+                ],
+            ),
+            (
+                "/path/to/another/directory",
+                [
+                    ("file3.txt", 512, "2022-01-05T00:00:00+00:00", "2022-01-06T00:00:00+00:00"),
+                ],
+            ),
+        ]
+    
+        for directory_path, expected_output in test_cases:
+            with pytest.raises(ValueError, match=r"The path .* is not a valid directory."):
+                task_func(directory_path)
+    
+>           output = task_func(directory_path)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0972.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory_path = '/path/to/directory'
+
+    def task_func(directory_path: str):
+        if not Path(directory_path).is_dir():
+>           raise ValueError(f"The path {directory_path} is not a valid directory.")
+E           ValueError: The path /path/to/directory is not a valid directory.
+
+test_0972.py:8: ValueError
+=========================== short test summary info ============================
+FAILED test_0972.py::test_task_func - ValueError: The path /path/to/directory...
+1 failed in 0.52s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

@@ -1,0 +1,77 @@
+F.F.                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        # Test with a valid input
+        data = [
+            [1, 2, 3, 4, 5],
+            [6, 7, 8, 9, 10],
+            [11, 12, 13, 14, 15]
+        ]
+        df, results = task_func(data, random_seed=42)
+    
+        # Check if the DataFrame is created correctly
+        assert isinstance(df, pd.DataFrame)
+        assert df.shape == (3, 5)
+        assert list(df.columns) == ["A", "B", "C", "D", "Response"]
+    
+        # Check if the regression results are returned
+>       assert isinstance(results, sm.regression.linear_model.RegressionResultsWrapper)
+                                   ^^
+E       NameError: name 'sm' is not defined
+
+test_0517.py:21: NameError
+__________________________ test_task_func_empty_input __________________________
+
+    def test_task_func_empty_input():
+        # Test with empty input
+        data = []
+>       df, results = task_func(data, random_seed=42)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0517.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0517.py:21: in task_func
+    model = sm.OLS(y, X)
+            ^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/statsmodels/regression/linear_model.py:921: in __init__
+    super().__init__(endog, exog, missing=missing,
+../../../.venv/lib/python3.12/site-packages/statsmodels/regression/linear_model.py:746: in __init__
+    super().__init__(endog, exog, missing=missing,
+../../../.venv/lib/python3.12/site-packages/statsmodels/regression/linear_model.py:200: in __init__
+    super().__init__(endog, exog, **kwargs)
+../../../.venv/lib/python3.12/site-packages/statsmodels/base/model.py:270: in __init__
+    super().__init__(endog, exog, **kwargs)
+../../../.venv/lib/python3.12/site-packages/statsmodels/base/model.py:95: in __init__
+    self.data = self._handle_data(endog, exog, missing, hasconst,
+../../../.venv/lib/python3.12/site-packages/statsmodels/base/model.py:135: in _handle_data
+    data = handle_data(endog, exog, missing, hasconst, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/statsmodels/base/data.py:694: in handle_data
+    return klass(endog, exog=exog, missing=missing, hasconst=hasconst, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/statsmodels/base/data.py:86: in __init__
+    self.endog, self.exog = self._convert_endog_exog(endog, exog)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <statsmodels.base.data.PandasData object at 0x7a484f3ddd00>
+endog = array([], dtype=object), exog = array([], shape=(0, 5), dtype=object)
+
+    def _convert_endog_exog(self, endog, exog=None):
+        # TODO: remove this when we handle dtype systematically
+        endog = np.asarray(endog)
+        exog = exog if exog is None else np.asarray(exog)
+        if endog.dtype == object or exog is not None and exog.dtype == object:
+>           raise ValueError(
+                "Pandas data cast to numpy dtype of object. "
+                "Check input data with np.asarray(data)."
+            )
+E           ValueError: Pandas data cast to numpy dtype of object. Check input data with np.asarray(data).
+
+../../../.venv/lib/python3.12/site-packages/statsmodels/base/data.py:523: ValueError
+=========================== short test summary info ============================
+FAILED test_0517.py::test_task_func_valid_input - NameError: name 'sm' is not...
+FAILED test_0517.py::test_task_func_empty_input - ValueError: Pandas data cas...
+2 failed, 2 passed in 4.09s

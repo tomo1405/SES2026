@@ -1,0 +1,40 @@
+.F.F.F                                                                   [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_invalid_ip ___________________________
+
+    def test_task_func_invalid_ip():
+        ip_address = '{"ip": "256.256.256.256"}'
+>       assert task_func(ip_address) == 'Invalid IP address received'
+E       AssertionError: assert '256.256.256.256' == 'Invalid IP address received'
+E         
+E         - Invalid IP address received
+E         + 256.256.256.256
+
+test_0179.py:10: AssertionError
+________________________ test_task_func_non_json_input _________________________
+
+    def test_task_func_non_json_input():
+        ip_address = "not a json string"
+>       assert task_func(ip_address) == 'Expecting property name enclosed in double quotes: line 1 column 2 (char 1)'
+E       AssertionError: assert 'Expecting va...mn 1 (char 0)' == 'Expecting pr...mn 2 (char 1)'
+E         
+E         - Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+E         + Expecting value: line 1 column 1 (char 0)
+
+test_0179.py:18: AssertionError
+__________________________ test_task_func_none_input ___________________________
+
+    def test_task_func_none_input():
+        ip_address = None
+>       assert task_func(ip_address) == 'NoneType object is not subscriptable'
+E       AssertionError: assert 'the JSON obj... not NoneType' == 'NoneType obj...subscriptable'
+E         
+E         - NoneType object is not subscriptable
+E         + the JSON object must be str, bytes or bytearray, not NoneType
+
+test_0179.py:26: AssertionError
+=========================== short test summary info ============================
+FAILED test_0179.py::test_task_func_invalid_ip - AssertionError: assert '256....
+FAILED test_0179.py::test_task_func_non_json_input - AssertionError: assert '...
+FAILED test_0179.py::test_task_func_none_input - AssertionError: assert 'the ...
+3 failed, 3 passed in 0.41s

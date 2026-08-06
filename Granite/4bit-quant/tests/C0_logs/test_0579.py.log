@@ -1,0 +1,76 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+username = 'example_user'
+
+    def task_func(username):
+        response = requests.get(URL + username)
+        try:
+>           response.raise_for_status()  # This will raise an HTTPError if the response was an error
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../../../src/src_0579.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Response [404]>
+
+    def raise_for_status(self) -> None:
+        """Raises :class:`HTTPError`, if one occurred."""
+    
+        http_error_msg = ""
+        if isinstance(self.reason, bytes):
+            # We attempt to decode utf-8 first because some servers
+            # choose to localize their reason strings. If the string
+            # isn't utf-8, we fall back to iso-8859-1 for all other
+            # encodings. (See PR #3538)
+            try:
+                reason = self.reason.decode("utf-8")
+            except UnicodeDecodeError:
+                reason = self.reason.decode("iso-8859-1")
+        else:
+            reason = self.reason
+    
+        if 400 <= self.status_code < 500:
+            http_error_msg = (
+                f"{self.status_code} Client Error: {reason} for url: {self.url}"
+            )
+    
+        elif 500 <= self.status_code < 600:
+            http_error_msg = (
+                f"{self.status_code} Server Error: {reason} for url: {self.url}"
+            )
+    
+        if http_error_msg:
+>           raise HTTPError(http_error_msg, response=self)
+E           requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://api.github.com/users/example_user
+
+../../../.venv/lib/python3.12/site-packages/requests/models.py:1167: HTTPError
+
+The above exception was the direct cause of the following exception:
+
+    def test_task_func():
+        username = 'example_user'
+>       response = task_func(username)
+                   ^^^^^^^^^^^^^^^^^^^
+
+test_0579.py:6: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+username = 'example_user'
+
+    def task_func(username):
+        response = requests.get(URL + username)
+        try:
+            response.raise_for_status()  # This will raise an HTTPError if the response was an error
+            user_data = response.json()
+        except requests.exceptions.HTTPError as e:
+            # Optionally, log the error or handle it according to your needs
+            error_msg = f"Failed to fetch user data for '{username}'. HTTP status: {e.response.status_code} - {e.response.reason}."
+>           raise Exception(error_msg) from e
+E           Exception: Failed to fetch user data for 'example_user'. HTTP status: 404 - Not Found.
+
+../../../src/src_0579.py:12: Exception
+=========================== short test summary info ============================
+FAILED test_0579.py::test_task_func - Exception: Failed to fetch user data fo...
+1 failed, 1 passed in 0.96s

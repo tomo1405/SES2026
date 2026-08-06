@@ -1,0 +1,28 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        car_dict = {'Car1': 'Red', 'Car2': 'Blue', 'Car3': 'Red', 'Car4': 'Green'}
+        df, ax = task_func(car_dict)
+    
+        # Check if DataFrame is created correctly
+        assert isinstance(df, pd.DataFrame)
+        assert list(df.columns) == ['Car', 'Color']
+        assert len(df) == 4
+    
+        # Check if the DataFrame has the correct data
+        expected_data = [
+            ('Car1', 'Red'),
+            ('Car2', 'Blue'),
+            ('Car3', 'Red'),
+            ('Car4', 'Green')
+        ]
+>       assert all(df.iloc[i].tolist() == expected_data[i] for i in range(len(df)))
+E       assert False
+E        +  where False = all(<generator object test_task_func.<locals>.<genexpr> at 0x76909f44e960>)
+
+test_0064.py:21: AssertionError
+=========================== short test summary info ============================
+FAILED test_0064.py::test_task_func - assert False
+1 failed in 1.96s

@@ -1,0 +1,18 @@
+F..                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        temperatures = pd.DataFrame({'temperature': [23, 24, 25, 26, 27]}, index=pd.date_range('2022-01-01', '2022-01-05'))
+        ax = task_func(temperatures)
+        assert ax.get_xlabel() == 'Date'
+        assert ax.get_ylabel() == 'Temperature (°C)'
+        assert ax.get_title() == 'Daily Temperatures in New York'
+>       assert ax.get_lines()[0].get_data() == (temperatures.index, temperatures['temperature'])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+test_0104.py:12: ValueError
+=========================== short test summary info ============================
+FAILED test_0104.py::test_task_func - ValueError: The truth value of an array...
+1 failed, 2 passed in 2.08s

@@ -1,0 +1,23 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        dataset = [pd.DataFrame({'a': range(10)}), pd.DataFrame({'b': range(5)})]
+        filename = 'test_file.csv'
+        task_func(dataset, filename)
+        filepath = os.path.join(OUTPUT_DIR, filename)
+        with open(filepath, 'r') as f:
+            content = f.read()
+        assert '------' in content
+        assert 'index' not in content
+>       assert content.count('\n') == len(dataset) - 1
+E       AssertionError: assert 19 == (2 - 1)
+E        +  where 19 = <built-in method count of str object at 0x7b24a2b0be70>('\n')
+E        +    where <built-in method count of str object at 0x7b24a2b0be70> = 'a\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n\n------\nb\n0\n1\n2\n3\n4\n'.count
+E        +  and   2 = len([   a\n0  0\n1  1\n2  2\n3  3\n4  4\n5  5\n6  6\n7  7\n8  8\n9  9,    b\n0  0\n1  1\n2  2\n3  3\n4  4])
+
+test_0630.py:17: AssertionError
+=========================== short test summary info ============================
+FAILED test_0630.py::test_task_func - AssertionError: assert 19 == (2 - 1)
+1 failed in 1.30s

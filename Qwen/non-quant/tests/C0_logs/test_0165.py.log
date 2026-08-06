@@ -1,0 +1,138 @@
+FFF.FF                                                                   [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_default_parameters _______________________
+
+    def test_task_func_default_parameters():
+        fig = task_func()
+        assert isinstance(fig, plt.Figure)
+        data = pd.DataFrame(np.random.uniform(0, 1, size=(5, 5)), columns=[f'Label{i + 1}' for i in range(5)])
+>       assert np.allclose(fig.axes[0].lines[0].get_ydata(), data.sum(axis=1))
+                           ^^^^^^^^^^^^^^^^^^^^
+
+test_0165.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Axes.ArtistList of 0 lines>, key = 0
+
+    def __getitem__(self, key):
+>       return [artist
+                for artist in self._axes._children
+                if self._type_check(artist)][key]
+E       IndexError: list index out of range
+
+../../../.venv/lib/python3.12/site-packages/matplotlib/axes/_base.py:1530: IndexError
+_______________________ test_task_func_custom_parameters _______________________
+
+    def test_task_func_custom_parameters():
+        fig = task_func(num_labels=3, data_range=(10, 20))
+        assert isinstance(fig, plt.Figure)
+        data = pd.DataFrame(np.random.uniform(10, 20, size=(3, 3)), columns=[f'Label{i + 1}' for i in range(3)])
+>       assert np.allclose(fig.axes[0].lines[0].get_ydata(), data.sum(axis=1))
+                           ^^^^^^^^^^^^^^^^^^^^
+
+test_0165.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Axes.ArtistList of 0 lines>, key = 0
+
+    def __getitem__(self, key):
+>       return [artist
+                for artist in self._axes._children
+                if self._type_check(artist)][key]
+E       IndexError: list index out of range
+
+../../../.venv/lib/python3.12/site-packages/matplotlib/axes/_base.py:1530: IndexError
+__________________________ test_task_func_zero_labels __________________________
+
+    def test_task_func_zero_labels():
+        with pytest.raises(ValueError):
+>           task_func(num_labels=0)
+
+test_0165.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0165.py:11: in task_func
+    data.plot(kind='bar', stacked=True, ax=ax)
+../../../.venv/lib/python3.12/site-packages/pandas/plotting/_core.py:1185: in __call__
+    return plot_backend.plot(data, kind=kind, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/plotting/_matplotlib/__init__.py:71: in plot
+    plot_obj.generate()
+../../../.venv/lib/python3.12/site-packages/pandas/plotting/_matplotlib/core.py:516: in generate
+    self._compute_plot_data()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.plotting._matplotlib.core.BarPlot object at 0x761dec41aab0>
+
+    @final
+    def _compute_plot_data(self) -> None:
+        data = self.data
+    
+        # GH15079 reconstruct data if by is defined
+        if self.by is not None:
+            self.subplots = True
+            data = reconstruct_data_with_by(self.data, by=self.by, cols=self.columns)
+    
+        # GH16953, infer_objects is needed as fallback, for ``Series``
+        # with ``dtype == object``
+        data = data.infer_objects()
+        include_type = [np.number, "datetime", "datetimetz", "timedelta"]
+    
+        # GH23719, allow plotting boolean
+        if self.include_bool is True:
+            include_type.append(np.bool_)
+    
+        # GH22799, exclude datetime-like type for boxplot
+        exclude_type = None
+        if self._kind == "box":
+            # TODO: change after solving issue 27881
+            include_type = [np.number]
+            exclude_type = ["timedelta"]
+    
+        # GH 18755, include object and category type for scatter plot
+        if self._kind == "scatter":
+            include_type.extend(["object", "category", "string"])
+    
+        numeric_data = data.select_dtypes(include=include_type, exclude=exclude_type)
+    
+        is_empty = numeric_data.shape[-1] == 0
+        # no non-numeric frames or series allowed
+        if is_empty:
+>           raise TypeError("no numeric data to plot")
+E           TypeError: no numeric data to plot
+
+../../../.venv/lib/python3.12/site-packages/pandas/plotting/_matplotlib/core.py:716: TypeError
+______________________ test_task_func_invalid_data_range _______________________
+
+    def test_task_func_invalid_data_range():
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0165.py:29: Failed
+_________________________ test_task_func_single_label __________________________
+
+    def test_task_func_single_label():
+        fig = task_func(num_labels=1)
+        assert isinstance(fig, plt.Figure)
+        data = pd.DataFrame(np.random.uniform(0, 1, size=(1, 1)), columns=['Label1'])
+>       assert np.allclose(fig.axes[0].lines[0].get_ydata(), data.sum(axis=1))
+                           ^^^^^^^^^^^^^^^^^^^^
+
+test_0165.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Axes.ArtistList of 0 lines>, key = 0
+
+    def __getitem__(self, key):
+>       return [artist
+                for artist in self._axes._children
+                if self._type_check(artist)][key]
+E       IndexError: list index out of range
+
+../../../.venv/lib/python3.12/site-packages/matplotlib/axes/_base.py:1530: IndexError
+=========================== short test summary info ============================
+FAILED test_0165.py::test_task_func_default_parameters - IndexError: list ind...
+FAILED test_0165.py::test_task_func_custom_parameters - IndexError: list inde...
+FAILED test_0165.py::test_task_func_zero_labels - TypeError: no numeric data ...
+FAILED test_0165.py::test_task_func_invalid_data_range - Failed: DID NOT RAIS...
+FAILED test_0165.py::test_task_func_single_label - IndexError: list index out...
+5 failed, 1 passed in 2.61s

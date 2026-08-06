@@ -1,0 +1,50 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+    
+        # Mock the matplotlib axes object
+        class Axes:
+            def plot(self, x, y, color):
+                assert isinstance(x, np.ndarray)
+                assert isinstance(y, np.ndarray)
+                assert color in COLORS
+    
+            def set_rlabel_position(self, position):
+                assert 0 <= position <= 180
+    
+        ax = Axes()
+    
+        # Test with random inputs
+        num_tests = 10
+        for _ in range(num_tests):
+>           color = task_func(ax)
+                    ^^^^^^^^^^^^^
+
+test_0254.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0254.py:11: in task_func
+    ax.plot(x, y, color=color)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <test_0254.test_task_func.<locals>.Axes object at 0x7ca6a1289d30>
+x = array([0.        , 0.00628947, 0.01257895, 0.01886842, 0.0251579 ,
+       0.03144737, 0.03773685, 0.04402632, 0.050315...03, 6.23286951, 6.23915898, 6.24544846, 6.25173793,
+       6.25802741, 6.26431688, 6.27060636, 6.27689583, 6.28318531])
+y = array([ 0.00000000e+00,  4.40121020e-02,  8.79389084e-02,  1.31695289e-01,
+        1.75196443e-01,  2.18358066e-01,  2...6510e-01, -2.18358066e-01, -1.75196443e-01,
+       -1.31695289e-01, -8.79389084e-02, -4.40121020e-02, -1.71450552e-15])
+color = 'm'
+
+    def plot(self, x, y, color):
+        assert isinstance(x, np.ndarray)
+        assert isinstance(y, np.ndarray)
+>       assert color in COLORS
+                        ^^^^^^
+E       NameError: name 'COLORS' is not defined
+
+test_0254.py:14: NameError
+=========================== short test summary info ============================
+FAILED test_0254.py::test_task_func - NameError: name 'COLORS' is not defined
+1 failed in 0.62s

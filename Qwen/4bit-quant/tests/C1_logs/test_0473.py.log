@@ -1,0 +1,40 @@
+....F                                                                    [100%]
+=================================== FAILURES ===================================
+________________ test_task_func_with_more_clusters_than_points _________________
+
+    def test_task_func_with_more_clusters_than_points():
+        # Test with more clusters than points
+        myList = [[1, 2], [2, 1]]
+        n_clusters = 3
+>       ax = task_func(myList, n_clusters)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0473.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0473.py:8: in task_func
+    kmeans.fit(myList)
+../../../.venv/lib/python3.12/site-packages/sklearn/base.py:1403: in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/cluster/_kmeans.py:1473: in fit
+    self._check_params_vs_input(X)
+../../../.venv/lib/python3.12/site-packages/sklearn/cluster/_kmeans.py:1413: in _check_params_vs_input
+    super()._check_params_vs_input(X, default_n_init=10)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = KMeans(n_clusters=3, n_init=10, random_state=42)
+X = array([[1., 2.],
+       [2., 1.]]), default_n_init = 10
+
+    def _check_params_vs_input(self, X, default_n_init=None):
+        # n_clusters
+        if X.shape[0] < self.n_clusters:
+>           raise ValueError(
+                f"n_samples={X.shape[0]} should be >= n_clusters={self.n_clusters}."
+            )
+E           ValueError: n_samples=2 should be >= n_clusters=3.
+
+../../../.venv/lib/python3.12/site-packages/sklearn/cluster/_kmeans.py:877: ValueError
+=========================== short test summary info ============================
+FAILED test_0473.py::test_task_func_with_more_clusters_than_points - ValueErr...
+1 failed, 4 passed in 3.94s

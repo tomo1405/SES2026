@@ -1,0 +1,69 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+______________ test_task_func[5-integer_range0-expected_labels0] _______________
+
+num_types = 5, integer_range = (0, 100)
+expected_labels = ['Type1', 'Type2', 'Type3', 'Type4', 'Type5']
+
+    @pytest.mark.parametrize("num_types,integer_range,expected_labels", [
+        (5, (0, 100), ['Type1', 'Type2', 'Type3', 'Type4', 'Type5']),
+        (3, (10, 20), ['Type1', 'Type2', 'Type3']),
+        (7, (50, 100), ['Type1', 'Type2', 'Type3', 'Type4', 'Type5', 'Type6', 'Type7']),
+    ])
+    def test_task_func(num_types, integer_range, expected_labels):
+        fig, ax = task_func(num_types, integer_range)
+        actual_labels = [label.get_text() for label in ax.get_xticklabels()]
+>       assert actual_labels == expected_labels
+E       AssertionError: assert ['0', '50', '...', '250', ...] == ['Type1', 'Ty...pe4', 'Type5']
+E         
+E         At index 0 diff: '0' != 'Type1'
+E         Left contains 3 more items, first extra item: '250'
+E         Use -v to get more diff
+
+test_0168.py:15: AssertionError
+______________ test_task_func[3-integer_range1-expected_labels1] _______________
+
+num_types = 3, integer_range = (10, 20)
+expected_labels = ['Type1', 'Type2', 'Type3']
+
+    @pytest.mark.parametrize("num_types,integer_range,expected_labels", [
+        (5, (0, 100), ['Type1', 'Type2', 'Type3', 'Type4', 'Type5']),
+        (3, (10, 20), ['Type1', 'Type2', 'Type3']),
+        (7, (50, 100), ['Type1', 'Type2', 'Type3', 'Type4', 'Type5', 'Type6', 'Type7']),
+    ])
+    def test_task_func(num_types, integer_range, expected_labels):
+        fig, ax = task_func(num_types, integer_range)
+        actual_labels = [label.get_text() for label in ax.get_xticklabels()]
+>       assert actual_labels == expected_labels
+E       AssertionError: assert ['0', '10', '...', '40', '50'] == ['Type1', 'Type2', 'Type3']
+E         
+E         At index 0 diff: '0' != 'Type1'
+E         Left contains 3 more items, first extra item: '30'
+E         Use -v to get more diff
+
+test_0168.py:15: AssertionError
+______________ test_task_func[7-integer_range2-expected_labels2] _______________
+
+num_types = 7, integer_range = (50, 100)
+expected_labels = ['Type1', 'Type2', 'Type3', 'Type4', 'Type5', 'Type6', ...]
+
+    @pytest.mark.parametrize("num_types,integer_range,expected_labels", [
+        (5, (0, 100), ['Type1', 'Type2', 'Type3', 'Type4', 'Type5']),
+        (3, (10, 20), ['Type1', 'Type2', 'Type3']),
+        (7, (50, 100), ['Type1', 'Type2', 'Type3', 'Type4', 'Type5', 'Type6', 'Type7']),
+    ])
+    def test_task_func(num_types, integer_range, expected_labels):
+        fig, ax = task_func(num_types, integer_range)
+        actual_labels = [label.get_text() for label in ax.get_xticklabels()]
+>       assert actual_labels == expected_labels
+E       AssertionError: assert ['0', '100', ...', '500', ...] == ['Type1', 'Ty... 'Type6', ...]
+E         
+E         At index 0 diff: '0' != 'Type1'
+E         Use -v to get more diff
+
+test_0168.py:15: AssertionError
+=========================== short test summary info ============================
+FAILED test_0168.py::test_task_func[5-integer_range0-expected_labels0] - Asse...
+FAILED test_0168.py::test_task_func[3-integer_range1-expected_labels1] - Asse...
+FAILED test_0168.py::test_task_func[7-integer_range2-expected_labels2] - Asse...
+3 failed in 2.12s

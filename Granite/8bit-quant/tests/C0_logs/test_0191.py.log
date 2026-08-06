@@ -1,0 +1,49 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_stringio_input ______________________
+
+    def test_task_func_with_stringio_input():
+        csv_input = StringIO('Name,Age\nAlice,25\nBob,30')
+        expected_dataframe = pd.DataFrame({'Name': ['Alice', 'Bob'], 'Age': [25, 30]})
+        actual_dataframe = task_func(csv_input)
+>       assert actual_dataframe.equals(expected_dataframe)
+E       assert False
+E        +  where False = equals(    Name  Age\n0  Alice   25\n1    Bob   30)
+E        +    where equals =     Name Age\n0  Alice  25\n1    Bob  30.equals
+
+test_0191.py:12: AssertionError
+_____________________ test_task_func_with_file_path_input ______________________
+
+    def test_task_func_with_file_path_input():
+        csv_input = 'test.csv'
+        with open(csv_input, 'w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(['Name', 'Age'])
+            writer.writerow(['Alice', 25])
+            writer.writerow(['Bob', 30])
+        expected_dataframe = pd.DataFrame({'Name': ['Alice', 'Bob'], 'Age': [25, 30]})
+>       actual_dataframe = task_func(csv_input)
+                           ^^^^^^^^^^^^^^^^^^^^
+
+test_0191.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0191.py:20: in task_func
+    cols = dr.fieldnames
+           ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <csv.DictReader object at 0x757f0ae80b60>
+
+    @property
+    def fieldnames(self):
+        if self._fieldnames is None:
+            try:
+>               self._fieldnames = next(self.reader)
+                                   ^^^^^^^^^^^^^^^^^
+E               ValueError: I/O operation on closed file.
+
+/usr/lib/python3.12/csv.py:102: ValueError
+=========================== short test summary info ============================
+FAILED test_0191.py::test_task_func_with_stringio_input - assert False
+FAILED test_0191.py::test_task_func_with_file_path_input - ValueError: I/O op...
+2 failed in 1.18s

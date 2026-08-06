@@ -1,0 +1,82 @@
+.FFFFF.F                                                                 [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_single_empty_sublist ______________________
+
+    def test_task_func_single_empty_sublist():
+>       assert task_func([[]]) == {}
+E       AssertionError: assert {'i': 1} == {}
+E         
+E         Left contains 1 more item:
+E         {'i': 1}
+E         Use -v to get more diff
+
+test_0768.py:11: AssertionError
+____________________ test_task_func_multiple_empty_sublists ____________________
+
+    def test_task_func_multiple_empty_sublists():
+>       assert task_func([[], [], []]) == {}
+E       AssertionError: assert {'I': 1, 'E': 1, 'i': 1} == {}
+E         
+E         Left contains 3 more items:
+E         {'E': 1, 'I': 1, 'i': 1}
+E         Use -v to get more diff
+
+test_0768.py:14: AssertionError
+____________________ test_task_func_single_element_sublists ____________________
+
+    def test_task_func_single_element_sublists():
+        result = task_func([['a'], ['b'], ['c']])
+        assert len(result) == 3
+        for letter in 'abc':
+>           assert result[letter] == 1
+                   ^^^^^^^^^^^^^^
+E           KeyError: 'a'
+
+test_0768.py:20: KeyError
+________________________ test_task_func_mixed_sublists _________________________
+
+    def test_task_func_mixed_sublists():
+        result = task_func([['a', 'b'], ['c'], ['d', 'e', 'f']])
+>       assert len(result) == 6
+E       AssertionError: assert 3 == 6
+E        +  where 3 = len({'H': 1, 'P': 1, 'n': 1})
+
+test_0768.py:24: AssertionError
+_______________________ test_task_func_repeated_elements _______________________
+
+    def test_task_func_repeated_elements():
+        result = task_func([['a', 'a'], ['b', 'b'], ['c', 'c']])
+        assert len(result) == 3
+        for letter in 'abc':
+>           assert result[letter] == 2
+                   ^^^^^^^^^^^^^^
+E           KeyError: 'a'
+
+test_0768.py:32: KeyError
+________________________ test_task_func_random_letters _________________________
+
+    def test_task_func_random_letters():
+        random.seed(42)  # For reproducibility
+        result = task_func([[random.choice(string.ascii_letters) for _ in range(10)] for _ in range(5)])
+        expected = {'n': 1, 'r': 2, 's': 1, 'p': 1, 'k': 1, 'g': 1, 'w': 1, 'z': 1, 'h': 1, 'q': 1}
+>       assert result == expected
+E       AssertionError: assert {'y': 1, 'g':...w': 2, 'M': 1} == {'n': 1, 'r':..., 'p': 1, ...}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'w': 2} != {'w': 1}
+E         Left contains 2 more items:
+E         {'M': 1, 'y': 1}
+E         Right contains 8 more items:
+E         {'h': 1, 'k': 1, 'n': 1, 'p': 1, 'q': 1, 'r': 2, 's': 1, 'z': 1}
+E         Use -v to get more diff
+
+test_0768.py:44: AssertionError
+=========================== short test summary info ============================
+FAILED test_0768.py::test_task_func_single_empty_sublist - AssertionError: as...
+FAILED test_0768.py::test_task_func_multiple_empty_sublists - AssertionError:...
+FAILED test_0768.py::test_task_func_single_element_sublists - KeyError: 'a'
+FAILED test_0768.py::test_task_func_mixed_sublists - AssertionError: assert 3...
+FAILED test_0768.py::test_task_func_repeated_elements - KeyError: 'a'
+FAILED test_0768.py::test_task_func_random_letters - AssertionError: assert {...
+6 failed, 2 passed in 0.57s

@@ -1,0 +1,155 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func[df0-0] _____________________________
+
+df =    A  B
+0  1  4
+1  2  5
+2  3  6, expected = 0
+
+    @pytest.mark.parametrize("df, expected", [
+        (pd.DataFrame({"A": [1, 2, 3], "B": [4, 5, 6]}), 0),
+        (pd.DataFrame({"A": ["({[]})", "[]{}", "{}()"], "B": ["{}[]()", "[][]", "()()"]}), 12),
+        (pd.DataFrame({"A": ["({[]})", "[]{}", "{}()"], "B": ["{}[]()", "[][]", "()()"], "C": ["({[]})", "[]{}", "{}()"]}), 24),
+    ])
+    def test_task_func(df, expected):
+>       assert task_func(df) == expected
+               ^^^^^^^^^^^^^
+
+test_0798.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0798.py:11: in task_func
+    return df.applymap(
+           ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =    A  B
+0  1  4
+1  2  5
+2  3  6, name = 'applymap'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute 'applymap'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+____________________________ test_task_func[df1-12] ____________________________
+
+df =         A       B
+0  ({[]})  {}[]()
+1    []{}    [][]
+2    {}()    ()()
+expected = 12
+
+    @pytest.mark.parametrize("df, expected", [
+        (pd.DataFrame({"A": [1, 2, 3], "B": [4, 5, 6]}), 0),
+        (pd.DataFrame({"A": ["({[]})", "[]{}", "{}()"], "B": ["{}[]()", "[][]", "()()"]}), 12),
+        (pd.DataFrame({"A": ["({[]})", "[]{}", "{}()"], "B": ["{}[]()", "[][]", "()()"], "C": ["({[]})", "[]{}", "{}()"]}), 24),
+    ])
+    def test_task_func(df, expected):
+>       assert task_func(df) == expected
+               ^^^^^^^^^^^^^
+
+test_0798.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0798.py:11: in task_func
+    return df.applymap(
+           ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =         A       B
+0  ({[]})  {}[]()
+1    []{}    [][]
+2    {}()    ()()
+name = 'applymap'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute 'applymap'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+____________________________ test_task_func[df2-24] ____________________________
+
+df =         A       B       C
+0  ({[]})  {}[]()  ({[]})
+1    []{}    [][]    []{}
+2    {}()    ()()    {}()
+expected = 24
+
+    @pytest.mark.parametrize("df, expected", [
+        (pd.DataFrame({"A": [1, 2, 3], "B": [4, 5, 6]}), 0),
+        (pd.DataFrame({"A": ["({[]})", "[]{}", "{}()"], "B": ["{}[]()", "[][]", "()()"]}), 12),
+        (pd.DataFrame({"A": ["({[]})", "[]{}", "{}()"], "B": ["{}[]()", "[][]", "()()"], "C": ["({[]})", "[]{}", "{}()"]}), 24),
+    ])
+    def test_task_func(df, expected):
+>       assert task_func(df) == expected
+               ^^^^^^^^^^^^^
+
+test_0798.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0798.py:11: in task_func
+    return df.applymap(
+           ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =         A       B       C
+0  ({[]})  {}[]()  ({[]})
+1    []{}    [][]    []{}
+2    {}()    ()()    {}()
+name = 'applymap'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute 'applymap'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+=========================== short test summary info ============================
+FAILED test_0798.py::test_task_func[df0-0] - AttributeError: 'DataFrame' obje...
+FAILED test_0798.py::test_task_func[df1-12] - AttributeError: 'DataFrame' obj...
+FAILED test_0798.py::test_task_func[df2-24] - AttributeError: 'DataFrame' obj...
+3 failed in 2.44s

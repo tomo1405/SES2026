@@ -1,0 +1,36 @@
+F.FF                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_type_error ___________________________
+
+    def test_task_func_type_error():
+        image = np.array([[1, 2, 3], [4, 5, 6]])
+>       with pytest.raises(TypeError):
+E       Failed: DID NOT RAISE TypeError
+
+test_0170.py:9: Failed
+__________________________ test_task_func_return_type __________________________
+
+    def test_task_func_return_type():
+        image = np.array([[1, 2, 3], [4, 5, 6]])
+        ax, filtered_image = task_func(image, sigma=2)
+>       assert isinstance(ax, plt.Axes)
+E       AssertionError: assert False
+E        +  where False = isinstance(array([<Axes: title={'center': 'Original'}>,\n       <Axes: title={'center': 'Filtered'}>], dtype=object), <class 'matplotlib.axes._axes.Axes'>)
+E        +    where <class 'matplotlib.axes._axes.Axes'> = plt.Axes
+
+test_0170.py:20: AssertionError
+_________________________ test_task_func_return_value __________________________
+
+    def test_task_func_return_value():
+        image = np.array([[1, 2, 3], [4, 5, 6]])
+        ax, filtered_image = task_func(image, sigma=2)
+>       assert np.allclose(filtered_image, gaussian_filter(image, sigma=2))
+                                           ^^^^^^^^^^^^^^^
+E       NameError: name 'gaussian_filter' is not defined
+
+test_0170.py:26: NameError
+=========================== short test summary info ============================
+FAILED test_0170.py::test_task_func_type_error - Failed: DID NOT RAISE TypeError
+FAILED test_0170.py::test_task_func_return_type - AssertionError: assert False
+FAILED test_0170.py::test_task_func_return_value - NameError: name 'gaussian_...
+3 failed, 1 passed in 2.04s

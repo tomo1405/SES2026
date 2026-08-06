@@ -1,0 +1,133 @@
+F..FFF                                                                   [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_date ___________________________
+
+date_str = '2023-12-25'
+booking_data = {'Room1': 'Booked', 'Room3': 'Available'}
+
+    def task_func(date_str, booking_data):
+        # Validate the date string
+        try:
+            date = datetime.strptime(date_str, "%Y-%m-%d")
+            if date < datetime.now():
+>               raise ValueError("Date is in the past. Please provide a future date.")
+E               ValueError: Date is in the past. Please provide a future date.
+
+../../../src/src_1045.py:10: ValueError
+
+The above exception was the direct cause of the following exception:
+
+    def test_task_func_valid_date():
+        date_str = "2023-12-25"
+        booking_data = {"Room1": "Booked", "Room3": "Available"}
+>       report_df, ax = task_func(date_str, booking_data)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1045.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+date_str = '2023-12-25'
+booking_data = {'Room1': 'Booked', 'Room3': 'Available'}
+
+    def task_func(date_str, booking_data):
+        # Validate the date string
+        try:
+            date = datetime.strptime(date_str, "%Y-%m-%d")
+            if date < datetime.now():
+                raise ValueError("Date is in the past. Please provide a future date.")
+        except ValueError as e:
+>           raise ValueError(f"Invalid date: {e}") from e
+E           ValueError: Invalid date: Date is in the past. Please provide a future date.
+
+../../../src/src_1045.py:12: ValueError
+______________________ test_task_func_empty_booking_data _______________________
+
+date_str = '2023-12-25', booking_data = {}
+
+    def task_func(date_str, booking_data):
+        # Validate the date string
+        try:
+            date = datetime.strptime(date_str, "%Y-%m-%d")
+            if date < datetime.now():
+>               raise ValueError("Date is in the past. Please provide a future date.")
+E               ValueError: Date is in the past. Please provide a future date.
+
+../../../src/src_1045.py:10: ValueError
+
+The above exception was the direct cause of the following exception:
+
+    def test_task_func_empty_booking_data():
+        date_str = "2023-12-25"
+        booking_data = {}
+>       report_df, ax = task_func(date_str, booking_data)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1045.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+date_str = '2023-12-25', booking_data = {}
+
+    def task_func(date_str, booking_data):
+        # Validate the date string
+        try:
+            date = datetime.strptime(date_str, "%Y-%m-%d")
+            if date < datetime.now():
+                raise ValueError("Date is in the past. Please provide a future date.")
+        except ValueError as e:
+>           raise ValueError(f"Invalid date: {e}") from e
+E           ValueError: Invalid date: Date is in the past. Please provide a future date.
+
+../../../src/src_1045.py:12: ValueError
+_______________________ test_task_func_all_rooms_booked ________________________
+
+    def test_task_func_all_rooms_booked():
+        date_str = "2023-12-25"
+>       booking_data = {room: "Booked" for room in ROOMS}
+                                                   ^^^^^
+E       NameError: name 'ROOMS' is not defined
+
+test_1045.py:44: NameError
+______________________ test_task_func_single_room_booked _______________________
+
+date_str = '2023-12-25', booking_data = {'Room1': 'Booked'}
+
+    def task_func(date_str, booking_data):
+        # Validate the date string
+        try:
+            date = datetime.strptime(date_str, "%Y-%m-%d")
+            if date < datetime.now():
+>               raise ValueError("Date is in the past. Please provide a future date.")
+E               ValueError: Date is in the past. Please provide a future date.
+
+../../../src/src_1045.py:10: ValueError
+
+The above exception was the direct cause of the following exception:
+
+    def test_task_func_single_room_booked():
+        date_str = "2023-12-25"
+        booking_data = {"Room1": "Booked"}
+>       report_df, ax = task_func(date_str, booking_data)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1045.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+date_str = '2023-12-25', booking_data = {'Room1': 'Booked'}
+
+    def task_func(date_str, booking_data):
+        # Validate the date string
+        try:
+            date = datetime.strptime(date_str, "%Y-%m-%d")
+            if date < datetime.now():
+                raise ValueError("Date is in the past. Please provide a future date.")
+        except ValueError as e:
+>           raise ValueError(f"Invalid date: {e}") from e
+E           ValueError: Invalid date: Date is in the past. Please provide a future date.
+
+../../../src/src_1045.py:12: ValueError
+=========================== short test summary info ============================
+FAILED test_1045.py::test_task_func_valid_date - ValueError: Invalid date: Da...
+FAILED test_1045.py::test_task_func_empty_booking_data - ValueError: Invalid ...
+FAILED test_1045.py::test_task_func_all_rooms_booked - NameError: name 'ROOMS...
+FAILED test_1045.py::test_task_func_single_room_booked - ValueError: Invalid ...
+4 failed, 2 passed in 1.16s

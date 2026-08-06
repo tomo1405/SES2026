@@ -1,0 +1,25 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with default parameters
+        matrix = task_func()
+        assert matrix.shape == (3, 2)
+        assert np.all(matrix >= np.datetime64(datetime(2021, 1, 1)))
+        assert np.all(matrix <= np.datetime64(datetime(2021, 12, 31)))
+    
+        # Test with custom parameters
+        matrix = task_func(rows=5, columns=3, start_date=datetime(2022, 1, 1), end_date=datetime(2022, 12, 31), seed=123)
+        assert matrix.shape == (5, 3)
+        assert np.all(matrix >= np.datetime64(datetime(2022, 1, 1)))
+        assert np.all(matrix <= np.datetime64(datetime(2022, 12, 31)))
+    
+        # Test with invalid parameters
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0948.py:22: Failed
+=========================== short test summary info ============================
+FAILED test_0948.py::test_task_func - Failed: DID NOT RAISE ValueError
+1 failed in 0.69s

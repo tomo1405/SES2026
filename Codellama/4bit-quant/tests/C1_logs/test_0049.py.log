@@ -1,0 +1,26 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that the function returns a list of timestamps
+        timestamps = task_func(10)
+        assert isinstance(timestamps, list)
+        assert len(timestamps) == 10
+    
+        # Test that the function generates a histogram with the correct number of bins
+        timestamps = task_func(10, output_path="test.png")
+>       assert plt.hist([datetime.strptime(t, DATE_FORMAT) for t in timestamps])
+                                              ^^^^^^^^^^^
+E       NameError: name 'DATE_FORMAT' is not defined
+
+test_0049.py:17: NameError
+=============================== warnings summary ===============================
+Codellama/4bit-quant/tests/test_0049.py: 20 warnings
+  /work/tomohiro-w/utg/src/src_0049.py:11: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+    formatted_time = datetime.utcfromtimestamp(timestamp).strftime(DATE_FORMAT)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0049.py::test_task_func - NameError: name 'DATE_FORMAT' is not de...
+1 failed, 20 warnings in 1.54s

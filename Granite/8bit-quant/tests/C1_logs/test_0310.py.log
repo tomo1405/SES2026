@@ -1,0 +1,40 @@
+F..                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        list_of_lists = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        scaled_data = task_func(list_of_lists)
+        assert isinstance(scaled_data, list)
+        for scaled_list in scaled_data:
+            assert isinstance(scaled_list, list)
+            assert all(isinstance(x, float) for x in scaled_list)
+        expected_scaled_data = [
+            [0.0, 0.25, 0.5],
+            [0.0, 0.25, 0.5],
+            [0.0, 0.25, 0.5]
+        ]
+>       np.testing.assert_almost_equal(scaled_data, expected_scaled_data)
+E       AssertionError: 
+E       Arrays are not almost equal to 7 decimals
+E       
+E       Mismatched elements: 6 / 9 (66.7%)
+E       First 5 mismatches are at indices:
+E        [0, 1]: 0.5 (ACTUAL), 0.25 (DESIRED)
+E        [0, 2]: 1.0 (ACTUAL), 0.5 (DESIRED)
+E        [1, 1]: 0.5 (ACTUAL), 0.25 (DESIRED)
+E        [1, 2]: 1.0 (ACTUAL), 0.5 (DESIRED)
+E        [2, 1]: 0.5 (ACTUAL), 0.25 (DESIRED)
+E       Max absolute difference among violations: 0.5
+E       Max relative difference among violations: 1.
+E        ACTUAL: array([[0. , 0.5, 1. ],
+E              [0. , 0.5, 1. ],
+E              [0. , 0.5, 1. ]])
+E        DESIRED: array([[0.  , 0.25, 0.5 ],
+E              [0.  , 0.25, 0.5 ],
+E              [0.  , 0.25, 0.5 ]])
+
+test_0310.py:18: AssertionError
+=========================== short test summary info ============================
+FAILED test_0310.py::test_task_func - AssertionError: 
+1 failed, 2 passed in 2.56s

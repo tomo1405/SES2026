@@ -1,0 +1,32 @@
+.F                                                                       [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_no_matching_files _______________________
+
+mock_show = <MagicMock name='show' id='134065159093664'>
+mock_read_csv = <MagicMock name='read_csv' id='134065159163008'>
+mock_listdir = <MagicMock name='listdir' id='134065159166848'>
+
+    @patch('os.listdir')
+    @patch('pandas.read_csv')
+    @patch('matplotlib.pyplot.show')
+    def test_task_func_no_matching_files(mock_show, mock_read_csv, mock_listdir):
+        # Setup mock data
+        mock_listdir.return_value = ['file1.txt', 'file2.csv']
+    
+        # Define test parameters
+        directory = '/test/directory'
+        pattern = r'^file\d\.csv$'
+    
+        # Call the function
+        result = task_func(directory, pattern)
+    
+        # Assertions
+>       assert len(result) == 0, "Expected no plots"
+E       AssertionError: Expected no plots
+E       assert 1 == 0
+E        +  where 1 = len([<MagicMock name='read_csv().plot()' id='134066236125984'>])
+
+test_0909.py:58: AssertionError
+=========================== short test summary info ============================
+FAILED test_0909.py::test_task_func_no_matching_files - AssertionError: Expec...
+1 failed, 1 passed in 2.53s

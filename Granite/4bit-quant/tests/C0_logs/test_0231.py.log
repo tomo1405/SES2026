@@ -1,0 +1,72 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+mock_show = <MagicMock name='show' id='139815445056688'>
+
+    @patch("matplotlib.pyplot.show")
+    def test_task_func_valid_input(mock_show):
+        valid_input = pd.DataFrame(columns=COLUMNS)
+        fig = task_func(valid_input)
+        assert isinstance(fig, plt.Figure)
+>       mock_show.assert_called_once()
+
+test_0231.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='show' id='139815445056688'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'show' to have been called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:923: AssertionError
+__________________ test_task_func_valid_input_with_duplicates __________________
+
+mock_show = <MagicMock name='show' id='139814331705072'>
+
+    @patch("matplotlib.pyplot.show")
+    def test_task_func_valid_input_with_duplicates(mock_show):
+        df = pd.DataFrame(columns=COLUMNS)
+>       df = df.append([df] * 2, ignore_index=True)
+             ^^^^^^^^^
+
+test_0231.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Empty DataFrame
+Columns: [Name, Age, Country, Score]
+Index: []
+name = 'append'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute 'append'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+=========================== short test summary info ============================
+FAILED test_0231.py::test_task_func_valid_input - AssertionError: Expected 's...
+FAILED test_0231.py::test_task_func_valid_input_with_duplicates - AttributeEr...
+2 failed, 1 passed in 3.95s

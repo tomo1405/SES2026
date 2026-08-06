@@ -1,0 +1,55 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a list of dates covering all days of the week
+        dates_str_list = [
+            "2023-10-02",  # Monday
+            "2023-10-03",  # Tuesday
+            "2023-10-04",  # Wednesday
+            "2023-10-05",  # Thursday
+            "2023-10-06",  # Friday
+            "2023-10-07",  # Saturday
+            "2023-10-08"   # Sunday
+        ]
+        expected_output = pd.Series([1, 1, 1, 1, 1, 1, 1], index=['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'])
+        assert task_func(dates_str_list).equals(expected_output)
+    
+        # Test with an empty list
+        dates_str_list = []
+        expected_output = pd.Series([0, 0, 0, 0, 0, 0, 0], index=['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'])
+        assert task_func(dates_str_list).equals(expected_output)
+    
+        # Test with multiple occurrences of the same day
+        dates_str_list = [
+            "2023-10-02",  # Monday
+            "2023-10-02",  # Monday
+            "2023-10-02",  # Monday
+            "2023-10-03",  # Tuesday
+            "2023-10-03"   # Tuesday
+        ]
+        expected_output = pd.Series([3, 2, 0, 0, 0, 0, 0], index=['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'])
+        assert task_func(dates_str_list).equals(expected_output)
+    
+        # Test with different formats of date strings
+        dates_str_list = [
+            "02/10/2023",  # Monday
+            "2023-10-03",  # Tuesday
+            "10/04/2023",  # Wednesday
+            "2023.10.05",  # Thursday
+            "2023/10/06",  # Friday
+            "10-07-2023",  # Saturday
+            "2023 10 08"   # Sunday
+        ]
+        expected_output = pd.Series([1, 1, 1, 1, 1, 1, 1], index=['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'])
+>       assert task_func(dates_str_list).equals(expected_output)
+E       AssertionError: assert False
+E        +  where False = equals(Monday       1\nTuesday      1\nWednesday    1\nThursday     1\nFriday       1\nSaturday     1\nSunday       1\ndtype: int64)
+E        +    where equals = Monday       0\nTuesday      1\nWednesday    1\nThursday     1\nFriday       2\nSaturday     1\nSunday       1\ndtype: int64.equals
+E        +      where Monday       0\nTuesday      1\nWednesday    1\nThursday     1\nFriday       2\nSaturday     1\nSunday       1\ndtype: int64 = task_func(['02/10/2023', '2023-10-03', '10/04/2023', '2023.10.05', '2023/10/06', '10-07-2023', ...])
+
+test_0650.py:48: AssertionError
+=========================== short test summary info ============================
+FAILED test_0650.py::test_task_func - AssertionError: assert False
+1 failed in 1.15s

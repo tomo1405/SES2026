@@ -1,0 +1,40 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: File does not exist
+        with pytest.raises(SystemExit) as pytest_wrapped_e:
+            task_func('path/to/nonexistent/file.csv', 'column_name')
+        assert pytest_wrapped_e.type == SystemExit
+        assert pytest_wrapped_e.value.code != 0
+    
+        # Test case 2: Column exists
+        df = pd.DataFrame({'column_name': ['value1\n', 'value2\n', 'value3\n']})
+        df_expected = pd.DataFrame({'column_name': ['value1<br>', 'value2<br>', 'value3<br>']})
+>       df_actual = task_func(df, 'column_name')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0925.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test_0925.py:7: in task_func
+    if not os.path.exists(file_path):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path =   column_name
+0    value1\n
+1    value2\n
+2    value3\n
+
+>   ???
+E   TypeError: stat: path should be string, bytes, os.PathLike or integer, not DataFrame
+
+<frozen genericpath>:19: TypeError
+----------------------------- Captured stdout call -----------------------------
+File does not exist: path/to/nonexistent/file.csv
+=========================== short test summary info ============================
+FAILED test_0925.py::test_task_func - TypeError: stat: path should be string,...
+1 failed in 1.16s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

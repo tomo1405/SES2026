@@ -1,0 +1,23 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that the function raises a ValueError when the dictionary does not contain 'Lon' and 'Lat' keys
+        with pytest.raises(ValueError):
+            task_func({'foo': (1, 2), 'bar': (3, 4)})
+    
+        # Test that the function raises a ValueError when the 'Lon' and 'Lat' values are not tuples
+        with pytest.raises(ValueError):
+            task_func({'Lon': 1, 'Lat': 2})
+    
+        # Test that the function returns a GeoDataFrame with the correct columns and data types
+        gdf = task_func({'Lon': (-180, 180), 'Lat': (-90, 90)})
+>       assert isinstance(gdf, gpd.GeoDataFrame)
+                               ^^^
+E       NameError: name 'gpd' is not defined
+
+test_0188.py:16: NameError
+=========================== short test summary info ============================
+FAILED test_0188.py::test_task_func - NameError: name 'gpd' is not defined
+1 failed in 1.56s

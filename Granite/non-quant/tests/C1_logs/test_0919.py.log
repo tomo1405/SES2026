@@ -1,0 +1,127 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data = [[1, 'ABC', 'XYZ'], [2, 'DEF', 'GHI']]
+        mapping = {'ABC': '123', 'DEF': '456'}
+        expected_output = [[1, '123', 'XYZ'], [2, '456', 'GHI']]
+>       df = task_func(data, mapping)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0919.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0919.py:11: in task_func
+    df = df.applymap(lambda x: pattern.sub(replace_match, x) if isinstance(x, str) else x)
+         ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =    0    1    2
+0  1  ABC  XYZ
+1  2  DEF  GHI, name = 'applymap'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute 'applymap'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+_______________________ test_task_func_with_null_values ________________________
+
+    def test_task_func_with_null_values():
+        data = [[1, 'ABC', None], [2, None, 'GHI']]
+        mapping = {'ABC': '123', 'DEF': '456'}
+        expected_output = [[1, '123', None], [2, None, 'GHI']]
+>       df = task_func(data, mapping)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0919.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0919.py:11: in task_func
+    df = df.applymap(lambda x: pattern.sub(replace_match, x) if isinstance(x, str) else x)
+         ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =    0    1    2
+0  1  ABC  NaN
+1  2  NaN  GHI, name = 'applymap'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute 'applymap'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+____________________ test_task_func_with_non_string_values _____________________
+
+    def test_task_func_with_non_string_values():
+        data = [[1, 123, 'XYZ'], [2, 'DEF', 'GHI']]
+        mapping = {'ABC': '123', 'DEF': '456'}
+        expected_output = [[1, 123, 'XYZ'], [2, 'DEF', 'GHI']]
+>       df = task_func(data, mapping)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0919.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0919.py:11: in task_func
+    df = df.applymap(lambda x: pattern.sub(replace_match, x) if isinstance(x, str) else x)
+         ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =    0    1    2
+0  1  123  XYZ
+1  2  DEF  GHI, name = 'applymap'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute 'applymap'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+=========================== short test summary info ============================
+FAILED test_0919.py::test_task_func - AttributeError: 'DataFrame' object has ...
+FAILED test_0919.py::test_task_func_with_null_values - AttributeError: 'DataF...
+FAILED test_0919.py::test_task_func_with_non_string_values - AttributeError: ...
+3 failed in 1.40s

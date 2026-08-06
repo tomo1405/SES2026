@@ -1,0 +1,48 @@
+F..F                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a known open port (e.g., 80) and a known closed port (e.g., 9999)
+        open_port_result = task_func('127.0.0.1/32', 80)
+        closed_port_result = task_func('127.0.0.1/32', 9999)
+    
+        # Assert that the correct IP address is in the result
+        assert '127.0.0.1' in open_port_result
+        assert '127.0.0.1' in closed_port_result
+    
+        # Assert that the port status is correctly identified
+>       assert open_port_result['127.0.0.1'] is True
+E       assert False is True
+
+test_0148.py:14: AssertionError
+_________________________ test_task_func_invalid_port __________________________
+
+    def test_task_func_invalid_port():
+        # Test with an invalid port number
+>       with pytest.raises(OSError):
+E       Failed: DID NOT RAISE OSError
+
+test_0148.py:33: Failed
+=============================== warnings summary ===============================
+Qwen/4bit-quant/tests/test_0148.py::test_task_func_invalid_port
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/_pytest/threadexception.py:58: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-7 (check_port)
+  
+  Traceback (most recent call last):
+    File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
+      self.run()
+    File "/usr/lib/python3.12/threading.py", line 1010, in run
+      self._target(*self._args, **self._kwargs)
+    File "/work/tomohiro-w/utg/src/src_0148.py", line 11, in check_port
+      sock.connect((str(ip), port))
+  OverflowError: connect(): port must be 0-65535.
+  
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+    warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0148.py::test_task_func - assert False is True
+FAILED test_0148.py::test_task_func_invalid_port - Failed: DID NOT RAISE OSError
+2 failed, 2 passed, 1 warning in 1.44s

@@ -1,0 +1,28 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that all elements in f_list must be callable functions
+        with pytest.raises(ValueError):
+            task_func([1, 2, 3], "test.csv")
+    
+        # Test that f_list should not be empty
+        with pytest.raises(ValueError):
+            task_func([], "test.csv")
+    
+        # Test that file_path must be a string
+        with pytest.raises(ValueError):
+            task_func([lambda x: x, lambda x: x], 123)
+    
+        # Test that the function returns a DataFrame with the correct columns
+        df = task_func([lambda x: x, lambda x: x], "test.csv")
+>       assert isinstance(df, pd.DataFrame)
+E       AssertionError: assert False
+E        +  where False = isinstance(None, <class 'pandas.DataFrame'>)
+E        +    where <class 'pandas.DataFrame'> = pd.DataFrame
+
+test_0572.py:21: AssertionError
+=========================== short test summary info ============================
+FAILED test_0572.py::test_task_func - AssertionError: assert False
+1 failed in 1.11s

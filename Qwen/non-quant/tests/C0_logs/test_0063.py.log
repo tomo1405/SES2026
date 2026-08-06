@@ -1,0 +1,33 @@
+...F                                                                     [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_empty_result __________________________
+
+    def test_task_func_empty_result():
+        result = []
+        with patch('src_0063.random.choice', return_value='y'):
+            with patch('src_0063.sns.histplot') as mock_histplot:
+                with patch('src_0063.plt.show'):
+                    task_func(result)
+>                   mock_histplot.assert_not_called()
+
+test_0063.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='histplot' id='124908353994672'>
+
+    def assert_not_called(self):
+        """assert that the mock was never called.
+        """
+        if self.call_count != 0:
+            msg = ("Expected '%s' to not have been called. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'histplot' to not have been called. Called 1 times.
+E           Calls: [call([], color='y')].
+
+/usr/lib/python3.12/unittest/mock.py:905: AssertionError
+=========================== short test summary info ============================
+FAILED test_0063.py::test_task_func_empty_result - AssertionError: Expected '...
+1 failed, 3 passed in 3.31s

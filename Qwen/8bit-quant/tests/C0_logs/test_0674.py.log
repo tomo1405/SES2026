@@ -1,0 +1,116 @@
+.E......F                                                                [100%]
+==================================== ERRORS ====================================
+____________ ERROR at teardown of test_task_func_creates_directory _____________
+
+    def teardown_function():
+        """Cleanup any temporary directories after tests."""
+        temp_dir = "test_dir"
+        if os.path.exists(temp_dir):
+>           shutil.rmtree(temp_dir)
+
+test_0674.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/shutil.py:796: in rmtree
+    onexc(os.rmdir, path, err)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = 'test_dir', ignore_errors = False, onerror = None
+onexc = <function rmtree.<locals>.onexc at 0x7c60b47e4540>, dir_fd = None
+
+    def rmtree(path, ignore_errors=False, onerror=None, *, onexc=None, dir_fd=None):
+        """Recursively delete a directory tree.
+    
+        If dir_fd is not None, it should be a file descriptor open to a directory;
+        path will then be relative to that directory.
+        dir_fd may not be implemented on your platform.
+        If it is unavailable, using it will raise a NotImplementedError.
+    
+        If ignore_errors is set, errors are ignored; otherwise, if onexc or
+        onerror is set, it is called to handle the error with arguments (func,
+        path, exc_info) where func is platform and implementation dependent;
+        path is the argument to that function that caused it to fail; and
+        the value of exc_info describes the exception. For onexc it is the
+        exception instance, and for onerror it is a tuple as returned by
+        sys.exc_info().  If ignore_errors is false and both onexc and
+        onerror are None, the exception is reraised.
+    
+        onerror is deprecated and only remains for backwards compatibility.
+        If both onerror and onexc are set, onerror is ignored and onexc is used.
+        """
+    
+        sys.audit("shutil.rmtree", path, dir_fd)
+        if ignore_errors:
+            def onexc(*args):
+                pass
+        elif onerror is None and onexc is None:
+            def onexc(*args):
+                raise
+        elif onexc is None:
+            if onerror is None:
+                def onexc(*args):
+                    raise
+            else:
+                # delegate to onerror
+                def onexc(*args):
+                    func, path, exc = args
+                    if exc is None:
+                        exc_info = None, None, None
+                    else:
+                        exc_info = type(exc), exc, exc.__traceback__
+                    return onerror(func, path, exc_info)
+    
+        if _use_fd_functions:
+            # While the unsafe rmtree works fine on bytes, the fd based does not.
+            if isinstance(path, bytes):
+                path = os.fsdecode(path)
+            # Note: To guard against symlink races, we use the standard
+            # lstat()/open()/fstat() trick.
+            try:
+                orig_st = os.lstat(path, dir_fd=dir_fd)
+            except Exception as err:
+                onexc(os.lstat, path, err)
+                return
+            try:
+                fd = os.open(path, os.O_RDONLY | os.O_NONBLOCK, dir_fd=dir_fd)
+                fd_closed = False
+            except Exception as err:
+                onexc(os.open, path, err)
+                return
+            try:
+                if os.path.samestat(orig_st, os.fstat(fd)):
+                    _rmtree_safe_fd(fd, path, onexc)
+                    try:
+                        os.close(fd)
+                    except OSError as err:
+                        # close() should not be retried after an error.
+                        fd_closed = True
+                        onexc(os.close, path, err)
+                    fd_closed = True
+                    try:
+>                       os.rmdir(path, dir_fd=dir_fd)
+E                       FileNotFoundError: [Errno 2] No such file or directory: 'test_dir'
+
+/usr/lib/python3.12/shutil.py:794: FileNotFoundError
+=================================== FAILURES ===================================
+____________________ test_task_func_with_existing_directory ____________________
+
+temp_directory = local('/tmp/pytest-of-tomohiro-w/pytest-2153/test_task_func_with_existing_d0/test_dir')
+
+    def test_task_func_with_existing_directory(temp_directory):
+        """Test that the function works correctly with an existing directory."""
+>       os.makedirs(str(temp_directory))
+
+test_0674.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = '/tmp/pytest-of-tomohiro-w/pytest-2153/test_task_func_with_existing_d0/test_dir'
+mode = 511, exist_ok = False
+
+>   ???
+E   FileExistsError: [Errno 17] File exists: '/tmp/pytest-of-tomohiro-w/pytest-2153/test_task_func_with_existing_d0/test_dir'
+
+<frozen os>:225: FileExistsError
+=========================== short test summary info ============================
+FAILED test_0674.py::test_task_func_with_existing_directory - FileExistsError...
+ERROR test_0674.py::test_task_func_creates_directory - FileNotFoundError: [Er...
+1 failed, 7 passed, 1 error in 0.62s

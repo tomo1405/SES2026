@@ -1,0 +1,27 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        script_path = "path/to/script.py"
+        args = ["arg1", "arg2"]
+        wait = True
+    
+        with pytest.raises(ValueError):
+            task_func("invalid_script_path")
+    
+        process = subprocess.Popen(
+            [sys.executable, script_path, *args],
+            stderr=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+        )
+>       assert "Exception" in str(process.communicate()[1])
+E       assert 'Exception' in 'b"/work/tomohiro-w/utg/.venv/bin/python3: can\'t open file \'/work/tomohiro-w/utg/Granite/4bit-quant/tests/path/to/script.py\': [Errno 2] No such file or directory\\n"'
+E        +  where 'b"/work/tomohiro-w/utg/.venv/bin/python3: can\'t open file \'/work/tomohiro-w/utg/Granite/4bit-quant/tests/path/to/script.py\': [Errno 2] No such file or directory\\n"' = str(b"/work/tomohiro-w/utg/.venv/bin/python3: can't open file '/work/tomohiro-w/utg/Granite/4bit-quant/tests/path/to/script.py': [Errno 2] No such file or directory\n")
+
+test_0347.py:42: AssertionError
+=========================== short test summary info ============================
+FAILED test_0347.py::test_task_func - assert 'Exception' in 'b"/work/tomohiro...
+1 failed in 0.45s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

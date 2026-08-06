@@ -1,0 +1,32 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_invalid_ip ___________________________
+
+    def test_task_func_invalid_ip():
+        ip_address = '{"ip": "192.168.0.1.2"}'
+        expected_result = 'Invalid IP address received'
+>       assert task_func(ip_address) == expected_result
+E       AssertionError: assert '192.168.0.1.2' == 'Invalid IP address received'
+E         
+E         - Invalid IP address received
+E         + 192.168.0.1.2
+
+test_0179.py:12: AssertionError
+_________________________ test_task_func_invalid_json __________________________
+
+    def test_task_func_invalid_json():
+        ip_address = '{"ip": "192.168.0.1"'
+        expected_result = 'Expecting value: line 1 column 1 (char 0)'
+>       assert task_func(ip_address) == expected_result
+E       assert "Expecting ',... 21 (char 20)" == 'Expecting va...mn 1 (char 0)'
+E         
+E         - Expecting value: line 1 column 1 (char 0)
+E         ?           ^^ ^
+E         + Expecting ',' delimiter: line 1 column 21 (char 20)
+E         ?           ^^^^^^ ^^^^ +                +        +
+
+test_0179.py:17: AssertionError
+=========================== short test summary info ============================
+FAILED test_0179.py::test_task_func_invalid_ip - AssertionError: assert '192....
+FAILED test_0179.py::test_task_func_invalid_json - assert "Expecting ',... 21...
+2 failed, 1 passed in 0.41s

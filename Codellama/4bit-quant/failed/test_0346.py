@@ -1,0 +1,31 @@
+import pytest
+from src_0346 import task_func
+
+def test_task_func():
+    # Test case 1: Test that the function raises a ValueError when the DataFrame is empty
+    df = pd.DataFrame()
+    col1 = "a"
+    col2 = "b"
+    with pytest.raises(ValueError):
+        task_func(df, col1, col2)
+
+    # Test case 2: Test that the function raises a ValueError when the specified column does not exist
+    df = pd.DataFrame({"a": [1, 2, 3], "b": [4, 5, 6]})
+    col1 = "c"
+    col2 = "d"
+    with pytest.raises(ValueError):
+        task_func(df, col1, col2)
+
+    # Test case 3: Test that the function returns a valid Seaborn Axes object when the DataFrame is not empty and the specified columns exist
+    df = pd.DataFrame({"a": [1, 2, 3], "b": [4, 5, 6]})
+    col1 = "a"
+    col2 = "b"
+    ax = task_func(df, col1, col2)
+    assert isinstance(ax, sns.axis.Axis)
+
+    # Test case 4: Test that the function returns a valid Seaborn Axes object when the DataFrame is not empty and the specified columns exist
+    df = pd.DataFrame({"a": [1, 2, 3], "b": [4, 5, 6]})
+    col1 = "a"
+    col2 = "b"
+    ax = task_func(df, col1, col2)
+    assert isinstance(ax, sns.axis.Axis)

@@ -1,0 +1,44 @@
+FF.F                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_type_check ___________________________
+
+    def test_task_func_type_check():
+        x = np.array([1, 2, 3])
+        y = np.array([4, 5, 6])
+>       with pytest.raises(TypeError):
+E       Failed: DID NOT RAISE TypeError
+
+test_0357.py:10: Failed
+__________________________ test_task_func_empty_array __________________________
+
+    def test_task_func_empty_array():
+        x = np.array([])
+        y = np.array([])
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0357.py:16: Failed
+----------------------------- Captured stdout call -----------------------------
+Empty x or y array provided.
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        x = np.array([1, 2, 3])
+        y = np.array([4, 5, 6])
+        ax, Z = task_func(x, y)
+        assert isinstance(ax, matplotlib.axes.Axes)
+        assert isinstance(Z, np.ndarray)
+        assert Z.shape == (3, 3)
+>       assert np.allclose(Z, np.array([[0, 0, 0], [0, 0, 0], [0, 0, 0]]))
+E       assert False
+E        +  where False = <function allclose at 0x73724c5632f0>(array([[2.67794504, 2.25311288, 1.89254688],\n       [2.76108628, 2.40377759, 2.08634533],\n       [2.8198421 , 2.51279637, 2.2318395 ]]), array([[0, 0, 0],\n       [0, 0, 0],\n       [0, 0, 0]]))
+E        +    where <function allclose at 0x73724c5632f0> = np.allclose
+E        +    and   array([[0, 0, 0],\n       [0, 0, 0],\n       [0, 0, 0]]) = <built-in function array>([[0, 0, 0], [0, 0, 0], [0, 0, 0]])
+E        +      where <built-in function array> = np.array
+
+test_0357.py:32: AssertionError
+=========================== short test summary info ============================
+FAILED test_0357.py::test_task_func_type_check - Failed: DID NOT RAISE TypeError
+FAILED test_0357.py::test_task_func_empty_array - Failed: DID NOT RAISE Value...
+FAILED test_0357.py::test_task_func_valid_input - assert False
+3 failed, 1 passed in 1.55s

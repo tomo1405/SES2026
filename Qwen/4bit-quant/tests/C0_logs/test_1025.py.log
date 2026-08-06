@@ -1,0 +1,43 @@
+F.FF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_valid_data ________________________
+
+sample_data = {'A': [1, 2, 3, 4, 5], 'B': [5, 4, 3, 2, 1]}
+
+    def test_task_func_with_valid_data(sample_data):
+        df, plot = task_func(sample_data)
+        assert isinstance(df, pd.DataFrame)
+        assert not df.empty
+>       assert isinstance(plot, plt.AxesSubplot)
+                                ^^^^^^^^^^^^^^^
+E       AttributeError: module 'matplotlib.pyplot' has no attribute 'AxesSubplot'
+
+test_1025.py:28: AttributeError
+____________________ test_task_func_with_single_value_data _____________________
+
+single_value_data = {'A': [1, 1, 1, 1, 1]}
+
+    def test_task_func_with_single_value_data(single_value_data):
+        df, plot = task_func(single_value_data)
+>       assert df.empty
+E       assert False
+E        +  where False =    A\n0  1\n1  1\n2  1\n3  1\n4  1.empty
+
+test_1025.py:38: AssertionError
+________________________ test_task_func_with_large_data ________________________
+
+    def test_task_func_with_large_data():
+        large_data = {f'Col{i}': np.random.rand(1000) for i in range(10)}
+        df, plot = task_func(large_data)
+        assert isinstance(df, pd.DataFrame)
+        assert not df.empty
+>       assert isinstance(plot, plt.AxesSubplot)
+                                ^^^^^^^^^^^^^^^
+E       AttributeError: module 'matplotlib.pyplot' has no attribute 'AxesSubplot'
+
+test_1025.py:46: AttributeError
+=========================== short test summary info ============================
+FAILED test_1025.py::test_task_func_with_valid_data - AttributeError: module ...
+FAILED test_1025.py::test_task_func_with_single_value_data - assert False
+FAILED test_1025.py::test_task_func_with_large_data - AttributeError: module ...
+3 failed, 1 passed in 3.78s

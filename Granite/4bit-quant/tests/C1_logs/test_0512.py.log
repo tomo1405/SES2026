@@ -1,0 +1,126 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+content = array([['John', 25, 50000, 2],
+       ['Jane', 30, 60000, 3],
+       ['Bob', 35, 70000, 4]], dtype=object)
+columns = Index(['Age', 'Salary', 'Experience'], dtype='str'), dtype = None
+
+    def _finalize_columns_and_data(
+        content: np.ndarray,  # ndim == 2
+        columns: Index | None,
+        dtype: DtypeObj | None,
+    ) -> tuple[list[ArrayLike], Index]:
+        """
+        Ensure we have valid columns, cast object dtypes if possible.
+        """
+        contents = list(content.T)
+    
+        try:
+>           columns = _validate_or_indexify_columns(contents, columns)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:911: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+content = [array(['John', 'Jane', 'Bob'], dtype=object), array([25, 30, 35], dtype=object), array([50000, 60000, 70000], dtype=object), array([2, 3, 4], dtype=object)]
+columns = Index(['Age', 'Salary', 'Experience'], dtype='str')
+
+    def _validate_or_indexify_columns(
+        content: list[np.ndarray], columns: Index | None
+    ) -> Index:
+        """
+        If columns is None, make numbers as column names; Otherwise, validate that
+        columns have valid length.
+    
+        Parameters
+        ----------
+        content : list of np.ndarrays
+        columns : Index or None
+    
+        Returns
+        -------
+        Index
+            If columns is None, assign positional column index value as columns.
+    
+        Raises
+        ------
+        1. AssertionError when content is not composed of list of lists, and if
+            length of columns is not equal to length of content.
+        2. ValueError when content is list of lists, but length of each sub-list
+            is not equal
+        3. ValueError when content is list of lists, but length of sub-list is
+            not equal to length of content
+        """
+        if columns is None:
+            columns = default_index(len(content))
+        else:
+            # Add mask for data which is composed of list of lists
+            is_mi_list = isinstance(columns, list) and all(
+                isinstance(col, list) for col in columns
+            )
+    
+            if not is_mi_list and len(columns) != len(content):  # pragma: no cover
+                # caller's responsibility to check for this...
+>               raise AssertionError(
+                    f"{len(columns)} columns passed, passed data had {len(content)} columns"
+                )
+E               AssertionError: 3 columns passed, passed data had 4 columns
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:958: AssertionError
+
+The above exception was the direct cause of the following exception:
+
+    def test_task_func():
+        column = "Age"
+        data = [
+            ["John", 25, 50000, 2],
+            ["Jane", 30, 60000, 3],
+            ["Bob", 35, 70000, 4],
+        ]
+    
+>       result, ax = task_func(column, data)
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0512.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0512.py:8: in task_func
+    df = pd.DataFrame(data, columns=COLUMNS)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:837: in __init__
+    arrays, columns, index = nested_data_to_arrays(
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:477: in nested_data_to_arrays
+    arrays, columns = to_arrays(data, columns, dtype=dtype)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:812: in to_arrays
+    content, columns = _finalize_columns_and_data(arr, columns, dtype)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+content = array([['John', 25, 50000, 2],
+       ['Jane', 30, 60000, 3],
+       ['Bob', 35, 70000, 4]], dtype=object)
+columns = Index(['Age', 'Salary', 'Experience'], dtype='str'), dtype = None
+
+    def _finalize_columns_and_data(
+        content: np.ndarray,  # ndim == 2
+        columns: Index | None,
+        dtype: DtypeObj | None,
+    ) -> tuple[list[ArrayLike], Index]:
+        """
+        Ensure we have valid columns, cast object dtypes if possible.
+        """
+        contents = list(content.T)
+    
+        try:
+            columns = _validate_or_indexify_columns(contents, columns)
+        except AssertionError as err:
+            # GH#26429 do not raise user-facing AssertionError
+>           raise ValueError(err) from err
+E           ValueError: 3 columns passed, passed data had 4 columns
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:914: ValueError
+=========================== short test summary info ============================
+FAILED test_0512.py::test_task_func - ValueError: 3 columns passed, passed da...
+1 failed in 2.46s

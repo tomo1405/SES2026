@@ -1,0 +1,29 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        file_path = 'test_file.csv'
+        num_rows = 10
+        data_dimensions = 3
+        random_seed = 42
+    
+        np.random.seed(random_seed)
+        expected_df = pd.DataFrame(np.random.rand(num_rows, data_dimensions),
+                                   columns=[f'Feature_{i + 1}' for i in range(data_dimensions)])
+    
+        expected_df.to_csv(file_path, index=False)
+    
+        actual_file_path = task_func(file_path, num_rows, data_dimensions, random_seed)
+    
+        actual_df = pd.read_csv(actual_file_path)
+    
+>       assert actual_df.equals(expected_df)
+E       assert False
+E        +  where False = equals(   Feature_1  Feature_2  Feature_3\n0   0.374540   0.950714   0.731994\n1   0.598658   0.156019   0.155995\n2   0.058084 ...229   0.611853\n7   0.139494   0.292145   0.366362\n8   0.456070   0.785176   0.199674\n9   0.514234   0.592415   0.046450)
+E        +    where equals =    Feature_1  Feature_2  Feature_3\n0   0.374540   0.950714   0.731994\n1   0.598658   0.156019   0.155995\n2   0.058084 ...229   0.611853\n7   0.139494   0.292145   0.366362\n8   0.456070   0.785176   0.199674\n9   0.514234   0.592415   0.046450.equals
+
+test_0841.py:23: AssertionError
+=========================== short test summary info ============================
+FAILED test_0841.py::test_task_func - assert False
+1 failed in 1.46s

@@ -1,0 +1,73 @@
+FFF.F                                                                    [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        animal_dict = {'cat': 'Cat', 'dog': 'Dog', 'elephant': 'Elephant'}
+        reversed_dict, animal_counter = task_func(animal_dict)
+        assert reversed_dict == {'Cat': ['cat'], 'Dog': ['dog'], 'Elephant': ['elephant']}
+>       assert animal_counter == {'Cat': 1, 'Dog': 1, 'Elephant': 1}
+E       AssertionError: assert Counter({'Zeb...Elephant': 1}) == {'Cat': 1, 'D...'Elephant': 1}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'Cat': 7} != {'Cat': 1}
+E         {'Dog': 7} != {'Dog': 1}
+E         Left contains 8 more items:
+E         {'Bear': 8,...
+E         
+E         ...Full output truncated (8 lines hidden), use '-vv' to show
+
+test_0385.py:8: AssertionError
+________________________ test_task_func_with_max_count _________________________
+
+    def test_task_func_with_max_count():
+        animal_dict = {'cat': 'Cat', 'dog': 'Dog', 'elephant': 'Elephant'}
+        reversed_dict, animal_counter = task_func(animal_dict, max_count=5)
+        assert reversed_dict == {'Cat': ['cat'], 'Dog': ['dog'], 'Elephant': ['elephant']}
+>       assert animal_counter == {'Cat': 5, 'Dog': 5, 'Elephant': 5}
+E       AssertionError: assert Counter({'Tig...Elephant': 1}) == {'Cat': 5, 'D...'Elephant': 5}
+E         
+E         Differing items:
+E         {'Cat': 4} != {'Cat': 5}
+E         {'Dog': 4} != {'Dog': 5}
+E         {'Elephant': 1} != {'Elephant': 5}
+E         Left contains 8 more items:
+E         {'Bear': 4,...
+E         
+E         ...Full output truncated (8 lines hidden), use '-vv' to show
+
+test_0385.py:14: AssertionError
+___________________________ test_task_func_with_seed ___________________________
+
+    def test_task_func_with_seed():
+        animal_dict = {'cat': 'Cat', 'dog': 'Dog', 'elephant': 'Elephant'}
+        reversed_dict, animal_counter = task_func(animal_dict, seed=123)
+        assert reversed_dict == {'Cat': ['cat'], 'Dog': ['dog'], 'Elephant': ['elephant']}
+>       assert animal_counter == {'Cat': 1, 'Dog': 1, 'Elephant': 1}
+E       AssertionError: assert Counter({'Rab...'Giraffe': 1}) == {'Cat': 1, 'D...'Elephant': 1}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'Dog': 5} != {'Dog': 1}
+E         {'Elephant': 2} != {'Elephant': 1}
+E         Left contains 8 more items:
+E         {'Bear': 2,...
+E         
+E         ...Full output truncated (8 lines hidden), use '-vv' to show
+
+test_0385.py:20: AssertionError
+_______________________ test_task_func_with_invalid_seed _______________________
+
+    def test_task_func_with_invalid_seed():
+        animal_dict = {'cat': 'Cat', 'dog': 'Dog', 'elephant': 'Elephant'}
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0385.py:29: Failed
+=========================== short test summary info ============================
+FAILED test_0385.py::test_task_func - AssertionError: assert Counter({'Zeb......
+FAILED test_0385.py::test_task_func_with_max_count - AssertionError: assert C...
+FAILED test_0385.py::test_task_func_with_seed - AssertionError: assert Counte...
+FAILED test_0385.py::test_task_func_with_invalid_seed - Failed: DID NOT RAISE...
+4 failed, 1 passed in 0.42s

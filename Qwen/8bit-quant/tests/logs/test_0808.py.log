@@ -1,0 +1,44 @@
+.FF..                                                                    [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_with_outliers _________________________
+
+    def test_task_func_with_outliers():
+        data = np.array([1.0, 2.0, 3.0, 4.0, 5.0, 100.0])
+        outliers, mean, variance = task_func(data)
+        assert outliers == [5]
+>       assert np.isclose(mean, 3.0)
+E       assert np.False_
+E        +  where np.False_ = <function isclose at 0x7a64931ca170>(np.float64(19.166666666666668), 3.0)
+E        +    where <function isclose at 0x7a64931ca170> = np.isclose
+
+test_0808.py:16: AssertionError
+_________________________ test_task_func_all_outliers __________________________
+
+    def test_task_func_all_outliers():
+        data = np.array([100.0, 200.0, 300.0])
+        outliers, mean, variance = task_func(data)
+>       assert outliers == [0, 1, 2]
+E       assert [] == [0, 1, 2]
+E         
+E         Right contains 3 more items, first extra item: 0
+E         Use -v to get more diff
+
+test_0808.py:22: AssertionError
+=============================== warnings summary ===============================
+Qwen/8bit-quant/tests/test_0808.py::test_task_func_empty_data
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/scipy/stats/_continuous_distns.py:481: RuntimeWarning: Mean of empty slice
+    loc = data.mean()
+
+Qwen/8bit-quant/tests/test_0808.py::test_task_func_empty_data
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/_methods.py:142: RuntimeWarning: invalid value encountered in scalar divide
+    ret = ret.dtype.type(ret / rcount)
+
+Qwen/8bit-quant/tests/test_0808.py::test_task_func_empty_data
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/scipy/stats/_continuous_distns.py:486: RuntimeWarning: Mean of empty slice
+    scale = np.sqrt(((data - loc)**2).mean())
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0808.py::test_task_func_with_outliers - assert np.False_
+FAILED test_0808.py::test_task_func_all_outliers - assert [] == [0, 1, 2]
+2 failed, 3 passed, 3 warnings in 2.18s

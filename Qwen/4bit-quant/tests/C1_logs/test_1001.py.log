@@ -1,0 +1,49 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_urlretrieve = None
+
+    def test_task_func(mock_urlretrieve):
+        url = "http://example.com/data.json"
+>       df = task_func(url)
+             ^^^^^^^^^^^^^^
+
+test_1001.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'http://example.com/data.json'
+
+    def task_func(url):
+        urllib.request.urlretrieve(url, TARGET_JSON_FILE)
+    
+>       with open(TARGET_JSON_FILE, "r") as f:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'downloaded_file.json'
+
+../../../src/src_1001.py:10: FileNotFoundError
+_________________________ test_task_func_file_cleanup __________________________
+
+mock_urlretrieve = None
+
+    def test_task_func_file_cleanup(mock_urlretrieve):
+        url = "http://example.com/data.json"
+>       task_func(url)
+
+test_1001.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'http://example.com/data.json'
+
+    def task_func(url):
+        urllib.request.urlretrieve(url, TARGET_JSON_FILE)
+    
+>       with open(TARGET_JSON_FILE, "r") as f:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'downloaded_file.json'
+
+../../../src/src_1001.py:10: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_1001.py::test_task_func - FileNotFoundError: [Errno 2] No such fi...
+FAILED test_1001.py::test_task_func_file_cleanup - FileNotFoundError: [Errno ...
+2 failed in 1.12s

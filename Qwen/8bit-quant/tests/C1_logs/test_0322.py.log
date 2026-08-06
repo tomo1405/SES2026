@@ -1,0 +1,75 @@
+FFF..FF                                                                  [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_no_names ____________________________
+
+    def test_task_func_no_names():
+        text = "No names here"
+        name_freqs, ax, skewness, kurtosis = task_func(text)
+>       assert name_freqs.empty
+E       assert False
+E        +  where False = No names here    1\nName: count, dtype: int64.empty
+
+test_0322.py:26: AssertionError
+__________________________ test_task_func_single_name __________________________
+
+    def test_task_func_single_name():
+        text = "Alice"
+        name_freqs, ax, skewness, kurtosis = task_func(text)
+        assert name_freqs['Alice'] == 1
+>       assert isinstance(ax, MockAxes)
+E       AssertionError: assert False
+E        +  where False = isinstance(<Axes: title={'center': 'Name Frequencies'}>, MockAxes)
+
+test_0322.py:35: AssertionError
+________________________ test_task_func_multiple_names _________________________
+
+    def test_task_func_multiple_names():
+        text = "Alice [extra info] Bob Charlie Alice"
+        name_freqs, ax, skewness, kurtosis = task_func(text)
+>       assert name_freqs['Alice'] == 2
+E       assert np.int64(1) == 2
+
+test_0322.py:42: AssertionError
+_________________________ test_task_func_with_brackets _________________________
+
+    def test_task_func_with_brackets():
+        text = "Alice [extra info]"
+        name_freqs, ax, skewness, kurtosis = task_func(text)
+        assert name_freqs['Alice'] == 1
+>       assert isinstance(ax, MockAxes)
+E       AssertionError: assert False
+E        +  where False = isinstance(<Axes: title={'center': 'Name Frequencies'}>, MockAxes)
+
+test_0322.py:69: AssertionError
+____________________ test_task_func_with_multiple_brackets _____________________
+
+    def test_task_func_with_multiple_brackets():
+        text = "Alice [extra info] Bob [more info] Charlie"
+        name_freqs, ax, skewness, kurtosis = task_func(text)
+        assert name_freqs['Alice'] == 1
+        assert name_freqs['Bob'] == 1
+        assert name_freqs['Charlie'] == 1
+>       assert isinstance(ax, MockAxes)
+E       AssertionError: assert False
+E        +  where False = isinstance(<Axes: title={'center': 'Name Frequencies'}>, MockAxes)
+
+test_0322.py:79: AssertionError
+=============================== warnings summary ===============================
+Qwen/8bit-quant/tests/test_0322.py::test_task_func_multiple_names
+Qwen/8bit-quant/tests/test_0322.py::test_task_func_with_multiple_brackets
+  /work/tomohiro-w/utg/src/src_0322.py:15: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+    skewness = stats.skew(name_freqs)
+
+Qwen/8bit-quant/tests/test_0322.py::test_task_func_multiple_names
+Qwen/8bit-quant/tests/test_0322.py::test_task_func_with_multiple_brackets
+  /work/tomohiro-w/utg/src/src_0322.py:16: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+    kurtosis = stats.kurtosis(name_freqs)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0322.py::test_task_func_no_names - assert False
+FAILED test_0322.py::test_task_func_single_name - AssertionError: assert False
+FAILED test_0322.py::test_task_func_multiple_names - assert np.int64(1) == 2
+FAILED test_0322.py::test_task_func_with_brackets - AssertionError: assert False
+FAILED test_0322.py::test_task_func_with_multiple_brackets - AssertionError: ...
+5 failed, 2 passed, 4 warnings in 4.16s

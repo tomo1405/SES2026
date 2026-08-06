@@ -1,0 +1,68 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_input_validation ________________________
+
+    def test_task_func_input_validation():
+        # Test with non-2D input
+        with pytest.raises(ValueError, match="Input data must be a 2D numpy array."):
+>           task_func([1, 2, 3])
+
+test_0158.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = [1, 2, 3]
+
+    def task_func(data):
+    
+>       if not isinstance(data, np.ndarray) or data.ndim != 2:
+                                ^^
+E       NameError: name 'np' is not defined
+
+../../../src/src_0158.py:5: NameError
+________________________ test_task_func_correct_output _________________________
+
+    def test_task_func_correct_output():
+        # Test with valid 2D numpy array
+        data = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+>       df, ax = task_func(data)
+                 ^^^^^^^^^^^^^^^
+
+test_0158.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = array([[1, 2, 3],
+       [4, 5, 6],
+       [7, 8, 9]])
+
+    def task_func(data):
+    
+>       if not isinstance(data, np.ndarray) or data.ndim != 2:
+                                ^^
+E       NameError: name 'np' is not defined
+
+../../../src/src_0158.py:5: NameError
+__________________________ test_task_func_empty_array __________________________
+
+    def test_task_func_empty_array():
+        # Test with an empty 2D numpy array
+        data = np.array([])
+        with pytest.raises(ValueError, match="Input data must be a 2D numpy array."):
+>           task_func(data)
+
+test_0158.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = array([], dtype=float64)
+
+    def task_func(data):
+    
+>       if not isinstance(data, np.ndarray) or data.ndim != 2:
+                                ^^
+E       NameError: name 'np' is not defined
+
+../../../src/src_0158.py:5: NameError
+=========================== short test summary info ============================
+FAILED test_0158.py::test_task_func_input_validation - NameError: name 'np' i...
+FAILED test_0158.py::test_task_func_correct_output - NameError: name 'np' is ...
+FAILED test_0158.py::test_task_func_empty_array - NameError: name 'np' is not...
+3 failed in 3.47s

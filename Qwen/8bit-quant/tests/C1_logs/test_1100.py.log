@@ -1,0 +1,73 @@
+FF.FFF                                                                   [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_no_urls ____________________________
+
+    def test_task_func_no_urls():
+        text = "This is a test text with no urls."
+        expected_output = [('test', 1), ('text', 1), ('with', 1), ('no', 1), ('urls', 1)]
+>       assert sorted(task_func(text)) == sorted(expected_output)
+E       AssertionError: assert [('a', 1), ('..., ('with', 1)] == [('no', 1), (..., ('with', 1)]
+E         
+E         At index 0 diff: ('a', 1) != ('no', 1)
+E         Right contains 2 more items, first extra item: ('urls', 1)
+E         Use -v to get more diff
+
+test_1100.py:7: AssertionError
+___________________________ test_task_func_with_urls ___________________________
+
+    def test_task_func_with_urls():
+        text = "This is a test text with http://example.com urls."
+        expected_output = [('test', 1), ('text', 1), ('with', 1), ('urls', 1)]
+>       assert sorted(task_func(text)) == sorted(expected_output)
+E       AssertionError: assert [('a', 1), ('..., ('with', 1)] == [('test', 1),..., ('with', 1)]
+E         
+E         At index 0 diff: ('a', 1) != ('test', 1)
+E         Right contains one more item: ('with', 1)
+E         Use -v to get more diff
+
+test_1100.py:12: AssertionError
+________________________ test_task_func_only_stopwords _________________________
+
+    def test_task_func_only_stopwords():
+        text = "is a the and"
+        expected_output = []
+>       assert task_func(text) == expected_output
+E       AssertionError: assert [('is', 1), (...), ('and', 1)] == []
+E         
+E         Left contains 4 more items, first extra item: ('is', 1)
+E         Use -v to get more diff
+
+test_1100.py:22: AssertionError
+__________________________ test_task_func_mixed_case ___________________________
+
+    def test_task_func_mixed_case():
+        text = "This is a TEST text with TEST URLs."
+        expected_output = [('TEST', 2), ('text', 1), ('with', 1), ('URLs', 1)]
+>       assert sorted(task_func(text)) == sorted(expected_output)
+E       AssertionError: assert [('a', 1), ('..., ('with', 1)] == [('TEST', 2),..., ('with', 1)]
+E         
+E         At index 0 diff: ('a', 1) != ('TEST', 2)
+E         Right contains one more item: ('with', 1)
+E         Use -v to get more diff
+
+test_1100.py:27: AssertionError
+______________________ test_task_func_special_characters _______________________
+
+    def test_task_func_special_characters():
+        text = "Hello, world! This is a test."
+        expected_output = [('Hello', 1), ('world', 1), ('This', 1), ('is', 1), ('a', 1), ('test', 1)]
+>       assert sorted(task_func(text)) == sorted(expected_output)
+E       AssertionError: assert [('a', 1), ('is', 1)] == [('Hello', 1)... ('world', 1)]
+E         
+E         At index 0 diff: ('a', 1) != ('Hello', 1)
+E         Right contains 4 more items, first extra item: ('a', 1)
+E         Use -v to get more diff
+
+test_1100.py:32: AssertionError
+=========================== short test summary info ============================
+FAILED test_1100.py::test_task_func_no_urls - AssertionError: assert [('a', 1...
+FAILED test_1100.py::test_task_func_with_urls - AssertionError: assert [('a',...
+FAILED test_1100.py::test_task_func_only_stopwords - AssertionError: assert [...
+FAILED test_1100.py::test_task_func_mixed_case - AssertionError: assert [('a'...
+FAILED test_1100.py::test_task_func_special_characters - AssertionError: asse...
+5 failed, 1 passed in 0.62s

@@ -1,0 +1,35 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a temporary directory and some text files for testing
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Create test files
+            file1_path = os.path.join(temp_dir, 'file1.txt')
+            file2_path = os.path.join(temp_dir, 'file2.txt')
+            non_txt_path = os.path.join(temp_dir, 'non_txt_file.txt')
+    
+            with open(file1_path, 'w') as f:
+                f.write("hello world hello")
+    
+            with open(file2_path, 'w') as f:
+                f.write("world python")
+    
+            with open(non_txt_path, 'w') as f:
+                f.write("non text file")
+    
+            # Define the output file path
+            output_file_path = os.path.join(temp_dir, 'output.json')
+    
+            # Call the function
+            total_words = task_func(output_file_path, temp_dir)
+    
+            # Check the total number of words
+>           assert total_words == 6
+E           assert 8 == 6
+
+test_0288.py:32: AssertionError
+=========================== short test summary info ============================
+FAILED test_0288.py::test_task_func - assert 8 == 6
+1 failed in 0.41s

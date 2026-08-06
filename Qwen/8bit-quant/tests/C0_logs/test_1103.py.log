@@ -1,0 +1,76 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_datetime = <MagicMock name='datetime' id='125096743850480'>
+mock_popen = <MagicMock name='Popen' id='125096743855520'>
+
+    @patch('subprocess.Popen')
+    @patch('datetime.datetime')
+    def test_task_func(mock_datetime, mock_popen):
+        # Mock datetime.now() to return fixed values
+        mock_datetime.now.side_effect = [datetime(2023, 1, 1, 12, 0, 0), datetime(2023, 1, 1, 12, 1, 0)]
+    
+        # Mock Popen to simulate script execution
+        mock_process = Mock()
+        mock_process.communicate.return_value = (b'stdout', b'stderr')
+        mock_popen.return_value = mock_process
+    
+        # Call the function with a dummy script path
+        result = task_func('/path/to/script.R')
+    
+        # Assert the expected output
+>       assert result == {
+            'Start Time': '2023-01-01 12:00:00',
+            'End Time': '2023-01-01 12:01:00',
+            'Stdout': 'stdout',
+            'Stderr': 'stderr'
+        }
+E       AssertionError: assert {'Start Time'...rr': 'stderr'} == {'Start Time'...rr': 'stderr'}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Differing items:
+E         {'Start Time': '2026-07-29 14:30:27.776433'} != {'Start Time': '2023-01-01 12:00:00'}
+E         {'End Time': '2026-07-29 14:30:27.776647'} != {'End Time': '2023-01-01 12:01:00'}
+E         Use -v to get more diff
+
+test_1103.py:21: AssertionError
+__________________________ test_task_func_with_error ___________________________
+
+mock_datetime = <MagicMock name='datetime' id='125096742148080'>
+mock_popen = <MagicMock name='Popen' id='125096742148704'>
+
+    @patch('subprocess.Popen')
+    @patch('datetime.datetime')
+    def test_task_func_with_error(mock_datetime, mock_popen):
+        # Mock datetime.now() to return fixed values
+        mock_datetime.now.side_effect = [datetime(2023, 1, 1, 12, 0, 0), datetime(2023, 1, 1, 12, 1, 0)]
+    
+        # Mock Popen to simulate script execution with error
+        mock_process = Mock()
+        mock_process.communicate.return_value = (b'', b'error message')
+        mock_popen.return_value = mock_process
+    
+        # Call the function with a dummy script path
+        result = task_func('/path/to/script.R')
+    
+        # Assert the expected output
+>       assert result == {
+            'Start Time': '2023-01-01 12:00:00',
+            'End Time': '2023-01-01 12:01:00',
+            'Stdout': '',
+            'Stderr': 'error message'
+        }
+E       AssertionError: assert {'Start Time'...rror message'} == {'Start Time'...rror message'}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Differing items:
+E         {'Start Time': '2026-07-29 14:30:27.798354'} != {'Start Time': '2023-01-01 12:00:00'}
+E         {'End Time': '2026-07-29 14:30:27.798513'} != {'End Time': '2023-01-01 12:01:00'}
+E         Use -v to get more diff
+
+test_1103.py:43: AssertionError
+=========================== short test summary info ============================
+FAILED test_1103.py::test_task_func - AssertionError: assert {'Start Time'......
+FAILED test_1103.py::test_task_func_with_error - AssertionError: assert {'Sta...
+2 failed, 1 passed in 0.60s

@@ -1,0 +1,101 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+_________________ test_task_func[fruit_data0-expected_output0] _________________
+
+fruit_data = [('apple', 10), ('banana', 20), ('apple', 5)]
+expected_output =    Total Count  Average Count
+0           15              5
+1           20             10
+
+    @pytest.mark.parametrize("fruit_data, expected_output", [
+        (
+            [("apple", 10), ("banana", 20), ("apple", 5)],
+            pd.DataFrame({"Total Count": [15, 20], "Average Count": [5, 10]})
+        ),
+        (
+            [],
+            pd.DataFrame()
+        ),
+        (
+            [("apple", 10), ("banana", 20), ("orange", 15)],
+            pd.DataFrame({"Total Count": [10, 20, 15], "Average Count": [5, 10, 5]})
+        )
+    ])
+    def test_task_func(fruit_data, expected_output):
+        """
+        Test the task_func function with different inputs and expected outputs.
+        """
+        actual_output = task_func(fruit_data)
+>       pd.testing.assert_frame_equal(actual_output, expected_output)
+
+test_0865.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+left = Index(['apple', 'banana'], dtype='str')
+right = RangeIndex(start=0, stop=2, step=1), obj = 'DataFrame.index'
+
+    def _check_types(left, right, obj: str = "Index") -> None:
+        if not exact:
+            return
+    
+        assert_class_equal(left, right, exact=exact, obj=obj)
+>       assert_attr_equal("inferred_type", left, right, obj=obj)
+E       AssertionError: DataFrame.index are different
+E       
+E       Attribute "inferred_type" are different
+E       [left]:  string
+E       [right]: integer
+
+../../../.venv/lib/python3.12/site-packages/pandas/_testing/asserters.py:253: AssertionError
+_________________ test_task_func[fruit_data2-expected_output2] _________________
+
+fruit_data = [('apple', 10), ('banana', 20), ('orange', 15)]
+expected_output =    Total Count  Average Count
+0           10              5
+1           20             10
+2           15              5
+
+    @pytest.mark.parametrize("fruit_data, expected_output", [
+        (
+            [("apple", 10), ("banana", 20), ("apple", 5)],
+            pd.DataFrame({"Total Count": [15, 20], "Average Count": [5, 10]})
+        ),
+        (
+            [],
+            pd.DataFrame()
+        ),
+        (
+            [("apple", 10), ("banana", 20), ("orange", 15)],
+            pd.DataFrame({"Total Count": [10, 20, 15], "Average Count": [5, 10, 5]})
+        )
+    ])
+    def test_task_func(fruit_data, expected_output):
+        """
+        Test the task_func function with different inputs and expected outputs.
+        """
+        actual_output = task_func(fruit_data)
+>       pd.testing.assert_frame_equal(actual_output, expected_output)
+
+test_0865.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+left = Index(['apple', 'banana', 'orange'], dtype='str')
+right = RangeIndex(start=0, stop=3, step=1), obj = 'DataFrame.index'
+
+    def _check_types(left, right, obj: str = "Index") -> None:
+        if not exact:
+            return
+    
+        assert_class_equal(left, right, exact=exact, obj=obj)
+>       assert_attr_equal("inferred_type", left, right, obj=obj)
+E       AssertionError: DataFrame.index are different
+E       
+E       Attribute "inferred_type" are different
+E       [left]:  string
+E       [right]: integer
+
+../../../.venv/lib/python3.12/site-packages/pandas/_testing/asserters.py:253: AssertionError
+=========================== short test summary info ============================
+FAILED test_0865.py::test_task_func[fruit_data0-expected_output0] - Assertion...
+FAILED test_0865.py::test_task_func[fruit_data2-expected_output2] - Assertion...
+2 failed, 1 passed in 1.44s

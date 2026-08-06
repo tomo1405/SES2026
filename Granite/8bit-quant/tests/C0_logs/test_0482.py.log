@@ -1,0 +1,26 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data_list = ["apple,banana,orange", "cat,dog,bird", "one,two,three,four"]
+        df = task_func(data_list)
+        assert isinstance(df, pd.DataFrame)
+        assert "Original String" in df.columns
+        assert "Randomized String" in df.columns
+        for i, row in df.iterrows():
+            original_string = row["Original String"]
+            randomized_string = row["Randomized String"]
+            substrings = re.split("\s*,\s*", original_string)
+            random_positions = random.sample(range(len(substrings)), len(substrings))
+            expected_randomized_string = ", ".join([substrings[i] for i in random_positions])
+>           assert randomized_string == expected_randomized_string
+E           AssertionError: assert 'orange, apple, banana' == 'orange, banana, apple'
+E             
+E             - orange, banana, apple
+E             + orange, apple, banana
+
+test_0482.py:19: AssertionError
+=========================== short test summary info ============================
+FAILED test_0482.py::test_task_func - AssertionError: assert 'orange, apple, ...
+1 failed in 1.09s

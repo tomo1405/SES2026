@@ -1,0 +1,120 @@
+FFFFFFF                                                                  [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_empty_list ________________________
+
+    def test_task_func_with_empty_list():
+        result = task_func([])
+        assert isinstance(result, Axes)
+>       assert result.get_lines() == []  # No lines should be plotted for an empty list
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert <a list of 1 Line2D objects> == []
+E         
+E         Left contains one more item: <matplotlib.lines.Line2D object at 0x7874b9e9fd10>
+E         Use -v to get more diff
+
+test_0232.py:10: AssertionError
+___________________ test_task_func_with_single_value_object ____________________
+
+    def test_task_func_with_single_value_object():
+        obj = ValueObject(mu=5, std=2, seed=42)
+        result = task_func([obj])
+        assert isinstance(result, Axes)
+        assert len(result.get_lines()) == 1  # One line for the PDF
+>       assert len(result.patches) == 1  # One patch for the histogram
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 30 == 1
+E        +  where 30 = len(<Axes.ArtistList of 30 patches>)
+E        +    where <Axes.ArtistList of 30 patches> = <Axes: title={'center': 'Fit results: mu = 4.71,  std = 0.00'}>.patches
+
+test_0232.py:18: AssertionError
+__________________ test_task_func_with_multiple_value_objects __________________
+
+    def test_task_func_with_multiple_value_objects():
+        obj1 = ValueObject(mu=5, std=2, seed=42)
+        obj2 = ValueObject(mu=5, std=2, seed=43)
+        obj3 = ValueObject(mu=5, std=2, seed=44)
+        result = task_func([obj1, obj2, obj3])
+        assert isinstance(result, Axes)
+        assert len(result.get_lines()) == 1  # One line for the PDF
+>       assert len(result.patches) == 1  # One patch for the histogram
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 30 == 1
+E        +  where 30 = len(<Axes.ArtistList of 30 patches>)
+E        +    where <Axes.ArtistList of 30 patches> = <Axes: title={'center': 'Fit results: mu = 5.20,  std = 2.11'}>.patches
+
+test_0232.py:27: AssertionError
+_________________________ test_task_func_with_zero_std _________________________
+
+    def test_task_func_with_zero_std():
+        obj = ValueObject(mu=5, std=0, seed=42)
+        result = task_func([obj])
+        assert isinstance(result, Axes)
+        assert len(result.get_lines()) == 1  # One line for the PDF
+>       assert len(result.patches) == 1  # One patch for the histogram
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 30 == 1
+E        +  where 30 = len(<Axes.ArtistList of 30 patches>)
+E        +    where <Axes.ArtistList of 30 patches> = <Axes: title={'center': 'Fit results: mu = 5.00,  std = 0.00'}>.patches
+
+test_0232.py:34: AssertionError
+_________________ test_task_func_with_large_number_of_objects __________________
+
+    def test_task_func_with_large_number_of_objects():
+        objects = [ValueObject(mu=5, std=2, seed=i) for i in range(100)]
+        result = task_func(objects)
+        assert isinstance(result, Axes)
+        assert len(result.get_lines()) == 1  # One line for the PDF
+>       assert len(result.patches) == 1  # One patch for the histogram
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 30 == 1
+E        +  where 30 = len(<Axes.ArtistList of 30 patches>)
+E        +    where <Axes.ArtistList of 30 patches> = <Axes: title={'center': 'Fit results: mu = 4.78,  std = 1.93'}>.patches
+
+test_0232.py:41: AssertionError
+______________________ test_task_func_with_negative_mean _______________________
+
+    def test_task_func_with_negative_mean():
+        obj = ValueObject(mu=-5, std=2, seed=42)
+        result = task_func([obj])
+        assert isinstance(result, Axes)
+        assert len(result.get_lines()) == 1  # One line for the PDF
+>       assert len(result.patches) == 1  # One patch for the histogram
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 30 == 1
+E        +  where 30 = len(<Axes.ArtistList of 30 patches>)
+E        +    where <Axes.ArtistList of 30 patches> = <Axes: title={'center': 'Fit results: mu = -5.29,  std = 0.00'}>.patches
+
+test_0232.py:48: AssertionError
+______________________ test_task_func_with_positive_mean _______________________
+
+    def test_task_func_with_positive_mean():
+        obj = ValueObject(mu=5, std=2, seed=42)
+        result = task_func([obj])
+        assert isinstance(result, Axes)
+        assert len(result.get_lines()) == 1  # One line for the PDF
+>       assert len(result.patches) == 1  # One patch for the histogram
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 30 == 1
+E        +  where 30 = len(<Axes.ArtistList of 30 patches>)
+E        +    where <Axes.ArtistList of 30 patches> = <Axes: title={'center': 'Fit results: mu = 4.71,  std = 0.00'}>.patches
+
+test_0232.py:55: AssertionError
+=============================== warnings summary ===============================
+Qwen/non-quant/tests/test_0232.py::test_task_func_with_empty_list
+Qwen/non-quant/tests/test_0232.py::test_task_func_with_single_value_object
+Qwen/non-quant/tests/test_0232.py::test_task_func_with_zero_std
+Qwen/non-quant/tests/test_0232.py::test_task_func_with_negative_mean
+Qwen/non-quant/tests/test_0232.py::test_task_func_with_positive_mean
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/scipy/stats/_distn_infrastructure.py:2079: RuntimeWarning: divide by zero encountered in divide
+    x = np.asarray((x - loc)/scale, dtype=dtyp)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0232.py::test_task_func_with_empty_list - assert <a list of 1 Lin...
+FAILED test_0232.py::test_task_func_with_single_value_object - AssertionError...
+FAILED test_0232.py::test_task_func_with_multiple_value_objects - AssertionEr...
+FAILED test_0232.py::test_task_func_with_zero_std - AssertionError: assert 30...
+FAILED test_0232.py::test_task_func_with_large_number_of_objects - AssertionE...
+FAILED test_0232.py::test_task_func_with_negative_mean - AssertionError: asse...
+FAILED test_0232.py::test_task_func_with_positive_mean - AssertionError: asse...
+7 failed, 5 warnings in 2.77s

@@ -1,0 +1,55 @@
+.FF.F                                                                    [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_positive_count ______________________
+
+    def test_task_func_with_positive_count():
+        result = task_func(5, seed=42)
+        expected = Counter([('d', 'e'), ('a', 'b'), ('a', 'd'), ('c', 'c'), ('b', 'c')])
+>       assert result == expected
+E       AssertionError: assert Counter({('d'...'c', 'a'): 1}) == Counter({('d'...'b', 'c'): 1})
+E         
+E         Left contains 5 more items:
+E         {('b', 'b'): 1, ('c', 'a'): 1, ('d', 'a'): 1, ('d', 'd'): 1, ('e', 'a'): 1}
+E         Right contains 5 more items:
+E         {('a', 'b'): 1, ('a', 'd'): 1, ('b', 'c'): 1, ('c', 'c'): 1, ('d', 'e'): 1}
+E         Use -v to get more diff
+
+test_0899.py:12: AssertionError
+_______________________ test_task_func_with_large_count ________________________
+
+    def test_task_func_with_large_count():
+        result = task_func(100, seed=42)
+        expected = Counter([('d', 'e'), ('a', 'b'), ('a', 'd'), ('c', 'c'), ('b', 'c')] * 20)
+>       assert result == expected
+E       AssertionError: assert Counter({('b'...'a', 'e'): 1}) == Counter({('d'...b', 'c'): 20})
+E         
+E         Differing items:
+E         {('c', 'c'): 3} != {('c', 'c'): 20}
+E         {('a', 'd'): 5} != {('a', 'd'): 20}
+E         {('b', 'c'): 4} != {('b', 'c'): 20}
+E         {('a', 'b'): 6} != {('a', 'b'): 20}
+E         Left contains 20 more items:...
+E         
+E         ...Full output truncated (23 lines hidden), use '-vv' to show
+
+test_0899.py:17: AssertionError
+______________________ test_task_func_with_single_letter _______________________
+
+    def test_task_func_with_single_letter():
+        result = task_func(1, seed=42)
+        expected = Counter([('d', 'e')])
+>       assert result == expected
+E       AssertionError: assert Counter({('d', 'a'): 1}) == Counter({('d', 'e'): 1})
+E         
+E         Left contains 1 more item:
+E         {('d', 'a'): 1}
+E         Right contains 1 more item:
+E         {('d', 'e'): 1}
+E         Use -v to get more diff
+
+test_0899.py:27: AssertionError
+=========================== short test summary info ============================
+FAILED test_0899.py::test_task_func_with_positive_count - AssertionError: ass...
+FAILED test_0899.py::test_task_func_with_large_count - AssertionError: assert...
+FAILED test_0899.py::test_task_func_with_single_letter - AssertionError: asse...
+3 failed, 2 passed in 0.48s

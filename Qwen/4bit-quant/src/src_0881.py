@@ -1,0 +1,10 @@
+import pandas as pd
+from sklearn.cluster import KMeans
+def task_func(data, n_clusters=3, seed=None):
+    if not data.apply(lambda s: pd.to_numeric(s, errors='coerce').notnull().all()).all():
+        raise ValueError("DataFrame should only contain numeric values.")
+
+    kmeans = KMeans(n_clusters=n_clusters, random_state=seed, n_init=10)
+    kmeans.fit(data)
+
+    return kmeans.labels_, kmeans

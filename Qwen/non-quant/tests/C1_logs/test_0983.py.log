@@ -1,0 +1,114 @@
+.FF.FF                                                                   [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_histogram_properties ______________________
+
+sample_df =       values
+0   0.527142
+1  -0.454029
+2  -1.018012
+3   1.262149
+4  -0.982863
+..       ...
+95  0.037162
+96 -1.002975
+97  0.595882
+98  1.514207
+99  0.783500
+
+[100 rows x 1 columns]
+
+    def test_task_func_histogram_properties(sample_df):
+        ax = task_func(sample_df, 'values', bins=10, density=True, alpha=0.5, color="b")
+        lines, patches = ax.get_legend_handles_labels()
+>       assert len(patches) == 10  # Check number of bins
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert 0 == 10
+E        +  where 0 = len([])
+
+test_0983.py:20: AssertionError
+__________________________ test_task_func_normal_fit ___________________________
+
+sample_df =       values
+0   1.372636
+1   1.082712
+2  -0.614709
+3   1.260078
+4  -0.624749
+..       ...
+95  0.804876
+96 -0.721171
+97 -0.239199
+98  0.094987
+99  2.252478
+
+[100 rows x 1 columns]
+
+    def test_task_func_normal_fit(sample_df):
+        ax = task_func(sample_df, 'values')
+        lines, _ = ax.get_legend_handles_labels()
+>       assert len(lines) == 1  # Only one line for the normal fit
+        ^^^^^^^^^^^^^^^^^^^^^^
+E       assert 0 == 1
+E        +  where 0 = len([])
+
+test_0983.py:27: AssertionError
+_____________________________ test_task_func_seed ______________________________
+
+sample_df =       values
+0  -0.353002
+1   1.241357
+2  -1.314385
+3  -0.051718
+4   0.137860
+..       ...
+95  0.708436
+96 -1.156416
+97  0.007535
+98  1.243492
+99 -1.162246
+
+[100 rows x 1 columns]
+
+    def test_task_func_seed(sample_df):
+        ax1 = task_func(sample_df, 'values', seed=42)
+        ax2 = task_func(sample_df, 'values', seed=42)
+        lines1, _ = ax1.get_legend_handles_labels()
+        lines2, _ = ax2.get_legend_handles_labels()
+>       assert np.array_equal(lines1[0].get_xdata(), lines2[0].get_xdata())
+                              ^^^^^^^^^
+E       IndexError: list index out of range
+
+test_0983.py:44: IndexError
+____________________________ test_task_func_no_seed ____________________________
+
+sample_df =       values
+0   0.496714
+1  -0.138264
+2   0.647689
+3   1.523030
+4  -0.234153
+..       ...
+95 -1.463515
+96  0.296120
+97  0.261055
+98  0.005113
+99 -0.234587
+
+[100 rows x 1 columns]
+
+    def test_task_func_no_seed(sample_df):
+        ax1 = task_func(sample_df, 'values')
+        ax2 = task_func(sample_df, 'values')
+        lines1, _ = ax1.get_legend_handles_labels()
+        lines2, _ = ax2.get_legend_handles_labels()
+>       assert not np.array_equal(lines1[0].get_xdata(), lines2[0].get_xdata())
+                                  ^^^^^^^^^
+E       IndexError: list index out of range
+
+test_0983.py:52: IndexError
+=========================== short test summary info ============================
+FAILED test_0983.py::test_task_func_histogram_properties - assert 0 == 10
+FAILED test_0983.py::test_task_func_normal_fit - assert 0 == 1
+FAILED test_0983.py::test_task_func_seed - IndexError: list index out of range
+FAILED test_0983.py::test_task_func_no_seed - IndexError: list index out of r...
+4 failed, 2 passed in 3.64s

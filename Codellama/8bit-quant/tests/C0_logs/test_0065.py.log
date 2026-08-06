@@ -1,0 +1,137 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data = [
+            ['A', 'B', 'C'],
+            ['A', 'B', 'C'],
+            ['A', 'B', 'D'],
+            ['A', 'B', 'D'],
+            ['A', 'C', 'D'],
+            ['A', 'C', 'D'],
+            ['B', 'C', 'D'],
+            ['B', 'C', 'D'],
+            ['B', 'C', 'E'],
+            ['B', 'C', 'E'],
+            ['B', 'D', 'E'],
+            ['B', 'D', 'E'],
+            ['C', 'D', 'E'],
+            ['C', 'D', 'E'],
+            ['C', 'D', 'F'],
+            ['C', 'D', 'F'],
+            ['D', 'E', 'F'],
+            ['D', 'E', 'F'],
+            ['E', 'F', 'G'],
+            ['E', 'F', 'G'],
+            ['F', 'G', 'H'],
+            ['F', 'G', 'H'],
+            ['G', 'H', 'I'],
+            ['G', 'H', 'I'],
+            ['H', 'I', 'J'],
+            ['H', 'I', 'J'],
+            ['I', 'J', 'K'],
+            ['I', 'J', 'K'],
+            ['J', 'K', 'L'],
+            ['J', 'K', 'L'],
+            ['K', 'L', 'M'],
+            ['K', 'L', 'M'],
+            ['L', 'M', 'N'],
+            ['L', 'M', 'N'],
+            ['M', 'N', 'O'],
+            ['M', 'N', 'O'],
+            ['N', 'O', 'P'],
+            ['N', 'O', 'P'],
+            ['O', 'P', 'Q'],
+            ['O', 'P', 'Q'],
+            ['P', 'Q', 'R'],
+            ['P', 'Q', 'R'],
+            ['Q', 'R', 'S'],
+            ['Q', 'R', 'S'],
+            ['R', 'S', 'T'],
+            ['R', 'S', 'T'],
+            ['S', 'T', 'U'],
+            ['S', 'T', 'U'],
+            ['T', 'U', 'V'],
+            ['T', 'U', 'V'],
+            ['U', 'V', 'W'],
+            ['U', 'V', 'W'],
+            ['V', 'W', 'X'],
+            ['V', 'W', 'X'],
+            ['W', 'X', 'Y'],
+            ['W', 'X', 'Y'],
+            ['X', 'Y', 'Z'],
+            ['X', 'Y', 'Z'],
+            ['Y', 'Z', 'A'],
+            ['Y', 'Z', 'A'],
+            ['Z', 'A', 'B'],
+            ['Z', 'A', 'B'],
+        ]
+>       expected_analyzed_df = pd.DataFrame(
+            {
+                'col1': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
+                'col2': ['B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
+                'col3': ['C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
+            }
+        )
+
+test_0065.py:70: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:769: in __init__
+    mgr = dict_to_mgr(data, index, columns, dtype=dtype, copy=copy)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:460: in dict_to_mgr
+    return arrays_to_mgr(arrays, columns, index, dtype=dtype, consolidate=copy)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:113: in arrays_to_mgr
+    index = _extract_index(arrays)
+            ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = [['A', 'B', 'C', 'D', 'E', 'F', ...], ['B', 'C', 'D', 'E', 'F', 'G', ...], ['C', 'D', 'E', 'F', 'G', 'H', ...]]
+
+    def _extract_index(data) -> Index:
+        """
+        Try to infer an Index from the passed data, raise ValueError on failure.
+        """
+        index: Index
+        if len(data) == 0:
+            return default_index(0)
+    
+        raw_lengths = set()
+        indexes: list[list[Hashable] | Index] = []
+    
+        have_raw_arrays = False
+        have_series = False
+        have_dicts = False
+    
+        for val in data:
+            if isinstance(val, ABCSeries):
+                have_series = True
+                indexes.append(val.index)
+            elif isinstance(val, dict):
+                have_dicts = True
+                indexes.append(list(val.keys()))
+            elif is_list_like(val) and getattr(val, "ndim", 1) == 1:
+                have_raw_arrays = True
+                raw_lengths.add(len(val))
+            elif isinstance(val, np.ndarray) and val.ndim > 1:
+                raise ValueError("Per-column arrays must each be 1-dimensional")
+    
+        if not indexes and not raw_lengths:
+            raise ValueError("If using all scalar values, you must pass an index")
+    
+        if have_series:
+            index = union_indexes(indexes)
+        elif have_dicts:
+            index = union_indexes(indexes, sort=False)
+    
+        if have_raw_arrays:
+            if len(raw_lengths) > 1:
+>               raise ValueError("All arrays must be of the same length")
+E               ValueError: All arrays must be of the same length
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:643: ValueError
+=========================== short test summary info ============================
+FAILED test_0065.py::test_task_func - ValueError: All arrays must be of the s...
+1 failed in 3.38s

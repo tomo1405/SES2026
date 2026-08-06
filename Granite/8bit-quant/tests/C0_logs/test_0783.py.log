@@ -1,0 +1,31 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+_____________________________ test_task_func_seed ______________________________
+
+input_args = {'n': 10, 'domain': 'samplewebsite.com', 'categories': ['Sports', 'Technology', 'Health', 'Science', 'Business'], 'random_seed': None}
+
+    def test_task_func_seed(input_args):
+        input_args_copy = input_args.copy()
+        df1 = task_func(**input_args)
+        input_args_copy["random_seed"] = 42
+        df2 = task_func(**input_args_copy)
+>       assert df1.equals(df2)
+E       assert False
+E        +  where False = equals(       title                    title_url  id    category  views\n0  Article 0  samplewebsite.com/Article_0   0      Sp... 8  samplewebsite.com/Article_8   8      Sports   1010\n9  Article 9  samplewebsite.com/Article_9   9    Business    980)
+E        +    where equals =        title                    title_url  id    category  views\n0  Article 0  samplewebsite.com/Article_0   0     Sci... 8  samplewebsite.com/Article_8   8    Business   1025\n9  Article 9  samplewebsite.com/Article_9   9      Sports    928.equals
+
+test_0783.py:27: AssertionError
+_________________________ test_task_func_invalid_input _________________________
+
+input_args = {'n': 10, 'domain': 'samplewebsite.com', 'categories': ['Sports', 'Technology', 'Health', 'Science', 'Business'], 'random_seed': None}
+
+    def test_task_func_invalid_input(input_args):
+        with pytest.raises(ValueError):
+>           task_func(n=-1, **input_args)
+E           TypeError: src_0783.task_func() got multiple values for keyword argument 'n'
+
+test_0783.py:31: TypeError
+=========================== short test summary info ============================
+FAILED test_0783.py::test_task_func_seed - assert False
+FAILED test_0783.py::test_task_func_invalid_input - TypeError: src_0783.task_...
+2 failed, 1 passed in 1.13s

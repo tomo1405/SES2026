@@ -1,0 +1,30 @@
+F..                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        result = task_func(df)
+        assert isinstance(result, pd.DataFrame)
+        assert result.shape == df.shape
+        for col in df.columns:
+            for value, expected in zip(result[col], df[col]):
+                if pd.notnull(value):
+>                   assert re.search(DATA_PATTERN, value)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0644.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pattern = '>\\d+\\.\\d+<', string = 1.2, flags = 0
+
+    def search(pattern, string, flags=0):
+        """Scan through string looking for a match to the pattern, returning
+        a Match object, or None if no match was found."""
+>       return _compile(pattern, flags).search(string)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: expected string or bytes-like object, got 'float'
+
+/usr/lib/python3.12/re/__init__.py:177: TypeError
+=========================== short test summary info ============================
+FAILED test_0644.py::test_task_func - TypeError: expected string or bytes-lik...
+1 failed, 2 passed in 1.11s

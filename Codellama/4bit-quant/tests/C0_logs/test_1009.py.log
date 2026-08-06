@@ -1,0 +1,35 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        url = "https://www.example.com"
+        table_id = "table_id"
+    
+        # Test with valid URL and table ID
+>       df = task_func(url, table_id)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1009.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'https://www.example.com', table_id = 'table_id'
+
+    def task_func(url, table_id):
+        try:
+            response = requests.get(url, timeout=5)
+            response.raise_for_status()  # Raises an HTTPError if the HTTP request returned an unsuccessful status code
+        except requests.exceptions.HTTPError as e:
+            raise e
+    
+        soup = BeautifulSoup(response.text, "html.parser")
+        table = soup.find("table", {"id": table_id})
+    
+        if table is None:
+>           raise ValueError("Table with the specified ID not found.")
+E           ValueError: Table with the specified ID not found.
+
+../../../src/src_1009.py:16: ValueError
+=========================== short test summary info ============================
+FAILED test_1009.py::test_task_func - ValueError: Table with the specified ID...
+1 failed in 1.85s

@@ -1,0 +1,85 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data_dict = {'b': 2, 'c': 3, 'd': 2}
+        source_directory = '/path/to/source'
+        backup_directory = '/path/to/backup'
+        expected_result = ({'a': 1, 'b': 2, 'c': 3, 'd': 2}, [(3, 'c'), (2, 'd'), (1, 'a')], True)
+    
+        result = task_func(data_dict, source_directory, backup_directory)
+>       assert result == expected_result, "Task function returned an incorrect result"
+E       AssertionError: Task function returned an incorrect result
+E       assert ({'b': 2, 'c'...1, 1)], False) == ({'a': 1, 'b'..., 'a')], True)
+E         
+E         At index 1 diff: [(2, 2), (3, 1), (1, 1)] != [(3, 'c'), (2, 'd'), (1, 'a')]
+E         Use -v to get more diff
+
+test_0877.py:11: AssertionError
+_____________________ test_task_func_with_empty_data_dict ______________________
+
+    def test_task_func_with_empty_data_dict():
+        data_dict = {}
+        source_directory = '/path/to/source'
+        backup_directory = '/path/to/backup'
+        expected_result = ({'a': 1}, [], False)
+    
+        result = task_func(data_dict, source_directory, backup_directory)
+>       assert result == expected_result, "Task function returned an incorrect result"
+E       AssertionError: Task function returned an incorrect result
+E       assert ({'a': 1}, [(1, 1)], False) == ({'a': 1}, [], False)
+E         
+E         At index 1 diff: [(1, 1)] != []
+E         Use -v to get more diff
+
+test_0877.py:20: AssertionError
+____________________ test_task_func_with_non_dict_data_dict ____________________
+
+    def test_task_func_with_non_dict_data_dict():
+        data_dict = 'not a dict'
+        source_directory = '/path/to/source'
+        backup_directory = '/path/to/backup'
+        with pytest.raises(TypeError) as exc_info:
+>           task_func(data_dict, source_directory, backup_directory)
+
+test_0877.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data_dict = 'not a dict', source_directory = '/path/to/source'
+backup_directory = '/path/to/backup'
+
+    def task_func(data_dict, source_directory, backup_directory):
+        # Add the key 'a' with value 1
+>       data_dict.update({'a': 1})
+        ^^^^^^^^^^^^^^^^
+E       AttributeError: 'str' object has no attribute 'update'
+
+../../../src/src_0877.py:7: AttributeError
+_________________ test_task_func_with_non_str_source_directory _________________
+
+    def test_task_func_with_non_str_source_directory():
+        data_dict = {'b': 2, 'c': 3, 'd': 2}
+        source_directory = 123
+        backup_directory = '/path/to/backup'
+>       with pytest.raises(TypeError) as exc_info:
+E       Failed: DID NOT RAISE TypeError
+
+test_0877.py:34: Failed
+_________________ test_task_func_with_non_str_backup_directory _________________
+
+    def test_task_func_with_non_str_backup_directory():
+        data_dict = {'b': 2, 'c': 3, 'd': 2}
+        source_directory = '/path/to/source'
+        backup_directory = 456
+>       with pytest.raises(TypeError) as exc_info:
+E       Failed: DID NOT RAISE TypeError
+
+test_0877.py:42: Failed
+=========================== short test summary info ============================
+FAILED test_0877.py::test_task_func - AssertionError: Task function returned ...
+FAILED test_0877.py::test_task_func_with_empty_data_dict - AssertionError: Ta...
+FAILED test_0877.py::test_task_func_with_non_dict_data_dict - AttributeError:...
+FAILED test_0877.py::test_task_func_with_non_str_source_directory - Failed: D...
+FAILED test_0877.py::test_task_func_with_non_str_backup_directory - Failed: D...
+5 failed in 0.54s

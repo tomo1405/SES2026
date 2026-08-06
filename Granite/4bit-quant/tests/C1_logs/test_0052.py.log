@@ -1,0 +1,47 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Mock the input data
+        df = ...
+    
+        # Mock the expected output
+        expected_selected_df = ...
+        expected_ax = ...
+    
+        # Call the function and compare the output with the expected output
+>       selected_df, ax = task_func(df, age=25, height=65)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0052.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df = Ellipsis, age = 25, height = 65
+
+    def task_func(df, age: int, height: int):
+        # Filter the DataFrame based on given conditions
+>       selected_df = df[(df["Age"] > age) & (df["Height"] < height)].copy()
+                          ^^^^^^^^^
+E       TypeError: 'ellipsis' object is not subscriptable
+
+../../../src/src_0052.py:5: TypeError
+______________________ test_task_func_with_invalid_input _______________________
+
+    def test_task_func_with_invalid_input():
+        # Mock an invalid input
+        invalid_df = ...
+    
+        # Call the function with an invalid input and assert that it raises an exception
+        with pytest.raises(Exception) as exc_info:
+            task_func(invalid_df, age=25, height=65)
+>       assert "Invalid input" in str(exc_info.value)
+E       assert 'Invalid input' in "'ellipsis' object is not subscriptable"
+E        +  where "'ellipsis' object is not subscriptable" = str(TypeError("'ellipsis' object is not subscriptable"))
+E        +    where TypeError("'ellipsis' object is not subscriptable") = <ExceptionInfo TypeError("'ellipsis' object is not subscriptable") tblen=2>.value
+
+test_0052.py:24: AssertionError
+=========================== short test summary info ============================
+FAILED test_0052.py::test_task_func - TypeError: 'ellipsis' object is not sub...
+FAILED test_0052.py::test_task_func_with_invalid_input - assert 'Invalid inpu...
+2 failed in 4.28s

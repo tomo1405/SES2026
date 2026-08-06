@@ -1,0 +1,71 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_success ____________________________
+
+mock_wikipedia_page = <MagicMock name='page' id='125463643374848'>
+
+    def test_task_func_success(mock_wikipedia_page):
+        ax = task_func("Sample Page Title")
+        assert isinstance(ax, plt.Axes)
+>       assert mock_wikipedia_page.called_once_with("Sample Page Title")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0060.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='page' id='125463643374848'>, name = 'called_once_with'
+
+    def __getattr__(self, name):
+        if name in {'_mock_methods', '_mock_unsafe'}:
+            raise AttributeError(name)
+        elif self._mock_methods is not None:
+            if name not in self._mock_methods or name in _all_magics:
+                raise AttributeError("Mock object has no attribute %r" % name)
+        elif _is_magic(name):
+            raise AttributeError(name)
+        if not self._mock_unsafe and (not self._mock_methods or name not in self._mock_methods):
+            if name.startswith(('assert', 'assret', 'asert', 'aseert', 'assrt')) or name in _ATTRIB_DENY_LIST:
+>               raise AttributeError(
+                    f"{name!r} is not a valid assertion. Use a spec "
+                    f"for the mock if {name!r} is meant to be an attribute.")
+E               AttributeError: 'called_once_with' is not a valid assertion. Use a spec for the mock if 'called_once_with' is meant to be an attribute.. Did you mean: 'assert_called_once_with'?
+
+/usr/lib/python3.12/unittest/mock.py:663: AttributeError
+____________________________ test_task_func_failure ____________________________
+
+mock_wikipedia_page = <MagicMock name='page' id='125463643908016'>
+
+    def test_task_func_failure(mock_wikipedia_page):
+        mock_wikipedia_page.side_effect = Exception("Test exception")
+        ax = task_func("Sample Page Title")
+        assert ax is None
+>       assert mock_wikipedia_page.called_once_with("Sample Page Title")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0060.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='page' id='125463643908016'>, name = 'called_once_with'
+
+    def __getattr__(self, name):
+        if name in {'_mock_methods', '_mock_unsafe'}:
+            raise AttributeError(name)
+        elif self._mock_methods is not None:
+            if name not in self._mock_methods or name in _all_magics:
+                raise AttributeError("Mock object has no attribute %r" % name)
+        elif _is_magic(name):
+            raise AttributeError(name)
+        if not self._mock_unsafe and (not self._mock_methods or name not in self._mock_methods):
+            if name.startswith(('assert', 'assret', 'asert', 'aseert', 'assrt')) or name in _ATTRIB_DENY_LIST:
+>               raise AttributeError(
+                    f"{name!r} is not a valid assertion. Use a spec "
+                    f"for the mock if {name!r} is meant to be an attribute.")
+E               AttributeError: 'called_once_with' is not a valid assertion. Use a spec for the mock if 'called_once_with' is meant to be an attribute.. Did you mean: 'assert_called_once_with'?
+
+/usr/lib/python3.12/unittest/mock.py:663: AttributeError
+----------------------------- Captured stdout call -----------------------------
+An error occured: Test exception
+=========================== short test summary info ============================
+FAILED test_0060.py::test_task_func_success - AttributeError: 'called_once_wi...
+FAILED test_0060.py::test_task_func_failure - AttributeError: 'called_once_wi...
+2 failed in 2.66s

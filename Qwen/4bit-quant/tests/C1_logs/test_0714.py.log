@@ -1,0 +1,57 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_existing_file _________________________
+
+mock_os = <test_0714.MockPath object at 0x7a73fa3905c0>
+mock_open = <test_0714.MockOpen object at 0x7a73fa3907a0>
+
+    def test_task_func_existing_file(mock_os, mock_open):
+        mock_os.existing_files = ['/path/to/logfile.log']
+        keywords = ['error', 'info']
+>       result = task_func('/path/to/logfile.log', keywords)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0714.py:52: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+log_file_path = '/path/to/logfile.log', keywords = ['error', 'info']
+
+    def task_func(log_file_path: str, keywords: list):
+        if not os.path.exists(log_file_path):
+            raise FileNotFoundError(f"Log file {log_file_path} does not exist.")
+    
+        formatted_lines = []
+>       with open(log_file_path, 'r') as log:
+E       TypeError: 'MockFile' object does not support the context manager protocol
+
+../../../src/src_0714.py:8: TypeError
+____________________ test_task_func_unexpected_line_format _____________________
+
+mock_os = <test_0714.MockPath object at 0x7a73fa390f50>
+mock_open = <test_0714.MockOpen object at 0x7a73fa3910a0>
+
+    def test_task_func_unexpected_line_format(mock_os, mock_open):
+        mock_os.existing_files = ['/path/to/logfile.log']
+        mock_open.files_content['/path/to/logfile.log'] = "unexpected line format"
+        keywords = ['error']
+>       result = task_func('/path/to/logfile.log', keywords)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0714.py:70: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+log_file_path = '/path/to/logfile.log', keywords = ['error']
+
+    def task_func(log_file_path: str, keywords: list):
+        if not os.path.exists(log_file_path):
+            raise FileNotFoundError(f"Log file {log_file_path} does not exist.")
+    
+        formatted_lines = []
+>       with open(log_file_path, 'r') as log:
+E       TypeError: 'MockFile' object does not support the context manager protocol
+
+../../../src/src_0714.py:8: TypeError
+=========================== short test summary info ============================
+FAILED test_0714.py::test_task_func_existing_file - TypeError: 'MockFile' obj...
+FAILED test_0714.py::test_task_func_unexpected_line_format - TypeError: 'Mock...
+2 failed, 1 passed in 0.45s

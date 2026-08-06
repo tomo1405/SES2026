@@ -1,0 +1,34 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with 1 string of length 5
+        result = task_func(1, 5)
+        assert len(result) == 5  # There should be 5 unique characters at most
+        assert all(isinstance(item, tuple) and len(item) == 2 for item in result)  # Each item should be a tuple of (char, count)
+    
+        # Test with 0 strings
+        result = task_func(0, 10)
+        assert result == []  # No strings means no characters
+    
+        # Test with multiple strings of varying lengths
+        result = task_func(5, 3)
+        assert len(result) <= 26  # There can't be more than 26 unique lowercase letters
+        assert all(isinstance(item, tuple) and len(item) == 2 for item in result)
+    
+        # Test with very large number of strings and long length
+        result = task_func(100, 100)
+        assert len(result) <= 26  # Still, there can't be more than 26 unique lowercase letters
+    
+        # Test with a small alphabet size
+        result = task_func(10, 1)
+>       assert len(result) == 10  # Each string is of length 1, so each character is unique
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 8 == 10
+E        +  where 8 = len([('h', 2), ('z', 2), ('j', 1), ('v', 1), ('q', 1), ('a', 1), ...])
+
+test_0099.py:26: AssertionError
+=========================== short test summary info ============================
+FAILED test_0099.py::test_task_func - AssertionError: assert 8 == 10
+1 failed in 0.39s

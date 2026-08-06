@@ -1,0 +1,54 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+_______________________________ test_task_func_1 _______________________________
+
+    def test_task_func_1():
+        """
+        Test case 1:
+        Check if the function returns the expected result for a given input.
+        """
+        num_samples = 1000
+        k = 5
+        d = 2
+        random_seed = 42
+        expected_result = 0.5
+    
+        np.random.seed(random_seed)
+        data = np.random.randn(num_samples, 1)*k + d
+        scaler = StandardScaler()
+        scaled_data = scaler.fit_transform(data)
+    
+        mse = task_func(num_samples, k, d, random_seed)
+    
+>       assert mse == expected_result
+E       assert 19.556346991818835 == 0.5
+
+test_0773.py:25: AssertionError
+_______________________________ test_task_func_2 _______________________________
+
+    def test_task_func_2():
+        """
+        Test case 2:
+        Check if the function returns the expected result for a different input.
+        """
+        num_samples = 500
+        k = 10
+        d = 5
+        random_seed = None
+        expected_result = 2.5
+    
+        np.random.seed(random_seed)
+        data = np.random.randn(num_samples, 1)*k + d
+        scaler = StandardScaler()
+        scaled_data = scaler.fit_transform(data)
+    
+        mse = task_func(num_samples, k, d, random_seed)
+    
+>       assert mse == expected_result
+E       assert 103.26014764300218 == 2.5
+
+test_0773.py:45: AssertionError
+=========================== short test summary info ============================
+FAILED test_0773.py::test_task_func_1 - assert 19.556346991818835 == 0.5
+FAILED test_0773.py::test_task_func_2 - assert 103.26014764300218 == 2.5
+2 failed, 1 passed in 3.16s

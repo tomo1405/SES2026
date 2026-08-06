@@ -1,0 +1,83 @@
+.FFFF.                                                                   [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_empty_list ___________________________
+
+    def test_task_func_empty_list():
+        ax = task_func([])
+        assert isinstance(ax, plt.Axes)
+        assert ax.get_title() == 'Weekly Activity'
+        assert ax.get_xlabel() == 'Day of the Week'
+        assert ax.get_ylabel() == 'Number of Activities'
+>       assert list(ax.get_xticklabels()) == ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+E       AssertionError: assert [Text(0, 0, '...turday'), ...] == ['Monday', 'T...aturday', ...]
+E         
+E         At index 0 diff: Text(0, 0, 'Monday') != 'Monday'
+E         Use -v to get more diff
+
+test_0368.py:19: AssertionError
+________________________ test_task_func_single_activity ________________________
+
+    def test_task_func_single_activity():
+        activity = datetime(2023, 10, 9)  # Monday
+        ax = task_func([activity])
+        assert isinstance(ax, plt.Axes)
+        assert ax.get_title() == 'Weekly Activity'
+        assert ax.get_xlabel() == 'Day of the Week'
+        assert ax.get_ylabel() == 'Number of Activities'
+>       assert list(ax.get_xticklabels()) == ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+E       AssertionError: assert [Text(0, 0, '...turday'), ...] == ['Monday', 'T...aturday', ...]
+E         
+E         At index 0 diff: Text(0, 0, 'Monday') != 'Monday'
+E         Use -v to get more diff
+
+test_0368.py:29: AssertionError
+______________________ test_task_func_multiple_activities ______________________
+
+    def test_task_func_multiple_activities():
+        activities = [
+            datetime(2023, 10, 9),  # Monday
+            datetime(2023, 10, 10), # Tuesday
+            datetime(2023, 10, 11), # Wednesday
+            datetime(2023, 10, 12), # Thursday
+            datetime(2023, 10, 13), # Friday
+            datetime(2023, 10, 14), # Saturday
+            datetime(2023, 10, 15)  # Sunday
+        ]
+        ax = task_func(activities)
+        assert isinstance(ax, plt.Axes)
+        assert ax.get_title() == 'Weekly Activity'
+        assert ax.get_xlabel() == 'Day of the Week'
+        assert ax.get_ylabel() == 'Number of Activities'
+>       assert list(ax.get_xticklabels()) == ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+E       AssertionError: assert [Text(0, 0, '...turday'), ...] == ['Monday', 'T...aturday', ...]
+E         
+E         At index 0 diff: Text(0, 0, 'Monday') != 'Monday'
+E         Use -v to get more diff
+
+test_0368.py:47: AssertionError
+______________________ test_task_func_same_day_activities ______________________
+
+    def test_task_func_same_day_activities():
+        activities = [
+            datetime(2023, 10, 9),  # Monday
+            datetime(2023, 10, 9),  # Monday
+            datetime(2023, 10, 9),  # Monday
+        ]
+        ax = task_func(activities)
+        assert isinstance(ax, plt.Axes)
+        assert ax.get_title() == 'Weekly Activity'
+        assert ax.get_xlabel() == 'Day of the Week'
+        assert ax.get_ylabel() == 'Number of Activities'
+>       assert list(ax.get_xticklabels()) == ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+E       AssertionError: assert [Text(0, 0, '...turday'), ...] == ['Monday', 'T...aturday', ...]
+E         
+E         At index 0 diff: Text(0, 0, 'Monday') != 'Monday'
+E         Use -v to get more diff
+
+test_0368.py:61: AssertionError
+=========================== short test summary info ============================
+FAILED test_0368.py::test_task_func_empty_list - AssertionError: assert [Text...
+FAILED test_0368.py::test_task_func_single_activity - AssertionError: assert ...
+FAILED test_0368.py::test_task_func_multiple_activities - AssertionError: ass...
+FAILED test_0368.py::test_task_func_same_day_activities - AssertionError: ass...
+4 failed, 2 passed in 1.72s

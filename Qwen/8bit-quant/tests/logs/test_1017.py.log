@@ -1,0 +1,74 @@
+..FF                                                                     [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_invalid_image_format ______________________
+
+    def test_task_func_invalid_image_format():
+        invalid_image_data = b"GIF89a\x01\x00\x01\x00\x80\x00\x00\xff\xff\xff\x00\x00\x00!\xf9\x04\x01\x00\x00\x00\x00,\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02D\x01\x00;"
+        response = io.BytesIO(invalid_image_data)
+        response.name = "invalid.gif"
+        with pytest.raises(IOError, match="Error processing the image:"):
+>           task_func(response)
+
+test_1017.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = <_io.BytesIO object at 0x78610ca05940>
+
+    def task_func(url: str) -> "matplotlib.axes._axes.Axes":
+        response = None  # Initialize response to None
+        # Validate the URL
+        if not isinstance(url, str) or not url:
+>           raise ValueError("Invalid URL provided.")
+E           ValueError: Invalid URL provided.
+
+../../../src/src_1017.py:9: ValueError
+__________________________ test_task_func_valid_image __________________________
+
+    def test_task_func_valid_image():
+        # Create a simple test image
+        image = Image.new('RGB', (100, 100), color = 'red')
+        img_byte_arr = io.BytesIO()
+        image.save(img_byte_arr, format='JPEG')
+        img_byte_arr.seek(0)
+    
+        # Use a mock to simulate the response
+        class MockResponse:
+            def __init__(self, content):
+                self.content = content
+            def raw(self):
+                return self.content
+            def close(self):
+                pass
+    
+        response = MockResponse(img_byte_arr)
+    
+        # Use a context manager to replace requests.get with our mock
+        with pytest.MonkeyPatch().context() as mp:
+            mp.setattr(requests, 'get', lambda *args, **kwargs: response)
+    
+>           ax = task_func("http://example.com/testimage.jpg")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1017.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'http://example.com/testimage.jpg'
+
+    def task_func(url: str) -> "matplotlib.axes._axes.Axes":
+        response = None  # Initialize response to None
+        # Validate the URL
+        if not isinstance(url, str) or not url:
+            raise ValueError("Invalid URL provided.")
+    
+        # Download the image with error handling
+        try:
+            response = requests.get(url, stream=True, timeout=10)
+>           response.raise_for_status()
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: 'MockResponse' object has no attribute 'raise_for_status'
+
+../../../src/src_1017.py:14: AttributeError
+=========================== short test summary info ============================
+FAILED test_1017.py::test_task_func_invalid_image_format - ValueError: Invali...
+FAILED test_1017.py::test_task_func_valid_image - AttributeError: 'MockRespon...
+2 failed, 2 passed in 3.04s

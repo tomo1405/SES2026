@@ -1,0 +1,40 @@
+F.....F                                                                  [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_input_type ___________________________
+
+    def test_task_func_input_type():
+        with pytest.raises(ValueError):
+>           task_func([1, 2, 3])
+
+test_0977.py:8: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+records = [1, 2, 3], random_seed = 0
+
+    def task_func(records: np.ndarray, random_seed: int = 0) -> pd.DataFrame:
+        if random_seed is not None:
+            np.random.seed(random_seed)
+    
+>       if not (records.ndim == 2):
+                ^^^^^^^^^^^^
+E       AttributeError: 'list' object has no attribute 'ndim'
+
+../../../src/src_0977.py:8: AttributeError
+_______________________ test_task_func_normalized_values _______________________
+
+    def test_task_func_normalized_values():
+        records = np.array([[1, 2], [3, 4]])
+        df = task_func(records)
+        assert np.allclose(df.mean(), 0)
+>       assert np.allclose(df.std(), 1)
+E       assert False
+E        +  where False = <function allclose at 0x751cf53e00b0>(f1    1.414214\nf2    1.414214\ndtype: float64, 1)
+E        +    where <function allclose at 0x751cf53e00b0> = np.allclose
+E        +    and   f1    1.414214\nf2    1.414214\ndtype: float64 = std()
+E        +      where std =     f1   f2\n0 -1.0 -1.0\n1  1.0  1.0.std
+
+test_0977.py:39: AssertionError
+=========================== short test summary info ============================
+FAILED test_0977.py::test_task_func_input_type - AttributeError: 'list' objec...
+FAILED test_0977.py::test_task_func_normalized_values - assert False
+2 failed, 5 passed in 2.80s

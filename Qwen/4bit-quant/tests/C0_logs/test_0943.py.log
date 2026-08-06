@@ -1,0 +1,29 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Set the random seed to ensure reproducibility
+        np.random.seed(0)
+    
+        # Call the function with default parameters
+        sales_df, ax = task_func()
+    
+        # Check the DataFrame structure
+        assert isinstance(sales_df, pd.DataFrame)
+        assert sales_df.columns.tolist() == ['Date', 'Category', 'Sales']
+        assert len(sales_df) == 13 * 5  # 13 weeks * 5 categories
+    
+        # Check the Date column
+        expected_dates = pd.date_range(start='2016-01-01', periods=13, freq='WOM-2FRI')
+>       assert sales_df['Date'].tolist() == expected_dates.tolist()
+E       AssertionError: assert [Timestamp('2...:00:00'), ...] == [Timestamp('2...:00:00'), ...]
+E         
+E         At index 1 diff: Timestamp('2016-01-08 00:00:00') != Timestamp('2016-02-12 00:00:00')
+E         Left contains 52 more items, first extra item: Timestamp('2016-03-11 00:00:00')
+E         Use -v to get more diff
+
+test_0943.py:20: AssertionError
+=========================== short test summary info ============================
+FAILED test_0943.py::test_task_func - AssertionError: assert [Timestamp('2......
+1 failed in 2.10s

@@ -1,0 +1,25 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        rows = 5
+        columns = ["A", "B", "C", "D", "E"]
+        seed = 0
+        expected_columns = sorted(list(set(columns)))
+        expected_data = np.random.rand(rows, len(expected_columns))
+        np.random.shuffle(expected_columns)
+        expected_df = pd.DataFrame(expected_data, columns=expected_columns)
+    
+        actual_df = task_func(rows, columns, seed)
+    
+>       assert actual_df.columns.tolist() == expected_df.columns.tolist()
+E       AssertionError: assert ['E', 'C', 'D', 'B', 'A'] == ['E', 'B', 'C', 'A', 'D']
+E         
+E         At index 1 diff: 'C' != 'B'
+E         Use -v to get more diff
+
+test_0976.py:17: AssertionError
+=========================== short test summary info ============================
+FAILED test_0976.py::test_task_func - AssertionError: assert ['E', 'C', 'D', ...
+1 failed in 1.21s

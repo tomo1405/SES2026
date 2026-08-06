@@ -1,0 +1,92 @@
+.FFFFFF                                                                  [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_different_lengths _______________________
+
+    def test_task_func_different_lengths():
+        l1 = [0.1, 0.2, 0.3]
+        l2 = [0.8, 0.9]
+>       assert task_func(l1, l2) == 0.8
+E       assert 0.3 == 0.8
+E        +  where 0.3 = task_func([0.1, 0.2, 0.3], [0.8, 0.9])
+
+test_0024.py:12: AssertionError
+________________________ test_task_func_one_empty_list _________________________
+
+    def test_task_func_one_empty_list():
+        l1 = []
+        l2 = [0.4, 0.6, 0.8]
+>       assert task_func(l1, l2) == 0.6
+E       assert 0.4 == 0.6
+E        +  where 0.4 = task_func([], [0.4, 0.6, 0.8])
+
+test_0024.py:17: AssertionError
+_______________________ test_task_func_both_empty_lists ________________________
+
+    def test_task_func_both_empty_lists():
+        l1 = []
+        l2 = []
+        with pytest.raises(IndexError):
+>           task_func(l1, l2)
+
+test_0024.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0024.py:6: in task_func
+    closest_index = np.argmin(differences)
+                    ^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:1452: in argmin
+    return _wrapfunc(a, 'argmin', axis=axis, out=out, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+obj = array([], dtype=float64), method = 'argmin', args = ()
+kwds = {'axis': None, 'out': None}
+
+    def _wrapfunc(obj, method, *args, **kwds):
+        bound = getattr(obj, method, None)
+        if bound is None:
+            return _wrapit(obj, method, *args, **kwds)
+    
+        try:
+>           return bound(*args, **kwds)
+                   ^^^^^^^^^^^^^^^^^^^^
+E           ValueError: attempt to get argmin of an empty sequence
+
+../../../.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:54: ValueError
+________________________ test_task_func_threshold_zero _________________________
+
+    def test_task_func_threshold_zero():
+        l1 = [-0.5, 0.5, 1.5]
+        l2 = [-1.5, 0.5, 2.5]
+>       assert task_func(l1, l2, THRESHOLD=0.0) == 0.5
+E       assert -0.5 == 0.5
+E        +  where -0.5 = task_func([-0.5, 0.5, 1.5], [-1.5, 0.5, 2.5], THRESHOLD=0.0)
+
+test_0024.py:28: AssertionError
+_________________________ test_task_func_threshold_one _________________________
+
+    def test_task_func_threshold_one():
+        l1 = [0.1, 0.9, 1.9]
+        l2 = [0.2, 0.8, 1.8]
+>       assert task_func(l1, l2, THRESHOLD=1.0) == 1.9
+E       assert 0.9 == 1.9
+E        +  where 0.9 = task_func([0.1, 0.9, 1.9], [0.2, 0.8, 1.8], THRESHOLD=1.0)
+
+test_0024.py:33: AssertionError
+________________________ test_task_func_negative_values ________________________
+
+    def test_task_func_negative_values():
+        l1 = [-0.7, -0.3, -0.1]
+        l2 = [-0.8, -0.4, -0.2]
+>       assert task_func(l1, l2) == -0.3
+E       assert -0.1 == -0.3
+E        +  where -0.1 = task_func([-0.7, -0.3, -0.1], [-0.8, -0.4, -0.2])
+
+test_0024.py:38: AssertionError
+=========================== short test summary info ============================
+FAILED test_0024.py::test_task_func_different_lengths - assert 0.3 == 0.8
+FAILED test_0024.py::test_task_func_one_empty_list - assert 0.4 == 0.6
+FAILED test_0024.py::test_task_func_both_empty_lists - ValueError: attempt to...
+FAILED test_0024.py::test_task_func_threshold_zero - assert -0.5 == 0.5
+FAILED test_0024.py::test_task_func_threshold_one - assert 0.9 == 1.9
+FAILED test_0024.py::test_task_func_negative_values - assert -0.1 == -0.3
+6 failed, 1 passed in 0.56s

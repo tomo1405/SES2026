@@ -1,0 +1,27 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        fig = plt.figure()
+        ax = fig.add_subplot(111, polar=True)
+        ax = task_func(ax, 1)
+        assert ax.get_rlabel_position() == 45
+>       assert ax.collections[0].get_paths()[0].vertices[:, 0].max() == 1
+               ^^^^^^^^^^^^^^^^^
+
+test_0262.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Axes.ArtistList of 0 collections>, key = 0
+
+    def __getitem__(self, key):
+>       return [artist
+                for artist in self._axes._children
+                if self._type_check(artist)][key]
+E       IndexError: list index out of range
+
+../../../.venv/lib/python3.12/site-packages/matplotlib/axes/_base.py:1530: IndexError
+=========================== short test summary info ============================
+FAILED test_0262.py::test_task_func - IndexError: list index out of range
+1 failed in 1.79s

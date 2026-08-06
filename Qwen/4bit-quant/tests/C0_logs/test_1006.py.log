@@ -1,0 +1,65 @@
+F.FF                                                                     [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_valid_url ___________________________
+
+    def test_task_func_valid_url():
+        with tempfile.TemporaryDirectory() as temp_dir:
+            url = "http://example.com/sample.zip"
+            save_path = os.path.join(temp_dir, "downloaded_file.zip")
+            extract_path = os.path.join(temp_dir, "extracted_files")
+    
+            result = task_func(url, save_path, extract_path)
+    
+>           assert result == extract_path
+E           AssertionError: assert 'URL Error: Not Found' == '/tmp/tmpzasb...tracted_files'
+E             
+E             - /tmp/tmpzasbavxi/extracted_files
+E             + URL Error: Not Found
+
+test_1006.py:14: AssertionError
+______________________ test_task_func_existing_save_path _______________________
+
+    def test_task_func_existing_save_path():
+        with tempfile.TemporaryDirectory() as temp_dir:
+            url = "http://example.com/sample.zip"
+            save_path = os.path.join(temp_dir, "downloaded_file.zip")
+            extract_path = os.path.join(temp_dir, "extracted_files")
+    
+            # Create an existing file at save_path
+            with open(save_path, 'w') as f:
+                f.write("dummy content")
+    
+            result = task_func(url, save_path, extract_path)
+    
+>           assert result == extract_path
+E           AssertionError: assert 'URL Error: Not Found' == '/tmp/tmp8ca9...tracted_files'
+E             
+E             - /tmp/tmp8ca9xd_0/extracted_files
+E             + URL Error: Not Found
+
+test_1006.py:40: AssertionError
+______________________ test_task_func_extract_path_exists ______________________
+
+    def test_task_func_extract_path_exists():
+        with tempfile.TemporaryDirectory() as temp_dir:
+            url = "http://example.com/sample.zip"
+            save_path = os.path.join(temp_dir, "downloaded_file.zip")
+            extract_path = os.path.join(temp_dir, "extracted_files")
+    
+            # Create the extraction directory
+            os.makedirs(extract_path)
+    
+            result = task_func(url, save_path, extract_path)
+    
+>           assert result == extract_path
+E           AssertionError: assert 'URL Error: Not Found' == '/tmp/tmpfncy...tracted_files'
+E             
+E             - /tmp/tmpfncyu4dn/extracted_files
+E             + URL Error: Not Found
+
+test_1006.py:55: AssertionError
+=========================== short test summary info ============================
+FAILED test_1006.py::test_task_func_valid_url - AssertionError: assert 'URL E...
+FAILED test_1006.py::test_task_func_existing_save_path - AssertionError: asse...
+FAILED test_1006.py::test_task_func_extract_path_exists - AssertionError: ass...
+3 failed, 1 passed in 0.58s

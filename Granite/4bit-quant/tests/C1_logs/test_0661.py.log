@@ -1,0 +1,103 @@
+.F                                                                       [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_invalid_input _______________________
+
+    def test_task_func_with_invalid_input():
+        x = [np.array([1, 2, 3]), "not an array"]
+        y = [np.array([2, 3, 4]), np.array([5, 6, 7])]
+        labels = ["Label 1", "Label 2"]
+    
+        with pytest.raises(TypeError):
+>           task_func(x, y, labels)
+
+test_0661.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test_0661.py:12: in task_func
+    xy = np.vstack((x[i], y[i])).T  # Transpose to get correct shape for scaling
+         ^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tup = ('not an array', array([5, 6, 7])), dtype = None, casting = 'same_kind'
+
+    @array_function_dispatch(_vhstack_dispatcher)
+    def vstack(tup, *, dtype=None, casting="same_kind"):
+        """
+        Stack arrays in sequence vertically (row wise).
+    
+        This is equivalent to concatenation along the first axis after 1-D arrays
+        of shape `(N,)` have been reshaped to `(1,N)`. Rebuilds arrays divided by
+        `vsplit`.
+    
+        This function makes most sense for arrays with up to 3 dimensions. For
+        instance, for pixel-data with a height (first axis), width (second axis),
+        and r/g/b channels (third axis). The functions `concatenate`, `stack` and
+        `block` provide more general stacking and concatenation operations.
+    
+        Parameters
+        ----------
+        tup : sequence of ndarrays
+            The arrays must have the same shape along all but the first axis.
+            1-D arrays must have the same length. In the case of a single
+            array_like input, it will be treated as a sequence of arrays; i.e.,
+            each element along the zeroth axis is treated as a separate array.
+    
+        dtype : str or dtype
+            If provided, the destination array will have this dtype. Cannot be
+            provided together with `out`.
+    
+            .. versionadded:: 1.24
+    
+        casting : {'no', 'equiv', 'safe', 'same_kind', 'unsafe'}, optional
+            Controls what kind of data casting may occur. Defaults to 'same_kind'.
+    
+            .. versionadded:: 1.24
+    
+        Returns
+        -------
+        stacked : ndarray
+            The array formed by stacking the given arrays, will be at least 2-D.
+    
+        See Also
+        --------
+        concatenate : Join a sequence of arrays along an existing axis.
+        stack : Join a sequence of arrays along a new axis.
+        block : Assemble an nd-array from nested lists of blocks.
+        hstack : Stack arrays in sequence horizontally (column wise).
+        dstack : Stack arrays in sequence depth wise (along third axis).
+        column_stack : Stack 1-D arrays as columns into a 2-D array.
+        vsplit : Split an array into multiple sub-arrays vertically (row-wise).
+        unstack : Split an array into a tuple of sub-arrays along an axis.
+    
+        Examples
+        --------
+        >>> import numpy as np
+        >>> a = np.array([1, 2, 3])
+        >>> b = np.array([4, 5, 6])
+        >>> np.vstack((a,b))
+        array([[1, 2, 3],
+               [4, 5, 6]])
+    
+        >>> a = np.array([[1], [2], [3]])
+        >>> b = np.array([[4], [5], [6]])
+        >>> np.vstack((a,b))
+        array([[1],
+               [2],
+               [3],
+               [4],
+               [5],
+               [6]])
+    
+        """
+        arrs = atleast_2d(*tup)
+        if not isinstance(arrs, tuple):
+            arrs = (arrs,)
+>       return _nx.concatenate(arrs, 0, dtype=dtype, casting=casting)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: all the input array dimensions except for the concatenation axis must match exactly, but along dimension 1, the array at index 0 has size 1 and the array at index 1 has size 3
+
+../../../.venv/lib/python3.12/site-packages/numpy/_core/shape_base.py:290: ValueError
+=========================== short test summary info ============================
+FAILED test_0661.py::test_task_func_with_invalid_input - ValueError: all the ...
+1 failed, 1 passed in 4.08s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

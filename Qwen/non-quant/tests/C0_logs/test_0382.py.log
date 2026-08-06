@@ -1,0 +1,101 @@
+..F                                                                      [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_successful_execution ______________________
+
+    def test_task_func_successful_execution():
+>       ax, importances = task_func(file_path=None, target_column='Index')
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0382.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0382.py:31: in task_func
+    sns.barplot(x=X.columns, y=importances, ax=ax)
+../../../.venv/lib/python3.12/site-packages/seaborn/categorical.py:2363: in barplot
+    p._attach(ax, log_scale=log_scale)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <seaborn.categorical._CategoricalAggPlotter object at 0x7ec8fd10a2a0>
+obj = <test_0382.mock_subplots.<locals>.MockAx object at 0x7ec8fcdbf020>
+allowed_types = ['numeric', 'datetime', 'categorical'], log_scale = None
+
+    def _attach(
+        self,
+        obj,
+        allowed_types=None,
+        log_scale=None,
+    ):
+        """Associate the plotter with an Axes manager and initialize its units.
+    
+        Parameters
+        ----------
+        obj : :class:`matplotlib.axes.Axes` or :class:'FacetGrid`
+            Structural object that we will eventually plot onto.
+        allowed_types : str or list of str
+            If provided, raise when either the x or y variable does not have
+            one of the declared seaborn types.
+        log_scale : bool, number, or pair of bools or numbers
+            If not False, set the axes to use log scaling, with the given
+            base or defaulting to 10. If a tuple, interpreted as separate
+            arguments for the x and y axes.
+    
+        """
+        from .axisgrid import FacetGrid
+        if isinstance(obj, FacetGrid):
+            self.ax = None
+            self.facets = obj
+            ax_list = obj.axes.flatten()
+            if obj.col_names is not None:
+                self.var_levels["col"] = obj.col_names
+            if obj.row_names is not None:
+                self.var_levels["row"] = obj.row_names
+        else:
+            self.ax = obj
+            self.facets = None
+            ax_list = [obj]
+    
+        # Identify which "axis" variables we have defined
+        axis_variables = set("xy").intersection(self.variables)
+    
+        # -- Verify the types of our x and y variables here.
+        # This doesn't really make complete sense being here here, but it's a fine
+        # place for it, given  the current system.
+        # (Note that for some plots, there might be more complicated restrictions)
+        # e.g. the categorical plots have their own check that as specific to the
+        # non-categorical axis.
+        if allowed_types is None:
+            allowed_types = ["numeric", "datetime", "categorical"]
+        elif isinstance(allowed_types, str):
+            allowed_types = [allowed_types]
+    
+        for var in axis_variables:
+            var_type = self.var_types[var]
+            if var_type not in allowed_types:
+                err = (
+                    f"The {var} variable is {var_type}, but one of "
+                    f"{allowed_types} is required"
+                )
+                raise TypeError(err)
+    
+        # -- Get axis objects for each row in plot_data for type conversions and scaling
+    
+        facet_dim = {"x": "col", "y": "row"}
+    
+        self.converters = {}
+        for var in axis_variables:
+            other_var = {"x": "y", "y": "x"}[var]
+    
+            converter = pd.Series(index=self.plot_data.index, name=var, dtype=object)
+            share_state = getattr(self.facets, f"_share{var}", True)
+    
+            # Simplest cases are that we have a single axes, all axes are shared,
+            # or sharing is only on the orthogonal facet dimension. In these cases,
+            # all datapoints get converted the same way, so use the first axis
+            if share_state is True or share_state == facet_dim[other_var]:
+>               converter.loc[:] = getattr(ax_list[0], f"{var}axis")
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               AttributeError: 'MockAx' object has no attribute 'yaxis'
+
+../../../.venv/lib/python3.12/site-packages/seaborn/_base.py:1101: AttributeError
+=========================== short test summary info ============================
+FAILED test_0382.py::test_task_func_successful_execution - AttributeError: 'M...
+1 failed, 2 passed in 4.38s

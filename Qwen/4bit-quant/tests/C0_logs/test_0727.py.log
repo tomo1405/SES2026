@@ -1,0 +1,112 @@
+....F.F.....                                                             [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_n_is_negative _________________________
+
+    def test_task_func_n_is_negative():
+>       assert task_func("hello world", -1) == []
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0727.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0727.py:17: in task_func
+    return sample(english_words, n)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <random.Random object at 0x1137e330>, population = ['hello', 'world']
+k = -1, counts = None
+
+    def sample(self, population, k, *, counts=None):
+        """Chooses k unique random elements from a population sequence.
+    
+        Returns a new list containing elements from the population while
+        leaving the original population unchanged.  The resulting list is
+        in selection order so that all sub-slices will also be valid random
+        samples.  This allows raffle winners (the sample) to be partitioned
+        into grand prize and second place winners (the subslices).
+    
+        Members of the population need not be hashable or unique.  If the
+        population contains repeats, then each occurrence is a possible
+        selection in the sample.
+    
+        Repeated elements can be specified one at a time or with the optional
+        counts parameter.  For example:
+    
+            sample(['red', 'blue'], counts=[4, 2], k=5)
+    
+        is equivalent to:
+    
+            sample(['red', 'red', 'red', 'red', 'blue', 'blue'], k=5)
+    
+        To choose a sample from a range of integers, use range() for the
+        population argument.  This is especially fast and space efficient
+        for sampling from a large population:
+    
+            sample(range(10000000), 60)
+    
+        """
+    
+        # Sampling without replacement entails tracking either potential
+        # selections (the pool) in a list or previous selections in a set.
+    
+        # When the number of selections is small compared to the
+        # population, then tracking selections is efficient, requiring
+        # only a small set and an occasional reselection.  For
+        # a larger number of selections, the pool tracking method is
+        # preferred since the list takes less space than the
+        # set and it doesn't suffer from frequent reselections.
+    
+        # The number of calls to _randbelow() is kept at or near k, the
+        # theoretical minimum.  This is important because running time
+        # is dominated by _randbelow() and because it extracts the
+        # least entropy from the underlying random number generators.
+    
+        # Memory requirements are kept to the smaller of a k-length
+        # set or an n-length list.
+    
+        # There are other sampling algorithms that do not require
+        # auxiliary memory, but they were rejected because they made
+        # too many calls to _randbelow(), making them slower and
+        # causing them to eat more entropy than necessary.
+    
+        if not isinstance(population, _Sequence):
+            raise TypeError("Population must be a sequence.  "
+                            "For dicts or sets, use sorted(d).")
+        n = len(population)
+        if counts is not None:
+            cum_counts = list(_accumulate(counts))
+            if len(cum_counts) != n:
+                raise ValueError('The number of counts does not match the population')
+            total = cum_counts.pop()
+            if not isinstance(total, int):
+                raise TypeError('Counts must be integers')
+            if total <= 0:
+                raise ValueError('Total of counts must be greater than zero')
+            selections = self.sample(range(total), k=k)
+            bisect = _bisect
+            return [population[bisect(cum_counts, s)] for s in selections]
+        randbelow = self._randbelow
+        if not 0 <= k <= n:
+>           raise ValueError("Sample larger than population or is negative")
+E           ValueError: Sample larger than population or is negative
+
+/usr/lib/python3.12/random.py:430: ValueError
+________________________ test_task_func_random_sampling ________________________
+
+    def test_task_func_random_sampling():
+        random.seed(0)  # For reproducibility
+        result = task_func("hello world this is a test", 3)
+        assert len(result) == 3
+        assert set(result).issubset({"hello", "world", "this", "is", "a", "test"})
+        # Check that the order is consistent with the random seed
+>       assert result == ['is', 'test', 'this']
+E       AssertionError: assert ['is', 'test', 'hello'] == ['is', 'test', 'this']
+E         
+E         At index 2 diff: 'hello' != 'this'
+E         Use -v to get more diff
+
+test_0727.py:38: AssertionError
+=========================== short test summary info ============================
+FAILED test_0727.py::test_task_func_n_is_negative - ValueError: Sample larger...
+FAILED test_0727.py::test_task_func_random_sampling - AssertionError: assert ...
+2 failed, 10 passed in 4.46s

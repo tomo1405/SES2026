@@ -1,0 +1,57 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+date_str = '2023-01-01'
+booking_data = {'Room1': 'Booked', 'Room2': 'Not Listed'}
+
+    def task_func(date_str, booking_data):
+        # Validate the date string
+        try:
+            date = datetime.strptime(date_str, "%Y-%m-%d")
+            if date < datetime.now():
+>               raise ValueError("Date is in the past. Please provide a future date.")
+E               ValueError: Date is in the past. Please provide a future date.
+
+../../../src/src_1045.py:10: ValueError
+
+The above exception was the direct cause of the following exception:
+
+    def test_task_func():
+        date_str = "2023-01-01"
+        booking_data = {"Room1": "Booked", "Room2": "Not Listed"}
+>       report_df, ax = task_func(date_str, booking_data)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1045.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+date_str = '2023-01-01'
+booking_data = {'Room1': 'Booked', 'Room2': 'Not Listed'}
+
+    def task_func(date_str, booking_data):
+        # Validate the date string
+        try:
+            date = datetime.strptime(date_str, "%Y-%m-%d")
+            if date < datetime.now():
+                raise ValueError("Date is in the past. Please provide a future date.")
+        except ValueError as e:
+>           raise ValueError(f"Invalid date: {e}") from e
+E           ValueError: Invalid date: Date is in the past. Please provide a future date.
+
+../../../src/src_1045.py:12: ValueError
+___________________________ test_invalid_date_format ___________________________
+
+    def test_invalid_date_format():
+        date_str = "2023-01-01"
+        booking_data = {}
+>       with raises(ValueError, match="Invalid date: unconverted data remains"):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'Invalid date: unconverted data remains'
+E         Actual message: 'Invalid date: Date is in the past. Please provide a future date.'
+
+test_1045.py:29: AssertionError
+=========================== short test summary info ============================
+FAILED test_1045.py::test_task_func - ValueError: Invalid date: Date is in th...
+FAILED test_1045.py::test_invalid_date_format - AssertionError: Regex pattern...
+2 failed, 1 passed in 1.32s

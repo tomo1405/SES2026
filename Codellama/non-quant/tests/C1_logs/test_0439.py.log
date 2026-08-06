@@ -1,0 +1,33 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        numbers = [1, 2, 3, 4, 5]
+        file_path = "save.pkl"
+        expected_fig = plt.figure()
+        plt.plot(numbers)
+    
+        with open(file_path, "wb") as file:
+            pickle.dump(expected_fig, file)
+    
+        loaded_fig = task_func(numbers, file_path)
+    
+>       assert loaded_fig == expected_fig
+E       assert <Figure size 640x480 with 1 Axes> == <Figure size 640x480 with 1 Axes>
+
+test_0439.py:19: AssertionError
+________________________ test_task_func_file_not_found _________________________
+
+    def test_task_func_file_not_found():
+        numbers = [1, 2, 3, 4, 5]
+        file_path = "save.pkl"
+    
+>       with pytest.raises(FileNotFoundError):
+E       Failed: DID NOT RAISE FileNotFoundError
+
+test_0439.py:32: Failed
+=========================== short test summary info ============================
+FAILED test_0439.py::test_task_func_valid_input - assert <Figure size 640x480...
+FAILED test_0439.py::test_task_func_file_not_found - Failed: DID NOT RAISE Fi...
+2 failed, 1 passed in 1.59s

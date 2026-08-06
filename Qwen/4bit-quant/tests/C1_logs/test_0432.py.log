@@ -1,0 +1,26 @@
+F..                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_image __________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1688/test_task_func_valid_image0')
+
+    def test_task_func_valid_image(tmp_path):
+        # Create a temporary image file
+        image_path = tmp_path / "test_image.png"
+        height, width = 100, 100
+        img = np.zeros((height, width), dtype=np.uint8)
+        img[50:, 50:] = 255  # Create a simple binary image
+        cv2.imwrite(str(image_path), img)
+    
+        # Call the function and check the output
+        histogram = task_func(str(image_path))
+        assert isinstance(histogram, np.ndarray)
+        assert histogram.shape == (256,)
+>       assert histogram[0] == 2500  # 100*100-50*50 = 2500 pixels are black
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert np.int64(7500) == 2500
+
+test_0432.py:19: AssertionError
+=========================== short test summary info ============================
+FAILED test_0432.py::test_task_func_valid_image - assert np.int64(7500) == 2500
+1 failed, 2 passed in 0.63s

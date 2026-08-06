@@ -1,0 +1,45 @@
+.FF.                                                                     [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_existing_file _______________________
+
+    def test_task_func_with_existing_file():
+        with TemporaryDirectory() as temp_dir:
+            source_dir = os.path.join(temp_dir, "source")
+            target_dir = os.path.join(temp_dir, "target")
+            os.makedirs(source_dir)
+            with open(os.path.join(source_dir, "test.txt"), "w") as f:
+                f.write("Test file")
+>           with open(os.path.join(target_dir, "test.txt"), "w") as f:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmpj6r9fjh3/target/test.txt'
+
+test_0963.py:54: FileNotFoundError
+_________________ test_task_func_with_non_existing_source_dir __________________
+
+    def test_task_func_with_non_existing_source_dir():
+        with TemporaryDirectory() as temp_dir:
+            source_dir = os.path.join(temp_dir, "source")
+            target_dir = os.path.join(temp_dir, "target")
+>           moved_files = task_func(source_dir, target_dir)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0963.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+source_directory = '/tmp/tmpxxzj58xp/source'
+target_directory = '/tmp/tmpxxzj58xp/target'
+
+    def task_func(source_directory: str, target_directory: str):
+        moved_files = 0
+    
+        if not os.path.exists(source_directory):
+>           raise FileNotFoundError("source_directory must exist.")
+E           FileNotFoundError: source_directory must exist.
+
+test_0963.py:11: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0963.py::test_task_func_with_existing_file - FileNotFoundError: [...
+FAILED test_0963.py::test_task_func_with_non_existing_source_dir - FileNotFou...
+2 failed, 2 passed in 0.49s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

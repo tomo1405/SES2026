@@ -1,0 +1,59 @@
+..F.FF                                                                   [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_scaled_columns _________________________
+
+    def test_task_func_scaled_columns():
+        n_rows = 10
+        scale_cols = [0, 2]
+        df = task_func(n_rows, scale_cols)
+    
+        for col_index in scale_cols:
+            original_data = np.random.randint(0, 100, size=n_rows)
+            scaler = StandardScaler()
+            scaled_data = scaler.fit_transform(original_data.reshape(-1, 1)).flatten()
+    
+>           assert np.allclose(df.iloc[:, col_index].values, scaled_data, atol=1e-7)
+E           assert False
+E            +  where False = <function allclose at 0x7e18249241f0>(array([ 0.81577161, -0.54384774,  1.11790924, -0.59420401,  0.86612788,\n       -0.54384774,  1.21862178, -0.19135383,  0.06042753, -2.20560472]), array([ 0.84773778, -0.22411458, -1.78317256,  0.03572841,  1.3349434 ,\n        1.2050219 , -1.55580994,  0.45797328, -0.41899683,  0.10068916]), atol=1e-07)
+E            +    where <function allclose at 0x7e18249241f0> = np.allclose
+E            +    and   array([ 0.81577161, -0.54384774,  1.11790924, -0.59420401,  0.86612788,\n       -0.54384774,  1.21862178, -0.19135383,  0.06042753, -2.20560472]) = 0    0.815772\n1   -0.543848\n2    1.117909\n3   -0.594204\n4    0.866128\n5   -0.543848\n6    1.218622\n7   -0.191354\n8    0.060428\n9   -2.205605\nName: A, dtype: float64.values
+
+test_0838.py:29: AssertionError
+__________________________ test_task_func_no_scaling ___________________________
+
+    def test_task_func_no_scaling():
+        n_rows = 10
+        scale_cols = []
+        df = task_func(n_rows, scale_cols)
+>       assert df.equals(pd.DataFrame(np.random.randint(0, 100, size=(n_rows, 5)), columns=['A', 'B', 'C', 'D', 'E']))
+E       AssertionError: assert False
+E        +  where False = equals(    A   B   C   D   E\n0  18   9  61  34  86\n1   6  35  61  21  89\n2  22  38  31  83  23\n3  49  90  34  85  29\n4  13  4...3  50  87\n5  69  95  98  76  25\n6  83  35  59  54  82\n7  46  15  44  23  20\n8  13  24  24  10  28\n9  35  63  92  64  93)
+E        +    where equals =     A   B   C   D   E\n0  99  31   5  37  75\n1  12  29   1  66  64\n2  53  49  40  58  13\n3  95  88  84  79  82\n4  97  5...4  58   2\n5  34  35  96  89   7\n6  15  19  82  98  44\n7  60  69  14  39  27\n8  39   2  19  95  18\n9  88  32  18  30  65.equals
+E        +    and       A   B   C   D   E\n0  18   9  61  34  86\n1   6  35  61  21  89\n2  22  38  31  83  23\n3  49  90  34  85  29\n4  13  4...3  50  87\n5  69  95  98  76  25\n6  83  35  59  54  82\n7  46  15  44  23  20\n8  13  24  24  10  28\n9  35  63  92  64  93 = <class 'pandas.DataFrame'>(array([[18,  9, 61, 34, 86],\n       [ 6, 35, 61, 21, 89],\n       [22, 38, 31, 83, 23],\n       [49, 90, 34, 85, 29],\n  ...],\n       [83, 35, 59, 54, 82],\n       [46, 15, 44, 23, 20],\n       [13, 24, 24, 10, 28],\n       [35, 63, 92, 64, 93]]), columns=['A', 'B', 'C', 'D', 'E'])
+E        +      where <class 'pandas.DataFrame'> = pd.DataFrame
+E        +      and   array([[18,  9, 61, 34, 86],\n       [ 6, 35, 61, 21, 89],\n       [22, 38, 31, 83, 23],\n       [49, 90, 34, 85, 29],\n  ...],\n       [83, 35, 59, 54, 82],\n       [46, 15, 44, 23, 20],\n       [13, 24, 24, 10, 28],\n       [35, 63, 92, 64, 93]]) = randint(0, 100, size=(10, 5))
+E        +        where randint = <module 'numpy.random' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/random/__init__.py'>.randint
+E        +          where <module 'numpy.random' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/random/__init__.py'> = np.random
+
+test_0838.py:43: AssertionError
+______________________ test_task_func_single_scale_column ______________________
+
+    def test_task_func_single_scale_column():
+        n_rows = 10
+        scale_cols = [1]
+        df = task_func(n_rows, scale_cols)
+        scaler = StandardScaler()
+        original_data = np.random.randint(0, 100, size=n_rows)
+        scaled_data = scaler.fit_transform(original_data.reshape(-1, 1)).flatten()
+>       assert np.allclose(df.iloc[:, 1].values, scaled_data, atol=1e-7)
+E       assert False
+E        +  where False = <function allclose at 0x7e18249241f0>(array([ 0.71726442,  1.13728412,  0.71726442,  0.84650125,  0.652646  ,\n       -1.41514331, -1.51207093, -0.93050519, -0.93050519,  0.71726442]), array([ 1.72548714,  1.53914944, -1.1441135 ,  0.30932059, -1.18138104,\n       -0.62236793, -0.17515744, -1.03231088,  0.60746092, -0.02608728]), atol=1e-07)
+E        +    where <function allclose at 0x7e18249241f0> = np.allclose
+E        +    and   array([ 0.71726442,  1.13728412,  0.71726442,  0.84650125,  0.652646  ,\n       -1.41514331, -1.51207093, -0.93050519, -0.93050519,  0.71726442]) = 0    0.717264\n1    1.137284\n2    0.717264\n3    0.846501\n4    0.652646\n5   -1.415143\n6   -1.512071\n7   -0.930505\n8   -0.930505\n9    0.717264\nName: B, dtype: float64.values
+
+test_0838.py:52: AssertionError
+=========================== short test summary info ============================
+FAILED test_0838.py::test_task_func_scaled_columns - assert False
+FAILED test_0838.py::test_task_func_no_scaling - AssertionError: assert False
+FAILED test_0838.py::test_task_func_single_scale_column - assert False
+3 failed, 3 passed in 3.29s

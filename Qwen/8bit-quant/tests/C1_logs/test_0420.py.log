@@ -1,0 +1,65 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sample_data = (array([[0.37454012, 0.95071431, 0.73199394, 0.59865848, 0.15601864],
+       [0.15599452, 0.05808361, 0.86617615, 0.60...,
+       0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0,
+       1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1]))
+
+    def test_task_func(sample_data):
+        X, Y = sample_data
+        model, ax = task_func(X, Y)
+    
+        # Check if the model is an instance of Sequential
+        assert isinstance(model, tf.keras.models.Sequential)
+    
+        # Check if the axes object is an instance of matplotlib.axes.Axes
+        assert isinstance(ax, plt.Axes)
+    
+        # Check if the model has been trained
+>       assert len(model.history.history) == 200
+E       AssertionError: assert 1 == 200
+E        +  where 1 = len({'loss': [0.6916153430938721, 0.6445198059082031, 0.6138850450515747, 0.5855012536048889, 0.5576592087745667, 0.5372412800788879, ...]})
+E        +    where {'loss': [0.6916153430938721, 0.6445198059082031, 0.6138850450515747, 0.5855012536048889, 0.5576592087745667, 0.5372412800788879, ...]} = <keras.src.callbacks.history.History object at 0x7bed8a943980>.history
+E        +      where <keras.src.callbacks.history.History object at 0x7bed8a943980> = <Sequential name=sequential, built=True>.history
+
+test_0420.py:27: AssertionError
+----------------------------- Captured stderr call -----------------------------
+E0000 00:00:1785300791.371814  833433 cuda_platform.cc:52] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: UNKNOWN ERROR (303)
+________________________ test_task_func_with_one_class _________________________
+
+    def test_task_func_with_one_class():
+        X = np.random.rand(100, 5)
+        Y = np.zeros(100)
+        model, ax = task_func(X, Y)
+    
+        # Check if the model is an instance of Sequential
+        assert isinstance(model, tf.keras.models.Sequential)
+    
+        # Check if the axes object is an instance of matplotlib.axes.Axes
+        assert isinstance(ax, plt.Axes)
+    
+        # Check if the model has been trained
+>       assert len(model.history.history) == 200
+E       AssertionError: assert 1 == 200
+E        +  where 1 = len({'loss': [0.18879210948944092, 0.04955146089196205, 0.02968914806842804, 0.021341171115636826, 0.01672147959470749, 0.013765056617558002, ...]})
+E        +    where {'loss': [0.18879210948944092, 0.04955146089196205, 0.02968914806842804, 0.021341171115636826, 0.01672147959470749, 0.013765056617558002, ...]} = <keras.src.callbacks.history.History object at 0x7bed70b9d190>.history
+E        +      where <keras.src.callbacks.history.History object at 0x7bed70b9d190> = <Sequential name=sequential_1, built=True>.history
+
+test_0420.py:57: AssertionError
+=============================== warnings summary ===============================
+Qwen/8bit-quant/tests/test_0420.py::test_task_func
+Qwen/8bit-quant/tests/test_0420.py::test_task_func_with_one_class
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/keras/src/layers/core/dense.py:107: UserWarning: Do not pass an `input_shape`/`input_dim` argument to a layer. When using Sequential models, prefer using an `Input(shape)` object as the first layer in the model instead.
+    super().__init__(activity_regularizer=activity_regularizer, **kwargs)
+
+Qwen/8bit-quant/tests/test_0420.py::test_task_func_with_one_class
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/sklearn/metrics/_ranking.py:1192: UserWarning: No positive class found in y_true, recall is set to one for all thresholds.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0420.py::test_task_func - AssertionError: assert 1 == 200
+FAILED test_0420.py::test_task_func_with_one_class - AssertionError: assert 1...
+2 failed, 1 passed, 3 warnings in 39.20s

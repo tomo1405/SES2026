@@ -1,0 +1,30 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        input_file = "input.json"
+        with patch("src_0528.json.load", MagicMock(return_value=[{"key1": 1, "key2": 2}, {"key1": 3, "key2": 4}])):
+            with patch("src_0528.open", mock_open(read_data=json.dumps([{"key1": 1, "key2": 2}, {"key1": 3, "key2": 4}]))) as mock_file:
+                results, ax = task_func(input_file)
+                mock_file.assert_called_once_with(input_file, "r")
+    
+        expected_results = {"key1": {"mean": 2.0, "median": 2.0}, "key2": {"mean": 2.5, "median": 2.5}}
+>       assert results == expected_results
+E       AssertionError: assert {'key1': {'me...float64(3.0)}} == {'key1': {'me...median': 2.5}}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'key2': {'mean': np.float64(3.0), 'median': np.float64(3.0)}} != {'key2': {'mean': 2.5, 'median': 2.5}}
+E         Use -v to get more diff
+
+test_0528.py:19: AssertionError
+=============================== warnings summary ===============================
+Granite/8bit-quant/tests/test_0528.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/categorical.py:700: MatplotlibDeprecationWarning: vert: bool was deprecated in Matplotlib 3.11 and will be removed in 3.13. Use orientation: {'vertical', 'horizontal'} instead.
+    artists = ax.bxp(**boxplot_kws)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0528.py::test_task_func - AssertionError: assert {'key1': {'me......
+1 failed, 1 warning in 3.38s

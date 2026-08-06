@@ -1,0 +1,194 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_____________ TestPostRequestHandler.test_valid_json_with_data_key _____________
+
+self = <test_0274.TestPostRequestHandler object at 0x75889069af30>
+
+    def test_valid_json_with_data_key(self):
+        handler_class = task_func()
+        request_line = b"POST / HTTP/1.1\r\n"
+        headers = (
+            b"Host: localhost:8000\r\n"
+            b"Content-Type: application/json\r\n"
+            b"Content-Length: 19\r\n"
+            b"\r\n"
+        )
+        body = b'{"data": "some data"}'
+        raw_request = request_line + headers + body
+    
+        class MockRequest:
+            method = 'POST'
+            headers = {}
+            rfile = BytesIO(raw_request)
+    
+        class MockResponse:
+            def __init__(self):
+                self.status = None
+                self.headers = {}
+                self.wfile = BytesIO()
+    
+            def send_response(self, status):
+                self.status = status
+    
+            def send_header(self, key, value):
+                self.headers[key] = value
+    
+            def end_headers(self):
+                pass
+    
+            def write(self, data):
+                self.wfile.write(data)
+    
+        mock_response = MockResponse()
+>       handler = handler_class(MockRequest(), mock_response)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: BaseRequestHandler.__init__() missing 1 required positional argument: 'server'
+
+test_0274.py:43: TypeError
+_______________ TestPostRequestHandler.test_invalid_content_type _______________
+
+self = <test_0274.TestPostRequestHandler object at 0x7588906b0680>
+
+    def test_invalid_content_type(self):
+        handler_class = task_func()
+        request_line = b"POST / HTTP/1.1\r\n"
+        headers = (
+            b"Host: localhost:8000\r\n"
+            b"Content-Type: text/plain\r\n"
+            b"Content-Length: 12\r\n"
+            b"\r\n"
+        )
+        body = b'some data'
+        raw_request = request_line + headers + body
+    
+        class MockRequest:
+            method = 'POST'
+            headers = {}
+            rfile = BytesIO(raw_request)
+    
+        class MockResponse:
+            def __init__(self):
+                self.status = None
+                self.headers = {}
+                self.wfile = BytesIO()
+    
+            def send_response(self, status):
+                self.status = status
+    
+            def send_header(self, key, value):
+                self.headers[key] = value
+    
+            def end_headers(self):
+                pass
+    
+            def write(self, data):
+                self.wfile.write(data)
+    
+        mock_response = MockResponse()
+>       handler = handler_class(MockRequest(), mock_response)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: BaseRequestHandler.__init__() missing 1 required positional argument: 'server'
+
+test_0274.py:87: TypeError
+___________________ TestPostRequestHandler.test_invalid_json ___________________
+
+self = <test_0274.TestPostRequestHandler object at 0x7588906b08f0>
+
+    def test_invalid_json(self):
+        handler_class = task_func()
+        request_line = b"POST / HTTP/1.1\r\n"
+        headers = (
+            b"Host: localhost:8000\r\n"
+            b"Content-Type: application/json\r\n"
+            b"Content-Length: 11\r\n"
+            b"\r\n"
+        )
+        body = b'{"data": "some data'
+        raw_request = request_line + headers + body
+    
+        class MockRequest:
+            method = 'POST'
+            headers = {}
+            rfile = BytesIO(raw_request)
+    
+        class MockResponse:
+            def __init__(self):
+                self.status = None
+                self.headers = {}
+                self.wfile = BytesIO()
+    
+            def send_response(self, status):
+                self.status = status
+    
+            def send_header(self, key, value):
+                self.headers[key] = value
+    
+            def end_headers(self):
+                pass
+    
+            def write(self, data):
+                self.wfile.write(data)
+    
+        mock_response = MockResponse()
+>       handler = handler_class(MockRequest(), mock_response)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: BaseRequestHandler.__init__() missing 1 required positional argument: 'server'
+
+test_0274.py:131: TypeError
+______________ TestPostRequestHandler.test_no_data_key_in_request ______________
+
+self = <test_0274.TestPostRequestHandler object at 0x7588906b0b60>
+
+    def test_no_data_key_in_request(self):
+        handler_class = task_func()
+        request_line = b"POST / HTTP/1.1\r\n"
+        headers = (
+            b"Host: localhost:8000\r\n"
+            b"Content-Type: application/json\r\n"
+            b"Content-Length: 15\r\n"
+            b"\r\n"
+        )
+        body = b'{"key": "value"}'
+        raw_request = request_line + headers + body
+    
+        class MockRequest:
+            method = 'POST'
+            headers = {}
+            rfile = BytesIO(raw_request)
+    
+        class MockResponse:
+            def __init__(self):
+                self.status = None
+                self.headers = {}
+                self.wfile = BytesIO()
+    
+            def send_response(self, status):
+                self.status = status
+    
+            def send_header(self, key, value):
+                self.headers[key] = value
+    
+            def end_headers(self):
+                pass
+    
+            def write(self, data):
+                self.wfile.write(data)
+    
+        mock_response = MockResponse()
+>       handler = handler_class(MockRequest(), mock_response)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: BaseRequestHandler.__init__() missing 1 required positional argument: 'server'
+
+test_0274.py:175: TypeError
+=============================== warnings summary ===============================
+../../../src/src_0274.py:1
+  /work/tomohiro-w/utg/src/src_0274.py:1: DeprecationWarning: 'cgi' is deprecated and slated for removal in Python 3.13
+    import cgi
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0274.py::TestPostRequestHandler::test_valid_json_with_data_key - ...
+FAILED test_0274.py::TestPostRequestHandler::test_invalid_content_type - Type...
+FAILED test_0274.py::TestPostRequestHandler::test_invalid_json - TypeError: B...
+FAILED test_0274.py::TestPostRequestHandler::test_no_data_key_in_request - Ty...
+4 failed, 1 warning in 0.55s

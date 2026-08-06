@@ -1,0 +1,32 @@
+..F..                                                                    [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_multiple_files ______________________
+
+    def test_task_func_with_multiple_files():
+        with tempfile.TemporaryDirectory() as temp_dir:
+            file_paths = []
+            for i in range(3):
+                file_path = os.path.join(temp_dir, f'test_file_{i}.txt')
+                with open(file_path, 'w') as f:
+                    f.write(f'Hello, World! {i}')
+                file_paths.append(file_path)
+            result = task_func(temp_dir)
+            assert os.path.exists(result)
+            with open(result, newline='') as csvfile:
+                reader = csv.reader(csvfile)
+                rows = list(reader)
+            assert len(rows) == 4  # Header row and three data rows
+            assert rows[0] == ['File Name', 'Size']
+            for i, row in enumerate(rows[1:], start=0):
+>               assert row[0] == f'test_file_{i}.txt'
+E               AssertionError: assert 'test_file_2.txt' == 'test_file_0.txt'
+E                 
+E                 - test_file_0.txt
+E                 ?           ^
+E                 + test_file_2.txt
+E                 ?           ^
+
+test_0267.py:47: AssertionError
+=========================== short test summary info ============================
+FAILED test_0267.py::test_task_func_with_multiple_files - AssertionError: ass...
+1 failed, 4 passed in 0.44s

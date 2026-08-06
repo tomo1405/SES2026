@@ -1,0 +1,58 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sample_df =    var1  var2  predicted
+0     1     2        2.8
+1     2     4        3.4
+2     3     5        4.0
+3     4     4        4.6
+4     5     5        5.2
+
+    def test_task_func(sample_df):
+        result_df = task_func(sample_df)
+    
+        # Check if the 'predicted' column is added
+        assert 'predicted' in result_df.columns
+    
+        # Check if the length of 'predicted' column matches the input DataFrame
+        assert len(result_df['predicted']) == len(sample_df)
+    
+        # Check if the predicted values are calculated correctly
+        # Using the same formula as in the task_func
+>       regression = linregress(sample_df['var1'], sample_df['var2'])
+                     ^^^^^^^^^^
+E       NameError: name 'linregress' is not defined
+
+test_0678.py:26: NameError
+______________________ test_task_func_with_constant_var2 _______________________
+
+sample_df =    var1  var2  predicted
+0     1     5        5.0
+1     2     5        5.0
+2     3     5        5.0
+3     4     5        5.0
+4     5     5        5.0
+
+    def test_task_func_with_constant_var2(sample_df):
+        # Modify the sample_df to have constant 'var2'
+        sample_df['var2'] = 5
+    
+        result_df = task_func(sample_df)
+    
+        # Check if the 'predicted' column is added
+        assert 'predicted' in result_df.columns
+    
+        # Check if the length of 'predicted' column matches the input DataFrame
+        assert len(result_df['predicted']) == len(sample_df)
+    
+        # Check if the predicted values are equal to the intercept when 'var2' is constant
+>       regression = linregress(sample_df['var1'], sample_df['var2'])
+                     ^^^^^^^^^^
+E       NameError: name 'linregress' is not defined
+
+test_0678.py:58: NameError
+=========================== short test summary info ============================
+FAILED test_0678.py::test_task_func - NameError: name 'linregress' is not def...
+FAILED test_0678.py::test_task_func_with_constant_var2 - NameError: name 'lin...
+2 failed, 1 passed in 2.72s

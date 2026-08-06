@@ -1,0 +1,68 @@
+FF.FF.                                                                   [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_length _____________________________
+
+    def test_task_func_length():
+        length = 10
+        result = task_func(length)
+>       assert len(result) == length // 2
+E       AssertionError: assert 1 == (10 // 2)
+E        +  where 1 = len('v')
+
+test_0992.py:9: AssertionError
+__________________________ test_task_func_characters ___________________________
+
+    def test_task_func_characters():
+        length = 10
+        result = task_func(length)
+>       assert all(c in string.printable for c in result)
+E       assert False
+E        +  where False = all(<generator object test_task_func_characters.<locals>.<genexpr> at 0x746bfcc29f20>)
+
+test_0992.py:14: AssertionError
+_______________________ test_task_func_single_character ________________________
+
+    def test_task_func_single_character():
+        length = 1
+>       result = task_func(length)
+                 ^^^^^^^^^^^^^^^^^
+
+test_0992.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+length = 1
+
+    def task_func(length):
+        HEX_CHARS = string.hexdigits.lower()
+        hex_string = "".join(random.choice(HEX_CHARS) for _ in range(length))
+>       return binascii.unhexlify(hex_string).decode("utf-8", "ignore")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       binascii.Error: Odd-length string
+
+../../../src/src_0992.py:7: Error
+__________________________ test_task_func_odd_length ___________________________
+
+    def test_task_func_odd_length():
+        length = 9
+>       result = task_func(length)
+                 ^^^^^^^^^^^^^^^^^
+
+test_0992.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+length = 9
+
+    def task_func(length):
+        HEX_CHARS = string.hexdigits.lower()
+        hex_string = "".join(random.choice(HEX_CHARS) for _ in range(length))
+>       return binascii.unhexlify(hex_string).decode("utf-8", "ignore")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       binascii.Error: Odd-length string
+
+../../../src/src_0992.py:7: Error
+=========================== short test summary info ============================
+FAILED test_0992.py::test_task_func_length - AssertionError: assert 1 == (10 ...
+FAILED test_0992.py::test_task_func_characters - assert False
+FAILED test_0992.py::test_task_func_single_character - binascii.Error: Odd-le...
+FAILED test_0992.py::test_task_func_odd_length - binascii.Error: Odd-length s...
+4 failed, 2 passed in 0.49s

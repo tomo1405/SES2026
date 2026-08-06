@@ -1,0 +1,32 @@
+F..F                                                                     [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_valid_column __________________________
+
+    def test_task_func_valid_column():
+        data = [
+            ["2022-01-01", 10, 20, 30, 40, 50],
+            ["2022-01-02", 10, 20, 30, 40, 50],
+            ["2022-01-03", 10, 20, 30, 40, 50],
+        ]
+        result = task_func("Open", data)
+        assert result["sum"] == 30
+        assert result["mean"] == 10
+        assert result["min"] == 10
+>       assert result["max"] == 20
+E       assert np.int64(10) == 20
+
+test_0508.py:14: AssertionError
+__________________________ test_task_func_empty_data ___________________________
+
+    def test_task_func_empty_data():
+        data = []
+        result = task_func("Open", data)
+        assert result["sum"] == 0
+>       assert result["mean"] == 0
+E       assert nan == 0
+
+test_0508.py:38: AssertionError
+=========================== short test summary info ============================
+FAILED test_0508.py::test_task_func_valid_column - assert np.int64(10) == 20
+FAILED test_0508.py::test_task_func_empty_data - assert nan == 0
+2 failed, 2 passed in 1.11s

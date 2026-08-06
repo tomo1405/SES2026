@@ -1,0 +1,50 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sales_df =          Date        Category  Sales
+0  2016-01-08     Electronics    272
+1  2016-01-08         Fashion    147
+2  2016... Home & Kitchen    435
+63 2017-01-13      Automotive    488
+64 2017-01-13          Sports    205
+
+[65 rows x 3 columns]
+
+    def test_task_func(sales_df):
+        sales_df, ax = task_func()
+        assert isinstance(sales_df, pd.DataFrame)
+        assert isinstance(ax, plt.Axes)
+>       assert sales_df.shape == (13, 6)
+E       assert (65, 3) == (13, 6)
+E         
+E         At index 0 diff: 65 != 13
+E         Use -v to get more diff
+
+test_0943.py:24: AssertionError
+______________________ test_task_func_with_custom_params _______________________
+
+sales_df =           Date     Category  Sales
+0   2020-01-05  Electronics    272
+1   2020-01-05      Fashion    147
+2   2020-01-1...12-20      Fashion    148
+102 2020-12-27  Electronics    405
+103 2020-12-27      Fashion    169
+
+[104 rows x 3 columns]
+
+    def test_task_func_with_custom_params(sales_df):
+        sales_df, ax = task_func(start_date='2020-01-01', periods=52, freq='W-SUN', categories=['Electronics', 'Fashion'])
+        assert isinstance(sales_df, pd.DataFrame)
+        assert isinstance(ax, plt.Axes)
+>       assert sales_df.shape == (52, 3)
+E       assert (104, 3) == (52, 3)
+E         
+E         At index 0 diff: 104 != 52
+E         Use -v to get more diff
+
+test_0943.py:31: AssertionError
+=========================== short test summary info ============================
+FAILED test_0943.py::test_task_func - assert (65, 3) == (13, 6)
+FAILED test_0943.py::test_task_func_with_custom_params - assert (104, 3) == (...
+2 failed in 2.30s

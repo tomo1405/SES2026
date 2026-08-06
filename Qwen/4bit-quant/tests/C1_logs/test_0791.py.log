@@ -1,0 +1,52 @@
+.F.FF                                                                    [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_standardization ________________________
+
+    def test_task_func_standardization():
+        data = {
+            'A': [1, 2, 3],
+            'B': [4, 5, 6]
+        }
+        df = pd.DataFrame(data)
+        result = task_func(df, 'A', 'B')
+>       assert np.allclose(df['A'].mean(), 0) and np.allclose(df['A'].std(), 1)
+E       assert (True and False)
+E        +  where True = <function allclose at 0x7bc8f27207b0>(np.float64(0.0), 0)
+E        +    where <function allclose at 0x7bc8f27207b0> = np.allclose
+E        +    and   np.float64(0.0) = mean()
+E        +      where mean = 0   -1.224745\n1    0.000000\n2    1.224745\nName: A, dtype: float64.mean
+E        +  and   False = <function allclose at 0x7bc8f27207b0>(np.float64(1.224744871391589), 1)
+E        +    where <function allclose at 0x7bc8f27207b0> = np.allclose
+E        +    and   np.float64(1.224744871391589) = std()
+E        +      where std = 0   -1.224745\n1    0.000000\n2    1.224745\nName: A, dtype: float64.std
+
+test_0791.py:22: AssertionError
+___________________________ test_task_func_default_N ___________________________
+
+    def test_task_func_default_N():
+        data = {
+            'A': [1, 2, 3],
+            'B': [4, 5, 6]
+        }
+        df = pd.DataFrame(data)
+        result = task_func(df, 'A', 'B')
+>       assert len(result) == 10
+E       assert 3 == 10
+E        +  where 3 = len([0, 1, 2])
+
+test_0791.py:42: AssertionError
+________________________ test_task_func_empty_dataframe ________________________
+
+    def test_task_func_empty_dataframe():
+        df = pd.DataFrame(columns=['A', 'B'])
+>       with pytest.raises(ValueError, match="Columns A or B not found in the DataFrame."):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'Columns A or B not found in the DataFrame.'
+E         Actual message: 'Found array with 0 sample(s) (shape=(0, 2)) while a minimum of 1 is required by StandardScaler.'
+
+test_0791.py:46: AssertionError
+=========================== short test summary info ============================
+FAILED test_0791.py::test_task_func_standardization - assert (True and False)
+FAILED test_0791.py::test_task_func_default_N - assert 3 == 10
+FAILED test_0791.py::test_task_func_empty_dataframe - AssertionError: Regex p...
+3 failed, 2 passed in 2.90s

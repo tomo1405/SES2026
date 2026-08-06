@@ -1,0 +1,90 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a simple list of tuples
+        input_data = [(1, 2), (2, 3), (3, 4), (4, 5)]
+        arr, computed_stats, ax = task_func(input_data)
+    
+        # Check if the array is correctly extracted
+        expected_arr = np.array([2, 3, 4, 5])
+        assert np.array_equal(arr, expected_arr), f"Expected {expected_arr}, but got {arr}"
+    
+        # Check if the computed statistics are correct
+        expected_stats = {
+            'mean': np.mean(expected_arr),
+            'std': np.std(expected_arr),
+            'min': np.min(expected_arr),
+            'max': np.max(expected_arr)
+        }
+        assert computed_stats == expected_stats, f"Expected {expected_stats}, but got {computed_stats}"
+    
+        # Check if the plot is correctly created
+        assert isinstance(ax, plt.Axes), "The returned ax should be an instance of matplotlib.axes._subplots.AxesSubplot"
+    
+        # Test with an empty list
+        input_data_empty = []
+        with pytest.raises(IndexError):
+>           task_func(input_data_empty)
+
+test_0240.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0240.py:10: in task_func
+    'min': np.min(arr),
+           ^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:3299: in min
+    return _wrapreduction(a, np.minimum, 'min', axis, None, out,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+obj = array([], dtype=float64), ufunc = <ufunc 'minimum'>, method = 'min'
+axis = None, dtype = None, out = None
+kwargs = {'keepdims': <no value>, 'initial': <no value>, 'where': <no value>}
+
+    def _wrapreduction(obj, ufunc, method, axis, dtype, out, **kwargs):
+        passkwargs = {k: v for k, v in kwargs.items()
+                      if v is not np._NoValue}
+    
+        if type(obj) is not mu.ndarray:
+            try:
+                reduction = getattr(obj, method)
+            except AttributeError:
+                pass
+            else:
+                # This branch is needed for reductions like any which don't
+                # support a dtype.
+                if dtype is not None:
+                    return reduction(axis=axis, dtype=dtype, out=out, **passkwargs)
+                else:
+                    return reduction(axis=axis, out=out, **passkwargs)
+    
+>       return ufunc.reduce(obj, axis, dtype, out, **passkwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: zero-size array to reduction operation minimum which has no identity
+
+../../../.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:83: ValueError
+=============================== warnings summary ===============================
+Qwen/4bit-quant/tests/test_0240.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:3862: RuntimeWarning: Mean of empty slice
+    return _methods._mean(a, axis=axis, dtype=dtype,
+
+Qwen/4bit-quant/tests/test_0240.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/_methods.py:142: RuntimeWarning: invalid value encountered in scalar divide
+    ret = ret.dtype.type(ret / rcount)
+
+Qwen/4bit-quant/tests/test_0240.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/_methods.py:219: RuntimeWarning: Degrees of freedom <= 0 for slice
+    ret = _var(a, axis=axis, dtype=dtype, out=out, ddof=ddof,
+
+Qwen/4bit-quant/tests/test_0240.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/_methods.py:178: RuntimeWarning: invalid value encountered in divide
+    arrmean = um.true_divide(arrmean, div, out=arrmean,
+
+Qwen/4bit-quant/tests/test_0240.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/_methods.py:211: RuntimeWarning: invalid value encountered in scalar divide
+    ret = ret.dtype.type(ret / rcount)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0240.py::test_task_func - ValueError: zero-size array to reductio...
+1 failed, 5 warnings in 2.92s

@@ -1,0 +1,65 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_with_http_url _________________________
+
+mock_requests = None
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1750/test_task_func_with_http_url0')
+
+    def test_task_func_with_http_url(mock_requests, tmpdir):
+        url = "http://example.com"
+        output_path = str(tmpdir / "output.json")
+        expected_output = ['+123 456-7890']
+    
+        result = task_func(url, output_path)
+    
+>       assert result == expected_output
+E       AssertionError: assert ['+123 456'] == ['+123 456-7890']
+E         
+E         At index 0 diff: '+123 456' != '+123 456-7890'
+E         Use -v to get more diff
+
+test_1138.py:28: AssertionError
+_________________________ test_task_func_with_file_url _________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1750/test_task_func_with_file_url0')
+
+    def test_task_func_with_file_url(tmpdir):
+        input_file = tmpdir / "input.html"
+        input_file.write("<html><body>Phone: +123 456-7890</body></html>")
+        url = f"file://{input_file}"
+        output_path = str(tmpdir / "output.json")
+        expected_output = ['+123 456-7890']
+    
+        result = task_func(url, output_path)
+    
+>       assert result == expected_output
+E       AssertionError: assert ['+123 456'] == ['+123 456-7890']
+E         
+E         At index 0 diff: '+123 456' != '+123 456-7890'
+E         Use -v to get more diff
+
+test_1138.py:42: AssertionError
+_______________________ test_task_func_no_phone_numbers ________________________
+
+mock_requests = None
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1750/test_task_func_no_phone_number0')
+
+    def test_task_func_no_phone_numbers(mock_requests, tmpdir):
+        url = "http://example.com"
+        output_path = str(tmpdir / "output.json")
+        expected_output = []
+    
+        result = task_func(url, output_path)
+    
+>       assert result == expected_output
+E       AssertionError: assert ['+123 456'] == []
+E         
+E         Left contains one more item: '+123 456'
+E         Use -v to get more diff
+
+test_1138.py:54: AssertionError
+=========================== short test summary info ============================
+FAILED test_1138.py::test_task_func_with_http_url - AssertionError: assert ['...
+FAILED test_1138.py::test_task_func_with_file_url - AssertionError: assert ['...
+FAILED test_1138.py::test_task_func_no_phone_numbers - AssertionError: assert...
+3 failed in 1.22s

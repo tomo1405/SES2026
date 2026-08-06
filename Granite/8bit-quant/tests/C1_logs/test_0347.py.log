@@ -1,0 +1,33 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        script_path = "path/to/script.py"
+        args = ["arg1", "arg2"]
+        wait = True
+    
+        with pytest.raises(ValueError):
+            task_func("invalid_script_path")
+    
+        with pytest.raises(subprocess.CalledProcessError):
+>           task_func(script_path, wait, *args, "Exception")
+
+test_0347.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+script_path = 'path/to/script.py', wait = True
+args = ('arg1', 'arg2', 'Exception')
+
+    def task_func(script_path, wait=True, *args):
+        # Check if script exists
+        if not os.path.isfile(script_path):
+>           raise ValueError(f"Script '{script_path}' does not exist.")
+E           ValueError: Script 'path/to/script.py' does not exist.
+
+test_0347.py:10: ValueError
+=========================== short test summary info ============================
+FAILED test_0347.py::test_task_func - ValueError: Script 'path/to/script.py' ...
+1 failed in 0.43s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

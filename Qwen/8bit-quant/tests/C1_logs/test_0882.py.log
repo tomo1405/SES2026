@@ -1,0 +1,40 @@
+F.F...F                                                                  [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_default_sample_size ______________________
+
+    def test_task_func_default_sample_size():
+        result = task_func('test_data.csv')
+>       assert result.equals(pd.DataFrame({'data': ['1x', '3x', '5x']}))
+E       AssertionError: assert False
+E        +  where False = equals(  data\n0   1x\n1   3x\n2   5x)
+E        +    where equals =   data\n0   1x\n2   3x\n4   5x.equals
+E        +    and     data\n0   1x\n1   3x\n2   5x = <class 'pandas.DataFrame'>({'data': ['1x', '3x', '5x']})
+E        +      where <class 'pandas.DataFrame'> = pd.DataFrame
+
+test_0882.py:21: AssertionError
+__________________________ test_task_func_no_matches ___________________________
+
+    def test_task_func_no_matches():
+        result = task_func('test_data.csv', pattern='[a-zA-Z]+')
+>       assert result.empty
+E       assert False
+E        +  where False =   data\n0   1x\n1   2y\n2   3x\n3   4z\n4   5x.empty
+
+test_0882.py:30: AssertionError
+________________ test_task_func_larger_sample_size_than_matches ________________
+
+    def test_task_func_larger_sample_size_than_matches():
+        result = task_func('test_data.csv', sample_size=10)
+>       assert result.equals(pd.DataFrame({'data': ['1x', '3x', '5x']}))
+E       AssertionError: assert False
+E        +  where False = equals(  data\n0   1x\n1   3x\n2   5x)
+E        +    where equals =   data\n4   5x\n0   1x\n2   3x.equals
+E        +    and     data\n0   1x\n1   3x\n2   5x = <class 'pandas.DataFrame'>({'data': ['1x', '3x', '5x']})
+E        +      where <class 'pandas.DataFrame'> = pd.DataFrame
+
+test_0882.py:46: AssertionError
+=========================== short test summary info ============================
+FAILED test_0882.py::test_task_func_default_sample_size - AssertionError: ass...
+FAILED test_0882.py::test_task_func_no_matches - assert False
+FAILED test_0882.py::test_task_func_larger_sample_size_than_matches - Asserti...
+3 failed, 4 passed in 1.38s

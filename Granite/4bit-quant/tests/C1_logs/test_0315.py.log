@@ -1,0 +1,79 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        SERVER_NAME = 'example.com'
+        SERVER_PORT = 443
+        path = '/index.html'
+        expected_output = 'Hello, World!'
+    
+        response = task_func(SERVER_NAME, SERVER_PORT, path)
+>       assert response == expected_output
+E       assert '<!doctype ht...ody></html>\n' == 'Hello, World!'
+E         
+E         - Hello, World!
+E         + <!doctype html><html lang="en"><head><title>Example Domain</title><link rel="icon" href="data:,"><meta name="viewport" content="width=device-width, initial-scale=1"><style>body{background:#eee;width:60vw;margin:15vh auto;font-family:system-ui,sans-serif}h1{font-size:1.5em}div{opacity:0.8}a:link,a:visited{color:#348}</style></head><body><div><h1>Example Domain</h1><p>This domain is for use in documentation examples without needing permission. Avoid use in operations.</p><p><a href="https://iana.org/domains/example">Learn more</a></p></div></body></html>
+
+test_0315.py:14: AssertionError
+___________________ test_task_func_with_invalid_server_name ____________________
+
+    def test_task_func_with_invalid_server_name():
+        SERVER_NAME = 'invalid_server'
+        SERVER_PORT = 443
+        path = '/index.html'
+    
+        with pytest.raises(ConnectionError):
+>           task_func(SERVER_NAME, SERVER_PORT, path)
+
+test_0315.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0315.py:7: in task_func
+    with socket.create_connection((SERVER_NAME, SERVER_PORT)) as sock:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/socket.py:828: in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+host = 'invalid_server', port = 443, family = 0
+type = <SocketKind.SOCK_STREAM: 1>, proto = 0, flags = 0
+
+    def getaddrinfo(host, port, family=0, type=0, proto=0, flags=0):
+        """Resolve host and port into list of address info entries.
+    
+        Translate the host/port argument into a sequence of 5-tuples that contain
+        all the necessary arguments for creating a socket connected to that service.
+        host is a domain name, a string representation of an IPv4/v6 address or
+        None. port is a string service name such as 'http', a numeric port number or
+        None. By passing None as the value of host and port, you can pass NULL to
+        the underlying C API.
+    
+        The family, type and proto arguments can be optionally specified in order to
+        narrow the list of addresses returned. Passing zero as a value for each of
+        these arguments selects the full range of results.
+        """
+        # We override this function since we want to translate the numeric family
+        # and socket type values to enum constants.
+        addrlist = []
+>       for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       socket.gaierror: [Errno -3] Temporary failure in name resolution
+
+/usr/lib/python3.12/socket.py:963: gaierror
+_______________________ test_task_func_with_invalid_path _______________________
+
+    def test_task_func_with_invalid_path():
+        SERVER_NAME = 'example.com'
+        SERVER_PORT = 443
+        path = '/invalid_path'
+    
+>       with pytest.raises(http.client.BadStatusLine):
+E       Failed: DID NOT RAISE BadStatusLine
+
+test_0315.py:29: Failed
+=========================== short test summary info ============================
+FAILED test_0315.py::test_task_func - assert '<!doctype ht...ody></html>\n' =...
+FAILED test_0315.py::test_task_func_with_invalid_server_name - socket.gaierro...
+FAILED test_0315.py::test_task_func_with_invalid_path - Failed: DID NOT RAISE...
+3 failed in 0.55s

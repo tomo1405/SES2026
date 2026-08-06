@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data = {
+            "Apple": [1, 2, 3, 4, 5],
+            "Banana": [10, 20, 30, 40, 50],
+            "Orange": [100, 200, 300, 400, 500]
+        }
+        df = pd.DataFrame(data)
+        df.fillna(0, inplace=True)
+        for fruit in df.columns:
+            plt.plot(df[fruit], label=fruit)
+        plt.xlabel("Time")
+        plt.ylabel("Sales Quantity")
+        plt.title("Fruit Sales over Time")
+        plt.legend()
+        plt.gca()
+        assert plt.gca().get_title() == "Fruit Sales over Time"
+        assert plt.gca().get_xlabel() == "Time"
+        assert plt.gca().get_ylabel() == "Sales Quantity"
+>       assert plt.gca().get_legend().get_title().get_text() == "Fruit"
+E       AssertionError: assert '' == 'Fruit'
+E         
+E         - Fruit
+
+test_0520.py:24: AssertionError
+=========================== short test summary info ============================
+FAILED test_0520.py::test_task_func - AssertionError: assert '' == 'Fruit'
+1 failed in 2.05s

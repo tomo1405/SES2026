@@ -1,0 +1,40 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_valid_url ___________________________
+
+    def test_task_func_valid_url():
+        url = "https://www.example.com/file.zip"
+        filename = "file.zip"
+        expected_message = "Download and extraction successful"
+        expected_files = ["file1.txt", "file2.txt"]
+    
+        message, files = task_func(url, filename)
+    
+>       assert message == expected_message
+E       AssertionError: assert 'Download fai...atus code 404' == 'Download and...on successful'
+E         
+E         - Download and extraction successful
+E         + Download failed: HTTP status code 404
+
+test_1013.py:13: AssertionError
+_______________________ test_task_func_invalid_zip_file ________________________
+
+    def test_task_func_invalid_zip_file():
+        url = "https://www.example.com/file.zip"
+        filename = "file.zip"
+        expected_message = "Error: Invalid zip file: BadZipFile"
+        expected_files = []
+    
+        message, files = task_func(url, filename)
+    
+>       assert message == expected_message
+E       AssertionError: assert 'Download fai...atus code 404' == 'Error: Inval...e: BadZipFile'
+E         
+E         - Error: Invalid zip file: BadZipFile
+E         + Download failed: HTTP status code 404
+
+test_1013.py:37: AssertionError
+=========================== short test summary info ============================
+FAILED test_1013.py::test_task_func_valid_url - AssertionError: assert 'Downl...
+FAILED test_1013.py::test_task_func_invalid_zip_file - AssertionError: assert...
+2 failed, 1 passed in 0.84s

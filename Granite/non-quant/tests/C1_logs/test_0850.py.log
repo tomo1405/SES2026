@@ -1,0 +1,38 @@
+F..F                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        input_string = "This is a test string\nWith multiple lines\nAnd some stopwords\nLike the\nAnd the\nThe"
+        expected_output = {'This': 1, 'is': 1, 'a': 1, 'test': 1, 'string': 1, 'With': 1, 'multiple': 1, 'lines': 1, 'And': 2, 'some': 1, 'stopwords': 1, 'Like': 1, 'the': 2, 'And': 1, 'the': 1, 'The': 1}
+        actual_output = task_func(input_string)
+>       assert actual_output == expected_output
+E       AssertionError: assert {'This': 1, '...With': 1, ...} == {'This': 1, '...test': 1, ...}
+E         
+E         Omitting 9 identical items, use -vv to show
+E         Differing items:
+E         {'And': 2} != {'And': 1}
+E         Right contains 4 more items:
+E         {'a': 1, 'is': 1, 'some': 1, 'the': 1}
+E         Use -v to get more diff
+
+test_0850.py:8: AssertionError
+___________________________ test_task_func_stopwords ___________________________
+
+    def test_task_func_stopwords():
+        input_string = "This is a test string with some stopwords like the and the"
+        expected_output = {'This': 1, 'is': 1, 'a': 1, 'test': 1, 'string': 1, 'with': 1, 'some': 1, 'stopwords': 1, 'like': 1, 'the': 2}
+        actual_output = task_func(input_string)
+>       assert actual_output == expected_output
+E       AssertionError: assert {'This': 1, '...ords': 1, ...} == {'This': 1, '...test': 1, ...}
+E         
+E         Omitting 5 identical items, use -vv to show
+E         Right contains 5 more items:
+E         {'a': 1, 'is': 1, 'some': 1, 'the': 2, 'with': 1}
+E         Use -v to get more diff
+
+test_0850.py:26: AssertionError
+=========================== short test summary info ============================
+FAILED test_0850.py::test_task_func - AssertionError: assert {'This': 1, '......
+FAILED test_0850.py::test_task_func_stopwords - AssertionError: assert {'This...
+2 failed, 2 passed in 3.66s

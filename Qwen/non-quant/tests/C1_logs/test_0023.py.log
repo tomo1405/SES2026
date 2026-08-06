@@ -1,0 +1,60 @@
+FF....F..                                                                [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_empty_lists __________________________
+
+    def test_task_func_empty_lists():
+>       assert task_func([], []) == Counter()
+               ^^^^^^^^^^^^^^^^^
+
+test_0023.py:8: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0023.py:6: in task_func
+    sample = choices(combined, k=K)
+             ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <random.Random object at 0x40d5f410>, population = [], weights = None
+cum_weights = None, k = 10
+
+    def choices(self, population, weights=None, *, cum_weights=None, k=1):
+        """Return a k sized list of population elements chosen with replacement.
+    
+        If the relative weights or cumulative weights are not specified,
+        the selections are made with equal probability.
+    
+        """
+        random = self.random
+        n = len(population)
+        if cum_weights is None:
+            if weights is None:
+                floor = _floor
+                n += 0.0    # convert to float for a small speed improvement
+>               return [population[floor(random() * n)] for i in _repeat(None, k)]
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               IndexError: list index out of range
+
+/usr/lib/python3.12/random.py:467: IndexError
+_____________________ test_task_func_single_element_lists ______________________
+
+    def test_task_func_single_element_lists():
+>       assert task_func([1], [2]) == Counter({1: 1, 2: 1})
+E       assert Counter({2: 6, 1: 4}) == Counter({1: 1, 2: 1})
+E         
+E         Differing items:
+E         {1: 4} != {1: 1}
+E         {2: 6} != {2: 1}
+E         Use -v to get more diff
+
+test_0023.py:11: AssertionError
+__________________________ test_task_func_negative_K ___________________________
+
+    def test_task_func_negative_K():
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0023.py:29: Failed
+=========================== short test summary info ============================
+FAILED test_0023.py::test_task_func_empty_lists - IndexError: list index out ...
+FAILED test_0023.py::test_task_func_single_element_lists - assert Counter({2:...
+FAILED test_0023.py::test_task_func_negative_K - Failed: DID NOT RAISE ValueE...
+3 failed, 6 passed in 0.41s

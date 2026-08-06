@@ -1,0 +1,81 @@
+F..F.                                                                    [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_success ____________________________
+
+mock_subprocess = None, mock_pandas = None
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1272/test_task_func_success0')
+
+    def test_task_func_success(mock_subprocess, mock_pandas, tmpdir):
+        script_path = "valid_script.py"
+        output_file_path = str(tmpdir.join("output.csv"))
+        df = pd.DataFrame({
+            "Category": ["X", "Y", "Z"],
+            "Value": [10, 20, 30]
+        })
+        df.to_csv(output_file_path, index=False)
+    
+>       result_df, ax = task_func(script_path, output_file_path)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0461.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0461.py:11: in task_func
+    df = pd.read_csv(output_file_path)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = '/tmp/pytest-of-tomohiro-w/pytest-1272/test_task_func_success0/output.csv'
+
+    @staticmethod
+    def read_csv(file_path):
+        if file_path == "invalid_columns.csv":
+            return pd.DataFrame(columns=["A", "B", "C"])
+        elif file_path == "valid_data.csv":
+            return pd.DataFrame({
+                "Category": ["X", "Y", "Z"],
+                "Value": [10, 20, 30]
+            })
+        else:
+>           raise FileNotFoundError("Mocked FileNotFoundError")
+E           FileNotFoundError: Mocked FileNotFoundError
+
+test_0461.py:28: FileNotFoundError
+________________________ test_task_func_invalid_columns ________________________
+
+mock_subprocess = None, mock_pandas = None
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1272/test_task_func_invalid_columns0')
+
+    def test_task_func_invalid_columns(mock_subprocess, mock_pandas, tmpdir):
+        script_path = "valid_script.py"
+        output_file_path = str(tmpdir.join("invalid_columns.csv"))
+    
+        with pytest.raises(ValueError, match="CSV file must contain exactly 2 columns"):
+>           task_func(script_path, output_file_path)
+
+test_0461.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0461.py:11: in task_func
+    df = pd.read_csv(output_file_path)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = '/tmp/pytest-of-tomohiro-w/pytest-1272/test_task_func_invalid_columns0/invalid_columns.csv'
+
+    @staticmethod
+    def read_csv(file_path):
+        if file_path == "invalid_columns.csv":
+            return pd.DataFrame(columns=["A", "B", "C"])
+        elif file_path == "valid_data.csv":
+            return pd.DataFrame({
+                "Category": ["X", "Y", "Z"],
+                "Value": [10, 20, 30]
+            })
+        else:
+>           raise FileNotFoundError("Mocked FileNotFoundError")
+E           FileNotFoundError: Mocked FileNotFoundError
+
+test_0461.py:28: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0461.py::test_task_func_success - FileNotFoundError: Mocked FileN...
+FAILED test_0461.py::test_task_func_invalid_columns - FileNotFoundError: Mock...
+2 failed, 3 passed in 1.17s

@@ -1,0 +1,73 @@
+F.FF                                                                     [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_regular_function _____________________
+
+    def test_task_func_with_regular_function():
+        def regular_function(a, b, c=10, d="default"):
+            pass
+    
+        result = task_func(regular_function)
+>       assert result == {
+            'function_name': 'regular_function',
+            'is_lambda': False,
+            'args': ['a', 'b', 'c', 'd'],
+            'defaults': (10, "default"),
+            'annotations': {}
+        }
+E       AssertionError: assert {'function_na...efault'), ...} == {'function_na...efault'), ...}
+E         
+E         Omitting 4 identical items, use -vv to show
+E         Differing items:
+E         {'is_lambda': True} != {'is_lambda': False}
+E         Use -v to get more diff
+
+test_0567.py:9: AssertionError
+_______________________ test_task_func_with_no_defaults ________________________
+
+    def test_task_func_with_no_defaults():
+        def no_defaults_function(x, y):
+            pass
+    
+        result = task_func(no_defaults_function)
+>       assert result == {
+            'function_name': 'no_defaults_function',
+            'is_lambda': False,
+            'args': ['x', 'y'],
+            'defaults': None,
+            'annotations': {}
+        }
+E       AssertionError: assert {'function_na...s': None, ...} == {'function_na...s': None, ...}
+E         
+E         Omitting 4 identical items, use -vv to show
+E         Differing items:
+E         {'is_lambda': True} != {'is_lambda': False}
+E         Use -v to get more diff
+
+test_0567.py:34: AssertionError
+_______________________ test_task_func_with_annotations ________________________
+
+    def test_task_func_with_annotations():
+        def annotated_function(x: int, y: str) -> bool:
+            pass
+    
+        result = task_func(annotated_function)
+>       assert result == {
+            'function_name': 'annotated_function',
+            'is_lambda': False,
+            'args': ['x', 'y'],
+            'defaults': None,
+            'annotations': {'x': int, 'y': str, 'return': bool}
+        }
+E       AssertionError: assert {'function_na...s': None, ...} == {'function_na...s': None, ...}
+E         
+E         Omitting 4 identical items, use -vv to show
+E         Differing items:
+E         {'is_lambda': True} != {'is_lambda': False}
+E         Use -v to get more diff
+
+test_0567.py:47: AssertionError
+=========================== short test summary info ============================
+FAILED test_0567.py::test_task_func_with_regular_function - AssertionError: a...
+FAILED test_0567.py::test_task_func_with_no_defaults - AssertionError: assert...
+FAILED test_0567.py::test_task_func_with_annotations - AssertionError: assert...
+3 failed, 1 passed in 0.46s

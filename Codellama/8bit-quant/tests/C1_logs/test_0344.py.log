@@ -1,0 +1,33 @@
+..FF                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        df = pd.DataFrame({'a': [1, 2, 3], 'b': [4, 5, 6]})
+        col = 'a'
+        ax = task_func(df, col)
+        assert isinstance(ax, plt.Axes)
+>       assert ax.get_title() == 'Value Counts'
+E       AssertionError: assert '' == 'Value Counts'
+E         
+E         - Value Counts
+
+test_0344.py:24: AssertionError
+____________________ test_task_func_valid_input_with_title _____________________
+
+    def test_task_func_valid_input_with_title():
+        df = pd.DataFrame({'a': [1, 2, 3], 'b': [4, 5, 6]})
+        col = 'a'
+        title = 'My Pie Chart'
+        ax = task_func(df, col, title)
+        assert isinstance(ax, plt.Axes)
+        assert ax.get_title() == title
+>       assert len(ax.get_legend().get_texts()) == 2
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'NoneType' object has no attribute 'get_texts'
+
+test_0344.py:36: AttributeError
+=========================== short test summary info ============================
+FAILED test_0344.py::test_task_func_valid_input - AssertionError: assert '' =...
+FAILED test_0344.py::test_task_func_valid_input_with_title - AttributeError: ...
+2 failed, 2 passed in 2.16s

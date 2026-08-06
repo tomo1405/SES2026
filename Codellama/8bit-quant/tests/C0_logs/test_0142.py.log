@@ -1,0 +1,23 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        rows = 10
+        columns = ['A', 'B', 'C', 'D', 'E', 'F']
+        seed = 42
+    
+        df, stats_dict = task_func(rows, columns, seed)
+    
+        assert isinstance(df, pd.DataFrame)
+        assert isinstance(stats_dict, dict)
+        assert len(stats_dict) == len(columns)
+        assert all(col in columns for col in stats_dict.keys())
+>       assert all(isinstance(stats_dict[col]['mean'], float) for col in columns)
+E       assert False
+E        +  where False = all(<generator object test_task_func.<locals>.<genexpr> at 0x7205b406bae0>)
+
+test_0142.py:16: AssertionError
+=========================== short test summary info ============================
+FAILED test_0142.py::test_task_func - assert False
+1 failed in 1.06s

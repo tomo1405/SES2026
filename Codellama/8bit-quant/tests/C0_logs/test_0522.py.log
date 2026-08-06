@@ -1,0 +1,27 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data_list = [
+            [1, 2, 3],
+            [4, 5, 6],
+            [7, 8, 9]
+        ]
+        ax = task_func(data_list)
+        assert isinstance(ax, plt.Axes)
+        assert ax.get_title() == "Student Scores over Tests"
+        assert ax.get_xlabel() == "Test Number"
+        assert ax.get_ylabel() == "Score"
+        assert len(ax.get_lines()) == 3
+        for line in ax.get_lines():
+            assert isinstance(line, plt.Line2D)
+>           assert line.get_label() in ["Test 1", "Test 2", "Test 3"]
+E           AssertionError: assert '0' in ['Test 1', 'Test 2', 'Test 3']
+E            +  where '0' = get_label()
+E            +    where get_label = <matplotlib.lines.Line2D object at 0x7361b337ff80>.get_label
+
+test_0522.py:20: AssertionError
+=========================== short test summary info ============================
+FAILED test_0522.py::test_task_func - AssertionError: assert '0' in ['Test 1'...
+1 failed in 2.01s

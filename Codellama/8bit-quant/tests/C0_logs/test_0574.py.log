@@ -1,0 +1,29 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        array_length = 100
+        df, ax = task_func(array_length)
+    
+        assert isinstance(df, pd.DataFrame)
+        assert isinstance(ax, matplotlib.axes.Axes)
+    
+        assert df.shape == (3, 2)
+        assert df.index.tolist() == ['Mean', 'Median', 'Standard Deviation']
+        assert df.columns.tolist() == ['Array1', 'Array2']
+    
+>       assert np.allclose(df.loc['Mean', 'Array1'], np.mean(np.random.rand(array_length)))
+E       AssertionError: assert False
+E        +  where False = <function allclose at 0x7dbce1f797b0>(np.float64(0.47547101686948195), np.float64(0.47622435570829524))
+E        +    where <function allclose at 0x7dbce1f797b0> = np.allclose
+E        +    and   np.float64(0.47622435570829524) = <function mean at 0x7dbce1f625f0>(array([0.1543718 , 0.96130493, 0.18272381, 0.93314321, 0.40435537,\n       0.96732289, 0.0022078 , 0.69034228, 0.725473...5 , 0.38580604, 0.6312886 , 0.9916533 , 0.35045073,\n       0.04708446, 0.29600386, 0.43326103, 0.61201241, 0.27267121]))
+E        +      where <function mean at 0x7dbce1f625f0> = np.mean
+E        +      and   array([0.1543718 , 0.96130493, 0.18272381, 0.93314321, 0.40435537,\n       0.96732289, 0.0022078 , 0.69034228, 0.725473...5 , 0.38580604, 0.6312886 , 0.9916533 , 0.35045073,\n       0.04708446, 0.29600386, 0.43326103, 0.61201241, 0.27267121]) = rand(100)
+E        +        where rand = <module 'numpy.random' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/random/__init__.py'>.rand
+E        +          where <module 'numpy.random' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/random/__init__.py'> = np.random
+
+test_0574.py:18: AssertionError
+=========================== short test summary info ============================
+FAILED test_0574.py::test_task_func - AssertionError: assert False
+1 failed in 2.16s

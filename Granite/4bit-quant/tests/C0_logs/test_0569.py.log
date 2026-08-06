@@ -1,0 +1,27 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        with pytest.raises(ValueError):
+            task_func([lambda x: x])
+    
+>       df = task_func([lambda x, y: x + y, lambda x, y, z: x * y * z])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0569.py:8: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+f_list = [<function test_task_func.<locals>.<lambda> at 0x709dfc626980>, <function test_task_func.<locals>.<lambda> at 0x709dfc626ac0>]
+
+    def task_func(f_list):
+        func_info = []
+        for f in f_list:
+            if f.__name__ == "<lambda>":
+>               raise ValueError("The function should not be a lambda function.")
+E               ValueError: The function should not be a lambda function.
+
+../../../src/src_0569.py:8: ValueError
+=========================== short test summary info ============================
+FAILED test_0569.py::test_task_func - ValueError: The function should not be ...
+1 failed in 2.09s

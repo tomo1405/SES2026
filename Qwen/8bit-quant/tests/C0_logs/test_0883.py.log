@@ -1,0 +1,19 @@
+F....                                                                    [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_existing_file _________________________
+
+mock_db_file = '/tmp/pytest-of-tomohiro-w/pytest-2191/test_task_func_existing_file0/test.db'
+
+    def test_task_func_existing_file(mock_db_file):
+        result = task_func(mock_db_file, 'test_table', 'name', '\d+[xX]')
+>       assert result.equals(pd.DataFrame({'id': [3, 4], 'name': ['item10x', 'item20X']}))
+E       AssertionError: assert False
+E        +  where False = equals(   id     name\n0   3  item10x\n1   4  item20X)
+E        +    where equals = Empty DataFrame\nColumns: [id, name]\nIndex: [].equals
+E        +    and      id     name\n0   3  item10x\n1   4  item20X = <class 'pandas.DataFrame'>({'id': [3, 4], 'name': ['item10x', 'item20X']})
+E        +      where <class 'pandas.DataFrame'> = pd.DataFrame
+
+test_0883.py:22: AssertionError
+=========================== short test summary info ============================
+FAILED test_0883.py::test_task_func_existing_file - AssertionError: assert False
+1 failed, 4 passed in 1.39s

@@ -1,0 +1,31 @@
+..F.                                                                     [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_xlsx_files ________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1586/test_task_func_with_xlsx_files0')
+
+    def test_task_func_with_xlsx_files(tmpdir):
+        # Create some test .xlsx files
+        wb1 = Workbook()
+        ws1 = wb1.active
+        ws1['A1'] = 'Test "String"'
+        wb1.save(os.path.join(tmpdir, 'test1.xlsx'))
+    
+        wb2 = Workbook()
+        ws2 = wb2.active
+        ws2['B2'] = 'Another "Test" String'
+        wb2.save(os.path.join(tmpdir, 'test2.xlsx'))
+    
+        result = task_func(str(tmpdir))
+        assert result == 2
+    
+        # Check if the files were processed correctly
+        for filename in ['test1.xlsx', 'test2.xlsx']:
+>           workbook = load_workbook(filename=os.path.join(tmpdir, filename))
+                       ^^^^^^^^^^^^^
+E           NameError: name 'load_workbook' is not defined
+
+test_0375.py:34: NameError
+=========================== short test summary info ============================
+FAILED test_0375.py::test_task_func_with_xlsx_files - NameError: name 'load_w...
+1 failed, 3 passed in 0.93s

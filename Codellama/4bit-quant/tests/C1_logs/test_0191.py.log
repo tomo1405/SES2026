@@ -1,0 +1,67 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_with_stringio _________________________
+
+    def test_task_func_with_stringio():
+        csv_input = StringIO('col1,col2\n1,2\n3,4')
+        dataframe = task_func(csv_input)
+>       assert dataframe.equals(pd.DataFrame({'col1': [1, 3], 'col2': [2, 4]}))
+E       AssertionError: assert False
+E        +  where False = equals(   col1  col2\n0     1     2\n1     3     4)
+E        +    where equals =   col1 col2\n0    1    2\n1    3    4.equals
+E        +    and      col1  col2\n0     1     2\n1     3     4 = <class 'pandas.DataFrame'>({'col1': [1, 3], 'col2': [2, 4]})
+E        +      where <class 'pandas.DataFrame'> = pd.DataFrame
+
+test_0191.py:11: AssertionError
+___________________________ test_task_func_with_file ___________________________
+
+    def test_task_func_with_file():
+        csv_input = 'test_data.csv'
+>       dataframe = task_func(csv_input)
+                    ^^^^^^^^^^^^^^^^^^^^
+
+test_0191.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0191.py:20: in task_func
+    cols = dr.fieldnames
+           ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <csv.DictReader object at 0x7fd877ae07a0>
+
+    @property
+    def fieldnames(self):
+        if self._fieldnames is None:
+            try:
+>               self._fieldnames = next(self.reader)
+                                   ^^^^^^^^^^^^^^^^^
+E               ValueError: I/O operation on closed file.
+
+/usr/lib/python3.12/csv.py:102: ValueError
+______________________ test_task_func_with_invalid_input _______________________
+
+    def test_task_func_with_invalid_input():
+        csv_input = 'invalid_data.csv'
+        with pytest.raises(ValueError):
+>           task_func(csv_input)
+
+test_0191.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+csv_input = 'invalid_data.csv'
+
+    def task_func(csv_input):
+        # Check if the input is a StringIO object or a file path
+        if isinstance(csv_input, StringIO):
+            dr = csv.DictReader(csv_input)  # Read from StringIO
+        else:
+>           with open(csv_input, 'r') as f:
+                 ^^^^^^^^^^^^^^^^^^^^
+E           FileNotFoundError: [Errno 2] No such file or directory: 'invalid_data.csv'
+
+../../../src/src_0191.py:13: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0191.py::test_task_func_with_stringio - AssertionError: assert False
+FAILED test_0191.py::test_task_func_with_file - ValueError: I/O operation on ...
+FAILED test_0191.py::test_task_func_with_invalid_input - FileNotFoundError: [...
+3 failed in 1.08s

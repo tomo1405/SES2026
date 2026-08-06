@@ -1,0 +1,114 @@
+....FF                                                                   [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+>       result = task_func({"group1": [1, 2, 3], "group2": [4, 5, 6]})
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1027.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+kwargs = {'group1': [1, 2, 3], 'group2': [4, 5, 6]}
+
+    def task_func(kwargs):
+        alpha = 0.05  # Define the significance level
+    
+        group1 = np.array(kwargs.get("group1", []))
+        group2 = np.array(kwargs.get("group2", []))
+    
+        # Check for empty or all-NaN groups
+        if (
+            len(group1) == 0
+            or len(group2) == 0
+            or np.all(np.isnan(group1))
+            or np.all(np.isnan(group2))
+        ):
+            raise ValueError("One or both groups are empty or contain only NaN values.")
+    
+        # Removing NaN values and ensuring sufficient data
+        valid_group1 = group1[~np.isnan(group1)]
+        valid_group2 = group2[~np.isnan(group2)]
+    
+        # Check for sufficient size and variance
+        if len(valid_group1) < 2 or len(valid_group2) < 2:
+            raise ValueError("Each group must have at least two non-NaN values.")
+    
+        if np.var(valid_group1) < 1e-8 or np.var(valid_group2) < 1e-8:
+            raise ValueError("Variance in one or both groups is too low.")
+    
+        # Perform t-test
+        _, p_val = ttest_ind(valid_group1, valid_group2, nan_policy="omit")
+    
+        significant = p_val < alpha
+    
+        # Calculate descriptive statistics
+        group1_stats = {"mean": np.mean(valid_group1), "std": np.std(valid_group1)}
+        group2_stats = {"mean": np.mean(valid_group2), "std": np.std(valid_group2)}
+    
+        # Plotting
+        _, (ax_boxplot, ax_histogram) = plt.subplots(2, 1, figsize=(8, 12))
+    
+        # Boxplot
+>       ax_boxplot.boxplot([valid_group1, valid_group2], labels=["group1", "group2"])
+E       TypeError: Axes.boxplot() got an unexpected keyword argument 'labels'
+
+../../../src/src_1027.py:43: TypeError
+________________________ test_task_func_with_nan_values ________________________
+
+    def test_task_func_with_nan_values():
+>       result = task_func({"group1": [1, np.nan, 3], "group2": [4, 5, np.nan]})
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1027.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+kwargs = {'group1': [1, nan, 3], 'group2': [4, 5, nan]}
+
+    def task_func(kwargs):
+        alpha = 0.05  # Define the significance level
+    
+        group1 = np.array(kwargs.get("group1", []))
+        group2 = np.array(kwargs.get("group2", []))
+    
+        # Check for empty or all-NaN groups
+        if (
+            len(group1) == 0
+            or len(group2) == 0
+            or np.all(np.isnan(group1))
+            or np.all(np.isnan(group2))
+        ):
+            raise ValueError("One or both groups are empty or contain only NaN values.")
+    
+        # Removing NaN values and ensuring sufficient data
+        valid_group1 = group1[~np.isnan(group1)]
+        valid_group2 = group2[~np.isnan(group2)]
+    
+        # Check for sufficient size and variance
+        if len(valid_group1) < 2 or len(valid_group2) < 2:
+            raise ValueError("Each group must have at least two non-NaN values.")
+    
+        if np.var(valid_group1) < 1e-8 or np.var(valid_group2) < 1e-8:
+            raise ValueError("Variance in one or both groups is too low.")
+    
+        # Perform t-test
+        _, p_val = ttest_ind(valid_group1, valid_group2, nan_policy="omit")
+    
+        significant = p_val < alpha
+    
+        # Calculate descriptive statistics
+        group1_stats = {"mean": np.mean(valid_group1), "std": np.std(valid_group1)}
+        group2_stats = {"mean": np.mean(valid_group2), "std": np.std(valid_group2)}
+    
+        # Plotting
+        _, (ax_boxplot, ax_histogram) = plt.subplots(2, 1, figsize=(8, 12))
+    
+        # Boxplot
+>       ax_boxplot.boxplot([valid_group1, valid_group2], labels=["group1", "group2"])
+E       TypeError: Axes.boxplot() got an unexpected keyword argument 'labels'
+
+../../../src/src_1027.py:43: TypeError
+=========================== short test summary info ============================
+FAILED test_1027.py::test_task_func_valid_input - TypeError: Axes.boxplot() g...
+FAILED test_1027.py::test_task_func_with_nan_values - TypeError: Axes.boxplot...
+2 failed, 4 passed in 3.33s

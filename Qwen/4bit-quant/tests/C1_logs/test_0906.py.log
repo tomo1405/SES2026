@@ -1,0 +1,25 @@
+....F                                                                    [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_custom_extension _____________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1729/test_task_func_with_custom_ext0')
+
+    def test_task_func_with_custom_extension(tmpdir):
+        # Create a temporary directory with a custom extension file
+        custom_ext_dir = tmpdir.mkdir("custom_ext")
+        custom_ext_file = custom_ext_dir.join("data.json")
+        custom_ext_file.write('{"name": "Eve", "age": 40}')
+    
+        # Call the function with a custom extension and check that it returns an empty dictionary
+        result = task_func(str(custom_ext_dir), file_extension='.json')
+>       assert result == {}
+E       assert {'data': [['{..."age": 40}']]} == {}
+E         
+E         Left contains 1 more item:
+E         {'data': [['{"name": "Eve"', ' "age": 40}']]}
+E         Use -v to get more diff
+
+test_0906.py:59: AssertionError
+=========================== short test summary info ============================
+FAILED test_0906.py::test_task_func_with_custom_extension - assert {'data': [...
+1 failed, 4 passed in 0.47s

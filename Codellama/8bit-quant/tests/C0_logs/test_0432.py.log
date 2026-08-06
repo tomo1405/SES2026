@@ -1,0 +1,43 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_image __________________________
+
+    def test_task_func_valid_image():
+        image_file = "test_image.jpg"
+        expected_histogram = np.array([100, 100, 100, 100, 100])
+>       assert np.array_equal(task_func(image_file), expected_histogram)
+                              ^^^^^^^^^^^^^^^^^^^^^
+
+test_0432.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+image_file = 'test_image.jpg'
+
+    def task_func(image_file: str) -> np.ndarray:
+        if not os.path.exists(image_file):
+>           raise FileNotFoundError(f"The file {image_file} does not exist.")
+E           FileNotFoundError: The file test_image.jpg does not exist.
+
+../../../src/src_0432.py:6: FileNotFoundError
+_________________________ test_task_func_invalid_image _________________________
+
+    def test_task_func_invalid_image():
+        image_file = "invalid_image.jpg"
+        with pytest.raises(ValueError):
+>           task_func(image_file)
+
+test_0432.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+image_file = 'invalid_image.jpg'
+
+    def task_func(image_file: str) -> np.ndarray:
+        if not os.path.exists(image_file):
+>           raise FileNotFoundError(f"The file {image_file} does not exist.")
+E           FileNotFoundError: The file invalid_image.jpg does not exist.
+
+../../../src/src_0432.py:6: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0432.py::test_task_func_valid_image - FileNotFoundError: The file...
+FAILED test_0432.py::test_task_func_invalid_image - FileNotFoundError: The fi...
+2 failed, 1 passed in 0.66s

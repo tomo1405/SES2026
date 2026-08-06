@@ -1,0 +1,25 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        file_path = 'test_data.csv'
+        num_rows = 10
+        gender = ['Male', 'Female', 'Non-Binary']
+        countries = ['USA', 'UK', 'Canada', 'Australia', 'India']
+        seed = 1234
+    
+        result = task_func(file_path, num_rows, gender, countries, seed)
+    
+        assert result == file_path
+    
+        with open(file_path, 'r') as csv_file:
+            reader = csv.DictReader(csv_file)
+            for row in reader:
+>               assert row['Name'] in [''.join(random.choices('ABCDEFGHIJKLMNOPQRSTUVWXYZ', k=5))]
+E               AssertionError: assert 'ZLAXY' in ['TNLHU']
+
+test_0840.py:21: AssertionError
+=========================== short test summary info ============================
+FAILED test_0840.py::test_task_func - AssertionError: assert 'ZLAXY' in ['TNL...
+1 failed in 0.46s

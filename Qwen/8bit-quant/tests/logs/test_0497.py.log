@@ -1,0 +1,66 @@
+FFF.                                                                     [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_default_parameters _______________________
+
+    def test_task_func_default_parameters():
+        ax = task_func()
+        assert isinstance(ax, plt.Axes)
+        dates = [datetime.now().date() - timedelta(days=i) for i in range(7)]
+>       assert all(isinstance(date, datetime.date) for date in dates)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0497.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <list_iterator object at 0x7163a923a0b0>
+
+>   assert all(isinstance(date, datetime.date) for date in dates)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: isinstance() arg 2 must be a type, a tuple of types, or a union
+
+test_0497.py:13: TypeError
+______________________ test_task_func_custom_days_in_past ______________________
+
+    def test_task_func_custom_days_in_past():
+        days_in_past = 5
+        ax = task_func(days_in_past=days_in_past)
+        assert isinstance(ax, plt.Axes)
+        dates = [datetime.now().date() - timedelta(days=i) for i in range(days_in_past)]
+>       assert all(isinstance(date, datetime.date) for date in dates)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0497.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <list_iterator object at 0x7163a8dbc250>
+
+>   assert all(isinstance(date, datetime.date) for date in dates)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: isinstance() arg 2 must be a type, a tuple of types, or a union
+
+test_0497.py:23: TypeError
+______________________ test_task_func_custom_random_seed _______________________
+
+    def test_task_func_custom_random_seed():
+        random_seed = 42
+        ax1 = task_func(random_seed=random_seed)
+        ax2 = task_func(random_seed=random_seed)
+        assert isinstance(ax1, plt.Axes)
+        assert isinstance(ax2, plt.Axes)
+        dates1 = [datetime.now().date() - timedelta(days=i) for i in range(7)]
+        dates2 = [datetime.now().date() - timedelta(days=i) for i in range(7)]
+        assert all(date1 == date2 for date1, date2 in zip(dates1, dates2))
+        temperatures1 = np.random.randint(low=15, high=35, size=7)
+        temperatures2 = np.random.randint(low=15, high=35, size=7)
+        assert len(temperatures1) == 7
+        assert len(temperatures2) == 7
+>       assert all(temp1 == temp2 for temp1, temp2 in zip(temperatures1, temperatures2))
+E       assert False
+E        +  where False = all(<generator object test_task_func_custom_random_seed.<locals>.<genexpr> at 0x7163a8db0ee0>)
+
+test_0497.py:41: AssertionError
+=========================== short test summary info ============================
+FAILED test_0497.py::test_task_func_default_parameters - TypeError: isinstanc...
+FAILED test_0497.py::test_task_func_custom_days_in_past - TypeError: isinstan...
+FAILED test_0497.py::test_task_func_custom_random_seed - assert False
+3 failed, 1 passed in 1.65s

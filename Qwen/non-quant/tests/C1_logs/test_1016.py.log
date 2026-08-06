@@ -1,0 +1,18 @@
+....F                                                                    [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_database_error ______________________
+
+mock_connect = <MagicMock name='connect' id='137699683793904'>
+
+    @patch('src_1016.sqlite3.connect')
+    def test_task_func_with_database_error(mock_connect):
+        mock_conn = mock_connect.return_value
+        mock_conn.execute.side_effect = sqlite3.DatabaseError("Database write error")
+    
+>       with pytest.raises(sqlite3.DatabaseError) as excinfo:
+E       Failed: DID NOT RAISE DatabaseError
+
+test_1016.py:48: Failed
+=========================== short test summary info ============================
+FAILED test_1016.py::test_task_func_with_database_error - Failed: DID NOT RAI...
+1 failed, 4 passed in 1.52s

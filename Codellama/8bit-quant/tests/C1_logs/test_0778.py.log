@@ -1,0 +1,47 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        directory = 'path/to/directory'
+        pattern = r'^(.*?)-\d+\.zip$'
+        expected_output = ['path/to/directory/extracted_dir1', 'path/to/directory/extracted_dir2']
+>       assert task_func(directory, pattern) == expected_output
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0778.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = 'path/to/directory', pattern = '^(.*?)-\\d+\\.zip$'
+
+    def task_func(directory, pattern=r'^(.*?)-\d+\.zip$'):
+        extracted_dirs = []
+>       for filename in os.listdir(directory):
+                        ^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'path/to/directory'
+
+../../../src/src_0778.py:6: FileNotFoundError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        directory = 'path/to/directory'
+        pattern = r'^(.*?)-\d+\.zip$'
+        with pytest.raises(ValueError):
+>           task_func(directory, pattern)
+
+test_0778.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = 'path/to/directory', pattern = '^(.*?)-\\d+\\.zip$'
+
+    def task_func(directory, pattern=r'^(.*?)-\d+\.zip$'):
+        extracted_dirs = []
+>       for filename in os.listdir(directory):
+                        ^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'path/to/directory'
+
+../../../src/src_0778.py:6: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0778.py::test_task_func_valid_input - FileNotFoundError: [Errno 2...
+FAILED test_0778.py::test_task_func_invalid_input - FileNotFoundError: [Errno...
+2 failed in 0.46s

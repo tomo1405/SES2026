@@ -1,0 +1,36 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test data
+        df = pd.DataFrame({
+            "x": [1, 2, 3, 4, 5, 1, 2, 3, 4, 5],
+            "y": [1, 2, 3, 4, 5, 1, 2, 3, 4, 5]
+        })
+    
+        # Expected output
+        duplicates_counter = Counter({(1, 1): 2, (2, 2): 2, (3, 3): 2, (4, 4): 2, (5, 5): 2})
+        unique_df = pd.DataFrame({
+            "x": [1, 2, 3, 4, 5],
+            "y": [1, 2, 3, 4, 5],
+            "cluster": [0, 1, 2, 3, 4]
+        })
+        ax = None  # TODO: Find a way to test the output of a matplotlib function
+    
+        # Actual output
+        output = task_func(df)
+    
+        # Assertion
+        assert output[0] == duplicates_counter
+>       assert output[1].equals(unique_df)
+E       assert False
+E        +  where False = equals(   x  y  cluster\n0  1  1        0\n1  2  2        1\n2  3  3        2\n3  4  4        3\n4  5  5        4)
+E        +    where equals =    x  y  cluster\n0  1  1        1\n1  2  2        1\n2  3  3        0\n3  4  4        0\n4  5  5        2.equals
+
+test_0532.py:52: AssertionError
+=========================== short test summary info ============================
+FAILED test_0532.py::test_task_func - assert False
+1 failed in 4.65s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

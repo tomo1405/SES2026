@@ -1,0 +1,49 @@
+F..F.                                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_valid_letter _______________________
+
+sample_data = {'Word': ['apple', 'banana', 'apricot', 'cherry', 'avocado', 'berry']}
+
+    def test_task_func_with_valid_letter(sample_data):
+        df = pd.DataFrame(sample_data)
+        letter = 'a'
+        result = task_func(df, letter)
+        expected_result = {5: 2, 6: 1}
+>       assert result == expected_result
+E       assert {7: 2, 5: 1} == {5: 2, 6: 1}
+E         
+E         Differing items:
+E         {5: 1} != {5: 2}
+E         Left contains 1 more item:
+E         {7: 2}
+E         Right contains 1 more item:
+E         {6: 1}
+E         Use -v to get more diff
+
+test_0599.py:17: AssertionError
+____________________ test_task_func_with_non_string_column _____________________
+
+sample_data = {'Word': ['apple', 'banana', 'apricot', 'cherry', 'avocado', 'berry']}
+
+    def test_task_func_with_non_string_column(sample_data):
+        df = pd.DataFrame(sample_data)
+        df['Word'] = df['Word'].astype(object)
+        letter = 'a'
+        result = task_func(df, letter)
+        expected_result = {5: 2, 6: 1}
+>       assert result == expected_result
+E       assert {7: 2, 5: 1} == {5: 2, 6: 1}
+E         
+E         Differing items:
+E         {5: 1} != {5: 2}
+E         Left contains 1 more item:
+E         {7: 2}
+E         Right contains 1 more item:
+E         {6: 1}
+E         Use -v to get more diff
+
+test_0599.py:39: AssertionError
+=========================== short test summary info ============================
+FAILED test_0599.py::test_task_func_with_valid_letter - assert {7: 2, 5: 1} =...
+FAILED test_0599.py::test_task_func_with_non_string_column - assert {7: 2, 5:...
+2 failed, 3 passed in 1.34s

@@ -1,0 +1,90 @@
+F..FFFF                                                                  [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_with_seed ___________________________
+
+    def test_task_func_with_seed():
+        data_list = ["apple, banana, cherry", "dog, elephant", "fish"]
+        seed = 42
+        expected_output = pd.DataFrame({
+            "Original String": ["apple, banana, cherry", "dog, elephant", "fish"],
+            "Modified String": ["banana, cherry", "elephant", "fish"]
+        })
+    
+        result_df = task_func(data_list, seed=seed)
+>       assert result_df.equals(expected_output)
+E       assert False
+E        +  where False = equals(         Original String Modified String\n0  apple, banana, cherry  banana, cherry\n1          dog, elephant        elephant\n2                   fish            fish)
+E        +    where equals =          Original String Modified String\n0  apple, banana, cherry  banana, cherry\n1          dog, elephant   elephant, dog\n2                   fish   random_string.equals
+
+test_0483.py:14: AssertionError
+__________________________ test_task_func_empty_list ___________________________
+
+    def test_task_func_empty_list():
+        data_list = []
+        expected_output = pd.DataFrame(columns=["Original String", "Modified String"])
+    
+        result_df = task_func(data_list)
+>       assert result_df.equals(expected_output)
+E       assert False
+E        +  where False = equals(Empty DataFrame\nColumns: [Original String, Modified String]\nIndex: [])
+E        +    where equals = Empty DataFrame\nColumns: [Original String, Modified String]\nIndex: [].equals
+
+test_0483.py:39: AssertionError
+_______________________ test_task_func_replace_operation _______________________
+
+    def test_task_func_replace_operation():
+        data_list = ["apple, banana, cherry"]
+        seed = 42
+        expected_output = pd.DataFrame({
+            "Original String": ["apple, banana, cherry"],
+            "Modified String": ["random_string, banana, cherry"]
+        })
+    
+        result_df = task_func(data_list, seed=seed)
+>       assert result_df.equals(expected_output)
+E       assert False
+E        +  where False = equals(         Original String                Modified String\n0  apple, banana, cherry  random_string, banana, cherry)
+E        +    where equals =          Original String Modified String\n0  apple, banana, cherry  banana, cherry.equals
+
+test_0483.py:50: AssertionError
+_______________________ test_task_func_shuffle_operation _______________________
+
+    def test_task_func_shuffle_operation():
+        data_list = ["apple, banana, cherry"]
+        seed = 42
+        expected_output = pd.DataFrame({
+            "Original String": ["apple, banana, cherry"],
+            "Modified String": ["banana, apple, cherry"]
+        })
+    
+        result_df = task_func(data_list, seed=seed)
+>       assert result_df.equals(expected_output)
+E       assert False
+E        +  where False = equals(         Original String        Modified String\n0  apple, banana, cherry  banana, apple, cherry)
+E        +    where equals =          Original String Modified String\n0  apple, banana, cherry  banana, cherry.equals
+
+test_0483.py:61: AssertionError
+______________________ test_task_func_randomize_operation ______________________
+
+    def test_task_func_randomize_operation():
+        data_list = ["apple, banana, cherry"]
+        seed = 42
+        expected_output = pd.DataFrame({
+            "Original String": ["apple, banana, cherry"],
+            "Modified String": ["cherry, banana, apple"]
+        })
+    
+        result_df = task_func(data_list, seed=seed)
+>       assert result_df.equals(expected_output)
+E       assert False
+E        +  where False = equals(         Original String        Modified String\n0  apple, banana, cherry  cherry, banana, apple)
+E        +    where equals =          Original String Modified String\n0  apple, banana, cherry  banana, cherry.equals
+
+test_0483.py:72: AssertionError
+=========================== short test summary info ============================
+FAILED test_0483.py::test_task_func_with_seed - assert False
+FAILED test_0483.py::test_task_func_empty_list - assert False
+FAILED test_0483.py::test_task_func_replace_operation - assert False
+FAILED test_0483.py::test_task_func_shuffle_operation - assert False
+FAILED test_0483.py::test_task_func_randomize_operation - assert False
+5 failed, 2 passed in 1.65s

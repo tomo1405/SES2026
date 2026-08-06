@@ -1,0 +1,70 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data_dict = {"a": [1, 2, 3, 4, 5], "b": [1, 2, 3, 4, 5], "c": [1, 2, 3, 4, 5]}
+        df = pd.DataFrame(data_dict)
+        axes_list = task_func(data_dict)
+        assert len(axes_list) == 3
+        for ax in axes_list:
+            assert isinstance(ax, plt.Axes)
+            assert ax.get_title() in df.columns
+            assert len(ax.get_xticks()) == len(df[ax.get_title()].value_counts())
+>           assert len(ax.get_yticks()) == len(df[ax.get_title()].value_counts())
+E           AssertionError: assert 7 == 5
+E            +  where 7 = len(array([0. , 0.2, 0.4, 0.6, 0.8, 1. , 1.2]))
+E            +    where array([0. , 0.2, 0.4, 0.6, 0.8, 1. , 1.2]) = get_yticks()
+E            +      where get_yticks = <Axes: title={'center': 'a'}, xlabel='a'>.get_yticks
+E            +  and   5 = len(a\n1    1\n2    1\n3    1\n4    1\n5    1\nName: count, dtype: int64)
+E            +    where a\n1    1\n2    1\n3    1\n4    1\n5    1\nName: count, dtype: int64 = value_counts()
+E            +      where value_counts = 0    1\n1    2\n2    3\n3    4\n4    5\nName: a, dtype: int64.value_counts
+
+test_1070.py:15: AssertionError
+_____________________ test_task_func_uniform_distribution ______________________
+
+    def test_task_func_uniform_distribution():
+        data_dict = {"a": [1, 1, 1, 1, 1], "b": [1, 1, 1, 1, 1], "c": [1, 1, 1, 1, 1]}
+        df = pd.DataFrame(data_dict)
+        axes_list = task_func(data_dict)
+        assert len(axes_list) == 3
+        for ax in axes_list:
+            assert isinstance(ax, plt.Axes)
+            assert ax.get_title() in df.columns
+            assert len(ax.get_xticks()) == len(df[ax.get_title()].value_counts())
+>           assert len(ax.get_yticks()) == len(df[ax.get_title()].value_counts())
+E           AssertionError: assert 7 == 1
+E            +  where 7 = len(array([0., 1., 2., 3., 4., 5., 6.]))
+E            +    where array([0., 1., 2., 3., 4., 5., 6.]) = get_yticks()
+E            +      where get_yticks = <Axes: title={'center': 'a'}, xlabel='a'>.get_yticks
+E            +  and   1 = len(a\n1    5\nName: count, dtype: int64)
+E            +    where a\n1    5\nName: count, dtype: int64 = value_counts()
+E            +      where value_counts = 0    1\n1    1\n2    1\n3    1\n4    1\nName: a, dtype: int64.value_counts
+
+test_1070.py:26: AssertionError
+___________________ test_task_func_non_uniform_distribution ____________________
+
+    def test_task_func_non_uniform_distribution():
+        data_dict = {"a": [1, 2, 3, 4, 5], "b": [1, 2, 3, 4, 5], "c": [1, 2, 3, 4, 5]}
+        df = pd.DataFrame(data_dict)
+        axes_list = task_func(data_dict)
+        assert len(axes_list) == 3
+        for ax in axes_list:
+            assert isinstance(ax, plt.Axes)
+            assert ax.get_title() in df.columns
+            assert len(ax.get_xticks()) == len(df[ax.get_title()].value_counts())
+>           assert len(ax.get_yticks()) == len(df[ax.get_title()].value_counts())
+E           AssertionError: assert 7 == 5
+E            +  where 7 = len(array([0. , 0.2, 0.4, 0.6, 0.8, 1. , 1.2]))
+E            +    where array([0. , 0.2, 0.4, 0.6, 0.8, 1. , 1.2]) = get_yticks()
+E            +      where get_yticks = <Axes: title={'center': 'a'}, xlabel='a'>.get_yticks
+E            +  and   5 = len(a\n1    1\n2    1\n3    1\n4    1\n5    1\nName: count, dtype: int64)
+E            +    where a\n1    1\n2    1\n3    1\n4    1\n5    1\nName: count, dtype: int64 = value_counts()
+E            +      where value_counts = 0    1\n1    2\n2    3\n3    4\n4    5\nName: a, dtype: int64.value_counts
+
+test_1070.py:37: AssertionError
+=========================== short test summary info ============================
+FAILED test_1070.py::test_task_func - AssertionError: assert 7 == 5
+FAILED test_1070.py::test_task_func_uniform_distribution - AssertionError: as...
+FAILED test_1070.py::test_task_func_non_uniform_distribution - AssertionError...
+3 failed in 2.35s

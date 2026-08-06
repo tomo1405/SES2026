@@ -1,0 +1,25 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        ip_range = '192.168.1.0/24'
+        csv_path = 'test.csv'
+    
+        result = task_func(ip_range, csv_path)
+    
+        assert result == csv_path
+    
+        with open(csv_path, 'r') as csvfile:
+            reader = csv.DictReader(csvfile)
+            assert reader.fieldnames == ['IP Address']
+    
+            for row in reader:
+>               assert row['IP Address'] in IPv4Network(ip_range)
+                                            ^^^^^^^^^^^
+E               NameError: name 'IPv4Network' is not defined
+
+test_0146.py:19: NameError
+=========================== short test summary info ============================
+FAILED test_0146.py::test_task_func - NameError: name 'IPv4Network' is not de...
+1 failed in 0.40s

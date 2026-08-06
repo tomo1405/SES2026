@@ -1,0 +1,30 @@
+...FF                                                                    [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_name_encoding _________________________
+
+    def test_task_func_name_encoding():
+        df = task_func()
+        assert all(isinstance(name, str) for name in df['Name'])
+        # Check for specific accented characters
+        assert any('ó' in name for name in df['Name'])
+        assert any('é' in name for name in df['Name'])
+>       assert any('ú' in name for name in df['Name'])
+E       assert False
+E        +  where False = any(<generator object test_task_func_name_encoding.<locals>.<genexpr> at 0x7dcb054313c0>)
+
+test_0761.py:38: AssertionError
+_________________________ test_task_func_email_format __________________________
+
+    def test_task_func_email_format():
+        df = task_func()
+        for email in df['Email']:
+>           assert re.match(r'^[a-z.]+[0-9]+@example\.com$', email)
+E           AssertionError: assert None
+E            +  where None = <function match at 0x7dcb9e2f5800>('^[a-z.]+[0-9]+@example\\.com$', 'pérez1981@example.com')
+E            +    where <function match at 0x7dcb9e2f5800> = re.match
+
+test_0761.py:43: AssertionError
+=========================== short test summary info ============================
+FAILED test_0761.py::test_task_func_name_encoding - assert False
+FAILED test_0761.py::test_task_func_email_format - AssertionError: assert None
+2 failed, 3 passed in 1.19s

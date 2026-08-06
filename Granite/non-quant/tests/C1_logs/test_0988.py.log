@@ -1,0 +1,35 @@
+..F                                                                      [100%]
+=================================== FAILURES ===================================
+_____________________________ test_task_func_plot ______________________________
+
+mock_show = <MagicMock name='show' id='129489912598688'>
+
+    @patch("matplotlib.pyplot.show")
+    def test_task_func_plot(mock_show):
+        json_data = '{"a": {"b": 1.2}, "c": 3.4}'
+        data_key = "a.b"
+        values, normalized_values, ax = task_func(json_data, data_key)
+        assert isinstance(ax, plt.Axes)
+>       ax.legend.assert_called_once()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'function' object has no attribute 'assert_called_once'
+
+test_0988.py:58: AttributeError
+=============================== warnings summary ===============================
+Granite/non-quant/tests/test_0988.py::test_task_func
+Granite/non-quant/tests/test_0988.py::test_task_func_empty_data
+Granite/non-quant/tests/test_0988.py::test_task_func_plot
+  /work/tomohiro-w/utg/Granite/non-quant/tests/test_0988.py:13: UserWarning: Instantiating Float64Dtype without any arguments.Pass a Float64Dtype instance to silence this warning.
+    values = pd.Series(data, dtype=pd.Float64Dtype)
+
+Granite/non-quant/tests/test_0988.py::test_task_func
+Granite/non-quant/tests/test_0988.py::test_task_func_plot
+  /work/tomohiro-w/utg/Granite/non-quant/tests/test_0988.py:21: UserWarning: Instantiating Float64Dtype without any arguments.Pass a Float64Dtype instance to silence this warning.
+    normalized_values = pd.Series(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0988.py::test_task_func_plot - AttributeError: 'function' object ...
+1 failed, 2 passed, 5 warnings in 3.64s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

@@ -1,0 +1,95 @@
+F.FF                                                                     [100%]
+=================================== FAILURES ===================================
+_________________________________ test_ax_type _________________________________
+
+ax = <Axes: >
+
+    def test_ax_type(ax):
+>       assert isinstance(task_func(ax, 0), matplotlib.axes.Axes)
+                          ^^^^^^^^^^^^^^^^
+
+test_0256.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ax = <Axes: >, func_index = 0
+
+    def task_func(ax, func_index):
+        print(type(ax))
+        if not isinstance(ax, matplotlib.axes.Axes):
+            raise ValueError("The input is not an axes")
+        x = np.linspace(0, 2 * np.pi, 1000)
+        y = FUNCTIONS[func_index](x)
+    
+        ax.plot(x, y)
+>       ax.set_rlabel_position(func_index * 45)
+        ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Axes' object has no attribute 'set_rlabel_position'
+
+../../../src/src_0256.py:13: AttributeError
+----------------------------- Captured stdout call -----------------------------
+<class 'matplotlib.axes._axes.Axes'>
+________________________________ test_plot_data ________________________________
+
+ax = <Axes: >
+
+    def test_plot_data(ax):
+        x = np.linspace(0, 2 * np.pi, 1000)
+        y = np.sin(x)
+>       ax_out = task_func(ax, 0)
+                 ^^^^^^^^^^^^^^^^
+
+test_0256.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ax = <Axes: >, func_index = 0
+
+    def task_func(ax, func_index):
+        print(type(ax))
+        if not isinstance(ax, matplotlib.axes.Axes):
+            raise ValueError("The input is not an axes")
+        x = np.linspace(0, 2 * np.pi, 1000)
+        y = FUNCTIONS[func_index](x)
+    
+        ax.plot(x, y)
+>       ax.set_rlabel_position(func_index * 45)
+        ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Axes' object has no attribute 'set_rlabel_position'
+
+../../../src/src_0256.py:13: AttributeError
+----------------------------- Captured stdout call -----------------------------
+<class 'matplotlib.axes._axes.Axes'>
+_____________________________ test_rlabel_position _____________________________
+
+ax = <Axes: >
+
+    def test_rlabel_position(ax):
+        rlabel_positions = [45, 90, 135]
+        for i in range(3):
+>           ax_out = task_func(ax, i)
+                     ^^^^^^^^^^^^^^^^
+
+test_0256.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ax = <Axes: >, func_index = 0
+
+    def task_func(ax, func_index):
+        print(type(ax))
+        if not isinstance(ax, matplotlib.axes.Axes):
+            raise ValueError("The input is not an axes")
+        x = np.linspace(0, 2 * np.pi, 1000)
+        y = FUNCTIONS[func_index](x)
+    
+        ax.plot(x, y)
+>       ax.set_rlabel_position(func_index * 45)
+        ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Axes' object has no attribute 'set_rlabel_position'
+
+../../../src/src_0256.py:13: AttributeError
+----------------------------- Captured stdout call -----------------------------
+<class 'matplotlib.axes._axes.Axes'>
+=========================== short test summary info ============================
+FAILED test_0256.py::test_ax_type - AttributeError: 'Axes' object has no attr...
+FAILED test_0256.py::test_plot_data - AttributeError: 'Axes' object has no at...
+FAILED test_0256.py::test_rlabel_position - AttributeError: 'Axes' object has...
+3 failed, 1 passed in 1.68s

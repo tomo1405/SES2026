@@ -1,0 +1,109 @@
+....FFFFFF....                                                           [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_type_error_rng_seed ______________________
+
+    def test_task_func_type_error_rng_seed():
+>       with pytest.raises(TypeError):
+E       Failed: DID NOT RAISE TypeError
+
+test_0765.py:21: Failed
+_____________________ test_task_func_value_error_csv_file ______________________
+
+    def test_task_func_value_error_csv_file():
+        with pytest.raises(ValueError):
+>           task_func(csv_file='')
+
+test_0765.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+csv_file = '', latin_names = ['Sopetón', 'Méndez', 'Gómez', 'Pérez', 'Muñoz']
+names = ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones'], encoding = 'latin-1'
+rng_seed = None
+
+    def task_func(csv_file='names.csv',
+              latin_names=['Sopetón', 'Méndez', 'Gómez', 'Pérez', 'Muñoz'],
+              names=['Smith', 'Johnson', 'Williams', 'Brown', 'Jones'],
+              encoding='latin-1', rng_seed=None):
+    
+        if not isinstance(csv_file, str):
+            raise TypeError("csv_file should be a string.")
+    
+        if not isinstance(names, list):
+            raise TypeError("names should be a list.")
+    
+        if not isinstance(latin_names, list):
+            raise TypeError("latin_names should be a list.")
+    
+        if rng_seed is not None:
+            random.seed(rng_seed)
+    
+>       with open(csv_file, 'w', newline='', encoding=encoding) as csvfile:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: ''
+
+../../../src/src_0765.py:20: FileNotFoundError
+_______________________ test_task_func_value_error_names _______________________
+
+    def test_task_func_value_error_names():
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0765.py:29: Failed
+____________________ test_task_func_value_error_latin_names ____________________
+
+    def test_task_func_value_error_latin_names():
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0765.py:33: Failed
+_____________________ test_task_func_value_error_encoding ______________________
+
+    def test_task_func_value_error_encoding():
+        with pytest.raises(ValueError):
+>           task_func(encoding='')
+
+test_0765.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+csv_file = 'names.csv'
+latin_names = ['Sopetón', 'Méndez', 'Gómez', 'Pérez', 'Muñoz']
+names = ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones'], encoding = ''
+rng_seed = None
+
+    def task_func(csv_file='names.csv',
+              latin_names=['Sopetón', 'Méndez', 'Gómez', 'Pérez', 'Muñoz'],
+              names=['Smith', 'Johnson', 'Williams', 'Brown', 'Jones'],
+              encoding='latin-1', rng_seed=None):
+    
+        if not isinstance(csv_file, str):
+            raise TypeError("csv_file should be a string.")
+    
+        if not isinstance(names, list):
+            raise TypeError("names should be a list.")
+    
+        if not isinstance(latin_names, list):
+            raise TypeError("latin_names should be a list.")
+    
+        if rng_seed is not None:
+            random.seed(rng_seed)
+    
+>       with open(csv_file, 'w', newline='', encoding=encoding) as csvfile:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       LookupError: unknown encoding:
+
+../../../src/src_0765.py:20: LookupError
+_____________________ test_task_func_value_error_rng_seed ______________________
+
+    def test_task_func_value_error_rng_seed():
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0765.py:41: Failed
+=========================== short test summary info ============================
+FAILED test_0765.py::test_task_func_type_error_rng_seed - Failed: DID NOT RAI...
+FAILED test_0765.py::test_task_func_value_error_csv_file - FileNotFoundError:...
+FAILED test_0765.py::test_task_func_value_error_names - Failed: DID NOT RAISE...
+FAILED test_0765.py::test_task_func_value_error_latin_names - Failed: DID NOT...
+FAILED test_0765.py::test_task_func_value_error_encoding - LookupError: unkno...
+FAILED test_0765.py::test_task_func_value_error_rng_seed - Failed: DID NOT RA...
+6 failed, 8 passed in 0.51s

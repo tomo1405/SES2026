@@ -1,0 +1,75 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        product_list = ['ProductA', 'ProductB', 'ProductC']
+        categories = ['Category1', 'Category2', 'Category3']
+    
+        # Test with default parameters
+        df = task_func(product_list, categories)
+        assert isinstance(df, pd.DataFrame)
+        assert len(df) == len(product_list)
+        assert all(col in df.columns for col in ['Product', 'Category', 'Quantity Sold', 'Revenue'])
+    
+        # Test with custom min and max values
+        df_custom = task_func(product_list, categories, min_value=5, max_value=50)
+        assert isinstance(df_custom, pd.DataFrame)
+        assert len(df_custom) == len(product_list)
+        assert all(col in df_custom.columns for col in ['Product', 'Category', 'Quantity Sold', 'Revenue'])
+    
+        # Test with empty product list
+        df_empty_products = task_func([], categories)
+        assert df_empty_products.empty
+    
+        # Test with empty categories
+        with pytest.raises(IndexError):
+>           task_func(product_list, [])
+
+test_0352.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0352.py:8: in task_func
+    category = categories[random.randint(0, len(categories)-1)]
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/random.py:336: in randint
+    return self.randrange(a, b+1)
+           ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <random.Random object at 0x3c014410>, start = 0, stop = 0, step = 1
+
+    def randrange(self, start, stop=None, step=_ONE):
+        """Choose a random item from range(stop) or range(start, stop[, step]).
+    
+        Roughly equivalent to ``choice(range(start, stop, step))`` but
+        supports arbitrarily large ranges and is optimized for common cases.
+    
+        """
+    
+        # This code is a bit messy to make it fast for the
+        # common case while still doing adequate error checking.
+        istart = _index(start)
+        if stop is None:
+            # We don't check for "step != 1" because it hasn't been
+            # type checked and converted to an integer yet.
+            if step is not _ONE:
+                raise TypeError("Missing a non-None stop argument")
+            if istart > 0:
+                return self._randbelow(istart)
+            raise ValueError("empty range for randrange()")
+    
+        # Stop argument supplied.
+        istop = _index(stop)
+        width = istop - istart
+        istep = _index(step)
+        # Fast path.
+        if istep == 1:
+            if width > 0:
+                return istart + self._randbelow(width)
+>           raise ValueError(f"empty range in randrange({start}, {stop})")
+E           ValueError: empty range in randrange(0, 0)
+
+/usr/lib/python3.12/random.py:319: ValueError
+=========================== short test summary info ============================
+FAILED test_0352.py::test_task_func - ValueError: empty range in randrange(0, 0)
+1 failed in 1.27s

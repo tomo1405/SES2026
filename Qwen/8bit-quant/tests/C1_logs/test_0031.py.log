@@ -1,0 +1,170 @@
+FFFF.                                                                    [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_valid_file_and_data ______________________
+
+    def test_task_func_valid_file_and_data():
+>       result = task_func("existing_file.json", "name")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0031.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = 'existing_file.json', attribute = 'name'
+INPUT_JSON = {'type': 'object', 'properties': {'name': {'type': <class 'str'>}, 'age': {'type': <class 'int'>}, 'email': {'type': <class 'str'>}}, 'required': ['name', 'age', 'email']}
+EMAIL_REGEX = '^[a-z0-9]+[\\._]?[a-z0-9]+[@]\\w+[.]\\w{2,3}$'
+
+    def task_func(
+        file_path,
+        attribute,
+        INPUT_JSON={
+            "type": "object",
+            "properties": {
+                "name": {"type": str},
+                "age": {"type": int},
+                "email": {"type": str}
+            },
+            "required": ["name", "age", "email"]
+        },
+        EMAIL_REGEX=r"^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$"):
+        if not os.path.isfile(file_path):
+            raise ValueError(f'{file_path} does not exist.')
+    
+>       with open(file_path, 'r') as f:
+             ^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'existing_file.json'
+
+../../../src/src_0031.py:20: FileNotFoundError
+__________________ test_task_func_missing_required_attribute ___________________
+
+    def test_task_func_missing_required_attribute():
+        with pytest.raises(ValueError, match="age is missing from the JSON object."):
+>           task_func("existing_file.json", "age")
+
+test_0031.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = 'existing_file.json', attribute = 'age'
+INPUT_JSON = {'type': 'object', 'properties': {'name': {'type': <class 'str'>}, 'age': {'type': <class 'int'>}, 'email': {'type': <class 'str'>}}, 'required': ['name', 'age', 'email']}
+EMAIL_REGEX = '^[a-z0-9]+[\\._]?[a-z0-9]+[@]\\w+[.]\\w{2,3}$'
+
+    def task_func(
+        file_path,
+        attribute,
+        INPUT_JSON={
+            "type": "object",
+            "properties": {
+                "name": {"type": str},
+                "age": {"type": int},
+                "email": {"type": str}
+            },
+            "required": ["name", "age", "email"]
+        },
+        EMAIL_REGEX=r"^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$"):
+        if not os.path.isfile(file_path):
+            raise ValueError(f'{file_path} does not exist.')
+    
+>       with open(file_path, 'r') as f:
+             ^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'existing_file.json'
+
+../../../src/src_0031.py:20: FileNotFoundError
+______________ test_task_func_invalid_type_for_required_attribute ______________
+
+    def test_task_func_invalid_type_for_required_attribute():
+        mock_json = {
+            "name": "John Doe",
+            "age": "thirty",
+            "email": "john.doe@example.com"
+        }
+        with pytest.raises(ValueError, match="age is not of type <class 'int'>."):
+>           task_func("existing_file.json", "age", INPUT_JSON={
+                "type": "object",
+                "properties": {
+                    "name": {"type": str},
+                    "age": {"type": int},
+                    "email": {"type": str}
+                },
+                "required": ["name", "age", "email"]
+            })
+
+test_0031.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = 'existing_file.json', attribute = 'age'
+INPUT_JSON = {'type': 'object', 'properties': {'name': {'type': <class 'str'>}, 'age': {'type': <class 'int'>}, 'email': {'type': <class 'str'>}}, 'required': ['name', 'age', 'email']}
+EMAIL_REGEX = '^[a-z0-9]+[\\._]?[a-z0-9]+[@]\\w+[.]\\w{2,3}$'
+
+    def task_func(
+        file_path,
+        attribute,
+        INPUT_JSON={
+            "type": "object",
+            "properties": {
+                "name": {"type": str},
+                "age": {"type": int},
+                "email": {"type": str}
+            },
+            "required": ["name", "age", "email"]
+        },
+        EMAIL_REGEX=r"^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$"):
+        if not os.path.isfile(file_path):
+            raise ValueError(f'{file_path} does not exist.')
+    
+>       with open(file_path, 'r') as f:
+             ^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'existing_file.json'
+
+../../../src/src_0031.py:20: FileNotFoundError
+_________________________ test_task_func_invalid_email _________________________
+
+    def test_task_func_invalid_email():
+        mock_json = {
+            "name": "John Doe",
+            "age": 30,
+            "email": "invalid-email"
+        }
+        with pytest.raises(ValueError, match="Email is not valid."):
+>           task_func("existing_file.json", "email", INPUT_JSON={
+                "type": "object",
+                "properties": {
+                    "name": {"type": str},
+                    "age": {"type": int},
+                    "email": {"type": str}
+                },
+                "required": ["name", "age", "email"]
+            })
+
+test_0031.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = 'existing_file.json', attribute = 'email'
+INPUT_JSON = {'type': 'object', 'properties': {'name': {'type': <class 'str'>}, 'age': {'type': <class 'int'>}, 'email': {'type': <class 'str'>}}, 'required': ['name', 'age', 'email']}
+EMAIL_REGEX = '^[a-z0-9]+[\\._]?[a-z0-9]+[@]\\w+[.]\\w{2,3}$'
+
+    def task_func(
+        file_path,
+        attribute,
+        INPUT_JSON={
+            "type": "object",
+            "properties": {
+                "name": {"type": str},
+                "age": {"type": int},
+                "email": {"type": str}
+            },
+            "required": ["name", "age", "email"]
+        },
+        EMAIL_REGEX=r"^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$"):
+        if not os.path.isfile(file_path):
+            raise ValueError(f'{file_path} does not exist.')
+    
+>       with open(file_path, 'r') as f:
+             ^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'existing_file.json'
+
+../../../src/src_0031.py:20: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0031.py::test_task_func_valid_file_and_data - FileNotFoundError: ...
+FAILED test_0031.py::test_task_func_missing_required_attribute - FileNotFound...
+FAILED test_0031.py::test_task_func_invalid_type_for_required_attribute - Fil...
+FAILED test_0031.py::test_task_func_invalid_email - FileNotFoundError: [Errno...
+4 failed, 1 passed in 0.45s

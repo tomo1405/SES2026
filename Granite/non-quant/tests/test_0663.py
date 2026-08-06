@@ -1,0 +1,18 @@
+import pytest
+from src_0663 import task_func
+
+def test_task_func():
+    x = [[1, 2], [3, 4], [5, 6]]
+    y = [[7, 8], [9, 10], [11, 12]]
+    labels = ['label1', 'label2', 'label3']
+    
+    fig = task_func(x, y, labels)
+    
+    assert fig is not None
+    assert fig.axes is not None
+    assert len(fig.axes) == 1
+    assert fig.axes[0].patches is not None
+    assert len(fig.axes[0].patches) == 3
+    
+    for i in range(len(x)):
+        assert fig.axes[0].patches[i].get_label() == labels[i]

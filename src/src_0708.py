@@ -1,0 +1,11 @@
+import json
+import numpy as np
+def task_func(df):
+    df['IntCol'] = np.log10(df['IntCol'])
+
+    # Convert 'IntCol' column to a list and write it to a JSON file
+    int_col_list = df['IntCol'].tolist()
+    with open('IntCol.json', 'w') as json_file:
+        json.dump(int_col_list, json_file)
+
+    return df

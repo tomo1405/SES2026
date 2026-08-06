@@ -1,0 +1,99 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        message = "Hello, World!"
+        encryption_key = "secret_key"
+        expected_output = "gAAAAABb_wcV8N7Oc5-yLXpQn8Mu82g32RvNgYp34567890"
+>       assert task_func(message, encryption_key) == expected_output
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0027.py:8: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0027.py:4: in task_func
+    fernet = Fernet(base64.urlsafe_b64encode(encryption_key.encode()))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <cryptography.fernet.Fernet object at 0x7c4527195d30>
+key = b'secret_key', backend = None
+
+    def __init__(
+        self,
+        key: bytes | str,
+        backend: typing.Any = None,
+    ) -> None:
+        try:
+            key = base64.urlsafe_b64decode(key)
+        except binascii.Error as exc:
+            raise ValueError(
+                "Fernet key must be 32 url-safe base64-encoded bytes."
+            ) from exc
+        if len(key) != 32:
+>           raise ValueError(
+                "Fernet key must be 32 url-safe base64-encoded bytes."
+            )
+E           ValueError: Fernet key must be 32 url-safe base64-encoded bytes.
+
+../../../.venv/lib/python3.12/site-packages/cryptography/fernet.py:41: ValueError
+_____________________ test_task_func_with_invalid_message ______________________
+
+    def test_task_func_with_invalid_message():
+        message = 1234
+        encryption_key = "secret_key"
+        with pytest.raises(TypeError):
+>           task_func(message, encryption_key)
+
+test_0027.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0027.py:4: in task_func
+    fernet = Fernet(base64.urlsafe_b64encode(encryption_key.encode()))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <cryptography.fernet.Fernet object at 0x7c4527195af0>
+key = b'secret_key', backend = None
+
+    def __init__(
+        self,
+        key: bytes | str,
+        backend: typing.Any = None,
+    ) -> None:
+        try:
+            key = base64.urlsafe_b64decode(key)
+        except binascii.Error as exc:
+            raise ValueError(
+                "Fernet key must be 32 url-safe base64-encoded bytes."
+            ) from exc
+        if len(key) != 32:
+>           raise ValueError(
+                "Fernet key must be 32 url-safe base64-encoded bytes."
+            )
+E           ValueError: Fernet key must be 32 url-safe base64-encoded bytes.
+
+../../../.venv/lib/python3.12/site-packages/cryptography/fernet.py:41: ValueError
+__________________ test_task_func_with_invalid_encryption_key __________________
+
+    def test_task_func_with_invalid_encryption_key():
+        message = "Hello, World!"
+        encryption_key = 1234
+        with pytest.raises(TypeError):
+>           task_func(message, encryption_key)
+
+test_0027.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+message = 'Hello, World!', encryption_key = 1234
+
+    def task_func(message, encryption_key):
+>       fernet = Fernet(base64.urlsafe_b64encode(encryption_key.encode()))
+                                                 ^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'int' object has no attribute 'encode'
+
+../../../src/src_0027.py:4: AttributeError
+=========================== short test summary info ============================
+FAILED test_0027.py::test_task_func - ValueError: Fernet key must be 32 url-s...
+FAILED test_0027.py::test_task_func_with_invalid_message - ValueError: Fernet...
+FAILED test_0027.py::test_task_func_with_invalid_encryption_key - AttributeEr...
+3 failed in 0.44s

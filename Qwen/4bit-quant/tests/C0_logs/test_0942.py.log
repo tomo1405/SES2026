@@ -1,0 +1,38 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        start_date = '2023-01-01'
+        periods = 10
+        freq = 'D'
+        random_seed = 42
+    
+        forecast_df, ax = task_func(start_date, periods, freq, random_seed)
+    
+        # Check if the DataFrame has the correct shape
+        assert forecast_df.shape == (periods, 1), "DataFrame does not have the expected shape"
+    
+        # Check if the DataFrame index is of type DatetimeIndex
+        assert isinstance(forecast_df.index, pd.DatetimeIndex), "DataFrame index is not of type DatetimeIndex"
+    
+        # Check if the DataFrame contains the correct columns
+        assert list(forecast_df.columns) == ['Sales'], "DataFrame does not contain the expected column 'Sales'"
+    
+        # Check if the Sales values are within the expected range
+        assert all(forecast_df['Sales'] >= 100) and all(forecast_df['Sales'] <= 500), "Sales values are out of the expected range"
+    
+        # Check if the plot is created with the correct title and labels
+        assert ax.get_title() == 'Sales Forecast', "Plot does not have the expected title"
+        assert ax.get_xlabel() == 'Date', "Plot does not have the expected x-label"
+        assert ax.get_ylabel() == 'Sales', "Plot does not have the expected y-label"
+    
+        # Check if the grid is enabled
+>       assert ax.gridOn, "Grid is not enabled in the plot"
+               ^^^^^^^^^
+E       AttributeError: 'Axes' object has no attribute 'gridOn'. Did you mean: '_gridOn'?
+
+test_0942.py:33: AttributeError
+=========================== short test summary info ============================
+FAILED test_0942.py::test_task_func - AttributeError: 'Axes' object has no at...
+1 failed in 2.18s

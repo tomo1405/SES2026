@@ -1,0 +1,51 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        directory = 'test_directory'
+>       pub_key, zipfile_name = task_func(directory)
+                                ^^^^^^^^^^^^^^^^^^^^
+
+test_0586.py:6: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0586.py:15: in task_func
+    encrypted_data = rsa.encrypt(data, pub_key)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/rsa/pkcs1.py:195: in encrypt
+    padded = _pad_for_encryption(message, keylength)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+message = b'PK\x03\x04\x14\x00\x00\x00\x00\x00g\x89\xfc\\_1\xee\x07\x05\x00\x00\x00\x05\x00\x00\x00\t\x00\x00\x00file2.txtfile2P...00\x00\xa4\x81`\x00\x00\x00file1.txtPK\x05\x06\x00\x00\x00\x00\x03\x00\x03\x00\xa9\x00\x00\x00\x8c\x00\x00\x00\x00\x00'
+target_length = 64
+
+    def _pad_for_encryption(message: bytes, target_length: int) -> bytes:
+        r"""Pads the message for encryption, returning the padded message.
+    
+        :return: 00 02 RANDOM_DATA 00 MESSAGE
+    
+        >>> block = _pad_for_encryption(b'hello', 16)
+        >>> len(block)
+        16
+        >>> block[0:2]
+        b'\x00\x02'
+        >>> block[-6:]
+        b'\x00hello'
+    
+        """
+    
+        max_msglength = target_length - 11
+        msglength = len(message)
+    
+        if msglength > max_msglength:
+>           raise OverflowError(
+                "%i bytes needed for message, but there is only"
+                " space for %i" % (msglength, max_msglength)
+            )
+E           OverflowError: 331 bytes needed for message, but there is only space for 53
+
+../../../.venv/lib/python3.12/site-packages/rsa/pkcs1.py:113: OverflowError
+=========================== short test summary info ============================
+FAILED test_0586.py::test_task_func - OverflowError: 331 bytes needed for mes...
+1 failed in 0.46s

@@ -1,0 +1,46 @@
+FF.F                                                                     [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_with_file_url _________________________
+
+    def test_task_func_with_file_url():
+        webpage_url = "file://path/to/file.html"
+>       num_rows = task_func(webpage_url)
+                   ^^^^^^^^^^^^^^^^^^^^^^
+
+test_1016.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+webpage_url = 'file://path/to/file.html', database_name = 'my_database.db'
+
+    def task_func(webpage_url: str, database_name: str = "my_database.db") -> int:
+        try:
+            if webpage_url.startswith("file://"):
+>               with open(webpage_url[7:], "r", encoding="utf-8") as file:
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               FileNotFoundError: [Errno 2] No such file or directory: 'path/to/file.html'
+
+../../../src/src_1016.py:8: FileNotFoundError
+_________________________ test_task_func_with_http_url _________________________
+
+    def test_task_func_with_http_url():
+        webpage_url = "http://www.example.com"
+        num_rows = task_func(webpage_url)
+>       assert num_rows == expected_num_rows
+                           ^^^^^^^^^^^^^^^^^
+E       NameError: name 'expected_num_rows' is not defined
+
+test_1016.py:16: NameError
+__________________ test_task_func_with_invalid_database_name ___________________
+
+    def test_task_func_with_invalid_database_name():
+        webpage_url = "http://www.example.com"
+        database_name = "not/a/valid/database/name.db"
+>       with pytest.raises(sqlite3.DatabaseError):
+E       Failed: DID NOT RAISE DatabaseError
+
+test_1016.py:26: Failed
+=========================== short test summary info ============================
+FAILED test_1016.py::test_task_func_with_file_url - FileNotFoundError: [Errno...
+FAILED test_1016.py::test_task_func_with_http_url - NameError: name 'expected...
+FAILED test_1016.py::test_task_func_with_invalid_database_name - Failed: DID ...
+3 failed, 1 passed in 1.53s

@@ -1,0 +1,100 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_output _____________________________
+
+sample_data = [[1, 2, 3], [1, 2, 4], [1, 3, 5], [2, 2, 6], [2, 3, 7]]
+
+    def test_task_func_output(sample_data):
+        analyzed_df, ax = task_func(sample_data)
+    
+        # Check if the DataFrame is correctly grouped and counted
+        expected_df = pd.DataFrame({
+            'col1': [1, 1, 2],
+            'col2': [2, 3, 2],
+            'col3': [2, 1, 1]
+        })
+>       pd.testing.assert_frame_equal(analyzed_df.reset_index(drop=True), expected_df)
+E       AssertionError: DataFrame are different
+E       
+E       DataFrame shape mismatch
+E       [left]:  (4, 3)
+E       [right]: (3, 3)
+
+test_0067.py:26: AssertionError
+__________________________ test_task_func_empty_data ___________________________
+
+    def test_task_func_empty_data():
+        data = []
+        analyzed_df, ax = task_func(data)
+    
+        # Check if the DataFrame is empty
+        assert analyzed_df.empty
+    
+        # Check if the seaborn axis object is created
+>       assert isinstance(ax, sns.axisgrid.FacetGrid)
+E       AssertionError: assert False
+E        +  where False = isinstance(<Axes: xlabel='col3', ylabel='Density'>, <class 'seaborn.axisgrid.FacetGrid'>)
+E        +    where <class 'seaborn.axisgrid.FacetGrid'> = <module 'seaborn.axisgrid' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/axisgrid.py'>.FacetGrid
+E        +      where <module 'seaborn.axisgrid' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/axisgrid.py'> = sns.axisgrid
+
+test_0067.py:39: AssertionError
+________________________ test_task_func_single_row_data ________________________
+
+    def test_task_func_single_row_data():
+        data = [[1, 2, 3]]
+        analyzed_df, ax = task_func(data)
+    
+        # Check if the DataFrame is correctly grouped and counted
+        expected_df = pd.DataFrame({
+            'col1': [1],
+            'col2': [2],
+            'col3': [1]
+        })
+        pd.testing.assert_frame_equal(analyzed_df.reset_index(drop=True), expected_df)
+    
+        # Check if the seaborn axis object is created
+>       assert isinstance(ax, sns.axisgrid.FacetGrid)
+E       AssertionError: assert False
+E        +  where False = isinstance(<Axes: xlabel='col3', ylabel='Density'>, <class 'seaborn.axisgrid.FacetGrid'>)
+E        +    where <class 'seaborn.axisgrid.FacetGrid'> = <module 'seaborn.axisgrid' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/axisgrid.py'>.FacetGrid
+E        +      where <module 'seaborn.axisgrid' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/axisgrid.py'> = sns.axisgrid
+
+test_0067.py:54: AssertionError
+=============================== warnings summary ===============================
+Qwen/8bit-quant/tests/test_0067.py::test_task_func_output
+Qwen/8bit-quant/tests/test_0067.py::test_task_func_empty_data
+Qwen/8bit-quant/tests/test_0067.py::test_task_func_single_row_data
+  /work/tomohiro-w/utg/src/src_0067.py:8: UserWarning: 
+  
+  `distplot` is a deprecated function and will be removed in seaborn v0.14.0.
+  
+  Please adapt your code to use either `displot` (a figure-level function with
+  similar flexibility) or `histplot` (an axes-level function for histograms).
+  
+  For a guide to updating your code to use the new functions, please see
+  https://gist.github.com/mwaskom/de44147ed2974457ad6372750bbe5751
+  
+    ax = sns.distplot(analyzed_df[COLUMNS[-1]])
+
+Qwen/8bit-quant/tests/test_0067.py::test_task_func_empty_data
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/distributions.py:2464: RuntimeWarning: Mean of empty slice
+    line, = ax.plot(a.mean(), 0)
+
+Qwen/8bit-quant/tests/test_0067.py::test_task_func_empty_data
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/_methods.py:142: RuntimeWarning: invalid value encountered in scalar divide
+    ret = ret.dtype.type(ret / rcount)
+
+Qwen/8bit-quant/tests/test_0067.py::test_task_func_empty_data
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/lib/_histograms_impl.py:897: RuntimeWarning: invalid value encountered in divide
+    return n / db / n.sum(), bin_edges
+
+Qwen/8bit-quant/tests/test_0067.py::test_task_func_single_row_data
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/distributions.py:2496: UserWarning: Dataset has 0 variance; skipping density estimate. Pass `warn_singular=False` to disable this warning.
+    kdeplot(**{axis: a}, ax=ax, color=kde_color, **kde_kws)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0067.py::test_task_func_output - AssertionError: DataFrame are di...
+FAILED test_0067.py::test_task_func_empty_data - AssertionError: assert False
+FAILED test_0067.py::test_task_func_single_row_data - AssertionError: assert ...
+3 failed, 7 warnings in 3.56s

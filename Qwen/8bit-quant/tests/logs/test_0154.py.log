@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a simple list of categories
+        data = ['apple', 'banana', 'orange', 'apple']
+        expected_output = pd.DataFrame({
+            'Category': ['apple', 'banana', 'orange', 'apple'],
+            'Encoded': [0, 1, 2, 0]
+        })
+        output_df = task_func(data)
+        assert output_df.equals(expected_output), "Test failed for simple list of categories"
+    
+        # Test with an empty list
+        data = []
+        expected_output = pd.DataFrame({
+            'Category': [],
+            'Encoded': []
+        })
+        output_df = task_func(data)
+>       assert output_df.equals(expected_output), "Test failed for empty list"
+E       AssertionError: Test failed for empty list
+E       assert False
+E        +  where False = equals(Empty DataFrame\nColumns: [Category, Encoded]\nIndex: [])
+E        +    where equals = Empty DataFrame\nColumns: [Category, Encoded]\nIndex: [].equals
+
+test_0154.py:23: AssertionError
+=========================== short test summary info ============================
+FAILED test_0154.py::test_task_func - AssertionError: Test failed for empty list
+1 failed in 2.77s

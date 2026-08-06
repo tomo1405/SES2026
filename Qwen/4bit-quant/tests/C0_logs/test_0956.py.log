@@ -1,0 +1,48 @@
+F..F                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_valid_input ________________________
+
+    def test_task_func_with_valid_input():
+        mystrings = ["hello world", "foo bar"]
+        text = "Hello world! Foo bar foo bar."
+        ax = task_func(mystrings, text)
+    
+        # Check if the plot is created correctly
+        assert isinstance(ax, plt.Axes)
+    
+        # Check if the text is processed correctly
+        expected_text = "Hello_world! Foo_bar foo_bar."
+>       assert text == expected_text
+E       AssertionError: assert 'Hello world!... bar foo bar.' == 'Hello_world!..._bar foo_bar.'
+E         
+E         - Hello_world! Foo_bar foo_bar.
+E         ?      ^          ^       ^
+E         + Hello world! Foo bar foo bar.
+E         ?      ^          ^       ^
+
+test_0956.py:18: AssertionError
+_______________ test_task_func_with_case_insensitive_replacement _______________
+
+    def test_task_func_with_case_insensitive_replacement():
+        mystrings = ["hello world"]
+        text = "Hello World! hello world?"
+        ax = task_func(mystrings, text)
+    
+        # Check if the plot is created correctly
+        assert isinstance(ax, plt.Axes)
+    
+        # Check if the text is processed correctly
+        expected_text = "Hello_world! Hello_world?"
+>       assert text == expected_text
+E       AssertionError: assert 'Hello World! hello world?' == 'Hello_world! Hello_world?'
+E         
+E         - Hello_world! Hello_world?
+E         ?      ^^      ^    ^
+E         + Hello World! hello world?
+E         ?      ^^      ^    ^
+
+test_0956.py:53: AssertionError
+=========================== short test summary info ============================
+FAILED test_0956.py::test_task_func_with_valid_input - AssertionError: assert...
+FAILED test_0956.py::test_task_func_with_case_insensitive_replacement - Asser...
+2 failed, 2 passed in 1.65s

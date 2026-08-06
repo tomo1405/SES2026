@@ -1,0 +1,46 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that the function returns an Axes object and a numpy array
+        ax, image = task_func()
+        assert isinstance(ax, matplotlib.axes.Axes)
+        assert isinstance(image, np.ndarray)
+    
+        # Test that the image is the correct size
+        assert image.shape == (100, 100, 3)
+    
+        # Test that the image is within the correct range
+        assert np.all(image >= 0)
+        assert np.all(image <= 255)
+    
+        # Test that the function raises an error when the range is invalid
+        with pytest.raises(ValueError):
+>           task_func(range_low=256, range_high=257)
+
+test_0215.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+seed = 42, image_size = (100, 100, 3), range_low = 256, range_high = 257
+
+    def task_func(seed=42, image_size=(100, 100, 3), range_low=0, range_high=255):
+    
+        if range_low >= range_high:
+            raise ValueError("range_low must be less than range_high.")
+    
+        random.seed(seed)
+        np.random.seed(seed)
+        image = np.zeros(image_size, dtype=np.uint8)
+    
+        for i in range(image_size[0]):
+            for j in range(image_size[1]):
+                for k in range(image_size[2]):
+>                   image[i, j, k] = random.randint(range_low, range_high)
+                    ^^^^^^^^^^^^^^
+E                   OverflowError: Python integer 256 out of bounds for uint8
+
+../../../src/src_0215.py:17: OverflowError
+=========================== short test summary info ============================
+FAILED test_0215.py::test_task_func - OverflowError: Python integer 256 out o...
+1 failed in 2.49s

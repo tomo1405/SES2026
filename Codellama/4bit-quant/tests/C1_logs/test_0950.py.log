@@ -1,0 +1,49 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        rows = 5
+        columns = 3
+        seed = 123
+        expected_matrix = np.array([[0.5488135, 0.71518934, 0.60276335],
+                                   [0.4236548, 0.8300264, 0.89177364],
+                                   [0.9492429, 0.97910626, 0.30548734],
+                                   [0.5689483, 0.5311472, 0.99406426],
+                                   [0.9396925, 0.7883327, 0.95755196]])
+        expected_df = pd.DataFrame(expected_matrix)
+        result_df = task_func(rows, columns, seed)
+>       np.testing.assert_array_equal(result_df.values, expected_df.values)
+E       AssertionError: 
+E       Arrays are not equal
+E       
+E       Mismatched elements: 15 / 15 (100%)
+E       First 5 mismatches are at indices:
+E        [0, 0]: 0.6964691855978616 (ACTUAL), 0.5488135 (DESIRED)
+E        [0, 1]: 0.28613933495037946 (ACTUAL), 0.71518934 (DESIRED)
+E        [0, 2]: 0.2268514535642031 (ACTUAL), 0.60276335 (DESIRED)
+E        [1, 0]: 0.5513147690828912 (ACTUAL), 0.4236548 (DESIRED)
+E        [1, 1]: 0.7194689697855631 (ACTUAL), 0.8300264 (DESIRED)
+E       Max absolute difference among violations: 0.7286548
+E       Max relative difference among violations: 0.92429859
+E        ACTUAL: array([[0.696469, 0.286139, 0.226851],
+E              [0.551315, 0.719469, 0.423106],
+E              [0.980764, 0.68483 , 0.480932],...
+E        DESIRED: array([[0.548813, 0.715189, 0.602763],
+E              [0.423655, 0.830026, 0.891774],
+E              [0.949243, 0.979106, 0.305487],...
+
+test_0950.py:17: AssertionError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        rows = 0
+        columns = 3
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0950.py:28: Failed
+=========================== short test summary info ============================
+FAILED test_0950.py::test_task_func - AssertionError: 
+FAILED test_0950.py::test_task_func_invalid_input - Failed: DID NOT RAISE Val...
+2 failed, 1 passed in 1.15s

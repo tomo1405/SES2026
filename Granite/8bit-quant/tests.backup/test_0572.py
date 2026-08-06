@@ -1,0 +1,32 @@
+import pytest
+from src_0572 import task_func
+import pandas as pd
+
+def test_valid_input():
+    f_list = [print, len, sum]
+    file_path = "test.csv"
+    task_func(f_list, file_path)
+    df = pd.read_csv(file_path)
+    assert df.shape == (3, 5)
+    assert df['Function Name'].tolist() == ['print', 'len', 'sum']
+    assert df['Number of Arguments'].tolist() == [0, 1, 1]
+    assert df['Defaults'].tolist() == [None, None, None]
+    assert df['Annotations'].tolist() == [None, None, None]
+    assert df['Is Lambda'].tolist() == [False, False, False]
+
+def test_invalid_input():
+    with pytest.raises(ValueError) as excinfo:
+        task_func([], "test.csv")
+    assert "f_list should not be empty." in str(excinfo.value)
+
+    with pytest.raises(ValueError) as excinfo:
+        task_func([print, len, sum, "invalid"], "test.csv")
+    assert "All elements in f_list must be callable functions." in str(excinfo.value)
+
+    with pytest.raises(ValueError) as excinfo:
+        task_func([print, len, sum], 123)
+    assert "file_path must be a string." in str(excinfo.value)
+
+    with pytest.raises(IOError) as excinfo:
+        task_func([print, len, sum], "invalid_file.csv")
+    assert "Error writing to file" in str(excinfo.value)

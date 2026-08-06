@@ -1,0 +1,60 @@
+.FFFF                                                                    [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_single_prefix _______________________
+
+    def test_task_func_with_single_prefix():
+        result = task_func({'A': 2})
+        assert len(result) == 2
+        for emp_id in result:
+            assert emp_id.startswith('A')
+            assert len(emp_id) == 6
+>           assert emp_id[1:] in set(''.join(random.choices(ascii_uppercase, k=5)) for _ in range(100))
+E           AssertionError: assert 'GFWAC' in {'ACWML', 'AHRYO', 'ANAGT', 'ANCRW', 'BJSYG', 'BVOHV', ...}
+E            +  where {'ACWML', 'AHRYO', 'ANAGT', 'ANCRW', 'BJSYG', 'BVOHV', ...} = set(<generator object test_task_func_with_single_prefix.<locals>.<genexpr> at 0x71ea990b1b70>)
+
+test_1116.py:16: AssertionError
+____________________ test_task_func_with_multiple_prefixes _____________________
+
+    def test_task_func_with_multiple_prefixes():
+        result = task_func({'A': 1, 'B': 2})
+        assert len(result) == 3
+        for emp_id in result:
+            if emp_id.startswith('A'):
+                assert len(emp_id) == 6
+>               assert emp_id[1:] in set(''.join(random.choices(ascii_uppercase, k=5)) for _ in range(100))
+E               AssertionError: assert 'LVDCN' in {'BKWYD', 'CGXAP', 'CWSVB', 'DAIJT', 'DAWCQ', 'DJGKF', ...}
+E                +  where {'BKWYD', 'CGXAP', 'CWSVB', 'DAIJT', 'DAWCQ', 'DJGKF', ...} = set(<generator object test_task_func_with_multiple_prefixes.<locals>.<genexpr> at 0x71ea990b2020>)
+
+test_1116.py:24: AssertionError
+______________________ test_task_func_with_zero_employees ______________________
+
+    def test_task_func_with_zero_employees():
+        result = task_func({'A': 0, 'B': 2})
+        assert len(result) == 2
+        for emp_id in result:
+            assert emp_id.startswith('B')
+            assert len(emp_id) == 6
+>           assert emp_id[1:] in set(''.join(random.choices(ascii_uppercase, k=5)) for _ in range(100))
+E           AssertionError: assert 'YRKIP' in {'AHSHV', 'AKLAL', 'AXOPS', 'BAWMD', 'BBVDV', 'BIDQC', ...}
+E            +  where {'AHSHV', 'AKLAL', 'AXOPS', 'BAWMD', 'BBVDV', 'BIDQC', ...} = set(<generator object test_task_func_with_zero_employees.<locals>.<genexpr> at 0x71ea990b27a0>)
+
+test_1116.py:35: AssertionError
+________________ test_task_func_with_large_number_of_employees _________________
+
+    def test_task_func_with_large_number_of_employees():
+        result = task_func({'A': 10})
+        assert len(result) == 10
+        for emp_id in result:
+            assert emp_id.startswith('A')
+            assert len(emp_id) == 6
+>           assert emp_id[1:] in set(''.join(random.choices(ascii_uppercase, k=5)) for _ in range(100))
+E           AssertionError: assert 'HWTAX' in {'AAAFP', 'AEIIY', 'BCARJ', 'BCATJ', 'BKSDH', 'BWODY', ...}
+E            +  where {'AAAFP', 'AEIIY', 'BCARJ', 'BCATJ', 'BKSDH', 'BWODY', ...} = set(<generator object test_task_func_with_large_number_of_employees.<locals>.<genexpr> at 0x71ea990b2b60>)
+
+test_1116.py:43: AssertionError
+=========================== short test summary info ============================
+FAILED test_1116.py::test_task_func_with_single_prefix - AssertionError: asse...
+FAILED test_1116.py::test_task_func_with_multiple_prefixes - AssertionError: ...
+FAILED test_1116.py::test_task_func_with_zero_employees - AssertionError: ass...
+FAILED test_1116.py::test_task_func_with_large_number_of_employees - Assertio...
+4 failed, 1 passed in 0.51s

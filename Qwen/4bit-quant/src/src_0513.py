@@ -1,0 +1,19 @@
+import pandas as pd
+import numpy as np
+def task_func(column, data):
+    COLUMNS = ["Product", "Quantity Sold", "Total Sales"]
+    df = pd.DataFrame(data, columns=COLUMNS)
+    if (df["Quantity Sold"] < 0).any() or (df["Total Sales"] < 0).any():
+        raise ValueError("Value must not be negative")
+    column_data = df[column]
+
+    result = {
+        "sum": np.sum(column_data),
+        "mean": np.mean(column_data),
+        "min": np.min(column_data),
+        "max": np.max(column_data),
+    }
+
+    ax = df.plot.bar(x="Product", y=column, title=f"Bar Chart of {column}")
+
+    return result, ax

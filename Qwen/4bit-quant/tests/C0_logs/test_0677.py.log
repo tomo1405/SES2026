@@ -1,0 +1,28 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_random = None
+sample_df =    team1  team2  score1  score2 winner
+0  TeamA  TeamD      10       8  TeamA
+1  TeamB  TeamE       5       5  TeamB
+2  TeamC  TeamF       8      10  TeamF
+
+    def test_task_func(mock_random, sample_df):
+        result_df = task_func(sample_df)
+    
+        # Check if the 'winner' column is added
+        assert 'winner' in result_df.columns
+    
+        # Check the correctness of the 'winner' values based on the scores
+        expected_winners = ['TeamA', 'TeamE', 'TeamF']
+>       assert result_df['winner'].tolist() == expected_winners
+E       AssertionError: assert ['TeamA', 'TeamB', 'TeamF'] == ['TeamA', 'TeamE', 'TeamF']
+E         
+E         At index 1 diff: 'TeamB' != 'TeamE'
+E         Use -v to get more diff
+
+test_0677.py:33: AssertionError
+=========================== short test summary info ============================
+FAILED test_0677.py::test_task_func - AssertionError: assert ['TeamA', 'TeamB...
+1 failed, 1 passed in 1.11s

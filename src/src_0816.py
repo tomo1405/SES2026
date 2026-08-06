@@ -1,0 +1,11 @@
+import pandas as pd
+import numpy as np
+def task_func(test_scores, student):
+    test_scores = pd.DataFrame(test_scores)
+    if student not in test_scores['Student'].values:
+        raise ValueError(f"The student with ID {student} is not present in the test scores DataFrame.")
+    student_scores = test_scores[test_scores['Student'] == student]['Score']
+    average_score = student_scores.mean()
+    std = student_scores.std()
+    
+    return np.array([average_score, std]), test_scores

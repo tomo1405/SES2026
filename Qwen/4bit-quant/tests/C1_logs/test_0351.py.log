@@ -1,0 +1,28 @@
+..F..                                                                    [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_failure_move __________________________
+
+    def test_task_func_failure_move():
+        with tempfile.TemporaryDirectory() as src_folder, tempfile.TemporaryDirectory() as dst_folder:
+            # Create a compressed file
+            with open(os.path.join(src_folder, 'file1.txt'), 'w') as f:
+                f.write('content1')
+            os.system(f'gzip {os.path.join(src_folder, "file1.txt")}')
+    
+            # Remove write permission from the destination folder to simulate a move failure
+            os.chmod(dst_folder, 0o444)
+    
+            result = task_func(src_folder, dst_folder)
+    
+            assert result['success'] is False
+            assert result['message'] == 'Some files failed to compress or move.'
+>           assert result['failed_files'] == ['file1.txt.gz']
+E           AssertionError: assert ['file1.txt.g...file1.txt.gz'] == ['file1.txt.gz']
+E             
+E             Left contains one more item: 'file1.txt.gz'
+E             Use -v to get more diff
+
+test_0351.py:62: AssertionError
+=========================== short test summary info ============================
+FAILED test_0351.py::test_task_func_failure_move - AssertionError: assert ['f...
+1 failed, 4 passed in 0.42s

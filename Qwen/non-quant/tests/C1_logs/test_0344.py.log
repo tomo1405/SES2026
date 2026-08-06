@@ -1,0 +1,55 @@
+...FF                                                                    [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_with_no_title _________________________
+
+sample_df =   category
+0        A
+1        B
+2        A
+3        C
+4        B
+5        A
+6        D
+7        C
+8        B
+9        A
+
+    def test_task_func_with_no_title(sample_df):
+        ax = task_func(sample_df, 'category')
+        assert isinstance(ax, plt.Axes)
+>       assert ax.get_title() == ''  # No title should be set
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 'Category Distribution' == ''
+E         
+E         + Category Distribution
+
+test_0344.py:32: AssertionError
+__________________ test_task_func_with_single_value_in_column __________________
+
+sample_df =   category
+0        A
+1        B
+2        A
+3        C
+4        B
+5        A
+6        D
+7        C
+8        B
+9        A
+
+    def test_task_func_with_single_value_in_column(sample_df):
+        single_value_df = pd.DataFrame({'category': ['A'] * 10})
+        ax = task_func(single_value_df, 'category', 'Single Value Distribution')
+        assert isinstance(ax, plt.Axes)
+>       assert len(ax.patches) == 1  # There should be only one unique category: A
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 9 == 1
+E        +  where 9 = len(<Axes.ArtistList of 9 patches>)
+E        +    where <Axes.ArtistList of 9 patches> = <Axes: title={'center': 'Single Value Distribution'}>.patches
+
+test_0344.py:38: AssertionError
+=========================== short test summary info ============================
+FAILED test_0344.py::test_task_func_with_no_title - AssertionError: assert 'C...
+FAILED test_0344.py::test_task_func_with_single_value_in_column - AssertionEr...
+2 failed, 3 passed in 2.16s

@@ -1,0 +1,37 @@
+.....FF                                                                  [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_special_characters _______________________
+
+    def test_task_func_special_characters():
+        texts = ["Hello@world!", "This#is$a%test^", "Another&example*"]
+        output, feature_names = task_func(texts)
+        assert len(output) == len(texts)
+        assert len(feature_names) > 0
+        assert "hello" in feature_names
+        assert "world" in feature_names
+        assert "this" in feature_names
+        assert "is" in feature_names
+>       assert "a" in feature_names
+E       AssertionError: assert 'a' in ['another', 'example', 'hello', 'is', 'test', 'this', ...]
+
+test_1101.py:47: AssertionError
+__________________________ test_task_func_large_input __________________________
+
+    def test_task_func_large_input():
+        texts = ["Python" * 1000] * 5
+        output, feature_names = task_func(texts)
+        assert len(output) == len(texts)
+        assert len(feature_names) > 0
+>       assert feature_names[0] == "python"
+E       AssertionError: assert 'pythonpython...npythonpython' == 'python'
+E         
+E         - python
+E         + pythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpythonpython...
+E         
+E         ...Full output truncated (1 line hidden), use '-vv' to show
+
+test_1101.py:57: AssertionError
+=========================== short test summary info ============================
+FAILED test_1101.py::test_task_func_special_characters - AssertionError: asse...
+FAILED test_1101.py::test_task_func_large_input - AssertionError: assert 'pyt...
+2 failed, 5 passed in 3.20s

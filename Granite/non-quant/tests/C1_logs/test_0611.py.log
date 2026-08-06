@@ -1,0 +1,82 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________ test_task_func[tuples0-2-expected_df_shape0-2] ________________
+
+df =    A   B   C   D   E
+0  1   6  11  16  21
+1  2   7  12  17  22
+2  3   8  13  18  23
+3  4   9  14  19  24
+4  5  10  15  20  25
+tuples = [(1, 2), (3, 4)], n_plots = 2, expected_df_shape = (3, 5)
+expected_num_plots = 2
+
+    @pytest.mark.parametrize("tuples, n_plots, expected_df_shape, expected_num_plots", [
+        ([(1, 2), (3, 4)], 2, (3, 5), 2),
+        ([(5, 6), (7, 8)], 3, (1, 5), 0),
+        ([(9, 10), (11, 12)], 1, (0, 5), 0)
+    ])
+    def test_task_func(df, tuples, n_plots, expected_df_shape, expected_num_plots):
+        result_df, plots = task_func(df, tuples, n_plots)
+>       assert result_df.shape == expected_df_shape
+E       assert (5, 5) == (3, 5)
+E         
+E         At index 0 diff: 5 != 3
+E         Use -v to get more diff
+
+test_0611.py:22: AssertionError
+________________ test_task_func[tuples1-3-expected_df_shape1-0] ________________
+
+df =    A   B   C   D   E
+0  1   6  11  16  21
+1  2   7  12  17  22
+2  3   8  13  18  23
+3  4   9  14  19  24
+4  5  10  15  20  25
+tuples = [(5, 6), (7, 8)], n_plots = 3, expected_df_shape = (1, 5)
+expected_num_plots = 0
+
+    @pytest.mark.parametrize("tuples, n_plots, expected_df_shape, expected_num_plots", [
+        ([(1, 2), (3, 4)], 2, (3, 5), 2),
+        ([(5, 6), (7, 8)], 3, (1, 5), 0),
+        ([(9, 10), (11, 12)], 1, (0, 5), 0)
+    ])
+    def test_task_func(df, tuples, n_plots, expected_df_shape, expected_num_plots):
+        result_df, plots = task_func(df, tuples, n_plots)
+>       assert result_df.shape == expected_df_shape
+E       assert (5, 5) == (1, 5)
+E         
+E         At index 0 diff: 5 != 1
+E         Use -v to get more diff
+
+test_0611.py:22: AssertionError
+________________ test_task_func[tuples2-1-expected_df_shape2-0] ________________
+
+df =    A   B   C   D   E
+0  1   6  11  16  21
+1  2   7  12  17  22
+2  3   8  13  18  23
+3  4   9  14  19  24
+4  5  10  15  20  25
+tuples = [(9, 10), (11, 12)], n_plots = 1, expected_df_shape = (0, 5)
+expected_num_plots = 0
+
+    @pytest.mark.parametrize("tuples, n_plots, expected_df_shape, expected_num_plots", [
+        ([(1, 2), (3, 4)], 2, (3, 5), 2),
+        ([(5, 6), (7, 8)], 3, (1, 5), 0),
+        ([(9, 10), (11, 12)], 1, (0, 5), 0)
+    ])
+    def test_task_func(df, tuples, n_plots, expected_df_shape, expected_num_plots):
+        result_df, plots = task_func(df, tuples, n_plots)
+>       assert result_df.shape == expected_df_shape
+E       assert (5, 5) == (0, 5)
+E         
+E         At index 0 diff: 5 != 0
+E         Use -v to get more diff
+
+test_0611.py:22: AssertionError
+=========================== short test summary info ============================
+FAILED test_0611.py::test_task_func[tuples0-2-expected_df_shape0-2] - assert ...
+FAILED test_0611.py::test_task_func[tuples1-3-expected_df_shape1-0] - assert ...
+FAILED test_0611.py::test_task_func[tuples2-1-expected_df_shape2-0] - assert ...
+3 failed in 5.46s

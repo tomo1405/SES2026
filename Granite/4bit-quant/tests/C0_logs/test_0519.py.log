@@ -1,0 +1,33 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        array = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        expected_df = pd.DataFrame(array, columns=['A', 'B', 'C'])
+        expected_distance_matrix = pd.DataFrame(
+            [[0.0, 1.0, 1.41421356],
+             [1.0, 0.0, 1.41421356],
+             [1.41421356, 1.41421356, 0.0]],
+            index=['A', 'B', 'C'],
+            columns=['A', 'B', 'C']
+        )
+        df, distance_matrix = task_func(array)
+        assert df.equals(expected_df)
+>       assert distance_matrix.equals(expected_distance_matrix)
+E       assert False
+E        +  where False = equals(          A         B         C\nA  0.000000  1.000000  1.414214\nB  1.000000  0.000000  1.414214\nC  1.414214  1.414214  0.000000)
+E        +    where equals =            0         1          2\n0   0.000000  5.196152  10.392305\n1   5.196152  0.000000   5.196152\n2  10.392305  5.196152   0.000000.equals
+
+test_0519.py:18: AssertionError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+>       with pytest.raises(TypeError):
+E       Failed: DID NOT RAISE TypeError
+
+test_0519.py:21: Failed
+=========================== short test summary info ============================
+FAILED test_0519.py::test_task_func - assert False
+FAILED test_0519.py::test_task_func_invalid_input - Failed: DID NOT RAISE Typ...
+2 failed in 2.02s

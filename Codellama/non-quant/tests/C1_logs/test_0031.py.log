@@ -1,0 +1,88 @@
+.FFF                                                                     [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        file_path = 'test_data.json'
+        attribute = 'name'
+        expected_output = 'John Doe'
+    
+        with open(file_path, 'w') as f:
+            json.dump({'name': 'John Doe', 'age': 30, 'email': 'johndoe@example.com'}, f)
+    
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0031.py:27: Failed
+_______________________ test_task_func_invalid_attribute _______________________
+
+    def test_task_func_invalid_attribute():
+        file_path = 'test_data.json'
+        attribute = 'invalid_attribute'
+        expected_output = 'John Doe'
+    
+        with open(file_path, 'w') as f:
+            json.dump({'name': 'John Doe', 'age': 30, 'email': 'johndoe@example.com'}, f)
+    
+        with pytest.raises(ValueError):
+>           task_func(file_path, attribute)
+
+test_0031.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = 'test_data.json', attribute = 'invalid_attribute'
+INPUT_JSON = {'type': 'object', 'properties': {'name': {'type': <class 'str'>}, 'age': {'type': <class 'int'>}, 'email': {'type': <class 'str'>}}, 'required': ['name', 'age', 'email']}
+EMAIL_REGEX = '^[a-z0-9]+[\\._]?[a-z0-9]+[@]\\w+[.]\\w{2,3}$'
+
+    def task_func(
+        file_path,
+        attribute,
+        INPUT_JSON={
+            "type": "object",
+            "properties": {
+                "name": {"type": str},
+                "age": {"type": int},
+                "email": {"type": str}
+            },
+            "required": ["name", "age", "email"]
+        },
+        EMAIL_REGEX=r"^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$"):
+        if not os.path.isfile(file_path):
+            raise ValueError(f'{file_path} does not exist.')
+    
+        with open(file_path, 'r') as f:
+            data = json.load(f)
+    
+        for key in INPUT_JSON['required']:
+            if key not in data:
+                raise ValueError(f'{key} is missing from the JSON object.')
+            if not isinstance(data[key], INPUT_JSON['properties'][key]['type']):
+                raise ValueError(f'{key} is not of type {INPUT_JSON["properties"][key]["type"]}.')
+    
+        if 'email' in data and not re.fullmatch(EMAIL_REGEX, data['email']):
+            raise ValueError('Email is not valid.')
+    
+>       return data[attribute]
+               ^^^^^^^^^^^^^^^
+E       KeyError: 'invalid_attribute'
+
+../../../src/src_0031.py:32: KeyError
+_________________________ test_task_func_invalid_json __________________________
+
+    def test_task_func_invalid_json():
+        file_path = 'test_data.json'
+        attribute = 'name'
+        expected_output = 'John Doe'
+    
+        with open(file_path, 'w') as f:
+            json.dump({'name': 'John Doe', 'age': 30, 'email': 'johndoe@example.com'}, f)
+    
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0031.py:49: Failed
+=========================== short test summary info ============================
+FAILED test_0031.py::test_task_func_invalid_input - Failed: DID NOT RAISE Val...
+FAILED test_0031.py::test_task_func_invalid_attribute - KeyError: 'invalid_at...
+FAILED test_0031.py::test_task_func_invalid_json - Failed: DID NOT RAISE Valu...
+3 failed, 1 passed in 0.41s

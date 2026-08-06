@@ -1,0 +1,77 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        url = "https://www.example.com/data"
+>       csv_file_path = task_func(url)
+                        ^^^^^^^^^^^^^^
+
+test_0724.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0724.py:8: in task_func
+    html = urllib.request.urlopen(url).read()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:215: in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:521: in open
+    response = meth(req, response)
+               ^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:630: in http_response
+    response = self.parent.error(
+/usr/lib/python3.12/urllib/request.py:559: in error
+    return self._call_chain(*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:492: in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <urllib.request.HTTPDefaultErrorHandler object at 0x75b812d78a10>
+req = <urllib.request.Request object at 0x75b812d78860>
+fp = <http.client.HTTPResponse object at 0x75b812d78d00>, code = 404
+msg = 'Not Found', hdrs = <http.client.HTTPMessage object at 0x75b812d79490>
+
+    def http_error_default(self, req, fp, code, msg, hdrs):
+>       raise HTTPError(req.full_url, code, msg, hdrs, fp)
+E       urllib.error.HTTPError: HTTP Error 404: Not Found
+
+/usr/lib/python3.12/urllib/request.py:639: HTTPError
+_______________________ test_task_func_with_invalid_url ________________________
+
+    def test_task_func_with_invalid_url():
+        with pytest.raises(urllib.error.URLError):
+>           task_func("invalid_url")
+
+test_0724.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0724.py:8: in task_func
+    html = urllib.request.urlopen(url).read()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:215: in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:499: in open
+    req = Request(fullurl, data)
+          ^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:318: in __init__
+    self.full_url = url
+    ^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:344: in full_url
+    self._parse()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <urllib.request.Request object at 0x75b812d7a930>
+
+    def _parse(self):
+        self.type, rest = _splittype(self._full_url)
+        if self.type is None:
+>           raise ValueError("unknown url type: %r" % self.full_url)
+E           ValueError: unknown url type: 'invalid_url'
+
+/usr/lib/python3.12/urllib/request.py:373: ValueError
+=========================== short test summary info ============================
+FAILED test_0724.py::test_task_func - urllib.error.HTTPError: HTTP Error 404:...
+FAILED test_0724.py::test_task_func_with_invalid_url - ValueError: unknown ur...
+2 failed in 1.52s

@@ -1,0 +1,41 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+file_path = 'path/to/file.csv'
+
+    def task_func(file_path):
+        try:
+>           with open(file_path, "r", encoding="utf-8") as file:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           FileNotFoundError: [Errno 2] No such file or directory: 'path/to/file.csv'
+
+../../../src/src_1055.py:7: FileNotFoundError
+
+The above exception was the direct cause of the following exception:
+
+    def test_task_func():
+        file_path = "path/to/file.csv"
+>       mean, std_dev, ax = task_func(file_path)
+                            ^^^^^^^^^^^^^^^^^^^^
+
+test_1055.py:6: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = 'path/to/file.csv'
+
+    def task_func(file_path):
+        try:
+            with open(file_path, "r", encoding="utf-8") as file:
+                reader = csv.reader(file)
+                population = [int(row[0]) for row in reader]
+        except IOError as exc:
+>           raise IOError(
+                "Error reading the file. Please check the file path and permissions."
+            ) from exc
+E           OSError: Error reading the file. Please check the file path and permissions.
+
+../../../src/src_1055.py:11: OSError
+=========================== short test summary info ============================
+FAILED test_1055.py::test_task_func - OSError: Error reading the file. Please...
+1 failed, 1 passed in 3.67s

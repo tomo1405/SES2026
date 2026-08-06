@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        directory = 'path/to/directory'
+        pattern = r'^(.*?)-\d+\.csv$'
+        expected_new_files = ['file1.csv', 'file2.csv', 'file3.csv']
+    
+>       new_files = task_func(directory, pattern)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0772.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = 'path/to/directory', pattern = '^(.*?)-\\d+\\.csv$'
+
+    def task_func(directory: str, pattern: str = r'^(.*?)-\d+\.csv$') -> list:
+    
+        file_dir = Path(directory)
+        file_pattern = re.compile(pattern)
+        new_files = []
+    
+>       for filename in os.listdir(file_dir):
+                        ^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'path/to/directory'
+
+../../../src/src_0772.py:11: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0772.py::test_task_func - FileNotFoundError: [Errno 2] No such fi...
+1 failed in 0.48s

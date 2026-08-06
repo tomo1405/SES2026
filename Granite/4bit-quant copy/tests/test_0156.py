@@ -1,0 +1,19 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import pytest
+
+from src_0156 import task_func
+
+# Constants
+COLUMN_NAMES = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+
+def test_task_func():
+    data = [[1, 2, 3, 4, 5, 6, 7, 8], [9, 10, 11, 12, 13, 14, 15, 16]]
+    df, ax = task_func(data)
+
+    assert isinstance(df, pd.DataFrame)
+    assert df.columns.tolist() == COLUMN_NAMES
+    assert df['Average'].mean() == 8
+
+    assert isinstance(ax, plt.Axes)
+    assert ax.get_ylabel() == 'Average'

@@ -1,0 +1,23 @@
+....F                                                                    [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_with_index ___________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1377/test_task_func_with_index0')
+
+    def test_task_func_with_index(tmp_path):
+        data = {'Name': ['Alice', 'Bob'], 'Age': [25, 30]}
+        df = pd.DataFrame(data)
+        file_path = tmp_path / "data_with_index.csv"
+        df.to_csv(file_path, index=True)
+    
+        result_df = task_func(str(file_path))
+        expected_df = df.reset_index(drop=True)
+>       assert result_df.equals(expected_df)
+E       assert False
+E        +  where False = equals(    Name  Age\n0  Alice   25\n1    Bob   30)
+E        +    where equals =    Unnamed: 0   Name  Age\n0           0  Alice   25\n1           1    Bob   30.equals
+
+test_0646.py:46: AssertionError
+=========================== short test summary info ============================
+FAILED test_0646.py::test_task_func_with_index - assert False
+1 failed, 4 passed in 1.19s

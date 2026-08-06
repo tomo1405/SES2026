@@ -1,0 +1,34 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        myString = "https://www.google.com https://www.facebook.com"
+        API_KEY = "your_api_key"
+        expected_output = {
+            "www.google.com": {"country": "United States", "city": "Mountain View", "zip": "94043", "latitude": 37.405991, "longitude": -122.078519},
+            "www.facebook.com": {"country": "United States", "city": "Menlo Park", "zip": "94025", "latitude": 37.485991, "longitude": -122.158519}
+        }
+        actual_output = task_func(myString, API_KEY)
+>       assert actual_output == expected_output
+E       AssertionError: assert {'www.google....': '03', ...}} == {'www.google.....485991, ...}}
+E         
+E         Differing items:
+E         {'www.facebook.com': {'status': 'success', 'country': 'Singapore', 'countryCode': 'SG', 'region': '03', ...}} != {'www.facebook.com': {'country': 'United States', 'city': 'Menlo Park', 'zip': '94025', 'latitude': 37.485991, ...}}
+E         {'www.google.com': {'status': 'success', 'country': 'United States', 'countryCode': 'US', 'region': 'CA', ...}} != {'www.google.com': {'country': 'United States', 'city': 'Mountain View', 'zip': '94043', 'latitude': 37.405991, ...}}
+E         Use -v to get more diff
+
+test_1122.py:14: AssertionError
+_____________________ test_task_func_with_invalid_api_key ______________________
+
+    def test_task_func_with_invalid_api_key():
+        myString = "https://www.google.com https://www.facebook.com"
+        API_KEY = "invalid_api_key"
+>       with pytest.raises(requests.exceptions.HTTPError):
+E       Failed: DID NOT RAISE HTTPError
+
+test_1122.py:19: Failed
+=========================== short test summary info ============================
+FAILED test_1122.py::test_task_func - AssertionError: assert {'www.google.......
+FAILED test_1122.py::test_task_func_with_invalid_api_key - Failed: DID NOT RA...
+2 failed in 1.43s

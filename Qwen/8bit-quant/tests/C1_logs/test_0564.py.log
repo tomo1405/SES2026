@@ -1,0 +1,213 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a temporary directory for the DLL files
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Create a mock DLL file in the temporary directory
+            dll_path = os.path.join(temp_dir, 'mock.dll')
+            with open(dll_path, 'w') as f:
+                f.write('Mock DLL content')
+    
+            # Create a destination directory
+            dest_dir = os.path.join(temp_dir, 'destination')
+            os.makedirs(dest_dir)
+    
+            # Call the function with the paths
+>           result = task_func(dll_path, dest_dir)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0564.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0564.py:6: in task_func
+    lib = ctypes.CDLL(filepath)
+          ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <CDLL '/tmp/tmpgi76fp55/mock.dll', handle 0 at 0x7fd15f47f440>
+name = '/tmp/tmpgi76fp55/mock.dll', mode = 0, handle = None, use_errno = False
+use_last_error = False, winmode = None
+
+    def __init__(self, name, mode=DEFAULT_MODE, handle=None,
+                 use_errno=False,
+                 use_last_error=False,
+                 winmode=None):
+        if name:
+            name = _os.fspath(name)
+        self._name = name
+        flags = self._func_flags_
+        if use_errno:
+            flags |= _FUNCFLAG_USE_ERRNO
+        if use_last_error:
+            flags |= _FUNCFLAG_USE_LASTERROR
+        if _sys.platform.startswith("aix"):
+            """When the name contains ".a(" and ends with ")",
+               e.g., "libFOO.a(libFOO.so)" - this is taken to be an
+               archive(member) syntax for dlopen(), and the mode is adjusted.
+               Otherwise, name is presented to dlopen() as a file argument.
+            """
+            if name and name.endswith(")") and ".a(" in name:
+                mode |= ( _os.RTLD_MEMBER | _os.RTLD_NOW )
+        if _os.name == "nt":
+            if winmode is not None:
+                mode = winmode
+            else:
+                import nt
+                mode = nt._LOAD_LIBRARY_SEARCH_DEFAULT_DIRS
+                if '/' in name or '\\' in name:
+                    self._name = nt._getfullpathname(self._name)
+                    mode |= nt._LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR
+    
+        class _FuncPtr(_CFuncPtr):
+            _flags_ = flags
+            _restype_ = self._func_restype_
+        self._FuncPtr = _FuncPtr
+    
+        if handle is None:
+>           self._handle = _dlopen(self._name, mode)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E           OSError: /tmp/tmpgi76fp55/mock.dll: file too short
+
+/usr/lib/python3.12/ctypes/__init__.py:379: OSError
+____________________________ test_task_func_no_dlls ____________________________
+
+    def test_task_func_no_dlls():
+        # Create a temporary directory without any DLL files
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Create a destination directory
+            dest_dir = os.path.join(temp_dir, 'destination')
+            os.makedirs(dest_dir)
+    
+            # Call the function with the paths
+>           result = task_func(os.path.join(temp_dir, 'nonexistent.dll'), dest_dir)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0564.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0564.py:6: in task_func
+    lib = ctypes.CDLL(filepath)
+          ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <CDLL '/tmp/tmpylt3x930/nonexistent.dll', handle 0 at 0x7fd15f6843e0>
+name = '/tmp/tmpylt3x930/nonexistent.dll', mode = 0, handle = None
+use_errno = False, use_last_error = False, winmode = None
+
+    def __init__(self, name, mode=DEFAULT_MODE, handle=None,
+                 use_errno=False,
+                 use_last_error=False,
+                 winmode=None):
+        if name:
+            name = _os.fspath(name)
+        self._name = name
+        flags = self._func_flags_
+        if use_errno:
+            flags |= _FUNCFLAG_USE_ERRNO
+        if use_last_error:
+            flags |= _FUNCFLAG_USE_LASTERROR
+        if _sys.platform.startswith("aix"):
+            """When the name contains ".a(" and ends with ")",
+               e.g., "libFOO.a(libFOO.so)" - this is taken to be an
+               archive(member) syntax for dlopen(), and the mode is adjusted.
+               Otherwise, name is presented to dlopen() as a file argument.
+            """
+            if name and name.endswith(")") and ".a(" in name:
+                mode |= ( _os.RTLD_MEMBER | _os.RTLD_NOW )
+        if _os.name == "nt":
+            if winmode is not None:
+                mode = winmode
+            else:
+                import nt
+                mode = nt._LOAD_LIBRARY_SEARCH_DEFAULT_DIRS
+                if '/' in name or '\\' in name:
+                    self._name = nt._getfullpathname(self._name)
+                    mode |= nt._LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR
+    
+        class _FuncPtr(_CFuncPtr):
+            _flags_ = flags
+            _restype_ = self._func_restype_
+        self._FuncPtr = _FuncPtr
+    
+        if handle is None:
+>           self._handle = _dlopen(self._name, mode)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E           OSError: /tmp/tmpylt3x930/nonexistent.dll: cannot open shared object file: No such file or directory
+
+/usr/lib/python3.12/ctypes/__init__.py:379: OSError
+_________________________ test_task_func_multiple_dlls _________________________
+
+    def test_task_func_multiple_dlls():
+        # Create a temporary directory with multiple DLL files
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Create mock DLL files in the temporary directory
+            dll_paths = [os.path.join(temp_dir, f'mock_{i}.dll') for i in range(3)]
+            for dll_path in dll_paths:
+                with open(dll_path, 'w') as f:
+                    f.write('Mock DLL content')
+    
+            # Create a destination directory
+            dest_dir = os.path.join(temp_dir, 'destination')
+            os.makedirs(dest_dir)
+    
+            # Call the function with the path of one of the DLLs
+>           result = task_func(dll_paths[0], dest_dir)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0564.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0564.py:6: in task_func
+    lib = ctypes.CDLL(filepath)
+          ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <CDLL '/tmp/tmpjbf0mkbl/mock_0.dll', handle 0 at 0x7fd15f684d40>
+name = '/tmp/tmpjbf0mkbl/mock_0.dll', mode = 0, handle = None, use_errno = False
+use_last_error = False, winmode = None
+
+    def __init__(self, name, mode=DEFAULT_MODE, handle=None,
+                 use_errno=False,
+                 use_last_error=False,
+                 winmode=None):
+        if name:
+            name = _os.fspath(name)
+        self._name = name
+        flags = self._func_flags_
+        if use_errno:
+            flags |= _FUNCFLAG_USE_ERRNO
+        if use_last_error:
+            flags |= _FUNCFLAG_USE_LASTERROR
+        if _sys.platform.startswith("aix"):
+            """When the name contains ".a(" and ends with ")",
+               e.g., "libFOO.a(libFOO.so)" - this is taken to be an
+               archive(member) syntax for dlopen(), and the mode is adjusted.
+               Otherwise, name is presented to dlopen() as a file argument.
+            """
+            if name and name.endswith(")") and ".a(" in name:
+                mode |= ( _os.RTLD_MEMBER | _os.RTLD_NOW )
+        if _os.name == "nt":
+            if winmode is not None:
+                mode = winmode
+            else:
+                import nt
+                mode = nt._LOAD_LIBRARY_SEARCH_DEFAULT_DIRS
+                if '/' in name or '\\' in name:
+                    self._name = nt._getfullpathname(self._name)
+                    mode |= nt._LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR
+    
+        class _FuncPtr(_CFuncPtr):
+            _flags_ = flags
+            _restype_ = self._func_restype_
+        self._FuncPtr = _FuncPtr
+    
+        if handle is None:
+>           self._handle = _dlopen(self._name, mode)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E           OSError: /tmp/tmpjbf0mkbl/mock_0.dll: file too short
+
+/usr/lib/python3.12/ctypes/__init__.py:379: OSError
+=========================== short test summary info ============================
+FAILED test_0564.py::test_task_func - OSError: /tmp/tmpgi76fp55/mock.dll: fil...
+FAILED test_0564.py::test_task_func_no_dlls - OSError: /tmp/tmpylt3x930/nonex...
+FAILED test_0564.py::test_task_func_multiple_dlls - OSError: /tmp/tmpjbf0mkbl...
+3 failed in 0.51s

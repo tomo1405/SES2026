@@ -1,0 +1,43 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___________ test_task_func[categories0-months0-42-expected_output0] ____________
+
+categories = ['Electronics', 'Clothing', 'Home & Kitchen', 'Books', 'Beauty & Personal Care']
+months = ['January', 'February', 'March', 'April', 'May', 'June', ...]
+random_seed = 42
+expected_output =        Month                Category  Sales
+0    January             Electronics  102.4
+1    January                Cl...                   Books  150.8
+9   February  Beauty & Personal Care  178.4
+10  December  Beauty & Personal Care  200.1
+
+    @pytest.mark.parametrize("categories, months, random_seed, expected_output", [
+        (['Electronics', 'Clothing', 'Home & Kitchen', 'Books', 'Beauty & Personal Care'],
+         ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+         42,
+         pd.DataFrame([['January', 'Electronics', 102.4],
+                       ['January', 'Clothing', 123.1],
+                       ['January', 'Home & Kitchen', 150.5],
+                       ['January', 'Books', 110.2],
+                       ['January', 'Beauty & Personal Care', 135.7],
+                       ['February', 'Electronics', 145.3],
+                       ['February', 'Clothing', 167.2],
+                       ['February', 'Home & Kitchen', 198.1],
+                       ['February', 'Books', 150.8],
+                       ['February', 'Beauty & Personal Care', 178.4],
+                       # ... and so on for all months and categories
+                       ['December', 'Beauty & Personal Care', 200.1]],
+                      columns=['Month', 'Category', 'Sales']))
+    ])
+    def test_task_func(categories, months, random_seed, expected_output):
+        seed(random_seed)
+        actual_output = task_func(categories, months, random_seed)
+>       assert actual_output.equals(expected_output)
+E       assert False
+E        +  where False = equals(       Month                Category  Sales\n0    January             Electronics  102.4\n1    January                Cl...                   Books  150.8\n9   February  Beauty & Personal Care  178.4\n10  December  Beauty & Personal Care  200.1)
+E        +    where equals =         Month                Category       Sales\n0     January             Electronics  427.111331\n1     January     ...Kitchen  316.596409\n58   December                   Books  297.381619\n59   December  Beauty & Personal Care  339.529114.equals
+
+test_0096.py:27: AssertionError
+=========================== short test summary info ============================
+FAILED test_0096.py::test_task_func[categories0-months0-42-expected_output0]
+1 failed in 1.06s

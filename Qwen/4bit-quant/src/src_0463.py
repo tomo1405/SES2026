@@ -1,0 +1,25 @@
+import pandas as pd
+import random
+def task_func(num_rows=100, categories=["a", "b", "c", "d", "e"], random_seed=42):
+    if num_rows <= 0:
+        raise ValueError("num_rows must not be negative")
+
+    random.seed(random_seed)
+
+    df = pd.DataFrame(
+        {
+            "Category": [
+                categories[random.randint(0, len(categories) - 1)]
+                for _ in range(num_rows)
+            ],
+            "Value": [random.randint(1, 100) for _ in range(num_rows)],
+        }
+    )
+
+    ax = (
+        df["Category"]
+        .value_counts()
+        .plot(kind="bar", title="Category Counts", figsize=(10, 6))
+    )
+
+    return df, ax

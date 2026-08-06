@@ -1,0 +1,42 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        url = "https://jsonplaceholder.typicode.com/posts"
+>       df = task_func(url)
+             ^^^^^^^^^^^^^^
+
+test_1001.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'https://jsonplaceholder.typicode.com/posts'
+
+    def task_func(url):
+        urllib.request.urlretrieve(url, TARGET_JSON_FILE)
+    
+        with open(TARGET_JSON_FILE, "r") as f:
+            data = json.load(f)
+    
+>       os.remove(TARGET_JSON_FILE)
+E       FileNotFoundError: [Errno 2] No such file or directory: 'downloaded_file.json'
+
+test_1001.py:14: FileNotFoundError
+__________________________ test_task_func_invalid_url __________________________
+
+    def test_task_func_invalid_url():
+        url = "https://invalidurl.com/posts"
+        with pytest.raises(Exception) as excinfo:
+            task_func(url)
+>       assert "Unable to retrieve data from the given URL" in str(excinfo.value)
+E       AssertionError: assert 'Unable to retrieve data from the given URL' in 'HTTP Error 403: Forbidden'
+E        +  where 'HTTP Error 403: Forbidden' = str(<HTTPError 403: 'Forbidden'>)
+E        +    where <HTTPError 403: 'Forbidden'> = <ExceptionInfo <HTTPError 403: 'Forbidden'> tblen=14>.value
+
+test_1001.py:28: AssertionError
+=========================== short test summary info ============================
+FAILED test_1001.py::test_task_func - FileNotFoundError: [Errno 2] No such fi...
+FAILED test_1001.py::test_task_func_invalid_url - AssertionError: assert 'Una...
+2 failed in 2.00s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

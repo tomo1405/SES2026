@@ -1,0 +1,87 @@
+F.FF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sample_df =    feature1  feature2  feature3  feature4  feature5
+0         1         5         2         6         3
+1         2   ...    4         5
+3         4         2         5         3         6
+4         5         1         6         2         7
+replacement_dict = {1: 10, 2: 20, 3: 30}
+
+    def test_task_func(sample_df, replacement_dict):
+        result = task_func(sample_df, replacement_dict)
+    
+        # Expected means after replacement
+        expected_means = {
+            'feature1': 30.0,
+            'feature2': 20.0,
+            'feature3': 40.0,
+            'feature4': 50.0,
+            'feature5': 60.0
+        }
+    
+        # Check if means are calculated correctly
+>       for feature, stats_dict in result.items():
+                                   ^^^^^^^^^^^^
+E       AttributeError: 'str' object has no attribute 'items'
+
+test_0222.py:34: AttributeError
+________________________ test_task_func_no_replacement _________________________
+
+sample_df =    feature1  feature2  feature3  feature4  feature5
+0         1         5         2         6         3
+1         2   ...    4         5
+3         4         2         5         3         6
+4         5         1         6         2         7
+
+    def test_task_func_no_replacement(sample_df):
+        result = task_func(sample_df, {})
+    
+        # Expected means without replacement
+        expected_means = {
+            'feature1': 3.0,
+            'feature2': 3.0,
+            'feature3': 4.0,
+            'feature4': 4.0,
+            'feature5': 5.0
+        }
+    
+        # Check if means are calculated correctly
+>       for feature, stats_dict in result.items():
+                                   ^^^^^^^^^^^^
+E       AttributeError: 'str' object has no attribute 'items'
+
+test_0222.py:55: AttributeError
+___________________________ test_task_func_with_mode ___________________________
+
+sample_df =    feature1  feature2  feature3  feature4  feature5
+0         1         5         2         6         3
+1         2   ...    4         5
+3         4         2         5         3         6
+4         5         1         6         2         7
+replacement_dict = {1: 10, 2: 20, 3: 30}
+
+    def test_task_func_with_mode(sample_df, replacement_dict):
+        result = task_func(sample_df, replacement_dict)
+    
+        # Expected modes after replacement
+        expected_modes = {
+            'feature1': 10,
+            'feature2': 20,
+            'feature3': 30,
+            'feature4': 40,
+            'feature5': 50
+        }
+    
+        # Check if modes are calculated correctly
+>       for feature, stats_dict in result.items():
+                                   ^^^^^^^^^^^^
+E       AttributeError: 'str' object has no attribute 'items'
+
+test_0222.py:71: AttributeError
+=========================== short test summary info ============================
+FAILED test_0222.py::test_task_func - AttributeError: 'str' object has no att...
+FAILED test_0222.py::test_task_func_no_replacement - AttributeError: 'str' ob...
+FAILED test_0222.py::test_task_func_with_mode - AttributeError: 'str' object ...
+3 failed, 1 passed in 2.61s

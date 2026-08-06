@@ -1,0 +1,64 @@
+.FFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_invalid_script _________________________
+
+    def test_task_func_invalid_script():
+        script_path = "path/to/invalid/script.py"
+        with pytest.raises(subprocess.CalledProcessError) as excinfo:
+>           task_func(script_path)
+
+test_0347.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+script_path = 'path/to/invalid/script.py', wait = True, args = ()
+
+    def task_func(script_path, wait=True, *args):
+        # Check if script exists
+        if not os.path.isfile(script_path):
+>           raise ValueError(f"Script '{script_path}' does not exist.")
+E           ValueError: Script 'path/to/invalid/script.py' does not exist.
+
+../../../src/src_0347.py:8: ValueError
+_____________________________ test_task_func_wait ______________________________
+
+    def test_task_func_wait():
+        script_path = "path/to/valid/script.py"
+>       result = task_func(script_path, wait=True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0347.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+script_path = 'path/to/valid/script.py', wait = True, args = ()
+
+    def task_func(script_path, wait=True, *args):
+        # Check if script exists
+        if not os.path.isfile(script_path):
+>           raise ValueError(f"Script '{script_path}' does not exist.")
+E           ValueError: Script 'path/to/valid/script.py' does not exist.
+
+../../../src/src_0347.py:8: ValueError
+____________________________ test_task_func_nowait _____________________________
+
+    def test_task_func_nowait():
+        script_path = "path/to/valid/script.py"
+>       result = task_func(script_path, wait=False)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0347.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+script_path = 'path/to/valid/script.py', wait = False, args = ()
+
+    def task_func(script_path, wait=True, *args):
+        # Check if script exists
+        if not os.path.isfile(script_path):
+>           raise ValueError(f"Script '{script_path}' does not exist.")
+E           ValueError: Script 'path/to/valid/script.py' does not exist.
+
+../../../src/src_0347.py:8: ValueError
+=========================== short test summary info ============================
+FAILED test_0347.py::test_task_func_invalid_script - ValueError: Script 'path...
+FAILED test_0347.py::test_task_func_wait - ValueError: Script 'path/to/valid/...
+FAILED test_0347.py::test_task_func_nowait - ValueError: Script 'path/to/vali...
+3 failed, 1 passed in 0.43s

@@ -1,0 +1,38 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a temporary CSV file
+        with tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix='.csv') as temp_file:
+            temp_filename = temp_file.name
+            temp_file.write("name,age\nAlice,30\nBob,25")
+            temp_file.flush()
+    
+        # Call the function
+        result = task_func(temp_filename)
+    
+        # Check if the function returned the correct filename
+        assert result == temp_filename
+    
+        # Read the content of the file after processing
+        with open(temp_filename, 'r') as file:
+            content = file.read()
+    
+        # Expected content after reversing the rows
+        expected_content = "name,age\nBob,25\nAlice,30"
+    
+        # Check if the content is as expected
+>       assert content == expected_content
+E       AssertionError: assert 'Bob,25\nAlice,30\nname,age\n' == 'name,age\nBob,25\nAlice,30'
+E         
+E         + Bob,25
+E         + Alice,30
+E           name,age
+E         - Bob,25
+E         - Alice,30
+
+test_0673.py:27: AssertionError
+=========================== short test summary info ============================
+FAILED test_0673.py::test_task_func - AssertionError: assert 'Bob,25\nAlice,3...
+1 failed in 0.46s

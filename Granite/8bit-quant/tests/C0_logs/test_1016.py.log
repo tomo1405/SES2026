@@ -1,0 +1,67 @@
+FF.FF                                                                    [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_with_file_url _________________________
+
+    def test_task_func_with_file_url():
+        webpage_url = "file://path/to/file.html"
+>       num_records = task_func(webpage_url)
+                      ^^^^^^^^^^^^^^^^^^^^^^
+
+test_1016.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+webpage_url = 'file://path/to/file.html', database_name = 'my_database.db'
+
+    def task_func(webpage_url: str, database_name: str = "my_database.db") -> int:
+        try:
+            if webpage_url.startswith("file://"):
+>               with open(webpage_url[7:], "r", encoding="utf-8") as file:
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               FileNotFoundError: [Errno 2] No such file or directory: 'path/to/file.html'
+
+../../../src/src_1016.py:8: FileNotFoundError
+_________________________ test_task_func_with_http_url _________________________
+
+    def test_task_func_with_http_url():
+        webpage_url = "http://www.example.com"
+        num_records = task_func(webpage_url)
+>       assert num_records == expected_num_records
+                              ^^^^^^^^^^^^^^^^^^^^
+E       NameError: name 'expected_num_records' is not defined
+
+test_1016.py:16: NameError
+________________________ test_task_func_with_empty_data ________________________
+
+    def test_task_func_with_empty_data():
+        webpage_url = "file://path/to/empty_file.html"
+>       num_records = task_func(webpage_url)
+                      ^^^^^^^^^^^^^^^^^^^^^^
+
+test_1016.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+webpage_url = 'file://path/to/empty_file.html', database_name = 'my_database.db'
+
+    def task_func(webpage_url: str, database_name: str = "my_database.db") -> int:
+        try:
+            if webpage_url.startswith("file://"):
+>               with open(webpage_url[7:], "r", encoding="utf-8") as file:
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               FileNotFoundError: [Errno 2] No such file or directory: 'path/to/empty_file.html'
+
+../../../src/src_1016.py:8: FileNotFoundError
+__________________ test_task_func_with_invalid_database_name ___________________
+
+    def test_task_func_with_invalid_database_name():
+        webpage_url = "http://www.example.com"
+        database_name = "not/a/valid/path"
+>       with pytest.raises(sqlite3.DatabaseError):
+E       Failed: DID NOT RAISE DatabaseError
+
+test_1016.py:31: Failed
+=========================== short test summary info ============================
+FAILED test_1016.py::test_task_func_with_file_url - FileNotFoundError: [Errno...
+FAILED test_1016.py::test_task_func_with_http_url - NameError: name 'expected...
+FAILED test_1016.py::test_task_func_with_empty_data - FileNotFoundError: [Err...
+FAILED test_1016.py::test_task_func_with_invalid_database_name - Failed: DID ...
+4 failed, 1 passed in 1.47s

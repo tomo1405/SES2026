@@ -1,0 +1,42 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        my_path = 'path/to/files'
+        days_old = 30
+        archive_dir = task_func(my_path, days_old)
+        assert os.path.isdir(archive_dir)
+>       assert os.path.isfile(os.path.join(archive_dir, 'file1.txt'))
+E       AssertionError: assert False
+E        +  where False = <function isfile at 0x7487974142c0>('path/to/files/archive/file1.txt')
+E        +    where <function isfile at 0x7487974142c0> = <module 'posixpath' (frozen)>.isfile
+E        +      where <module 'posixpath' (frozen)> = os.path
+E        +    and   'path/to/files/archive/file1.txt' = <function join at 0x748797414cc0>('path/to/files/archive', 'file1.txt')
+E        +      where <function join at 0x748797414cc0> = <module 'posixpath' (frozen)>.join
+E        +        where <module 'posixpath' (frozen)> = os.path
+
+test_0264.py:12: AssertionError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        my_path = 'path/to/files'
+        days_old = 0
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0264.py:21: Failed
+_________________________ test_task_func_invalid_path __________________________
+
+    def test_task_func_invalid_path():
+        my_path = 'path/to/invalid/files'
+        days_old = 30
+>       with pytest.raises(FileNotFoundError):
+E       Failed: DID NOT RAISE FileNotFoundError
+
+test_0264.py:27: Failed
+=========================== short test summary info ============================
+FAILED test_0264.py::test_task_func_valid_input - AssertionError: assert False
+FAILED test_0264.py::test_task_func_invalid_input - Failed: DID NOT RAISE Val...
+FAILED test_0264.py::test_task_func_invalid_path - Failed: DID NOT RAISE File...
+3 failed in 0.41s

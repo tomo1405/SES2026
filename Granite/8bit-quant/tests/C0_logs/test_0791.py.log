@@ -1,0 +1,70 @@
+F.FF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+df =        col1      col2
+0 -1.414214  1.414214
+1 -0.707107  0.707107
+2  0.000000  0.000000
+3  0.707107 -0.707107
+4  1.414214 -1.414214
+
+    def test_task_func(df):
+        col1 = 'col1'
+        col2 = 'col2'
+        N = 3
+        result = task_func(df, col1, col2, N)
+        expected = [4, 3, 2]
+>       assert result == expected
+E       assert [0, 4, 1] == [4, 3, 2]
+E         
+E         At index 0 diff: 0 != 4
+E         Use -v to get more diff
+
+test_0791.py:19: AssertionError
+________________________ test_task_func_with_invalid_N _________________________
+
+df =        col1      col2
+0 -1.414214  1.414214
+1 -0.707107  0.707107
+2  0.000000  0.000000
+3  0.707107 -0.707107
+4  1.414214 -1.414214
+
+    def test_task_func_with_invalid_N(df):
+        col1 = 'col1'
+        col2 = 'col2'
+        N = -1
+>       with pytest.raises(ValueError) as excinfo:
+E       Failed: DID NOT RAISE ValueError
+
+test_0791.py:33: Failed
+______________________ test_task_func_with_invalid_scaler ______________________
+
+df =    col1  col2
+0     1     5
+1     2     4
+2     3     3
+3     4     2
+4     5     1
+
+    def test_task_func_with_invalid_scaler(df):
+        class InvalidScaler:
+            pass
+        col1 = 'col1'
+        col2 = 'col2'
+        N = 3
+        scaler = InvalidScaler()
+        with pytest.raises(TypeError) as excinfo:
+            task_func(df, col1, col2, N, scaler=scaler)
+>       assert 'scaler must be an instance of StandardScaler.' in str(excinfo.value)
+E       assert 'scaler must be an instance of StandardScaler.' in "task_func() got an unexpected keyword argument 'scaler'"
+E        +  where "task_func() got an unexpected keyword argument 'scaler'" = str(TypeError("task_func() got an unexpected keyword argument 'scaler'"))
+E        +    where TypeError("task_func() got an unexpected keyword argument 'scaler'") = <ExceptionInfo TypeError("task_func() got an unexpected keyword argument 'scaler'") tblen=1>.value
+
+test_0791.py:46: AssertionError
+=========================== short test summary info ============================
+FAILED test_0791.py::test_task_func - assert [0, 4, 1] == [4, 3, 2]
+FAILED test_0791.py::test_task_func_with_invalid_N - Failed: DID NOT RAISE Va...
+FAILED test_0791.py::test_task_func_with_invalid_scaler - assert 'scaler must...
+3 failed, 1 passed in 2.81s

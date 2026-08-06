@@ -1,0 +1,44 @@
+.F.F.FF                                                                  [100%]
+=================================== FAILURES ===================================
+__________________ test_task_func_utc_datetime_tzinfo_not_utc __________________
+
+    def test_task_func_utc_datetime_tzinfo_not_utc():
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0200.py:14: Failed
+__________________ test_task_func_weather_conditions_not_list __________________
+
+    def test_task_func_weather_conditions_not_list():
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0200.py:22: Failed
+_________________________ test_task_func_seed_not_int __________________________
+
+    def test_task_func_seed_not_int():
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0200.py:30: Failed
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        report_df = task_func(utc_datetime=datetime.now(tz=pytz.utc), cities=['New York', 'London', 'Beijing', 'Tokyo', 'Sydney'], weather_conditions=['Sunny', 'Cloudy', 'Rainy', 'Snowy', 'Stormy'], timezones={'New York': 'America/New_York', 'London': 'Europe/London', 'Beijing': 'Asia/Shanghai', 'Tokyo': 'Asia/Tokyo', 'Sydney': 'Australia/Sydney'}, seed=42)
+        assert isinstance(report_df, pd.DataFrame)
+        assert report_df.shape == (5, 3)
+        assert report_df.columns.tolist() == ['City', 'Local Time', 'Weather Condition']
+        assert report_df['City'].tolist() == ['New York', 'London', 'Beijing', 'Tokyo', 'Sydney']
+>       assert report_df['Local Time'].tolist() == ['2022-01-01 12:00:00 EST', '2022-01-01 17:00:00 GMT', '2022-01-01 08:00:00 CST', '2022-01-01 13:00:00 JST', '2022-01-01 16:00:00 AEST']
+E       AssertionError: assert ['2026-07-28 ...7:55:31 AEST'] == ['2022-01-01 ...6:00:00 AEST']
+E         
+E         At index 0 diff: '2026-07-28 17:55:31 EDT' != '2022-01-01 12:00:00 EST'
+E         Use -v to get more diff
+
+test_0200.py:39: AssertionError
+=========================== short test summary info ============================
+FAILED test_0200.py::test_task_func_utc_datetime_tzinfo_not_utc - Failed: DID...
+FAILED test_0200.py::test_task_func_weather_conditions_not_list - Failed: DID...
+FAILED test_0200.py::test_task_func_seed_not_int - Failed: DID NOT RAISE Valu...
+FAILED test_0200.py::test_task_func_valid_input - AssertionError: assert ['20...
+4 failed, 3 passed in 1.39s

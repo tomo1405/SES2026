@@ -1,0 +1,52 @@
+F..EF                                                                    [100%]
+==================================== ERRORS ====================================
+________________ ERROR at setup of test_task_func_write_failure ________________
+file /work/tomohiro-w/utg/Qwen/4bit-quant/tests/test_0805.py, line 34
+  def test_task_func_write_failure(mocker):
+E       fixture 'mocker' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, cov, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, no_cover, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/work/tomohiro-w/utg/Qwen/4bit-quant/tests/test_0805.py:34
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        metrics = {'accuracy': 0.9, 'loss': 0.1}
+        filename = 'test_log.txt'
+        result = task_func(metrics, filename)
+        assert result is True
+        log_path = os.path.join('./logs', filename)
+        assert os.path.exists(log_path)
+        with open(log_path, 'r') as f:
+            lines = f.readlines()
+            assert len(lines) > 3  # datetime + 2 metrics + newline
+>           assert lines[0].strip().startswith(str(datetime.now()))
+E           AssertionError: assert False
+E            +  where False = <built-in method startswith of str object at 0x71d619356d30>('2026-07-28 12:52:54.306947')
+E            +    where <built-in method startswith of str object at 0x71d619356d30> = '2026-07-28 12:52:54.305669'.startswith
+E            +      where '2026-07-28 12:52:54.305669' = <built-in method strip of str object at 0x71d619356c90>()
+E            +        where <built-in method strip of str object at 0x71d619356c90> = '2026-07-28 12:52:54.305669\n'.strip
+E            +    and   '2026-07-28 12:52:54.306947' = str(datetime.datetime(2026, 7, 28, 12, 52, 54, 306947))
+E            +      where datetime.datetime(2026, 7, 28, 12, 52, 54, 306947) = <built-in method now of type object at 0xa4fd20>()
+E            +        where <built-in method now of type object at 0xa4fd20> = datetime.now
+
+test_0805.py:16: AssertionError
+________________________ test_task_func_custom_log_dir _________________________
+
+    def test_task_func_custom_log_dir():
+        metrics = {'accuracy': 0.9, 'loss': 0.1}
+        filename = 'test_log.txt'
+        custom_log_dir = '/tmp/custom_logs'
+        result = task_func(metrics, filename, log_dir=custom_log_dir)
+>       assert result is True
+E       assert False is True
+
+test_0805.py:46: AssertionError
+----------------------------- Captured stdout call -----------------------------
+An error occurred: [Errno 2] No such file or directory: '/tmp/custom_logs/test_log.txt'
+=========================== short test summary info ============================
+FAILED test_0805.py::test_task_func_valid_input - AssertionError: assert False
+FAILED test_0805.py::test_task_func_custom_log_dir - assert False is True
+ERROR test_0805.py::test_task_func_write_failure
+2 failed, 2 passed, 1 error in 0.48s

@@ -1,0 +1,37 @@
+.F.                                                                      [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_empty_lists ________________________
+
+    def test_task_func_with_empty_lists():
+        l1 = []
+        l2 = []
+        THRESHOLD = 0.5
+        combined = [val for pair in zip_longest(l1, l2) for val in pair if val is not None]
+        differences = np.abs(np.array(combined) - THRESHOLD)
+>       closest_index = np.argmin(differences)
+                        ^^^^^^^^^^^^^^^^^^^^^^
+
+test_0024.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:1452: in argmin
+    return _wrapfunc(a, 'argmin', axis=axis, out=out, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+obj = array([], dtype=float64), method = 'argmin', args = ()
+kwds = {'axis': None, 'out': None}
+
+    def _wrapfunc(obj, method, *args, **kwds):
+        bound = getattr(obj, method, None)
+        if bound is None:
+            return _wrapit(obj, method, *args, **kwds)
+    
+        try:
+>           return bound(*args, **kwds)
+                   ^^^^^^^^^^^^^^^^^^^^
+E           ValueError: attempt to get argmin of an empty sequence
+
+../../../.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:54: ValueError
+=========================== short test summary info ============================
+FAILED test_0024.py::test_task_func_with_empty_lists - ValueError: attempt to...
+1 failed, 2 passed in 0.58s

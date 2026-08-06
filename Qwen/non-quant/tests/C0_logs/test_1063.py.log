@@ -1,0 +1,67 @@
+.FFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_non_empty_array ________________________
+
+    def test_task_func_non_empty_array():
+        arr = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+        ax = task_func(arr)
+        assert isinstance(ax, Axes)
+        assert ax.get_title() == "Time Series of Row Sums"
+        assert len(ax.lines) == 1
+        line = ax.lines[0]
+        expected_data = pd.Series([6, 15, 24], index=pd.date_range(start="1/1/2020", periods=3))
+        assert np.allclose(line.get_ydata(), expected_data.values)
+>       assert all(line.get_xdata() == expected_data.index)
+E       AssertionError: assert False
+E        +  where False = all(array([Period... dtype=object) == DatetimeIndex...s]', freq='D')
+E           
+E           Use -v to get more diff)
+
+test_1063.py:24: AssertionError
+__________________________ test_task_func_single_row ___________________________
+
+    def test_task_func_single_row():
+        arr = np.array([[1, 2, 3]])
+        ax = task_func(arr)
+        assert isinstance(ax, Axes)
+        assert ax.get_title() == "Time Series of Row Sums"
+        assert len(ax.lines) == 1
+        line = ax.lines[0]
+        expected_data = pd.Series([6], index=pd.date_range(start="1/1/2020", periods=1))
+        assert np.allclose(line.get_ydata(), expected_data.values)
+>       assert all(line.get_xdata() == expected_data.index)
+E       AssertionError: assert False
+E        +  where False = all(array([Period... dtype=object) == DatetimeIndex...s]', freq='D')
+E           
+E           Use -v to get more diff)
+
+test_1063.py:35: AssertionError
+_________________________ test_task_func_single_column _________________________
+
+    def test_task_func_single_column():
+        arr = np.array([[1], [2], [3]])
+        ax = task_func(arr)
+        assert isinstance(ax, Axes)
+        assert ax.get_title() == "Time Series of Row Sums"
+        assert len(ax.lines) == 1
+        line = ax.lines[0]
+        expected_data = pd.Series([1, 2, 3], index=pd.date_range(start="1/1/2020", periods=3))
+        assert np.allclose(line.get_ydata(), expected_data.values)
+>       assert all(line.get_xdata() == expected_data.index)
+E       AssertionError: assert False
+E        +  where False = all(array([Period... dtype=object) == DatetimeIndex...s]', freq='D')
+E           
+E           Use -v to get more diff)
+
+test_1063.py:46: AssertionError
+=============================== warnings summary ===============================
+Qwen/non-quant/tests/test_1063.py::test_task_func_single_row
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/pandas/plotting/_matplotlib/core.py:1613: UserWarning: Attempting to set identical low and high xlims makes transformation singular; automatically expanding.
+    ax.set_xlim(left, right)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_1063.py::test_task_func_non_empty_array - AssertionError: assert ...
+FAILED test_1063.py::test_task_func_single_row - AssertionError: assert False
+FAILED test_1063.py::test_task_func_single_column - AssertionError: assert False
+3 failed, 1 passed, 1 warning in 2.30s

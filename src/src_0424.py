@@ -1,0 +1,15 @@
+import numpy as np
+import cv2
+import os
+def task_func(image_path='image.jpg', threshold=128):
+
+    if not isinstance(threshold, int) or not (0 <= threshold <= 255):
+        raise ValueError("Threshold must be an integer between 0 and 255.")
+
+    if not os.path.exists(image_path):
+        raise FileNotFoundError(f"No image found at {image_path}")
+
+    img = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+    binary_img = np.where(img > threshold, 255, 0).astype('uint8')
+
+    return np.array(img), binary_img

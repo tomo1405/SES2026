@@ -1,0 +1,34 @@
+.F                                                                       [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_with_patch ___________________________
+
+    def test_task_func_with_patch():
+        with patch("matplotlib.pyplot.show") as mock_show:
+            df = pd.DataFrame({"name": ["Alice", "Bob", "Alice"], "age": [25, 30, 25]})
+            duplicates_counter, ax = task_func(df)
+            assert duplicates_counter == Counter({25: 2})
+            assert isinstance(ax, plt.Axes)
+>           mock_show.assert_called_once()
+
+test_0531.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='show' id='137180502773632'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'show' to have been called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:923: AssertionError
+=========================== short test summary info ============================
+FAILED test_0531.py::test_task_func_with_patch - AssertionError: Expected 'sh...
+1 failed, 1 passed in 3.66s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

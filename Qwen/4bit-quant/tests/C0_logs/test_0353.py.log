@@ -1,0 +1,54 @@
+FF.FF                                                                    [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_positive_top_k _________________________
+
+    def test_task_func_positive_top_k():
+        text_dict = {'apple': 5, 'banana': 3, 'cherry': 8}
+        word_keys = ['apple', 'banana']
+        top_k = 2
+        ax, result = task_func(text_dict, word_keys, top_k)
+>       assert isinstance(ax, pd.plotting._matplotlib.bar.BarPlot)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'pandas.plotting._matplotlib' has no attribute 'bar'
+
+test_0353.py:11: AttributeError
+__________________________ test_task_func_zero_top_k ___________________________
+
+    def test_task_func_zero_top_k():
+        text_dict = {'apple': 5, 'banana': 3, 'cherry': 8}
+        word_keys = ['apple', 'banana']
+        top_k = 0
+>       with pytest.raises(ValueError, match='top_k must be a positive integer.'):
+E       Failed: DID NOT RAISE ValueError
+
+test_0353.py:18: Failed
+________________ test_task_func_top_k_greater_than_dict_length _________________
+
+    def test_task_func_top_k_greater_than_dict_length():
+        text_dict = {'apple': 5, 'banana': 3, 'cherry': 8}
+        word_keys = ['apple', 'banana']
+        top_k = 10
+        ax, result = task_func(text_dict, word_keys, top_k)
+>       assert isinstance(ax, pd.plotting._matplotlib.bar.BarPlot)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'pandas.plotting._matplotlib' has no attribute 'bar'
+
+test_0353.py:33: AttributeError
+_______________________ test_task_func_missing_word_key ________________________
+
+    def test_task_func_missing_word_key():
+        text_dict = {'apple': 5, 'banana': 3, 'cherry': 8}
+        word_keys = ['apple', 'orange']
+        top_k = 2
+        ax, result = task_func(text_dict, word_keys, top_k)
+>       assert isinstance(ax, pd.plotting._matplotlib.bar.BarPlot)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'pandas.plotting._matplotlib' has no attribute 'bar'
+
+test_0353.py:41: AttributeError
+=========================== short test summary info ============================
+FAILED test_0353.py::test_task_func_positive_top_k - AttributeError: module '...
+FAILED test_0353.py::test_task_func_zero_top_k - Failed: DID NOT RAISE ValueE...
+FAILED test_0353.py::test_task_func_top_k_greater_than_dict_length - Attribut...
+FAILED test_0353.py::test_task_func_missing_word_key - AttributeError: module...
+4 failed, 1 passed in 2.00s

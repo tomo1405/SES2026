@@ -1,0 +1,43 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data_list = ["apple, banana, cherry", "orange, grapes, mango"]
+        expected_output = pd.DataFrame({"Original String": data_list, "Randomized String": ["banana, apple, cherry", "orange, mango, grapes"]})
+        output = task_func(data_list)
+>       assert output.equals(expected_output)
+E       assert False
+E        +  where False = equals(         Original String      Randomized String\n0  apple, banana, cherry  banana, apple, cherry\n1  orange, grapes, mango  orange, mango, grapes)
+E        +    where equals =          Original String      Randomized String\n0  apple, banana, cherry  cherry, apple, banana\n1  orange, grapes, mango  mango, grapes, orange.equals
+
+test_0482.py:9: AssertionError
+___________________________ test_task_func_with_seed ___________________________
+
+    def test_task_func_with_seed():
+        data_list = ["apple, banana, cherry", "orange, grapes, mango"]
+        expected_output = pd.DataFrame({"Original String": data_list, "Randomized String": ["banana, apple, cherry", "orange, mango, grapes"]})
+        output = task_func(data_list, seed=42)
+>       assert output.equals(expected_output)
+E       assert False
+E        +  where False = equals(         Original String      Randomized String\n0  apple, banana, cherry  banana, apple, cherry\n1  orange, grapes, mango  orange, mango, grapes)
+E        +    where equals =          Original String      Randomized String\n0  apple, banana, cherry  cherry, apple, banana\n1  orange, grapes, mango  mango, grapes, orange.equals
+
+test_0482.py:15: AssertionError
+______________________ test_task_func_with_different_seed ______________________
+
+    def test_task_func_with_different_seed():
+        data_list = ["apple, banana, cherry", "orange, grapes, mango"]
+        expected_output = pd.DataFrame({"Original String": data_list, "Randomized String": ["banana, apple, cherry", "orange, mango, grapes"]})
+        output = task_func(data_list, seed=1337)
+>       assert output.equals(expected_output)
+E       assert False
+E        +  where False = equals(         Original String      Randomized String\n0  apple, banana, cherry  banana, apple, cherry\n1  orange, grapes, mango  orange, mango, grapes)
+E        +    where equals =          Original String      Randomized String\n0  apple, banana, cherry  cherry, banana, apple\n1  orange, grapes, mango  grapes, mango, orange.equals
+
+test_0482.py:21: AssertionError
+=========================== short test summary info ============================
+FAILED test_0482.py::test_task_func - assert False
+FAILED test_0482.py::test_task_func_with_seed - assert False
+FAILED test_0482.py::test_task_func_with_different_seed - assert False
+3 failed in 1.10s

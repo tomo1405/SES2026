@@ -1,0 +1,30 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sample_df =    closing_price   Z_score
+0            100 -1.513289
+1            102 -0.855337
+2            101 -1.184313
+3         ...8  1.118518
+6            107  0.789542
+7            103 -0.526361
+8            104 -0.197386
+9            106  0.460566
+
+    def test_task_func(sample_df):
+        outliers, ax = task_func(sample_df)
+    
+        # Check if the outliers DataFrame is correctly identified
+        expected_outliers = sample_df.iloc[[4, 5]]
+>       pd.testing.assert_frame_equal(outliers.reset_index(drop=True), expected_outliers.reset_index(drop=True))
+E       AssertionError: DataFrame are different
+E       
+E       DataFrame shape mismatch
+E       [left]:  (0, 2)
+E       [right]: (2, 2)
+
+test_0916.py:19: AssertionError
+=========================== short test summary info ============================
+FAILED test_0916.py::test_task_func - AssertionError: DataFrame are different
+1 failed in 3.44s

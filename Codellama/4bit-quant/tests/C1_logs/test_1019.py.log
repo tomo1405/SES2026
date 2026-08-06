@@ -1,0 +1,39 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with valid URL and from_encoding
+        url = "http://example.com"
+        from_encoding = "cp1251"
+        soup = task_func(url, from_encoding)
+        assert soup is not None
+        assert isinstance(soup, BeautifulSoup)
+    
+        # Test with invalid URL
+        url = None
+        soup = task_func(url, from_encoding)
+        assert soup is None
+    
+        # Test with invalid from_encoding
+        url = "http://example.com"
+        from_encoding = None
+        soup = task_func(url, from_encoding)
+        assert soup is None
+    
+        # Test with use_lxml=True
+        url = "http://example.com"
+        from_encoding = "cp1251"
+        soup = task_func(url, from_encoding, use_lxml=True)
+        assert soup is not None
+        assert isinstance(soup, BeautifulSoup)
+>       assert soup.parser == "lxml"
+E       assert None == 'lxml'
+E        +  where None = <!DOCTYPE html>\n<html lang="en"><head><title>Example Domain</title><link href="data:," rel="icon"/><meta content="widt...sion. Avoid use in operations.</p><p><a href="https://iana.org/domains/example">Learn more</a></p></div></body></html>\n.parser
+
+test_1019.py:30: AssertionError
+----------------------------- Captured stdout call -----------------------------
+An error occurred: decode() argument 'encoding' must be str, not None
+=========================== short test summary info ============================
+FAILED test_1019.py::test_task_func - assert None == 'lxml'
+1 failed in 1.27s

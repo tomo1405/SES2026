@@ -1,0 +1,67 @@
+....FFFF                                                                 [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_case_insensitivity _______________________
+
+    def test_task_func_case_insensitivity():
+        result = task_func("Hello hello HELLO")
+>       assert result == {'hello': 3}
+E       AssertionError: assert {'Hello': 1, ...1, 'HELLO': 1} == {'hello': 3}
+E         
+E         Differing items:
+E         {'hello': 1} != {'hello': 3}
+E         Left contains 2 more items:
+E         {'HELLO': 1, 'Hello': 1}
+E         Use -v to get more diff
+
+test_0333.py:29: AssertionError
+_______________________ test_task_func_with_punctuation ________________________
+
+    def test_task_func_with_punctuation():
+        result = task_func("Hello, world! Hello...")
+>       assert result == {'hello': 2, 'world': 1}
+E       AssertionError: assert {'Hello': 2, 'world': 1} == {'hello': 2, 'world': 1}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Left contains 1 more item:
+E         {'Hello': 2}
+E         Right contains 1 more item:
+E         {'hello': 2}
+E         Use -v to get more diff
+
+test_0333.py:33: AssertionError
+_________________________ test_task_func_with_numbers __________________________
+
+    def test_task_func_with_numbers():
+        result = task_func("Hello 123 world")
+>       assert result == {'hello': 1, 'world': 1}
+E       AssertionError: assert {'Hello': 1, ...1, 'world': 1} == {'hello': 1, 'world': 1}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Left contains 2 more items:
+E         {'123': 1, 'Hello': 1}
+E         Right contains 1 more item:
+E         {'hello': 1}
+E         Use -v to get more diff
+
+test_0333.py:37: AssertionError
+____________________ test_task_func_with_special_characters ____________________
+
+    def test_task_func_with_special_characters():
+        result = task_func("Hello @world! #hello")
+>       assert result == {'hello': 2, 'world': 1}
+E       AssertionError: assert {'Hello': 1, ...1, 'hello': 1} == {'hello': 2, 'world': 1}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'hello': 1} != {'hello': 2}
+E         Left contains 1 more item:
+E         {'Hello': 1}
+E         Use -v to get more diff
+
+test_0333.py:41: AssertionError
+=========================== short test summary info ============================
+FAILED test_0333.py::test_task_func_case_insensitivity - AssertionError: asse...
+FAILED test_0333.py::test_task_func_with_punctuation - AssertionError: assert...
+FAILED test_0333.py::test_task_func_with_numbers - AssertionError: assert {'H...
+FAILED test_0333.py::test_task_func_with_special_characters - AssertionError:...
+4 failed, 4 passed in 3.89s

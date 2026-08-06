@@ -1,0 +1,100 @@
+FEFFEF                                                                   [100%]
+==================================== ERRORS ====================================
+____________ ERROR at teardown of test_task_func_default_parameters ____________
+
+    def teardown_function():
+        # Clean up created directories and files
+        for dir_name in ["latin_files", "custom_dir", "existing_dir", "no_files_dir"]:
+            if os.path.exists(dir_name):
+                for root, dirs, files in os.walk(dir_name, topdown=False):
+                    for name in files:
+>                       os.remove(os.path.join(root, name))
+E                       FileNotFoundError: [Errno 2] No such file or directory: 'latin_files/file2.txt'
+
+test_0763.py:71: FileNotFoundError
+____________ ERROR at teardown of test_task_func_existing_directory ____________
+
+    def teardown_function():
+        # Clean up created directories and files
+        for dir_name in ["latin_files", "custom_dir", "existing_dir", "no_files_dir"]:
+            if os.path.exists(dir_name):
+                for root, dirs, files in os.walk(dir_name, topdown=False):
+                    for name in files:
+>                       os.remove(os.path.join(root, name))
+E                       FileNotFoundError: [Errno 2] No such file or directory: 'existing_dir/file1.txt'
+
+test_0763.py:71: FileNotFoundError
+=================================== FAILURES ===================================
+______________________ test_task_func_default_parameters _______________________
+
+    def test_task_func_default_parameters():
+        # Test with default parameters
+        result = task_func()
+        assert os.path.exists(result)
+        assert zipfile.is_zipfile(result)
+        with zipfile.ZipFile(result, 'r') as zip_ref:
+            file_list = zip_ref.namelist()
+            assert len(file_list) == 3
+            for file_name in ['file1.txt', 'file2.txt', 'file3.txt']:
+>               assert file_name in file_list
+E               AssertionError: assert 'file1.txt' in ['latin_files/file2.txt', 'latin_files/file3.txt', 'latin_files/file1.txt']
+
+test_0763.py:15: AssertionError
+_______________________ test_task_func_custom_parameters _______________________
+
+    def test_task_func_custom_parameters():
+        # Test with custom parameters
+        directory_name = "custom_dir"
+        content = "Custom Content"
+        file_names = ["a.txt", "b.txt"]
+        encoding = "utf-8"
+        result = task_func(directory_name, content, file_names, encoding)
+        assert os.path.exists(result)
+        assert zipfile.is_zipfile(result)
+        with zipfile.ZipFile(result, 'r') as zip_ref:
+            file_list = zip_ref.namelist()
+            assert len(file_list) == 2
+            for file_name in file_names:
+>               assert file_name in file_list
+E               AssertionError: assert 'a.txt' in ['custom_dir/a.txt', 'custom_dir/b.txt']
+
+test_0763.py:33: AssertionError
+______________________ test_task_func_existing_directory _______________________
+
+    def test_task_func_existing_directory():
+        # Test with an existing directory
+        directory_name = "existing_dir"
+        os.makedirs(directory_name, exist_ok=True)
+        result = task_func(directory_name)
+        assert os.path.exists(result)
+        assert zipfile.is_zipfile(result)
+        with zipfile.ZipFile(result, 'r') as zip_ref:
+            file_list = zip_ref.namelist()
+            assert len(file_list) == 3
+            for file_name in ['file1.txt', 'file2.txt', 'file3.txt']:
+>               assert file_name in file_list
+E               AssertionError: assert 'file1.txt' in ['existing_dir/file2.txt', 'existing_dir/file3.txt', 'existing_dir/file1.txt']
+
+test_0763.py:49: AssertionError
+___________________________ test_task_func_no_files ____________________________
+
+    def test_task_func_no_files():
+        # Test with no files
+        directory_name = "no_files_dir"
+        file_names = []
+        result = task_func(directory_name, file_names=file_names)
+>       assert os.path.exists(result)
+E       AssertionError: assert False
+E        +  where False = <function exists at 0x714b0a3f3600>('no_files_dir.zip')
+E        +    where <function exists at 0x714b0a3f3600> = <module 'posixpath' (frozen)>.exists
+E        +      where <module 'posixpath' (frozen)> = os.path
+
+test_0763.py:59: AssertionError
+=========================== short test summary info ============================
+FAILED test_0763.py::test_task_func_default_parameters - AssertionError: asse...
+FAILED test_0763.py::test_task_func_custom_parameters - AssertionError: asser...
+FAILED test_0763.py::test_task_func_existing_directory - AssertionError: asse...
+FAILED test_0763.py::test_task_func_no_files - AssertionError: assert False
+ERROR test_0763.py::test_task_func_default_parameters - FileNotFoundError: [E...
+ERROR test_0763.py::test_task_func_existing_directory - FileNotFoundError: [E...
+4 failed, 2 errors in 0.60s

@@ -1,0 +1,58 @@
+F.FF.                                                                    [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_valid_n ____________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1258/test_task_func_valid_n0')
+
+    def test_task_func_valid_n(tmp_path):
+        n = 3
+        file_name = tmp_path / "test_output.json"
+        result = task_func(n, file_name)
+>       assert result == str(file_name)
+E       AssertionError: assert PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1258/test_task_func_valid_n0/test_output.json') == '/tmp/pytest-of-tomohiro-w/pytest-1258/test_task_func_valid_n0/test_output.json'
+E        +  where '/tmp/pytest-of-tomohiro-w/pytest-1258/test_task_func_valid_n0/test_output.json' = str(PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1258/test_task_func_valid_n0/test_output.json'))
+
+test_0366.py:11: AssertionError
+__________________ test_task_func_n_greater_than_words_length __________________
+
+    def test_task_func_n_greater_than_words_length():
+        with pytest.raises(ValueError):
+>           task_func(len(WORDS) + 1, "test_output.json")
+                          ^^^^^
+E           NameError: name 'WORDS' is not defined
+
+test_0366.py:25: NameError
+_______________________ test_task_func_seed_consistency ________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1258/test_task_func_seed_consistenc0')
+
+    def test_task_func_seed_consistency(tmp_path):
+        n = 5
+        file_name1 = tmp_path / "test_output1.json"
+        file_name2 = tmp_path / "test_output2.json"
+    
+        task_func(n, file_name1)
+        task_func(n, file_name2)
+    
+        with open(file_name1, 'r') as f1:
+            data1 = json.load(f1)
+    
+        with open(file_name2, 'r') as f2:
+            data2 = json.load(f2)
+    
+>       assert data1 == data2
+E       AssertionError: assert {'cherry': 1,...erry': 1, ...} == {'apple': 1, ...'fig': 1, ...}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Left contains 3 more items:
+E         {'banana': 1, 'grape': 1, 'honeydew': 1}
+E         Right contains 3 more items:
+E         {'apple': 1, 'date': 1, 'fig': 1}
+E         Use -v to get more diff
+
+test_0366.py:41: AssertionError
+=========================== short test summary info ============================
+FAILED test_0366.py::test_task_func_valid_n - AssertionError: assert PosixPat...
+FAILED test_0366.py::test_task_func_n_greater_than_words_length - NameError: ...
+FAILED test_0366.py::test_task_func_seed_consistency - AssertionError: assert...
+3 failed, 2 passed in 0.41s

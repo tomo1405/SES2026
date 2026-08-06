@@ -1,0 +1,16 @@
+import pandas as pd
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+def task_func(df):
+    # Perform clustering
+    scaler = StandardScaler()
+    df_std = scaler.fit_transform(df.values)
+    
+    # Convert standardized values back to a DataFrame using pd
+    df_std = pd.DataFrame(df_std, columns=df.columns)
+    
+    # Perform clustering with sklearn's KMeans
+    kmeans = KMeans(n_clusters=3, random_state=0).fit(df_std)
+    labels = kmeans.labels_  # The labels are directly a numpy array
+    
+    return labels

@@ -1,0 +1,43 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_valid_inputs __________________________
+
+    def test_task_func_valid_inputs():
+        start_time = 0
+        end_time = 100
+        step = 1
+        amplitude = 1
+        period = 10
+        seed = 0
+    
+        np.random.seed(seed)
+        expected_timestamps = np.arange(start_time, end_time, step)
+        expected_values = np.random.normal(size=len(expected_timestamps))
+        expected_data = []
+        for i, ts in enumerate(expected_timestamps):
+            dt = datetime.utcfromtimestamp(ts / 1000).strftime("%Y-%m-%d %H:%M:%S.%f")
+            value = expected_values[i] + amplitude * np.sin(2 * np.pi * ts / period)
+            expected_data.append([dt, value])
+    
+        expected_df = pd.DataFrame(expected_data, columns=["Timestamp", "Value"])
+    
+        ax = task_func(start_time, end_time, step, amplitude, period, seed)
+    
+>       assert np.allclose(ax.get_xdata(), expected_df["Timestamp"])
+                           ^^^^^^^^^^^^
+E       AttributeError: 'Axes' object has no attribute 'get_xdata'. Did you mean: 'fmt_xdata'?
+
+test_0489.py:30: AttributeError
+=============================== warnings summary ===============================
+Codellama/8bit-quant/tests/test_0489.py: 100 warnings
+  /work/tomohiro-w/utg/Codellama/8bit-quant/tests/test_0489.py:22: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+    dt = datetime.utcfromtimestamp(ts / 1000).strftime("%Y-%m-%d %H:%M:%S.%f")
+
+Codellama/8bit-quant/tests/test_0489.py: 100 warnings
+  /work/tomohiro-w/utg/src/src_0489.py:22: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+    dt = datetime.utcfromtimestamp(ts / 1000).strftime("%Y-%m-%d %H:%M:%S.%f")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0489.py::test_task_func_valid_inputs - AttributeError: 'Axes' obj...
+1 failed, 1 passed, 200 warnings in 2.18s

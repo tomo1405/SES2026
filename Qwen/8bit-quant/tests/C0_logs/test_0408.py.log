@@ -1,0 +1,38 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+setup_files = ('/tmp/pytest-of-tomohiro-w/pytest-2084/test_task_func0/excel/test.xlsx', local('/tmp/pytest-of-tomohiro-w/pytest-2084/test_task_func0/csv'), 'test.xlsx')
+
+    def test_task_func(setup_files):
+        excel_file_path, csv_file_path, excel_file_name = setup_files
+        expected_csv_file_name = os.path.splitext(excel_file_name)[0] + '.csv'
+        expected_csv_file_path = os.path.join(csv_file_path, expected_csv_file_name)
+        expected_csv_content = [
+            ["Name", "Age", "City"],
+            ["Alice", 30, "New York"],
+            ["Bob", 25, "Los Angeles"]
+        ]
+    
+>       result = task_func(excel_file_name, excel_file_path, csv_file_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0408.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_name = 'test.xlsx'
+excel_file_path = '/tmp/pytest-of-tomohiro-w/pytest-2084/test_task_func0/excel/test.xlsx'
+csv_file_path = local('/tmp/pytest-of-tomohiro-w/pytest-2084/test_task_func0/csv')
+
+    def task_func(file_name, excel_file_path, csv_file_path) -> str:
+    
+        excel_file = os.path.join(excel_file_path, file_name)
+        # Check if the Excel file exists
+        if not os.path.isfile(excel_file):
+>           raise FileNotFoundError(f"[Errno 2] No such file or directory: '{excel_file}'")
+E           FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-tomohiro-w/pytest-2084/test_task_func0/excel/test.xlsx/test.xlsx'
+
+../../../src/src_0408.py:9: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0408.py::test_task_func - FileNotFoundError: [Errno 2] No such fi...
+1 failed, 1 passed in 1.13s

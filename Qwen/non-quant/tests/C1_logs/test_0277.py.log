@@ -1,0 +1,95 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_output _____________________________
+
+sample_matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+
+    def test_task_func_output(sample_matrix):
+        skewness, kurtosis, ax = task_func(sample_matrix)
+    
+        # Check if the returned values are of correct type
+        assert isinstance(skewness, float)
+        assert isinstance(kurtosis, float)
+>       assert isinstance(ax, plt.AxesSubplot)
+                              ^^^^^^^^^^^^^^^
+E       AttributeError: module 'matplotlib.pyplot' has no attribute 'AxesSubplot'
+
+test_0277.py:21: AttributeError
+_____________________________ test_task_func_plot ______________________________
+
+sample_matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+
+    def test_task_func_plot(sample_matrix):
+        _, _, ax = task_func(sample_matrix)
+    
+        # Check if the plot has the correct number of lines (histogram + normal distribution curve)
+        lines = ax.get_lines()
+>       assert len(lines) == 2
+E       assert 1 == 2
+E        +  where 1 = len(<a list of 1 Line2D objects>)
+
+test_0277.py:37: AssertionError
+_______________________ test_task_func_with_empty_matrix _______________________
+
+    def test_task_func_with_empty_matrix():
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0277.py:49: Failed
+____________________ test_task_func_with_single_row_matrix _____________________
+
+    def test_task_func_with_single_row_matrix():
+        matrix = [[1, 2, 3]]
+        skewness, kurtosis, ax = task_func(matrix)
+    
+        assert isinstance(skewness, float)
+        assert isinstance(kurtosis, float)
+>       assert isinstance(ax, plt.AxesSubplot)
+                              ^^^^^^^^^^^^^^^
+E       AttributeError: module 'matplotlib.pyplot' has no attribute 'AxesSubplot'
+
+test_0277.py:58: AttributeError
+=============================== warnings summary ===============================
+Qwen/non-quant/tests/test_0277.py::test_task_func_with_empty_matrix
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/lib/_histograms_impl.py:897: RuntimeWarning: invalid value encountered in divide
+    return n / db / n.sum(), bin_edges
+
+Qwen/non-quant/tests/test_0277.py::test_task_func_with_empty_matrix
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:3862: RuntimeWarning: Mean of empty slice
+    return _methods._mean(a, axis=axis, dtype=dtype,
+
+Qwen/non-quant/tests/test_0277.py::test_task_func_with_empty_matrix
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/_methods.py:142: RuntimeWarning: invalid value encountered in scalar divide
+    ret = ret.dtype.type(ret / rcount)
+
+Qwen/non-quant/tests/test_0277.py::test_task_func_with_empty_matrix
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/_methods.py:219: RuntimeWarning: Degrees of freedom <= 0 for slice
+    ret = _var(a, axis=axis, dtype=dtype, out=out, ddof=ddof,
+
+Qwen/non-quant/tests/test_0277.py::test_task_func_with_empty_matrix
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/_methods.py:178: RuntimeWarning: invalid value encountered in divide
+    arrmean = um.true_divide(arrmean, div, out=arrmean,
+
+Qwen/non-quant/tests/test_0277.py::test_task_func_with_empty_matrix
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/_methods.py:211: RuntimeWarning: invalid value encountered in scalar divide
+    ret = ret.dtype.type(ret / rcount)
+
+Qwen/non-quant/tests/test_0277.py::test_task_func_with_empty_matrix
+  /work/tomohiro-w/utg/src/src_0277.py:15: SmallSampleWarning: One or more sample arguments is too small; all returned values will be NaN. See documentation for sample size requirements.
+    skewness = stats.skew(max_values)
+
+Qwen/non-quant/tests/test_0277.py::test_task_func_with_empty_matrix
+  /work/tomohiro-w/utg/src/src_0277.py:16: SmallSampleWarning: One or more sample arguments is too small; all returned values will be NaN. See documentation for sample size requirements.
+    kurtosis = stats.kurtosis(max_values)
+
+Qwen/non-quant/tests/test_0277.py::test_task_func_with_single_row_matrix
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/scipy/stats/_distn_infrastructure.py:2079: RuntimeWarning: divide by zero encountered in divide
+    x = np.asarray((x - loc)/scale, dtype=dtyp)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0277.py::test_task_func_output - AttributeError: module 'matplotl...
+FAILED test_0277.py::test_task_func_plot - assert 1 == 2
+FAILED test_0277.py::test_task_func_with_empty_matrix - Failed: DID NOT RAISE...
+FAILED test_0277.py::test_task_func_with_single_row_matrix - AttributeError: ...
+4 failed, 9 warnings in 3.00s

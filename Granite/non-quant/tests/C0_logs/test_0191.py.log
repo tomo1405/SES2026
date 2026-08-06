@@ -1,0 +1,54 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_stringio_input ______________________
+
+    def test_task_func_with_stringio_input():
+        csv_input = StringIO('Name,Age,City\nJohn,25,New York\nJane,30,Los Angeles')
+        expected_dataframe = pd.DataFrame({
+            'Name': ['John', 'Jane'],
+            'Age': [25, 30],
+            'City': ['New York', 'Los Angeles']
+        })
+        actual_dataframe = task_func(csv_input)
+>       assert actual_dataframe.equals(expected_dataframe)
+E       assert False
+E        +  where False = equals(   Name  Age         City\n0  John   25     New York\n1  Jane   30  Los Angeles)
+E        +    where equals =    Name Age         City\n0  John  25     New York\n1  Jane  30  Los Angeles.equals
+
+test_0191.py:16: AssertionError
+_____________________ test_task_func_with_file_path_input ______________________
+
+    def test_task_func_with_file_path_input():
+        csv_input = 'test.csv'
+        with open(csv_input, 'w') as f:
+            f.write('Name,Age,City\nJohn,25,New York\nJane,30,Los Angeles')
+        expected_dataframe = pd.DataFrame({
+            'Name': ['John', 'Jane'],
+            'Age': [25, 30],
+            'City': ['New York', 'Los Angeles']
+        })
+>       actual_dataframe = task_func(csv_input)
+                           ^^^^^^^^^^^^^^^^^^^^
+
+test_0191.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0191.py:20: in task_func
+    cols = dr.fieldnames
+           ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <csv.DictReader object at 0x7d6beb489550>
+
+    @property
+    def fieldnames(self):
+        if self._fieldnames is None:
+            try:
+>               self._fieldnames = next(self.reader)
+                                   ^^^^^^^^^^^^^^^^^
+E               ValueError: I/O operation on closed file.
+
+/usr/lib/python3.12/csv.py:102: ValueError
+=========================== short test summary info ============================
+FAILED test_0191.py::test_task_func_with_stringio_input - assert False
+FAILED test_0191.py::test_task_func_with_file_path_input - ValueError: I/O op...
+2 failed in 1.15s

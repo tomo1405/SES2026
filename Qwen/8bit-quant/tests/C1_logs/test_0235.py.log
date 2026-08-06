@@ -1,0 +1,54 @@
+.FFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_drop_duplicates ________________________
+
+sample_df =       Name  Age  Score
+0    Alice   25     85
+1      Bob   30     90
+2  Charlie   35     95
+3    Alice   25     85
+
+    def test_task_func_drop_duplicates(sample_df):
+        result_df, _ = task_func(sample_df)
+>       assert len(result_df) == 3, "Duplicate names should be dropped"
+               ^^^^^^^^^^^^^^
+E       TypeError: object of type 'module' has no len()
+
+test_0235.py:22: TypeError
+_______________________ test_task_func_linear_regression _______________________
+
+sample_df =       Name  Age  Score
+0    Alice   25     85
+1      Bob   30     90
+2  Charlie   35     95
+3    Alice   25     85
+
+    def test_task_func_linear_regression(sample_df):
+        result_df, _ = task_func(sample_df)
+>       slope, intercept, r_value, _, _ = stats.linregress(result_df['Age'], result_df['Score'])
+                                          ^^^^^
+E       NameError: name 'stats' is not defined
+
+test_0235.py:26: NameError
+_____________________________ test_task_func_plot ______________________________
+
+sample_df =       Name  Age  Score
+0    Alice   25     85
+1      Bob   30     90
+2  Charlie   35     95
+3    Alice   25     85
+
+    def test_task_func_plot(sample_df):
+        plt, ax = task_func(sample_df)
+>       assert isinstance(plt, plt.Figure), "Return value should be a matplotlib Figure"
+E       AssertionError: Return value should be a matplotlib Figure
+E       assert False
+E        +  where False = isinstance(<module 'matplotlib.pyplot' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/matplotlib/pyplot.py'>, <class 'matplotlib.figure.Figure'>)
+E        +    where <class 'matplotlib.figure.Figure'> = <module 'matplotlib.pyplot' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/matplotlib/pyplot.py'>.Figure
+
+test_0235.py:33: AssertionError
+=========================== short test summary info ============================
+FAILED test_0235.py::test_task_func_drop_duplicates - TypeError: object of ty...
+FAILED test_0235.py::test_task_func_linear_regression - NameError: name 'stat...
+FAILED test_0235.py::test_task_func_plot - AssertionError: Return value shoul...
+3 failed, 1 passed in 3.68s

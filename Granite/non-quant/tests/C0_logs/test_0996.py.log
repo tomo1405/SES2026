@@ -1,0 +1,49 @@
+..FF                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_empty_file ___________________________
+
+    def test_task_func_empty_file():
+        with patch("src_0996.plt.savefig") as mock_savefig:
+            with patch("src_0996.os.path.isfile", return_value=True) as mock_isfile:
+                with patch("src_0996.pd.read_csv", side_effect=pd.errors.EmptyDataError) as mock_read_csv:
+                    mean, median, plot_path = task_func("test_file.csv", "test_plot.png")
+                    mock_isfile.assert_called_once_with("test_file.csv")
+                    mock_read_csv.assert_called_once_with("test_file.csv")
+                    assert mean is np.nan
+                    assert median is np.nan
+>                   mock_savefig.assert_called_once()
+
+test_0996.py:80: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='savefig' id='127226187886624'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'savefig' to have been called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:923: AssertionError
+_______________________ test_task_func_non_numeric_data ________________________
+
+    def test_task_func_non_numeric_data():
+        with patch("src_0996.plt.savefig") as mock_savefig:
+            with patch("src_0996.os.path.isfile", return_value=True) as mock_isfile:
+                with patch("src_0996.pd.read_csv", return_value=pd.Series(["a", "b", "c"])) as mock_read_csv:
+                    mean, median, plot_path = task_func("test_file.csv", "test_plot.png")
+                    mock_isfile.assert_called_once_with("test_file.csv")
+                    mock_read_csv.assert_called_once_with("test_file.csv")
+>                   assert mean == 2
+E                   assert nan == 2
+
+test_0996.py:89: AssertionError
+=========================== short test summary info ============================
+FAILED test_0996.py::test_task_func_empty_file - AssertionError: Expected 'sa...
+FAILED test_0996.py::test_task_func_non_numeric_data - assert nan == 2
+2 failed, 2 passed in 2.08s

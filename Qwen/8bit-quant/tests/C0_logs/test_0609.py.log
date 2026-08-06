@@ -1,0 +1,25 @@
+..F..                                                                    [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_rows_removed __________________________
+
+sample_df =    A  B   C   D   E
+0  1  5   9  13  17
+1  2  6  10  14  18
+2  3  7  11  15  19
+3  4  8  12  16  20
+sample_tuples = [(1, 5), (2, 6)]
+
+    def test_task_func_rows_removed(sample_df, sample_tuples):
+        sample_df.loc[0, 'A'] = 1
+        sample_df.loc[0, 'B'] = 5
+        n_plots = 2
+        result_df, plots = task_func(sample_df, sample_tuples, n_plots)
+>       assert result_df.equals(sample_df.iloc[1:])
+E       assert False
+E        +  where False = equals(   A  B   C   D   E\n1  2  6  10  14  18\n2  3  7  11  15  19\n3  4  8  12  16  20)
+E        +    where equals =    A  B   C   D   E\n0  1  5   9  13  17\n1  2  6  10  14  18\n2  3  7  11  15  19\n3  4  8  12  16  20.equals
+
+test_0609.py:40: AssertionError
+=========================== short test summary info ============================
+FAILED test_0609.py::test_task_func_rows_removed - assert False
+1 failed, 4 passed in 5.64s

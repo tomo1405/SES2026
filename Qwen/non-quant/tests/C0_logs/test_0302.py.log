@@ -1,0 +1,26 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a date in the middle of a solar cycle
+        date_str = "2022-01-01"
+        from_tz = "UTC"
+        to_tz = "America/New_York"
+        result = task_func(date_str, from_tz, to_tz)
+        assert isinstance(result, float)
+    
+        # Test with a date at the start of a solar cycle
+        date_str = "2019-01-01"
+        from_tz = "UTC"
+        to_tz = "America/New_York"
+        result = task_func(date_str, from_tz, to_tz)
+>       assert math.isclose(result, 1.0, rel_tol=1e-9)
+E       assert False
+E        +  where False = <built-in function isclose>(0.9594929736144974, 1.0, rel_tol=1e-09)
+E        +    where <built-in function isclose> = math.isclose
+
+test_0302.py:21: AssertionError
+=========================== short test summary info ============================
+FAILED test_0302.py::test_task_func - assert False
+1 failed in 0.76s

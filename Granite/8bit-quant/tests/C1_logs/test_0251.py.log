@@ -1,0 +1,50 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data_list = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        expected_results = {'Position 1': 5.0, 'Position 2': 7.0, 'Position 3': 9.0}
+    
+        with open('mean_values.json', 'w') as f:
+            json.dump(expected_results, f)
+    
+        results = task_func(data_list)
+    
+>       assert results == expected_results
+E       AssertionError: assert {'Position 1'....float64(6.0)} == {'Position 1'...ition 3': 9.0}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'Position 2': np.float64(6.0)} != {'Position 2': 7.0}
+E         Right contains 1 more item:
+E         {'Position 3': 9.0}
+E         Use -v to get more diff
+
+test_0251.py:16: AssertionError
+___________________________ test_task_func_with_nan ____________________________
+
+    def test_task_func_with_nan():
+        data_list = [[1, 2, np.nan], [4, 5, 6], [7, 8, 9]]
+        expected_results = {'Position 1': 4.5, 'Position 2': 6.0, 'Position 3': 9.0}
+    
+        with open('mean_values.json', 'w') as f:
+            json.dump(expected_results, f)
+    
+        results = task_func(data_list)
+    
+>       assert results == expected_results
+E       AssertionError: assert {'Position 1'....float64(7.5)} == {'Position 1'...ition 3': 9.0}
+E         
+E         Differing items:
+E         {'Position 1': np.float64(5.0)} != {'Position 1': 4.5}
+E         {'Position 2': np.float64(7.5)} != {'Position 2': 6.0}
+E         Right contains 1 more item:
+E         {'Position 3': 9.0}
+E         Use -v to get more diff
+
+test_0251.py:27: AssertionError
+=========================== short test summary info ============================
+FAILED test_0251.py::test_task_func - AssertionError: assert {'Position 1'......
+FAILED test_0251.py::test_task_func_with_nan - AssertionError: assert {'Posit...
+2 failed in 0.58s

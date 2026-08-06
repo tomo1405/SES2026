@@ -1,0 +1,59 @@
+F...F.F                                                                  [100%]
+=================================== FAILURES ===================================
+____________________ test_task_func_with_default_parameters ____________________
+
+    def test_task_func_with_default_parameters():
+        text = "apple [banana] orange apple banana"
+        expected_word_freqs = {'apple': 2, 'banana': 2, 'orange': 1}
+        result_word_freqs, _ = task_func(text)
+>       assert result_word_freqs == expected_word_freqs
+E       AssertionError: assert {'apple': 2, ..., 'banana': 1} == {'apple': 2, ..., 'orange': 1}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Differing items:
+E         {'banana': 1} != {'banana': 2}
+E         Use -v to get more diff
+
+test_0324.py:9: AssertionError
+______________________ test_task_func_with_different_seed ______________________
+
+    def test_task_func_with_different_seed():
+        text = "apple [banana] orange apple banana"
+        _, means_1 = task_func(text, seed=1)
+        _, means_2 = task_func(text, seed=2)
+>       assert not np.array_equal(means_1, means_2)
+E       assert not True
+E        +  where True = <function array_equal at 0x7973891c82b0>(array([[1.33333333]]), array([[1.33333333]]))
+E        +    where <function array_equal at 0x7973891c82b0> = np.array_equal
+
+test_0324.py:32: AssertionError
+________________________ test_task_func_with_empty_text ________________________
+
+    def test_task_func_with_empty_text():
+        text = ""
+        expected_word_freqs = {}
+>       result_word_freqs, _ = task_func(text)
+                               ^^^^^^^^^^^^^^^
+
+test_0324.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = '', num_gaussians = 1, seed = 42
+
+    def task_func(text, num_gaussians=1, seed=42):
+        np.random.seed(seed)
+        names = re.findall(r'(.*?)(?:\[.*?\]|$)', text)
+        words = ' '.join(names).split()
+        word_freqs = Counter(words)
+        if num_gaussians <= 0:
+            raise ValueError('Number of Gaussians must be greater than 0.')
+        if len(word_freqs) < num_gaussians:
+>           raise Exception('Number of Gaussians must be less than or equal to the number of unique words.')
+E           Exception: Number of Gaussians must be less than or equal to the number of unique words.
+
+../../../src/src_0324.py:13: Exception
+=========================== short test summary info ============================
+FAILED test_0324.py::test_task_func_with_default_parameters - AssertionError:...
+FAILED test_0324.py::test_task_func_with_different_seed - assert not True
+FAILED test_0324.py::test_task_func_with_empty_text - Exception: Number of Ga...
+3 failed, 4 passed in 3.21s

@@ -1,0 +1,37 @@
+F..                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a simple text containing dollar-prefixed words
+        text = "This is a $test and another $example. $123 is a number."
+        filename = "test_output.csv"
+    
+        # Call the function
+        result = task_func(text, filename)
+    
+        # Check if the file was created and its path is returned correctly
+        assert os.path.exists(result), f"File {result} does not exist"
+        assert os.path.abspath(filename) == result
+    
+        # Read the CSV file to verify its contents
+        with open(filename, 'r') as f:
+            reader = csv.reader(f)
+            rows = list(reader)
+    
+        # The first row should be the header
+        assert rows[0] == ["Word"]
+    
+        # The remaining rows should contain the dollar-prefixed words
+        expected_words = ["$test", "$example"]
+        actual_words = [row[0] for row in rows[1:]]
+>       assert actual_words == expected_words
+E       AssertionError: assert ['$test', '$example', '$123'] == ['$test', '$example']
+E         
+E         Left contains one more item: '$123'
+E         Use -v to get more diff
+
+test_1097.py:30: AssertionError
+=========================== short test summary info ============================
+FAILED test_1097.py::test_task_func - AssertionError: assert ['$test', '$exam...
+1 failed, 2 passed in 3.96s

@@ -1,0 +1,35 @@
+FF...                                                                    [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        pattern = "hello"
+        directory = "."
+        extensions = ["*.txt"]
+        expected_files = [Path("hello.txt").resolve()]
+>       assert task_func(pattern, directory, extensions) == expected_files
+E       AssertionError: assert [] == [PosixPath('/...s/hello.txt')]
+E         
+E         Right contains one more item: PosixPath('/work/tomohiro-w/utg/Codellama/non-quant/tests/hello.txt')
+E         Use -v to get more diff
+
+test_0337.py:11: AssertionError
+___________________ test_task_func_with_multiple_extensions ____________________
+
+    def test_task_func_with_multiple_extensions():
+        pattern = "hello"
+        directory = "."
+        extensions = ["*.txt", "*.py"]
+        expected_files = [Path("hello.txt").resolve(), Path("hello.py").resolve()]
+>       assert task_func(pattern, directory, extensions) == expected_files
+E       AssertionError: assert [PosixPath('/...163.py'), ...] == [PosixPath('/...ts/hello.py')]
+E         
+E         At index 0 diff: PosixPath('/work/tomohiro-w/utg/Codellama/non-quant/tests/test_0287.py') != PosixPath('/work/tomohiro-w/utg/Codellama/non-quant/tests/hello.txt')
+E         Left contains 52 more items, first extra item: PosixPath('/work/tomohiro-w/utg/Codellama/non-quant/tests/test_0932.py')
+E         Use -v to get more diff
+
+test_0337.py:18: AssertionError
+=========================== short test summary info ============================
+FAILED test_0337.py::test_task_func - AssertionError: assert [] == [PosixPath...
+FAILED test_0337.py::test_task_func_with_multiple_extensions - AssertionError...
+2 failed, 3 passed in 0.92s

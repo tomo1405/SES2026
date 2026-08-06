@@ -1,0 +1,26 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data_list = ["apple,banana,orange", "cat,dog,bird", "red,green,blue"]
+        seed = 123
+        df = task_func(data_list, seed)
+        assert isinstance(df, pd.DataFrame)
+        assert df.shape == (3, 2)
+        assert df.columns.tolist() == ["Original String", "Shuffled String"]
+        expected_shuffled_strings = [
+            "apple,banana,orange",
+            "cat,dog,bird",
+            "blue,green,red",
+        ]
+>       assert df["Shuffled String"].tolist() == expected_shuffled_strings
+E       AssertionError: assert ['orange, ban..., red, green'] == ['apple,banan...ue,green,red']
+E         
+E         At index 0 diff: 'orange, banana, apple' != 'apple,banana,orange'
+E         Use -v to get more diff
+
+test_0481.py:18: AssertionError
+=========================== short test summary info ============================
+FAILED test_0481.py::test_task_func - AssertionError: assert ['orange, ban......
+1 failed in 1.16s

@@ -1,0 +1,88 @@
+EE                                                                       [100%]
+==================================== ERRORS ====================================
+_______________________ ERROR at setup of test_task_func _______________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1725/test_task_func0')
+
+    @pytest.fixture
+    def temp_dir(tmpdir):
+        """Create a temporary directory with some files."""
+        temp_dir = Path(tmpdir)
+        (temp_dir / "AcroTray.exe").touch()
+>       (temp_dir / "SubDir" / "AcroTray.exe").touch()
+
+test_0813.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1725/test_task_func0/SubDir/AcroTray.exe')
+mode = 438, exist_ok = True
+
+    def touch(self, mode=0o666, exist_ok=True):
+        """
+        Create this file with the given access mode, if it doesn't exist.
+        """
+    
+        if exist_ok:
+            # First try to bump modification time
+            # Implementation note: GNU touch uses the UTIME_NOW option of
+            # the utimensat() / futimens() functions.
+            try:
+                os.utime(self, None)
+            except OSError:
+                # Avoid exception chaining
+                pass
+            else:
+                return
+        flags = os.O_CREAT | os.O_WRONLY
+        if not exist_ok:
+            flags |= os.O_EXCL
+>       fd = os.open(self, flags, mode)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-tomohiro-w/pytest-1725/test_task_func0/SubDir/AcroTray.exe'
+
+/usr/lib/python3.12/pathlib.py:1305: FileNotFoundError
+______________ ERROR at setup of test_task_func_permission_error _______________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1725/test_task_func_permission_erro0')
+
+    @pytest.fixture
+    def temp_dir(tmpdir):
+        """Create a temporary directory with some files."""
+        temp_dir = Path(tmpdir)
+        (temp_dir / "AcroTray.exe").touch()
+>       (temp_dir / "SubDir" / "AcroTray.exe").touch()
+
+test_0813.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1725/test_task_func_permission_erro0/SubDir/AcroTray.exe')
+mode = 438, exist_ok = True
+
+    def touch(self, mode=0o666, exist_ok=True):
+        """
+        Create this file with the given access mode, if it doesn't exist.
+        """
+    
+        if exist_ok:
+            # First try to bump modification time
+            # Implementation note: GNU touch uses the UTIME_NOW option of
+            # the utimensat() / futimens() functions.
+            try:
+                os.utime(self, None)
+            except OSError:
+                # Avoid exception chaining
+                pass
+            else:
+                return
+        flags = os.O_CREAT | os.O_WRONLY
+        if not exist_ok:
+            flags |= os.O_EXCL
+>       fd = os.open(self, flags, mode)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-tomohiro-w/pytest-1725/test_task_func_permission_erro0/SubDir/AcroTray.exe'
+
+/usr/lib/python3.12/pathlib.py:1305: FileNotFoundError
+=========================== short test summary info ============================
+ERROR test_0813.py::test_task_func - FileNotFoundError: [Errno 2] No such fil...
+ERROR test_0813.py::test_task_func_permission_error - FileNotFoundError: [Err...
+2 errors in 0.51s

@@ -1,0 +1,161 @@
+FEFF                                                                     [100%]
+==================================== ERRORS ====================================
+____________________ ERROR at setup of test_task_func_plot _____________________
+file /work/tomohiro-w/utg/Qwen/non-quant/tests/test_0036.py, line 25
+  def test_task_func_plot(sample_df, mocker):
+E       fixture 'mocker' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, cov, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, no_cover, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, sample_df, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/work/tomohiro-w/utg/Qwen/non-quant/tests/test_0036.py:25
+=================================== FAILURES ===================================
+____________________________ test_task_func_output _____________________________
+
+sample_df =    A  B  C
+0  1  3  4
+1  2  4  5
+2  3  5  6
+3  4  6  7
+4  5  7  8
+
+    def test_task_func_output(sample_df):
+>       modified_df, ax = task_func(sample_df)
+                          ^^^^^^^^^^^^^^^^^^^^
+
+test_0036.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0036.py:4: in task_func
+    df = df.applymap(lambda x: x if x in target_values else 0)
+         ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =    A  B  C
+0  1  3  4
+1  2  4  5
+2  3  5  6
+3  4  6  7
+4  5  7  8
+name = 'applymap'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute 'applymap'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+_____________________ test_task_func_default_target_values _____________________
+
+sample_df =    A  B  C
+0  1  3  4
+1  2  4  5
+2  3  5  6
+3  4  6  7
+4  5  7  8
+
+    def test_task_func_default_target_values(sample_df):
+>       modified_df, _ = task_func(sample_df)
+                         ^^^^^^^^^^^^^^^^^^^^
+
+test_0036.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0036.py:4: in task_func
+    df = df.applymap(lambda x: x if x in target_values else 0)
+         ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =    A  B  C
+0  1  3  4
+1  2  4  5
+2  3  5  6
+3  4  6  7
+4  5  7  8
+name = 'applymap'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute 'applymap'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+_____________________ test_task_func_custom_target_values ______________________
+
+sample_df =    A  B  C
+0  1  3  4
+1  2  4  5
+2  3  5  6
+3  4  6  7
+4  5  7  8
+
+    def test_task_func_custom_target_values(sample_df):
+>       modified_df, _ = task_func(sample_df, target_values=[2, 5])
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0036.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0036.py:4: in task_func
+    df = df.applymap(lambda x: x if x in target_values else 0)
+         ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =    A  B  C
+0  1  3  4
+1  2  4  5
+2  3  5  6
+3  4  6  7
+4  5  7  8
+name = 'applymap'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute 'applymap'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+=========================== short test summary info ============================
+FAILED test_0036.py::test_task_func_output - AttributeError: 'DataFrame' obje...
+FAILED test_0036.py::test_task_func_default_target_values - AttributeError: '...
+FAILED test_0036.py::test_task_func_custom_target_values - AttributeError: 'D...
+ERROR test_0036.py::test_task_func_plot
+3 failed, 1 error in 4.19s

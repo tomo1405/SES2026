@@ -1,0 +1,95 @@
+FF.F                                                                     [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_output _____________________________
+
+sample_df =    A  B   C   D   E
+0  1  5   9  13  17
+1  2  6  10  14  18
+2  3  7  11  15  19
+3  4  8  12  16  20
+sample_tuples = [(1, 5), (3, 11)]
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x72dffe26f1a0>
+
+    def test_task_func_output(sample_df, sample_tuples, monkeypatch):
+        # Mock the plotting function to avoid actual plotting
+        monkeypatch.setattr(plt, 'show', lambda: None)
+    
+        # Call the function with test data
+        result_df, plot_details = task_func(sample_df, sample_tuples, 2)
+    
+        # Check that the correct rows are removed
+        expected_df = sample_df[(sample_df['A'] != 1) | (sample_df['B'] != 5) | (sample_df['C'] != 3) | (sample_df['D'] != 11)]
+        pd.testing.assert_frame_equal(result_df, expected_df)
+    
+        # Check that plot details are correctly generated
+        assert len(plot_details) == min(2, len(result_df))
+        for x_col, y_col in plot_details:
+>           assert x_col in COLUMNS
+                            ^^^^^^^
+E           NameError: name 'COLUMNS' is not defined
+
+test_0612.py:36: NameError
+________________________ test_task_func_no_rows_removed ________________________
+
+sample_df =    A  B   C   D   E
+0  1  5   9  13  17
+1  2  6  10  14  18
+2  3  7  11  15  19
+3  4  8  12  16  20
+sample_tuples = [(0, 0), (0, 0)]
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x72dfbdf6dee0>
+
+    def test_task_func_no_rows_removed(sample_df, sample_tuples, monkeypatch):
+        # Mock the plotting function to avoid actual plotting
+        monkeypatch.setattr(plt, 'show', lambda: None)
+    
+        # Modify sample_tuples to not match any row in sample_df
+        sample_tuples = [(0, 0), (0, 0)]
+    
+        # Call the function with test data
+        result_df, plot_details = task_func(sample_df, sample_tuples, 2)
+    
+        # Check that no rows are removed
+        pd.testing.assert_frame_equal(result_df, sample_df)
+    
+        # Check that plot details are correctly generated
+        assert len(plot_details) == min(2, len(result_df))
+        for x_col, y_col in plot_details:
+>           assert x_col in COLUMNS
+                            ^^^^^^^
+E           NameError: name 'COLUMNS' is not defined
+
+test_0612.py:56: NameError
+_____________________ test_task_func_more_plots_than_rows ______________________
+
+sample_df =    A  B   C   D   E
+0  1  5   9  13  17
+1  2  6  10  14  18
+2  3  7  11  15  19
+3  4  8  12  16  20
+sample_tuples = [(1, 5), (3, 11)]
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x72dfbbd93f50>
+
+    def test_task_func_more_plots_than_rows(sample_df, sample_tuples, monkeypatch):
+        # Mock the plotting function to avoid actual plotting
+        monkeypatch.setattr(plt, 'show', lambda: None)
+    
+        # Call the function with test data and more plots than available rows
+        result_df, plot_details = task_func(sample_df, sample_tuples, 10)
+    
+        # Check that no rows are removed
+        pd.testing.assert_frame_equal(result_df, sample_df)
+    
+        # Check that plot details are correctly generated based on available rows
+        assert len(plot_details) == len(result_df)
+        for x_col, y_col in plot_details:
+>           assert x_col in COLUMNS
+                            ^^^^^^^
+E           NameError: name 'COLUMNS' is not defined
+
+test_0612.py:86: NameError
+=========================== short test summary info ============================
+FAILED test_0612.py::test_task_func_output - NameError: name 'COLUMNS' is not...
+FAILED test_0612.py::test_task_func_no_rows_removed - NameError: name 'COLUMN...
+FAILED test_0612.py::test_task_func_more_plots_than_rows - NameError: name 'C...
+3 failed, 1 passed in 2.62s

@@ -1,0 +1,97 @@
+F.FF                                                                     [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_success ____________________________
+
+mock_zipfile = <MagicMock name='ZipFile' id='138048160328416'>
+mock_urlretrieve = <MagicMock name='urlretrieve' id='138048160332400'>
+
+    @patch('src_1006.urllib.request.urlretrieve')
+    @patch('src_1006.zipfile.ZipFile')
+    def test_task_func_success(mock_zipfile, mock_urlretrieve):
+        # Arrange
+        url = "http://example.com/file.zip"
+        save_path = "downloaded_file.zip"
+        extract_path = "extracted_files"
+        mock_urlretrieve.return_value = None
+        mock_zipfile.return_value.extractall.return_value = None
+    
+        # Act
+>       result = task_func(url, save_path, extract_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1006.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'http://example.com/file.zip', save_path = 'downloaded_file.zip'
+extract_path = 'extracted_files'
+
+    def task_func(
+        url: str,
+        save_path: str = "downloaded_file.zip",
+        extract_path: str = "extracted_files",
+    ) -> str:
+        try:
+            # Check if save_path already exists, if so, remove it
+            if os.path.exists(save_path):
+                os.remove(save_path)
+    
+            # Download the file from the URL
+            urllib.request.urlretrieve(url, save_path)
+    
+            # Create the extraction directory if it doesn't exist
+            if not os.path.exists(extract_path):
+                os.makedirs(extract_path)
+    
+            # Extract the zip file
+            with zipfile.ZipFile(save_path, "r") as zip_ref:
+                zip_ref.extractall(extract_path)
+    
+            # Remove the downloaded zip file
+>           os.remove(save_path)
+E           FileNotFoundError: [Errno 2] No such file or directory: 'downloaded_file.zip'
+
+../../../src/src_1006.py:27: FileNotFoundError
+______________________ test_task_func_existing_save_path _______________________
+
+    def test_task_func_existing_save_path():
+        # Arrange
+        url = "http://example.com/file.zip"
+        save_path = "downloaded_file.zip"
+        extract_path = "extracted_files"
+        open(save_path, 'a').close()  # Create an empty file to simulate existing save_path
+    
+        # Act
+        result = task_func(url, save_path, extract_path)
+    
+        # Assert
+>       assert result == extract_path
+E       AssertionError: assert 'URL Error: Not Found' == 'extracted_files'
+E         
+E         - extracted_files
+E         + URL Error: Not Found
+
+test_1006.py:55: AssertionError
+_____________________ test_task_func_existing_extract_path _____________________
+
+    def test_task_func_existing_extract_path():
+        # Arrange
+        url = "http://example.com/file.zip"
+        save_path = "downloaded_file.zip"
+        extract_path = "extracted_files"
+>       os.makedirs(extract_path)  # Create the directory to simulate existing extract_path
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1006.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'extracted_files', mode = 511, exist_ok = False
+
+>   ???
+E   FileExistsError: [Errno 17] File exists: 'extracted_files'
+
+<frozen os>:225: FileExistsError
+=========================== short test summary info ============================
+FAILED test_1006.py::test_task_func_success - FileNotFoundError: [Errno 2] No...
+FAILED test_1006.py::test_task_func_existing_save_path - AssertionError: asse...
+FAILED test_1006.py::test_task_func_existing_extract_path - FileExistsError: ...
+3 failed, 1 passed in 0.65s

@@ -1,0 +1,150 @@
+.FFFF                                                                    [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_single_match __________________________
+
+    def test_task_func_single_match():
+        data = {'hex_column': ['1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t1u2v3w4x5y6z7a8b9c0d1e2f3']}
+        df = pd.DataFrame(data)
+        result = task_func(df, 'hex_column')
+        expected = pd.Series({data['hex_column'][0]: 1})
+>       pd.testing.assert_series_equal(result, expected)
+E       AssertionError: Series are different
+E       
+E       Series length are different
+E       [left]:  0, Index([], dtype='float64')
+E       [right]: 1, Index(['1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t1u2v3w4x5y6z7a8b9c0d1e2f3'], dtype='str')
+
+test_0348.py:17: AssertionError
+_______________________ test_task_func_multiple_matches ________________________
+
+    def test_task_func_multiple_matches():
+        data = {'hex_column': ['1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t1u2v3w4x5y6z7a8b9c0d1e2f3',
+                               '1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t1u2v3w4x5y6z7a8b9c0d1e2f3',
+                               'abcd1234abcd1234']}
+        df = pd.DataFrame(data)
+        result = task_func(df, 'hex_column')
+        expected = pd.Series({'1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t1u2v3w4x5y6z7a8b9c0d1e2f3': 2,
+                              'abcd1234abcd1234': 1})
+>       pd.testing.assert_series_equal(result, expected)
+E       AssertionError: Series are different
+E       
+E       Series length are different
+E       [left]:  0, Index([], dtype='float64')
+E       [right]: 2, Index(['1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t1u2v3w4x5y6z7a8b9c0d1e2f3', 'abcd1234abcd1234'], dtype='str')
+
+test_0348.py:27: AssertionError
+_________________________ test_task_func_empty_column __________________________
+
+    def test_task_func_empty_column():
+        data = {'hex_column': [None, '', np.nan]}
+        df = pd.DataFrame(data)
+>       result = task_func(df, 'hex_column')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0348.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0348.py:8: in task_func
+    matches = df[column].apply(lambda x: re.findall(PATTERN, x))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/series.py:5084: in apply
+    ).apply()
+      ^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/apply.py:1520: in apply
+    return self.apply_standard()
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/apply.py:1578: in apply_standard
+    mapped = obj._map_values(mapper=curried)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/base.py:1020: in _map_values
+    return arr.map(mapper, na_action=na_action)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/arrow/array.py:1753: in map
+    return super().map(mapper, na_action)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/base.py:2745: in map
+    return map_array(self, mapper, na_action=na_action)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/algorithms.py:1715: in map_array
+    return lib.map_infer(values, mapper)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pandas/_libs/lib.pyx:3071: in pandas._libs.lib.map_infer
+    ???
+../../../src/src_0348.py:8: in <lambda>
+    matches = df[column].apply(lambda x: re.findall(PATTERN, x))
+                                         ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pattern = '([a-fA-F\\d]{32})', string = nan, flags = 0
+
+    def findall(pattern, string, flags=0):
+        """Return a list of all non-overlapping matches in the string.
+    
+        If one or more capturing groups are present in the pattern, return
+        a list of groups; this will be a list of tuples if the pattern
+        has more than one group.
+    
+        Empty matches are included in the result."""
+>       return _compile(pattern, flags).findall(string)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: expected string or bytes-like object, got 'float'
+
+/usr/lib/python3.12/re/__init__.py:217: TypeError
+_______________________ test_task_func_mixed_data_types ________________________
+
+    def test_task_func_mixed_data_types():
+        data = {'hex_column': ['1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t1u2v3w4x5y6z7a8b9c0d1e2f3',
+                               12345,
+                               'not a hex',
+                               '6f1234567890abcdef1234567890abcdef']}
+        df = pd.DataFrame(data)
+>       result = task_func(df, 'hex_column')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0348.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0348.py:8: in task_func
+    matches = df[column].apply(lambda x: re.findall(PATTERN, x))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/series.py:5084: in apply
+    ).apply()
+      ^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/apply.py:1520: in apply
+    return self.apply_standard()
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/apply.py:1578: in apply_standard
+    mapped = obj._map_values(mapper=curried)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/base.py:1022: in _map_values
+    return algorithms.map_array(arr, mapper, na_action=na_action)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/algorithms.py:1715: in map_array
+    return lib.map_infer(values, mapper)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pandas/_libs/lib.pyx:3071: in pandas._libs.lib.map_infer
+    ???
+../../../src/src_0348.py:8: in <lambda>
+    matches = df[column].apply(lambda x: re.findall(PATTERN, x))
+                                         ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pattern = '([a-fA-F\\d]{32})', string = 12345, flags = 0
+
+    def findall(pattern, string, flags=0):
+        """Return a list of all non-overlapping matches in the string.
+    
+        If one or more capturing groups are present in the pattern, return
+        a list of groups; this will be a list of tuples if the pattern
+        has more than one group.
+    
+        Empty matches are included in the result."""
+>       return _compile(pattern, flags).findall(string)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: expected string or bytes-like object, got 'int'
+
+/usr/lib/python3.12/re/__init__.py:217: TypeError
+=========================== short test summary info ============================
+FAILED test_0348.py::test_task_func_single_match - AssertionError: Series are...
+FAILED test_0348.py::test_task_func_multiple_matches - AssertionError: Series...
+FAILED test_0348.py::test_task_func_empty_column - TypeError: expected string...
+FAILED test_0348.py::test_task_func_mixed_data_types - TypeError: expected st...
+4 failed, 1 passed in 1.38s

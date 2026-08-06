@@ -1,0 +1,30 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        goals = {'Team A': 10, 'Team B': 20, 'Team C': 30, 'Team D': 40, 'Team E': 50}
+        penalties = {'Team A': 5, 'Team B': 10, 'Team C': 15, 'Team D': 20, 'Team E': 25}
+    
+        df, plot = task_func(goals, penalties)
+    
+        assert isinstance(df, pd.DataFrame)
+        assert isinstance(plot, sns.PairGrid)
+    
+        assert df.shape == (5, 3)
+        assert df.columns.tolist() == ['Team', 'Goals', 'Penalties']
+    
+        assert df['Team'].tolist() == ['Team A', 'Team B', 'Team C', 'Team D', 'Team E']
+        assert df['Goals'].tolist() == [10, 20, 30, 40, 50]
+        assert df['Penalties'].tolist() == [5, 10, 15, 20, 25]
+    
+>       assert plot.axes.shape == (3, 3)
+E       assert (2, 2) == (3, 3)
+E         
+E         At index 0 diff: 2 != 3
+E         Use -v to get more diff
+
+test_0615.py:22: AssertionError
+=========================== short test summary info ============================
+FAILED test_0615.py::test_task_func - assert (2, 2) == (3, 3)
+1 failed in 3.66s

@@ -1,0 +1,92 @@
+F..F                                                                     [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_valid_xml ___________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1323/test_task_func_valid_xml0')
+
+    def test_task_func_valid_xml(tmpdir):
+        xml_content = "<root><child1>text1</child1><child2>text2</child2></root>"
+        output_csv_path = str(tmpdir / "output.csv")
+    
+        task_func(xml_content, output_csv_path)
+    
+        with open(output_csv_path, "r", encoding="utf-8") as f:
+            reader = csv.reader(f)
+            rows = list(reader)
+    
+        expected_rows = [['root', None], ['child1', 'text1'], ['child2', 'text2']]
+>       assert rows == expected_rows
+E       AssertionError: assert [['root', '']...d2', 'text2']] == [['root', Non...d2', 'text2']]
+E         
+E         At index 0 diff: ['root', ''] != ['root', None]
+E         Use -v to get more diff
+
+test_1010.py:19: AssertionError
+___________________________ test_task_func_empty_xml ___________________________
+
+xml_content = ''
+output_csv_path = '/tmp/pytest-of-tomohiro-w/pytest-1323/test_task_func_empty_xml0/output.csv'
+
+    def task_func(xml_content, output_csv_path):
+        try:
+>           root = ET.fromstring(xml_content)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../../../src/src_1010.py:5: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = '', parser = <xml.etree.ElementTree.XMLParser object at 0x7fa9e34bfce0>
+
+    def XML(text, parser=None):
+        """Parse XML document from string constant.
+    
+        This function can be used to embed "XML Literals" in Python code.
+    
+        *text* is a string containing XML data, *parser* is an
+        optional parser instance, defaulting to the standard XMLParser.
+    
+        Returns an Element instance.
+    
+        """
+        if not parser:
+            parser = XMLParser(target=TreeBuilder())
+        parser.feed(text)
+>       return parser.close()
+               ^^^^^^^^^^^^^^
+E       xml.etree.ElementTree.ParseError: no element found: line 1, column 0
+
+/usr/lib/python3.12/xml/etree/ElementTree.py:1336: ParseError
+
+The above exception was the direct cause of the following exception:
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1323/test_task_func_empty_xml0')
+
+    def test_task_func_empty_xml(tmpdir):
+        xml_content = ""
+        output_csv_path = str(tmpdir / "output.csv")
+    
+>       task_func(xml_content, output_csv_path)
+
+test_1010.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+xml_content = ''
+output_csv_path = '/tmp/pytest-of-tomohiro-w/pytest-1323/test_task_func_empty_xml0/output.csv'
+
+    def task_func(xml_content, output_csv_path):
+        try:
+            root = ET.fromstring(xml_content)
+            data = [[elem.tag, elem.text] for elem in root.iter()]
+    
+            with open(output_csv_path, "w", newline="", encoding="utf-8") as f:
+                writer = csv.writer(f)
+                writer.writerows(data)
+        except ET.ParseError as e:
+>           raise ET.ParseError(f"Error parsing XML: {e}") from e
+E           xml.etree.ElementTree.ParseError: Error parsing XML: no element found: line 1, column 0
+
+../../../src/src_1010.py:12: ParseError
+=========================== short test summary info ============================
+FAILED test_1010.py::test_task_func_valid_xml - AssertionError: assert [['roo...
+FAILED test_1010.py::test_task_func_empty_xml - xml.etree.ElementTree.ParseEr...
+2 failed, 2 passed in 0.50s

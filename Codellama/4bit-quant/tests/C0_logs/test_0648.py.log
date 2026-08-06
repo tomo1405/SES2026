@@ -1,0 +1,39 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: same timezone
+        date_str = "2022-01-01 12:00:00"
+        from_tz = "UTC"
+        to_tz = "UTC"
+        expected_result = 0
+>       assert task_func(date_str, from_tz, to_tz) == expected_result
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0648.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+date_str = '2022-01-01 12:00:00', from_tz = 'UTC', to_tz = 'UTC'
+
+    def task_func(date_str, from_tz, to_tz):
+        # Get timezone objects for the source and destination timezones
+        from_tz_obj = pytz.timezone(from_tz)
+        to_tz_obj = pytz.timezone(to_tz)
+    
+        # Parse the given date string and localize it to the source timezone
+        given_date_naive = parse(date_str)
+        given_date = from_tz_obj.localize(given_date_naive)
+    
+        # Convert the given date to the destination timezone
+        given_date_in_to_tz = given_date.astimezone(to_tz_obj)
+    
+        # Get the current time in the destination timezone
+>       current_date_in_to_tz = datetime.now(pytz.utc).astimezone(to_tz_obj)
+                                ^^^^^^^^
+E       NameError: name 'datetime' is not defined. Did you forget to import 'datetime'
+
+../../../src/src_0648.py:16: NameError
+=========================== short test summary info ============================
+FAILED test_0648.py::test_task_func - NameError: name 'datetime' is not defin...
+1 failed in 0.47s

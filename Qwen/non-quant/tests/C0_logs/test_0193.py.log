@@ -1,0 +1,109 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_smtp = <MagicMock name='SMTP' id='125900640616576'>
+
+    def test_task_func(mock_smtp):
+        # Arrange
+        text = "Josie Smith [3996 COLLEGE AVENUE, SOMETOWN, MD 21003]Mugsy Dog Smith [2560 OAK ST, GLENMEADE, WI 14098]"
+        expected_names = ["Josie Smith", "Mugsy Dog Smith"]
+    
+        # Act
+        names = task_func(text=text, smtp=Mock())
+    
+        # Assert
+        assert names == expected_names
+>       mock_smtp.assert_called_once_with("smtp.gmail.com", 587)
+
+test_0193.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='SMTP' id='125900640616576'>
+args = ('smtp.gmail.com', 587), kwargs = {}
+
+    def assert_called_once_with(self, /, *args, **kwargs):
+        """assert that the mock was called exactly once and that that call was
+        with the specified arguments."""
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to be called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'SMTP' to be called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:955: AssertionError
+___________________________ test_task_func_no_names ____________________________
+
+mock_smtp = <MagicMock name='SMTP' id='125900616179328'>
+
+    def test_task_func_no_names(mock_smtp):
+        # Arrange
+        text = "[3996 COLLEGE AVENUE, SOMETOWN, MD 21003]"
+        expected_names = []
+    
+        # Act
+        names = task_func(text=text, smtp=Mock())
+    
+        # Assert
+        assert names == expected_names
+>       mock_smtp.assert_called_once_with("smtp.gmail.com", 587)
+
+test_0193.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='SMTP' id='125900616179328'>
+args = ('smtp.gmail.com', 587), kwargs = {}
+
+    def assert_called_once_with(self, /, *args, **kwargs):
+        """assert that the mock was called exactly once and that that call was
+        with the specified arguments."""
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to be called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'SMTP' to be called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:955: AssertionError
+__________________________ test_task_func_empty_text ___________________________
+
+mock_smtp = <MagicMock name='SMTP' id='125900616183744'>
+
+    def test_task_func_empty_text(mock_smtp):
+        # Arrange
+        text = ""
+        expected_names = []
+    
+        # Act
+        names = task_func(text=text, smtp=Mock())
+    
+        # Assert
+        assert names == expected_names
+>       mock_smtp.assert_called_once_with("smtp.gmail.com", 587)
+
+test_0193.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='SMTP' id='125900616183744'>
+args = ('smtp.gmail.com', 587), kwargs = {}
+
+    def assert_called_once_with(self, /, *args, **kwargs):
+        """assert that the mock was called exactly once and that that call was
+        with the specified arguments."""
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to be called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'SMTP' to be called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:955: AssertionError
+=========================== short test summary info ============================
+FAILED test_0193.py::test_task_func - AssertionError: Expected 'SMTP' to be c...
+FAILED test_0193.py::test_task_func_no_names - AssertionError: Expected 'SMTP...
+FAILED test_0193.py::test_task_func_empty_text - AssertionError: Expected 'SM...
+3 failed in 0.51s

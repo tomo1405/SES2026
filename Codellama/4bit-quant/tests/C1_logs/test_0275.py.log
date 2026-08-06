@@ -1,0 +1,76 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        smtp_server = 'smtp.example.com'
+        smtp_port = 587
+        smtp_username = 'username'
+        smtp_password = 'password'
+        email_data = {'subject': 'Test Email', 'message': 'This is a test email', 'to': 'recipient@example.com'}
+    
+        handler = task_func(smtp_server, smtp_port, smtp_username, smtp_password)
+>       handler.do_POST()
+E       TypeError: task_func.<locals>.EmailRequestHandler.do_POST() missing 1 required positional argument: 'self'
+
+test_0275.py:14: TypeError
+_________________________ test_task_func_invalid_json __________________________
+
+    def test_task_func_invalid_json():
+        smtp_server = 'smtp.example.com'
+        smtp_port = 587
+        smtp_username = 'username'
+        smtp_password = 'password'
+        email_data = {'subject': 'Test Email', 'message': 'This is a test email', 'to': 'recipient@example.com'}
+    
+        handler = task_func(smtp_server, smtp_port, smtp_username, smtp_password)
+        handler.headers = {'content-type': 'application/json'}
+        handler.rfile = io.BytesIO(b'{"subject": "Test Email", "message": "This is a test email", "to": "recipient@example.com"}')
+>       handler.do_POST()
+E       TypeError: task_func.<locals>.EmailRequestHandler.do_POST() missing 1 required positional argument: 'self'
+
+test_0275.py:28: TypeError
+________________________ test_task_func_missing_fields _________________________
+
+    def test_task_func_missing_fields():
+        smtp_server = 'smtp.example.com'
+        smtp_port = 587
+        smtp_username = 'username'
+        smtp_password = 'password'
+        email_data = {'subject': 'Test Email', 'message': 'This is a test email', 'to': 'recipient@example.com'}
+    
+        handler = task_func(smtp_server, smtp_port, smtp_username, smtp_password)
+        handler.headers = {'content-type': 'application/json'}
+        handler.rfile = io.BytesIO(b'{"subject": "Test Email", "message": "This is a test email"}')
+>       handler.do_POST()
+E       TypeError: task_func.<locals>.EmailRequestHandler.do_POST() missing 1 required positional argument: 'self'
+
+test_0275.py:42: TypeError
+___________________ test_task_func_invalid_smtp_credentials ____________________
+
+    def test_task_func_invalid_smtp_credentials():
+        smtp_server = 'smtp.example.com'
+        smtp_port = 587
+        smtp_username = 'username'
+        smtp_password = 'password'
+        email_data = {'subject': 'Test Email', 'message': 'This is a test email', 'to': 'recipient@example.com'}
+    
+        handler = task_func(smtp_server, smtp_port, smtp_username, smtp_password)
+        handler.headers = {'content-type': 'application/json'}
+        handler.rfile = io.BytesIO(b'{"subject": "Test Email", "message": "This is a test email", "to": "recipient@example.com"}')
+>       handler.do_POST()
+E       TypeError: task_func.<locals>.EmailRequestHandler.do_POST() missing 1 required positional argument: 'self'
+
+test_0275.py:56: TypeError
+=============================== warnings summary ===============================
+../../../src/src_0275.py:1
+  /work/tomohiro-w/utg/src/src_0275.py:1: DeprecationWarning: 'cgi' is deprecated and slated for removal in Python 3.13
+    import cgi
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0275.py::test_task_func - TypeError: task_func.<locals>.EmailRequ...
+FAILED test_0275.py::test_task_func_invalid_json - TypeError: task_func.<loca...
+FAILED test_0275.py::test_task_func_missing_fields - TypeError: task_func.<lo...
+FAILED test_0275.py::test_task_func_invalid_smtp_credentials - TypeError: tas...
+4 failed, 1 warning in 0.57s

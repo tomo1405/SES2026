@@ -1,0 +1,81 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        n_rows = 10
+        remove_cols = [0, 2]
+        columns = ['A', 'B', 'C', 'D', 'E']
+        random_seed = 42
+    
+        df = task_func(n_rows, remove_cols, columns, random_seed)
+    
+        assert df.shape == (n_rows, len(columns) - len(remove_cols))
+>       assert all(df.columns == columns)
+                   ^^^^^^^^^^^^^^^^^^^^^
+
+test_0836.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/ops/common.py:85: in new_method
+    return method(self, other)
+           ^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/arraylike.py:42: in __eq__
+    return self._cmp_method(other, operator.eq)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py:7406: in _cmp_method
+    result = ops.comparison_op(self._values, other, op)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+left = <ArrowStringArray>
+['B', 'D', 'E']
+Length: 3, dtype: str
+right = ['A', 'B', 'C', 'D', 'E'], op = <built-in function eq>
+
+    def comparison_op(left: ArrayLike, right: Any, op) -> ArrayLike:
+        """
+        Evaluate a comparison operation `=`, `!=`, `>=`, `>`, `<=`, or `<`.
+    
+        Note: the caller is responsible for ensuring that numpy warnings are
+        suppressed (with np.errstate(all="ignore")) if needed.
+    
+        Parameters
+        ----------
+        left : np.ndarray or ExtensionArray
+        right : object
+            Cannot be a DataFrame, Series, or Index.
+        op : {operator.eq, operator.ne, operator.gt, operator.ge, operator.lt, operator.le}
+    
+        Returns
+        -------
+        ndarray or ExtensionArray
+        """
+        # NB: We assume extract_array has already been called on left and right
+        lvalues = ensure_wrapped_if_datetimelike(left)
+        rvalues = ensure_wrapped_if_datetimelike(right)
+    
+        rvalues = lib.item_from_zerodim(rvalues)
+    
+        # Special handling needed if rvalues is a zerodim np.ndarray subclass, see GH#63205
+        rvalues_is_zerodim: bool = getattr(rvalues, "ndim", None) == 0
+    
+        if isinstance(rvalues, list):
+            # We don't catch tuple here bc we may be comparing e.g. MultiIndex
+            #  to a tuple that represents a single entry, see test_compare_tuple_strs
+            rvalues = sanitize_array(rvalues, None)
+        rvalues = ensure_wrapped_if_datetimelike(rvalues)
+    
+        if isinstance(rvalues, (np.ndarray, ABCExtensionArray)) and not rvalues_is_zerodim:
+            # TODO: make this treatment consistent across ops and classes.
+            #  We are not catching all listlikes here (e.g. frozenset, tuple)
+            #  The ambiguous case is object-dtype.  See GH#27803
+            if len(lvalues) != len(rvalues):
+>               raise ValueError(
+                    "Lengths must match to compare", lvalues.shape, rvalues.shape
+                )
+E               ValueError: ('Lengths must match to compare', (3,), (5,))
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/ops/array_ops.py:332: ValueError
+=========================== short test summary info ============================
+FAILED test_0836.py::test_task_func - ValueError: ('Lengths must match to com...
+1 failed in 1.27s

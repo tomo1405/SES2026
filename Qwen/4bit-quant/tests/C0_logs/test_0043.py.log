@@ -1,0 +1,38 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a sample data matrix
+        data_matrix = np.array([[1, 2], [3, 4], [5, 6]])
+    
+        # Call the function
+>       df, ax = task_func(data_matrix, n_components=2)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0043.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data_matrix = array([[1, 2],
+       [3, 4],
+       [5, 6]]), n_components = 2
+
+    def task_func(data_matrix, n_components=2):
+        pca = PCA(n_components=n_components)
+        transformed_data = pca.fit_transform(data_matrix)
+    
+        df = pd.DataFrame(
+            transformed_data,
+            columns=[f"Component {i+1}" for i in range(transformed_data.shape[1])],
+        )
+        df["Mean"] = df.mean(axis=1)
+    
+        fig, ax = plt.subplots()
+>       ax.plot(np.cumsum(pca.explained_variance_ratio_))
+                ^^
+E       NameError: name 'np' is not defined
+
+../../../src/src_0043.py:15: NameError
+=========================== short test summary info ============================
+FAILED test_0043.py::test_task_func - NameError: name 'np' is not defined
+1 failed in 4.03s

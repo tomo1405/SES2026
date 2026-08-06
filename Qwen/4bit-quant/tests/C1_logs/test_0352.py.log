@@ -1,0 +1,28 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a simple list of products and categories
+        product_list = ['Product A', 'Product B']
+        categories = ['Category 1', 'Category 2']
+    
+        # Call the function
+        df = task_func(product_list, categories)
+    
+        # Check if the DataFrame has the correct columns
+        assert all(column in df.columns for column in ['Product', 'Category', 'Quantity Sold', 'Revenue'])
+    
+        # Check if the number of rows is equal to the length of the product list
+        assert len(df) == len(product_list)
+    
+        # Check if the values in 'Quantity Sold' and 'Revenue' are within the specified range
+        for index, row in df.iterrows():
+>           assert min_value <= row['Quantity Sold'] <= max_value
+                   ^^^^^^^^^
+E           NameError: name 'min_value' is not defined
+
+test_0352.py:20: NameError
+=========================== short test summary info ============================
+FAILED test_0352.py::test_task_func - NameError: name 'min_value' is not defined
+1 failed in 1.13s

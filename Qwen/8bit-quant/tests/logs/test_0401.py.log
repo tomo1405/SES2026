@@ -1,0 +1,65 @@
+F..FF                                                                    [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_finds_matching_string _____________________
+
+temp_directory = '/tmp/pytest-of-tomohiro-w/pytest-1446/test_task_func_finds_matching_0'
+
+    def test_task_func_finds_matching_string(temp_directory):
+        contents_list = [
+            {"key": "value1"},
+            {"key": "value2"},
+            {"key": "value3"}
+        ]
+        create_temp_json_files(temp_directory, contents_list)
+    
+        result = task_func(temp_directory, "value2")
+>       assert len(result) == 1
+E       assert 0 == 1
+E        +  where 0 = len([])
+
+test_0401.py:34: AssertionError
+_________________________ test_task_func_non_json_file _________________________
+
+temp_directory = '/tmp/pytest-of-tomohiro-w/pytest-1446/test_task_func_non_json_file0'
+
+    def test_task_func_non_json_file(temp_directory):
+        os.makedirs(os.path.join(temp_directory, "subdir"), exist_ok=True)
+        with open(os.path.join(temp_directory, "subdir", "non_json.txt"), 'w') as f:
+            f.write("This is not a JSON file.")
+    
+        contents_list = [
+            {"key": "value1"}
+        ]
+        create_temp_json_files(temp_directory, contents_list)
+    
+        result = task_func(temp_directory, "value1")
+>       assert len(result) == 1
+E       assert 0 == 1
+E        +  where 0 = len([])
+
+test_0401.py:67: AssertionError
+_______________________ test_task_func_invalid_json_file _______________________
+
+temp_directory = '/tmp/pytest-of-tomohiro-w/pytest-1446/test_task_func_invalid_json_fi0'
+
+    def test_task_func_invalid_json_file(temp_directory):
+        os.makedirs(os.path.join(temp_directory, "subdir"), exist_ok=True)
+        with open(os.path.join(temp_directory, "subdir", "invalid_json.json"), 'w') as f:
+            f.write("Invalid JSON")
+    
+        contents_list = [
+            {"key": "value1"}
+        ]
+        create_temp_json_files(temp_directory, contents_list)
+    
+        result = task_func(temp_directory, "value1")
+>       assert len(result) == 1
+E       assert 0 == 1
+E        +  where 0 = len([])
+
+test_0401.py:83: AssertionError
+=========================== short test summary info ============================
+FAILED test_0401.py::test_task_func_finds_matching_string - assert 0 == 1
+FAILED test_0401.py::test_task_func_non_json_file - assert 0 == 1
+FAILED test_0401.py::test_task_func_invalid_json_file - assert 0 == 1
+3 failed, 2 passed in 0.44s

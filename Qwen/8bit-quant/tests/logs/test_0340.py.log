@@ -1,0 +1,68 @@
+F.FFF                                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_valid_input ________________________
+
+    def test_task_func_with_valid_input():
+        req_data = {"key1": "value1", "key2": "value2"}
+        secret_key = "mysecretkey"
+        expected_output = "expected_url_encoded_hmac_signature"  # Replace with actual expected output
+    
+        result = task_func(req_data, secret_key)
+>       assert result == expected_output
+E       AssertionError: assert 'ca9b6f8e3b56...143f65df19663' == 'expected_url...mac_signature'
+E         
+E         - expected_url_encoded_hmac_signature
+E         + ca9b6f8e3b566e77b9f05c421ef44f137099b6d2fc3fba8a56d143f65df19663
+
+test_0340.py:10: AssertionError
+___________________ test_task_func_with_empty_dict_req_data ____________________
+
+    def test_task_func_with_empty_dict_req_data():
+        req_data = {}
+        secret_key = "mysecretkey"
+        expected_output = "expected_url_encoded_hmac_signature_for_empty_dict"  # Replace with actual expected output
+    
+        result = task_func(req_data, secret_key)
+>       assert result == expected_output
+E       AssertionError: assert '419662b1b86d...c65a122a3cf37' == 'expected_url...or_empty_dict'
+E         
+E         - expected_url_encoded_hmac_signature_for_empty_dict
+E         + 419662b1b86dd1ea70413afe9f33765837f4143117c063eaec2c65a122a3cf37
+
+test_0340.py:26: AssertionError
+______________ test_task_func_with_special_characters_in_req_data ______________
+
+    def test_task_func_with_special_characters_in_req_data():
+        req_data = {"key!@#": "value$%^", "key&*()": "value_+{}"}
+        secret_key = "mysecretkey"
+        expected_output = "expected_url_encoded_hmac_signature_with_special_chars"  # Replace with actual expected output
+    
+        result = task_func(req_data, secret_key)
+>       assert result == expected_output
+E       AssertionError: assert '426b12281fc3...42f55f625a9b5' == 'expected_url...special_chars'
+E         
+E         - expected_url_encoded_hmac_signature_with_special_chars
+E         + 426b12281fc32cc10a8c4c510881fc9ce7650e9643c65a38a2342f55f625a9b5
+
+test_0340.py:34: AssertionError
+________________ test_task_func_with_secret_key_as_empty_string ________________
+
+    def test_task_func_with_secret_key_as_empty_string():
+        req_data = {"key1": "value1"}
+        secret_key = ""
+        expected_output = "expected_url_encoded_hmac_signature_with_empty_secret_key"  # Replace with actual expected output
+    
+        result = task_func(req_data, secret_key)
+>       assert result == expected_output
+E       AssertionError: assert '5fb7af95a21a...f4567747bc28f' == 'expected_url...ty_secret_key'
+E         
+E         - expected_url_encoded_hmac_signature_with_empty_secret_key
+E         + 5fb7af95a21aa82434bb109b65502efb06e86b402eeae323590f4567747bc28f
+
+test_0340.py:42: AssertionError
+=========================== short test summary info ============================
+FAILED test_0340.py::test_task_func_with_valid_input - AssertionError: assert...
+FAILED test_0340.py::test_task_func_with_empty_dict_req_data - AssertionError...
+FAILED test_0340.py::test_task_func_with_special_characters_in_req_data - Ass...
+FAILED test_0340.py::test_task_func_with_secret_key_as_empty_string - Asserti...
+4 failed, 1 passed in 0.43s

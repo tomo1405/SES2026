@@ -1,0 +1,25 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        with patch('os.path.getsize') as mock_getsize, patch('os.path.getmtime') as mock_getmtime:
+            mock_getsize.return_value = 1024
+            mock_getmtime.return_value = 1634616324.123456
+    
+            result = task_func('test_file.txt')
+    
+            mock_getsize.assert_called_once_with('test_file.txt')
+            mock_getmtime.assert_called_once_with('test_file.txt')
+>           assert result == {'size': '1024 bytes', 'last_modified': '2021-10-19 18:05:24'}
+E           AssertionError: assert {'size': '102...-19 13:05:24'} == {'size': '102...-19 18:05:24'}
+E             
+E             Omitting 1 identical items, use -vv to show
+E             Differing items:
+E             {'last_modified': '2021-10-19 13:05:24'} != {'last_modified': '2021-10-19 18:05:24'}
+E             Use -v to get more diff
+
+test_0782.py:18: AssertionError
+=========================== short test summary info ============================
+FAILED test_0782.py::test_task_func - AssertionError: assert {'size': '102......
+1 failed, 1 passed in 0.50s

@@ -1,0 +1,26 @@
+...F                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_data ___________________________
+
+    def test_task_func_valid_data():
+        data = {
+            "Salary_String": ["50,000", "60,000", "70,000"],
+            "Experience": [3, 5, 7]
+        }
+        ax = task_func(data)
+        assert isinstance(ax, plt.Axes)
+        assert ax.get_title() == "Normalized Salary vs Experience"
+        assert ax.get_xlabel() == "Experience"
+        assert ax.get_ylabel() == "Normalized Salary"
+    
+        # Check if the plot contains the correct number of points
+        lines = ax.get_lines()
+>       assert len(lines) == 1  # There should be one scatter plot line
+        ^^^^^^^^^^^^^^^^^^^^^^
+E       assert 0 == 1
+E        +  where 0 = len(<a list of 0 Line2D objects>)
+
+test_1084.py:35: AssertionError
+=========================== short test summary info ============================
+FAILED test_1084.py::test_task_func_valid_data - assert 0 == 1
+1 failed, 3 passed in 3.64s

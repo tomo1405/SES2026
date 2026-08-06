@@ -1,0 +1,36 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        n = 10
+        output_path = "test_output.png"
+        timestamps = task_func(n, output_path)
+        assert len(timestamps) == n
+        assert all(isinstance(t, str) for t in timestamps)
+>       assert all(t.startswith(datetime.utcfromtimestamp(0).strftime(DATE_FORMAT)) for t in timestamps)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0049.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <list_iterator object at 0x75f3aefb3790>
+
+>   assert all(t.startswith(datetime.utcfromtimestamp(0).strftime(DATE_FORMAT)) for t in timestamps)
+                                                                  ^^^^^^^^^^^
+E   NameError: name 'DATE_FORMAT' is not defined
+
+test_0049.py:14: NameError
+=============================== warnings summary ===============================
+Codellama/8bit-quant/tests/test_0049.py: 10 warnings
+  /work/tomohiro-w/utg/src/src_0049.py:11: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+    formatted_time = datetime.utcfromtimestamp(timestamp).strftime(DATE_FORMAT)
+
+Codellama/8bit-quant/tests/test_0049.py::test_task_func
+  /work/tomohiro-w/utg/Codellama/8bit-quant/tests/test_0049.py:14: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+    assert all(t.startswith(datetime.utcfromtimestamp(0).strftime(DATE_FORMAT)) for t in timestamps)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0049.py::test_task_func - NameError: name 'DATE_FORMAT' is not de...
+1 failed, 11 warnings in 1.66s

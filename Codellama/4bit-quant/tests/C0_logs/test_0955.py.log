@@ -1,0 +1,52 @@
+F..FF                                                                    [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_positive_n_sentences ______________________
+
+    def test_task_func_positive_n_sentences():
+        target_words = ["hello", "world"]
+        n_sentences = 5
+        vocabulary = ["hello", "world", "goodbye", "cruel", "world"]
+        sentences = task_func(target_words, n_sentences, vocabulary)
+        assert len(sentences) == n_sentences
+        for sentence in sentences:
+>           assert sentence.lower() in vocabulary
+E           AssertionError: assert 'goodbye goodbye cruel goodbye goodbye world goodbye goodbye cruel hello' in ['hello', 'world', 'goodbye', 'cruel', 'world']
+E            +  where 'goodbye goodbye cruel goodbye goodbye world goodbye goodbye cruel hello' = <built-in method lower of str object at 0x7a05246c09d0>()
+E            +    where <built-in method lower of str object at 0x7a05246c09d0> = 'goodbye goodbye cruel goodbye goodbye world goodbye goodbye cruel hello'.lower
+
+test_0955.py:11: AssertionError
+________________ test_task_func_target_words_not_in_vocabulary _________________
+
+    def test_task_func_target_words_not_in_vocabulary():
+        target_words = ["hello", "world"]
+        n_sentences = 5
+        vocabulary = ["goodbye", "cruel", "world"]
+        sentences = task_func(target_words, n_sentences, vocabulary)
+        assert len(sentences) == n_sentences
+        for sentence in sentences:
+>           assert sentence.lower() in vocabulary
+E           AssertionError: assert 'cruel goodbye world cruel goodbye world world world goodbye world' in ['goodbye', 'cruel', 'world']
+E            +  where 'cruel goodbye world cruel goodbye world world world goodbye world' = <built-in method lower of str object at 0x7a052493a560>()
+E            +    where <built-in method lower of str object at 0x7a052493a560> = 'cruel goodbye world cruel goodbye world world world goodbye world'.lower
+
+test_0955.py:34: AssertionError
+__________________ test_task_func_target_words_in_vocabulary ___________________
+
+    def test_task_func_target_words_in_vocabulary():
+        target_words = ["hello", "world"]
+        n_sentences = 5
+        vocabulary = ["hello", "world", "goodbye", "cruel", "world"]
+        sentences = task_func(target_words, n_sentences, vocabulary)
+        assert len(sentences) == n_sentences
+        for sentence in sentences:
+>           assert sentence.lower() in vocabulary
+E           AssertionError: assert 'world cruel goodbye hello hello world world world cruel hello' in ['hello', 'world', 'goodbye', 'cruel', 'world']
+E            +  where 'world cruel goodbye hello hello world world world cruel hello' = <built-in method lower of str object at 0x7a05246c0730>()
+E            +    where <built-in method lower of str object at 0x7a05246c0730> = 'world cruel goodbye hello hello world world world cruel hello'.lower
+
+test_0955.py:43: AssertionError
+=========================== short test summary info ============================
+FAILED test_0955.py::test_task_func_positive_n_sentences - AssertionError: as...
+FAILED test_0955.py::test_task_func_target_words_not_in_vocabulary - Assertio...
+FAILED test_0955.py::test_task_func_target_words_in_vocabulary - AssertionErr...
+3 failed, 2 passed in 0.48s

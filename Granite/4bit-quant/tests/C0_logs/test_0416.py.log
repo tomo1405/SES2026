@@ -1,0 +1,29 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: input is not a pandas DataFrame
+        with pytest.raises(TypeError):
+            task_func("not a DataFrame")
+    
+        # Test case 2: input is a pandas DataFrame but does not have the 'UnicodeString' column
+        df = pd.DataFrame()
+        with pytest.raises(KeyError):
+            task_func(df)
+    
+        # Test case 3: input is a pandas DataFrame with the 'UnicodeString' column
+        df = pd.DataFrame({'UnicodeString': ['\u00e9']})
+        expected_df = pd.DataFrame({'UnicodeString': ['é']})
+        actual_df = task_func(df)
+>       assert actual_df.equals(expected_df)
+E       assert False
+E        +  where False = equals(  UnicodeString\n0             é)
+E        +    where equals =   UnicodeString\n0            Ã©.equals
+
+test_0416.py:30: AssertionError
+=========================== short test summary info ============================
+FAILED test_0416.py::test_task_func - assert False
+1 failed in 1.13s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

@@ -1,0 +1,39 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that the function returns a tuple with two elements
+        result = task_func()
+        assert isinstance(result, tuple)
+        assert len(result) == 2
+    
+        # Test that the first element of the tuple is a pandas DataFrame
+        df, ax = result
+        assert isinstance(df, pd.DataFrame)
+    
+        # Test that the DataFrame has the correct columns
+        assert list(df.columns) == ["Student", "Score"]
+    
+        # Test that the DataFrame has the correct number of rows
+        assert len(df) == 5
+    
+        # Test that the second element of the tuple is a matplotlib Axes object
+        assert isinstance(ax, matplotlib.axes.Axes)
+    
+        # Test that the Axes object has the correct ylabel
+        assert ax.get_ylabel() == "Score"
+    
+        # Test that the Axes object has the correct xlabel
+        assert ax.get_xlabel() == "Student"
+    
+        # Test that the Axes object has the correct title
+>       assert ax.get_title() == "Scores"
+E       AssertionError: assert '' == 'Scores'
+E         
+E         - Scores
+
+test_0087.py:32: AssertionError
+=========================== short test summary info ============================
+FAILED test_0087.py::test_task_func - AssertionError: assert '' == 'Scores'
+1 failed in 2.00s

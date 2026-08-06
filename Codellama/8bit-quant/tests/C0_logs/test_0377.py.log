@@ -1,0 +1,53 @@
+FF.F                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        text = "This is a sample text for testing the task function."
+        expected_result = {'this': 1, 'is': 1, 'a': 1, 'sample': 1, 'text': 1, 'for': 1, 'testing': 1, 'the': 1, 'task': 1, 'function': 1}
+>       assert task_func(text) == expected_result
+E       AssertionError: assert {'sample': 1,...task': 1, ...} == {'this': 1, '...mple': 1, ...}
+E         
+E         Omitting 5 identical items, use -vv to show
+E         Right contains 5 more items:
+E         {'a': 1, 'for': 1, 'is': 1, 'the': 1, 'this': 1}
+E         Use -v to get more diff
+
+test_0377.py:7: AssertionError
+________________________ test_task_func_with_stopwords _________________________
+
+    def test_task_func_with_stopwords():
+        text = "This is a sample text for testing the task function."
+        expected_result = {'this': 1, 'is': 1, 'a': 1, 'sample': 1, 'text': 1, 'for': 1, 'testing': 1, 'the': 1, 'task': 1, 'function': 1}
+>       assert task_func(text) == expected_result
+E       AssertionError: assert {'sample': 1,...task': 1, ...} == {'this': 1, '...mple': 1, ...}
+E         
+E         Omitting 5 identical items, use -vv to show
+E         Right contains 5 more items:
+E         {'a': 1, 'for': 1, 'is': 1, 'the': 1, 'this': 1}
+E         Use -v to get more diff
+
+test_0377.py:12: AssertionError
+______________________ test_task_func_with_invalid_input _______________________
+
+    def test_task_func_with_invalid_input():
+        text = 123
+        with pytest.raises(TypeError):
+>           task_func(text)
+
+test_0377.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = 123
+
+    def task_func(text):
+>       words = re.split(r'\W+', text.lower())
+                                 ^^^^^^^^^^
+E       AttributeError: 'int' object has no attribute 'lower'
+
+../../../src/src_0377.py:7: AttributeError
+=========================== short test summary info ============================
+FAILED test_0377.py::test_task_func - AssertionError: assert {'sample': 1,......
+FAILED test_0377.py::test_task_func_with_stopwords - AssertionError: assert {...
+FAILED test_0377.py::test_task_func_with_invalid_input - AttributeError: 'int...
+3 failed, 1 passed in 3.50s

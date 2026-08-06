@@ -1,0 +1,42 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        elements = ['H', 'He', 'Li', 'Be', 'B', 'C', 'N', 'O', 'F', 'Ne']
+        include_index = False
+        expected_df = pd.DataFrame({'Element': elements, 'Count': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]})
+        actual_df = task_func(elements, include_index)
+>       assert actual_df.equals(expected_df)
+E       assert False
+E        +  where False = equals(  Element  Count\n0       H      1\n1      He      2\n2      Li      3\n3      Be      4\n4       B      5\n5       C      6\n6       N      7\n7       O      8\n8       F      9\n9      Ne     10)
+E        +    where equals =   Element  Count\n0       H      1\n1      He      2\n2      Li      2\n3      Be      2\n4       B      1\n5       C      1\n6       N      1\n7       O      1\n8       F      1\n9      Ne      2.equals
+
+test_0150.py:11: AssertionError
+__________________________ test_task_func_with_index ___________________________
+
+    def test_task_func_with_index():
+        elements = ['H', 'He', 'Li', 'Be', 'B', 'C', 'N', 'O', 'F', 'Ne']
+        include_index = True
+        expected_df = pd.DataFrame({'Index': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 'Element': elements, 'Count': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]})
+        actual_df = task_func(elements, include_index)
+>       assert actual_df.equals(expected_df)
+E       assert False
+E        +  where False = equals(   Index Element  Count\n0      0       H      1\n1      1      He      2\n2      2      Li      3\n3      3      Be      ...5      5       C      6\n6      6       N      7\n7      7       O      8\n8      8       F      9\n9      9      Ne     10)
+E        +    where equals =    Index Element  Count\n0      0       H      1\n1      1      He      2\n2      2      Li      2\n3      3      Be      ...5      5       C      1\n6      6       N      1\n7      7       O      1\n8      8       F      1\n9      9      Ne      2.equals
+
+test_0150.py:18: AssertionError
+______________________ test_task_func_with_invalid_input _______________________
+
+    def test_task_func_with_invalid_input():
+        elements = ['H', 'He', 'Li', 'Be', 'B', 'C', 'N', 'O', 'F', 'Ne']
+        include_index = 'invalid'
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0150.py:23: Failed
+=========================== short test summary info ============================
+FAILED test_0150.py::test_task_func - assert False
+FAILED test_0150.py::test_task_func_with_index - assert False
+FAILED test_0150.py::test_task_func_with_invalid_input - Failed: DID NOT RAIS...
+3 failed in 1.19s

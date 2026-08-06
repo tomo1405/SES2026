@@ -1,0 +1,55 @@
+.F.                                                                      [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_invalid_json_data _______________________
+
+    def test_task_func_invalid_json_data():
+        json_data = '{"a": 1, "b": 2, "c": 3'  # Invalid JSON data
+        data_key = "a"
+        with patch("json.loads") as mock_json_loads:
+            mock_json_loads.side_effect = json.decoder.JSONDecodeError("Invalid JSON", "", 0)
+            with patch("json.dumps") as mock_json_dumps:
+                mock_json_dumps.return_value = "Mocked JSON data"
+                with pytest.raises(KeyError) as exc_info:
+>                   task_func(json_data, data_key)
+
+test_0988.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0988.py:6: in task_func
+    data = json.loads(json_data)
+           ^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/unittest/mock.py:1134: in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/unittest/mock.py:1138: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='loads' id='132582187870368'>
+args = ('{"a": 1, "b": 2, "c": 3',), kwargs = {}
+
+    def _execute_mock_call(self, /, *args, **kwargs):
+        # separate from _increment_mock_call so that awaited functions are
+        # executed separately from their call, also AsyncMock overrides this method
+    
+        effect = self.side_effect
+        if effect is not None:
+            if _is_exception(effect):
+>               raise effect
+E               json.decoder.JSONDecodeError: Invalid JSON: line 1 column 1 (char 0)
+
+/usr/lib/python3.12/unittest/mock.py:1193: JSONDecodeError
+=============================== warnings summary ===============================
+Granite/8bit-quant/tests/test_0988.py::test_task_func_valid_input
+Granite/8bit-quant/tests/test_0988.py::test_task_func_empty_values
+  /work/tomohiro-w/utg/src/src_0988.py:11: UserWarning: Instantiating Float64Dtype without any arguments.Pass a Float64Dtype instance to silence this warning.
+    values = pd.Series(data, dtype=pd.Float64Dtype)
+
+Granite/8bit-quant/tests/test_0988.py::test_task_func_valid_input
+  /work/tomohiro-w/utg/src/src_0988.py:19: UserWarning: Instantiating Float64Dtype without any arguments.Pass a Float64Dtype instance to silence this warning.
+    normalized_values = pd.Series(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0988.py::test_task_func_invalid_json_data - json.decoder.JSONDeco...
+1 failed, 2 passed, 3 warnings in 3.70s

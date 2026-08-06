@@ -1,0 +1,101 @@
+..FFFFF                                                                  [100%]
+=================================== FAILURES ===================================
+____________________ test_task_func_script_raises_exception ____________________
+
+    def test_task_func_script_raises_exception():
+        script_path = "test_script.py"
+        with pytest.raises(subprocess.CalledProcessError):
+>           task_func(script_path)
+
+test_0347.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+script_path = 'test_script.py', wait = True, args = ()
+
+    def task_func(script_path, wait=True, *args):
+        # Check if script exists
+        if not os.path.isfile(script_path):
+>           raise ValueError(f"Script '{script_path}' does not exist.")
+E           ValueError: Script 'test_script.py' does not exist.
+
+../../../src/src_0347.py:8: ValueError
+________________ test_task_func_script_does_not_raise_exception ________________
+
+    def test_task_func_script_does_not_raise_exception():
+        script_path = "test_script.py"
+>       task_func(script_path)
+
+test_0347.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+script_path = 'test_script.py', wait = True, args = ()
+
+    def task_func(script_path, wait=True, *args):
+        # Check if script exists
+        if not os.path.isfile(script_path):
+>           raise ValueError(f"Script '{script_path}' does not exist.")
+E           ValueError: Script 'test_script.py' does not exist.
+
+../../../src/src_0347.py:8: ValueError
+_______________________ test_task_func_script_with_args ________________________
+
+    def test_task_func_script_with_args():
+        script_path = "test_script.py"
+        args = ["arg1", "arg2"]
+>       task_func(script_path, *args)
+
+test_0347.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+script_path = 'test_script.py', wait = 'arg1', args = ('arg2',)
+
+    def task_func(script_path, wait=True, *args):
+        # Check if script exists
+        if not os.path.isfile(script_path):
+>           raise ValueError(f"Script '{script_path}' does not exist.")
+E           ValueError: Script 'test_script.py' does not exist.
+
+../../../src/src_0347.py:8: ValueError
+_______________________ test_task_func_script_with_wait ________________________
+
+    def test_task_func_script_with_wait():
+        script_path = "test_script.py"
+>       task_func(script_path, wait=True)
+
+test_0347.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+script_path = 'test_script.py', wait = True, args = ()
+
+    def task_func(script_path, wait=True, *args):
+        # Check if script exists
+        if not os.path.isfile(script_path):
+>           raise ValueError(f"Script '{script_path}' does not exist.")
+E           ValueError: Script 'test_script.py' does not exist.
+
+../../../src/src_0347.py:8: ValueError
+______________________ test_task_func_script_with_no_wait ______________________
+
+    def test_task_func_script_with_no_wait():
+        script_path = "test_script.py"
+>       task_func(script_path, wait=False)
+
+test_0347.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+script_path = 'test_script.py', wait = False, args = ()
+
+    def task_func(script_path, wait=True, *args):
+        # Check if script exists
+        if not os.path.isfile(script_path):
+>           raise ValueError(f"Script '{script_path}' does not exist.")
+E           ValueError: Script 'test_script.py' does not exist.
+
+../../../src/src_0347.py:8: ValueError
+=========================== short test summary info ============================
+FAILED test_0347.py::test_task_func_script_raises_exception - ValueError: Scr...
+FAILED test_0347.py::test_task_func_script_does_not_raise_exception - ValueEr...
+FAILED test_0347.py::test_task_func_script_with_args - ValueError: Script 'te...
+FAILED test_0347.py::test_task_func_script_with_wait - ValueError: Script 'te...
+FAILED test_0347.py::test_task_func_script_with_no_wait - ValueError: Script ...
+5 failed, 2 passed in 0.42s

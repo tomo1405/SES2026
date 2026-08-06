@@ -1,0 +1,38 @@
+F....                                                                    [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_matching_files ______________________
+
+setup_test_directory = '/tmp/tmpb0icw4s5'
+
+    def test_task_func_with_matching_files(setup_test_directory):
+        # Create test files
+        os.makedirs(os.path.join(setup_test_directory, 'subdir1'))
+        os.makedirs(os.path.join(setup_test_directory, 'subdir2'))
+    
+        with open(os.path.join(setup_test_directory, 'file1.txt'), 'w') as f:
+            f.write('content [subdir1]')
+    
+        with open(os.path.join(setup_test_directory, 'file2.txt'), 'w') as f:
+            f.write('content [subdir2]')
+    
+        # Call the function
+>       result = task_func(setup_test_directory)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0314.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = '/tmp/tmpb0icw4s5'
+
+    def task_func(directory):
+        DATE_FORMAT = '%Y%m%d%H%M%S'
+        moved_files = {}
+        for filename in os.listdir(directory):
+>           with open(os.path.join(directory, filename), 'r') as file:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           IsADirectoryError: [Errno 21] Is a directory: '/tmp/tmpb0icw4s5/subdir2'
+
+../../../src/src_0314.py:9: IsADirectoryError
+=========================== short test summary info ============================
+FAILED test_0314.py::test_task_func_with_matching_files - IsADirectoryError: ...
+1 failed, 4 passed in 0.44s

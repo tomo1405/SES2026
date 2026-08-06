@@ -1,0 +1,42 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_valid_xml ___________________________
+
+    def test_task_func_valid_xml():
+        xml_content = "<root><child1>value1</child1><child2>value2</child2></root>"
+        output_csv_path = "output.csv"
+        task_func(xml_content, output_csv_path)
+        with open(output_csv_path, "r", newline="", encoding="utf-8") as f:
+            reader = csv.reader(f)
+            data = list(reader)
+>       assert data == [["root", None], ["child1", "value1"], ["child2", "value2"]]
+E       AssertionError: assert [['root', '']...2', 'value2']] == [['root', Non...2', 'value2']]
+E         
+E         At index 0 diff: ['root', ''] != ['root', None]
+E         Use -v to get more diff
+
+test_1010.py:14: AssertionError
+__________________________ test_task_func_invalid_xml __________________________
+
+    def test_task_func_invalid_xml():
+        xml_content = "<root><child1>value1</child1><child2>value2</child2></root>"
+        output_csv_path = "output.csv"
+>       with pytest.raises(ET.ParseError):
+                           ^^
+E       NameError: name 'ET' is not defined
+
+test_1010.py:19: NameError
+_______________________ test_task_func_invalid_csv_path ________________________
+
+    def test_task_func_invalid_csv_path():
+        xml_content = "<root><child1>value1</child1><child2>value2</child2></root>"
+        output_csv_path = "invalid_path.csv"
+>       with pytest.raises(IOError):
+E       Failed: DID NOT RAISE OSError
+
+test_1010.py:25: Failed
+=========================== short test summary info ============================
+FAILED test_1010.py::test_task_func_valid_xml - AssertionError: assert [['roo...
+FAILED test_1010.py::test_task_func_invalid_xml - NameError: name 'ET' is not...
+FAILED test_1010.py::test_task_func_invalid_csv_path - Failed: DID NOT RAISE ...
+3 failed in 0.49s

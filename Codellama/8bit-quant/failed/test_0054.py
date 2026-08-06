@@ -1,0 +1,13 @@
+import pytest
+from src_0054 import task_func
+
+def test_task_func():
+    text = "Name: John Doe, Email: johndoe@example.com, Age: 25, Country: USA\nName: Jane Doe, Email: janedoe@example.com, Age: 30, Country: Canada\nName: Bob Smith, Email: bobsmith@example.com, Age: 35, Country: Australia"
+    expected_df = pd.DataFrame({"Name": ["John Doe", "Jane Doe", "Bob Smith"], "Email": ["johndoe@example.com", "janedoe@example.com", "bobsmith@example.com"], "Age": [25, 30, 35], "Country": ["USA", "Canada", "Australia"]})
+    expected_df["Age"] = expected_df["Age"].astype(int)
+    expected_hist = sns.histplot(data=expected_df, x="Age")
+    expected_hist.show()
+    actual_df = task_func(text)
+    assert actual_df.equals(expected_df)
+    assert actual_df["Age"].dtype == int
+    assert actual_df["Age"].hist().equals(expected_hist)

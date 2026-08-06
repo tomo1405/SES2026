@@ -1,0 +1,33 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        df, ax = task_func()
+        assert isinstance(df, pd.DataFrame)
+        assert isinstance(ax, matplotlib.axes.Axes)
+        assert df.shape == (5, 2)
+        assert df.columns.tolist() == ["Student", "Score"]
+>       assert df["Student"].tolist() == ["Alice", "Bob", "Charlie", "David", "Eve"]
+E       AssertionError: assert ['Charlie', '...David', 'Bob'] == ['Alice', 'Bo...David', 'Eve']
+E         
+E         At index 0 diff: 'Charlie' != 'Alice'
+E         Use -v to get more diff
+
+test_0087.py:13: AssertionError
+_________________________ test_task_func_with_students _________________________
+
+    def test_task_func_with_students():
+        df, ax = task_func(students=["Alice", "Bob", "Charlie"])
+        assert df.shape == (3, 2)
+>       assert df["Student"].tolist() == ["Alice", "Bob", "Charlie"]
+E       AssertionError: assert ['Charlie', 'Alice', 'Bob'] == ['Alice', 'Bob', 'Charlie']
+E         
+E         At index 0 diff: 'Charlie' != 'Alice'
+E         Use -v to get more diff
+
+test_0087.py:26: AssertionError
+=========================== short test summary info ============================
+FAILED test_0087.py::test_task_func - AssertionError: assert ['Charlie', '......
+FAILED test_0087.py::test_task_func_with_students - AssertionError: assert ['...
+2 failed, 1 passed in 2.17s

@@ -1,0 +1,93 @@
+F.FFF..                                                                  [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_empty_list ________________________
+
+    def test_task_func_with_empty_list():
+        result = task_func([])
+>       assert result == {'mean': np.nan, 'variance': np.nan}
+E       AssertionError: assert {'mean': np.f....float64(nan)} == {'mean': nan, 'variance': nan}
+E         
+E         Differing items:
+E         {'variance': np.float64(nan)} != {'variance': nan}
+E         {'mean': np.float64(nan)} != {'mean': nan}
+E         Use -v to get more diff
+
+test_0736.py:7: AssertionError
+____________________ test_task_func_with_multiple_elements _____________________
+
+    def test_task_func_with_multiple_elements():
+        result = task_func([[1, 2, 3], [4, 5]])
+>       assert result == {'mean': 3.0, 'variance': 2.5}
+E       AssertionError: assert {'mean': np.f....float64(2.0)} == {'mean': 3.0, 'variance': 2.5}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'variance': np.float64(2.0)} != {'variance': 2.5}
+E         Use -v to get more diff
+
+test_0736.py:15: AssertionError
+_______________________ test_task_func_with_nested_lists _______________________
+
+    def test_task_func_with_nested_lists():
+>       result = task_func([[1, [2, 3]], [4, 5]])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0736.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0736.py:5: in task_func
+    mean = np.mean(flattened)
+           ^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:3862: in mean
+    return _methods._mean(a, axis=axis, dtype=dtype,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = [1, [2, 3], 4, 5], axis = None, dtype = None, out = None, keepdims = False
+where = True
+
+    def _mean(a, axis=None, dtype=None, out=None, keepdims=False, *, where=True):
+>       arr = asanyarray(a)
+              ^^^^^^^^^^^^^
+E       ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (4,) + inhomogeneous part.
+
+../../../.venv/lib/python3.12/site-packages/numpy/_core/_methods.py:116: ValueError
+_____________________ test_task_func_with_negative_numbers _____________________
+
+    def test_task_func_with_negative_numbers():
+        result = task_func([[-1, -2, -3], [-4, -5]])
+>       assert result == {'mean': -3.0, 'variance': 2.5}
+E       AssertionError: assert {'mean': np.f....float64(2.0)} == {'mean': -3.0...ariance': 2.5}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'variance': np.float64(2.0)} != {'variance': 2.5}
+E         Use -v to get more diff
+
+test_0736.py:23: AssertionError
+=============================== warnings summary ===============================
+Qwen/4bit-quant/tests/test_0736.py::test_task_func_with_empty_list
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:3862: RuntimeWarning: Mean of empty slice
+    return _methods._mean(a, axis=axis, dtype=dtype,
+
+Qwen/4bit-quant/tests/test_0736.py::test_task_func_with_empty_list
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/_methods.py:142: RuntimeWarning: invalid value encountered in scalar divide
+    ret = ret.dtype.type(ret / rcount)
+
+Qwen/4bit-quant/tests/test_0736.py::test_task_func_with_empty_list
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:4270: RuntimeWarning: Degrees of freedom <= 0 for slice
+    return _methods._var(a, axis=axis, dtype=dtype, out=out, ddof=ddof,
+
+Qwen/4bit-quant/tests/test_0736.py::test_task_func_with_empty_list
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/_methods.py:178: RuntimeWarning: invalid value encountered in divide
+    arrmean = um.true_divide(arrmean, div, out=arrmean,
+
+Qwen/4bit-quant/tests/test_0736.py::test_task_func_with_empty_list
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/_methods.py:211: RuntimeWarning: invalid value encountered in scalar divide
+    ret = ret.dtype.type(ret / rcount)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0736.py::test_task_func_with_empty_list - AssertionError: assert ...
+FAILED test_0736.py::test_task_func_with_multiple_elements - AssertionError: ...
+FAILED test_0736.py::test_task_func_with_nested_lists - ValueError: setting a...
+FAILED test_0736.py::test_task_func_with_negative_numbers - AssertionError: a...
+4 failed, 3 passed, 5 warnings in 0.99s

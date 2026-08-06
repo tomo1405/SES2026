@@ -1,0 +1,87 @@
+.F.FFF                                                                   [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_scaling ____________________________
+
+df1 =    id  feature1  feature2
+0   1        10       1.5
+1   2        20       2.5
+2   3        30       3.5
+df2 =    id feature3
+0   2        a
+1   3        b
+2   4        c
+
+    def test_task_func_scaling(df1, df2):
+        _, _ = task_func(df1, df2)
+        # Assuming feature1 and feature2 are scaled, we can check the mean and std
+        # Note: This is a simplified check and may need to be adjusted based on the actual scaling logic
+>       assert np.isclose(df1['feature1'].mean(), 0, atol=1e-6), "feature1 is not scaled correctly"
+E       AssertionError: feature1 is not scaled correctly
+E       assert np.False_
+E        +  where np.False_ = <function isclose at 0x7d4306fd1c30>(np.float64(20.0), 0, atol=1e-06)
+E        +    where <function isclose at 0x7d4306fd1c30> = np.isclose
+E        +    and   np.float64(20.0) = mean()
+E        +      where mean = 0    10\n1    20\n2    30\nName: feature1, dtype: int64.mean
+
+test_0429.py:30: AssertionError
+___________________________ test_task_func_empty_df1 ___________________________
+
+df2 =    id feature3
+0   2        a
+1   3        b
+2   4        c
+
+    def test_task_func_empty_df1(df2):
+        empty_df1 = pd.DataFrame(columns=['id', 'feature1', 'feature2'])
+        merged_df, _ = task_func(empty_df1, df2)
+>       assert merged_df.empty, "Merged DataFrame should be empty if df1 is empty"
+E       AssertionError: Merged DataFrame should be empty if df1 is empty
+E       assert False
+E        +  where False =    id feature1 feature2 feature3\n0   2      NaN      NaN        a\n1   3      NaN      NaN        b\n2   4      NaN      NaN        c.empty
+
+test_0429.py:40: AssertionError
+___________________________ test_task_func_empty_df2 ___________________________
+
+df1 =    id  feature1  feature2
+0   1        10       1.5
+1   2        20       2.5
+2   3        30       3.5
+
+    def test_task_func_empty_df2(df1):
+        empty_df2 = pd.DataFrame(columns=['id', 'feature3'])
+        merged_df, _ = task_func(df1, empty_df2)
+>       assert merged_df.equals(df1), "Merged DataFrame should be equal to df1 if df2 is empty"
+E       AssertionError: Merged DataFrame should be equal to df1 if df2 is empty
+E       assert False
+E        +  where False = equals(   id  feature1  feature2\n0   1        10       1.5\n1   2        20       2.5\n2   3        30       3.5)
+E        +    where equals =    id  feature1  feature2 feature3\n0   1 -1.224745 -1.224745      NaN\n1   2  0.000000  0.000000      NaN\n2   3  1.224745  1.224745      NaN.equals
+
+test_0429.py:45: AssertionError
+______________________ test_task_func_no_numeric_features ______________________
+
+df1 =    id  feature1  feature2
+0   1        10       1.5
+1   2        20       2.5
+2   3        30       3.5
+df2 =    id feature3
+0   2        a
+1   3        b
+2   4        c
+
+    def test_task_func_no_numeric_features(df1, df2):
+        df1_non_numeric = df1.copy()
+        df1_non_numeric['feature1'] = df1_non_numeric['feature1'].astype(str)
+        merged_df, _ = task_func(df1_non_numeric, df2)
+>       assert merged_df.equals(df1_non_numeric), "Merged DataFrame should be equal to df1 if there are no numeric features in df1"
+E       AssertionError: Merged DataFrame should be equal to df1 if there are no numeric features in df1
+E       assert False
+E        +  where False = equals(   id feature1  feature2\n0   1       10       1.5\n1   2       20       2.5\n2   3       30       3.5)
+E        +    where equals =    id feature1  feature2 feature3\n0   1       10 -1.224745      NaN\n1   2       20  0.000000        a\n2   3       30  1.224745        b\n3   4      NaN       NaN        c.equals
+
+test_0429.py:51: AssertionError
+=========================== short test summary info ============================
+FAILED test_0429.py::test_task_func_scaling - AssertionError: feature1 is not...
+FAILED test_0429.py::test_task_func_empty_df1 - AssertionError: Merged DataFr...
+FAILED test_0429.py::test_task_func_empty_df2 - AssertionError: Merged DataFr...
+FAILED test_0429.py::test_task_func_no_numeric_features - AssertionError: Mer...
+4 failed, 2 passed in 5.09s

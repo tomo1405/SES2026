@@ -1,0 +1,51 @@
+F.F.                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        src_folder = "/path/to/source/folder"
+        backup_dir = "/path/to/backup/directory"
+>       assert task_func(src_folder, backup_dir) == True
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0345.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+src_folder = '/path/to/source/folder', backup_dir = '/path/to/backup/directory'
+
+    def task_func(src_folder, backup_dir):
+        # Check if source folder exists
+        if not os.path.isdir(src_folder):
+>           raise ValueError(f"Source folder '{src_folder}' does not exist.")
+E           ValueError: Source folder '/path/to/source/folder' does not exist.
+
+../../../src/src_0345.py:6: ValueError
+_____________________ test_task_func_backup_folder_exists ______________________
+
+    def test_task_func_backup_folder_exists():
+        src_folder = "/path/to/source/folder"
+        backup_dir = "/path/to/backup/directory"
+>       os.makedirs(os.path.join(backup_dir, os.path.basename(src_folder)))
+
+test_0345.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<frozen os>:215: in makedirs
+    ???
+<frozen os>:215: in makedirs
+    ???
+<frozen os>:215: in makedirs
+    ???
+<frozen os>:215: in makedirs
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = '/path', mode = 511, exist_ok = False
+
+>   ???
+E   PermissionError: [Errno 13] Permission denied: '/path'
+
+<frozen os>:225: PermissionError
+=========================== short test summary info ============================
+FAILED test_0345.py::test_task_func_valid_input - ValueError: Source folder '...
+FAILED test_0345.py::test_task_func_backup_folder_exists - PermissionError: [...
+2 failed, 2 passed in 0.44s

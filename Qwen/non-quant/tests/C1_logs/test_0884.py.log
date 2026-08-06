@@ -1,0 +1,477 @@
+F.FF                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_no_unique_values ________________________
+
+sample_df =    column_a  column_b  column_c
+0        10        40       800
+1        20        50       900
+2        30        60       900
+3        40        70       900
+4        50        80      1000
+
+    def test_task_func_no_unique_values(sample_df):
+>       assert task_func(sample_df, 'column_a', 'column_b', 'column_c') == True
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0884.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0884.py:15: in task_func
+    adf_result = adfuller(filtered_df[column_a])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+x = array([30., 40.]), maxlag = -1, regression = 'c', autolag = 'aic'
+store = False, regresults = False
+
+    def adfuller(
+        x,
+        maxlag: int | None = None,
+        regression="c",
+        autolag="AIC",
+        store=False,
+        regresults=False,
+    ):
+        """
+        Augmented Dickey-Fuller unit root test.
+    
+        The Augmented Dickey-Fuller test can be used to test for a unit root in a
+        univariate process in the presence of serial correlation.
+    
+        Parameters
+        ----------
+        x : array_like, 1d
+            The data series to test.
+        maxlag : {None, int}
+            Maximum lag which is included in test, default value of
+            12*(nobs/100)^{1/4} is used when ``None``.
+        regression : {"c","ct","ctt","n"}
+            Constant and trend order to include in regression.
+    
+            * "c" : constant only (default).
+            * "ct" : constant and trend.
+            * "ctt" : constant, and linear and quadratic trend.
+            * "n" : no constant, no trend.
+    
+        autolag : {"AIC", "BIC", "t-stat", None}
+            Method to use when automatically determining the lag length among the
+            values 0, 1, ..., maxlag.
+    
+            * If "AIC" (default) or "BIC", then the number of lags is chosen
+              to minimize the corresponding information criterion.
+            * "t-stat" based choice of maxlag.  Starts with maxlag and drops a
+              lag until the t-statistic on the last lag length is significant
+              using a 5%-sized test.
+            * If None, then the number of included lags is set to maxlag.
+        store : bool
+            If True, then a result instance is returned additionally to
+            the adf statistic. Default is False.
+        regresults : bool, optional
+            If True, the full regression results are returned. Default is False.
+    
+        Returns
+        -------
+        adf : float
+            The test statistic.
+        pvalue : float
+            MacKinnon's approximate p-value based on MacKinnon (1994, 2010).
+        usedlag : int
+            The number of lags used.
+        nobs : int
+            The number of observations used for the ADF regression and calculation
+            of the critical values.
+        critical values : dict
+            Critical values for the test statistic at the 1 %, 5 %, and 10 %
+            levels. Based on MacKinnon (2010).
+        icbest : float
+            The maximized information criterion if autolag is not None.
+        resstore : ResultStore, optional
+            A dummy class with results attached as attributes.
+    
+        Notes
+        -----
+        The null hypothesis of the Augmented Dickey-Fuller is that there is a unit
+        root, with the alternative that there is no unit root. If the pvalue is
+        above a critical size, then we cannot reject that there is a unit root.
+    
+        The p-values are obtained through regression surface approximation from
+        MacKinnon 1994, but using the updated 2010 tables. If the p-value is close
+        to significant, then the critical values should be used to judge whether
+        to reject the null.
+    
+        The autolag option and maxlag for it are described in Greene.
+    
+        See the notebook `Stationarity and detrending (ADF/KPSS)
+        <../examples/notebooks/generated/stationarity_detrending_adf_kpss.html>`__
+        for an overview.
+    
+        References
+        ----------
+        .. [1] W. Green.  "Econometric Analysis," 5th ed., Pearson, 2003.
+    
+        .. [2] Hamilton, J.D.  "Time Series Analysis".  Princeton, 1994.
+    
+        .. [3] MacKinnon, J.G. 1994.  "Approximate asymptotic distribution functions for
+            unit-root and cointegration tests.  `Journal of Business and Economic
+            Statistics` 12, 167-76.
+    
+        .. [4] MacKinnon, J.G. 2010. "Critical Values for Cointegration Tests."  Queen"s
+            University, Dept of Economics, Working Papers.  Available at
+            http://ideas.repec.org/p/qed/wpaper/1227.html
+        """
+        x = array_like(x, "x")
+        maxlag = int_like(maxlag, "maxlag", optional=True)
+        regression = string_like(
+            regression, "regression", options=("c", "ct", "ctt", "n")
+        )
+        autolag = string_like(
+            autolag, "autolag", optional=True, options=("aic", "bic", "t-stat")
+        )
+        store = bool_like(store, "store")
+        regresults = bool_like(regresults, "regresults")
+    
+        if x.max() == x.min():
+            raise ValueError("Invalid input, x is constant")
+    
+        if regresults:
+            store = True
+    
+        trenddict = {None: "n", 0: "c", 1: "ct", 2: "ctt"}
+        if regression is None or isinstance(regression, int):
+            regression = trenddict[regression]
+        regression = regression.lower()
+        nobs = x.shape[0]
+    
+        ntrend = len(regression) if regression != "n" else 0
+        if maxlag is None:
+            # from Greene referencing Schwert 1989
+            maxlag = int(np.ceil(12.0 * np.power(nobs / 100.0, 1 / 4.0)))
+            # -1 for the diff
+            maxlag = min(nobs // 2 - ntrend - 1, maxlag)
+            if maxlag < 0:
+>               raise ValueError(
+                    "sample size is too short to use selected "
+                    "regression component"
+E                   ValueError: sample size is too short to use selected regression component
+
+../../../.venv/lib/python3.12/site-packages/statsmodels/tsa/stattools.py:293: ValueError
+_______________________ test_task_func_stationary_series _______________________
+
+sample_df =    column_a  column_b  column_c
+0        10        40       800
+1        20        50       900
+2        30        60       900
+3        40        70       900
+4        50        80      1000
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x748c49c3b770>
+
+    def test_task_func_stationary_series(sample_df, monkeypatch):
+        # Patch the adfuller function to return a p-value of 0.04
+        monkeypatch.setattr(statsmodels.tsa.stattools, 'adfuller', mock_adfuller)
+>       assert task_func(sample_df, 'column_a', 'column_b', 'column_c') == True
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0884.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0884.py:15: in task_func
+    adf_result = adfuller(filtered_df[column_a])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+x = array([30., 40.]), maxlag = -1, regression = 'c', autolag = 'aic'
+store = False, regresults = False
+
+    def adfuller(
+        x,
+        maxlag: int | None = None,
+        regression="c",
+        autolag="AIC",
+        store=False,
+        regresults=False,
+    ):
+        """
+        Augmented Dickey-Fuller unit root test.
+    
+        The Augmented Dickey-Fuller test can be used to test for a unit root in a
+        univariate process in the presence of serial correlation.
+    
+        Parameters
+        ----------
+        x : array_like, 1d
+            The data series to test.
+        maxlag : {None, int}
+            Maximum lag which is included in test, default value of
+            12*(nobs/100)^{1/4} is used when ``None``.
+        regression : {"c","ct","ctt","n"}
+            Constant and trend order to include in regression.
+    
+            * "c" : constant only (default).
+            * "ct" : constant and trend.
+            * "ctt" : constant, and linear and quadratic trend.
+            * "n" : no constant, no trend.
+    
+        autolag : {"AIC", "BIC", "t-stat", None}
+            Method to use when automatically determining the lag length among the
+            values 0, 1, ..., maxlag.
+    
+            * If "AIC" (default) or "BIC", then the number of lags is chosen
+              to minimize the corresponding information criterion.
+            * "t-stat" based choice of maxlag.  Starts with maxlag and drops a
+              lag until the t-statistic on the last lag length is significant
+              using a 5%-sized test.
+            * If None, then the number of included lags is set to maxlag.
+        store : bool
+            If True, then a result instance is returned additionally to
+            the adf statistic. Default is False.
+        regresults : bool, optional
+            If True, the full regression results are returned. Default is False.
+    
+        Returns
+        -------
+        adf : float
+            The test statistic.
+        pvalue : float
+            MacKinnon's approximate p-value based on MacKinnon (1994, 2010).
+        usedlag : int
+            The number of lags used.
+        nobs : int
+            The number of observations used for the ADF regression and calculation
+            of the critical values.
+        critical values : dict
+            Critical values for the test statistic at the 1 %, 5 %, and 10 %
+            levels. Based on MacKinnon (2010).
+        icbest : float
+            The maximized information criterion if autolag is not None.
+        resstore : ResultStore, optional
+            A dummy class with results attached as attributes.
+    
+        Notes
+        -----
+        The null hypothesis of the Augmented Dickey-Fuller is that there is a unit
+        root, with the alternative that there is no unit root. If the pvalue is
+        above a critical size, then we cannot reject that there is a unit root.
+    
+        The p-values are obtained through regression surface approximation from
+        MacKinnon 1994, but using the updated 2010 tables. If the p-value is close
+        to significant, then the critical values should be used to judge whether
+        to reject the null.
+    
+        The autolag option and maxlag for it are described in Greene.
+    
+        See the notebook `Stationarity and detrending (ADF/KPSS)
+        <../examples/notebooks/generated/stationarity_detrending_adf_kpss.html>`__
+        for an overview.
+    
+        References
+        ----------
+        .. [1] W. Green.  "Econometric Analysis," 5th ed., Pearson, 2003.
+    
+        .. [2] Hamilton, J.D.  "Time Series Analysis".  Princeton, 1994.
+    
+        .. [3] MacKinnon, J.G. 1994.  "Approximate asymptotic distribution functions for
+            unit-root and cointegration tests.  `Journal of Business and Economic
+            Statistics` 12, 167-76.
+    
+        .. [4] MacKinnon, J.G. 2010. "Critical Values for Cointegration Tests."  Queen"s
+            University, Dept of Economics, Working Papers.  Available at
+            http://ideas.repec.org/p/qed/wpaper/1227.html
+        """
+        x = array_like(x, "x")
+        maxlag = int_like(maxlag, "maxlag", optional=True)
+        regression = string_like(
+            regression, "regression", options=("c", "ct", "ctt", "n")
+        )
+        autolag = string_like(
+            autolag, "autolag", optional=True, options=("aic", "bic", "t-stat")
+        )
+        store = bool_like(store, "store")
+        regresults = bool_like(regresults, "regresults")
+    
+        if x.max() == x.min():
+            raise ValueError("Invalid input, x is constant")
+    
+        if regresults:
+            store = True
+    
+        trenddict = {None: "n", 0: "c", 1: "ct", 2: "ctt"}
+        if regression is None or isinstance(regression, int):
+            regression = trenddict[regression]
+        regression = regression.lower()
+        nobs = x.shape[0]
+    
+        ntrend = len(regression) if regression != "n" else 0
+        if maxlag is None:
+            # from Greene referencing Schwert 1989
+            maxlag = int(np.ceil(12.0 * np.power(nobs / 100.0, 1 / 4.0)))
+            # -1 for the diff
+            maxlag = min(nobs // 2 - ntrend - 1, maxlag)
+            if maxlag < 0:
+>               raise ValueError(
+                    "sample size is too short to use selected "
+                    "regression component"
+E                   ValueError: sample size is too short to use selected regression component
+
+../../../.venv/lib/python3.12/site-packages/statsmodels/tsa/stattools.py:293: ValueError
+_____________________ test_task_func_non_stationary_series _____________________
+
+sample_df =    column_a  column_b  column_c
+0        10        40       800
+1        20        50       900
+2        30        60       900
+3        40        70       900
+4        50        80      1000
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x748c0998d2b0>
+
+    def test_task_func_non_stationary_series(sample_df, monkeypatch):
+        # Patch the adfuller function to return a p-value of 0.06
+        def mock_adfuller_non_stationary(series):
+            return (0, 0.06, 0, 0, {}, {})
+        monkeypatch.setattr(statsmodels.tsa.stattools, 'adfuller', mock_adfuller_non_stationary)
+>       assert task_func(sample_df, 'column_a', 'column_b', 'column_c') == False
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0884.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0884.py:15: in task_func
+    adf_result = adfuller(filtered_df[column_a])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+x = array([30., 40.]), maxlag = -1, regression = 'c', autolag = 'aic'
+store = False, regresults = False
+
+    def adfuller(
+        x,
+        maxlag: int | None = None,
+        regression="c",
+        autolag="AIC",
+        store=False,
+        regresults=False,
+    ):
+        """
+        Augmented Dickey-Fuller unit root test.
+    
+        The Augmented Dickey-Fuller test can be used to test for a unit root in a
+        univariate process in the presence of serial correlation.
+    
+        Parameters
+        ----------
+        x : array_like, 1d
+            The data series to test.
+        maxlag : {None, int}
+            Maximum lag which is included in test, default value of
+            12*(nobs/100)^{1/4} is used when ``None``.
+        regression : {"c","ct","ctt","n"}
+            Constant and trend order to include in regression.
+    
+            * "c" : constant only (default).
+            * "ct" : constant and trend.
+            * "ctt" : constant, and linear and quadratic trend.
+            * "n" : no constant, no trend.
+    
+        autolag : {"AIC", "BIC", "t-stat", None}
+            Method to use when automatically determining the lag length among the
+            values 0, 1, ..., maxlag.
+    
+            * If "AIC" (default) or "BIC", then the number of lags is chosen
+              to minimize the corresponding information criterion.
+            * "t-stat" based choice of maxlag.  Starts with maxlag and drops a
+              lag until the t-statistic on the last lag length is significant
+              using a 5%-sized test.
+            * If None, then the number of included lags is set to maxlag.
+        store : bool
+            If True, then a result instance is returned additionally to
+            the adf statistic. Default is False.
+        regresults : bool, optional
+            If True, the full regression results are returned. Default is False.
+    
+        Returns
+        -------
+        adf : float
+            The test statistic.
+        pvalue : float
+            MacKinnon's approximate p-value based on MacKinnon (1994, 2010).
+        usedlag : int
+            The number of lags used.
+        nobs : int
+            The number of observations used for the ADF regression and calculation
+            of the critical values.
+        critical values : dict
+            Critical values for the test statistic at the 1 %, 5 %, and 10 %
+            levels. Based on MacKinnon (2010).
+        icbest : float
+            The maximized information criterion if autolag is not None.
+        resstore : ResultStore, optional
+            A dummy class with results attached as attributes.
+    
+        Notes
+        -----
+        The null hypothesis of the Augmented Dickey-Fuller is that there is a unit
+        root, with the alternative that there is no unit root. If the pvalue is
+        above a critical size, then we cannot reject that there is a unit root.
+    
+        The p-values are obtained through regression surface approximation from
+        MacKinnon 1994, but using the updated 2010 tables. If the p-value is close
+        to significant, then the critical values should be used to judge whether
+        to reject the null.
+    
+        The autolag option and maxlag for it are described in Greene.
+    
+        See the notebook `Stationarity and detrending (ADF/KPSS)
+        <../examples/notebooks/generated/stationarity_detrending_adf_kpss.html>`__
+        for an overview.
+    
+        References
+        ----------
+        .. [1] W. Green.  "Econometric Analysis," 5th ed., Pearson, 2003.
+    
+        .. [2] Hamilton, J.D.  "Time Series Analysis".  Princeton, 1994.
+    
+        .. [3] MacKinnon, J.G. 1994.  "Approximate asymptotic distribution functions for
+            unit-root and cointegration tests.  `Journal of Business and Economic
+            Statistics` 12, 167-76.
+    
+        .. [4] MacKinnon, J.G. 2010. "Critical Values for Cointegration Tests."  Queen"s
+            University, Dept of Economics, Working Papers.  Available at
+            http://ideas.repec.org/p/qed/wpaper/1227.html
+        """
+        x = array_like(x, "x")
+        maxlag = int_like(maxlag, "maxlag", optional=True)
+        regression = string_like(
+            regression, "regression", options=("c", "ct", "ctt", "n")
+        )
+        autolag = string_like(
+            autolag, "autolag", optional=True, options=("aic", "bic", "t-stat")
+        )
+        store = bool_like(store, "store")
+        regresults = bool_like(regresults, "regresults")
+    
+        if x.max() == x.min():
+            raise ValueError("Invalid input, x is constant")
+    
+        if regresults:
+            store = True
+    
+        trenddict = {None: "n", 0: "c", 1: "ct", 2: "ctt"}
+        if regression is None or isinstance(regression, int):
+            regression = trenddict[regression]
+        regression = regression.lower()
+        nobs = x.shape[0]
+    
+        ntrend = len(regression) if regression != "n" else 0
+        if maxlag is None:
+            # from Greene referencing Schwert 1989
+            maxlag = int(np.ceil(12.0 * np.power(nobs / 100.0, 1 / 4.0)))
+            # -1 for the diff
+            maxlag = min(nobs // 2 - ntrend - 1, maxlag)
+            if maxlag < 0:
+>               raise ValueError(
+                    "sample size is too short to use selected "
+                    "regression component"
+E                   ValueError: sample size is too short to use selected regression component
+
+../../../.venv/lib/python3.12/site-packages/statsmodels/tsa/stattools.py:293: ValueError
+=========================== short test summary info ============================
+FAILED test_0884.py::test_task_func_no_unique_values - ValueError: sample siz...
+FAILED test_0884.py::test_task_func_stationary_series - ValueError: sample si...
+FAILED test_0884.py::test_task_func_non_stationary_series - ValueError: sampl...
+3 failed, 1 passed in 2.74s

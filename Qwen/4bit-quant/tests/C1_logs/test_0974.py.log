@@ -1,0 +1,74 @@
+....FFF                                                                  [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_path ___________________________
+
+    def test_task_func_valid_path():
+        # Assuming '/valid/path' exists and has valid components
+        expected_result = [
+            ('valid', {'total': 1000, 'used': 500, 'free': 500}),
+            ('path', {'total': 1000, 'used': 500, 'free': 500})
+        ]
+>       assert task_func("/valid/path") == expected_result
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0974.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = '/valid/path', delimiter = '/'
+
+    def task_func(path, delimiter="/"):
+        if not path or not isinstance(path, str):
+            raise ValueError("Path must be a non-empty string")
+        if not os.path.exists(path):
+>           raise FileNotFoundError(f"Path '{path}' does not exist")
+E           FileNotFoundError: Path '/valid/path' does not exist
+
+../../../src/src_0974.py:7: FileNotFoundError
+_____________________ test_task_func_with_custom_delimiter _____________________
+
+    def test_task_func_with_custom_delimiter():
+        # Assuming '/valid|path' exists and has valid components
+        expected_result = [
+            ('valid', {'total': 1000, 'used': 500, 'free': 500}),
+            ('path', {'total': 1000, 'used': 500, 'free': 500})
+        ]
+>       assert task_func("/valid|path", delimiter="|") == expected_result
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0974.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = '/valid|path', delimiter = '|'
+
+    def task_func(path, delimiter="/"):
+        if not path or not isinstance(path, str):
+            raise ValueError("Path must be a non-empty string")
+        if not os.path.exists(path):
+>           raise FileNotFoundError(f"Path '{path}' does not exist")
+E           FileNotFoundError: Path '/valid|path' does not exist
+
+../../../src/src_0974.py:7: FileNotFoundError
+______________________ test_task_func_invalid_components _______________________
+
+    def test_task_func_invalid_components():
+        with pytest.raises(ValueError):
+>           task_func("/valid//path")
+
+test_0974.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = '/valid//path', delimiter = '/'
+
+    def task_func(path, delimiter="/"):
+        if not path or not isinstance(path, str):
+            raise ValueError("Path must be a non-empty string")
+        if not os.path.exists(path):
+>           raise FileNotFoundError(f"Path '{path}' does not exist")
+E           FileNotFoundError: Path '/valid//path' does not exist
+
+../../../src/src_0974.py:7: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0974.py::test_task_func_valid_path - FileNotFoundError: Path '/va...
+FAILED test_0974.py::test_task_func_with_custom_delimiter - FileNotFoundError...
+FAILED test_0974.py::test_task_func_invalid_components - FileNotFoundError: P...
+3 failed, 4 passed in 0.49s

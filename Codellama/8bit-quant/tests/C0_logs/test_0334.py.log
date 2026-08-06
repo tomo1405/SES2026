@@ -1,0 +1,100 @@
+FFF..F..F.                                                               [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_k_is_zero ___________________________
+
+    def test_task_func_k_is_zero():
+        numbers, smallest_numbers = task_func(0)
+>       assert numbers == []
+E       assert [5, 36, 38, 57, 37] == []
+E         
+E         Left contains 5 more items, first extra item: 5
+E         Use -v to get more diff
+
+test_0334.py:6: AssertionError
+___________________________ test_task_func_k_is_one ____________________________
+
+    def test_task_func_k_is_one():
+        numbers, smallest_numbers = task_func(1)
+>       assert len(numbers) == 1
+E       assert 5 == 1
+E        +  where 5 = len([9, 35, 41, 48, 49])
+
+test_0334.py:11: AssertionError
+_____________________ test_task_func_k_is_greater_than_one _____________________
+
+    def test_task_func_k_is_greater_than_one():
+        numbers, smallest_numbers = task_func(2)
+>       assert len(numbers) == 2
+E       assert 5 == 2
+E        +  where 5 = len([31, 50, 45, 92, 67])
+
+test_0334.py:17: AssertionError
+________________ test_task_func_list_length_is_greater_than_one ________________
+
+    def test_task_func_list_length_is_greater_than_one():
+        numbers, smallest_numbers = task_func(2, 3)
+        assert len(numbers) == 3
+        assert len(smallest_numbers) == 2
+        assert smallest_numbers[0] == min(numbers)
+>       assert smallest_numbers[1] == min(numbers)
+E       assert 26 == 3
+E        +  where 3 = min([3, 26, 38])
+
+test_0334.py:38: AssertionError
+_______________ test_task_func_max_value_is_less_than_min_value ________________
+
+    def test_task_func_max_value_is_less_than_min_value():
+>       numbers, smallest_numbers = task_func(1, 1, 1, 0)
+                                    ^^^^^^^^^^^^^^^^^^^^^
+
+test_0334.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0334.py:5: in task_func
+    numbers = [random.randint(min_value, max_value) for _ in range(list_length)]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/random.py:336: in randint
+    return self.randrange(a, b+1)
+           ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <random.Random object at 0xbb78330>, start = 1, stop = 1, step = 1
+
+    def randrange(self, start, stop=None, step=_ONE):
+        """Choose a random item from range(stop) or range(start, stop[, step]).
+    
+        Roughly equivalent to ``choice(range(start, stop, step))`` but
+        supports arbitrarily large ranges and is optimized for common cases.
+    
+        """
+    
+        # This code is a bit messy to make it fast for the
+        # common case while still doing adequate error checking.
+        istart = _index(start)
+        if stop is None:
+            # We don't check for "step != 1" because it hasn't been
+            # type checked and converted to an integer yet.
+            if step is not _ONE:
+                raise TypeError("Missing a non-None stop argument")
+            if istart > 0:
+                return self._randbelow(istart)
+            raise ValueError("empty range for randrange()")
+    
+        # Stop argument supplied.
+        istop = _index(stop)
+        width = istop - istart
+        istep = _index(step)
+        # Fast path.
+        if istep == 1:
+            if width > 0:
+                return istart + self._randbelow(width)
+>           raise ValueError(f"empty range in randrange({start}, {stop})")
+E           ValueError: empty range in randrange(1, 1)
+
+/usr/lib/python3.12/random.py:319: ValueError
+=========================== short test summary info ============================
+FAILED test_0334.py::test_task_func_k_is_zero - assert [5, 36, 38, 57, 37] == []
+FAILED test_0334.py::test_task_func_k_is_one - assert 5 == 1
+FAILED test_0334.py::test_task_func_k_is_greater_than_one - assert 5 == 2
+FAILED test_0334.py::test_task_func_list_length_is_greater_than_one - assert ...
+FAILED test_0334.py::test_task_func_max_value_is_less_than_min_value - ValueE...
+5 failed, 5 passed in 0.44s

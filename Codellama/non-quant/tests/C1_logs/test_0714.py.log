@@ -1,0 +1,36 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        log_file_path = "test_log.txt"
+        keywords = ["keyword1", "keyword2"]
+        expected_output = [
+            "keyword1 : value1 : value2",
+            "keyword2 : value3 : value4"
+        ]
+        with open(log_file_path, "w") as log:
+            log.write("keyword1 value1 value2\n")
+            log.write("keyword2 value3 value4\n")
+>       assert task_func(log_file_path, keywords) == expected_output
+E       AssertionError: assert ['           ...      value4'] == ['keyword1 : ...ue3 : value4']
+E         
+E         At index 0 diff: '            keyword1 :               value1 :               value2' != 'keyword1 : value1 : value2'
+E         Use -v to get more diff
+
+test_0714.py:14: AssertionError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        log_file_path = "test_log.txt"
+        keywords = ["keyword1", "keyword2"]
+        with open(log_file_path, "w") as log:
+            log.write("invalid line\n")
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0714.py:21: Failed
+=========================== short test summary info ============================
+FAILED test_0714.py::test_task_func_valid_input - AssertionError: assert ['  ...
+FAILED test_0714.py::test_task_func_invalid_input - Failed: DID NOT RAISE Val...
+2 failed, 1 passed in 0.46s

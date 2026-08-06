@@ -1,0 +1,203 @@
+...F                                                                     [100%]
+=================================== FAILURES ===================================
+_____________________________ test_empty_dataframe _____________________________
+
+df =    A   B   C   D   E
+0  1   6  11  16  21
+1  2   7  12  17  22
+2  3   8  13  18  23
+3  4   9  14  19  24
+4  5  10  15  20  25
+
+    def test_empty_dataframe(df):
+        # Test if the function returns an empty list of plots for an empty DataFrame
+>       result_plots = task_func(pd.DataFrame(), [], 2)[1]
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0611.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0611.py:9: in task_func
+    df = df.set_index(list('ABCDE')).drop(tuples, errors='ignore').reset_index()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Empty DataFrame
+Columns: []
+Index: [], keys = ['A', 'B', 'C', 'D', 'E']
+drop = True, append = False, inplace = False, verify_integrity = False
+
+    def set_index(
+        self,
+        keys,
+        *,
+        drop: bool = True,
+        append: bool = False,
+        inplace: bool = False,
+        verify_integrity: bool | lib.NoDefault = lib.no_default,
+    ) -> DataFrame | None:
+        """
+        Set the DataFrame index using existing columns.
+    
+        Set the DataFrame index (row labels) using one or more existing
+        columns or arrays (of the correct length). The index can replace the
+        existing index or expand on it.
+    
+        Parameters
+        ----------
+        keys : label or array-like or list of labels/arrays
+            This parameter can be either a single column key, a single array of
+            the same length as the calling DataFrame, or a list containing an
+            arbitrary combination of column keys and arrays. Here, "array"
+            encompasses :class:`Series`, :class:`Index`, ``np.ndarray``, and
+            instances of :class:`~collections.abc.Iterator`.
+        drop : bool, default True
+            Delete columns to be used as the new index.
+        append : bool, default False
+            Whether to append columns to existing index.
+            Setting to True will add the new columns to existing index.
+            When set to False, the current index will be dropped from the DataFrame.
+        inplace : bool, default False
+            Whether to modify the DataFrame rather than creating a new one.
+        verify_integrity : bool, default False
+            Check the new index for duplicates. Otherwise defer the check until
+            necessary. Setting to False will improve the performance of this
+            method.
+    
+            .. deprecated:: 3.0.0
+    
+        Returns
+        -------
+        DataFrame or None
+            Changed row labels or None if ``inplace=True``.
+    
+        See Also
+        --------
+        DataFrame.reset_index : Opposite of set_index.
+        DataFrame.reindex : Change to new indices or expand indices.
+        DataFrame.reindex_like : Change to same indices as other DataFrame.
+    
+        Examples
+        --------
+        >>> df = pd.DataFrame(
+        ...     {
+        ...         "month": [1, 4, 7, 10],
+        ...         "year": [2012, 2014, 2013, 2014],
+        ...         "sale": [55, 40, 84, 31],
+        ...     }
+        ... )
+        >>> df
+           month  year  sale
+        0      1  2012    55
+        1      4  2014    40
+        2      7  2013    84
+        3     10  2014    31
+    
+        Set the index to become the 'month' column:
+    
+        >>> df.set_index("month")
+               year  sale
+        month
+        1      2012    55
+        4      2014    40
+        7      2013    84
+        10     2014    31
+    
+        Create a MultiIndex using columns 'year' and 'month':
+    
+        >>> df.set_index(["year", "month"])
+                    sale
+        year  month
+        2012  1     55
+        2014  4     40
+        2013  7     84
+        2014  10    31
+    
+        Create a MultiIndex using an Index and a column:
+    
+        >>> df.set_index([pd.Index([1, 2, 3, 4]), "year"])
+                 month  sale
+           year
+        1  2012  1      55
+        2  2014  4      40
+        3  2013  7      84
+        4  2014  10     31
+    
+        Create a MultiIndex using two Series:
+    
+        >>> s = pd.Series([1, 2, 3, 4])
+        >>> df.set_index([s, s**2])
+              month  year  sale
+        1 1       1  2012    55
+        2 4       4  2014    40
+        3 9       7  2013    84
+        4 16     10  2014    31
+    
+        Append a column to the existing index:
+    
+        >>> df = df.set_index("month")
+        >>> df.set_index("year", append=True)
+                      sale
+        month  year
+        1      2012    55
+        4      2014    40
+        7      2013    84
+        10     2014    31
+    
+        >>> df.set_index("year", append=False)
+               sale
+        year
+        2012    55
+        2014    40
+        2013    84
+        2014    31
+        """
+        if verify_integrity is not lib.no_default:
+            # GH#62919
+            warnings.warn(
+                "The 'verify_integrity' keyword in DataFrame.set_index is "
+                "deprecated and will be removed in a future version. "
+                "Directly check the result.index.is_unique instead.",
+                Pandas4Warning,
+                stacklevel=find_stack_level(),
+            )
+        else:
+            verify_integrity = False
+    
+        inplace = validate_bool_kwarg(inplace, "inplace")
+        self._check_inplace_and_allows_duplicate_labels(inplace)
+        if not isinstance(keys, list):
+            keys = [keys]
+    
+        err_msg = (
+            'The parameter "keys" may be a column key, one-dimensional '
+            "array, or a list containing only valid column keys and "
+            "one-dimensional arrays."
+        )
+    
+        missing: list[Hashable] = []
+        for col in keys:
+            if isinstance(col, (Index, Series, np.ndarray, list, abc.Iterator)):
+                # arrays are fine as long as they are one-dimensional
+                # iterators get converted to list below
+                if getattr(col, "ndim", 1) != 1:
+                    raise ValueError(err_msg)
+            else:
+                # everything else gets tried as a key; see GH 24969
+                try:
+                    found = col in self.columns
+                except TypeError as err:
+                    raise TypeError(
+                        f"{err_msg}. Received column of type {type(col)}"
+                    ) from err
+                else:
+                    if not found:
+                        missing.append(col)
+    
+        if missing:
+>           raise KeyError(f"None of {missing} are in the columns")
+E           KeyError: "None of ['A', 'B', 'C', 'D', 'E'] are in the columns"
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:6989: KeyError
+=========================== short test summary info ============================
+FAILED test_0611.py::test_empty_dataframe - KeyError: "None of ['A', 'B', 'C'...
+1 failed, 3 passed in 4.08s

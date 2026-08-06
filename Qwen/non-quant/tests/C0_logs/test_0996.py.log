@@ -1,0 +1,116 @@
+.FFFF                                                                    [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_empty_file ___________________________
+
+mock_file_path = '/tmp/pytest-of-tomohiro-w/pytest-1320/test_task_func_empty_file0/test_data.csv'
+mock_plot_path = '/tmp/pytest-of-tomohiro-w/pytest-1320/test_task_func_empty_file0/test_plot.png'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76fa5a11b500>
+
+    def test_task_func_empty_file(mock_file_path, mock_plot_path, monkeypatch):
+        def mock_read_csv(path):
+            raise pd.errors.EmptyDataError()
+        monkeypatch.setattr(pd, "read_csv", mock_read_csv)
+    
+>       mean, median, plot_path = task_func(mock_file_path, mock_plot_path)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0996.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = '/tmp/pytest-of-tomohiro-w/pytest-1320/test_task_func_empty_file0/test_data.csv'
+plot_path = '/tmp/pytest-of-tomohiro-w/pytest-1320/test_task_func_empty_file0/test_plot.png'
+
+    def task_func(file_path: str, plot_path: str) -> (float, float, str):
+        # Check if file exists
+        if not os.path.isfile(file_path):
+>           raise FileNotFoundError(f"File {file_path} does not exist.")
+E           FileNotFoundError: File /tmp/pytest-of-tomohiro-w/pytest-1320/test_task_func_empty_file0/test_data.csv does not exist.
+
+../../../src/src_0996.py:8: FileNotFoundError
+__________________________ test_task_func_valid_data ___________________________
+
+mock_file_path = '/tmp/pytest-of-tomohiro-w/pytest-1320/test_task_func_valid_data0/test_data.csv'
+mock_plot_path = '/tmp/pytest-of-tomohiro-w/pytest-1320/test_task_func_valid_data0/test_plot.png'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76fa5a11b2f0>
+
+    def test_task_func_valid_data(mock_file_path, mock_plot_path, monkeypatch):
+        def mock_read_csv(path):
+            return pd.DataFrame([1, 2, 3, 4, 5])
+        monkeypatch.setattr(pd, "read_csv", mock_read_csv)
+    
+>       mean, median, plot_path = task_func(mock_file_path, mock_plot_path)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0996.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = '/tmp/pytest-of-tomohiro-w/pytest-1320/test_task_func_valid_data0/test_data.csv'
+plot_path = '/tmp/pytest-of-tomohiro-w/pytest-1320/test_task_func_valid_data0/test_plot.png'
+
+    def task_func(file_path: str, plot_path: str) -> (float, float, str):
+        # Check if file exists
+        if not os.path.isfile(file_path):
+>           raise FileNotFoundError(f"File {file_path} does not exist.")
+E           FileNotFoundError: File /tmp/pytest-of-tomohiro-w/pytest-1320/test_task_func_valid_data0/test_data.csv does not exist.
+
+../../../src/src_0996.py:8: FileNotFoundError
+_______________________ test_task_func_non_numeric_data ________________________
+
+mock_file_path = '/tmp/pytest-of-tomohiro-w/pytest-1320/test_task_func_non_numeric_dat0/test_data.csv'
+mock_plot_path = '/tmp/pytest-of-tomohiro-w/pytest-1320/test_task_func_non_numeric_dat0/test_plot.png'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76fa5a11bd10>
+
+    def test_task_func_non_numeric_data(mock_file_path, mock_plot_path, monkeypatch):
+        def mock_read_csv(path):
+            return pd.DataFrame(["a", "b", "c"])
+        monkeypatch.setattr(pd, "read_csv", mock_read_csv)
+    
+>       mean, median, plot_path = task_func(mock_file_path, mock_plot_path)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0996.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = '/tmp/pytest-of-tomohiro-w/pytest-1320/test_task_func_non_numeric_dat0/test_data.csv'
+plot_path = '/tmp/pytest-of-tomohiro-w/pytest-1320/test_task_func_non_numeric_dat0/test_plot.png'
+
+    def task_func(file_path: str, plot_path: str) -> (float, float, str):
+        # Check if file exists
+        if not os.path.isfile(file_path):
+>           raise FileNotFoundError(f"File {file_path} does not exist.")
+E           FileNotFoundError: File /tmp/pytest-of-tomohiro-w/pytest-1320/test_task_func_non_numeric_dat0/test_data.csv does not exist.
+
+../../../src/src_0996.py:8: FileNotFoundError
+_________________________ test_task_func_all_nan_data __________________________
+
+mock_file_path = '/tmp/pytest-of-tomohiro-w/pytest-1320/test_task_func_all_nan_data0/test_data.csv'
+mock_plot_path = '/tmp/pytest-of-tomohiro-w/pytest-1320/test_task_func_all_nan_data0/test_plot.png'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76fa5a178230>
+
+    def test_task_func_all_nan_data(mock_file_path, mock_plot_path, monkeypatch):
+        def mock_read_csv(path):
+            return pd.DataFrame([np.nan, np.nan, np.nan])
+        monkeypatch.setattr(pd, "read_csv", mock_read_csv)
+    
+>       mean, median, plot_path = task_func(mock_file_path, mock_plot_path)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0996.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = '/tmp/pytest-of-tomohiro-w/pytest-1320/test_task_func_all_nan_data0/test_data.csv'
+plot_path = '/tmp/pytest-of-tomohiro-w/pytest-1320/test_task_func_all_nan_data0/test_plot.png'
+
+    def task_func(file_path: str, plot_path: str) -> (float, float, str):
+        # Check if file exists
+        if not os.path.isfile(file_path):
+>           raise FileNotFoundError(f"File {file_path} does not exist.")
+E           FileNotFoundError: File /tmp/pytest-of-tomohiro-w/pytest-1320/test_task_func_all_nan_data0/test_data.csv does not exist.
+
+../../../src/src_0996.py:8: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0996.py::test_task_func_empty_file - FileNotFoundError: File /tmp...
+FAILED test_0996.py::test_task_func_valid_data - FileNotFoundError: File /tmp...
+FAILED test_0996.py::test_task_func_non_numeric_data - FileNotFoundError: Fil...
+FAILED test_0996.py::test_task_func_all_nan_data - FileNotFoundError: File /t...
+4 failed, 1 passed in 2.51s

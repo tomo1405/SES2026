@@ -1,0 +1,54 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+____________________ test_task_func_sends_correct_response _____________________
+
+    def test_task_func_sends_correct_response():
+        # Create a mock socket
+        mock_socket = Mock()
+    
+        # Call the function with the mock socket
+        task_func(mock_socket)
+    
+        # Check that the send method was called with the correct data
+        expected_response = json.dumps({"message": "Hello", "time": str(datetime.now())}) + "\n"
+>       mock_socket.send.assert_called_once_with(expected_response.encode("utf-8"))
+
+test_1039.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/unittest/mock.py:956: in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock name='mock.send' id='132991614977904'>
+args = (b'{"message": "Hello", "time": "2026-07-29 02:38:00.089646"}\n',)
+kwargs = {}
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\n  Actual: %s'
+                    % (expected, actual))
+            raise AssertionError(error_message)
+    
+        def _error_message():
+            msg = self._format_mock_failure_message(args, kwargs)
+            return msg
+        expected = self._call_matcher(_Call((args, kwargs), two=True))
+        actual = self._call_matcher(self.call_args)
+        if actual != expected:
+            cause = expected if isinstance(expected, Exception) else None
+>           raise AssertionError(_error_message()) from cause
+E           AssertionError: expected call not found.
+E           Expected: send(b'{"message": "Hello", "time": "2026-07-29 02:38:00.089646"}\n')
+E             Actual: send(b'{"message": "Hello", "time": "2026-07-29 02:38:00.089325"}\n')
+
+/usr/lib/python3.12/unittest/mock.py:944: AssertionError
+=========================== short test summary info ============================
+FAILED test_1039.py::test_task_func_sends_correct_response - AssertionError: ...
+1 failed, 1 passed in 0.56s

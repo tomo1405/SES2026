@@ -1,0 +1,79 @@
+F..FF.                                                                   [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        letters = ['A', 'B', 'C']
+        repetitions = [3, 2, 1]
+        colors = ['red', 'green', 'blue']
+    
+        ax = task_func(letters, repetitions, colors)
+    
+        # Check if the axis object is created correctly
+        assert isinstance(ax, plt.Axes)
+    
+        # Check if the bars are plotted correctly
+        containers = ax.containers[0]
+        heights = [bar.get_height() for bar in containers]
+        assert heights == repetitions
+    
+        # Check if the colors are set correctly
+        for bar, color in zip(containers, colors):
+>           assert bar.get_facecolor()[0] == plt.colors.to_rgb(color)[0]
+                                             ^^^^^^^^^^
+E           AttributeError: module 'matplotlib.pyplot' has no attribute 'colors'. Did you mean: 'pcolor'?
+
+test_0911.py:25: AttributeError
+________________________ test_task_func_single_element _________________________
+
+    def test_task_func_single_element():
+        letters = ['X']
+        repetitions = [5]
+        colors = ['purple']
+    
+        ax = task_func(letters, repetitions, colors)
+    
+        # Check if the axis object is created correctly
+        assert isinstance(ax, plt.Axes)
+    
+        # Check if the bars are plotted correctly
+        containers = ax.containers[0]
+        heights = [bar.get_height() for bar in containers]
+        assert heights == repetitions
+    
+        # Check if the colors are set correctly
+        for bar, color in zip(containers, colors):
+>           assert bar.get_facecolor()[0] == plt.colors.to_rgb(color)[0]
+                                             ^^^^^^^^^^
+E           AttributeError: module 'matplotlib.pyplot' has no attribute 'colors'. Did you mean: 'pcolor'?
+
+test_0911.py:52: AttributeError
+_____________________ test_task_func_with_zero_repetitions _____________________
+
+    def test_task_func_with_zero_repetitions():
+        letters = ['A', 'B', 'C']
+        repetitions = [0, 2, 0]
+        colors = ['red', 'green', 'blue']
+    
+        ax = task_func(letters, repetitions, colors)
+    
+        # Check if the axis object is created correctly
+        assert isinstance(ax, plt.Axes)
+    
+        # Check if the bars are plotted correctly
+        containers = ax.containers[0]
+        heights = [bar.get_height() for bar in containers]
+        assert heights == repetitions
+    
+        # Check if the colors are set correctly
+        for bar, color in zip(containers, colors):
+>           assert bar.get_facecolor()[0] == plt.colors.to_rgb(color)[0]
+                                             ^^^^^^^^^^
+E           AttributeError: module 'matplotlib.pyplot' has no attribute 'colors'. Did you mean: 'pcolor'?
+
+test_0911.py:71: AttributeError
+=========================== short test summary info ============================
+FAILED test_0911.py::test_task_func_valid_input - AttributeError: module 'mat...
+FAILED test_0911.py::test_task_func_single_element - AttributeError: module '...
+FAILED test_0911.py::test_task_func_with_zero_repetitions - AttributeError: m...
+3 failed, 3 passed in 1.74s

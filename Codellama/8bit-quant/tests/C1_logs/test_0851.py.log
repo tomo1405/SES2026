@@ -1,0 +1,24 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        students = ['Alice', 'Bob', 'Charlie']
+        subjects = ['Math', 'English', 'Science']
+        seed = 1234
+    
+        report_df = task_func(students, subjects, seed)
+    
+        assert report_df.shape == (3, 5)
+        assert report_df.columns.tolist() == ['Student', 'Math', 'English', 'Science', 'Average Grade']
+        assert report_df['Student'].tolist() == ['Alice', 'Bob', 'Charlie']
+>       assert report_df['Math'].tolist() == [random.randint(0, 100), random.randint(0, 100), random.randint(0, 100)]
+E       assert [99, 0, 4] == [10, 12, 98]
+E         
+E         At index 0 diff: 99 != 10
+E         Use -v to get more diff
+
+test_0851.py:17: AssertionError
+=========================== short test summary info ============================
+FAILED test_0851.py::test_task_func - assert [99, 0, 4] == [10, 12, 98]
+1 failed in 1.12s

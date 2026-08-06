@@ -1,0 +1,57 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        num_samples = 100
+        num_outliers = 5
+        data, outliers_detected, ax = task_func(num_samples, num_outliers)
+        assert isinstance(data, np.ndarray)
+        assert isinstance(outliers_detected, np.ndarray)
+        assert isinstance(ax, plt.Axes)
+        assert len(data) == num_samples + num_outliers
+        if num_samples > 0:
+            assert len(outliers_detected) == num_outliers
+        else:
+            assert len(outliers_detected) == num_samples + num_outliers
+>       assert ax.get_xlabel() == 'Values'
+E       AssertionError: assert '' == 'Values'
+E         
+E         - Values
+
+test_1067.py:18: AssertionError
+_______________________ test_task_func_with_no_outliers ________________________
+
+    def test_task_func_with_no_outliers():
+        num_samples = 100
+        num_outliers = 0
+        data, outliers_detected, ax = task_func(num_samples, num_outliers)
+        assert isinstance(data, np.ndarray)
+        assert isinstance(outliers_detected, np.ndarray)
+        assert isinstance(ax, plt.Axes)
+        assert len(data) == num_samples + num_outliers
+>       assert len(outliers_detected) == num_outliers
+E       assert 6 == 0
+E        +  where 6 = len(array([2.00489658, 1.85318953, 1.96153026, 1.86371065, 2.23889894,\n       2.73824802]))
+
+test_1067.py:30: AssertionError
+________________________ test_task_func_with_no_samples ________________________
+
+    def test_task_func_with_no_samples():
+        num_samples = 0
+        num_outliers = 5
+        data, outliers_detected, ax = task_func(num_samples, num_outliers)
+        assert isinstance(data, np.ndarray)
+        assert isinstance(outliers_detected, np.ndarray)
+        assert isinstance(ax, plt.Axes)
+        assert len(data) == num_samples + num_outliers
+>       assert len(outliers_detected) == num_samples + num_outliers
+E       assert 0 == (0 + 5)
+E        +  where 0 = len(array([], dtype=float64))
+
+test_1067.py:43: AssertionError
+=========================== short test summary info ============================
+FAILED test_1067.py::test_task_func - AssertionError: assert '' == 'Values'
+FAILED test_1067.py::test_task_func_with_no_outliers - assert 6 == 0
+FAILED test_1067.py::test_task_func_with_no_samples - assert 0 == (0 + 5)
+3 failed in 1.72s

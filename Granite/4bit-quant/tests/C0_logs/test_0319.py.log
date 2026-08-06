@@ -1,0 +1,77 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        points_count = 1000
+        radius = 1
+        points = [(radius * math.sqrt(random.random()) * math.cos(2 * math.pi * random.random()),
+                   radius * math.sqrt(random.random()) * math.sin(2 * math.pi * random.random()))
+                  for _ in range(points_count)]
+        ax = task_func(points_count, radius)
+>       assert ax.get_aspect() == 'equal'
+E       AssertionError: assert 1.0 == 'equal'
+E        +  where 1.0 = get_aspect()
+E        +    where get_aspect = <Axes: >.get_aspect
+
+test_0319.py:14: AssertionError
+_______________________ test_task_func_with_default_args _______________________
+
+    def test_task_func_with_default_args():
+        ax = task_func()
+>       assert ax.get_aspect() == 'equal'
+E       AssertionError: assert 1.0 == 'equal'
+E        +  where 1.0 = get_aspect()
+E        +    where get_aspect = <Axes: >.get_aspect
+
+test_0319.py:19: AssertionError
+_______________________ test_task_func_with_zero_points ________________________
+
+    def test_task_func_with_zero_points():
+>       ax = task_func(0)
+             ^^^^^^^^^^^^
+
+test_0319.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+points_count = 0, radius = 1
+
+    def task_func(points_count=1000, radius=1):
+    
+        points = [(radius * math.sqrt(random.random()) * math.cos(2 * math.pi * random.random()),
+                   radius * math.sqrt(random.random()) * math.sin(2 * math.pi * random.random()))
+                  for _ in range(points_count)]
+    
+        fig, ax = plt.subplots()
+>       ax.scatter(*zip(*points))
+E       TypeError: Axes.scatter() missing 2 required positional arguments: 'x' and 'y'
+
+../../../src/src_0319.py:11: TypeError
+_____________________ test_task_func_with_negative_points ______________________
+
+    def test_task_func_with_negative_points():
+        with pytest.raises(ValueError):
+>           task_func(-1)
+
+test_0319.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+points_count = -1, radius = 1
+
+    def task_func(points_count=1000, radius=1):
+    
+        points = [(radius * math.sqrt(random.random()) * math.cos(2 * math.pi * random.random()),
+                   radius * math.sqrt(random.random()) * math.sin(2 * math.pi * random.random()))
+                  for _ in range(points_count)]
+    
+        fig, ax = plt.subplots()
+>       ax.scatter(*zip(*points))
+E       TypeError: Axes.scatter() missing 2 required positional arguments: 'x' and 'y'
+
+../../../src/src_0319.py:11: TypeError
+=========================== short test summary info ============================
+FAILED test_0319.py::test_task_func - AssertionError: assert 1.0 == 'equal'
+FAILED test_0319.py::test_task_func_with_default_args - AssertionError: asser...
+FAILED test_0319.py::test_task_func_with_zero_points - TypeError: Axes.scatte...
+FAILED test_0319.py::test_task_func_with_negative_points - TypeError: Axes.sc...
+4 failed in 1.70s

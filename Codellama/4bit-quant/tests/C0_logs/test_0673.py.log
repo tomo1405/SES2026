@@ -1,0 +1,23 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a valid file
+        filename = "test_data.csv"
+        with open(filename, 'w') as file:
+            file.write("1,2,3\n4,5,6")
+        assert task_func(filename) == filename
+        with open(filename, 'r') as file:
+            reader = csv.reader(file)
+            rows = list(reader)
+>           assert rows == [['3', '2', '1'], ['6', '5', '4']]
+E           AssertionError: assert [['4', '5', '...1', '2', '3']] == [['3', '2', '...6', '5', '4']]
+E             
+E             At index 0 diff: ['4', '5', '6'] != ['3', '2', '1']
+E             Use -v to get more diff
+
+test_0673.py:16: AssertionError
+=========================== short test summary info ============================
+FAILED test_0673.py::test_task_func - AssertionError: assert [['4', '5', '......
+1 failed in 0.46s

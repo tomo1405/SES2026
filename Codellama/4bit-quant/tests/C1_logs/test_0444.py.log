@@ -1,0 +1,48 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        P = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+        T = np.array([[10, 20, 30], [40, 50, 60], [70, 80, 90]])
+        n_clusters = 3
+        random_state = 0
+        n_init = 10
+        tensor_shape = (3, 3, 3)
+    
+        # Test that the function raises an error when the tensor shape is incorrect
+        with pytest.raises(ValueError):
+            task_func(P, T, n_clusters, random_state, n_init)
+    
+        # Test that the function returns the correct result when the tensor shape is correct
+>       result, ax = task_func(P, T, n_clusters, random_state, n_init)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0444.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+P = array([[1, 2, 3],
+       [4, 5, 6],
+       [7, 8, 9]])
+T = array([[10, 20, 30],
+       [40, 50, 60],
+       [70, 80, 90]])
+n_clusters = 3, random_state = 0, n_init = 10
+
+    def task_func(
+        P: np.ndarray,
+        T: np.ndarray,
+        n_clusters: int = 3,
+        random_state: int = 0,
+        n_init: int = 10,
+    ) -> (np.ndarray, plt.Axes):
+    
+        tensor_shape = (3, 3, 3)
+        if not T.shape == tensor_shape:
+>           raise ValueError("Provided tensor does not match the expected shape.")
+E           ValueError: Provided tensor does not match the expected shape.
+
+../../../src/src_0444.py:14: ValueError
+=========================== short test summary info ============================
+FAILED test_0444.py::test_task_func - ValueError: Provided tensor does not ma...
+1 failed in 3.74s

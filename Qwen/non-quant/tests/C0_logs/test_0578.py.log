@@ -1,0 +1,65 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_directory = '/tmp/pytest-of-tomohiro-w/pytest-1282/test_task_func0/test_dir'
+
+    def test_task_func(mock_directory):
+        # Expected results
+        expected_files_info = {
+            'file1.txt': {'Size': 13, 'MD5 Hash': '65a8e27d8879283831b664bd8b7f0ad4'},
+            'file2.txt': {'Size': 14, 'MD5 Hash': '3f53bf48d8c2d6b1e1f1033505d3c808'},
+            'file3.txt': {'Size': 16, 'MD5 Hash': 'd3b07384d113edec49eaa6238ad5ff00'}
+        }
+    
+        # Call the function with the mock directory
+        result = task_func(mock_directory)
+    
+        # Assert that the result matches the expected output
+>       assert result == expected_files_info
+E       AssertionError: assert {'file3.txt':...4bd8b7f0ad4'}} == {'file1.txt':...6238ad5ff00'}}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'file2.txt': {'Size': 14, 'MD5 Hash': '0507ef585b0d40cbe554120e94f78c75'}} != {'file2.txt': {'Size': 14, 'MD5 Hash': '3f53bf48d8c2d6b1e1f1033505d3c808'}}
+E         {'file3.txt': {'Size': 15, 'MD5 Hash': '2304b8b06f27e5184dec17e1a0785298'}} != {'file3.txt': {'Size': 16, 'MD5 Hash': 'd3b07384d113edec49eaa6238ad5ff00'}}
+E         Use -v to get more diff
+
+test_0578.py:40: AssertionError
+______________________ test_task_func_with_special_chars _______________________
+
+mock_open = <MagicMock name='open' id='134098330326928'>
+mock_getsize = <MagicMock name='getsize' id='134098330330432'>
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1282/test_task_func_with_special_ch0')
+
+    @patch('os.path.getsize', side_effect=[10, 20])
+    @patch('builtins.open', new_callable=mock_open, read_data=b'data')
+    def test_task_func_with_special_chars(mock_open, mock_getsize, tmp_path):
+        # Create a temporary directory with a file containing special characters
+        dir_path = tmp_path / "special_char_dir"
+        dir_path.mkdir()
+    
+        file = dir_path / "file_with_special_chars.txt"
+        file.write_text("Spécial Chars")
+    
+        # Expected results
+        expected_files_info = {
+            'file_with_special_chars.txt': {'Size': 20, 'MD5 Hash': '8d969eef6ecad3c29a3a629280e686cf'}
+        }
+    
+        # Call the function with the mock directory
+        result = task_func(str(dir_path))
+    
+        # Assert that the result matches the expected output
+>       assert result == expected_files_info
+E       AssertionError: assert {'file_with_s...0f7496026dc'}} == {'file_with_s...29280e686cf'}}
+E         
+E         Differing items:
+E         {'file_with_special_chars.txt': {'Size': 10, 'MD5 Hash': '8d777f385d3dfec8815d20f7496026dc'}} != {'file_with_special_chars.txt': {'Size': 20, 'MD5 Hash': '8d969eef6ecad3c29a3a629280e686cf'}}
+E         Use -v to get more diff
+
+test_0578.py:72: AssertionError
+=========================== short test summary info ============================
+FAILED test_0578.py::test_task_func - AssertionError: assert {'file3.txt':......
+FAILED test_0578.py::test_task_func_with_special_chars - AssertionError: asse...
+2 failed, 1 passed in 0.44s

@@ -1,0 +1,39 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a sample DataFrame
+        data = {
+            'id': [1, 1, 2, 2],
+            'age': [25, 30, 45, 50],
+            'income': [50000, 60000, 70000, 80000]
+        }
+        df = pd.DataFrame(data)
+    
+        # Expected output after scaling
+        expected_scaled_data = {
+            'id': [1, 1, 2, 2],
+            'age': [0.0, 1.0, 0.0, 1.0],
+            'income': [0.0, 1.0, 0.0, 1.0]
+        }
+        expected_df = pd.DataFrame(expected_scaled_data).set_index(df.index)
+    
+        # Expected histogram of the 'income' column
+        expected_hist, expected_bins = np.histogram([0.0, 1.0, 0.0, 1.0], bins=10)
+    
+        # Call the function
+        result_df, result_hist_bins = task_func(df)
+    
+        # Check if the scaled DataFrame is correct
+>       pd.testing.assert_frame_equal(result_df.reset_index(drop=True), expected_df.reset_index(drop=True))
+E       AssertionError: DataFrame are different
+E       
+E       DataFrame shape mismatch
+E       [left]:  (4, 2)
+E       [right]: (4, 3)
+
+test_0293.py:31: AssertionError
+=========================== short test summary info ============================
+FAILED test_0293.py::test_task_func - AssertionError: DataFrame are different
+1 failed in 2.95s

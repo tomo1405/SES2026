@@ -1,0 +1,22 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        s = "<xml>...</xml>"
+        file_path = "output.json"
+        expected_output = {"key": "value"}
+    
+        # Mock the expected behavior of the target function
+        def mock_xmltodict_parse(s):
+            return expected_output
+    
+        # Monkey patch the target function with the mock
+        with pytest. MonkeyPatch.context() as mp:
+>           mp.setattr(task_func, "xmltodict.parse", mock_xmltodict_parse)
+E           AttributeError: <function task_func at 0x7836deded760> has no attribute 'xmltodict.parse'
+
+test_0491.py:15: AttributeError
+=========================== short test summary info ============================
+FAILED test_0491.py::test_task_func - AttributeError: <function task_func at ...
+1 failed in 0.45s

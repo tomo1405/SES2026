@@ -1,0 +1,100 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        db_name = "test.db"
+        table_name = "test_table"
+        csv_path = "test_data.csv"
+    
+        # Setup test database
+>       setup_test_db(db_name, table_name)
+
+test_0537.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+db_name = 'test.db', table_name = 'test_table'
+
+    def setup_test_db(db_name, table_name):
+        conn = sqlite3.connect(db_name)
+        cursor = conn.cursor()
+>       cursor.execute(f"CREATE TABLE {table_name} (id INTEGER PRIMARY KEY, name TEXT)")
+E       sqlite3.OperationalError: table test_table already exists
+
+test_0537.py:11: OperationalError
+______________________ test_task_func_non_existent_table _______________________
+
+self = <pandas.io.sql.SQLiteDatabase object at 0x7dd2784bd850>
+sql = 'SELECT * from non_existent_table', params = None
+
+    def execute(self, sql: str | Select | TextClause, params=None):
+        from sqlite3 import Error
+    
+        if not isinstance(sql, str):
+            raise TypeError("Query must be a string unless using sqlalchemy.")
+        args = [] if params is None else [params]
+        cur = self.con.cursor()
+        try:
+>           cur.execute(sql, *args)
+E           sqlite3.OperationalError: no such table: non_existent_table
+
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:2702: OperationalError
+
+The above exception was the direct cause of the following exception:
+
+    def test_task_func_non_existent_table():
+        db_name = "test.db"
+        table_name = "non_existent_table"
+        csv_path = "test_data.csv"
+    
+        # Setup test database with no tables
+        conn = sqlite3.connect(db_name)
+        conn.close()
+    
+        # Run the function under test and expect it to raise an error
+        with pytest.raises(sqlite3.OperationalError):
+>           task_func(db_name, table_name, csv_path)
+
+test_0537.py:52: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0537.py:7: in task_func
+    df = pd.read_sql_query(f"SELECT * from {table_name}", conn)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:497: in read_sql_query
+    return pandas_sql.read_query(
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:2766: in read_query
+    cursor = self.execute(sql, params)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.io.sql.SQLiteDatabase object at 0x7dd2784bd850>
+sql = 'SELECT * from non_existent_table', params = None
+
+    def execute(self, sql: str | Select | TextClause, params=None):
+        from sqlite3 import Error
+    
+        if not isinstance(sql, str):
+            raise TypeError("Query must be a string unless using sqlalchemy.")
+        args = [] if params is None else [params]
+        cur = self.con.cursor()
+        try:
+            cur.execute(sql, *args)
+            return cur
+        except Error as exc:
+            try:
+                self.con.rollback()
+            except Error as inner_exc:  # pragma: no cover
+                ex = DatabaseError(
+                    f"Execution failed on sql: {sql}\n{exc}\nunable to rollback"
+                )
+                raise ex from inner_exc
+    
+            ex = DatabaseError(f"Execution failed on sql '{sql}': {exc}")
+>           raise ex from exc
+E           pandas.errors.DatabaseError: Execution failed on sql 'SELECT * from non_existent_table': no such table: non_existent_table
+
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:2714: DatabaseError
+=========================== short test summary info ============================
+FAILED test_0537.py::test_task_func - sqlite3.OperationalError: table test_ta...
+FAILED test_0537.py::test_task_func_non_existent_table - pandas.errors.Databa...
+2 failed in 1.17s

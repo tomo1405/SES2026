@@ -1,0 +1,31 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_db = <test_1132.MockConnection object at 0x756bf6cc4a40>
+
+    def test_task_func(mock_db):
+        salt = "some_salt"
+        cursor = mock_db.cursor
+        result = task_func(salt, cursor)
+    
+        # Check if the correct number of users were updated
+        assert result == len(mock_db.cursor.users)
+    
+        # Check if the update queries were executed correctly
+        expected_queries = [
+            "UPDATE users SET password = '9b74c9897bac770ffc029102a200c5de3b719d9b9d5f1e1e1e1e1e1e1e1e1e1e' WHERE id = 1",
+            "UPDATE users SET password = '9b74c9897bac770ffc029102a200c5de3b719d9b9d5f1e1e1e1e1e1e1e1e1e1e' WHERE id = 2"
+        ]
+    
+        for i, query in enumerate(mock_db.cursor.executed_queries):
+>           assert query == expected_queries[i]
+E           assert 'SELECT id, p...rd FROM users' == "UPDATE users... WHERE id = 1"
+E             
+E             - UPDATE users SET password = '9b74c9897bac770ffc029102a200c5de3b719d9b9d5f1e1e1e1e1e1e1e1e1e1e' WHERE id = 1
+E             + SELECT id, password FROM users
+
+test_1132.py:55: AssertionError
+=========================== short test summary info ============================
+FAILED test_1132.py::test_task_func - assert 'SELECT id, p...rd FROM users' =...
+1 failed, 1 passed in 0.48s

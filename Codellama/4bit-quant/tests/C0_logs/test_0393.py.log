@@ -1,0 +1,33 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a valid DataFrame
+        df = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]})
+        group_col = 'A'
+        value_col = 'B'
+        group_name = 'group1'
+>       ax = task_func(df, group_col, value_col, group_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0393.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df =    A  B
+0  1  4
+1  2  5
+2  3  6, group_col = 'A', value_col = 'B'
+group_name = 'group1'
+
+    def task_func(df, group_col, value_col, group_name):
+        # Filter the DataFrame to select the specific group
+        group_data = df[df[group_col] == group_name]
+        if group_data.empty:
+>           raise ValueError
+E           ValueError
+
+../../../src/src_0393.py:9: ValueError
+=========================== short test summary info ============================
+FAILED test_0393.py::test_task_func - ValueError
+1 failed in 2.13s

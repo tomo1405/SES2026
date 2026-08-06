@@ -1,0 +1,156 @@
+FFFFFFF                                                                  [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_empty_string _______________________
+
+    def test_task_func_with_empty_string():
+>       result = task_func("")
+                 ^^^^^^^^^^^^^
+
+test_0055.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0055.py:8: in task_func
+    dtm = vectorizer.fit_transform(sentences)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/base.py:1403: in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/feature_extraction/text.py:1387: in fit_transform
+    vocabulary, X = self._count_vocab(raw_documents, self.fixed_vocabulary_)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = CountVectorizer(), raw_documents = [], fixed_vocab = False
+
+    def _count_vocab(self, raw_documents, fixed_vocab):
+        """Create sparse feature matrix, and vocabulary where fixed_vocab=False"""
+        if fixed_vocab:
+            vocabulary = self.vocabulary_
+        else:
+            # Add a new value when a new vocabulary item is seen
+            vocabulary = defaultdict()
+            vocabulary.default_factory = vocabulary.__len__
+    
+        analyze = self.build_analyzer()
+        j_indices = []
+        indptr = []
+    
+        values = _make_int_array()
+        indptr.append(0)
+        for doc in raw_documents:
+            feature_counter = {}
+            for feature in analyze(doc):
+                try:
+                    feature_idx = vocabulary[feature]
+                    if feature_idx not in feature_counter:
+                        feature_counter[feature_idx] = 1
+                    else:
+                        feature_counter[feature_idx] += 1
+                except KeyError:
+                    # Ignore out-of-vocabulary items for fixed_vocab=True
+                    continue
+    
+            j_indices.extend(feature_counter.keys())
+            values.extend(feature_counter.values())
+            indptr.append(len(j_indices))
+    
+        if not fixed_vocab:
+            # disable defaultdict behaviour
+            vocabulary = dict(vocabulary)
+            if not vocabulary:
+>               raise ValueError(
+                    "empty vocabulary; perhaps the documents only contain stop words"
+                )
+E               ValueError: empty vocabulary; perhaps the documents only contain stop words
+
+../../../.venv/lib/python3.12/site-packages/sklearn/feature_extraction/text.py:1293: ValueError
+_____________________ test_task_func_with_single_sentence ______________________
+
+    def test_task_func_with_single_sentence():
+        text = "This is a test sentence."
+        result = task_func(text)
+        expected_columns = ["this", "is", "a", "test", "sentence"]
+>       assert list(result.columns) == expected_columns
+E       AssertionError: assert ['is', 'sente...test', 'this'] == ['this', 'is'...', 'sentence']
+E         
+E         At index 0 diff: 'is' != 'this'
+E         Right contains one more item: 'sentence'
+E         Use -v to get more diff
+
+test_0055.py:14: AssertionError
+____________________ test_task_func_with_multiple_sentences ____________________
+
+    def test_task_func_with_multiple_sentences():
+        text = "This is the first sentence. This is the second sentence."
+        result = task_func(text)
+        expected_columns = ["this", "is", "the", "first", "sentence", "second"]
+>       assert list(result.columns) == expected_columns
+E       AssertionError: assert ['first', 'is...'the', 'this'] == ['this', 'is'...ce', 'second']
+E         
+E         At index 0 diff: 'first' != 'this'
+E         Use -v to get more diff
+
+test_0055.py:21: AssertionError
+_____________________ test_task_func_with_trailing_period ______________________
+
+    def test_task_func_with_trailing_period():
+        text = "This is a test sentence. "
+        result = task_func(text)
+        expected_columns = ["this", "is", "a", "test", "sentence"]
+>       assert list(result.columns) == expected_columns
+E       AssertionError: assert ['is', 'sente...test', 'this'] == ['this', 'is'...', 'sentence']
+E         
+E         At index 0 diff: 'is' != 'this'
+E         Right contains one more item: 'sentence'
+E         Use -v to get more diff
+
+test_0055.py:28: AssertionError
+________________________ test_task_func_with_no_periods ________________________
+
+    def test_task_func_with_no_periods():
+        text = "This is a test sentence"
+        result = task_func(text)
+        expected_columns = ["this", "is", "a", "test", "sentence"]
+>       assert list(result.columns) == expected_columns
+E       AssertionError: assert ['is', 'sente...test', 'this'] == ['this', 'is'...', 'sentence']
+E         
+E         At index 0 diff: 'is' != 'this'
+E         Right contains one more item: 'sentence'
+E         Use -v to get more diff
+
+test_0055.py:35: AssertionError
+____________________ test_task_func_with_special_characters ____________________
+
+    def test_task_func_with_special_characters():
+        text = "Hello, world! How are you?"
+        result = task_func(text)
+        expected_columns = ["hello", "world", "how", "are", "you"]
+>       assert list(result.columns) == expected_columns
+E       AssertionError: assert ['are', 'hell...world', 'you'] == ['hello', 'wo... 'are', 'you']
+E         
+E         At index 0 diff: 'are' != 'hello'
+E         Use -v to get more diff
+
+test_0055.py:42: AssertionError
+_________________________ test_task_func_with_numbers __________________________
+
+    def test_task_func_with_numbers():
+        text = "I have 2 apples and 3 bananas."
+        result = task_func(text)
+        expected_columns = ["i", "have", "apples", "and", "bananas"]
+>       assert list(result.columns) == expected_columns
+E       AssertionError: assert ['and', 'appl...anas', 'have'] == ['i', 'have',...d', 'bananas']
+E         
+E         At index 0 diff: 'and' != 'i'
+E         Right contains one more item: 'bananas'
+E         Use -v to get more diff
+
+test_0055.py:49: AssertionError
+=========================== short test summary info ============================
+FAILED test_0055.py::test_task_func_with_empty_string - ValueError: empty voc...
+FAILED test_0055.py::test_task_func_with_single_sentence - AssertionError: as...
+FAILED test_0055.py::test_task_func_with_multiple_sentences - AssertionError:...
+FAILED test_0055.py::test_task_func_with_trailing_period - AssertionError: as...
+FAILED test_0055.py::test_task_func_with_no_periods - AssertionError: assert ...
+FAILED test_0055.py::test_task_func_with_special_characters - AssertionError:...
+FAILED test_0055.py::test_task_func_with_numbers - AssertionError: assert ['a...
+7 failed in 3.09s

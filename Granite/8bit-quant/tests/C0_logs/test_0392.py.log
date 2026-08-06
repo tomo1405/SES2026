@@ -1,0 +1,24 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        directory = 'test_directory'
+        archive_dir = 'test_archive'
+        os.makedirs(directory, exist_ok=True)
+        json_files = [os.path.join(directory, 'test_file.json')]
+        for json_file in json_files:
+            with open(json_file, 'w') as f:
+                f.write('test content')
+    
+        success, error_messages = task_func(directory, archive_dir)
+    
+        assert success == (len(error_messages) == 0)
+>       assert len(error_messages) == 0
+E       assert 1 == 0
+E        +  where 1 = len(["Unable to move test_directory/test_file.json due to Destination path 'test_archive/test_file.json' already exists"])
+
+test_0392.py:20: AssertionError
+=========================== short test summary info ============================
+FAILED test_0392.py::test_task_func - assert 1 == 0
+1 failed in 0.47s

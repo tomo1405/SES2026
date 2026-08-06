@@ -1,0 +1,30 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Test that the function returns the correct data types
+        df = pd.DataFrame({"a": [1, 2, 3], "b": [4, 5, 6], "c": [7, 8, 9]})
+        X_train, X_test, y_train, y_test = task_func(df, "a")
+        assert isinstance(X_train, pd.DataFrame)
+        assert isinstance(X_test, pd.DataFrame)
+        assert isinstance(y_train, pd.Series)
+        assert isinstance(y_test, pd.Series)
+    
+        # Test case 2: Test that the function drops the specified column if it exists
+        df = pd.DataFrame({"a": [1, 2, 3], "b": [4, 5, 6], "c": [7, 8, 9]})
+        X_train, X_test, y_train, y_test = task_func(df, "a", column_to_remove="b")
+        assert "b" not in X_train.columns
+        assert "b" not in X_test.columns
+    
+        # Test case 3: Test that the function splits the dataframe into training and test datasets
+        df = pd.DataFrame({"a": [1, 2, 3], "b": [4, 5, 6], "c": [7, 8, 9]})
+        X_train, X_test, y_train, y_test = task_func(df, "a", test_size=0.5)
+>       assert len(X_train) == 2
+E       assert 1 == 2
+E        +  where 1 = len(   b\n0  4)
+
+test_0423.py:24: AssertionError
+=========================== short test summary info ============================
+FAILED test_0423.py::test_task_func - assert 1 == 2
+1 failed in 2.77s

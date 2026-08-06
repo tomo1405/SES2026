@@ -1,0 +1,27 @@
+F..F                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        dates_str_list = ['2023-01-01', '2023-01-02', '2023-01-03', '2023-01-04', '2023-01-05']
+        expected_distribution = pd.Series([1, 1, 1, 1, 1, 0, 0], index=['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'])
+    
+        result = task_func(dates_str_list)
+>       assert result.equals(expected_distribution)
+E       assert False
+E        +  where False = equals(Monday       1\nTuesday      1\nWednesday    1\nThursday     1\nFriday       1\nSaturday     0\nSunday       0\ndtype: int64)
+E        +    where equals = Monday       1\nTuesday      1\nWednesday    1\nThursday     1\nFriday       0\nSaturday     0\nSunday       1\ndtype: int64.equals
+
+test_0650.py:12: AssertionError
+_____________________ test_task_func_with_invalid_date_str _____________________
+
+    def test_task_func_with_invalid_date_str():
+        dates_str_list = ['2023-01-01', '2023-01-02', '2023-01-03', '2023-01-04', '2023-01-05', '2023-01-06']
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0650.py:30: Failed
+=========================== short test summary info ============================
+FAILED test_0650.py::test_task_func - assert False
+FAILED test_0650.py::test_task_func_with_invalid_date_str - Failed: DID NOT R...
+2 failed, 2 passed in 1.38s

@@ -1,0 +1,32 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a simple input
+        input_data = "1-2-3-4-5"
+        result_ax = task_func(input_data)
+    
+        # Check if the result is an Axes object
+        assert isinstance(result_ax, plt.Axes), "The result should be a matplotlib Axes object."
+    
+        # Check if the DataFrame is created correctly
+        expected_df = pd.DataFrame([1, 2, 3, 4, 5], columns=['Values'])
+>       pd.testing.assert_frame_equal(result_ax.get_figure().get_axes()[0].lines[0].get_xdata(), expected_df['Values'])
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0568.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Axes.ArtistList of 0 lines>, key = 0
+
+    def __getitem__(self, key):
+>       return [artist
+                for artist in self._axes._children
+                if self._type_check(artist)][key]
+E       IndexError: list index out of range
+
+../../../.venv/lib/python3.12/site-packages/matplotlib/axes/_base.py:1530: IndexError
+=========================== short test summary info ============================
+FAILED test_0568.py::test_task_func - IndexError: list index out of range
+1 failed in 2.39s

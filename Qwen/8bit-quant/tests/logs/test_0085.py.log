@@ -1,0 +1,58 @@
+.......F.F                                                               [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        result = task_func(["ProductA", "ProductB"], n_samples=10, sales_lower=50, sales_upper=200, profit_margin_min=0.1, profit_margin_max=0.5, random_seed=42)
+        assert isinstance(result, pd.DataFrame)
+        assert "Product" in result.columns
+        assert "Sales" in result.columns
+        assert "Profit" in result.columns
+        assert len(result) <= 2  # Since there are only two products, the maximum number of unique products is 2
+>       assert result["Sales"].between(50, 200).all()
+E       assert np.False_
+E        +  where np.False_ = all()
+E        +    where all = 0    False\n1    False\nName: Sales, dtype: bool.all
+E        +      where 0    False\n1    False\nName: Sales, dtype: bool = between(50, 200)
+E        +        where between = 0    776\n1    298\nName: Sales, dtype: int64.between
+
+test_0085.py:41: AssertionError
+_______________________ test_task_func_groupby_and_sort ________________________
+
+    def test_task_func_groupby_and_sort():
+        result = task_func(["ProductA", "ProductB"], n_samples=10, random_seed=42)
+>       assert result.is_unique == False  # Ensure there are duplicates to test grouping
+               ^^^^^^^^^^^^^^^^
+
+test_0085.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =     Product  Sales      Profit
+0  ProductA    776  156.049623
+1  ProductB    298   51.685788
+name = 'is_unique'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute 'is_unique'. Did you mean: 'nunique'?
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+=========================== short test summary info ============================
+FAILED test_0085.py::test_task_func_valid_input - assert np.False_
+FAILED test_0085.py::test_task_func_groupby_and_sort - AttributeError: 'DataF...
+2 failed, 8 passed in 1.24s

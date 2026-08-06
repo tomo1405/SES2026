@@ -1,0 +1,30 @@
+F...                                                                     [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_success ____________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1409/test_task_func_success0')
+
+    def test_task_func_success(tmp_path):
+        # Set up temporary directories
+        download_dir = tmp_path / "downloads"
+        zip_dir = tmp_path / "unzipped_files"
+        download_dir.mkdir(parents=True, exist_ok=True)
+        zip_dir.mkdir(parents=True, exist_ok=True)
+    
+        # Mock the zipfile module to avoid actual extraction
+        class MockZipFile:
+            def __init__(self, file, mode):
+                pass
+    
+            def extractall(self, path):
+                (path / "file1.txt").touch()
+                (path / "file2.txt").touch()
+    
+>       monkeypatch.setattr(zipfile, 'ZipFile', MockZipFile)
+        ^^^^^^^^^^^
+E       NameError: name 'monkeypatch' is not defined
+
+test_1013.py:43: NameError
+=========================== short test summary info ============================
+FAILED test_1013.py::test_task_func_success - NameError: name 'monkeypatch' i...
+1 failed, 3 passed in 0.76s

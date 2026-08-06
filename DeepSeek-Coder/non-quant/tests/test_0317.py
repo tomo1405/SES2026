@@ -1,0 +1,8 @@
+import pytest
+from src_0317 import task_func
+
+def test_task_func():
+    result = task_func()
+    assert isinstance(result, pd.DataFrame), "The result should be a DataFrame"
+    assert len(result) > 0, "The DataFrame should not be empty"
+    assert set(result.columns) == {'Category', 'Count'}, "Columns should be 'Category' and 'Count'"

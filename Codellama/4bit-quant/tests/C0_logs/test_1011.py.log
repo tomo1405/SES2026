@@ -1,0 +1,144 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+url = 'https://www.example.com/image.jpg'
+
+    def task_func(url):
+        try:
+            response = requests.get(url, timeout=5)
+>           response.raise_for_status()
+
+../../../src/src_1011.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Response [404]>
+
+    def raise_for_status(self) -> None:
+        """Raises :class:`HTTPError`, if one occurred."""
+    
+        http_error_msg = ""
+        if isinstance(self.reason, bytes):
+            # We attempt to decode utf-8 first because some servers
+            # choose to localize their reason strings. If the string
+            # isn't utf-8, we fall back to iso-8859-1 for all other
+            # encodings. (See PR #3538)
+            try:
+                reason = self.reason.decode("utf-8")
+            except UnicodeDecodeError:
+                reason = self.reason.decode("iso-8859-1")
+        else:
+            reason = self.reason
+    
+        if 400 <= self.status_code < 500:
+            http_error_msg = (
+                f"{self.status_code} Client Error: {reason} for url: {self.url}"
+            )
+    
+        elif 500 <= self.status_code < 600:
+            http_error_msg = (
+                f"{self.status_code} Server Error: {reason} for url: {self.url}"
+            )
+    
+        if http_error_msg:
+>           raise HTTPError(http_error_msg, response=self)
+E           requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.example.com/image.jpg
+
+../../../.venv/lib/python3.12/site-packages/requests/models.py:1167: HTTPError
+
+The above exception was the direct cause of the following exception:
+
+    def test_task_func():
+        url = "https://www.example.com/image.jpg"
+>       image = task_func(url)
+                ^^^^^^^^^^^^^^
+
+test_1011.py:8: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'https://www.example.com/image.jpg'
+
+    def task_func(url):
+        try:
+            response = requests.get(url, timeout=5)
+            response.raise_for_status()
+            image = Image.open(io.BytesIO(response.content))
+            return image
+        except Exception as e:
+>           raise ValueError(f"Failed to retrieve image from {url}: {e}") from e
+E           ValueError: Failed to retrieve image from https://www.example.com/image.jpg: 404 Client Error: Not Found for url: https://www.example.com/image.jpg
+
+../../../src/src_1011.py:11: ValueError
+____________________________ test_task_func_timeout ____________________________
+
+url = 'https://www.example.com/timeout.jpg'
+
+    def task_func(url):
+        try:
+            response = requests.get(url, timeout=5)
+>           response.raise_for_status()
+
+../../../src/src_1011.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Response [404]>
+
+    def raise_for_status(self) -> None:
+        """Raises :class:`HTTPError`, if one occurred."""
+    
+        http_error_msg = ""
+        if isinstance(self.reason, bytes):
+            # We attempt to decode utf-8 first because some servers
+            # choose to localize their reason strings. If the string
+            # isn't utf-8, we fall back to iso-8859-1 for all other
+            # encodings. (See PR #3538)
+            try:
+                reason = self.reason.decode("utf-8")
+            except UnicodeDecodeError:
+                reason = self.reason.decode("iso-8859-1")
+        else:
+            reason = self.reason
+    
+        if 400 <= self.status_code < 500:
+            http_error_msg = (
+                f"{self.status_code} Client Error: {reason} for url: {self.url}"
+            )
+    
+        elif 500 <= self.status_code < 600:
+            http_error_msg = (
+                f"{self.status_code} Server Error: {reason} for url: {self.url}"
+            )
+    
+        if http_error_msg:
+>           raise HTTPError(http_error_msg, response=self)
+E           requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.example.com/timeout.jpg
+
+../../../.venv/lib/python3.12/site-packages/requests/models.py:1167: HTTPError
+
+The above exception was the direct cause of the following exception:
+
+    def test_task_func_timeout():
+        url = "https://www.example.com/timeout.jpg"
+        with pytest.raises(requests.Timeout):
+>           task_func(url)
+
+test_1011.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'https://www.example.com/timeout.jpg'
+
+    def task_func(url):
+        try:
+            response = requests.get(url, timeout=5)
+            response.raise_for_status()
+            image = Image.open(io.BytesIO(response.content))
+            return image
+        except Exception as e:
+>           raise ValueError(f"Failed to retrieve image from {url}: {e}") from e
+E           ValueError: Failed to retrieve image from https://www.example.com/timeout.jpg: 404 Client Error: Not Found for url: https://www.example.com/timeout.jpg
+
+../../../src/src_1011.py:11: ValueError
+=========================== short test summary info ============================
+FAILED test_1011.py::test_task_func - ValueError: Failed to retrieve image fr...
+FAILED test_1011.py::test_task_func_timeout - ValueError: Failed to retrieve ...
+2 failed, 1 passed in 0.90s

@@ -1,0 +1,109 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_valid_url ___________________________
+
+    def test_task_func_valid_url():
+        url = 'https://www.example.com/file.zip'
+        destination_directory = '.'
+        headers = {'accept': 'application/octet-stream'}
+        expected_files = ['file.zip']
+    
+>       files = task_func(url, destination_directory, headers)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0212.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0212.py:18: in task_func
+    with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/zipfile/__init__.py:1365: in __init__
+    self._RealGetContents()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <zipfile.ZipFile [closed]>
+
+    def _RealGetContents(self):
+        """Read in the table of contents for the ZIP file."""
+        fp = self.fp
+        try:
+            endrec = _EndRecData(fp)
+        except OSError:
+            raise BadZipFile("File is not a zip file")
+        if not endrec:
+>           raise BadZipFile("File is not a zip file")
+E           zipfile.BadZipFile: File is not a zip file
+
+/usr/lib/python3.12/zipfile/__init__.py:1432: BadZipFile
+__________________________ test_task_func_invalid_url __________________________
+
+    def test_task_func_invalid_url():
+        url = 'https://www.example.com/file.zip'
+        destination_directory = '.'
+        headers = {'accept': 'application/octet-stream'}
+        expected_files = []
+    
+>       files = task_func(url, destination_directory, headers)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0212.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0212.py:18: in task_func
+    with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/zipfile/__init__.py:1365: in __init__
+    self._RealGetContents()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <zipfile.ZipFile [closed]>
+
+    def _RealGetContents(self):
+        """Read in the table of contents for the ZIP file."""
+        fp = self.fp
+        try:
+            endrec = _EndRecData(fp)
+        except OSError:
+            raise BadZipFile("File is not a zip file")
+        if not endrec:
+>           raise BadZipFile("File is not a zip file")
+E           zipfile.BadZipFile: File is not a zip file
+
+/usr/lib/python3.12/zipfile/__init__.py:1432: BadZipFile
+________________________ test_task_func_invalid_headers ________________________
+
+    def test_task_func_invalid_headers():
+        url = 'https://www.example.com/file.zip'
+        destination_directory = '.'
+        headers = {'accept': 'application/json'}
+        expected_files = []
+    
+>       files = task_func(url, destination_directory, headers)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0212.py:30: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0212.py:18: in task_func
+    with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/zipfile/__init__.py:1365: in __init__
+    self._RealGetContents()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <zipfile.ZipFile [closed]>
+
+    def _RealGetContents(self):
+        """Read in the table of contents for the ZIP file."""
+        fp = self.fp
+        try:
+            endrec = _EndRecData(fp)
+        except OSError:
+            raise BadZipFile("File is not a zip file")
+        if not endrec:
+>           raise BadZipFile("File is not a zip file")
+E           zipfile.BadZipFile: File is not a zip file
+
+/usr/lib/python3.12/zipfile/__init__.py:1432: BadZipFile
+=========================== short test summary info ============================
+FAILED test_0212.py::test_task_func_valid_url - zipfile.BadZipFile: File is n...
+FAILED test_0212.py::test_task_func_invalid_url - zipfile.BadZipFile: File is...
+FAILED test_0212.py::test_task_func_invalid_headers - zipfile.BadZipFile: Fil...
+3 failed in 0.96s

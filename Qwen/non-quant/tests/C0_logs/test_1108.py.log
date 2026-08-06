@@ -1,0 +1,47 @@
+F....F                                                                   [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_valid_unix_timestamp ______________________
+
+    def test_task_func_valid_unix_timestamp():
+        # Test with a valid Unix timestamp and a valid timezone
+        unix_timestamp = 1633072800  # October 1, 2021, 00:00:00 UTC
+        target_timezone = 'America/New_York'
+        expected_output = '2021-10-01 19:00:00'  # Adjusted for Eastern Daylight Time (EDT)
+>       assert task_func(unix_timestamp, target_timezone) == expected_output
+E       AssertionError: assert '2021-10-01 03:20:00' == '2021-10-01 19:00:00'
+E         
+E         - 2021-10-01 19:00:00
+E         ?            ^^ ^
+E         + 2021-10-01 03:20:00
+E         ?            ^^ ^
+
+test_1108.py:11: AssertionError
+______________________ test_task_func_different_timezone _______________________
+
+    def test_task_func_different_timezone():
+        # Test with a different timezone (e.g., Japan Standard Time)
+        unix_timestamp = 1633072800
+        target_timezone = 'Asia/Tokyo'
+        expected_output = '2021-10-02 02:00:00'  # Adjusted for Japan Standard Time (JST)
+>       assert task_func(unix_timestamp, target_timezone) == expected_output
+E       AssertionError: assert '2021-10-01 16:20:00' == '2021-10-02 02:00:00'
+E         
+E         - 2021-10-02 02:00:00
+E         + 2021-10-01 16:20:00
+
+test_1108.py:46: AssertionError
+=============================== warnings summary ===============================
+Qwen/non-quant/tests/test_1108.py::test_task_func_valid_unix_timestamp
+Qwen/non-quant/tests/test_1108.py::test_task_func_invalid_timezone
+Qwen/non-quant/tests/test_1108.py::test_task_func_negative_unix_timestamp
+Qwen/non-quant/tests/test_1108.py::test_task_func_zero_unix_timestamp
+Qwen/non-quant/tests/test_1108.py::test_task_func_max_unix_timestamp
+Qwen/non-quant/tests/test_1108.py::test_task_func_different_timezone
+  /work/tomohiro-w/utg/src/src_1108.py:7: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+    datetime_utc = datetime.utcfromtimestamp(unix_timestamp).replace(tzinfo=pytz.utc)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_1108.py::test_task_func_valid_unix_timestamp - AssertionError: as...
+FAILED test_1108.py::test_task_func_different_timezone - AssertionError: asse...
+2 failed, 4 passed, 6 warnings in 0.76s

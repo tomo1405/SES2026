@@ -1,0 +1,58 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data = {'category': ['A', 'B', 'A', 'C', 'A', 'B', 'D', 'E']}
+        column = 'category'
+    
+        # Capture stdout to suppress plot display
+        captured_output = io.StringIO()
+        sys.stdout = captured_output
+    
+        ax = task_func(data, column)
+    
+        # Restore stdout
+        sys.stdout = sys.__stdout__
+    
+        # Check if the plot is generated correctly
+        buf = capture_plot(ax)
+        assert buf.getvalue() != b'', "The plot should be generated and saved to the buffer."
+    
+        # Check if the DataFrame is processed correctly
+        expected_counts = pd.Series({'A': 3, 'B': 2, 'C': 1, 'D': 1, 'E': 1})
+>       actual_counts = pd.Series(ax.get_ydata(), index=ax.get_xticklabels())
+                                  ^^^^^^^^^^^^
+E       AttributeError: 'Axes' object has no attribute 'get_ydata'. Did you mean: 'fmt_ydata'?
+
+test_0920.py:34: AttributeError
+______________________ test_task_func_missing_categories _______________________
+
+    def test_task_func_missing_categories():
+        data = {'category': ['A', 'B', 'A', 'C', 'A', 'B']}
+        column = 'category'
+    
+        # Capture stdout to suppress plot display
+        captured_output = io.StringIO()
+        sys.stdout = captured_output
+    
+        ax = task_func(data, column)
+    
+        # Restore stdout
+        sys.stdout = sys.__stdout__
+    
+        # Check if the plot is generated correctly
+        buf = capture_plot(ax)
+        assert buf.getvalue() != b'', "The plot should be generated and saved to the buffer."
+    
+        # Check if the DataFrame is processed correctly with missing categories
+        expected_counts = pd.Series({'A': 3, 'B': 2, 'C': 1, 'D': 0, 'E': 0})
+>       actual_counts = pd.Series(ax.get_ydata(), index=ax.get_xticklabels())
+                                  ^^^^^^^^^^^^
+E       AttributeError: 'Axes' object has no attribute 'get_ydata'. Did you mean: 'fmt_ydata'?
+
+test_0920.py:56: AttributeError
+=========================== short test summary info ============================
+FAILED test_0920.py::test_task_func - AttributeError: 'Axes' object has no at...
+FAILED test_0920.py::test_task_func_missing_categories - AttributeError: 'Axe...
+2 failed in 2.42s

@@ -1,0 +1,76 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a simple array of strings
+        input_arr = np.array(['1.2.3', '4.5.6'])
+        expected_output = np.array(['3.2.1', '6.5.4'])
+        assert np.array_equal(task_func(input_arr), expected_output)
+    
+        # Test with an empty array
+        input_arr = np.array([])
+        expected_output = np.array([])
+>       assert np.array_equal(task_func(input_arr), expected_output)
+                              ^^^^^^^^^^^^^^^^^^^^
+
+test_0758.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0758.py:8: in task_func
+    return vectorized_reverse(arr)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/numpy/lib/_function_base_impl.py:2529: in __call__
+    return self._call_as_normal(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/numpy/lib/_function_base_impl.py:2522: in _call_as_normal
+    return self._vectorize_call(func=func, args=vargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/numpy/lib/_function_base_impl.py:2607: in _vectorize_call
+    ufunc, otypes = self._get_ufunc_and_otypes(func=func, args=args)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <numpy.vectorize object at 0x7e2d5a43a5a0>
+func = <function task_func.<locals>.<lambda> at 0x7e2d575d2ca0>
+args = [array([], dtype=float64)]
+
+    def _get_ufunc_and_otypes(self, func, args):
+        """Return (ufunc, otypes)."""
+        # frompyfunc will fail if args is empty
+        if not args:
+            raise ValueError('args can not be empty')
+    
+        if self.otypes is not None:
+            otypes = self.otypes
+    
+            # self._ufunc is a dictionary whose keys are the number of
+            # arguments (i.e. len(args)) and whose values are ufuncs created
+            # by frompyfunc. len(args) can be different for different calls if
+            # self.pyfunc has parameters with default values.  We only use the
+            # cache when func is self.pyfunc, which occurs when the call uses
+            # only positional arguments and no arguments are excluded.
+    
+            nin = len(args)
+            nout = len(self.otypes)
+            if func is not self.pyfunc or nin not in self._ufunc:
+                ufunc = frompyfunc(func, nin, nout)
+            else:
+                ufunc = None  # We'll get it from self._ufunc
+            if func is self.pyfunc:
+                ufunc = self._ufunc.setdefault(nin, ufunc)
+        else:
+            # Get number of outputs and output types by calling the function on
+            # the first entries of args.  We also cache the result to prevent
+            # the subsequent call when the ufunc is evaluated.
+            # Assumes that ufunc first evaluates the 0th elements in the input
+            # arrays (the input values are not checked to ensure this)
+            args = [asarray(a) for a in args]
+            if builtins.any(arg.size == 0 for arg in args):
+>               raise ValueError('cannot call `vectorize` on size 0 inputs '
+                                 'unless `otypes` is set')
+E               ValueError: cannot call `vectorize` on size 0 inputs unless `otypes` is set
+
+../../../.venv/lib/python3.12/site-packages/numpy/lib/_function_base_impl.py:2563: ValueError
+=========================== short test summary info ============================
+FAILED test_0758.py::test_task_func - ValueError: cannot call `vectorize` on ...
+1 failed in 0.89s

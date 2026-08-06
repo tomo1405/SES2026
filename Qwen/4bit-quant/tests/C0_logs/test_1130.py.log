@@ -1,0 +1,56 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_getcwd = <MagicMock name='getcwd' id='140368220628336'>
+mock_datetime = <MagicMock name='datetime' id='140368217765024'>
+mock_requests_get = <MagicMock name='get' id='140368217949104'>
+
+    @patch('src_1130.requests.get')
+    @patch('src_1130.datetime')
+    @patch('src_1130.os.getcwd')
+    def test_task_func(mock_getcwd, mock_datetime, mock_requests_get):
+        # Mocking the current working directory
+        mock_getcwd.return_value = '/tmp'
+    
+        # Mocking the datetime to return a fixed timestamp
+        mock_now = mock_datetime.now.return_value
+        mock_now.strftime.return_value = "20230401123456789012"
+    
+        # Mocking the response content
+        mock_response = mock_requests_get.return_value
+        mock_response.content = b"Mocked response content"
+    
+        # JSON data containing the URL
+        json_data = '{"url": "http://example.com"}'
+    
+        # Calling the function
+>       result = task_func(json_data, "url", "/test/save/dir")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1130.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+json_data = '{"url": "http://example.com"}', unknown_key = 'url'
+save_dir = '/test/save/dir'
+
+    def task_func(json_data, unknown_key, save_dir=None):
+        data = json.loads(json_data)
+        url = data[unknown_key]  # Assuming the key directly contains the URL
+    
+        response = requests.get(url)
+    
+        # Using datetime to include milliseconds in the timestamp
+        timestamp = datetime.now().strftime("%Y%m%d%H%M%S%f")
+        filename = f"{unknown_key}_{timestamp}.txt"
+        save_dir = save_dir or os.getcwd()
+        file_path = os.path.join(save_dir, filename)
+    
+>       with open(file_path, 'wb') as f:
+             ^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/test/save/dir/url_20230401123456789012.txt'
+
+../../../src/src_1130.py:17: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_1130.py::test_task_func - FileNotFoundError: [Errno 2] No such fi...
+1 failed, 1 passed in 0.73s

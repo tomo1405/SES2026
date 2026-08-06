@@ -1,0 +1,27 @@
+import json
+import random
+import hashlib
+from datetime import datetime
+def task_func(utc_datetime, salt='salt', password_length=10, seed=0):
+    random.seed(seed)
+    # Test if the utc_datetime is a datetime object and the salt is a string
+    if not isinstance(utc_datetime, datetime):
+        raise ValueError("Input should be a datetime object")
+    if not isinstance(salt, str):
+        raise ValueError("Salt should be a string")
+
+    # Convert the datetime to a string
+    utc_time_str = utc_datetime.strftime("%Y-%m-%d %H:%M:%S")
+    # Create the salted string
+    salted_string = utc_time_str + salt
+
+    # Generate a random password
+    password = ''.join(random.choice('abcdefghijklmnopqrstuvwxyz0123456789') for _ in range(password_length))
+    
+    # Hash the password
+    hashed_password = hashlib.sha256((password + salted_string).encode('utf-8')).hexdigest()
+    
+    # Encode the hashed password as a JSON string
+    password_json_str = json.dumps(hashed_password)
+    
+    return password_json_str

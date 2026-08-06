@@ -1,0 +1,26 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Test that the function returns a tuple of (pd.DataFrame, plt.Axes)
+        data = pd.DataFrame({"A": [1, 2, 3], "B": [4, 5, 6]})
+        result = task_func(data)
+        assert isinstance(result, tuple)
+        assert isinstance(result[0], pd.DataFrame)
+        assert isinstance(result[1], plt.Axes)
+    
+        # Test case 2: Test that the function normalizes the data correctly
+        data = pd.DataFrame({"A": [1, 2, 3], "B": [4, 5, 6]})
+        result = task_func(data)
+>       assert result[0].equals(pd.DataFrame({"A": [0.5, 1, 1.5], "B": [0.75, 1, 1.25]}))
+E       AssertionError: assert False
+E        +  where False = equals(     A     B\n0  0.5  0.75\n1  1.0  1.00\n2  1.5  1.25)
+E        +    where equals =      A    B\n0  0.0  0.0\n1  0.5  0.5\n2  1.0  1.0.equals
+E        +    and        A     B\n0  0.5  0.75\n1  1.0  1.00\n2  1.5  1.25 = <class 'pandas.DataFrame'>({'A': [0.5, 1, 1.5], 'B': [0.75, 1, 1.25]})
+E        +      where <class 'pandas.DataFrame'> = pd.DataFrame
+
+test_0457.py:19: AssertionError
+=========================== short test summary info ============================
+FAILED test_0457.py::test_task_func - AssertionError: assert False
+1 failed in 4.05s

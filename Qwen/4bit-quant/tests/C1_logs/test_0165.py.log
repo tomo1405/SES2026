@@ -1,0 +1,59 @@
+...FF.F                                                                  [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_reproducibility ________________________
+
+    def test_task_func_reproducibility():
+        fig1 = task_func()
+        fig2 = task_func()
+>       assert fig1 == fig2  # Check if the figures are identical
+        ^^^^^^^^^^^^^^^^^^^
+E       assert <Figure size 640x480 with 1 Axes> == <Figure size 640x480 with 1 Axes>
+
+test_0165.py:31: AssertionError
+________________________ test_task_func_with_seed_reset ________________________
+
+    def test_task_func_with_seed_reset():
+        np.random.seed(0)
+        fig1 = task_func()
+        np.random.seed(0)
+        fig2 = task_func()
+>       assert fig1 == fig2  # Check if resetting the seed produces identical figures
+        ^^^^^^^^^^^^^^^^^^^
+E       assert <Figure size 640x480 with 1 Axes> == <Figure size 640x480 with 1 Axes>
+
+test_0165.py:38: AssertionError
+_______________________ test_task_func_dataframe_content _______________________
+
+    def test_task_func_dataframe_content():
+        np.random.seed(0)
+        data = pd.DataFrame(np.random.uniform(0, 1, size=(5, 5)), columns=[f'Label{i + 1}' for i in range(5)])
+        fig = task_func()
+        ax = fig.axes[0]
+        plotted_data = pd.DataFrame([[patch.get_height() for patch in bar] for bar in ax.containers])
+>       pd.testing.assert_frame_equal(plotted_data, data)
+
+test_0165.py:52: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+left = RangeIndex(start=0, stop=5, step=1)
+right = Index(['Label1', 'Label2', 'Label3', 'Label4', 'Label5'], dtype='str')
+obj = 'DataFrame.columns'
+
+    def _check_types(left, right, obj: str = "Index") -> None:
+        if not exact:
+            return
+    
+        assert_class_equal(left, right, exact=exact, obj=obj)
+>       assert_attr_equal("inferred_type", left, right, obj=obj)
+E       AssertionError: DataFrame.columns are different
+E       
+E       Attribute "inferred_type" are different
+E       [left]:  integer
+E       [right]: string
+
+../../../.venv/lib/python3.12/site-packages/pandas/_testing/asserters.py:253: AssertionError
+=========================== short test summary info ============================
+FAILED test_0165.py::test_task_func_reproducibility - assert <Figure size 640...
+FAILED test_0165.py::test_task_func_with_seed_reset - assert <Figure size 640...
+FAILED test_0165.py::test_task_func_dataframe_content - AssertionError: DataF...
+3 failed, 4 passed in 2.22s

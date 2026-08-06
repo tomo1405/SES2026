@@ -1,0 +1,59 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a temporary directory for testing
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Define test inputs
+            mystrings = ["test plot", "another plot", "test plot"]
+            seed = 42
+    
+            # Call the function
+            result = task_func(mystrings, temp_dir, seed=seed)
+    
+            # Check that the correct number of unique plots were saved
+            assert len(result) == 2, "The number of unique plots should be 2"
+    
+            # Check that the plots have the correct names
+            expected_files = ["test_plot.png", "another_plot.png"]
+            assert set(result) == set(expected_files), "The plot files do not match the expected names"
+    
+            # Check that the files exist in the directory
+            for file_name in expected_files:
+                assert os.path.exists(os.path.join(temp_dir, file_name)), f"File {file_name} does not exist in {temp_dir}"
+    
+            # Check that the random data is reproducible with the same seed
+            np.random.seed(seed)
+            data = np.random.rand(10)
+>           assert np.allclose(data, [0.37454012, 0.95071431, 0.73199394, 0.59865848, 0.15601864,
+                                       0.15599452, 0.05808366, 0.71009146, 0.42318462, 0.68166838]), \
+                "Random data does not match the expected values with the given seed"
+E           AssertionError: Random data does not match the expected values with the given seed
+E           assert False
+E            +  where False = <function allclose at 0x7d6a2b9fbe30>(array([0.37454012, 0.95071431, 0.73199394, 0.59865848, 0.15601864,\n       0.15599452, 0.05808361, 0.86617615, 0.60111501, 0.70807258]), [0.37454012, 0.95071431, 0.73199394, 0.59865848, 0.15601864, 0.15599452, ...])
+E            +    where <function allclose at 0x7d6a2b9fbe30> = np.allclose
+
+test_0954.py:31: AssertionError
+_________________________ test_task_func_empty_strings _________________________
+
+    def test_task_func_empty_strings():
+        # Create a temporary directory for testing
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Define test inputs
+            mystrings = ["", "   ", "non-empty string"]
+    
+            # Call the function
+            result = task_func(mystrings, temp_dir)
+    
+            # Check that the correct number of unique plots were saved
+>           assert len(result) == 1, "The number of unique plots should be 1"
+E           AssertionError: The number of unique plots should be 1
+E           assert 3 == 1
+E            +  where 3 = len(['.png', '___.png', 'non-empty_string.png'])
+
+test_0954.py:65: AssertionError
+=========================== short test summary info ============================
+FAILED test_0954.py::test_task_func - AssertionError: Random data does not ma...
+FAILED test_0954.py::test_task_func_empty_strings - AssertionError: The numbe...
+2 failed, 1 passed in 1.96s

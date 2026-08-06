@@ -1,0 +1,29 @@
+F....F.                                                                  [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_valid_prefix _______________________
+
+    def test_task_func_with_valid_prefix():
+        input_dict = {'EMP$$123': 3, 'EMP$$456': 2}
+        result = task_func(input_dict)
+        assert isinstance(result, dict)
+        assert len(result) == 2
+>       assert all(isinstance(v, list) and len(v) == num for k, v in result.items() for num in input_dict.values())
+E       assert False
+E        +  where False = all(<generator object test_task_func_with_valid_prefix.<locals>.<genexpr> at 0x7a7c274ba740>)
+
+test_1115.py:10: AssertionError
+____________________ test_task_func_with_negative_employees ____________________
+
+    def test_task_func_with_negative_employees():
+        input_dict = {'EMP$$123': -1}
+        result = task_func(input_dict)
+        assert isinstance(result, dict)
+>       assert len(result) == 0
+E       AssertionError: assert 1 == 0
+E        +  where 1 = len({'EMP$$123': []})
+
+test_1115.py:42: AssertionError
+=========================== short test summary info ============================
+FAILED test_1115.py::test_task_func_with_valid_prefix - assert False
+FAILED test_1115.py::test_task_func_with_negative_employees - AssertionError:...
+2 failed, 5 passed in 0.51s

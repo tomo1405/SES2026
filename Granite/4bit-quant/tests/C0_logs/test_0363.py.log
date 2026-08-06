@@ -1,0 +1,18 @@
+..F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_read_write_file ________________________
+
+    def test_task_func_read_write_file():
+        original_df = pd.DataFrame({"A": [1, 2, 3], "B": [4, 5, 6]})
+        original_file_location = "test.xlsx"
+        new_file_location = "new_test.xlsx"
+        original_df.to_excel(original_file_location, index=False)
+        new_df = task_func(original_file_location=original_file_location, new_file_location=new_file_location)
+        assert new_df.equals(original_df)
+>       os.remove(new_file_location)
+E       FileNotFoundError: [Errno 2] No such file or directory: 'new_test.xlsx'
+
+test_0363.py:22: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0363.py::test_task_func_read_write_file - FileNotFoundError: [Err...
+1 failed, 2 passed in 1.54s

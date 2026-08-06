@@ -1,0 +1,38 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Ensure the output directory exists
+        if not os.path.exists(OUTPUT_DIR):
+            os.makedirs(OUTPUT_DIR)
+    
+        # Call the function
+        file_path, ax = task_func(1, OUTPUT_DIR)
+    
+        # Check if the file path is correct
+        assert file_path == os.path.join(OUTPUT_DIR, 'traffic_data.csv')
+    
+        # Check if the file exists
+        assert os.path.exists(file_path)
+    
+        # Read the CSV file
+        df = pd.read_csv(file_path)
+    
+        # Check if the DataFrame is not empty
+        assert not df.empty
+    
+        # Check if the DataFrame has the correct columns
+        expected_columns = ['Time'] + VEHICLE_TYPES
+        assert list(df.columns) == expected_columns
+    
+        # Check if the DataFrame has the correct number of rows (including header)
+>       assert len(df) == 2  # 1 header row + 1 data row
+        ^^^^^^^^^^^^^^^^^^^
+E       assert 1 == 2
+E        +  where 1 = len(                         Time  Car  Bus  Truck  Bike\n0  2026-07-29 01:28:26.259720   14   22      9    34)
+
+test_0594.py:36: AssertionError
+=========================== short test summary info ============================
+FAILED test_0594.py::test_task_func - assert 1 == 2
+1 failed in 2.08s

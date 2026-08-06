@@ -1,0 +1,109 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        with patch('pathlib.Path') as mock_path:
+            mock_path.return_value.glob.return_value = [
+                MagicMock(name='file1.txt', spec=Path),
+                MagicMock(name='file2.txt', spec=Path),
+                MagicMock(name='file3.txt', spec=Path)
+            ]
+            with patch('tarfile.open', mock_open()) as mock_tar:
+                mock_tar.return_value.__enter__.return_value = MagicMock(spec=tarfile.TarFile)
+                result = task_func()
+>               mock_tar.assert_called_once_with(str(Path(DIRECTORY) / 'archive.tar'), 'w')
+
+test_0813.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/unittest/mock.py:956: in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='open' id='132296501549616'>
+args = ('C:\\\\SomeDir\\\\/archive.tar', 'w'), kwargs = {}
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\n  Actual: %s'
+                    % (expected, actual))
+            raise AssertionError(error_message)
+    
+        def _error_message():
+            msg = self._format_mock_failure_message(args, kwargs)
+            return msg
+        expected = self._call_matcher(_Call((args, kwargs), two=True))
+        actual = self._call_matcher(self.call_args)
+        if actual != expected:
+            cause = expected if isinstance(expected, Exception) else None
+>           raise AssertionError(_error_message()) from cause
+E           AssertionError: expected call not found.
+E           Expected: open('C:\\\\SomeDir\\\\/archive.tar', 'w')
+E             Actual: open(Path('C:\\\\SomeDir\\\\/archive.tar'), 'w')
+
+/usr/lib/python3.12/unittest/mock.py:944: AssertionError
+_____________________ test_task_func_with_permission_error _____________________
+
+    def test_task_func_with_permission_error():
+        with patch('pathlib.Path') as mock_path:
+            mock_path.return_value.glob.return_value = [
+                MagicMock(name='file1.txt', spec=Path),
+                MagicMock(name='file2.txt', spec=Path),
+                MagicMock(name='file3.txt', spec=Path)
+            ]
+            with patch('tarfile.open', mock_open()) as mock_tar:
+                mock_tar.return_value.__enter__.return_value = MagicMock(spec=tarfile.TarFile)
+                mock_tar.return_value.__enter__.return_value.add.side_effect = [
+                    PermissionError('Mock Permission Error'), None, None
+                ]
+                result = task_func()
+>               mock_tar.assert_called_once_with(str(Path(DIRECTORY) / 'archive.tar'), 'w')
+
+test_0813.py:52: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/unittest/mock.py:956: in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='open' id='132296500125312'>
+args = ('C:\\\\SomeDir\\\\/archive.tar', 'w'), kwargs = {}
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\n  Actual: %s'
+                    % (expected, actual))
+            raise AssertionError(error_message)
+    
+        def _error_message():
+            msg = self._format_mock_failure_message(args, kwargs)
+            return msg
+        expected = self._call_matcher(_Call((args, kwargs), two=True))
+        actual = self._call_matcher(self.call_args)
+        if actual != expected:
+            cause = expected if isinstance(expected, Exception) else None
+>           raise AssertionError(_error_message()) from cause
+E           AssertionError: expected call not found.
+E           Expected: open('C:\\\\SomeDir\\\\/archive.tar', 'w')
+E             Actual: open(Path('C:\\\\SomeDir\\\\/archive.tar'), 'w')
+
+/usr/lib/python3.12/unittest/mock.py:944: AssertionError
+=========================== short test summary info ============================
+FAILED test_0813.py::test_task_func - AssertionError: expected call not found.
+FAILED test_0813.py::test_task_func_with_permission_error - AssertionError: e...
+2 failed in 0.63s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

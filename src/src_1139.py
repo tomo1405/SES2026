@@ -1,0 +1,8 @@
+import numpy as np
+import itertools
+def task_func(matrix):
+    sorted_array = np.sort(matrix, axis=None)
+    
+    combinations = list(itertools.combinations(sorted_array, 2))
+    
+    return sorted_array, combinations

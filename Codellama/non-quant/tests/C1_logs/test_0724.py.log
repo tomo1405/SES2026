@@ -1,0 +1,28 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        url = 'https://www.example.com'
+>       csv_file_path = task_func(url)
+                        ^^^^^^^^^^^^^^
+
+test_0724.py:6: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'https://www.example.com'
+
+    def task_func(url):
+        html = urllib.request.urlopen(url).read()
+        soup = BeautifulSoup(html, 'html.parser')
+    
+        data = []
+        table = soup.find('table', attrs={'class':'data-table'})
+>       table_rows = table.find_all('tr')
+                     ^^^^^^^^^^^^^^
+E       AttributeError: 'NoneType' object has no attribute 'find_all'
+
+../../../src/src_0724.py:13: AttributeError
+=========================== short test summary info ============================
+FAILED test_0724.py::test_task_func - AttributeError: 'NoneType' object has n...
+1 failed in 1.11s

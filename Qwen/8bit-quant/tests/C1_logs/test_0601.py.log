@@ -1,0 +1,97 @@
+FF.F.                                                                    [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a simple DataFrame
+        data = {'Word': ['apple', 'apricot', 'banana', 'avocado', 'berry']}
+        df = pd.DataFrame(data)
+        letter = 'a'
+        result = task_func(df, letter)
+        expected = {
+            'mean': 6.0,
+            'median': 6.0,
+            'mode': 6
+        }
+>       assert result == expected
+E       AssertionError: assert {'mean': np.f...: np.int64(7)} == {'mean': 6.0,....0, 'mode': 6}
+E         
+E         Differing items:
+E         {'mean': np.float64(6.333333333333333)} != {'mean': 6.0}
+E         {'median': np.float64(7.0)} != {'median': 6.0}
+E         {'mode': np.int64(7)} != {'mode': 6}
+E         Use -v to get more diff
+
+test_0601.py:16: AssertionError
+__________________________ test_task_func_no_matches ___________________________
+
+    def test_task_func_no_matches():
+        # Test with no matches
+        data = {'Word': ['cherry', 'date', 'fig', 'grape']}
+        df = pd.DataFrame(data)
+        letter = 'a'
+>       result = task_func(df, letter)
+                 ^^^^^^^^^^^^^^^^^^^^^
+
+test_0601.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df =      Word
+0  cherry
+1    date
+2     fig
+3   grape, letter = 'a'
+
+    def task_func(df, letter):
+        df = pd.DataFrame(df)
+        regex = '^' + letter
+        filtered_df = df[df['Word'].str.contains(regex, regex=True)]
+        word_lengths = filtered_df['Word'].str.len()
+>       statistics = {'mean': np.mean(word_lengths), 'median': np.median(word_lengths), 'mode': word_lengths.mode().values[0]}
+                                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       IndexError: index 0 is out of bounds for axis 0 with size 0
+
+../../../src/src_0601.py:8: IndexError
+________________________ test_task_func_empty_dataframe ________________________
+
+    def test_task_func_empty_dataframe():
+        # Test with an empty DataFrame
+        df = pd.DataFrame(columns=['Word'])
+        letter = 'a'
+>       result = task_func(df, letter)
+                 ^^^^^^^^^^^^^^^^^^^^^
+
+test_0601.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df = Empty DataFrame
+Columns: [Word]
+Index: [], letter = 'a'
+
+    def task_func(df, letter):
+        df = pd.DataFrame(df)
+        regex = '^' + letter
+        filtered_df = df[df['Word'].str.contains(regex, regex=True)]
+        word_lengths = filtered_df['Word'].str.len()
+>       statistics = {'mean': np.mean(word_lengths), 'median': np.median(word_lengths), 'mode': word_lengths.mode().values[0]}
+                                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       IndexError: index 0 is out of bounds for axis 0 with size 0
+
+../../../src/src_0601.py:8: IndexError
+=============================== warnings summary ===============================
+Qwen/8bit-quant/tests/test_0601.py::test_task_func_no_matches
+Qwen/8bit-quant/tests/test_0601.py::test_task_func_empty_dataframe
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:3862: RuntimeWarning: Mean of empty slice
+    return _methods._mean(a, axis=axis, dtype=dtype,
+
+Qwen/8bit-quant/tests/test_0601.py::test_task_func_no_matches
+Qwen/8bit-quant/tests/test_0601.py::test_task_func_empty_dataframe
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/_methods.py:142: RuntimeWarning: invalid value encountered in scalar divide
+    ret = ret.dtype.type(ret / rcount)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0601.py::test_task_func - AssertionError: assert {'mean': np.f......
+FAILED test_0601.py::test_task_func_no_matches - IndexError: index 0 is out o...
+FAILED test_0601.py::test_task_func_empty_dataframe - IndexError: index 0 is ...
+3 failed, 2 passed, 4 warnings in 1.39s

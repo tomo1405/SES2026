@@ -1,0 +1,36 @@
+.F.F                                                                     [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_without_seed __________________________
+
+    def test_task_func_without_seed():
+        n = 10
+        expected_result = defaultdict(list)
+        for _ in range(n):
+            letter = random.choice(string.ascii_lowercase)
+            expected_result[letter].append(letter)
+        actual_result = task_func(n)
+>       assert actual_result == expected_result
+E       AssertionError: assert defaultdict(<..., 't': ['t']}) == defaultdict(<..., 'g': ['g']})
+E         
+E         Omitting 3 identical items, use -vv to show
+E         Differing items:
+E         {'r': ['r', 'r']} != {'r': ['r']}
+E         Left contains 4 more items:
+E         {'f': ['f'], 'k': ['k', 'k'], 't': ['t'], 'u': ['u']}
+E         Right contains 5 more items:
+E         {'a': ['a'], 'c': ['c', 'c'], 'g': ['g'], 's': ['s'], 'v': ['v']}
+E         Use -v to get more diff
+
+test_0863.py:25: AssertionError
+________________________ test_task_func_with_negative_n ________________________
+
+    def test_task_func_with_negative_n():
+        n = -10
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0863.py:35: Failed
+=========================== short test summary info ============================
+FAILED test_0863.py::test_task_func_without_seed - AssertionError: assert def...
+FAILED test_0863.py::test_task_func_with_negative_n - Failed: DID NOT RAISE V...
+2 failed, 2 passed in 0.51s

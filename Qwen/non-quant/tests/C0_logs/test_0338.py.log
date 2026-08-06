@@ -1,0 +1,85 @@
+.FFF..F                                                                  [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_bar_count ___________________________
+
+sample_df =   Category  Value
+0        A     10
+1        A     20
+2        B     30
+3        B     40
+4        C     50
+5        C     60
+
+    def test_task_func_bar_count(sample_df):
+        ax = task_func(sample_df, 'Category', 'Value')
+        bars = ax.patches
+>       assert len(bars) == 3  # There should be 3 bars for each unique category
+        ^^^^^^^^^^^^^^^^^^^^^
+E       assert 6 == 3
+E        +  where 6 = len(<Axes.ArtistList of 6 patches>)
+
+test_0338.py:22: AssertionError
+__________________________ test_task_func_bar_heights __________________________
+
+sample_df =   Category  Value
+0        A     10
+1        A     20
+2        B     30
+3        B     40
+4        C     50
+5        C     60
+
+    def test_task_func_bar_heights(sample_df):
+        ax = task_func(sample_df, 'Category', 'Value')
+        expected_means = [15, 35, 55]  # Means of values for categories A, B, C
+        for i, bar in enumerate(ax.patches):
+>           assert np.isclose(bar.get_height(), expected_means[i])
+                                                ^^^^^^^^^^^^^^^^^
+E           IndexError: list index out of range
+
+test_0338.py:28: IndexError
+__________________________ test_task_func_error_bars ___________________________
+
+sample_df =   Category  Value
+0        A     10
+1        A     20
+2        B     30
+3        B     40
+4        C     50
+5        C     60
+
+    def test_task_func_error_bars(sample_df):
+        ax = task_func(sample_df, 'Category', 'Value')
+        expected_stds = [5, 5, 5]  # Standard deviations of values for categories A, B, C
+        for i, bar in enumerate(ax.patches):
+>           error_bar = bar.errorbarlines[0]
+                        ^^^^^^^^^^^^^^^^^
+E           AttributeError: 'Rectangle' object has no attribute 'errorbarlines'
+
+test_0338.py:34: AttributeError
+____________________________ test_task_func_legend _____________________________
+
+sample_df =   Category  Value
+0        A     10
+1        A     20
+2        B     30
+3        B     40
+4        C     50
+5        C     60
+
+    def test_task_func_legend(sample_df):
+        ax = task_func(sample_df, 'Category', 'Value')
+        legend_labels = [text.get_text() for text in ax.get_legend().get_texts()]
+>       assert legend_labels == ['Group 1', 'Group 2', 'Group 3']
+E       AssertionError: assert ['Group 1', '...Group 3', ...] == ['Group 1', '...2', 'Group 3']
+E         
+E         Left contains 18 more items, first extra item: 'Group 1'
+E         Use -v to get more diff
+
+test_0338.py:51: AssertionError
+=========================== short test summary info ============================
+FAILED test_0338.py::test_task_func_bar_count - assert 6 == 3
+FAILED test_0338.py::test_task_func_bar_heights - IndexError: list index out ...
+FAILED test_0338.py::test_task_func_error_bars - AttributeError: 'Rectangle' ...
+FAILED test_0338.py::test_task_func_legend - AssertionError: assert ['Group 1...
+4 failed, 3 passed in 2.49s

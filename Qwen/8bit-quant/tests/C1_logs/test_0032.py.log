@@ -1,0 +1,32 @@
+.FF..                                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_dollar_words _______________________
+
+    def test_task_func_with_dollar_words():
+        text = "$money $is $fun but $$$$ is not"
+        expected_freq = {'$money': 1, '$is': 1, '$fun': 1}
+        with plt.ioff():  # Turn off interactive mode to prevent plot display
+            result = task_func(text)
+        assert isinstance(result, plt.Axes)
+>       assert result.get_lines()[0].get_xdata() == list(expected_freq.keys())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: operands could not be broadcast together with shapes (2,) (3,)
+
+test_0032.py:26: ValueError
+_______________________ test_task_func_with_punctuation ________________________
+
+    def test_task_func_with_punctuation():
+        text = "$money! $is? $fun but $$$$ is not"
+        expected_freq = {'$money': 1, '$is': 1, '$fun': 1}
+        with plt.ioff():  # Turn off interactive mode to prevent plot display
+            result = task_func(text)
+        assert isinstance(result, plt.Axes)
+>       assert result.get_lines()[0].get_xdata() == list(expected_freq.keys())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: operands could not be broadcast together with shapes (2,) (3,)
+
+test_0032.py:35: ValueError
+=========================== short test summary info ============================
+FAILED test_0032.py::test_task_func_with_dollar_words - ValueError: operands ...
+FAILED test_0032.py::test_task_func_with_punctuation - ValueError: operands c...
+2 failed, 3 passed in 4.94s

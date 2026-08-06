@@ -1,0 +1,59 @@
+..FF.F                                                                   [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_zero_points ________________________
+
+    def test_task_func_with_zero_points():
+        fig, ax = plt.subplots(subplot_kw={'projection': 'polar'})
+        num_points = 0
+        result_ax = task_func(ax, num_points)
+        assert isinstance(result_ax, plt.Axes)
+>       assert len(ax.collections) == 0  # No points to plot
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert 1 == 0
+E        +  where 1 = len(<Axes.ArtistList of 1 collections>)
+E        +    where <Axes.ArtistList of 1 collections> = <PolarAxes: >.collections
+
+test_0260.py:21: AssertionError
+_____________________ test_task_func_with_negative_points ______________________
+
+    def test_task_func_with_negative_points():
+        fig, ax = plt.subplots(subplot_kw={'projection': 'polar'})
+        num_points = -5
+>       with pytest.raises(ValueError, match="The input is not an axes"):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'The input is not an axes'
+E         Actual message: 'negative dimensions are not allowed'
+
+test_0260.py:26: AssertionError
+___________________ test_task_func_with_non_polar_projection ___________________
+
+    def test_task_func_with_non_polar_projection():
+        fig, ax = plt.subplots()
+        num_points = 10
+        with pytest.raises(ValueError, match="The input is not an axes"):
+>           task_func(ax, num_points)
+
+test_0260.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ax = <Axes: >, num_points = 10
+
+    def task_func(ax, num_points):
+    
+        if not isinstance(ax, matplotlib.axes.Axes):
+            raise ValueError("The input is not an axes")
+    
+        r = np.random.rand(num_points)
+        theta = 2 * np.pi * np.random.rand(num_points)
+    
+        ax.scatter(theta, r)
+>       ax.set_rlabel_position(num_points / 10)
+        ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Axes' object has no attribute 'set_rlabel_position'
+
+../../../src/src_0260.py:12: AttributeError
+=========================== short test summary info ============================
+FAILED test_0260.py::test_task_func_with_zero_points - assert 1 == 0
+FAILED test_0260.py::test_task_func_with_negative_points - AssertionError: Re...
+FAILED test_0260.py::test_task_func_with_non_polar_projection - AttributeErro...
+3 failed, 3 passed in 1.62s

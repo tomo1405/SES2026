@@ -1,0 +1,41 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_default_args __________________________
+
+    def test_task_func_default_args():
+        result = task_func()
+>       assert isinstance(result, tuple)
+E       assert False
+E        +  where False = isinstance(<generator object task_func.<locals>.<genexpr> at 0x7566020ae540>, tuple)
+
+test_0832.py:8: AssertionError
+__________________________ test_task_func_custom_args __________________________
+
+    def test_task_func_custom_args():
+        range_start = 10
+        range_end = 100
+        pairs_count = 5
+        random_seed = 42
+        random.seed(random_seed)
+        expected_result = [
+            (random.randint(range_start, range_end), random.randint(range_start, range_end), math.sqrt(abs(x - y)))
+            for x, y in [(random.randint(range_start, range_end), random.randint(range_start, range_end)) for _ in range(pairs_count)]
+        ]
+        result = task_func(range_start, range_end, pairs_count, random_seed)
+>       assert isinstance(result, tuple)
+E       assert False
+E        +  where False = isinstance(<generator object task_func.<locals>.<genexpr> at 0x7566020aee40>, tuple)
+
+test_0832.py:25: AssertionError
+_________________________ test_task_func_invalid_args __________________________
+
+    def test_task_func_invalid_args():
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0832.py:29: Failed
+=========================== short test summary info ============================
+FAILED test_0832.py::test_task_func_default_args - assert False
+FAILED test_0832.py::test_task_func_custom_args - assert False
+FAILED test_0832.py::test_task_func_invalid_args - Failed: DID NOT RAISE Valu...
+3 failed in 0.47s

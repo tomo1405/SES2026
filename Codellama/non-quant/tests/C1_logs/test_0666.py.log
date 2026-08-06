@@ -1,0 +1,30 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        src_dir = 'tests/test_data/src'
+        dst_dir = 'tests/test_data/dst'
+        FILE_PATTERNS = ['*.txt', '*.docx']
+    
+        # Test with no files in src_dir
+>       assert task_func(src_dir, dst_dir) == dst_dir
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0666.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0666.py:8: in task_func
+    matching_files = list(itertools.chain.from_iterable(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <list_iterator object at 0x719e4227fa90>
+
+    matching_files = list(itertools.chain.from_iterable(
+>       fnmatch.filter(os.listdir(src_dir), pattern) for pattern in FILE_PATTERNS))
+                       ^^^^^^^^^^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: 'tests/test_data/src'
+
+../../../src/src_0666.py:9: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0666.py::test_task_func - FileNotFoundError: [Errno 2] No such fi...
+1 failed in 0.46s

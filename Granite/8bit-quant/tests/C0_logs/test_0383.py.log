@@ -1,0 +1,30 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_output_shape __________________________
+
+    def test_task_func_output_shape():
+        length = 100
+        distribution, ax = task_func(length)
+        assert distribution.shape == (length,), "Output array should have shape (length,)"
+        assert ax.get_lines()[0].get_xdata().shape == (length,), "X-data of line plot should have shape (length,)"
+>       assert ax.get_lines()[1].get_xdata().shape == (length,), "X-data of line plot should have shape (length,)"
+               ^^^^^^^^^^^^^^^^^
+E       IndexError: list index out of range
+
+test_0383.py:18: IndexError
+_________________________ test_task_func_output_values _________________________
+
+    def test_task_func_output_values():
+        length = 10000
+        distribution, ax = task_func(length)
+>       assert np.mean(distribution) == 0, "Mean of distribution should be close to 0"
+E       AssertionError: Mean of distribution should be close to 0
+E       assert np.float64(0.008291921489077814) == 0
+E        +  where np.float64(0.008291921489077814) = <function mean at 0x77f75cfc7030>(array([ 0.63511791, -0.5021816 , -1.11040825, ...,  0.85022611,\n       -0.20983498, -1.21016735], shape=(10000,)))
+E        +    where <function mean at 0x77f75cfc7030> = np.mean
+
+test_0383.py:23: AssertionError
+=========================== short test summary info ============================
+FAILED test_0383.py::test_task_func_output_shape - IndexError: list index out...
+FAILED test_0383.py::test_task_func_output_values - AssertionError: Mean of d...
+2 failed, 1 passed in 2.65s

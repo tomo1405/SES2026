@@ -1,0 +1,59 @@
+.FFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_one_animal ________________________
+
+    def test_task_func_with_one_animal():
+        animals = ['dog']
+        mean = 10
+        expected_sales = {'dog': 0}
+        actual_sales = task_func(animals, mean)
+>       assert actual_sales == expected_sales
+E       AssertionError: assert {'dog': 11} == {'dog': 0}
+E         
+E         Differing items:
+E         {'dog': 11} != {'dog': 0}
+E         Use -v to get more diff
+
+test_0192.py:17: AssertionError
+_____________________ test_task_func_with_multiple_animals _____________________
+
+    def test_task_func_with_multiple_animals():
+        animals = ['dog', 'cat', 'bird']
+        mean = 10
+        expected_sales = {'dog': 0, 'cat': 0, 'bird': 0}
+        actual_sales = task_func(animals, mean)
+>       assert actual_sales == expected_sales
+E       AssertionError: assert {'dog': 3, 'c... 2, 'bird': 4} == {'dog': 0, 'c... 0, 'bird': 0}
+E         
+E         Differing items:
+E         {'bird': 4} != {'bird': 0}
+E         {'cat': 2} != {'cat': 0}
+E         {'dog': 3} != {'dog': 0}
+E         Use -v to get more diff
+
+test_0192.py:24: AssertionError
+_________________ test_task_func_with_random_animals_and_mean __________________
+
+    def test_task_func_with_random_animals_and_mean():
+        animals = ['dog', 'cat', 'bird', 'fish']
+        mean = 5
+        expected_sales = {}
+        for _ in range(100):
+            actual_sales = task_func(animals, mean)
+            for animal in animals:
+                expected_sales[animal] = expected_sales.get(animal, 0) + 1
+>           assert actual_sales == expected_sales
+E           AssertionError: assert {'dog': 2, 'c... 1, 'fish': 1} == {'dog': 1, 'c... 1, 'fish': 1}
+E             
+E             Omitting 2 identical items, use -vv to show
+E             Differing items:
+E             {'cat': 2} != {'cat': 1}
+E             {'dog': 2} != {'dog': 1}
+E             Use -v to get more diff
+
+test_0192.py:34: AssertionError
+=========================== short test summary info ============================
+FAILED test_0192.py::test_task_func_with_one_animal - AssertionError: assert ...
+FAILED test_0192.py::test_task_func_with_multiple_animals - AssertionError: a...
+FAILED test_0192.py::test_task_func_with_random_animals_and_mean - AssertionE...
+3 failed, 1 passed in 1.85s

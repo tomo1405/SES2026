@@ -1,0 +1,47 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: team1 wins
+        data = {
+            'team1': ['A', 'B'],
+            'team2': ['C', 'D'],
+            'score1': [3, 2],
+            'score2': [1, 1]
+        }
+        df = pd.DataFrame(data)
+        result_df = task_func(df)
+        assert result_df['winner'].tolist() == ['A', 'B']
+    
+        # Test case 2: team2 wins
+        data = {
+            'team1': ['E', 'F'],
+            'team2': ['G', 'H'],
+            'score1': [1, 1],
+            'score2': [3, 2]
+        }
+        df = pd.DataFrame(data)
+        result_df = task_func(df)
+        assert result_df['winner'].tolist() == ['G', 'H']
+    
+        # Test case 3: tie and random choice
+        data = {
+            'team1': ['I', 'J'],
+            'team2': ['K', 'L'],
+            'score1': [2, 2],
+            'score2': [2, 2]
+        }
+        df = pd.DataFrame(data)
+        result_df = task_func(df)
+>       assert result_df['winner'].isin(['I', 'K']).all() and result_df['winner'].isin(['J', 'L']).all()
+E       AssertionError: assert (np.False_)
+E        +  where np.False_ = all()
+E        +    where all = 0     True\n1    False\nName: winner, dtype: bool.all
+E        +      where 0     True\n1    False\nName: winner, dtype: bool = isin(['I', 'K'])
+E        +        where isin = 0    K\n1    L\nName: winner, dtype: str.isin
+
+test_0677.py:38: AssertionError
+=========================== short test summary info ============================
+FAILED test_0677.py::test_task_func - AssertionError: assert (np.False_)
+1 failed in 1.27s

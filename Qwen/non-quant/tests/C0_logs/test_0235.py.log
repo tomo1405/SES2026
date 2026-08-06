@@ -1,0 +1,33 @@
+..F...                                                                   [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_linregress ___________________________
+
+sample_df =       Name  Age  Score
+0    Alice   25     88
+1      Bob   30     92
+2  Charlie   35     87
+3    Alice   25     88
+
+    def test_task_func_linregress(sample_df):
+        df = sample_df.copy()
+        df.drop_duplicates(subset='Name', inplace=True)
+        slope, intercept, _, _, _ = stats.linregress(df['Age'], df['Score'])
+        plt, ax = task_func(df)
+>       assert ax.lines[1].get_xdata()[0] == df['Age'].min()
+               ^^^^^^^^^^^
+
+test_0235.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Axes.ArtistList of 1 lines>, key = 1
+
+    def __getitem__(self, key):
+>       return [artist
+                for artist in self._axes._children
+                if self._type_check(artist)][key]
+E       IndexError: list index out of range
+
+../../../.venv/lib/python3.12/site-packages/matplotlib/axes/_base.py:1530: IndexError
+=========================== short test summary info ============================
+FAILED test_0235.py::test_task_func_linregress - IndexError: list index out o...
+1 failed, 5 passed in 3.68s

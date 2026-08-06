@@ -1,0 +1,97 @@
+F.FFF                                                                    [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_regular_function _____________________
+
+    def test_task_func_with_regular_function():
+        def example_func(a, b, c=3):
+            """Example function."""
+            return a + b + c
+    
+        result = task_func(example_func)
+>       assert result == {
+            'function_name': 'example_func',
+            'is_lambda': False,
+            'args': ['a', 'b', 'c'],
+            'defaults': (3,),
+            'annotations': {}
+        }
+E       AssertionError: assert {'function_na...s': (3,), ...} == {'function_na...s': (3,), ...}
+E         
+E         Omitting 4 identical items, use -vv to show
+E         Differing items:
+E         {'is_lambda': True} != {'is_lambda': False}
+E         Use -v to get more diff
+
+test_0567.py:10: AssertionError
+___________________ test_task_func_with_no_default_arguments ___________________
+
+    def test_task_func_with_no_default_arguments():
+        def no_defaults(x, y, z):
+            return x * y * z
+    
+        result = task_func(no_defaults)
+>       assert result == {
+            'function_name': 'no_defaults',
+            'is_lambda': False,
+            'args': ['x', 'y', 'z'],
+            'defaults': None,
+            'annotations': {}
+        }
+E       AssertionError: assert {'function_na...s': None, ...} == {'function_na...s': None, ...}
+E         
+E         Omitting 4 identical items, use -vv to show
+E         Differing items:
+E         {'is_lambda': True} != {'is_lambda': False}
+E         Use -v to get more diff
+
+test_0567.py:35: AssertionError
+_______________________ test_task_func_with_annotations ________________________
+
+    def test_task_func_with_annotations():
+        def annotated_func(a: int, b: str) -> bool:
+            return isinstance(a, int) and isinstance(b, str)
+    
+        result = task_func(annotated_func)
+>       assert result == {
+            'function_name': 'annotated_func',
+            'is_lambda': False,
+            'args': ['a', 'b'],
+            'defaults': None,
+            'annotations': {'a': int, 'b': str, 'return': bool}
+        }
+E       AssertionError: assert {'function_na...s': None, ...} == {'function_na...s': None, ...}
+E         
+E         Omitting 4 identical items, use -vv to show
+E         Differing items:
+E         {'is_lambda': True} != {'is_lambda': False}
+E         Use -v to get more diff
+
+test_0567.py:48: AssertionError
+_________________________ test_task_func_with_no_args __________________________
+
+    def test_task_func_with_no_args():
+        def no_args():
+            return "No args"
+    
+        result = task_func(no_args)
+>       assert result == {
+            'function_name': 'no_args',
+            'is_lambda': False,
+            'args': [],
+            'defaults': None,
+            'annotations': {}
+        }
+E       AssertionError: assert {'function_na...s': None, ...} == {'function_na...s': None, ...}
+E         
+E         Omitting 4 identical items, use -vv to show
+E         Differing items:
+E         {'is_lambda': True} != {'is_lambda': False}
+E         Use -v to get more diff
+
+test_0567.py:61: AssertionError
+=========================== short test summary info ============================
+FAILED test_0567.py::test_task_func_with_regular_function - AssertionError: a...
+FAILED test_0567.py::test_task_func_with_no_default_arguments - AssertionErro...
+FAILED test_0567.py::test_task_func_with_annotations - AssertionError: assert...
+FAILED test_0567.py::test_task_func_with_no_args - AssertionError: assert {'f...
+4 failed, 1 passed in 0.48s

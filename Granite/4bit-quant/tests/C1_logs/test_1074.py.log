@@ -1,0 +1,31 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        time_strings = ["01/01/2023 12:00:00.000", "01/01/2023 12:00:01.000"]
+        ax = task_func(time_strings)
+        assert ax is not None
+>       assert ax.get_xlabel() == "Seconds"
+E       AssertionError: assert '' == 'Seconds'
+E         
+E         - Seconds
+
+test_1074.py:8: AssertionError
+___________________ test_task_func_with_invalid_time_strings ___________________
+
+    def test_task_func_with_invalid_time_strings():
+        time_strings = ["invalid_time_string", "another_invalid_time_string"]
+        ax = task_func(time_strings)
+        assert ax is None
+>       assert "Error parsing time strings" in capsys.readouterr().out
+                                               ^^^^^^
+E       NameError: name 'capsys' is not defined
+
+test_1074.py:16: NameError
+----------------------------- Captured stdout call -----------------------------
+Error parsing time strings: time data 'invalid_time_string' does not match format '%d/%m/%Y %H:%M:%S.%f'
+=========================== short test summary info ============================
+FAILED test_1074.py::test_task_func - AssertionError: assert '' == 'Seconds'
+FAILED test_1074.py::test_task_func_with_invalid_time_strings - NameError: na...
+2 failed in 1.87s

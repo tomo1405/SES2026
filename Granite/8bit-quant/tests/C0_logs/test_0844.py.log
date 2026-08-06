@@ -1,0 +1,64 @@
+F.FF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        n_sentences = random.randint(1, 10)
+        sentences = []
+        for _ in range(n_sentences):
+            sentence_len = random.randint(5, 10)
+            sentence = " ".join(random.choice(["sample", "text", "contains", "several", "words", "including"]) for _ in range(sentence_len)) + "."
+            sentences.append(sentence)
+    
+        text = " ".join(sentences)
+        text = re.sub(r'[^\w\s.]', '', text).lower()
+        text = re.sub(r'\s+\.', '.', text)
+        text = re.sub(r'\s+', ' ', text)
+    
+>       assert task_func(n_sentences) == text.strip()
+E       AssertionError: assert 'including se...tains sample.' == 'including in...xt text text.'
+E         
+E         - including including contains words text text text.
+E         + including several words words including including sample contains sample.
+
+test_0844.py:19: AssertionError
+_______________________ test_task_func_with_one_sentence _______________________
+
+    def test_task_func_with_one_sentence():
+        sentence = " ".join(random.choice(["sample", "text", "contains", "several", "words", "including"]) for _ in range(random.randint(5, 10))) + "."
+>       assert task_func(1) == sentence.strip()
+E       AssertionError: assert 'several text... text sample.' == 'sample conta...ns including.'
+E         
+E         - sample contains text sample text contains sample contains including.
+E         + several text including text sample contains sample contains text sample.
+
+test_0844.py:26: AssertionError
+____________________ test_task_func_with_multiple_sentences ____________________
+
+    def test_task_func_with_multiple_sentences():
+        n_sentences = random.randint(2, 10)
+        sentences = []
+        for _ in range(n_sentences):
+            sentence_len = random.randint(5, 10)
+            sentence = " ".join(random.choice(["sample", "text", "contains", "several", "words", "including"]) for _ in range(sentence_len)) + "."
+            sentences.append(sentence)
+    
+        text = " ".join(sentences)
+        text = re.sub(r'[^\w\s.]', '', text).lower()
+        text = re.sub(r'\s+\.', '.', text)
+        text = re.sub(r'\s+', ' ', text)
+    
+>       assert task_func(n_sentences) == text.strip()
+E       AssertionError: assert 'including te... sample text.' == 'including sa...everal words.'
+E         
+E         - including sample including including contains including words. including contains including words words including. sample contains sample words several including including including several sample. contains contains contains text including including sample including sample text. words text sample sample several words contains. text sample contains several including. sample sample including several several several several. contains text including several sample words. including words words several words.
+E         + including text text including including text text including cont...
+E         
+E         ...Full output truncated (1 line hidden), use '-vv' to show
+
+test_0844.py:41: AssertionError
+=========================== short test summary info ============================
+FAILED test_0844.py::test_task_func - AssertionError: assert 'including se......
+FAILED test_0844.py::test_task_func_with_one_sentence - AssertionError: asser...
+FAILED test_0844.py::test_task_func_with_multiple_sentences - AssertionError:...
+3 failed, 1 passed in 0.47s

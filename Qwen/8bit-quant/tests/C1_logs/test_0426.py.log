@@ -1,0 +1,34 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+create_test_image = '/tmp/pytest-of-tomohiro-w/pytest-2096/test_task_func0/test_image.jpg'
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-2096/test_task_func0')
+
+    def test_task_func(create_test_image, tmpdir):
+        image_path = create_test_image
+        histogram_path = tmpdir.join('test_histogram.png')
+    
+        # Call the function
+        axes = task_func(image_path=str(image_path), histogram_path=str(histogram_path))
+    
+        # Check if the file was created
+        assert os.path.exists(histogram_path)
+    
+        # Check if the axes object is returned
+        assert isinstance(axes, plt.Axes)
+    
+        # Check if the histogram is correct
+        img = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+        hist = cv2.calcHist([img], [0], None, [256], [0, 256])
+>       assert np.array_equal(hist, axes.lines[0].get_ydata())
+E       assert False
+E        +  where False = <function array_equal at 0x73c56df1d5f0>(array([[7.355e+03],\n       [2.900e+01],\n       [9.000e+00],\n       [5.000e+00],\n       [1.000e+00],\n       [0.000e+00]...0],\n       [0.000e+00],\n       [7.000e+00],\n       [1.000e+01],\n       [2.900e+01],\n       [2.554e+03]], dtype=float32), array([7.355e+03, 2.900e+01, 9.000e+00, 5.000e+00, 1.000e+00, 0.000e+00,\n       0.000e+00, 0.000e+00, 0.000e+00, 0.000...000e+00, 0.000e+00, 0.000e+00, 1.000e+00, 0.000e+00,\n       7.000e+00, 1.000e+01, 2.900e+01, 2.554e+03], dtype=float32))
+E        +    where <function array_equal at 0x73c56df1d5f0> = np.array_equal
+E        +    and   array([7.355e+03, 2.900e+01, 9.000e+00, 5.000e+00, 1.000e+00, 0.000e+00,\n       0.000e+00, 0.000e+00, 0.000e+00, 0.000...000e+00, 0.000e+00, 0.000e+00, 1.000e+00, 0.000e+00,\n       7.000e+00, 1.000e+01, 2.900e+01, 2.554e+03], dtype=float32) = get_ydata()
+E        +      where get_ydata = <matplotlib.lines.Line2D object at 0x73c458d8ed80>.get_ydata
+
+test_0426.py:33: AssertionError
+=========================== short test summary info ============================
+FAILED test_0426.py::test_task_func - assert False
+1 failed, 1 passed in 2.09s

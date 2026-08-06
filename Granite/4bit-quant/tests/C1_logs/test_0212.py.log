@@ -1,0 +1,71 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        url = "https://example.com/file.zip"
+        destination_directory = "/path/to/destination"
+        headers = {
+            'accept': 'application/octet-stream'
+        }
+>       extracted_files = task_func(url, destination_directory, headers)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0212.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'https://example.com/file.zip'
+destination_directory = '/path/to/destination'
+headers = {'accept': 'application/octet-stream'}
+
+    def task_func(url, destination_directory, headers=None):
+    
+        if headers is None:
+            headers = {
+                'accept': 'application/octet-stream'
+            }
+    
+        response = requests.get(url, headers=headers)
+        filename = os.path.basename(url)
+        zip_path = os.path.join(destination_directory, filename)
+    
+>       with open(zip_path, 'wb') as f:
+             ^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/path/to/destination/file.zip'
+
+../../../src/src_0212.py:15: FileNotFoundError
+________________________ test_task_func_with_no_headers ________________________
+
+    def test_task_func_with_no_headers():
+        url = "https://example.com/file.zip"
+        destination_directory = "/path/to/destination"
+>       extracted_files = task_func(url, destination_directory)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0212.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'https://example.com/file.zip'
+destination_directory = '/path/to/destination'
+headers = {'accept': 'application/octet-stream'}
+
+    def task_func(url, destination_directory, headers=None):
+    
+        if headers is None:
+            headers = {
+                'accept': 'application/octet-stream'
+            }
+    
+        response = requests.get(url, headers=headers)
+        filename = os.path.basename(url)
+        zip_path = os.path.join(destination_directory, filename)
+    
+>       with open(zip_path, 'wb') as f:
+             ^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/path/to/destination/file.zip'
+
+../../../src/src_0212.py:15: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0212.py::test_task_func - FileNotFoundError: [Errno 2] No such fi...
+FAILED test_0212.py::test_task_func_with_no_headers - FileNotFoundError: [Err...
+2 failed in 0.72s

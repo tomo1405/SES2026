@@ -1,0 +1,51 @@
+..F.F                                                                    [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_output_file_content ______________________
+
+    def test_task_func_output_file_content():
+        dataset = [pd.DataFrame({'a': [1, 2, 3], 'b': [4, 5, 6]}),
+                   pd.DataFrame({'a': [7, 8, 9], 'b': [10, 11, 12]})]
+        filename = 'test_output.csv'
+        output_dir = './output'
+    
+        task_func(dataset, filename, output_dir)
+    
+        filepath = os.path.join(output_dir, filename)
+        with open(filepath, 'r') as f:
+            content = f.read()
+>           assert content == 'a,b\n1,4\n2,5\n3,6\n------\n7,10\n8,11\n9,12\n'
+E           AssertionError: assert 'a,b\n1,4\n2,...n8,11\n9,12\n' == 'a,b\n1,4\n2,...n8,11\n9,12\n'
+E             
+E               a,b
+E               1,4
+E               2,5
+E               3,6
+E             + 
+E               ------...
+E             
+E             ...Full output truncated (4 lines hidden), use '-vv' to show
+
+test_0630.py:41: AssertionError
+______________________ test_task_func_output_file_newline ______________________
+
+    def test_task_func_output_file_newline():
+        dataset = [pd.DataFrame({'a': [1, 2, 3], 'b': [4, 5, 6]}),
+                   pd.DataFrame({'a': [7, 8, 9], 'b': [10, 11, 12]})]
+        filename = 'test_output.csv'
+        output_dir = './output'
+    
+        task_func(dataset, filename, output_dir)
+    
+        filepath = os.path.join(output_dir, filename)
+        with open(filepath, 'r') as f:
+            content = f.read()
+>           assert content.count('\n') == 4
+E           AssertionError: assert 10 == 4
+E            +  where 10 = <built-in method count of str object at 0x791f875f7e70>('\n')
+E            +    where <built-in method count of str object at 0x791f875f7e70> = 'a,b\n1,4\n2,5\n3,6\n\n------\na,b\n7,10\n8,11\n9,12\n'.count
+
+test_0630.py:69: AssertionError
+=========================== short test summary info ============================
+FAILED test_0630.py::test_task_func_output_file_content - AssertionError: ass...
+FAILED test_0630.py::test_task_func_output_file_newline - AssertionError: ass...
+2 failed, 3 passed in 1.13s

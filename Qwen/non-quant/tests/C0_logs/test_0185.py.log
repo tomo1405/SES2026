@@ -1,0 +1,117 @@
+FF.F                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sample_dataframe =                                         text
+0            sample text numbers punctuation
+1            another example different words
+2  pandas pytest great tools data processing
+
+    def test_task_func(sample_dataframe):
+        # Expected output after preprocessing and vectorization
+        expected_columns = [
+            'ample', 'sample', 'text', 'with', 'numbers', 'punctuation',
+            'another', 'example', 'different', 'words',
+            'pandas', 'pytest', 'great', 'tools', 'data', 'processing'
+        ]
+    
+        result_df = task_func(sample_dataframe, 'text')
+    
+        # Check if the resulting DataFrame has the correct shape
+>       assert result_df.shape == (3, len(expected_columns))
+E       assert (3, 14) == (3, 16)
+E         
+E         At index 1 diff: 14 != 16
+E         Use -v to get more diff
+
+test_0185.py:27: AssertionError
+________________________ test_task_func_empty_dataframe ________________________
+
+    def test_task_func_empty_dataframe():
+        empty_df = pd.DataFrame(columns=['text'])
+>       result_df = task_func(empty_df, 'text')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0185.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0185.py:24: in task_func
+    vectorized_data = vectorizer.fit_transform(dataframe[text_column])
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/base.py:1403: in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/feature_extraction/text.py:1387: in fit_transform
+    vocabulary, X = self._count_vocab(raw_documents, self.fixed_vocabulary_)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = CountVectorizer(), raw_documents = Series([], Name: text, dtype: object)
+fixed_vocab = False
+
+    def _count_vocab(self, raw_documents, fixed_vocab):
+        """Create sparse feature matrix, and vocabulary where fixed_vocab=False"""
+        if fixed_vocab:
+            vocabulary = self.vocabulary_
+        else:
+            # Add a new value when a new vocabulary item is seen
+            vocabulary = defaultdict()
+            vocabulary.default_factory = vocabulary.__len__
+    
+        analyze = self.build_analyzer()
+        j_indices = []
+        indptr = []
+    
+        values = _make_int_array()
+        indptr.append(0)
+        for doc in raw_documents:
+            feature_counter = {}
+            for feature in analyze(doc):
+                try:
+                    feature_idx = vocabulary[feature]
+                    if feature_idx not in feature_counter:
+                        feature_counter[feature_idx] = 1
+                    else:
+                        feature_counter[feature_idx] += 1
+                except KeyError:
+                    # Ignore out-of-vocabulary items for fixed_vocab=True
+                    continue
+    
+            j_indices.extend(feature_counter.keys())
+            values.extend(feature_counter.values())
+            indptr.append(len(j_indices))
+    
+        if not fixed_vocab:
+            # disable defaultdict behaviour
+            vocabulary = dict(vocabulary)
+            if not vocabulary:
+>               raise ValueError(
+                    "empty vocabulary; perhaps the documents only contain stop words"
+                )
+E               ValueError: empty vocabulary; perhaps the documents only contain stop words
+
+../../../.venv/lib/python3.12/site-packages/sklearn/feature_extraction/text.py:1293: ValueError
+________________________ test_task_func_duplicate_texts ________________________
+
+sample_dataframe =                                         text
+0            sample text numbers punctuation
+1            sample text numbers punctuation
+2  pandas pytest great tools data processing
+
+    def test_task_func_duplicate_texts(sample_dataframe):
+        sample_dataframe.loc[1, 'text'] = sample_dataframe.loc[0, 'text']
+        result_df = task_func(sample_dataframe, 'text')
+    
+        # Check if the resulting DataFrame has the correct shape
+>       assert result_df.shape == (3, 11)  # Assuming 11 unique words after preprocessing
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert (3, 10) == (3, 11)
+E         
+E         At index 1 diff: 10 != 11
+E         Use -v to get more diff
+
+test_0185.py:54: AssertionError
+=========================== short test summary info ============================
+FAILED test_0185.py::test_task_func - assert (3, 14) == (3, 16)
+FAILED test_0185.py::test_task_func_empty_dataframe - ValueError: empty vocab...
+FAILED test_0185.py::test_task_func_duplicate_texts - assert (3, 10) == (3, 11)
+3 failed, 1 passed in 2.63s

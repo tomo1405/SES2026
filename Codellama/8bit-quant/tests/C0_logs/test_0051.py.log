@@ -1,0 +1,68 @@
+..FFFF..                                                                 [100%]
+=================================== FAILURES ===================================
+_____________ test_task_func_returns_correct_datetimes[1647225600] _____________
+
+timestamp = 1647225600
+
+    @pytest.mark.parametrize("timestamp", [1647225600, 1647225600.123456789])
+    def test_task_func_returns_correct_datetimes(timestamp):
+        df, ax = task_func(timestamp)
+        expected_datetimes = [
+            datetime.fromtimestamp(timestamp, pytz.timezone(tz)).strftime(DATE_FORMAT)
+>           for tz in TIMEZONES
+                      ^^^^^^^^^
+        ]
+E       NameError: name 'TIMEZONES' is not defined
+
+test_0051.py:21: NameError
+_________ test_task_func_returns_correct_datetimes[1647225600.1234567] _________
+
+timestamp = 1647225600.1234567
+
+    @pytest.mark.parametrize("timestamp", [1647225600, 1647225600.123456789])
+    def test_task_func_returns_correct_datetimes(timestamp):
+        df, ax = task_func(timestamp)
+        expected_datetimes = [
+            datetime.fromtimestamp(timestamp, pytz.timezone(tz)).strftime(DATE_FORMAT)
+>           for tz in TIMEZONES
+                      ^^^^^^^^^
+        ]
+E       NameError: name 'TIMEZONES' is not defined
+
+test_0051.py:21: NameError
+_____________ test_task_func_returns_correct_timezones[1647225600] _____________
+
+timestamp = 1647225600
+
+    @pytest.mark.parametrize("timestamp", [1647225600, 1647225600.123456789])
+    def test_task_func_returns_correct_timezones(timestamp):
+        df, ax = task_func(timestamp)
+>       assert df["Timezone"].tolist() == TIMEZONES
+                                          ^^^^^^^^^
+E       NameError: name 'TIMEZONES' is not defined
+
+test_0051.py:28: NameError
+_________ test_task_func_returns_correct_timezones[1647225600.1234567] _________
+
+timestamp = 1647225600.1234567
+
+    @pytest.mark.parametrize("timestamp", [1647225600, 1647225600.123456789])
+    def test_task_func_returns_correct_timezones(timestamp):
+        df, ax = task_func(timestamp)
+>       assert df["Timezone"].tolist() == TIMEZONES
+                                          ^^^^^^^^^
+E       NameError: name 'TIMEZONES' is not defined
+
+test_0051.py:28: NameError
+=============================== warnings summary ===============================
+Codellama/8bit-quant/tests/test_0051.py: 40 warnings
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/matplotlib/axes/_axes.py:2246: DeprecationWarning: The 'generic' unit for NumPy timedelta is deprecated, and will raise an error in the future. This includes implicit conversion of bare integers (e.g. `+ 1`).Please use a specific unit instead.
+    dx = [convert(x0 + ddx) - x for ddx in dx]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0051.py::test_task_func_returns_correct_datetimes[1647225600] - N...
+FAILED test_0051.py::test_task_func_returns_correct_datetimes[1647225600.1234567]
+FAILED test_0051.py::test_task_func_returns_correct_timezones[1647225600] - N...
+FAILED test_0051.py::test_task_func_returns_correct_timezones[1647225600.1234567]
+4 failed, 4 passed, 40 warnings in 2.41s

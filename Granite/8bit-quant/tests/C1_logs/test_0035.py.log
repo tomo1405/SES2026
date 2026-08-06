@@ -1,0 +1,32 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        text = "This is a sample text with a URL: https://www.example.com"
+        wordcloud = task_func(text)
+        assert isinstance(wordcloud, WordCloud)
+        assert wordcloud.width == 400
+        assert wordcloud.height == 200
+>       assert wordcloud.max_words == 100
+E       assert 200 == 100
+E        +  where 200 = <wordcloud.wordcloud.WordCloud object at 0x7a2493807980>.max_words
+
+test_0035.py:27: AssertionError
+_________________________ test_task_func_with_no_urls __________________________
+
+    def test_task_func_with_no_urls():
+        text = "This is a sample text without any URLs."
+        wordcloud = task_func(text)
+        assert isinstance(wordcloud, WordCloud)
+>       assert wordcloud.width == 800
+E       assert 400 == 800
+E        +  where 400 = <wordcloud.wordcloud.WordCloud object at 0x7a24936ab3b0>.width
+
+test_0035.py:34: AssertionError
+=========================== short test summary info ============================
+FAILED test_0035.py::test_task_func - assert 200 == 100
+FAILED test_0035.py::test_task_func_with_no_urls - assert 400 == 800
+2 failed, 1 passed in 1.75s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

@@ -1,0 +1,97 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        dir_path = '/mock/path'
+        expected_df = pd.DataFrame({
+            'File': ['EMP1.txt', 'EMP2.txt'],
+            'Size': [1024, 1024]
+        })
+>       result_df = task_func(dir_path)
+                    ^^^^^^^^^^^^^^^^^^^
+
+test_0068.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dir_path = '/mock/path', pattern = '^EMP'
+
+    def task_func(dir_path: str, pattern: str = '^EMP'):
+        file_sizes = []
+>       for file in sorted(os.listdir(dir_path)):
+                           ^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mock/path'
+
+../../../src/src_0068.py:6: FileNotFoundError
+_______________________ test_task_func_no_matching_files _______________________
+
+    def test_task_func_no_matching_files():
+        dir_path = '/mock/path'
+        os.listdir = lambda path: ['NOEMP1.txt', 'NOEMP2.txt']
+        expected_df = pd.DataFrame(columns=['File', 'Size'])
+>       result_df = task_func(dir_path)
+                    ^^^^^^^^^^^^^^^^^^^
+
+test_0068.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dir_path = '/mock/path', pattern = '^EMP'
+
+    def task_func(dir_path: str, pattern: str = '^EMP'):
+        file_sizes = []
+>       for file in sorted(os.listdir(dir_path)):
+                           ^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mock/path'
+
+../../../src/src_0068.py:6: FileNotFoundError
+________________________ test_task_func_empty_directory ________________________
+
+    def test_task_func_empty_directory():
+        dir_path = '/mock/path'
+        os.listdir = lambda path: []
+        expected_df = pd.DataFrame(columns=['File', 'Size'])
+>       result_df = task_func(dir_path)
+                    ^^^^^^^^^^^^^^^^^^^
+
+test_0068.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dir_path = '/mock/path', pattern = '^EMP'
+
+    def task_func(dir_path: str, pattern: str = '^EMP'):
+        file_sizes = []
+>       for file in sorted(os.listdir(dir_path)):
+                           ^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mock/path'
+
+../../../src/src_0068.py:6: FileNotFoundError
+________________________ test_task_func_custom_pattern _________________________
+
+    def test_task_func_custom_pattern():
+        dir_path = '/mock/path'
+        os.listdir = lambda path: ['ABC1.txt', 'XYZ2.txt']
+        expected_df = pd.DataFrame({
+            'File': ['ABC1.txt', 'XYZ2.txt'],
+            'Size': [1024, 1024]
+        })
+>       result_df = task_func(dir_path, pattern='^[A-Z]{3}')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0068.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dir_path = '/mock/path', pattern = '^[A-Z]{3}'
+
+    def task_func(dir_path: str, pattern: str = '^EMP'):
+        file_sizes = []
+>       for file in sorted(os.listdir(dir_path)):
+                           ^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mock/path'
+
+../../../src/src_0068.py:6: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0068.py::test_task_func - FileNotFoundError: [Errno 2] No such fi...
+FAILED test_0068.py::test_task_func_no_matching_files - FileNotFoundError: [E...
+FAILED test_0068.py::test_task_func_empty_directory - FileNotFoundError: [Err...
+FAILED test_0068.py::test_task_func_custom_pattern - FileNotFoundError: [Errn...
+4 failed in 1.04s

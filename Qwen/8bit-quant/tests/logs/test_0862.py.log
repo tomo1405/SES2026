@@ -1,0 +1,48 @@
+..FF.                                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_single_list ________________________
+
+    def test_task_func_with_single_list():
+        result = task_func([[1, 2]])
+        assert len(result) == 1
+        assert isinstance(result[0], Counter)
+        assert sum(result[0].values()) == 2
+>       assert all(item in POSSIBLE_ITEMS for item in result[0])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0862.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <dict_keyiterator object at 0x7c54404271f0>
+
+>   assert all(item in POSSIBLE_ITEMS for item in result[0])
+                       ^^^^^^^^^^^^^^
+E   NameError: name 'POSSIBLE_ITEMS' is not defined
+
+test_0862.py:17: NameError
+______________________ test_task_func_with_multiple_lists ______________________
+
+    def test_task_func_with_multiple_lists():
+        result = task_func([[1, 2], [3, 4, 5]])
+        assert len(result) == 2
+        assert isinstance(result[0], Counter)
+        assert isinstance(result[1], Counter)
+        assert sum(result[0].values()) == 2
+        assert sum(result[1].values()) == 3
+>       assert all(item in POSSIBLE_ITEMS for item in result[0])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0862.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <dict_keyiterator object at 0x7c5440455530>
+
+>   assert all(item in POSSIBLE_ITEMS for item in result[0])
+                       ^^^^^^^^^^^^^^
+E   NameError: name 'POSSIBLE_ITEMS' is not defined
+
+test_0862.py:26: NameError
+=========================== short test summary info ============================
+FAILED test_0862.py::test_task_func_with_single_list - NameError: name 'POSSI...
+FAILED test_0862.py::test_task_func_with_multiple_lists - NameError: name 'PO...
+2 failed, 3 passed in 0.48s

@@ -1,0 +1,46 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        file_path = "test_file.csv"
+        with patch("src_1055.open", mock_open(read_data="1,2,3,4,5")) as mock_file:
+>           mean, std_dev, ax = task_func(file_path)
+                                ^^^^^^^^^^^^^^^^^^^^
+
+test_1055.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test_1055.py:17: in task_func
+    sample = np.random.choice(population, 30, replace=False)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   ValueError: Cannot take a larger sample than population when 'replace=False'
+
+numpy/random/mtrand.pyx:1025: ValueError
+____________________________ test_task_func_ioerror ____________________________
+
+    def test_task_func_ioerror():
+        file_path = "test_file.csv"
+        with patch("src_1055.open", side_effect=IOError("Test error")) as mock_file:
+            with patch("src_1055.IOError") as mock_ioerror:
+                with patch("src_1055.print") as mock_print:
+                    try:
+>                       task_func(file_path)
+
+test_1055.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test_1055.py:17: in task_func
+    sample = np.random.choice(population, 30, replace=False)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   ValueError: Cannot take a larger sample than population when 'replace=False'
+
+numpy/random/mtrand.pyx:1025: ValueError
+=========================== short test summary info ============================
+FAILED test_1055.py::test_task_func - ValueError: Cannot take a larger sample...
+FAILED test_1055.py::test_task_func_ioerror - ValueError: Cannot take a large...
+2 failed in 2.76s

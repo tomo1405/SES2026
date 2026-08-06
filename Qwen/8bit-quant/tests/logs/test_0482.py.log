@@ -1,0 +1,26 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with an empty list
+        result = task_func([])
+        assert result.empty
+        assert list(result.columns) == ["Original String", "Randomized String"]
+    
+        # Test with a single string
+        data_list = ["apple, banana, cherry"]
+        result = task_func(data_list)
+        expected_df = pd.DataFrame({
+            "Original String": ["apple, banana, cherry"],
+            "Randomized String": ["banana, apple, cherry"]
+        })
+>       assert result.equals(expected_df)
+E       assert False
+E        +  where False = equals(         Original String      Randomized String\n0  apple, banana, cherry  banana, apple, cherry)
+E        +    where equals =          Original String      Randomized String\n0  apple, banana, cherry  cherry, apple, banana.equals
+
+test_0482.py:18: AssertionError
+=========================== short test summary info ============================
+FAILED test_0482.py::test_task_func - assert False
+1 failed in 1.18s

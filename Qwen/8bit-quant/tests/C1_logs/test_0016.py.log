@@ -1,0 +1,62 @@
+.FF..                                                                    [100%]
+=================================== FAILURES ===================================
+___________________ test_task_func_with_empty_commands_file ____________________
+
+    def test_task_func_with_empty_commands_file():
+        with tempfile.TemporaryDirectory() as temp_dir:
+            commands_file_path = os.path.join(temp_dir, "empty_commands.csv")
+            output_dir_path = os.path.join(temp_dir, "output")
+            with open(commands_file_path, 'w', newline='') as f:
+                writer = csv.writer(f)
+                writer.writerow([])  # Empty row
+>           output_files = task_func(commands_file_path, output_dir_path)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0016.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+commands_file_path = '/tmp/tmpvexbxxx9/empty_commands.csv'
+output_dir_path = '/tmp/tmpvexbxxx9/output'
+
+    def task_func(commands_file_path, output_dir_path):
+        # Check if commands_file_path exists
+        if not os.path.exists(commands_file_path):
+            raise FileNotFoundError(f"File '{commands_file_path}' not found.")
+    
+        # Check if output_dir_path exists, if not, create it
+        if not os.path.exists(output_dir_path):
+            os.makedirs(output_dir_path)
+    
+        # Read commands from the CSV file
+        with open(commands_file_path, 'r') as f:
+            reader = csv.reader(f)
+>           commands = [cmd[0] for cmd in list(reader)]
+                        ^^^^^^
+E           IndexError: list index out of range
+
+../../../src/src_0016.py:16: IndexError
+______________________ test_task_func_with_valid_commands ______________________
+
+    def test_task_func_with_valid_commands():
+        with tempfile.TemporaryDirectory() as temp_dir:
+            commands_file_path = os.path.join(temp_dir, "valid_commands.csv")
+            output_dir_path = os.path.join(temp_dir, "output")
+            with open(commands_file_path, 'w', newline='') as f:
+                writer = csv.writer(f)
+                writer.writerow(["echo Hello, World!"])
+                writer.writerow(["echo Goodbye, World!"])
+            output_files = task_func(commands_file_path, output_dir_path)
+            assert len(output_files) == 2
+            for output_file in output_files:
+                assert os.path.exists(output_file)
+                with open(output_file, 'r') as f:
+                    content = f.read()
+                    assert "Hello, World!" in content
+>                   assert "Goodbye, World!" in content
+E                   AssertionError: assert 'Goodbye, World!' in 'Hello, World!\n'
+
+test_0016.py:39: AssertionError
+=========================== short test summary info ============================
+FAILED test_0016.py::test_task_func_with_empty_commands_file - IndexError: li...
+FAILED test_0016.py::test_task_func_with_valid_commands - AssertionError: ass...
+2 failed, 3 passed in 0.42s

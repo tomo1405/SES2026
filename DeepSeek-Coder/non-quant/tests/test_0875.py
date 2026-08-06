@@ -1,0 +1,11 @@
+import pytest
+from itertools import zip_longest
+from scipy.spatial import distance
+
+def task_func(points):
+    distances = []
+    for point1, point2 in zip_longest(points, points[1:]):
+        if point2 is not None:
+            distances.append(distance.euclidean(point1, point2))
+            
+    return distances

@@ -1,0 +1,29 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        df = pd.DataFrame({'Name': ['Alice', 'Bob', 'Charlie'], 'Score': [10, 20, 30]})
+        result_dict = task_func(df)
+>       assert result_dict == {'Alice': [('Alice', 10)], 'Bob': [('Bob', 20)], 'Charlie': [('Charlie', 30)]}
+E       AssertionError: assert {'Alice': <li...7cce0e4e6fe0>} == {'Alice': [('...harlie', 30)]}
+E         
+E         Differing items:
+E         {'Bob': <list_iterator object at 0x7cce0f545f30>} != {'Bob': [('Bob', 20)]}
+E         {'Alice': <list_iterator object at 0x7cce146010f0>} != {'Alice': [('Alice', 10)]}
+E         {'Charlie': <list_iterator object at 0x7cce0e4e6fe0>} != {'Charlie': [('Charlie', 30)]}
+E         Use -v to get more diff
+
+test_0830.py:9: AssertionError
+________________________ test_task_func_invalid_columns ________________________
+
+    def test_task_func_invalid_columns():
+        df = pd.DataFrame({'Name': ['Alice', 'Bob', 'Charlie'], 'Score': [10, 20, 30]})
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0830.py:13: Failed
+=========================== short test summary info ============================
+FAILED test_0830.py::test_task_func - AssertionError: assert {'Alice': <li......
+FAILED test_0830.py::test_task_func_invalid_columns - Failed: DID NOT RAISE V...
+2 failed in 1.15s

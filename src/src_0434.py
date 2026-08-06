@@ -1,0 +1,8 @@
+import base64
+import hashlib
+import hmac
+import binascii
+def task_func(s, signature, secret_key):
+    decoded_msg = base64.b64decode(s).decode()
+    computed_signature = hmac.new(secret_key.encode(), decoded_msg.encode(), hashlib.sha1)
+    return binascii.hexlify(computed_signature.digest()).decode() == signature

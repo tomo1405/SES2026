@@ -1,0 +1,38 @@
+....F.                                                                   [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_multiple_files _________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1718/test_task_func_multiple_files0')
+
+    def test_task_func_multiple_files(tmp_path):
+        (tmp_path / 'file1.txt').write_text('This is file1 with no errors.')
+        (tmp_path / 'file2.txt').write_text('This is file2 with one error and another Error.')
+        (tmp_path / 'subdir' / 'file3.txt').mkdir(parents=True)
+>       (tmp_path / 'subdir' / 'file3.txt').write_text('This is file3 with three errors, Error, error, and ERROR.')
+
+test_0769.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1049: in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1718/test_task_func_multiple_files0/subdir/file3.txt')
+mode = 'w', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       IsADirectoryError: [Errno 21] Is a directory: '/tmp/pytest-of-tomohiro-w/pytest-1718/test_task_func_multiple_files0/subdir/file3.txt'
+
+/usr/lib/python3.12/pathlib.py:1015: IsADirectoryError
+=========================== short test summary info ============================
+FAILED test_0769.py::test_task_func_multiple_files - IsADirectoryError: [Errn...
+1 failed, 5 passed in 0.48s

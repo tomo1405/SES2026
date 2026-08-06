@@ -1,0 +1,27 @@
+.F.                                                                      [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_no_match ____________________________
+
+setup_test_directory = '/tmp/pytest-of-tomohiro-w/pytest-1254/test_task_func_no_match0/test_dir'
+
+    def test_task_func_no_match(setup_test_directory):
+        # Modify one of the files to not match the pattern
+        test_file = os.path.join(setup_test_directory, "file1.txt")
+        with open(test_file, 'w') as file:
+            file.write("no match here")
+    
+        directory = setup_test_directory
+        result_directory, moved_files = task_func(directory)
+    
+        # Check if no files were moved
+>       assert moved_files == {}
+E       AssertionError: assert {'another_pre...8113616.txt']} == {}
+E         
+E         Left contains 1 more item:
+E         {'another_prefix': ['file2_20260728113616.txt']}
+E         Use -v to get more diff
+
+test_0314.py:57: AssertionError
+=========================== short test summary info ============================
+FAILED test_0314.py::test_task_func_no_match - AssertionError: assert {'anoth...
+1 failed, 2 passed in 0.47s

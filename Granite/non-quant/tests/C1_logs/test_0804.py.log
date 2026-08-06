@@ -1,0 +1,37 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+___________________ test_task_func_with_non_numeric_columns ____________________
+
+    def test_task_func_with_non_numeric_columns():
+        file_name = 'test_data_non_numeric.csv'
+        df = pd.DataFrame({
+            'A': ['a', 'b', 'c'],
+            'B': [4, 5, 6],
+            'C': [7, 8, 9]
+        })
+        df.to_csv(file_name, index=False)
+    
+>       with pytest.raises(ValueError) as excinfo:
+E       Failed: DID NOT RAISE ValueError
+
+test_0804.py:34: Failed
+________________________ test_task_func_with_empty_file ________________________
+
+    def test_task_func_with_empty_file():
+        file_name = 'test_data_empty.csv'
+        df = pd.DataFrame()
+        df.to_csv(file_name, index=False)
+    
+        with pytest.raises(ValueError) as excinfo:
+            task_func(file_name)
+    
+>       assert 'Input must at least have one numeric column.' in str(excinfo.value)
+E       AssertionError: assert 'Input must at least have one numeric column.' in 'No columns to parse from file'
+E        +  where 'No columns to parse from file' = str(EmptyDataError('No columns to parse from file'))
+E        +    where EmptyDataError('No columns to parse from file') = <ExceptionInfo EmptyDataError('No columns to parse from file') tblen=8>.value
+
+test_0804.py:47: AssertionError
+=========================== short test summary info ============================
+FAILED test_0804.py::test_task_func_with_non_numeric_columns - Failed: DID NO...
+FAILED test_0804.py::test_task_func_with_empty_file - AssertionError: assert ...
+2 failed, 1 passed in 2.84s

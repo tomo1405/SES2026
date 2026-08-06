@@ -1,0 +1,44 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        db_file = 'test.db'
+        table_name = 'test_table'
+        column_name = 'test_column'
+        pattern = '\d+[xX]'
+        with sqlite3.connect(db_file) as conn:
+>           conn.execute('''
+                CREATE TABLE test_table (
+                    id INTEGER PRIMARY KEY,
+                    name TEXT,
+                    value TEXT
+                )
+            ''')
+E           sqlite3.OperationalError: table test_table already exists
+
+test_0883.py:26: OperationalError
+___________________________ test_task_func_empty_df ____________________________
+
+    def test_task_func_empty_df():
+        db_file = 'test.db'
+        table_name = 'test_table'
+        column_name = 'test_column'
+        pattern = '\d+[xX]'
+        with sqlite3.connect(db_file) as conn:
+>           conn.execute('''
+                CREATE TABLE test_table (
+                    id INTEGER PRIMARY KEY,
+                    name TEXT,
+                    value TEXT
+                )
+            ''')
+E           sqlite3.OperationalError: table test_table already exists
+
+test_0883.py:51: OperationalError
+=========================== short test summary info ============================
+FAILED test_0883.py::test_task_func - sqlite3.OperationalError: table test_ta...
+FAILED test_0883.py::test_task_func_empty_df - sqlite3.OperationalError: tabl...
+2 failed, 1 passed in 1.44s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

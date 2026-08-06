@@ -1,0 +1,101 @@
+FF.F                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_default_arguments _______________________
+
+    def test_task_func_default_arguments():
+        # Mock the subprocess call and file operations
+        def mock_subprocess_call(args):
+            return 0
+    
+        def mock_open(*args, **kwargs):
+            class MockFile:
+                def write(self, data):
+                    pass
+    
+            return MockFile()
+    
+        subprocess.call = mock_subprocess_call
+        open = mock_open
+    
+        # Call the function
+>       result = task_func()
+                 ^^^^^^^^^^^
+
+test_0013.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+script_name = 'backup.sh', log_file = '/home/user/backup_log.json'
+
+    def task_func(script_name='backup.sh', log_file='/home/user/backup_log.json'):
+        log_data = {}
+    
+        if not os.path.isfile(script_name):
+>           raise FileNotFoundError(f"Script {script_name} does not exist.")
+E           FileNotFoundError: Script backup.sh does not exist.
+
+../../../src/src_0013.py:9: FileNotFoundError
+_______________________ test_task_func_custom_arguments ________________________
+
+    def test_task_func_custom_arguments():
+        # Mock the subprocess call and file operations
+        def mock_subprocess_call(args):
+            return 1
+    
+        def mock_open(*args, **kwargs):
+            class MockFile:
+                def write(self, data):
+                    pass
+    
+            return MockFile()
+    
+        subprocess.call = mock_subprocess_call
+        open = mock_open
+    
+        # Call the function with custom arguments
+>       result = task_func('custom_backup.sh', '/tmp/custom_backup_log.json')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0013.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+script_name = 'custom_backup.sh', log_file = '/tmp/custom_backup_log.json'
+
+    def task_func(script_name='backup.sh', log_file='/home/user/backup_log.json'):
+        log_data = {}
+    
+        if not os.path.isfile(script_name):
+>           raise FileNotFoundError(f"Script {script_name} does not exist.")
+E           FileNotFoundError: Script custom_backup.sh does not exist.
+
+../../../src/src_0013.py:9: FileNotFoundError
+_________________________ test_task_func_runtime_error _________________________
+
+    def test_task_func_runtime_error():
+        # Mock the subprocess call to raise an exception
+        def mock_subprocess_call(args):
+            raise Exception("Simulated error")
+    
+        subprocess.call = mock_subprocess_call
+    
+        # Expect RuntimeError
+        with pytest.raises(RuntimeError) as excinfo:
+>           task_func()
+
+test_0013.py:80: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+script_name = 'backup.sh', log_file = '/home/user/backup_log.json'
+
+    def task_func(script_name='backup.sh', log_file='/home/user/backup_log.json'):
+        log_data = {}
+    
+        if not os.path.isfile(script_name):
+>           raise FileNotFoundError(f"Script {script_name} does not exist.")
+E           FileNotFoundError: Script backup.sh does not exist.
+
+../../../src/src_0013.py:9: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0013.py::test_task_func_default_arguments - FileNotFoundError: Sc...
+FAILED test_0013.py::test_task_func_custom_arguments - FileNotFoundError: Scr...
+FAILED test_0013.py::test_task_func_runtime_error - FileNotFoundError: Script...
+3 failed, 1 passed in 0.39s

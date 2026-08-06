@@ -1,0 +1,45 @@
+..FF                                                                     [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_file_content __________________________
+
+    def test_task_func_file_content():
+        # Test file content
+        file_name = task_func("test_content.csv")
+        assert os.path.exists(file_name)
+    
+        with open(file_name, 'r') as file:
+            reader = csv.reader(file)
+            rows = list(reader)
+    
+        # Check header
+        assert rows[0] == ['Time', 'Temperature', 'Humidity', 'Pressure']
+    
+        # Check each row has 5 elements
+        for row in rows[1:]:
+>           assert len(row) == 5
+E           AssertionError: assert 4 == 5
+E            +  where 4 = len(['0:00', '9.885399305139266', '12.781057464772694', '1037.1140503619358'])
+
+test_1113.py:40: AssertionError
+_________________________ test_task_func_random_values _________________________
+
+    def test_task_func_random_values():
+        # Test random values within range
+        file_name = task_func("test_random.csv")
+        assert os.path.exists(file_name)
+    
+        with open(file_name, 'r') as file:
+            reader = csv.reader(file)
+            rows = list(reader)
+    
+        for row in rows[1:]:
+            time, temperature, humidity, pressure = row
+>           assert float(temperature) >= RANGE['Temperature'][0] and float(temperature) <= RANGE['Temperature'][1]
+                                         ^^^^^
+E           NameError: name 'RANGE' is not defined
+
+test_1113.py:56: NameError
+=========================== short test summary info ============================
+FAILED test_1113.py::test_task_func_file_content - AssertionError: assert 4 == 5
+FAILED test_1113.py::test_task_func_random_values - NameError: name 'RANGE' i...
+2 failed, 2 passed in 0.51s

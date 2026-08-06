@@ -1,0 +1,21 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        colors = ["red", "green", "blue"]
+        states = ["ON", "OFF"]
+        df = task_func(colors, states)
+        assert isinstance(df, pd.DataFrame)
+        assert df.shape == (len(colors), len(states))
+        assert all(df.columns == [f"Color:State {i+1}" for i in range(len(states))])
+>       assert all(df.index == [f"Color:{color}" for color in colors])
+E       AssertionError: assert False
+E        +  where False = all(RangeIndex(st...top=3, step=1) == ['Color:red',... 'Color:blue']
+E           
+E           Use -v to get more diff)
+
+test_1056.py:13: AssertionError
+=========================== short test summary info ============================
+FAILED test_1056.py::test_task_func - AssertionError: assert False
+1 failed in 1.32s

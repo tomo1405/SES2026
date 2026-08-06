@@ -1,0 +1,79 @@
+FF.FF                                                                    [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        list_of_menuitems = [
+            ['a', 'b', 'c'],
+            ['d', 'e', 'f'],
+            ['g', 'h', 'i']
+        ]
+        expected_result = 'e'
+>       assert task_func(list_of_menuitems) == expected_result
+E       AssertionError: assert 'a' == 'e'
+E         
+E         - e
+E         + a
+
+test_0770.py:11: AssertionError
+__________________________ test_task_func_empty_list ___________________________
+
+    def test_task_func_empty_list():
+        list_of_menuitems = []
+        expected_result = None
+>       assert task_func(list_of_menuitems) == expected_result
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0770.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+list_of_menuitems = []
+
+    def task_func(list_of_menuitems):
+        flat_list = list(itertools.chain(*list_of_menuitems))
+    
+        counter = Counter(flat_list)
+    
+>       return max(counter.items(), key=operator.itemgetter(1))[0]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: max() iterable argument is empty
+
+../../../src/src_0770.py:9: ValueError
+________________________ test_task_func_duplicate_items ________________________
+
+    def test_task_func_duplicate_items():
+        list_of_menuitems = [
+            ['a', 'b', 'c'],
+            ['d', 'e', 'f'],
+            ['g', 'h', 'i']
+        ]
+        expected_result = 'e'
+>       assert task_func(list_of_menuitems) == expected_result
+E       AssertionError: assert 'a' == 'e'
+E         
+E         - e
+E         + a
+
+test_0770.py:32: AssertionError
+______________ test_task_func_duplicate_items_with_different_case ______________
+
+    def test_task_func_duplicate_items_with_different_case():
+        list_of_menuitems = [
+            ['a', 'b', 'c'],
+            ['d', 'E', 'f'],
+            ['g', 'h', 'i']
+        ]
+        expected_result = 'E'
+>       assert task_func(list_of_menuitems) == expected_result
+E       AssertionError: assert 'a' == 'E'
+E         
+E         - E
+E         + a
+
+test_0770.py:41: AssertionError
+=========================== short test summary info ============================
+FAILED test_0770.py::test_task_func - AssertionError: assert 'a' == 'e'
+FAILED test_0770.py::test_task_func_empty_list - ValueError: max() iterable a...
+FAILED test_0770.py::test_task_func_duplicate_items - AssertionError: assert ...
+FAILED test_0770.py::test_task_func_duplicate_items_with_different_case - Ass...
+4 failed, 1 passed in 0.48s

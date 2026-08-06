@@ -1,0 +1,46 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_failure ____________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1519/test_task_func_failure0')
+
+    def test_task_func_failure(tmp_path):
+        script_path = "path/to/script.py"
+        temp_dir = str(tmp_path)
+        with open(script_path, "w") as f:
+            f.write("print('Hello, world!')")
+        result = task_func(script_path, temp_dir)
+>       assert result == "Script execution failed!"
+E       AssertionError: assert 'Script execu...successfully!' == 'Script execution failed!'
+E         
+E         - Script execution failed!
+E         + Script executed successfully!
+
+test_1104.py:21: AssertionError
+----------------------------- Captured stdout call -----------------------------
+Hello, world!
+0
+___________________________ test_task_func_exception ___________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1519/test_task_func_exception0')
+
+    def test_task_func_exception(tmp_path):
+        script_path = "path/to/script.py"
+        temp_dir = str(tmp_path)
+        with open(script_path, "w") as f:
+            f.write("print('Hello, world!')")
+        result = task_func(script_path, temp_dir)
+>       assert result == "Script execution failed!"
+E       AssertionError: assert 'Script execu...successfully!' == 'Script execution failed!'
+E         
+E         - Script execution failed!
+E         + Script executed successfully!
+
+test_1104.py:29: AssertionError
+----------------------------- Captured stdout call -----------------------------
+Hello, world!
+0
+=========================== short test summary info ============================
+FAILED test_1104.py::test_task_func_failure - AssertionError: assert 'Script ...
+FAILED test_1104.py::test_task_func_exception - AssertionError: assert 'Scrip...
+2 failed, 1 passed in 0.58s

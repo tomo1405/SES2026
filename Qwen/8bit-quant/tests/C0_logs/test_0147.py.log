@@ -1,0 +1,51 @@
+.F...                                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_invalid_ip_range ________________________
+
+    def test_task_func_invalid_ip_range():
+        with patch('subprocess.check_output') as mock_check_output:
+            mock_check_output.return_value = b''
+>           result = task_func('invalid_ip_range')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0147.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0147.py:6: in task_func
+    for ip in IPv4Network(ip_range):
+              ^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/ipaddress.py:1539: in __init__
+    self.network_address = IPv4Address(addr)
+                           ^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/ipaddress.py:1319: in __init__
+    self._ip = self._ip_int_from_string(addr_str)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cls = <class 'ipaddress.IPv4Address'>, ip_str = 'invalid_ip_range'
+
+    @classmethod
+    def _ip_int_from_string(cls, ip_str):
+        """Turn the given IP string into an integer for comparison.
+    
+        Args:
+            ip_str: A string, the IP ip_str.
+    
+        Returns:
+            The IP ip_str as an integer.
+    
+        Raises:
+            AddressValueError: if ip_str isn't a valid IPv4 Address.
+    
+        """
+        if not ip_str:
+            raise AddressValueError('Address cannot be empty')
+    
+        octets = ip_str.split('.')
+        if len(octets) != 4:
+>           raise AddressValueError("Expected 4 octets in %r" % ip_str)
+E           ipaddress.AddressValueError: Expected 4 octets in 'invalid_ip_range'
+
+/usr/lib/python3.12/ipaddress.py:1206: AddressValueError
+=========================== short test summary info ============================
+FAILED test_0147.py::test_task_func_invalid_ip_range - ipaddress.AddressValue...
+1 failed, 4 passed in 0.48s

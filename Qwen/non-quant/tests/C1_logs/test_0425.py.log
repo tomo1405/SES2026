@@ -1,0 +1,23 @@
+....F                                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_multiple_clusters _______________________
+
+    def test_task_func_multiple_clusters():
+        # Create a small dummy image with distinct colors
+        dummy_path = 'dummy.jpg'
+        img = np.zeros((10, 10, 3), dtype=np.uint8)
+        img[0:5, 0:5] = [255, 0, 0]  # Red
+        img[5:10, 0:5] = [0, 255, 0]  # Green
+        img[0:5, 5:10] = [0, 0, 255]  # Blue
+        img[5:10, 5:10] = [255, 255, 0]  # Yellow
+        cv2.imwrite(dummy_path, img)
+        original, segmented = task_func(image_path=dummy_path, n_clusters=4)
+>       assert np.array_equal(original, img)
+E       assert False
+E        +  where False = <function array_equal at 0x71a7743006f0>(array([[[254,   0,   1],\n        [254,   0,   0],\n        [254,   1,   0],\n        [216,   0,  24],\n        [141,   0,... 9],\n        [230, 255,   4],\n        [255, 255,   0],\n        [255, 255,   0],\n        [255, 255,   0]]], dtype=uint8), array([[[255,   0,   0],\n        [255,   0,   0],\n        [255,   0,   0],\n        [255,   0,   0],\n        [255,   0,... 0],\n        [255, 255,   0],\n        [255, 255,   0],\n        [255, 255,   0],\n        [255, 255,   0]]], dtype=uint8))
+E        +    where <function array_equal at 0x71a7743006f0> = np.array_equal
+
+test_0425.py:44: AssertionError
+=========================== short test summary info ============================
+FAILED test_0425.py::test_task_func_multiple_clusters - assert False
+1 failed, 4 passed in 3.45s

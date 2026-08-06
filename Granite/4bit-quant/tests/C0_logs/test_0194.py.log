@@ -1,0 +1,64 @@
+...F.FFF                                                                 [100%]
+=================================== FAILURES ===================================
+____________________ test_task_func_int_or_float_data_type _____________________
+
+    def test_task_func_int_or_float_data_type():
+        rows = 10
+        columns = 5
+        df = task_func(rows, columns)
+        for col in df.columns:
+            if df[col].dtype in [int, float]:
+                for value in df[col]:
+>                   assert isinstance(value, df[col].dtype)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E                   TypeError: isinstance() arg 2 must be a type, a tuple of types, or a union
+
+test_0194.py:41: TypeError
+________________________ test_task_func_tuple_data_type ________________________
+
+    def test_task_func_tuple_data_type():
+        rows = 10
+        columns = 5
+        df = task_func(rows, columns)
+        for col in df.columns:
+            if df[col].dtype == tuple:
+                for value in df[col]:
+>                   assert isinstance(value, tuple)
+E                   assert False
+E                    +  where False = isinstance([np.int64(0)], tuple)
+
+test_0194.py:63: AssertionError
+________________________ test_task_func_dict_data_type _________________________
+
+    def test_task_func_dict_data_type():
+        rows = 10
+        columns = 5
+        df = task_func(rows, columns)
+        for col in df.columns:
+            if df[col].dtype == dict:
+                for value in df[col]:
+>                   assert isinstance(value, dict)
+E                   assert False
+E                    +  where False = isinstance((np.int64(4), np.int64(8), np.int64(1), np.int64(3)), dict)
+
+test_0194.py:75: AssertionError
+_________________________ test_task_func_set_data_type _________________________
+
+    def test_task_func_set_data_type():
+        rows = 10
+        columns = 5
+        df = task_func(rows, columns)
+        for col in df.columns:
+            if df[col].dtype == set:
+                for value in df[col]:
+>                   assert isinstance(value, set)
+E                   assert False
+E                    +  where False = isinstance((np.int64(0), np.int64(7), np.int64(0), np.int64(6)), set)
+
+test_0194.py:89: AssertionError
+=========================== short test summary info ============================
+FAILED test_0194.py::test_task_func_int_or_float_data_type - TypeError: isins...
+FAILED test_0194.py::test_task_func_tuple_data_type - assert False
+FAILED test_0194.py::test_task_func_dict_data_type - assert False
+FAILED test_0194.py::test_task_func_set_data_type - assert False
+4 failed, 4 passed in 1.32s

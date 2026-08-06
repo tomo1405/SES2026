@@ -1,0 +1,32 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        time_strings = ["01/01/19 12:00:00.000", "01/01/19 12:00:01.000", "01/01/19 12:00:02.000"]
+        expected_differences = [1, 1, 1]
+        expected_xlabel = "Index"
+        expected_ylabel = "Time Difference (seconds)"
+        expected_title = "Time Differences Between Consecutive Timestamps"
+    
+        # Test the function
+        ax = task_func(time_strings)
+    
+        # Check the plot
+        assert ax.get_xlabel() == expected_xlabel
+        assert ax.get_ylabel() == expected_ylabel
+        assert ax.get_title() == expected_title
+>       assert np.array_equal(ax.get_xticks(), np.arange(len(time_strings)))
+E       AssertionError: assert False
+E        +  where False = <function array_equal at 0x701a983f48f0>(array([-0.5 , -0.25,  0.  ,  0.25,  0.5 ,  0.75,  1.  ,  1.25,  1.5 ]), array([0, 1, 2]))
+E        +    where <function array_equal at 0x701a983f48f0> = np.array_equal
+E        +    and   array([-0.5 , -0.25,  0.  ,  0.25,  0.5 ,  0.75,  1.  ,  1.25,  1.5 ]) = get_xticks()
+E        +      where get_xticks = <Axes: title={'center': 'Time Differences Between Consecutive Timestamps'}, xlabel='Index', ylabel='Time Difference (seconds)'>.get_xticks
+E        +    and   array([0, 1, 2]) = <built-in function arange>(3)
+E        +      where <built-in function arange> = np.arange
+E        +      and   3 = len(['01/01/19 12:00:00.000', '01/01/19 12:00:01.000', '01/01/19 12:00:02.000'])
+
+test_1076.py:21: AssertionError
+=========================== short test summary info ============================
+FAILED test_1076.py::test_task_func - AssertionError: assert False
+1 failed in 1.68s

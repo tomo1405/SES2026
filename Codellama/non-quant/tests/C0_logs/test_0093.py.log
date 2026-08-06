@@ -1,0 +1,65 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Input data is not a pandas DataFrame
+        data = [1, 2, 3, 4, 5]
+        with pytest.raises(ValueError):
+            task_func(data)
+    
+        # Test case 2: Number of clusters is not an integer greater than 1
+        data = pd.DataFrame({'feature1': [1, 2, 3, 4, 5], 'feature2': [6, 7, 8, 9, 10]})
+        with pytest.raises(ValueError):
+            task_func(data, n_clusters=0)
+    
+        # Test case 3: Input data has only one feature
+        data = pd.DataFrame({'feature1': [1, 2, 3, 4, 5]})
+        with pytest.raises(ValueError):
+>           task_func(data)
+
+test_0093.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0093.py:16: in task_func
+    ax.scatter(data.iloc[:, 0], data.iloc[:, 1], c=labels, cmap='viridis', alpha=0.6, label='Data points')
+                                ^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexing.py:1200: in __getitem__
+    return self._getitem_tuple(key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexing.py:1711: in _getitem_tuple
+    tup = self._validate_tuple_indexer(tup)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexing.py:993: in _validate_tuple_indexer
+    self._validate_key(k, i)
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexing.py:1605: in _validate_key
+    self._validate_integer(key, axis)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.indexing._iLocIndexer object at 0x7684a4052c10>, key = 1
+axis = 1
+
+    def _validate_integer(self, key: int | np.integer, axis: AxisInt) -> None:
+        """
+        Check that 'key' is a valid position in the desired axis.
+    
+        Parameters
+        ----------
+        key : int
+            Requested position.
+        axis : int
+            Desired axis.
+    
+        Raises
+        ------
+        IndexError
+            If 'key' is not a valid position in axis 'axis'.
+        """
+        len_axis = len(self.obj._get_axis(axis))
+        if key >= len_axis or key < -len_axis:
+>           raise IndexError("single positional indexer is out-of-bounds")
+E           IndexError: single positional indexer is out-of-bounds
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexing.py:1706: IndexError
+=========================== short test summary info ============================
+FAILED test_0093.py::test_task_func - IndexError: single positional indexer i...
+1 failed in 3.92s

@@ -1,0 +1,44 @@
+FFF.                                                                     [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_file_not_found _________________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7942ff12a660>
+
+    def test_task_func_file_not_found(monkeypatch):
+        monkeypatch.setattr(pd, 'read_csv', lambda *args, **kwargs: None)
+>       with pytest.raises(FileNotFoundError) as excinfo:
+E       Failed: DID NOT RAISE FileNotFoundError
+
+test_1054.py:31: Failed
+----------------------------- Captured stdout call -----------------------------
+An error occurred: 'NoneType' object is not subscriptable
+_________________________ test_task_func_no_save_path __________________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7942ff12b740>
+
+    def test_task_func_no_save_path(monkeypatch):
+        mock_data = [["text1"], ["text2"]]
+        monkeypatch.setattr(pd, 'read_csv', lambda *args, **kwargs: pd.DataFrame(mock_data, columns=["Text"]))
+>       monkeypatch.setattr(CountVectorizer, 'fit_transform', lambda *args, **kwargs: pd.DataFrame([[1, 2], [3, 4]]))
+                            ^^^^^^^^^^^^^^^
+E       NameError: name 'CountVectorizer' is not defined
+
+test_1054.py:38: NameError
+________________________ test_task_func_with_save_path _________________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7942ff12ae10>
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1513/test_task_func_with_save_path0')
+
+    def test_task_func_with_save_path(monkeypatch, tmpdir):
+        mock_data = [["text1"], ["text2"]]
+        monkeypatch.setattr(pd, 'read_csv', lambda *args, **kwargs: pd.DataFrame(mock_data, columns=["Text"]))
+>       monkeypatch.setattr(CountVectorizer, 'fit_transform', lambda *args, **kwargs: pd.DataFrame([[1, 2], [3, 4]]))
+                            ^^^^^^^^^^^^^^^
+E       NameError: name 'CountVectorizer' is not defined
+
+test_1054.py:45: NameError
+=========================== short test summary info ============================
+FAILED test_1054.py::test_task_func_file_not_found - Failed: DID NOT RAISE Fi...
+FAILED test_1054.py::test_task_func_no_save_path - NameError: name 'CountVect...
+FAILED test_1054.py::test_task_func_with_save_path - NameError: name 'CountVe...
+3 failed, 1 passed in 4.33s

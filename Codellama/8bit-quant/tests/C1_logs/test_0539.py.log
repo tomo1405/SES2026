@@ -1,0 +1,97 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        # Setup
+        db_name = "test.db"
+        table_name = "test_table"
+        conn = sqlite3.connect(db_name)
+        df = pd.DataFrame({"id": [1, 2, 3], "col1": [10, 20, 30], "col2": [100, 200, 300]})
+        df.to_sql(table_name, conn, if_exists="replace", index=False)
+    
+        # Test
+        ax = task_func(db_name, table_name)
+    
+        # Assert
+        assert isinstance(ax, matplotlib.axes.Axes)
+>       assert ax.get_xlabel() == numerical_columns[0]
+                                  ^^^^^^^^^^^^^^^^^
+E       NameError: name 'numerical_columns' is not defined
+
+test_0539.py:22: NameError
+_________________________ test_task_func_invalid_input _________________________
+
+self = <pandas.io.sql.SQLiteDatabase object at 0x7ba2644a3cb0>
+sql = 'SELECT * from invalid_table', params = None
+
+    def execute(self, sql: str | Select | TextClause, params=None):
+        from sqlite3 import Error
+    
+        if not isinstance(sql, str):
+            raise TypeError("Query must be a string unless using sqlalchemy.")
+        args = [] if params is None else [params]
+        cur = self.con.cursor()
+        try:
+>           cur.execute(sql, *args)
+E           sqlite3.OperationalError: no such table: invalid_table
+
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:2702: OperationalError
+
+The above exception was the direct cause of the following exception:
+
+    def test_task_func_invalid_input():
+        # Setup
+        db_name = "test.db"
+        table_name = "test_table"
+        conn = sqlite3.connect(db_name)
+        df = pd.DataFrame({"id": [1, 2, 3], "col1": [10, 20, 30], "col2": [100, 200, 300]})
+        df.to_sql(table_name, conn, if_exists="replace", index=False)
+    
+        # Test
+        with pytest.raises(ValueError):
+>           task_func(db_name, "invalid_table")
+
+test_0539.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0539.py:8: in task_func
+    df = pd.read_sql_query(f"SELECT * from {table_name}", conn)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:497: in read_sql_query
+    return pandas_sql.read_query(
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:2766: in read_query
+    cursor = self.execute(sql, params)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.io.sql.SQLiteDatabase object at 0x7ba2644a3cb0>
+sql = 'SELECT * from invalid_table', params = None
+
+    def execute(self, sql: str | Select | TextClause, params=None):
+        from sqlite3 import Error
+    
+        if not isinstance(sql, str):
+            raise TypeError("Query must be a string unless using sqlalchemy.")
+        args = [] if params is None else [params]
+        cur = self.con.cursor()
+        try:
+            cur.execute(sql, *args)
+            return cur
+        except Error as exc:
+            try:
+                self.con.rollback()
+            except Error as inner_exc:  # pragma: no cover
+                ex = DatabaseError(
+                    f"Execution failed on sql: {sql}\n{exc}\nunable to rollback"
+                )
+                raise ex from inner_exc
+    
+            ex = DatabaseError(f"Execution failed on sql '{sql}': {exc}")
+>           raise ex from exc
+E           pandas.errors.DatabaseError: Execution failed on sql 'SELECT * from invalid_table': no such table: invalid_table
+
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:2714: DatabaseError
+=========================== short test summary info ============================
+FAILED test_0539.py::test_task_func_valid_input - NameError: name 'numerical_...
+FAILED test_0539.py::test_task_func_invalid_input - pandas.errors.DatabaseErr...
+2 failed in 2.20s

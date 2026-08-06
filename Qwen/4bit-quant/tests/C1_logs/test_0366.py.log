@@ -1,0 +1,114 @@
+F.FFFF                                                                   [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_valid_n ____________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1680/test_task_func_valid_n0')
+
+    def test_task_func_valid_n(tmpdir):
+        # Arrange
+        n = 3
+        file_name = str(tmpdir / 'test_file.json')
+    
+        # Act
+        result = task_func(n, file_name)
+    
+        # Assert
+        assert result == file_name
+        assert os.path.exists(file_name)
+        with open(file_name, 'r') as f:
+            data = json.load(f)
+            assert len(data) == n
+            for word in data:
+>               assert word in WORDS
+                               ^^^^^
+E               NameError: name 'WORDS' is not defined
+
+test_0366.py:23: NameError
+________________ test_task_func_n_greater_than_word_list_length ________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1680/test_task_func_n_greater_than_0')
+
+    def test_task_func_n_greater_than_word_list_length(tmpdir):
+        # Arrange
+>       n = len(WORDS) + 1
+                ^^^^^
+E       NameError: name 'WORDS' is not defined
+
+test_0366.py:37: NameError
+_______________________ test_task_func_with_custom_seed ________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1680/test_task_func_with_custom_see0')
+
+    def test_task_func_with_custom_seed(tmpdir):
+        # Arrange
+        n = 3
+        file_name = str(tmpdir / 'test_file.json')
+        seed = 42
+    
+        # Act
+        task_func(n, file_name, seed=seed)
+    
+        # Assert
+        with open(file_name, 'r') as f:
+            data = json.load(f)
+            expected_words = ['date', 'fig', 'elderberry']  # Expected result based on seed 42
+>           assert list(data.keys()) == expected_words
+E           AssertionError: assert ['honeydew', 'fig', 'cherry'] == ['date', 'fig', 'elderberry']
+E             
+E             At index 0 diff: 'honeydew' != 'date'
+E             Use -v to get more diff
+
+test_0366.py:57: AssertionError
+_________________________ test_task_func_file_content __________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1680/test_task_func_file_content0')
+
+    def test_task_func_file_content(tmpdir):
+        # Arrange
+        n = 5
+        file_name = str(tmpdir / 'test_file.json')
+    
+        # Act
+        task_func(n, file_name)
+    
+        # Assert
+        with open(file_name, 'r') as f:
+            data = json.load(f)
+            assert len(data) == n
+            for word in data:
+>               assert word in WORDS
+                               ^^^^^
+E               NameError: name 'WORDS' is not defined
+
+test_0366.py:72: NameError
+___________________ test_task_func_overwrites_existing_file ____________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1680/test_task_func_overwrites_exis0')
+
+    def test_task_func_overwrites_existing_file(tmpdir):
+        # Arrange
+        n = 3
+        file_name = str(tmpdir / 'test_file.json')
+        with open(file_name, 'w') as f:
+            json.dump({'apple': 1}, f)
+    
+        # Act
+        task_func(n, file_name)
+    
+        # Assert
+        with open(file_name, 'r') as f:
+            data = json.load(f)
+            assert len(data) == n
+            for word in data:
+>               assert word in WORDS
+                               ^^^^^
+E               NameError: name 'WORDS' is not defined
+
+test_0366.py:90: NameError
+=========================== short test summary info ============================
+FAILED test_0366.py::test_task_func_valid_n - NameError: name 'WORDS' is not ...
+FAILED test_0366.py::test_task_func_n_greater_than_word_list_length - NameErr...
+FAILED test_0366.py::test_task_func_with_custom_seed - AssertionError: assert...
+FAILED test_0366.py::test_task_func_file_content - NameError: name 'WORDS' is...
+FAILED test_0366.py::test_task_func_overwrites_existing_file - NameError: nam...
+5 failed, 1 passed in 0.44s

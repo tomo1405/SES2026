@@ -1,0 +1,32 @@
+.F..F                                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_without_save_path _______________________
+
+sample_data_file = '/tmp/pytest-of-tomohiro-w/pytest-2214/test_task_func_without_save_pa0/sample.csv'
+
+    def test_task_func_without_save_path(sample_data_file):
+        result = task_func(sample_data_file)
+>       assert isinstance(result, plt.AxesSubplot)
+                                  ^^^^^^^^^^^^^^^
+E       AttributeError: module 'matplotlib.pyplot' has no attribute 'AxesSubplot'
+
+test_1053.py:25: AttributeError
+__________________________ test_task_func_single_line __________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-2214/test_task_func_single_line0')
+
+    def test_task_func_single_line(tmpdir):
+        data = ["This is a test line with some words"]
+        file_path = tmpdir.join("single_line.csv")
+        df = pd.DataFrame(data, columns=["Text"])
+        df.to_csv(file_path, index=False, header=False)
+        result = task_func(str(file_path))
+>       assert isinstance(result, plt.AxesSubplot)
+                                  ^^^^^^^^^^^^^^^
+E       AttributeError: module 'matplotlib.pyplot' has no attribute 'AxesSubplot'
+
+test_1053.py:47: AttributeError
+=========================== short test summary info ============================
+FAILED test_1053.py::test_task_func_without_save_path - AttributeError: modul...
+FAILED test_1053.py::test_task_func_single_line - AttributeError: module 'mat...
+2 failed, 3 passed in 5.02s

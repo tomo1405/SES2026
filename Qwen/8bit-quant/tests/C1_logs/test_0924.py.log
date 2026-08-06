@@ -1,0 +1,35 @@
+..F.F..                                                                  [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_default_num_records ______________________
+
+    def test_task_func_default_num_records():
+>       df = task_func(['Alice Smith', 'Bob Johnson', 'Charlie Brown'], ['example.com'])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0924.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+person_names = ['Alice Smith', 'Bob Johnson', 'Charlie Brown']
+email_domains = ['example.com'], num_records = 5
+
+    def task_func(person_names, email_domains, num_records=5):
+        if len(person_names) < num_records or len(email_domains) == 0:
+>           raise ValueError("Insufficient number of names or domains provided.")
+E           ValueError: Insufficient number of names or domains provided.
+
+../../../src/src_0924.py:6: ValueError
+_________________________ test_task_func_email_format __________________________
+
+    def test_task_func_email_format():
+        df = task_func(['Alice Smith', 'Bob Johnson', 'Charlie Brown'], ['example.com', 'test.com'], num_records=2)
+        for email in df['Email']:
+>           assert re.match(r'^[a-z]+[at][a-z]+\.[a-z]+$', email)
+E           AssertionError: assert None
+E            +  where None = <function match at 0x736e7ac81800>('^[a-z]+[at][a-z]+\\.[a-z]+$', 'alice[at]example.com')
+E            +    where <function match at 0x736e7ac81800> = re.match
+
+test_0924.py:26: AssertionError
+=========================== short test summary info ============================
+FAILED test_0924.py::test_task_func_default_num_records - ValueError: Insuffi...
+FAILED test_0924.py::test_task_func_email_format - AssertionError: assert None
+2 failed, 5 passed in 1.47s

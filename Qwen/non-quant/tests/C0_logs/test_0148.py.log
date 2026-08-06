@@ -1,0 +1,61 @@
+EEE.F                                                                    [100%]
+==================================== ERRORS ====================================
+_____________ ERROR at setup of test_task_func_single_ip_open_port _____________
+file /work/tomohiro-w/utg/Qwen/non-quant/tests/test_0148.py, line 5
+  def test_task_func_single_ip_open_port(mocker):
+E       fixture 'mocker' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, cov, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, no_cover, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/work/tomohiro-w/utg/Qwen/non-quant/tests/test_0148.py:5
+____________ ERROR at setup of test_task_func_single_ip_closed_port ____________
+file /work/tomohiro-w/utg/Qwen/non-quant/tests/test_0148.py, line 20
+  def test_task_func_single_ip_closed_port(mocker):
+E       fixture 'mocker' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, cov, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, no_cover, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/work/tomohiro-w/utg/Qwen/non-quant/tests/test_0148.py:20
+________________ ERROR at setup of test_task_func_multiple_ips _________________
+file /work/tomohiro-w/utg/Qwen/non-quant/tests/test_0148.py, line 35
+  def test_task_func_multiple_ips(mocker):
+E       fixture 'mocker' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, cov, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, no_cover, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/work/tomohiro-w/utg/Qwen/non-quant/tests/test_0148.py:35
+=================================== FAILURES ===================================
+_________________________ test_task_func_invalid_port __________________________
+
+    def test_task_func_invalid_port():
+        ip_range = '192.168.1.1/32'
+        port = -1
+    
+>       with pytest.raises(OSError):
+E       Failed: DID NOT RAISE OSError
+
+test_0148.py:64: Failed
+=============================== warnings summary ===============================
+Qwen/non-quant/tests/test_0148.py::test_task_func_invalid_port
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/_pytest/threadexception.py:58: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-1 (check_port)
+  
+  Traceback (most recent call last):
+    File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
+      self.run()
+    File "/usr/lib/python3.12/threading.py", line 1010, in run
+      self._target(*self._args, **self._kwargs)
+    File "/work/tomohiro-w/utg/src/src_0148.py", line 11, in check_port
+      sock.connect((str(ip), port))
+  OverflowError: connect(): port must be 0-65535.
+  
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+    warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0148.py::test_task_func_invalid_port - Failed: DID NOT RAISE OSError
+ERROR test_0148.py::test_task_func_single_ip_open_port
+ERROR test_0148.py::test_task_func_single_ip_closed_port
+ERROR test_0148.py::test_task_func_multiple_ips
+1 failed, 1 passed, 1 warning, 3 errors in 0.44s

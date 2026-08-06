@@ -1,0 +1,48 @@
+...FF                                                                    [100%]
+=================================== FAILURES ===================================
+________________ test_task_func_returns_correct_dataframe_data _________________
+
+    def test_task_func_returns_correct_dataframe_data():
+        n = 10
+        countries = ['USA', 'UK', 'China', 'India', 'Germany']
+        products = ['Product A', 'Product B', 'Product C', 'Product D', 'Product E']
+        output_path = None
+        random_seed = None
+    
+        result = task_func(n, countries, products, output_path, random_seed)
+    
+>       assert result['Country'].tolist() == ['USA', 'UK', 'China', 'India', 'Germany']
+E       AssertionError: assert ['Germany', '...A', 'UK', ...] == ['USA', 'UK',...a', 'Germany']
+E         
+E         At index 0 diff: 'Germany' != 'USA'
+E         Left contains 5 more items, first extra item: 'UK'
+E         Use -v to get more diff
+
+test_0787.py:49: AssertionError
+____________________ test_task_func_saves_data_to_csv_file _____________________
+
+    def test_task_func_saves_data_to_csv_file():
+        n = 10
+        countries = ['USA', 'UK', 'China', 'India', 'Germany']
+        products = ['Product A', 'Product B', 'Product C', 'Product D', 'Product E']
+        output_path = 'test_data.csv'
+        random_seed = None
+    
+        task_func(n, countries, products, output_path, random_seed)
+    
+        with open(output_path, 'r') as f:
+            reader = csv.DictReader(f)
+            data = [row for row in reader]
+    
+        assert len(data) == n
+>       assert data[0]['Country'] == 'USA'
+E       AssertionError: assert 'Germany' == 'USA'
+E         
+E         - USA
+E         + Germany
+
+test_0787.py:67: AssertionError
+=========================== short test summary info ============================
+FAILED test_0787.py::test_task_func_returns_correct_dataframe_data - Assertio...
+FAILED test_0787.py::test_task_func_saves_data_to_csv_file - AssertionError: ...
+2 failed, 3 passed in 1.14s

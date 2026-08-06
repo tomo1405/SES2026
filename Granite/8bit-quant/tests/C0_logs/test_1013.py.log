@@ -1,0 +1,37 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        url = "https://example.com/file.zip"
+        filename = "file.zip"
+        expected_output = ("Download and extraction successful", ["file1.txt", "file2.txt"])
+        output = task_func(url, filename)
+>       assert output == expected_output, "Task function output does not match expected output"
+E       AssertionError: Task function output does not match expected output
+E       assert ('Download fa...code 404', []) == ('Download an... 'file2.txt'])
+E         
+E         At index 0 diff: 'Download failed: HTTP status code 404' != 'Download and extraction successful'
+E         Use -v to get more diff
+
+test_1013.py:13: AssertionError
+__________________________ test_task_func_zip_failure __________________________
+
+    def test_task_func_zip_failure():
+        url = "https://example.com/file.zip"
+        filename = "file.zip"
+        expected_output = ("Error: Invalid zip file: BadZipFile('File is not a zip file')", [])
+        task_func.side_effect = zipfile.BadZipFile("File is not a zip file")
+        output = task_func(url, filename)
+>       assert output == expected_output, "Task function output does not match expected output"
+E       AssertionError: Task function output does not match expected output
+E       assert ('Download fa...code 404', []) == ("Error: Inva...p file')", [])
+E         
+E         At index 0 diff: 'Download failed: HTTP status code 404' != "Error: Invalid zip file: BadZipFile('File is not a zip file')"
+E         Use -v to get more diff
+
+test_1013.py:31: AssertionError
+=========================== short test summary info ============================
+FAILED test_1013.py::test_task_func - AssertionError: Task function output do...
+FAILED test_1013.py::test_task_func_zip_failure - AssertionError: Task functi...
+2 failed, 1 passed in 0.82s

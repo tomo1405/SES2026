@@ -1,0 +1,73 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func[array0] ____________________________
+
+array = [[1, 2, 3, 4, 5]]
+
+    @pytest.mark.parametrize("array", [
+        [[1, 2, 3, 4, 5]],
+        [[10, 20, 30, 40, 50]],
+        [[-1, -2, -3, -4, -5]]
+    ])
+    def test_task_func(array):
+        df, ax = task_func(array)
+        assert isinstance(df, pd.DataFrame)
+        assert isinstance(ax, plt.Axes)
+        assert list(df.columns) == ["A", "B", "C", "D", "E"]
+>       assert list(df.sum()) == [6, 120, -6]
+E       assert [1, 2, 3, 4, 5] == [6, 120, -6]
+E         
+E         At index 0 diff: 1 != 6
+E         Left contains 2 more items, first extra item: 4
+E         Use -v to get more diff
+
+test_0515.py:17: AssertionError
+____________________________ test_task_func[array1] ____________________________
+
+array = [[10, 20, 30, 40, 50]]
+
+    @pytest.mark.parametrize("array", [
+        [[1, 2, 3, 4, 5]],
+        [[10, 20, 30, 40, 50]],
+        [[-1, -2, -3, -4, -5]]
+    ])
+    def test_task_func(array):
+        df, ax = task_func(array)
+        assert isinstance(df, pd.DataFrame)
+        assert isinstance(ax, plt.Axes)
+        assert list(df.columns) == ["A", "B", "C", "D", "E"]
+>       assert list(df.sum()) == [6, 120, -6]
+E       assert [10, 20, 30, 40, 50] == [6, 120, -6]
+E         
+E         At index 0 diff: 10 != 6
+E         Left contains 2 more items, first extra item: 40
+E         Use -v to get more diff
+
+test_0515.py:17: AssertionError
+____________________________ test_task_func[array2] ____________________________
+
+array = [[-1, -2, -3, -4, -5]]
+
+    @pytest.mark.parametrize("array", [
+        [[1, 2, 3, 4, 5]],
+        [[10, 20, 30, 40, 50]],
+        [[-1, -2, -3, -4, -5]]
+    ])
+    def test_task_func(array):
+        df, ax = task_func(array)
+        assert isinstance(df, pd.DataFrame)
+        assert isinstance(ax, plt.Axes)
+        assert list(df.columns) == ["A", "B", "C", "D", "E"]
+>       assert list(df.sum()) == [6, 120, -6]
+E       assert [-1, -2, -3, -4, -5] == [6, 120, -6]
+E         
+E         At index 0 diff: -1 != 6
+E         Left contains 2 more items, first extra item: -4
+E         Use -v to get more diff
+
+test_0515.py:17: AssertionError
+=========================== short test summary info ============================
+FAILED test_0515.py::test_task_func[array0] - assert [1, 2, 3, 4, 5] == [6, 1...
+FAILED test_0515.py::test_task_func[array1] - assert [10, 20, 30, 40, 50] == ...
+FAILED test_0515.py::test_task_func[array2] - assert [-1, -2, -3, -4, -5] == ...
+3 failed in 2.12s

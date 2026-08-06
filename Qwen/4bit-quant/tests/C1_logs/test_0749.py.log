@@ -1,0 +1,46 @@
+..F.FF.                                                                  [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_standardization ________________________
+
+    def test_task_func_standardization():
+        df = pd.DataFrame({'Age': [30, 25, 40], 'Weight': [70, 60, 80]})
+        age = 35
+        weight = 50
+        result = task_func(df, age, weight)
+        scaler = StandardScaler()
+        expected = pd.DataFrame(scaler.fit_transform(df), columns=df.columns)
+>       assert result.equals(expected)
+E       assert False
+E        +  where False = equals(        Age    Weight\n0 -0.267261  0.000000\n1 -1.069045 -1.224745\n2  1.336306  1.224745)
+E        +    where equals =    Age  Weight\n0  1.0     1.0\n1 -1.0    -1.0.equals
+
+test_0749.py:29: AssertionError
+______________________ test_task_func_with_zero_variance _______________________
+
+    def test_task_func_with_zero_variance():
+        df = pd.DataFrame({'Age': [30, 30, 30], 'Weight': [70, 70, 70]})
+        age = 35
+        weight = 50
+        result = task_func(df, age, weight)
+>       assert result.empty
+E       assert False
+E        +  where False =    Age  Weight\n0  0.0     0.0\n1  0.0     0.0\n2  0.0     0.0.empty
+
+test_0749.py:43: AssertionError
+________________________ test_task_func_with_single_row ________________________
+
+    def test_task_func_with_single_row():
+        df = pd.DataFrame({'Age': [20], 'Weight': [70]})
+        age = 25
+        weight = 60
+        result = task_func(df, age, weight)
+>       assert result.empty
+E       assert False
+E        +  where False =    Age  Weight\n0  0.0     0.0.empty
+
+test_0749.py:50: AssertionError
+=========================== short test summary info ============================
+FAILED test_0749.py::test_task_func_standardization - assert False
+FAILED test_0749.py::test_task_func_with_zero_variance - assert False
+FAILED test_0749.py::test_task_func_with_single_row - assert False
+3 failed, 4 passed in 2.67s

@@ -1,0 +1,41 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        df = task_func()
+        assert isinstance(df, pd.DataFrame)
+        assert len(df) == NUM_SAMPLES
+        assert "String Field" in df.columns
+        assert "Float Field" in df.columns
+        for row in df.itertuples():
+>           assert isinstance(row.String_Field, str)
+                              ^^^^^^^^^^^^^^^^
+E           AttributeError: 'Pandas' object has no attribute 'String_Field'
+
+test_1087.py:16: AttributeError
+_________________________ test_task_func_string_field __________________________
+
+    def test_task_func_string_field():
+        df = task_func()
+        for row in df.itertuples():
+>           assert len(row.String_Field) == 10
+                       ^^^^^^^^^^^^^^^^
+E           AttributeError: 'Pandas' object has no attribute 'String_Field'
+
+test_1087.py:22: AttributeError
+__________________________ test_task_func_float_field __________________________
+
+    def test_task_func_float_field():
+        df = task_func()
+        for row in df.itertuples():
+>           assert float(row.Float_Field) >= 0 and float(row.Float_Field) <= 10000
+                         ^^^^^^^^^^^^^^^
+E           AttributeError: 'Pandas' object has no attribute 'Float_Field'
+
+test_1087.py:27: AttributeError
+=========================== short test summary info ============================
+FAILED test_1087.py::test_task_func - AttributeError: 'Pandas' object has no ...
+FAILED test_1087.py::test_task_func_string_field - AttributeError: 'Pandas' o...
+FAILED test_1087.py::test_task_func_float_field - AttributeError: 'Pandas' ob...
+3 failed in 2.07s

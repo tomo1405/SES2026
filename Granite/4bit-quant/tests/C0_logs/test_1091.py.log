@@ -1,0 +1,22 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        mock_data = [
+            '{"key1": "value1", "key2": "value2"}',
+            '{"key3": "value3", "key4": "value4"}',
+            '{"key5": "value5", "key6": "value6"}'
+        ]
+    
+        with patch('src_1091.json.load', MagicMock(return_value=mock_data)):
+            with patch('src_1091.ast.literal_eval', MagicMock(side_effect=ValueError)):
+                with patch('src_1091.open', mock_open(read_data='data')):
+>                   result = task_func(open('filename'))
+                                       ^^^^^^^^^^^^^^^^
+E                   FileNotFoundError: [Errno 2] No such file or directory: 'filename'
+
+test_1091.py:32: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_1091.py::test_task_func - FileNotFoundError: [Errno 2] No such fi...
+1 failed in 0.73s

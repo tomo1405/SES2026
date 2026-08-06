@@ -1,0 +1,39 @@
+...FF                                                                    [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_histogram ___________________________
+
+    def test_task_func_histogram():
+        mean = 0
+        std_dev = 1
+        n = 1000
+        with plt.ioff():  # Turn off interactive mode to prevent drawing
+            fig, ax = plt.subplots()
+            task_func(mean, std_dev, n)
+            lines = ax.get_lines()
+>           assert len(lines) == 1  # There should be one line for the PDF plot
+            ^^^^^^^^^^^^^^^^^^^^^^
+E           assert 0 == 1
+E            +  where 0 = len(<a list of 0 Line2D objects>)
+
+test_0456.py:39: AssertionError
+__________________________ test_task_func_plot_title ___________________________
+
+    def test_task_func_plot_title():
+        mean = 0
+        std_dev = 1
+        n = 1000
+        with plt.ioff():  # Turn off interactive mode to prevent drawing
+            fig, ax = plt.subplots()
+            task_func(mean, std_dev, n)
+            title = ax.get_title()
+            expected_title = f'Normal Distribution: Mean = {mean}, Std Dev = {std_dev}'
+>           assert title == expected_title
+E           AssertionError: assert '' == 'Normal Distr..., Std Dev = 1'
+E             
+E             - Normal Distribution: Mean = 0, Std Dev = 1
+
+test_0456.py:51: AssertionError
+=========================== short test summary info ============================
+FAILED test_0456.py::test_task_func_histogram - assert 0 == 1
+FAILED test_0456.py::test_task_func_plot_title - AssertionError: assert '' ==...
+2 failed, 3 passed in 3.03s

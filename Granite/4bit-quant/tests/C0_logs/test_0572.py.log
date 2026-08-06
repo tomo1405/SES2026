@@ -1,0 +1,23 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        f_list = [print, len, sum]
+        file_path = "test_file.csv"
+    
+        with pytest.raises(ValueError) as exc_info:
+            task_func([], file_path)
+        assert "f_list should not be empty." in str(exc_info.value)
+    
+        with pytest.raises(ValueError) as exc_info:
+            task_func(f_list, 123)
+        assert "file_path must be a string." in str(exc_info.value)
+    
+>       with pytest.raises(ValueError) as exc_info:
+E       Failed: DID NOT RAISE ValueError
+
+test_0572.py:17: Failed
+=========================== short test summary info ============================
+FAILED test_0572.py::test_task_func - Failed: DID NOT RAISE ValueError
+1 failed in 1.19s

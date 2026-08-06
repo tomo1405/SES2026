@@ -1,0 +1,122 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+input_df =          Word
+0       apple
+1      banana
+2      cherry
+3        date
+4  elderberry
+
+    def test_task_func(input_df):
+        result = task_func(input_df, 'b')
+        expected_result = {5: 2}
+>       assert result == expected_result
+E       assert {6: 1} == {5: 2}
+E         
+E         Left contains 1 more item:
+E         {6: 1}
+E         Right contains 1 more item:
+E         {5: 2}
+E         Use -v to get more diff
+
+test_0599.py:15: AssertionError
+_________________________ test_task_func_with_empty_df _________________________
+
+input_df = Empty DataFrame
+Columns: []
+Index: []
+
+    def test_task_func_with_empty_df(input_df):
+        input_df = pd.DataFrame()
+        with pytest.raises(ValueError):
+>           task_func(input_df, 'b')
+
+test_0599.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0599.py:7: in task_func
+    filtered_df = df[df['Word'].str.contains(regex, regex=True)]
+                     ^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:4378: in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = RangeIndex(start=0, stop=0, step=1), key = 'Word'
+
+    def get_loc(self, key) -> int:
+        """
+        Get integer location for requested label.
+    
+        Parameters
+        ----------
+        key : int or float
+            Label to locate. Integer-like floats (e.g. 3.0) are accepted and
+            treated as the corresponding integer. Non-integer floats and other
+            non-integer labels are not valid and will raise KeyError or
+            InvalidIndexError.
+    
+        Returns
+        -------
+        int
+            Integer location of the label within the RangeIndex.
+    
+        Raises
+        ------
+        KeyError
+            If the label is not present in the RangeIndex or the label is a
+            non-integer value.
+        InvalidIndexError
+            If the label is of an invalid type for the RangeIndex.
+    
+        See Also
+        --------
+        RangeIndex.get_slice_bound : Calculate slice bound that corresponds to
+            given label.
+        RangeIndex.get_indexer : Computes indexer and mask for new index given
+            the current index.
+        RangeIndex.get_non_unique : Returns indexer and masks for new index given
+            the current index.
+        RangeIndex.get_indexer_for : Returns an indexer even when non-unique.
+    
+        Examples
+        --------
+        >>> idx = pd.RangeIndex(5)
+        >>> idx.get_loc(3)
+        3
+    
+        >>> idx = pd.RangeIndex(2, 10, 2)  # values [2, 4, 6, 8]
+        >>> idx.get_loc(6)
+        2
+        """
+        if is_integer(key) or (is_float(key) and key.is_integer()):
+            new_key = int(key)
+            try:
+                return self._range.index(new_key)
+            except ValueError as err:
+                raise KeyError(key) from err
+        if isinstance(key, Hashable):
+>           raise KeyError(key)
+E           KeyError: 'Word'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/range.py:525: KeyError
+______________________ test_task_func_with_invalid_letter ______________________
+
+input_df =          Word
+0       apple
+1      banana
+2      cherry
+3        date
+4  elderberry
+
+    def test_task_func_with_invalid_letter(input_df):
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0599.py:23: Failed
+=========================== short test summary info ============================
+FAILED test_0599.py::test_task_func - assert {6: 1} == {5: 2}
+FAILED test_0599.py::test_task_func_with_empty_df - KeyError: 'Word'
+FAILED test_0599.py::test_task_func_with_invalid_letter - Failed: DID NOT RAI...
+3 failed in 1.21s

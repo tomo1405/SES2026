@@ -1,0 +1,26 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        products_list = ['Product 1', 'Product 2', 'Product 3']
+        sales_data = []
+    
+        for product in products_list:
+            sales = [randint(100, 500) for _ in range(12)]
+            avg_sales = mean(sales)
+            sales.append(avg_sales)
+            sales_data.append([product] + sales)
+    
+        expected_df = pd.DataFrame(sales_data, columns=['Product'] + [f'Month {i+1}' for i in range(12)] + ['Average Sales'])
+        actual_df = task_func(products_list)
+    
+>       assert actual_df.equals(expected_df)
+E       assert False
+E        +  where False = equals(     Product  Month 1  Month 2  ...  Month 11  Month 12  Average Sales\n0  Product 1      104      466  ...       292  ...       251     264.166667\n2  Product 3      126      411  ...       180       201     293.666667\n\n[3 rows x 14 columns])
+E        +    where equals =      Product  Month 1  Month 2  ...  Month 11  Month 12  Average Sales\n0  Product 1      330      252  ...       276  ...       131     257.083333\n2  Product 3      398      406  ...       132       363     330.666667\n\n[3 rows x 14 columns].equals
+
+test_0628.py:19: AssertionError
+=========================== short test summary info ============================
+FAILED test_0628.py::test_task_func - assert False
+1 failed, 1 passed in 1.12s

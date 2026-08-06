@@ -1,0 +1,30 @@
+F.F.                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+x_list = [1, 2, 3, 4, 5], y_list = [1, 2, 1, 2, 1]
+
+    def test_task_func(x_list, y_list):
+        labels, centers = task_func(x_list, y_list)
+        assert len(labels) == len(x_list)
+        assert len(centers) == 2
+>       assert isinstance(labels, list)
+E       assert False
+E        +  where False = isinstance(array([0, 0, 0, 1, 1], dtype=int32), list)
+
+test_0700.py:18: AssertionError
+_______________________ test_task_func_with_random_state _______________________
+
+x_list = [1, 2, 3, 4, 5], y_list = [1, 2, 1, 2, 1]
+
+    def test_task_func_with_random_state(x_list, y_list):
+        labels_1, _ = task_func(x_list, y_list, random_state=0)
+        labels_2, _ = task_func(x_list, y_list, random_state=0)
+>       assert labels_1 == labels_2
+E       ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+test_0700.py:30: ValueError
+=========================== short test summary info ============================
+FAILED test_0700.py::test_task_func - assert False
+FAILED test_0700.py::test_task_func_with_random_state - ValueError: The truth...
+2 failed, 2 passed in 3.77s

@@ -1,0 +1,58 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        my_path = '/path/to/files'
+        days_old = 30
+    
+>       archive_dir = task_func(my_path, days_old)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0264.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0264.py:10: in task_func
+    os.makedirs(archive_dir, exist_ok=True)
+<frozen os>:215: in makedirs
+    ???
+<frozen os>:215: in makedirs
+    ???
+<frozen os>:215: in makedirs
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = '/path', mode = 511, exist_ok = True
+
+>   ???
+E   PermissionError: [Errno 13] Permission denied: '/path'
+
+<frozen os>:225: PermissionError
+_______________________ test_task_func_with_invalid_path _______________________
+
+    def test_task_func_with_invalid_path():
+        my_path = '/invalid/path'
+        days_old = 30
+    
+        with pytest.raises(FileNotFoundError):
+>           task_func(my_path, days_old)
+
+test_0264.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0264.py:10: in task_func
+    os.makedirs(archive_dir, exist_ok=True)
+<frozen os>:215: in makedirs
+    ???
+<frozen os>:215: in makedirs
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = '/invalid', mode = 511, exist_ok = True
+
+>   ???
+E   PermissionError: [Errno 13] Permission denied: '/invalid'
+
+<frozen os>:225: PermissionError
+=========================== short test summary info ============================
+FAILED test_0264.py::test_task_func - PermissionError: [Errno 13] Permission ...
+FAILED test_0264.py::test_task_func_with_invalid_path - PermissionError: [Err...
+2 failed in 0.43s

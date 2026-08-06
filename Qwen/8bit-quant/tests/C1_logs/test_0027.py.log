@@ -1,0 +1,43 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a simple message and key
+        message = "Hello, World!"
+        encryption_key = "secret_key"
+        expected_output = "gAAAAABiR4..."
+>       assert task_func(message, encryption_key) == expected_output
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0027.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0027.py:4: in task_func
+    fernet = Fernet(base64.urlsafe_b64encode(encryption_key.encode()))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <cryptography.fernet.Fernet object at 0x72a44ccd9f10>
+key = b'secret_key', backend = None
+
+    def __init__(
+        self,
+        key: bytes | str,
+        backend: typing.Any = None,
+    ) -> None:
+        try:
+            key = base64.urlsafe_b64decode(key)
+        except binascii.Error as exc:
+            raise ValueError(
+                "Fernet key must be 32 url-safe base64-encoded bytes."
+            ) from exc
+        if len(key) != 32:
+>           raise ValueError(
+                "Fernet key must be 32 url-safe base64-encoded bytes."
+            )
+E           ValueError: Fernet key must be 32 url-safe base64-encoded bytes.
+
+../../../.venv/lib/python3.12/site-packages/cryptography/fernet.py:41: ValueError
+=========================== short test summary info ============================
+FAILED test_0027.py::test_task_func - ValueError: Fernet key must be 32 url-s...
+1 failed in 0.47s

@@ -1,0 +1,47 @@
+.F                                                                       [100%]
+=================================== FAILURES ===================================
+____________________ test_task_func_with_invalid_input_file ____________________
+
+    def test_task_func_with_invalid_input_file():
+        input_file = "invalid_input.json"
+        with patch("src_0528.open", mock_open(read_data="invalid json data")):
+            with patch("src_0528.json.load", MagicMock(side_effect=ValueError)):
+>               results, ax = task_func(input_file)
+                              ^^^^^^^^^^^^^^^^^^^^^
+
+test_0528.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0528.py:9: in task_func
+    data = json.load(f)
+           ^^^^^^^^^^^^
+/usr/lib/python3.12/unittest/mock.py:1134: in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/unittest/mock.py:1138: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock id='125028813954016'>
+args = (<MagicMock name='open()' id='125029892570096'>,), kwargs = {}
+
+    def _execute_mock_call(self, /, *args, **kwargs):
+        # separate from _increment_mock_call so that awaited functions are
+        # executed separately from their call, also AsyncMock overrides this method
+    
+        effect = self.side_effect
+        if effect is not None:
+            if _is_exception(effect):
+>               raise effect
+E               ValueError
+
+/usr/lib/python3.12/unittest/mock.py:1193: ValueError
+=============================== warnings summary ===============================
+Granite/non-quant/tests/test_0528.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/categorical.py:700: MatplotlibDeprecationWarning: vert: bool was deprecated in Matplotlib 3.11 and will be removed in 3.13. Use orientation: {'vertical', 'horizontal'} instead.
+    artists = ax.bxp(**boxplot_kws)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0528.py::test_task_func_with_invalid_input_file - ValueError
+1 failed, 1 passed, 1 warning in 3.86s

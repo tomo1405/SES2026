@@ -1,0 +1,38 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        start_date = '2023-01-01'
+        end_date = '2023-01-10'
+        random_seed = 42
+>       df, ax = task_func(start_date, end_date, random_seed)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0086.py:8: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+start_date = '2023-01-01', end_date = '2023-01-10', random_seed = 42
+
+    def task_func(start_date, end_date, random_seed=42):
+        if end_date < start_date:
+            raise ValueError("End date must be after start date")
+    
+        np.random.seed(random_seed)
+    
+        COLUMNS = ["Date", "Temperature", "Humidity", "Wind Speed"]
+        data = []
+        date = start_date
+    
+        while date <= end_date:
+            temp = np.random.uniform(-10, 40)
+            humidity = np.random.uniform(20, 100)
+            wind_speed = np.random.uniform(0, 20)
+            data.append([date, temp, humidity, wind_speed])
+>           date += timedelta(days=1)
+E           TypeError: can only concatenate str (not "datetime.timedelta") to str
+
+../../../src/src_0086.py:19: TypeError
+=========================== short test summary info ============================
+FAILED test_0086.py::test_task_func - TypeError: can only concatenate str (no...
+1 failed in 1.03s

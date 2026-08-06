@@ -1,0 +1,93 @@
+F..F.                                                                    [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_valid_pattern _________________________
+
+setup_db = '/tmp/pytest-of-tomohiro-w/pytest-1402/test_task_func_valid_pattern0/test.db'
+
+    def test_task_func_valid_pattern(setup_db):
+        db_file = setup_db
+        table_name = "test_table"
+        column_name = "value"
+        pattern = '\d+[xX]'
+    
+        result_df = task_func(db_file, table_name, column_name, pattern)
+        assert isinstance(result_df, pd.DataFrame)
+>       assert len(result_df) == 2
+E       assert 0 == 2
+E        +  where 0 = len(Empty DataFrame\nColumns: [id, value]\nIndex: [])
+
+test_0883.py:26: AssertionError
+_______________________ test_task_func_nonexistent_table _______________________
+
+self = <pandas.io.sql.SQLiteDatabase object at 0x79004e2484d0>
+sql = 'SELECT * FROM nonexistent_table', params = None
+
+    def execute(self, sql: str | Select | TextClause, params=None):
+        from sqlite3 import Error
+    
+        if not isinstance(sql, str):
+            raise TypeError("Query must be a string unless using sqlalchemy.")
+        args = [] if params is None else [params]
+        cur = self.con.cursor()
+        try:
+>           cur.execute(sql, *args)
+E           sqlite3.OperationalError: no such table: nonexistent_table
+
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:2702: OperationalError
+
+The above exception was the direct cause of the following exception:
+
+setup_db = '/tmp/pytest-of-tomohiro-w/pytest-1402/test_task_func_nonexistent_tab0/test.db'
+
+    def test_task_func_nonexistent_table(setup_db):
+        db_file = setup_db
+        table_name = "nonexistent_table"
+        column_name = "value"
+        pattern = '\d+[xX]'
+    
+        with pytest.raises(sqlite3.OperationalError):
+>           task_func(db_file, table_name, column_name, pattern)
+
+test_0883.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0883.py:10: in task_func
+    df = pd.read_sql_query(f"SELECT * FROM {table_name}", conn)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:497: in read_sql_query
+    return pandas_sql.read_query(
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:2766: in read_query
+    cursor = self.execute(sql, params)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.io.sql.SQLiteDatabase object at 0x79004e2484d0>
+sql = 'SELECT * FROM nonexistent_table', params = None
+
+    def execute(self, sql: str | Select | TextClause, params=None):
+        from sqlite3 import Error
+    
+        if not isinstance(sql, str):
+            raise TypeError("Query must be a string unless using sqlalchemy.")
+        args = [] if params is None else [params]
+        cur = self.con.cursor()
+        try:
+            cur.execute(sql, *args)
+            return cur
+        except Error as exc:
+            try:
+                self.con.rollback()
+            except Error as inner_exc:  # pragma: no cover
+                ex = DatabaseError(
+                    f"Execution failed on sql: {sql}\n{exc}\nunable to rollback"
+                )
+                raise ex from inner_exc
+    
+            ex = DatabaseError(f"Execution failed on sql '{sql}': {exc}")
+>           raise ex from exc
+E           pandas.errors.DatabaseError: Execution failed on sql 'SELECT * FROM nonexistent_table': no such table: nonexistent_table
+
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:2714: DatabaseError
+=========================== short test summary info ============================
+FAILED test_0883.py::test_task_func_valid_pattern - assert 0 == 2
+FAILED test_0883.py::test_task_func_nonexistent_table - pandas.errors.Databas...
+2 failed, 3 passed in 1.29s

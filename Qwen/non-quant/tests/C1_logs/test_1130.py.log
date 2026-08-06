@@ -1,0 +1,33 @@
+.F                                                                       [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_default_save_dir ________________________
+
+mock_response = <MagicMock id='138031943643408'>
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1657/test_task_func_default_save_di0')
+
+    def test_task_func_default_save_dir(mock_response, tmpdir):
+        # Arrange
+        json_data = '{"url_key": "http://example.com"}'
+        unknown_key = "url_key"
+        save_dir = None
+    
+        # Act
+        result = task_func(json_data, unknown_key, save_dir)
+    
+        # Assert
+        expected_filename = "url_key_*.txt"
+        expected_file_path = os.path.join(os.getcwd(), expected_filename)
+        assert os.path.exists(result)
+        assert expected_file_path.startswith(os.getcwd())
+        with open(result, 'rb') as f:
+            content = f.read()
+>       assert content == b"Mock content"
+E       AssertionError: assert b'<!doctype h...ody></html>\n' == b'Mock content'
+E         
+E         At index 0 diff: b'<' != b'M'
+E         Use -v to get more diff
+
+test_1130.py:55: AssertionError
+=========================== short test summary info ============================
+FAILED test_1130.py::test_task_func_default_save_dir - AssertionError: assert...
+1 failed, 1 passed in 0.78s

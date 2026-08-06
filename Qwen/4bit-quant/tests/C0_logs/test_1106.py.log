@@ -1,0 +1,30 @@
+F...                                                                     [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_success ____________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1419/test_task_func_success0')
+
+    def test_task_func_success(tmpdir):
+        # Create a temporary directory for the R script and output path
+        r_script_path = tmpdir.join("test_script.R").strpath
+        output_path = tmpdir.join("output").strpath
+        os.makedirs(output_path)
+    
+        # Write a simple R script that creates a CSV file
+        with open(r_script_path, "w") as f:
+            f.write('write.csv(data.frame(x=1, y=2), file="{}")'.format(os.path.join(output_path, "test_output.csv")))
+    
+        # Call the function with a duration that should be sufficient for the script to run
+        result = task_func(r_script_path, output_path, 5)
+>       assert result == (True, 'File generated successfully within the specified duration.')
+E       AssertionError: assert (False, 'File...ed duration.') == (True, 'File ...ed duration.')
+E         
+E         At index 0 diff: False != True
+E         Use -v to get more diff
+
+test_1106.py:20: AssertionError
+----------------------------- Captured stderr call -----------------------------
+/bin/sh: 1: /usr/bin/Rscript: not found
+=========================== short test summary info ============================
+FAILED test_1106.py::test_task_func_success - AssertionError: assert (False, ...
+1 failed, 3 passed in 16.52s

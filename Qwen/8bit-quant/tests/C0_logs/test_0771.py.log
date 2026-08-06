@@ -1,0 +1,47 @@
+FFF....                                                                  [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_default_parameters _______________________
+
+    def test_task_func_default_parameters():
+        r_squared, model = task_func()
+        assert isinstance(r_squared, float)
+        assert 0 <= r_squared <= 1
+>       assert isinstance(model, LinearRegression)
+                                 ^^^^^^^^^^^^^^^^
+E       NameError: name 'LinearRegression' is not defined
+
+test_0771.py:9: NameError
+_______________________ test_task_func_custom_parameters _______________________
+
+    def test_task_func_custom_parameters():
+        r_squared, model = task_func(num_samples=1000, noise_strength=0.5, random_seed=42, test_size=0.3)
+        assert isinstance(r_squared, float)
+        assert 0 <= r_squared <= 1
+>       assert isinstance(model, LinearRegression)
+                                 ^^^^^^^^^^^^^^^^
+E       NameError: name 'LinearRegression' is not defined
+
+test_0771.py:15: NameError
+________________________ test_task_func_minimum_samples ________________________
+
+    def test_task_func_minimum_samples():
+>       r_squared, model = task_func(num_samples=2, noise_strength=0, random_seed=42, test_size=0.5)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0771.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+num_samples = 2, noise_strength = 0, random_seed = 42, test_size = 0.5
+
+    def task_func(num_samples=500, noise_strength=1, random_seed=None, test_size=0.2):
+    
+        if num_samples * test_size < 2:
+>           raise ValueError("Test set should contain at least 2 samples. num_samples * testsize >=2")
+E           ValueError: Test set should contain at least 2 samples. num_samples * testsize >=2
+
+../../../src/src_0771.py:7: ValueError
+=========================== short test summary info ============================
+FAILED test_0771.py::test_task_func_default_parameters - NameError: name 'Lin...
+FAILED test_0771.py::test_task_func_custom_parameters - NameError: name 'Line...
+FAILED test_0771.py::test_task_func_minimum_samples - ValueError: Test set sh...
+3 failed, 4 passed in 3.46s

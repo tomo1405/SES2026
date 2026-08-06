@@ -1,0 +1,29 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: salt is not a string
+        with pytest.raises(TypeError):
+            task_func(123, None)
+    
+        # Test case 2: salt is a string, but cursor is None
+        with pytest.raises(TypeError):
+>           task_func("abc", None)
+
+test_1132.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+salt = 'abc', cursor = None
+
+    def task_func(salt, cursor):
+        if not isinstance(salt, str):
+            raise TypeError
+>       cursor.execute("SELECT id, password FROM users")
+        ^^^^^^^^^^^^^^
+E       AttributeError: 'NoneType' object has no attribute 'execute'
+
+../../../src/src_1132.py:6: AttributeError
+=========================== short test summary info ============================
+FAILED test_1132.py::test_task_func - AttributeError: 'NoneType' object has n...
+1 failed in 0.65s

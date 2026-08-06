@@ -1,0 +1,33 @@
+F......F...                                                              [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_valid_num_rows[0] _______________________
+
+num_rows = 0
+
+    @pytest.mark.parametrize("num_rows", [0, 1, 10, 100])
+    def test_task_func_valid_num_rows(num_rows):
+>       df, ax = task_func(num_rows=num_rows)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0463.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+num_rows = 0, categories = ['a', 'b', 'c', 'd', 'e'], random_seed = 42
+
+    def task_func(num_rows=100, categories=["a", "b", "c", "d", "e"], random_seed=42):
+        if num_rows <= 0:
+>           raise ValueError("num_rows must not be negative")
+E           ValueError: num_rows must not be negative
+
+../../../src/src_0463.py:5: ValueError
+______________________ test_task_func_invalid_categories _______________________
+
+    def test_task_func_invalid_categories():
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0463.py:24: Failed
+=========================== short test summary info ============================
+FAILED test_0463.py::test_task_func_valid_num_rows[0] - ValueError: num_rows ...
+FAILED test_0463.py::test_task_func_invalid_categories - Failed: DID NOT RAIS...
+2 failed, 9 passed in 2.24s

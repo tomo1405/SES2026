@@ -1,0 +1,44 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        csv_file = 'test_data.csv'
+        emp_prefix = 'EMP$$'
+        expected_result = {'EMP$$1': 1, 'EMP$$2': 2, 'EMP$$3': 3}
+    
+        result = task_func(csv_file, emp_prefix)
+    
+>       assert result == expected_result
+E       AssertionError: assert {} == {'EMP$$1': 1,..., 'EMP$$3': 3}
+E         
+E         Right contains 3 more items:
+E         {'EMP$$1': 1, 'EMP$$2': 2, 'EMP$$3': 3}
+E         Use -v to get more diff
+
+test_1114.py:11: AssertionError
+___________________________ test_task_func_exception ___________________________
+
+    def test_task_func_exception():
+        csv_file = 'test_data.csv'
+        emp_prefix = 'EMP$$'
+        expected_result = {"error": "Some unexpected exception occurred."}
+    
+        def mock_open(file, mode):
+            raise Exception("Some unexpected exception occurred.")
+    
+        with pytest.raises(Exception) as e:
+            with patch('src_1114.open', mock_open):
+                task_func(csv_file, emp_prefix)
+    
+>       assert str(e.value) == expected_result["error"]
+E       assert "name 'patch' is not defined" == 'Some unexpec...ion occurred.'
+E         
+E         - Some unexpected exception occurred.
+E         + name 'patch' is not defined
+
+test_1114.py:34: AssertionError
+=========================== short test summary info ============================
+FAILED test_1114.py::test_task_func - AssertionError: assert {} == {'EMP$$1':...
+FAILED test_1114.py::test_task_func_exception - assert "name 'patch' is not d...
+2 failed, 1 passed in 0.62s

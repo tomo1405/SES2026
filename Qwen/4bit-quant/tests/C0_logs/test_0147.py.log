@@ -1,0 +1,30 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_valid_ip_range _________________________
+
+    def test_task_func_valid_ip_range():
+        # Mocking the subprocess.check_output to simulate a successful ping
+        def mock_check_output(*args, **kwargs):
+            return b"Reply from 192.168.1.1: bytes=32 time<1ms TTL=64"
+    
+>       with pytest.monkeypatch.context() as mp:
+             ^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'pytest' has no attribute 'monkeypatch'. Did you mean: 'MonkeyPatch'?
+
+test_0147.py:9: AttributeError
+_________________________ test_task_func_no_active_ips _________________________
+
+    def test_task_func_no_active_ips():
+        # Mocking the subprocess.check_output to simulate a failed ping
+        def mock_check_output(*args, **kwargs):
+            raise subprocess.CalledProcessError(1, 'ping -c 1 192.168.1.1')
+    
+>       with pytest.monkeypatch.context() as mp:
+             ^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'pytest' has no attribute 'monkeypatch'. Did you mean: 'MonkeyPatch'?
+
+test_0147.py:28: AttributeError
+=========================== short test summary info ============================
+FAILED test_0147.py::test_task_func_valid_ip_range - AttributeError: module '...
+FAILED test_0147.py::test_task_func_no_active_ips - AttributeError: module 'p...
+2 failed, 1 passed in 0.44s

@@ -1,0 +1,104 @@
+FFF..                                                                    [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_same_timezones _________________________
+
+    def test_task_func_same_timezones():
+        date_str = "2023-10-01T12:00:00"
+        from_tz = "UTC"
+        to_tz = "UTC"
+>       result = task_func(date_str, from_tz, to_tz)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0648.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+date_str = '2023-10-01T12:00:00', from_tz = 'UTC', to_tz = 'UTC'
+
+    def task_func(date_str, from_tz, to_tz):
+        # Get timezone objects for the source and destination timezones
+        from_tz_obj = pytz.timezone(from_tz)
+        to_tz_obj = pytz.timezone(to_tz)
+    
+        # Parse the given date string and localize it to the source timezone
+        given_date_naive = parse(date_str)
+        given_date = from_tz_obj.localize(given_date_naive)
+    
+        # Convert the given date to the destination timezone
+        given_date_in_to_tz = given_date.astimezone(to_tz_obj)
+    
+        # Get the current time in the destination timezone
+>       current_date_in_to_tz = datetime.now(pytz.utc).astimezone(to_tz_obj)
+                                ^^^^^^^^
+E       NameError: name 'datetime' is not defined. Did you forget to import 'datetime'
+
+../../../src/src_0648.py:16: NameError
+______________________ test_task_func_different_timezones ______________________
+
+    def test_task_func_different_timezones():
+        date_str = "2023-10-01T12:00:00"
+        from_tz = "UTC"
+        to_tz = "America/New_York"
+>       result = task_func(date_str, from_tz, to_tz)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0648.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+date_str = '2023-10-01T12:00:00', from_tz = 'UTC', to_tz = 'America/New_York'
+
+    def task_func(date_str, from_tz, to_tz):
+        # Get timezone objects for the source and destination timezones
+        from_tz_obj = pytz.timezone(from_tz)
+        to_tz_obj = pytz.timezone(to_tz)
+    
+        # Parse the given date string and localize it to the source timezone
+        given_date_naive = parse(date_str)
+        given_date = from_tz_obj.localize(given_date_naive)
+    
+        # Convert the given date to the destination timezone
+        given_date_in_to_tz = given_date.astimezone(to_tz_obj)
+    
+        # Get the current time in the destination timezone
+>       current_date_in_to_tz = datetime.now(pytz.utc).astimezone(to_tz_obj)
+                                ^^^^^^^^
+E       NameError: name 'datetime' is not defined. Did you forget to import 'datetime'
+
+../../../src/src_0648.py:16: NameError
+__________________________ test_task_func_dst_change ___________________________
+
+    def test_task_func_dst_change():
+        date_str = "2023-03-12T02:00:00"  # Spring DST change in the US
+        from_tz = "America/New_York"
+        to_tz = "America/New_York"
+>       result = task_func(date_str, from_tz, to_tz)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0648.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+date_str = '2023-03-12T02:00:00', from_tz = 'America/New_York'
+to_tz = 'America/New_York'
+
+    def task_func(date_str, from_tz, to_tz):
+        # Get timezone objects for the source and destination timezones
+        from_tz_obj = pytz.timezone(from_tz)
+        to_tz_obj = pytz.timezone(to_tz)
+    
+        # Parse the given date string and localize it to the source timezone
+        given_date_naive = parse(date_str)
+        given_date = from_tz_obj.localize(given_date_naive)
+    
+        # Convert the given date to the destination timezone
+        given_date_in_to_tz = given_date.astimezone(to_tz_obj)
+    
+        # Get the current time in the destination timezone
+>       current_date_in_to_tz = datetime.now(pytz.utc).astimezone(to_tz_obj)
+                                ^^^^^^^^
+E       NameError: name 'datetime' is not defined. Did you forget to import 'datetime'
+
+../../../src/src_0648.py:16: NameError
+=========================== short test summary info ============================
+FAILED test_0648.py::test_task_func_same_timezones - NameError: name 'datetim...
+FAILED test_0648.py::test_task_func_different_timezones - NameError: name 'da...
+FAILED test_0648.py::test_task_func_dst_change - NameError: name 'datetime' i...
+3 failed, 2 passed in 0.62s

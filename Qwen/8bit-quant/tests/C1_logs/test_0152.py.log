@@ -1,0 +1,65 @@
+..FFFF                                                                   [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_single_key ___________________________
+
+    def test_task_func_single_key():
+        data_dict = {'a': [1, 2, 3], 'b': [4, 5, 6]}
+        data_keys = ['a']
+        normalized_df, ax = task_func(data_dict, data_keys)
+        expected_df = pd.DataFrame({'a': [0.0, 0.5, 1.0]})
+        pd.testing.assert_frame_equal(normalized_df, expected_df)
+>       assert isinstance(ax, pd.core.series.Series)
+E       AssertionError: assert False
+E        +  where False = isinstance(<Axes: title={'center': 'Normalized Data'}, xlabel='Index', ylabel='Normalized Value'>, <class 'pandas.Series'>)
+E        +    where <class 'pandas.Series'> = <module 'pandas.core.series' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/pandas/core/series.py'>.Series
+E        +      where <module 'pandas.core.series' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/pandas/core/series.py'> = <module 'pandas.core' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/pandas/core/__init__.py'>.series
+E        +        where <module 'pandas.core' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/pandas/core/__init__.py'> = pd.core
+
+test_0152.py:27: AssertionError
+_________________________ test_task_func_multiple_keys _________________________
+
+    def test_task_func_multiple_keys():
+        data_dict = {'a': [1, 2, 3], 'b': [4, 5, 6]}
+        data_keys = ['a', 'b']
+        normalized_df, ax = task_func(data_dict, data_keys)
+        expected_df = pd.DataFrame({'a': [0.0, 0.5, 1.0], 'b': [0.0, 0.5, 1.0]})
+        pd.testing.assert_frame_equal(normalized_df, expected_df)
+>       assert isinstance(ax, pd.core.series.Series)
+E       AssertionError: assert False
+E        +  where False = isinstance(<Axes: title={'center': 'Normalized Data'}, xlabel='Index', ylabel='Normalized Value'>, <class 'pandas.Series'>)
+E        +    where <class 'pandas.Series'> = <module 'pandas.core.series' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/pandas/core/series.py'>.Series
+E        +      where <module 'pandas.core.series' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/pandas/core/series.py'> = <module 'pandas.core' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/pandas/core/__init__.py'>.series
+E        +        where <module 'pandas.core' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/pandas/core/__init__.py'> = pd.core
+
+test_0152.py:35: AssertionError
+_____________________ test_task_func_with_negative_values ______________________
+
+    def test_task_func_with_negative_values():
+        data_dict = {'a': [-1, 0, 1], 'b': [-2, 0, 2]}
+        data_keys = ['a', 'b']
+        normalized_df, ax = task_func(data_dict, data_keys)
+        expected_df = pd.DataFrame({'a': [0.0, 0.5, 1.0], 'b': [0.0, 0.5, 1.0]})
+        pd.testing.assert_frame_equal(normalized_df, expected_df)
+>       assert isinstance(ax, pd.core.series.Series)
+E       AssertionError: assert False
+E        +  where False = isinstance(<Axes: title={'center': 'Normalized Data'}, xlabel='Index', ylabel='Normalized Value'>, <class 'pandas.Series'>)
+E        +    where <class 'pandas.Series'> = <module 'pandas.core.series' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/pandas/core/series.py'>.Series
+E        +      where <module 'pandas.core.series' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/pandas/core/series.py'> = <module 'pandas.core' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/pandas/core/__init__.py'>.series
+E        +        where <module 'pandas.core' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/pandas/core/__init__.py'> = pd.core
+
+test_0152.py:43: AssertionError
+_____________________ test_task_func_with_all_same_values ______________________
+
+    def test_task_func_with_all_same_values():
+        data_dict = {'a': [5, 5, 5], 'b': [10, 10, 10]}
+        data_keys = ['a', 'b']
+>       with pytest.raises(ValueError) as excinfo:
+E       Failed: DID NOT RAISE ValueError
+
+test_0152.py:48: Failed
+=========================== short test summary info ============================
+FAILED test_0152.py::test_task_func_single_key - AssertionError: assert False
+FAILED test_0152.py::test_task_func_multiple_keys - AssertionError: assert False
+FAILED test_0152.py::test_task_func_with_negative_values - AssertionError: as...
+FAILED test_0152.py::test_task_func_with_all_same_values - Failed: DID NOT RA...
+4 failed, 2 passed in 3.70s

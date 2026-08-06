@@ -1,0 +1,27 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that the function raises an error when the data directory does not exist
+        with pytest.raises(FileNotFoundError):
+            task_func(data_dir='/path/to/nonexistent/directory')
+    
+        # Test that the function raises an error when there are no CSV files in the data directory
+        with pytest.raises(ValueError):
+>           task_func(data_dir='/path/to/empty/directory')
+
+test_0379.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data_dir = '/path/to/empty/directory'
+
+    def task_func(data_dir='./data/'):
+        if not os.path.exists(data_dir):
+>           raise FileNotFoundError(f"The directory '{data_dir}' does not exist.")
+E           FileNotFoundError: The directory '/path/to/empty/directory' does not exist.
+
+../../../src/src_0379.py:7: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0379.py::test_task_func - FileNotFoundError: The directory '/path...
+1 failed in 1.19s

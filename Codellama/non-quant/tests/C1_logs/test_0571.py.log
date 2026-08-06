@@ -1,0 +1,29 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        def test_func(x: int, y: str = 'hello'):
+            pass
+    
+        expected_info = {
+            'function_name': 'test_func',
+            'args': ['x', 'y'],
+            'defaults': ['hello'],
+            'annotations': {'x': 'int', 'y': 'str'},
+            'is_lambda': False
+        }
+    
+>       assert task_func(test_func) == json.dumps(expected_info)
+E       assert '{"function_n...ambda": true}' == '{"function_n...mbda": false}'
+E         
+E         Skipping 118 identical leading characters in diff, use -v to show
+E         - _lambda": false}
+E         ?           ^^^^
+E         + _lambda": true}
+E         ?           ^^^
+
+test_0571.py:18: AssertionError
+=========================== short test summary info ============================
+FAILED test_0571.py::test_task_func - assert '{"function_n...ambda": true}' =...
+1 failed in 0.43s

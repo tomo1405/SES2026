@@ -1,0 +1,40 @@
+FF.F                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        text = "This is a sample text. It has multiple sentences. Each sentence has multiple words."
+        expected_output = pd.Series({"Sentence 1": 4, "Sentence 2": 5, "Sentence 3": 6})
+>       assert task_func(text).equals(expected_output)
+E       AssertionError: assert False
+E        +  where False = equals(Sentence 1    4\nSentence 2    5\nSentence 3    6\ndtype: int64)
+E        +    where equals = Sentence 1    5\nSentence 2    4\nSentence 3    4\ndtype: int64.equals
+E        +      where Sentence 1    5\nSentence 2    4\nSentence 3    4\ndtype: int64 = task_func('This is a sample text. It has multiple sentences. Each sentence has multiple words.')
+
+test_0056.py:9: AssertionError
+________________________ test_task_func_with_stopwords _________________________
+
+    def test_task_func_with_stopwords():
+        text = "Those are the words to ignore. This is a sample text. It has multiple sentences. Each sentence has multiple words."
+        expected_output = pd.Series({"Sentence 1": 4, "Sentence 2": 5, "Sentence 3": 6})
+>       assert task_func(text).equals(expected_output)
+E       AssertionError: assert False
+E        +  where False = equals(Sentence 1    4\nSentence 2    5\nSentence 3    6\ndtype: int64)
+E        +    where equals = Sentence 1    1\nSentence 2    5\nSentence 3    4\nSentence 4    4\ndtype: int64.equals
+E        +      where Sentence 1    1\nSentence 2    5\nSentence 3    4\nSentence 4    4\ndtype: int64 = task_func('Those are the words to ignore. This is a sample text. It has multiple sentences. Each sentence has multiple words.')
+
+test_0056.py:14: AssertionError
+______________________ test_task_func_with_invalid_input _______________________
+
+    def test_task_func_with_invalid_input():
+        text = "This is a sample text. It has multiple sentences. Each sentence has multiple words."
+        with pytest.raises(ValueError):
+>           task_func(text, invalid_input=True)
+E           TypeError: task_func() got an unexpected keyword argument 'invalid_input'
+
+test_0056.py:24: TypeError
+=========================== short test summary info ============================
+FAILED test_0056.py::test_task_func - AssertionError: assert False
+FAILED test_0056.py::test_task_func_with_stopwords - AssertionError: assert F...
+FAILED test_0056.py::test_task_func_with_invalid_input - TypeError: task_func...
+3 failed, 1 passed in 1.14s

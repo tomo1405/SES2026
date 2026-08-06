@@ -1,0 +1,13 @@
+import random
+from scipy import stats
+def task_func(animals, mean):
+    if not animals:
+        return {}
+
+    sales = {animal: 0 for animal in animals}
+    num_customers = stats.poisson(mu=mean).rvs()
+
+    for _ in range(num_customers):
+        animal = random.choice(animals)
+        sales[animal] += 1
+    return sales

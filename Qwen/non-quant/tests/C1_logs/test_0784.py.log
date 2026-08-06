@@ -1,0 +1,286 @@
+...F.EFE                                                                 [100%]
+==================================== ERRORS ====================================
+___________ ERROR at teardown of test_task_func_nonexistent_src_dir ____________
+
+    @pytest.fixture
+    def setup_directories():
+        src_dir = tempfile.mkdtemp()
+        dest_dir = tempfile.mkdtemp()
+        yield src_dir, dest_dir
+>       shutil.rmtree(src_dir)
+
+test_0784.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/shutil.py:775: in rmtree
+    onexc(os.lstat, path, err)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = '/tmp/tmpbe959vth', ignore_errors = False, onerror = None
+onexc = <function rmtree.<locals>.onexc at 0x7798b25572e0>, dir_fd = None
+
+    def rmtree(path, ignore_errors=False, onerror=None, *, onexc=None, dir_fd=None):
+        """Recursively delete a directory tree.
+    
+        If dir_fd is not None, it should be a file descriptor open to a directory;
+        path will then be relative to that directory.
+        dir_fd may not be implemented on your platform.
+        If it is unavailable, using it will raise a NotImplementedError.
+    
+        If ignore_errors is set, errors are ignored; otherwise, if onexc or
+        onerror is set, it is called to handle the error with arguments (func,
+        path, exc_info) where func is platform and implementation dependent;
+        path is the argument to that function that caused it to fail; and
+        the value of exc_info describes the exception. For onexc it is the
+        exception instance, and for onerror it is a tuple as returned by
+        sys.exc_info().  If ignore_errors is false and both onexc and
+        onerror are None, the exception is reraised.
+    
+        onerror is deprecated and only remains for backwards compatibility.
+        If both onerror and onexc are set, onerror is ignored and onexc is used.
+        """
+    
+        sys.audit("shutil.rmtree", path, dir_fd)
+        if ignore_errors:
+            def onexc(*args):
+                pass
+        elif onerror is None and onexc is None:
+            def onexc(*args):
+                raise
+        elif onexc is None:
+            if onerror is None:
+                def onexc(*args):
+                    raise
+            else:
+                # delegate to onerror
+                def onexc(*args):
+                    func, path, exc = args
+                    if exc is None:
+                        exc_info = None, None, None
+                    else:
+                        exc_info = type(exc), exc, exc.__traceback__
+                    return onerror(func, path, exc_info)
+    
+        if _use_fd_functions:
+            # While the unsafe rmtree works fine on bytes, the fd based does not.
+            if isinstance(path, bytes):
+                path = os.fsdecode(path)
+            # Note: To guard against symlink races, we use the standard
+            # lstat()/open()/fstat() trick.
+            try:
+>               orig_st = os.lstat(path, dir_fd=dir_fd)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmpbe959vth'
+
+/usr/lib/python3.12/shutil.py:773: FileNotFoundError
+___________ ERROR at teardown of test_task_func_nonexistent_dest_dir ___________
+
+    @pytest.fixture
+    def setup_directories():
+        src_dir = tempfile.mkdtemp()
+        dest_dir = tempfile.mkdtemp()
+        yield src_dir, dest_dir
+        shutil.rmtree(src_dir)
+>       shutil.rmtree(dest_dir)
+
+test_0784.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/shutil.py:775: in rmtree
+    onexc(os.lstat, path, err)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = '/tmp/tmpf2uqowhl', ignore_errors = False, onerror = None
+onexc = <function rmtree.<locals>.onexc at 0x7798b2557880>, dir_fd = None
+
+    def rmtree(path, ignore_errors=False, onerror=None, *, onexc=None, dir_fd=None):
+        """Recursively delete a directory tree.
+    
+        If dir_fd is not None, it should be a file descriptor open to a directory;
+        path will then be relative to that directory.
+        dir_fd may not be implemented on your platform.
+        If it is unavailable, using it will raise a NotImplementedError.
+    
+        If ignore_errors is set, errors are ignored; otherwise, if onexc or
+        onerror is set, it is called to handle the error with arguments (func,
+        path, exc_info) where func is platform and implementation dependent;
+        path is the argument to that function that caused it to fail; and
+        the value of exc_info describes the exception. For onexc it is the
+        exception instance, and for onerror it is a tuple as returned by
+        sys.exc_info().  If ignore_errors is false and both onexc and
+        onerror are None, the exception is reraised.
+    
+        onerror is deprecated and only remains for backwards compatibility.
+        If both onerror and onexc are set, onerror is ignored and onexc is used.
+        """
+    
+        sys.audit("shutil.rmtree", path, dir_fd)
+        if ignore_errors:
+            def onexc(*args):
+                pass
+        elif onerror is None and onexc is None:
+            def onexc(*args):
+                raise
+        elif onexc is None:
+            if onerror is None:
+                def onexc(*args):
+                    raise
+            else:
+                # delegate to onerror
+                def onexc(*args):
+                    func, path, exc = args
+                    if exc is None:
+                        exc_info = None, None, None
+                    else:
+                        exc_info = type(exc), exc, exc.__traceback__
+                    return onerror(func, path, exc_info)
+    
+        if _use_fd_functions:
+            # While the unsafe rmtree works fine on bytes, the fd based does not.
+            if isinstance(path, bytes):
+                path = os.fsdecode(path)
+            # Note: To guard against symlink races, we use the standard
+            # lstat()/open()/fstat() trick.
+            try:
+>               orig_st = os.lstat(path, dir_fd=dir_fd)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmpf2uqowhl'
+
+/usr/lib/python3.12/shutil.py:773: FileNotFoundError
+=================================== FAILURES ===================================
+________________________ test_task_func_empty_extension ________________________
+
+setup_directories = ('/tmp/tmpv8da6ffn', '/tmp/tmpqksvg5f2')
+
+    def test_task_func_empty_extension(setup_directories):
+        src_dir, dest_dir = setup_directories
+        file_names = ['file1.txt', 'file2.doc']
+        for file_name in file_names:
+            with open(os.path.join(src_dir, file_name), 'w') as f:
+                f.write('content')
+    
+>       assert task_func(src_dir, dest_dir, '') == 0
+E       AssertionError: assert 2 == 0
+E        +  where 2 = task_func('/tmp/tmpv8da6ffn', '/tmp/tmpqksvg5f2', '')
+
+test_0784.py:48: AssertionError
+_____________________ test_task_func_nonexistent_dest_dir ______________________
+
+src = '/tmp/tmp8clzslga/file1.txt', dst = '/tmp/tmpf2uqowhl/file1.txt'
+copy_function = <function copy2 at 0x7798b35b5da0>
+
+    def move(src, dst, copy_function=copy2):
+        """Recursively move a file or directory to another location. This is
+        similar to the Unix "mv" command. Return the file or directory's
+        destination.
+    
+        If dst is an existing directory or a symlink to a directory, then src is
+        moved inside that directory. The destination path in that directory must
+        not already exist.
+    
+        If dst already exists but is not a directory, it may be overwritten
+        depending on os.rename() semantics.
+    
+        If the destination is on our current filesystem, then rename() is used.
+        Otherwise, src is copied to the destination and then removed. Symlinks are
+        recreated under the new name if os.rename() fails because of cross
+        filesystem renames.
+    
+        The optional `copy_function` argument is a callable that will be used
+        to copy the source or it will be delegated to `copytree`.
+        By default, copy2() is used, but any function that supports the same
+        signature (like copy()) can be used.
+    
+        A lot more could be done here...  A look at a mv.c shows a lot of
+        the issues this implementation glosses over.
+    
+        """
+        sys.audit("shutil.move", src, dst)
+        real_dst = dst
+        if os.path.isdir(dst):
+            if _samefile(src, dst) and not os.path.islink(src):
+                # We might be on a case insensitive filesystem,
+                # perform the rename anyway.
+                os.rename(src, dst)
+                return
+    
+            # Using _basename instead of os.path.basename is important, as we must
+            # ignore any trailing slash to avoid the basename returning ''
+            real_dst = os.path.join(dst, _basename(src))
+    
+            if os.path.exists(real_dst):
+                raise Error("Destination path '%s' already exists" % real_dst)
+        try:
+>           os.rename(src, real_dst)
+E           FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmp8clzslga/file1.txt' -> '/tmp/tmpf2uqowhl/file1.txt'
+
+/usr/lib/python3.12/shutil.py:886: FileNotFoundError
+
+During handling of the above exception, another exception occurred:
+
+setup_directories = ('/tmp/tmp8clzslga', '/tmp/tmpf2uqowhl')
+
+    def test_task_func_nonexistent_dest_dir(setup_directories):
+        src_dir, dest_dir = setup_directories
+        shutil.rmtree(dest_dir)
+        file_names = ['file1.txt']
+        for file_name in file_names:
+            with open(os.path.join(src_dir, file_name), 'w') as f:
+                f.write('content')
+    
+>       task_func(src_dir, dest_dir, '.txt')
+
+test_0784.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0784.py:8: in task_func
+    shutil.move(os.path.join(src_dir, file_name), os.path.join(dest_dir, file_name))
+/usr/lib/python3.12/shutil.py:906: in move
+    copy_function(src, real_dst)
+/usr/lib/python3.12/shutil.py:475: in copy2
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+src = '/tmp/tmp8clzslga/file1.txt', dst = '/tmp/tmpf2uqowhl/file1.txt'
+follow_symlinks = True
+
+    def copyfile(src, dst, *, follow_symlinks=True):
+        """Copy data from src to dst in the most efficient way possible.
+    
+        If follow_symlinks is not set and src is a symbolic link, a new
+        symlink will be created instead of copying the file it points to.
+    
+        """
+        sys.audit("shutil.copyfile", src, dst)
+    
+        if _samefile(src, dst):
+            raise SameFileError("{!r} and {!r} are the same file".format(src, dst))
+    
+        file_size = 0
+        for i, fn in enumerate([src, dst]):
+            try:
+                st = _stat(fn)
+            except OSError:
+                # File most likely does not exist
+                pass
+            else:
+                # XXX What about other special files? (sockets, devices...)
+                if stat.S_ISFIFO(st.st_mode):
+                    fn = fn.path if isinstance(fn, os.DirEntry) else fn
+                    raise SpecialFileError("`%s` is a named pipe" % fn)
+                if _WINDOWS and i == 0:
+                    file_size = st.st_size
+    
+        if not follow_symlinks and _islink(src):
+            os.symlink(os.readlink(src), dst)
+        else:
+            with open(src, 'rb') as fsrc:
+                try:
+>                   with open(dst, 'wb') as fdst:
+                         ^^^^^^^^^^^^^^^
+E                   FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmpf2uqowhl/file1.txt'
+
+/usr/lib/python3.12/shutil.py:262: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0784.py::test_task_func_empty_extension - AssertionError: assert ...
+FAILED test_0784.py::test_task_func_nonexistent_dest_dir - FileNotFoundError:...
+ERROR test_0784.py::test_task_func_nonexistent_src_dir - FileNotFoundError: [...
+ERROR test_0784.py::test_task_func_nonexistent_dest_dir - FileNotFoundError: ...
+2 failed, 4 passed, 2 errors in 0.61s

@@ -1,0 +1,79 @@
+FF.F                                                                     [100%]
+=================================== FAILURES ===================================
+__________________ test_task_func[tuples0-2-expected_shape0] ___________________
+
+df =    A   B   C   D   E
+0  1   6  11  16  21
+1  2   7  12  17  22
+2  3   8  13  18  23
+3  4   9  14  19  24
+4  5  10  15  20  25
+tuples = [('A', 'B'), ('C', 'D')], n_plots = 2, expected_shape = (5, 3)
+
+    @pytest.mark.parametrize("tuples, n_plots, expected_shape", [
+        ([('A', 'B'), ('C', 'D')], 2, (5, 3)),
+        ([('A', 'B'), ('C', 'D'), ('E', 'A')], 3, (5, 3)),
+        ([], 5, (5, 5))
+    ])
+    def test_task_func(df, tuples, n_plots, expected_shape):
+        """
+        Test the task_func function with different input parameters.
+        """
+        df, plots = task_func(df, tuples, n_plots)
+>       assert df.shape == expected_shape
+E       assert (5, 5) == (5, 3)
+E         
+E         At index 1 diff: 5 != 3
+E         Use -v to get more diff
+
+test_0610.py:28: AssertionError
+__________________ test_task_func[tuples1-3-expected_shape1] ___________________
+
+df =    A   B   C   D   E
+0  1   6  11  16  21
+1  2   7  12  17  22
+2  3   8  13  18  23
+3  4   9  14  19  24
+4  5  10  15  20  25
+tuples = [('A', 'B'), ('C', 'D'), ('E', 'A')], n_plots = 3
+expected_shape = (5, 3)
+
+    @pytest.mark.parametrize("tuples, n_plots, expected_shape", [
+        ([('A', 'B'), ('C', 'D')], 2, (5, 3)),
+        ([('A', 'B'), ('C', 'D'), ('E', 'A')], 3, (5, 3)),
+        ([], 5, (5, 5))
+    ])
+    def test_task_func(df, tuples, n_plots, expected_shape):
+        """
+        Test the task_func function with different input parameters.
+        """
+        df, plots = task_func(df, tuples, n_plots)
+>       assert df.shape == expected_shape
+E       assert (5, 5) == (5, 3)
+E         
+E         At index 1 diff: 5 != 3
+E         Use -v to get more diff
+
+test_0610.py:28: AssertionError
+_________________________ test_task_func_invalid_input _________________________
+
+df =    A   B   C   D   E
+0  1   6  11  16  21
+1  2   7  12  17  22
+2  3   8  13  18  23
+3  4   9  14  19  24
+4  5  10  15  20  25
+
+    def test_task_func_invalid_input(df):
+        """
+        Test the task_func function with invalid input parameters.
+        """
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0610.py:34: Failed
+=========================== short test summary info ============================
+FAILED test_0610.py::test_task_func[tuples0-2-expected_shape0] - assert (5, 5...
+FAILED test_0610.py::test_task_func[tuples1-3-expected_shape1] - assert (5, 5...
+FAILED test_0610.py::test_task_func_invalid_input - Failed: DID NOT RAISE Val...
+3 failed, 1 passed in 2.36s

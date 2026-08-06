@@ -1,0 +1,48 @@
+..FFF.                                                                   [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_json_file_created _______________________
+
+    def test_task_func_json_file_created():
+        my_dict = {}
+        keys = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        task_func(my_dict, keys)
+>       assert "updated_dictionary.json" in my_dict
+E       AssertionError: assert 'updated_dictionary.json' in {1: 1, 2: 32, 3: 9, 4: 93, ...}
+
+test_0114.py:22: AssertionError
+_______________________ test_task_func_txt_file_created ________________________
+
+    def test_task_func_txt_file_created():
+        my_dict = {}
+        keys = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        task_func(my_dict, keys)
+>       assert "key_frequencies.txt" in my_dict
+E       AssertionError: assert 'key_frequencies.txt' in {1: 73, 2: 4, 3: 35, 4: 71, ...}
+
+test_0114.py:28: AssertionError
+_______________________ test_task_func_json_file_content _______________________
+
+    def test_task_func_json_file_content():
+        my_dict = {}
+        keys = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        task_func(my_dict, keys)
+        with open("updated_dictionary.json", "r") as json_file:
+            json_data = json.load(json_file)
+>           assert json_data == my_dict
+E           AssertionError: assert {'1': 37, '2'... '4': 91, ...} == {1: 37, 2: 3,...6, 4: 91, ...}
+E             
+E             Left contains 10 more items:
+E             {'1': 37,
+E              '10': 8,
+E              '2': 3,
+E              '3': 6,
+E              '4': 91,...
+E             
+E             ...Full output truncated (8 lines hidden), use '-vv' to show
+
+test_0114.py:36: AssertionError
+=========================== short test summary info ============================
+FAILED test_0114.py::test_task_func_json_file_created - AssertionError: asser...
+FAILED test_0114.py::test_task_func_txt_file_created - AssertionError: assert...
+FAILED test_0114.py::test_task_func_json_file_content - AssertionError: asser...
+3 failed, 3 passed in 0.42s

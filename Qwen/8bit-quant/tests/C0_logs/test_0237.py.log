@@ -1,0 +1,25 @@
+....F                                                                    [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_random_state __________________________
+
+sample_df =       Name  Age  Score Category
+0    Alice   25     88        A
+1      Bob   30     92        B
+2  Charlie   35     87        A
+3    David   40     94        B
+4      Eve   45     90        A
+5    Alice   25     88        A
+
+    def test_task_func_random_state(sample_df):
+        accuracy_default = task_func(sample_df)
+        accuracy_same_state = task_func(sample_df, random_state=42)
+        assert accuracy_default == accuracy_same_state
+    
+        accuracy_different_state = task_func(sample_df, random_state=123)
+>       assert accuracy_default != accuracy_different_state
+E       assert 0.0 != 0.0
+
+test_0237.py:40: AssertionError
+=========================== short test summary info ============================
+FAILED test_0237.py::test_task_func_random_state - assert 0.0 != 0.0
+1 failed, 4 passed in 4.64s

@@ -1,0 +1,157 @@
+F.FF                                                                     [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_positive_num_entries ______________________
+
+    def test_task_func_positive_num_entries():
+        db_path = "test_db.db"
+        table_name = "test_table"
+        num_entries = 10
+        random_seed = 1234
+    
+>       inserted_rows = task_func(db_path, table_name, num_entries, random_seed)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0536.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+db_path = 'test_db.db', table_name = 'test_table', num_entries = 10
+random_seed = 1234
+
+    def task_func(db_path, table_name, num_entries, random_seed=None):
+        # Setting the random seed if provided
+        if random_seed is not None:
+            seed(random_seed)
+            np.random.seed(random_seed)
+    
+        if num_entries < 0:
+            raise ValueError("num_entries cannot be negative.")
+    
+        NAMES = ["John", "Jane", "Steve", "Emma", "Liam", "Olivia"]
+        AGES = list(range(18, 65))
+        HEIGHTS = list(range(150, 200))
+    
+        conn = sqlite3.connect(db_path)
+        cur = conn.cursor()
+    
+        table_creation_sql = (
+            "CREATE TABLE IF NOT EXISTS {} (name TEXT, age INTEGER, height INTEGER)".format(
+                table_name
+            )
+        )
+        cur.execute(table_creation_sql)
+    
+        inserted_rows = 0
+        for _ in range(num_entries):
+            name = choice(NAMES)
+            age = choice(AGES)
+            height = choice(HEIGHTS)
+            insertion_sql = "INSERT INTO {} VALUES (?, ?, ?)".format(table_name)
+>           cur.execute(insertion_sql, (name, age, height))
+E           sqlite3.OperationalError: table test_table has 2 columns but 3 values were supplied
+
+../../../src/src_0536.py:33: OperationalError
+__________________________ test_task_func_random_seed __________________________
+
+    def test_task_func_random_seed():
+        db_path = "test_db.db"
+        table_name = "test_table"
+        num_entries = 10
+        random_seed = 1234
+    
+>       inserted_rows = task_func(db_path, table_name, num_entries, random_seed)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0536.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+db_path = 'test_db.db', table_name = 'test_table', num_entries = 10
+random_seed = 1234
+
+    def task_func(db_path, table_name, num_entries, random_seed=None):
+        # Setting the random seed if provided
+        if random_seed is not None:
+            seed(random_seed)
+            np.random.seed(random_seed)
+    
+        if num_entries < 0:
+            raise ValueError("num_entries cannot be negative.")
+    
+        NAMES = ["John", "Jane", "Steve", "Emma", "Liam", "Olivia"]
+        AGES = list(range(18, 65))
+        HEIGHTS = list(range(150, 200))
+    
+        conn = sqlite3.connect(db_path)
+        cur = conn.cursor()
+    
+        table_creation_sql = (
+            "CREATE TABLE IF NOT EXISTS {} (name TEXT, age INTEGER, height INTEGER)".format(
+                table_name
+            )
+        )
+        cur.execute(table_creation_sql)
+    
+        inserted_rows = 0
+        for _ in range(num_entries):
+            name = choice(NAMES)
+            age = choice(AGES)
+            height = choice(HEIGHTS)
+            insertion_sql = "INSERT INTO {} VALUES (?, ?, ?)".format(table_name)
+>           cur.execute(insertion_sql, (name, age, height))
+E           sqlite3.OperationalError: table test_table has 2 columns but 3 values were supplied
+
+../../../src/src_0536.py:33: OperationalError
+_____________________ test_task_func_random_seed_different _____________________
+
+    def test_task_func_random_seed_different():
+        db_path = "test_db.db"
+        table_name = "test_table"
+        num_entries = 10
+        random_seed = 1234
+    
+>       inserted_rows = task_func(db_path, table_name, num_entries, random_seed)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0536.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+db_path = 'test_db.db', table_name = 'test_table', num_entries = 10
+random_seed = 1234
+
+    def task_func(db_path, table_name, num_entries, random_seed=None):
+        # Setting the random seed if provided
+        if random_seed is not None:
+            seed(random_seed)
+            np.random.seed(random_seed)
+    
+        if num_entries < 0:
+            raise ValueError("num_entries cannot be negative.")
+    
+        NAMES = ["John", "Jane", "Steve", "Emma", "Liam", "Olivia"]
+        AGES = list(range(18, 65))
+        HEIGHTS = list(range(150, 200))
+    
+        conn = sqlite3.connect(db_path)
+        cur = conn.cursor()
+    
+        table_creation_sql = (
+            "CREATE TABLE IF NOT EXISTS {} (name TEXT, age INTEGER, height INTEGER)".format(
+                table_name
+            )
+        )
+        cur.execute(table_creation_sql)
+    
+        inserted_rows = 0
+        for _ in range(num_entries):
+            name = choice(NAMES)
+            age = choice(AGES)
+            height = choice(HEIGHTS)
+            insertion_sql = "INSERT INTO {} VALUES (?, ?, ?)".format(table_name)
+>           cur.execute(insertion_sql, (name, age, height))
+E           sqlite3.OperationalError: table test_table has 2 columns but 3 values were supplied
+
+../../../src/src_0536.py:33: OperationalError
+=========================== short test summary info ============================
+FAILED test_0536.py::test_task_func_positive_num_entries - sqlite3.Operationa...
+FAILED test_0536.py::test_task_func_random_seed - sqlite3.OperationalError: t...
+FAILED test_0536.py::test_task_func_random_seed_different - sqlite3.Operation...
+3 failed, 1 passed in 0.61s

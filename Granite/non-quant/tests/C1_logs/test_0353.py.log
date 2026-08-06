@@ -1,0 +1,70 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        text_dict = {'apple': 10, 'banana': 5, 'cherry': 8}
+        word_keys = ['apple', 'banana', 'cherry', 'date']
+        top_k = 2
+        ax, top_words = task_func(text_dict, word_keys, top_k)
+>       assert isinstance(ax, pd.Series)
+E       AssertionError: assert False
+E        +  where False = isinstance(<Axes: >, <class 'pandas.Series'>)
+E        +    where <class 'pandas.Series'> = pd.Series
+
+test_0353.py:23: AssertionError
+________________________ test_task_func_top_k_negative _________________________
+
+    def test_task_func_top_k_negative():
+        text_dict = {'apple': 10, 'banana': 5, 'cherry': 8}
+        word_keys = ['apple', 'banana', 'cherry', 'date']
+        top_k = -1
+        with patch('builtins.print') as mock_print:
+            try:
+                task_func(text_dict, word_keys, top_k)
+            except ValueError:
+                pass
+>       mock_print.assert_called_with('top_k must be a positive integer.')
+
+test_0353.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='print' id='128731758259440'>
+args = ('top_k must be a positive integer.',), kwargs = {}
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\n  Actual: %s'
+                    % (expected, actual))
+>           raise AssertionError(error_message)
+E           AssertionError: expected call not found.
+E           Expected: print('top_k must be a positive integer.')
+E             Actual: not called.
+
+/usr/lib/python3.12/unittest/mock.py:935: AssertionError
+_______________ test_task_func_top_k_greater_than_len_text_dict ________________
+
+    def test_task_func_top_k_greater_than_len_text_dict():
+        text_dict = {'apple': 10, 'banana': 5, 'cherry': 8}
+        word_keys = ['apple', 'banana', 'cherry', 'date']
+        top_k = len(text_dict) + 1
+        ax, top_words = task_func(text_dict, word_keys, top_k)
+>       assert isinstance(ax, pd.Series)
+E       AssertionError: assert False
+E        +  where False = isinstance(<Axes: >, <class 'pandas.Series'>)
+E        +    where <class 'pandas.Series'> = pd.Series
+
+test_0353.py:44: AssertionError
+=========================== short test summary info ============================
+FAILED test_0353.py::test_task_func - AssertionError: assert False
+FAILED test_0353.py::test_task_func_top_k_negative - AssertionError: expected...
+FAILED test_0353.py::test_task_func_top_k_greater_than_len_text_dict - Assert...
+3 failed in 2.08s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

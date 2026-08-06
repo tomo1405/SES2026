@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test data
+        csv_content = "name,age\nAlice,30\nBob,25"
+        filename = "test_output.xls"
+    
+        # Create a temporary directory to store the output file
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Construct the full path for the output file
+            full_path = os.path.join(temp_dir, filename)
+    
+            # Call the function
+            result = task_func(csv_content, full_path)
+    
+            # Check if the function returns the correct absolute path
+            assert result == os.path.abspath(full_path)
+    
+            # Check if the file exists
+            assert os.path.exists(full_path)
+    
+            # Open the Excel file and check its contents
+>           import xlrd
+E           ModuleNotFoundError: No module named 'xlrd'
+
+test_0500.py:26: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED test_0500.py::test_task_func - ModuleNotFoundError: No module named 'x...
+1 failed in 0.63s

@@ -1,0 +1,111 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+____________________ test_task_func_sends_correct_response _____________________
+
+mock_client_socket = <Mock id='138720982899248'>
+
+    def test_task_func_sends_correct_response(mock_client_socket):
+        # Arrange
+        expected_message = "Hello"
+        current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        expected_response = json.dumps({"message": expected_message, "time": current_time}) + "\n"
+    
+        # Act
+        task_func(mock_client_socket)
+    
+        # Assert
+>       mock_client_socket.send.assert_called_once_with(expected_response.encode("utf-8"))
+
+test_1039.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/unittest/mock.py:956: in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock name='mock.send' id='138720993679152'>
+args = (b'{"message": "Hello", "time": "2026-07-28 12:09:36"}\n',), kwargs = {}
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\n  Actual: %s'
+                    % (expected, actual))
+            raise AssertionError(error_message)
+    
+        def _error_message():
+            msg = self._format_mock_failure_message(args, kwargs)
+            return msg
+        expected = self._call_matcher(_Call((args, kwargs), two=True))
+        actual = self._call_matcher(self.call_args)
+        if actual != expected:
+            cause = expected if isinstance(expected, Exception) else None
+>           raise AssertionError(_error_message()) from cause
+E           AssertionError: expected call not found.
+E           Expected: send(b'{"message": "Hello", "time": "2026-07-28 12:09:36"}\n')
+E             Actual: send(b'{"message": "Hello", "time": "2026-07-28 12:09:36.090028"}\n')
+
+/usr/lib/python3.12/unittest/mock.py:944: AssertionError
+_____________________ test_task_func_includes_current_time _____________________
+
+mock_datetime = <MagicMock name='datetime' id='138720982904144'>
+mock_client_socket = <Mock id='138720982904192'>
+
+    @patch('src_1039.datetime')
+    def test_task_func_includes_current_time(mock_datetime, mock_client_socket):
+        # Arrange
+        mock_now = Mock()
+        mock_datetime.now.return_value = mock_now
+        expected_time_str = mock_now.strftime.return_value
+>       expected_response = json.dumps({"message": "Hello", "time": expected_time_str}) + "\n"
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1039.py:30: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/json/__init__.py:231: in dumps
+    return _default_encoder.encode(obj)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/encoder.py:200: in encode
+    chunks = self.iterencode(o, _one_shot=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/encoder.py:258: in iterencode
+    return _iterencode(o, 0)
+           ^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <json.encoder.JSONEncoder object at 0x7e2a80e78470>
+o = <Mock name='datetime.now().strftime()' id='138720981765728'>
+
+    def default(self, o):
+        """Implement this method in a subclass such that it returns
+        a serializable object for ``o``, or calls the base implementation
+        (to raise a ``TypeError``).
+    
+        For example, to support arbitrary iterators, you could
+        implement default like this::
+    
+            def default(self, o):
+                try:
+                    iterable = iter(o)
+                except TypeError:
+                    pass
+                else:
+                    return list(iterable)
+                # Let the base class default method raise the TypeError
+                return super().default(o)
+    
+        """
+>       raise TypeError(f'Object of type {o.__class__.__name__} '
+                        f'is not JSON serializable')
+E       TypeError: Object of type Mock is not JSON serializable
+
+/usr/lib/python3.12/json/encoder.py:180: TypeError
+=========================== short test summary info ============================
+FAILED test_1039.py::test_task_func_sends_correct_response - AssertionError: ...
+FAILED test_1039.py::test_task_func_includes_current_time - TypeError: Object...
+2 failed in 0.57s

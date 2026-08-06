@@ -1,0 +1,53 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a simple dataset
+        data = [(1, 2), (3, 4), (5, 6)]
+        ax, max_y_point = task_func(data)
+    
+        # Check if the max_y_point is correct
+        assert max_y_point == (5, 6)
+    
+        # Check if the plot has the correct number of points
+        lines = ax.get_lines()
+        scatter_plots = ax.collections
+    
+        assert len(scatter_plots) == 2  # One for all points, one for the max point
+    
+        # Check if the labels are set correctly
+        assert ax.get_xlabel() == 'x'
+        assert ax.get_ylabel() == 'y'
+        assert ax.get_title() == 'Points with Max Y Point Highlighted'
+    
+        # Check if the legend is present
+        legend = ax.get_legend()
+        assert legend is not None
+        assert len(legend.get_texts()) == 2  # One for each label
+    
+        # Clean up the plot to avoid interference with other tests
+>       plt.close(fig)
+                  ^^^
+E       NameError: name 'fig' is not defined
+
+test_0213.py:31: NameError
+_________________________ test_task_func_same_y_values _________________________
+
+    def test_task_func_same_y_values():
+        data = [(1, 2), (3, 2), (5, 2)]
+        ax, max_y_point = task_func(data)
+    
+        # Check if the max_y_point is the first point (or any point, since they are all equal)
+        assert max_y_point == (1, 2)
+    
+        # Clean up the plot
+>       plt.close(fig)
+                  ^^^
+E       NameError: name 'fig' is not defined
+
+test_0213.py:48: NameError
+=========================== short test summary info ============================
+FAILED test_0213.py::test_task_func - NameError: name 'fig' is not defined
+FAILED test_0213.py::test_task_func_same_y_values - NameError: name 'fig' is ...
+2 failed, 1 passed in 1.65s

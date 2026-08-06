@@ -1,0 +1,63 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        text = "This is a sample text. This text contains some duplicate words."
+        expected_output = Counter({'this': 2, 'is': 1, 'a': 1, 'sample': 1, 'text.': 1, 'contains': 1, 'some': 1, 'duplicate': 1, 'words.': 1})
+        actual_output = task_func(text)
+>       assert actual_output == expected_output, "Output does not match expected output"
+E       AssertionError: Output does not match expected output
+E       assert {'sample': 1,...cate': 1, ...} == Counter({'thi... 'words.': 1})
+E         
+E         Omitting 3 identical items, use -vv to show
+E         Left contains 2 more items:
+E         {'text': 2, 'words': 1}
+E         Right contains 6 more items:
+E         {'a': 1, 'is': 1, 'some': 1, 'text.': 1, 'this': 2, 'words.': 1}
+E         Use -v to get more diff
+
+test_0634.py:23: AssertionError
+______________________ test_task_func_with_no_duplicates _______________________
+
+    def test_task_func_with_no_duplicates():
+        text = "This is a unique text with no duplicate words."
+        expected_output = Counter({'this': 1, 'is': 1, 'a': 1, 'unique': 1, 'text': 1, 'with': 1, 'no': 1, 'duplicate': 1, 'words.': 1})
+        actual_output = task_func(text)
+>       assert actual_output == expected_output, "Output does not match expected output"
+E       AssertionError: Output does not match expected output
+E       assert {'unique': 1,...1, 'words': 1} == Counter({'thi... 'words.': 1})
+E         
+E         Omitting 3 identical items, use -vv to show
+E         Left contains 1 more item:
+E         {'words': 1}
+E         Right contains 6 more items:
+E         {'a': 1, 'is': 1, 'no': 1, 'this': 1, 'with': 1, 'words.': 1}
+E         Use -v to get more diff
+
+test_0634.py:29: AssertionError
+________________________ test_task_func_with_stopwords _________________________
+
+    def test_task_func_with_stopwords():
+        text = "This is a sample text. This text contains some stop words like 'the' and 'is'."
+        expected_output = Counter({'text': 2, 'contains': 1, 'some': 1, 'stop': 1, 'words': 1, 'like': 1, 'the': 1, 'and': 1})
+        actual_output = task_func(text)
+>       assert actual_output == expected_output, "Output does not match expected output"
+E       AssertionError: Output does not match expected output
+E       assert {'sample': 1,...stop': 1, ...} == Counter({'tex... 1, 'and': 1})
+E         
+E         Omitting 5 identical items, use -vv to show
+E         Left contains 1 more item:
+E         {'sample': 1}
+E         Right contains 3 more items:
+E         {'and': 1, 'some': 1, 'the': 1}
+E         Use -v to get more diff
+
+test_0634.py:35: AssertionError
+=========================== short test summary info ============================
+FAILED test_0634.py::test_task_func - AssertionError: Output does not match e...
+FAILED test_0634.py::test_task_func_with_no_duplicates - AssertionError: Outp...
+FAILED test_0634.py::test_task_func_with_stopwords - AssertionError: Output d...
+3 failed in 4.05s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

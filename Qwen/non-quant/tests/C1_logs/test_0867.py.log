@@ -1,0 +1,78 @@
+FFF.F                                                                    [100%]
+=================================== FAILURES ===================================
+____________________ test_task_func_with_default_parameters ____________________
+
+    def test_task_func_with_default_parameters():
+        data = [
+            ('item1', 1.0, 2.0),
+            ('item2', 3.0, 4.0),
+            ('item3', 5.0, 6.0),
+            ('item4', 7.0, 8.0)
+        ]
+        expected_labels = np.array([0, 0, 1, 1])  # This is an example, actual labels may vary
+        labels = task_func(data)
+>       assert np.array_equal(labels, expected_labels)
+E       assert False
+E        +  where False = <function array_equal at 0x78f7df8443f0>(array([1, 1, 0, 0], dtype=int32), array([0, 0, 1, 1]))
+E        +    where <function array_equal at 0x78f7df8443f0> = np.array_equal
+
+test_0867.py:15: AssertionError
+____________________ test_task_func_with_custom_n_clusters _____________________
+
+    def test_task_func_with_custom_n_clusters():
+        data = [
+            ('item1', 1.0, 2.0),
+            ('item2', 3.0, 4.0),
+            ('item3', 5.0, 6.0),
+            ('item4', 7.0, 8.0)
+        ]
+        expected_labels = np.array([0, 1, 0, 1])  # This is an example, actual labels may vary
+        labels = task_func(data, n_clusters=2)
+>       assert np.array_equal(labels, expected_labels)
+E       assert False
+E        +  where False = <function array_equal at 0x78f7df8443f0>(array([1, 1, 0, 0], dtype=int32), array([0, 1, 0, 1]))
+E        +    where <function array_equal at 0x78f7df8443f0> = np.array_equal
+
+test_0867.py:26: AssertionError
+___________________ test_task_func_with_custom_random_state ____________________
+
+    def test_task_func_with_custom_random_state():
+        data = [
+            ('item1', 1.0, 2.0),
+            ('item2', 3.0, 4.0),
+            ('item3', 5.0, 6.0),
+            ('item4', 7.0, 8.0)
+        ]
+        expected_labels = np.array([0, 0, 1, 1])  # This is an example, actual labels may vary
+        labels = task_func(data, random_state=42)
+>       assert np.array_equal(labels, expected_labels)
+E       assert False
+E        +  where False = <function array_equal at 0x78f7df8443f0>(array([0, 0, 0, 1], dtype=int32), array([0, 0, 1, 1]))
+E        +    where <function array_equal at 0x78f7df8443f0> = np.array_equal
+
+test_0867.py:37: AssertionError
+_________________________ test_task_func_with_no_data __________________________
+
+    def test_task_func_with_no_data():
+        data = []
+        expected_labels = np.array([])  # No labels for no data
+>       labels = task_func(data)
+                 ^^^^^^^^^^^^^^^
+
+test_0867.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = [], n_clusters = 2, random_state = 0
+
+    def task_func(data, n_clusters=2, random_state=0):
+>       items, x_values, y_values = zip(*data)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: not enough values to unpack (expected 3, got 0)
+
+../../../src/src_0867.py:4: ValueError
+=========================== short test summary info ============================
+FAILED test_0867.py::test_task_func_with_default_parameters - assert False
+FAILED test_0867.py::test_task_func_with_custom_n_clusters - assert False
+FAILED test_0867.py::test_task_func_with_custom_random_state - assert False
+FAILED test_0867.py::test_task_func_with_no_data - ValueError: not enough val...
+4 failed, 1 passed in 3.23s

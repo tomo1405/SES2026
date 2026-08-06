@@ -1,0 +1,24 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+input_array = [[1, 2, 3, 4, 5], [6, 7, 8, 9, 10]]
+
+    def test_task_func(input_array):
+        df, ax = task_func(input_array)
+        assert isinstance(df, pd.DataFrame)
+        assert isinstance(ax, plt.Axes)
+        assert list(df.columns) == ["A", "B", "C", "D", "E"]
+>       assert df.sum().equals(pd.Series([55, 60, 65, 70, 75]))
+E       AssertionError: assert False
+E        +  where False = equals(0    55\n1    60\n2    65\n3    70\n4    75\ndtype: int64)
+E        +    where equals = A     7\nB     9\nC    11\nD    13\nE    15\ndtype: int64.equals
+E        +      where A     7\nB     9\nC    11\nD    13\nE    15\ndtype: int64 = sum()
+E        +        where sum =    A  B  C  D   E\n0  1  2  3  4   5\n1  6  7  8  9  10.sum
+E        +    and   0    55\n1    60\n2    65\n3    70\n4    75\ndtype: int64 = <class 'pandas.Series'>([55, 60, 65, 70, 75])
+E        +      where <class 'pandas.Series'> = pd.Series
+
+test_0515.py:15: AssertionError
+=========================== short test summary info ============================
+FAILED test_0515.py::test_task_func - AssertionError: assert False
+1 failed in 2.43s

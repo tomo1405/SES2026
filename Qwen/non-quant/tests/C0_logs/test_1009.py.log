@@ -1,0 +1,83 @@
+.F..                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_http_error ___________________________
+
+mock_get = <MagicMock name='get' id='124571196300112'>
+
+    @patch('src_1009.requests.get')
+    def test_task_func_http_error(mock_get):
+        # Prepare mock response to simulate HTTP error
+        mock_response = MagicMock()
+        mock_response.status_code = 404
+        mock_get.return_value = mock_response
+    
+        # Call the function and expect an HTTPError
+        with pytest.raises(requests.exceptions.HTTPError):
+>           task_func("http://example.com", "test_table")
+
+test_1009.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1009.py:12: in task_func
+    soup = BeautifulSoup(response.text, "html.parser")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/bs4/__init__.py:465: in __init__
+    for (
+../../../.venv/lib/python3.12/site-packages/bs4/builder/_htmlparser.py:462: in prepare_markup
+    dammit = UnicodeDammit(
+../../../.venv/lib/python3.12/site-packages/bs4/dammit.py:820: in __init__
+    for encoding in self.detector.encodings:
+../../../.venv/lib/python3.12/site-packages/bs4/dammit.py:632: in encodings
+    self.declared_encoding = self.find_declared_encoding(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cls = <class 'bs4.dammit.EncodingDetector'>
+markup = <MagicMock name='get().text.read()' id='124571194521936'>
+is_html = True, search_entire_document = False
+
+    @classmethod
+    def find_declared_encoding(
+        cls,
+        markup: Union[bytes, str],
+        is_html: bool = False,
+        search_entire_document: bool = False,
+    ) -> Optional[_Encoding]:
+        """Given a document, tries to find an encoding declared within the
+        text of the document itself.
+    
+        An XML encoding is declared at the beginning of the document.
+    
+        An HTML encoding is declared in a <meta> tag, hopefully near the
+        beginning of the document.
+    
+        :param markup: Some markup.
+        :param is_html: If True, this markup is considered to be HTML. Otherwise
+            it's assumed to be XML.
+        :param search_entire_document: Since an encoding is supposed
+            to declared near the beginning of the document, most of
+            the time it's only necessary to search a few kilobytes of
+            data.  Set this to True to force this method to search the
+            entire document.
+        :return: The declared encoding, if one is found.
+        """
+        if search_entire_document:
+            xml_endpos = html_endpos = len(markup)
+        else:
+            xml_endpos = 1024
+            html_endpos = max(2048, int(len(markup) * 0.05))
+    
+        if isinstance(markup, bytes):
+            res = encoding_res[bytes]
+        else:
+            res = encoding_res[str]
+    
+        xml_re = res["xml"]
+        html_re = res["html"]
+        declared_encoding: Optional[_Encoding] = None
+>       declared_encoding_match = xml_re.search(markup, endpos=xml_endpos)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: expected string or bytes-like object, got 'MagicMock'
+
+../../../.venv/lib/python3.12/site-packages/bs4/dammit.py:731: TypeError
+=========================== short test summary info ============================
+FAILED test_1009.py::test_task_func_http_error - TypeError: expected string o...
+1 failed, 3 passed in 2.03s

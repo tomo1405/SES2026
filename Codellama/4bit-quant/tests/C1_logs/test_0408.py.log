@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test if the function raises an error when the Excel file does not exist
+        with pytest.raises(FileNotFoundError):
+            task_func('test.xlsx', '/path/to/excel/files', '/path/to/csv/files')
+    
+        # Test if the function returns the correct CSV file name
+>       csv_file_name = task_func('test.xlsx', '/path/to/excel/files', '/path/to/csv/files')
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0408.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_name = 'test.xlsx', excel_file_path = '/path/to/excel/files'
+csv_file_path = '/path/to/csv/files'
+
+    def task_func(file_name, excel_file_path, csv_file_path) -> str:
+    
+        excel_file = os.path.join(excel_file_path, file_name)
+        # Check if the Excel file exists
+        if not os.path.isfile(excel_file):
+>           raise FileNotFoundError(f"[Errno 2] No such file or directory: '{excel_file}'")
+E           FileNotFoundError: [Errno 2] No such file or directory: '/path/to/excel/files/test.xlsx'
+
+../../../src/src_0408.py:9: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0408.py::test_task_func - FileNotFoundError: [Errno 2] No such fi...
+1 failed in 0.95s

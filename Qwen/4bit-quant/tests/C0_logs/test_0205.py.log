@@ -1,0 +1,121 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a simple list
+        L = [1, 2, 3, 4, 5]
+        result = task_func(L)
+        assert result['mean'] == np.mean(L)
+        assert result['median'] == np.median(L)
+        assert result['mode'] == Counter(L).most_common(1)[0][0]
+        assert np.isclose(result['std_dev'], np.std(L))
+        assert isinstance(result['plot'], plt.Axes)
+    
+        # Test with a list having multiple modes
+        L = [1, 1, 2, 2, 3]
+        result = task_func(L)
+        assert result['mode'] == 1  # Mode should be the first one in case of a tie
+    
+        # Test with a list containing negative numbers
+        L = [-5, -3, -1, 1, 3, 5]
+        result = task_func(L)
+        assert result['mean'] == np.mean(L)
+        assert result['median'] == np.median(L)
+        assert result['mode'] == Counter(L).most_common(1)[0][0]
+        assert np.isclose(result['std_dev'], np.std(L))
+    
+        # Test with a list containing a single element
+        L = [42]
+        result = task_func(L)
+        assert result['mean'] == 42
+        assert result['median'] == 42
+        assert result['mode'] == 42
+        assert result['std_dev'] == 0
+        assert isinstance(result['plot'], plt.Axes)
+    
+        # Test with an empty list (should raise an error)
+>       with pytest.raises(np.AxisError):
+                           ^^^^^^^^^^^^
+
+test_0205.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+attr = 'AxisError'
+
+    def __getattr__(attr):
+        # Warn for expired attributes
+        import warnings
+    
+        if attr == "linalg":
+            import numpy.linalg as linalg
+            return linalg
+        elif attr == "fft":
+            import numpy.fft as fft
+            return fft
+        elif attr == "dtypes":
+            import numpy.dtypes as dtypes
+            return dtypes
+        elif attr == "random":
+            import numpy.random as random
+            return random
+        elif attr == "polynomial":
+            import numpy.polynomial as polynomial
+            return polynomial
+        elif attr == "ma":
+            import numpy.ma as ma
+            return ma
+        elif attr == "ctypeslib":
+            import numpy.ctypeslib as ctypeslib
+            return ctypeslib
+        elif attr == "exceptions":
+            import numpy.exceptions as exceptions
+            return exceptions
+        elif attr == "testing":
+            import numpy.testing as testing
+            return testing
+        elif attr == "matlib":
+            import numpy.matlib as matlib
+            return matlib
+        elif attr == "f2py":
+            import numpy.f2py as f2py
+            return f2py
+        elif attr == "typing":
+            import numpy.typing as typing
+            return typing
+        elif attr == "rec":
+            import numpy.rec as rec
+            return rec
+        elif attr == "char":
+            import numpy.char as char
+            return char
+        elif attr == "core":
+            import numpy.core as core
+            return core
+        elif attr == "strings":
+            import numpy.strings as strings
+            return strings
+        if attr in __future_scalars__:
+            # And future warnings for those that will change, but also give
+            # the AttributeError
+            warnings.warn(
+                f"In the future `np.{attr}` will be defined as the "
+                "corresponding NumPy scalar.", FutureWarning, stacklevel=2)
+    
+        if attr in __former_attrs__:
+            raise AttributeError(__former_attrs__[attr], name=None)
+    
+        if attr in __expired_attributes__:
+            raise AttributeError(
+                f"`np.{attr}` was removed in the NumPy 2.0 release. "
+                f"{__expired_attributes__[attr]}",
+                name=None
+            )
+    
+>       raise AttributeError(f"module {__name__!r} has no attribute {attr!r}")
+E       AttributeError: module 'numpy' has no attribute 'AxisError'
+
+../../../.venv/lib/python3.12/site-packages/numpy/__init__.py:769: AttributeError
+=========================== short test summary info ============================
+FAILED test_0205.py::test_task_func - AttributeError: module 'numpy' has no a...
+1 failed in 1.61s

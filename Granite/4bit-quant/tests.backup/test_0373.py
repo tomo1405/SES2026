@@ -1,0 +1,19 @@
+import re
+import glob
+from docx import Document
+import pytest
+
+def task_func(directory_path: str) -> int:
+    docx_files = glob.glob(directory_path + '/*.docx')
+    processed_files = 0
+
+    for docx_file in docx_files:
+        document = Document(docx_file)
+
+        for paragraph in document.paragraphs:
+            paragraph.text = re.sub(r'(?<!\\)"', r'\"', paragraph.text)
+
+        document.save(docx_file)
+        processed_files += 1
+
+    return processed_files

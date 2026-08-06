@@ -1,0 +1,25 @@
+F..F                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_verify_hash ________________________
+
+    def test_task_func_with_verify_hash():
+        input_string = "Hello, world!"
+        verify_hash = hashlib.sha256(input_string.encode()).hexdigest()
+        result = task_func(input_string, verify_hash)
+>       assert result == verify_hash
+E       AssertionError: assert True == '315f5bdb76d078c43b8ac0064e4a0164612b1fce77c869345bfc94c75894edd3'
+
+test_1022.py:10: AssertionError
+___________________ test_task_func_with_invalid_verify_hash ____________________
+
+    def test_task_func_with_invalid_verify_hash():
+        input_string = "Hello, world!"
+        verify_hash = "invalid_hash"
+>       with pytest.raises(TypeError):
+E       Failed: DID NOT RAISE TypeError
+
+test_1022.py:26: Failed
+=========================== short test summary info ============================
+FAILED test_1022.py::test_task_func_with_verify_hash - AssertionError: assert...
+FAILED test_1022.py::test_task_func_with_invalid_verify_hash - Failed: DID NO...
+2 failed, 2 passed in 0.49s

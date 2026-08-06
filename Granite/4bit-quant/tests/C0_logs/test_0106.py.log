@@ -1,0 +1,23 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Test if the function raises a ValueError when the DataFrame is empty
+        df_empty = pd.DataFrame()
+        with pytest.raises(ValueError, match="DataFrame must be non-empty"):
+            task_func(df_empty)
+    
+        # Test case 2: Test if the function raises a ValueError when the DataFrame does not have the required columns
+        df_missing_cols = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]})
+>       with pytest.raises(ValueError, match="DataFrame must contain 'group', 'date', and 'value' columns"):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: "DataFrame must contain 'group', 'date', and 'value' columns"
+E         Actual message: "DataFrame must be non-empty and contain 'group', 'date', and 'value' columns."
+
+test_0106.py:37: AssertionError
+=========================== short test summary info ============================
+FAILED test_0106.py::test_task_func - AssertionError: Regex pattern did not m...
+1 failed in 3.47s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

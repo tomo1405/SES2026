@@ -1,0 +1,31 @@
+python
+import pandas as pd
+import numpy as np
+import random
+from random import randint, seed
+# Constants
+CATEGORIES = ['Electronics', 'Clothing', 'Home & Kitchen', 'Books', 'Toys & Games']
+
+def task_func(mystrings, n_products, seed=0):
+    catalogue_data = []
+    random.seed(seed)
+    np.random.seed(seed)
+    for _ in range(n_products):
+        product_name = mystrings[randint(0, len(mystrings) - 1)].replace(' ', '_')
+        category = CATEGORIES[randint(0, len(CATEGORIES) - 1)]
+        price = round(np.random.normal(50, 10), 2)
+        catalogue_data.append([product_name, category, price])
+
+    catalogue_df = pd.DataFrame(catalogue_data, columns=['Product Name', 'Category', 'Price'])
+
+    return catalogue_df
+
+def test_task_func():
+    mystrings = ['apple', 'banana', 'orange', 'pear', 'grape']
+    n_products = 10
+    seed = 0
+    catalogue_df = task_func(mystrings, n_products, seed)
+    assert catalogue_df.shape == (n_products, 3)
+    assert catalogue_df['Product Name'].str.contains('_').any() == False
+    assert catalogue_df['Category'].isin(CATEGORIES).all()
+    assert catalogue_df['Price'].dtype == 'float64'

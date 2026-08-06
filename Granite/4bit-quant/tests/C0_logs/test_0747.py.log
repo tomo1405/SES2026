@@ -1,0 +1,62 @@
+..FFF                                                                    [100%]
+=================================== FAILURES ===================================
+_____________ test_task_func_target_column_should_be_in_df_columns _____________
+
+    def test_task_func_target_column_should_be_in_df_columns():
+        df = pd.DataFrame()
+        target_column = "target"
+        with pytest.raises(ValueError) as excinfo:
+            task_func(df, target_column)
+>       assert "target_column should be in DataFrame" in str(excinfo.value)
+E       AssertionError: assert 'target_column should be in DataFrame' in 'df should contain at least one row'
+E        +  where 'df should contain at least one row' = str(ValueError('df should contain at least one row'))
+E        +    where ValueError('df should contain at least one row') = <ExceptionInfo ValueError('df should contain at least one row') tblen=2>.value
+
+test_0747.py:27: AssertionError
+__________________ test_task_func_df_values_should_be_numeric __________________
+
+    def test_task_func_df_values_should_be_numeric():
+        df = pd.DataFrame({"a": ["1", "2"], "b": ["3", "4"]})
+        target_column = "target"
+        with pytest.raises(ValueError) as excinfo:
+            task_func(df, target_column)
+>       assert "df values should be numeric only" in str(excinfo.value)
+E       AssertionError: assert 'df values should be numeric only' in 'target_column should be in DataFrame'
+E        +  where 'target_column should be in DataFrame' = str(ValueError('target_column should be in DataFrame'))
+E        +    where ValueError('target_column should be in DataFrame') = <ExceptionInfo ValueError('target_column should be in DataFrame') tblen=2>.value
+
+test_0747.py:34: AssertionError
+_________________ test_task_func_target_values_should_be_used __________________
+
+    def test_task_func_target_values_should_be_used():
+        df = pd.DataFrame({"a": [1, 2], "b": [3, 4]})
+        target_column = "target"
+        target_values = [1, 2]
+>       model = task_func(df, target_column, target_values)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0747.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df =    a  b
+0  1  3
+1  2  4, target_column = 'target', target_values = [1, 2]
+
+    def task_func(df, target_column, target_values=None):
+    
+        if not isinstance(df, pd.DataFrame):
+            raise ValueError("df should be a DataFrame.")
+    
+        if df.empty:
+            raise ValueError("df should contain at least one row")
+    
+        if target_column not in df.columns:
+>           raise ValueError("target_column should be in DataFrame")
+E           ValueError: target_column should be in DataFrame
+
+../../../src/src_0747.py:13: ValueError
+=========================== short test summary info ============================
+FAILED test_0747.py::test_task_func_target_column_should_be_in_df_columns - A...
+FAILED test_0747.py::test_task_func_df_values_should_be_numeric - AssertionEr...
+FAILED test_0747.py::test_task_func_target_values_should_be_used - ValueError...
+3 failed, 2 passed in 3.42s

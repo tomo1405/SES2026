@@ -1,0 +1,26 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        script_name = random.choice(['script1.sh', 'script2.sh', 'script3.sh'])
+        script_path = os.path.join('/path/to/scripts', script_name)
+        subprocess.call(script_path, shell=True)
+>       assert task_func() == script_path
+               ^^^^^^^^^^^
+
+test_0746.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def task_func():
+        script_name = random.choice(SCRIPTS)
+>       script_path = os.path.join(SCRIPTS_DIR, script_name)  # Generate the full path
+                      ^^
+E       NameError: name 'os' is not defined. Did you forget to import 'os'
+
+../../../src/src_0746.py:8: NameError
+----------------------------- Captured stderr call -----------------------------
+/bin/sh: 1: /path/to/scripts/script2.sh: not found
+=========================== short test summary info ============================
+FAILED test_0746.py::test_task_func - NameError: name 'os' is not defined. Di...
+1 failed in 0.48s

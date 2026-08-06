@@ -1,0 +1,27 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a sample DataFrame
+        data = {'col1': [1, 2, 3, 4, 5], 'col2': [6, 7, 8, 9, 10]}
+        df = pd.DataFrame(data)
+    
+        # Create a list of columns to normalize
+        columns = ['col1', 'col2']
+    
+        # Call the task function
+        df_copy = task_func(df, columns)
+    
+        # Check that the DataFrame has been normalized
+>       assert df_copy.equals(pd.DataFrame({'col1': [0.0, 0.5, 1.0, 1.5, 2.0], 'col2': [0.0, 0.5, 1.0, 1.5, 2.0]}))
+E       AssertionError: assert False
+E        +  where False = equals(   col1  col2\n0   0.0   0.0\n1   0.5   0.5\n2   1.0   1.0\n3   1.5   1.5\n4   2.0   2.0)
+E        +    where equals =    col1  col2\n0  0.00  0.00\n1  0.25  0.25\n2  0.50  0.50\n3  0.75  0.75\n4  1.00  1.00.equals
+E        +    and      col1  col2\n0   0.0   0.0\n1   0.5   0.5\n2   1.0   1.0\n3   1.5   1.5\n4   2.0   2.0 = <class 'pandas.DataFrame'>({'col1': [0.0, 0.5, 1.0, 1.5, 2.0], 'col2': [0.0, 0.5, 1.0, 1.5, 2.0]})
+E        +      where <class 'pandas.DataFrame'> = pd.DataFrame
+
+test_0922.py:18: AssertionError
+=========================== short test summary info ============================
+FAILED test_0922.py::test_task_func - AssertionError: assert False
+1 failed in 2.96s

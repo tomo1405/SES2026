@@ -1,0 +1,24 @@
+....F.                                                                   [100%]
+=================================== FAILURES ===================================
+__________________ test_task_func_path_with_empty_components ___________________
+
+    def test_task_func_path_with_empty_components():
+        with pytest.raises(ValueError):
+>           task_func("//empty//components//")
+
+test_0974.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = '//empty//components//', delimiter = '/'
+
+    def task_func(path, delimiter="/"):
+        if not path or not isinstance(path, str):
+            raise ValueError("Path must be a non-empty string")
+        if not os.path.exists(path):
+>           raise FileNotFoundError(f"Path '{path}' does not exist")
+E           FileNotFoundError: Path '//empty//components//' does not exist
+
+../../../src/src_0974.py:7: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0974.py::test_task_func_path_with_empty_components - FileNotFound...
+1 failed, 5 passed in 0.60s

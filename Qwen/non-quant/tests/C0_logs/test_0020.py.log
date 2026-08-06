@@ -1,0 +1,22 @@
+....F                                                                    [100%]
+=================================== FAILURES ===================================
+____________________ test_task_func_with_existing_zip_file _____________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1203/test_task_func_with_existing_z0')
+
+    def test_task_func_with_existing_zip_file(tmpdir):
+        zip_file_path = tmpdir.join('files.zip')
+        zip_file_path.write('existing content')
+    
+        file1 = tmpdir.join('file1.txt')
+        file1.write('content of file1')
+    
+        new_zip_file_path = task_func(str(tmpdir))
+>       assert new_zip_file_path != str(zip_file_path)
+E       AssertionError: assert '/tmp/pytest-of-tomohiro-w/pytest-1203/test_task_func_with_existing_z0/files.zip' != '/tmp/pytest-of-tomohiro-w/pytest-1203/test_task_func_with_existing_z0/files.zip'
+E        +  where '/tmp/pytest-of-tomohiro-w/pytest-1203/test_task_func_with_existing_z0/files.zip' = str(local('/tmp/pytest-of-tomohiro-w/pytest-1203/test_task_func_with_existing_z0/files.zip'))
+
+test_0020.py:43: AssertionError
+=========================== short test summary info ============================
+FAILED test_0020.py::test_task_func_with_existing_zip_file - AssertionError: ...
+1 failed, 4 passed in 0.45s

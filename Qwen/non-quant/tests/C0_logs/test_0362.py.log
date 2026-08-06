@@ -1,0 +1,111 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_success ____________________________
+
+file_path = '/tmp/pytest-of-tomohiro-w/pytest-1257/test_task_func_success0/test.xlsx'
+sheet_name = 'Sheet1'
+
+    def mock_read_excel(file_path, sheet_name=None):
+        if file_path == "test.xlsx":
+            return MockDataFrame({"col1": [1, 2, 3], "col2": [4, 5, 6]})
+        else:
+>           raise FileNotFoundError
+E           FileNotFoundError
+
+test_0362.py:24: FileNotFoundError
+
+During handling of the above exception, another exception occurred:
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1257/test_task_func_success0')
+
+    def test_task_func_success(tmpdir):
+        excel_file = tmpdir.join("test.xlsx")
+        csv_file = tmpdir.join("test.csv")
+        excel_file.write_binary(b"")
+    
+>       result = task_func("Sheet1", str(excel_file), str(csv_file))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0362.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+sheet_name = 'Sheet1'
+excel_file_location = '/tmp/pytest-of-tomohiro-w/pytest-1257/test_task_func_success0/test.xlsx'
+csv_file_location = '/tmp/pytest-of-tomohiro-w/pytest-1257/test_task_func_success0/test.csv'
+
+    def task_func(sheet_name, excel_file_location="test.xlsx", csv_file_location="test.csv"):
+        try:
+            logging.info('Reading the Excel file.')
+            # Reading the Excel file
+            df = pd.read_excel(excel_file_location, sheet_name=sheet_name)
+    
+            logging.info('Converting to CSV.')
+            # Converting to CSV
+            df.to_csv(csv_file_location, index=False)
+    
+            # Calculating the sum of each column
+            column_sum = df.sum(numeric_only=True)
+        except FileNotFoundError:
+            logging.error(f"Excel file not found at {excel_file_location}")
+>           raise FileNotFoundError(f"Excel file not found at {excel_file_location}")
+E           FileNotFoundError: Excel file not found at /tmp/pytest-of-tomohiro-w/pytest-1257/test_task_func_success0/test.xlsx
+
+../../../src/src_0362.py:19: FileNotFoundError
+------------------------------ Captured log call -------------------------------
+ERROR    root:src_0362.py:18 Excel file not found at /tmp/pytest-of-tomohiro-w/pytest-1257/test_task_func_success0/test.xlsx
+______________________ test_task_func_invalid_sheet_name _______________________
+
+file_path = '/tmp/pytest-of-tomohiro-w/pytest-1257/test_task_func_invalid_sheet_n0/test.xlsx'
+sheet_name = 'InvalidSheet'
+
+    def mock_read_excel(file_path, sheet_name=None):
+        if file_path == "test.xlsx":
+            return MockDataFrame({"col1": [1, 2, 3], "col2": [4, 5, 6]})
+        else:
+>           raise FileNotFoundError
+E           FileNotFoundError
+
+test_0362.py:24: FileNotFoundError
+
+During handling of the above exception, another exception occurred:
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1257/test_task_func_invalid_sheet_n0')
+
+    def test_task_func_invalid_sheet_name(tmpdir):
+        excel_file = tmpdir.join("test.xlsx")
+        excel_file.write_binary(b"")
+    
+        with pytest.raises(ValueError) as excinfo:
+>           task_func("InvalidSheet", str(excel_file))
+
+test_0362.py:52: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+sheet_name = 'InvalidSheet'
+excel_file_location = '/tmp/pytest-of-tomohiro-w/pytest-1257/test_task_func_invalid_sheet_n0/test.xlsx'
+csv_file_location = 'test.csv'
+
+    def task_func(sheet_name, excel_file_location="test.xlsx", csv_file_location="test.csv"):
+        try:
+            logging.info('Reading the Excel file.')
+            # Reading the Excel file
+            df = pd.read_excel(excel_file_location, sheet_name=sheet_name)
+    
+            logging.info('Converting to CSV.')
+            # Converting to CSV
+            df.to_csv(csv_file_location, index=False)
+    
+            # Calculating the sum of each column
+            column_sum = df.sum(numeric_only=True)
+        except FileNotFoundError:
+            logging.error(f"Excel file not found at {excel_file_location}")
+>           raise FileNotFoundError(f"Excel file not found at {excel_file_location}")
+E           FileNotFoundError: Excel file not found at /tmp/pytest-of-tomohiro-w/pytest-1257/test_task_func_invalid_sheet_n0/test.xlsx
+
+../../../src/src_0362.py:19: FileNotFoundError
+------------------------------ Captured log call -------------------------------
+ERROR    root:src_0362.py:18 Excel file not found at /tmp/pytest-of-tomohiro-w/pytest-1257/test_task_func_invalid_sheet_n0/test.xlsx
+=========================== short test summary info ============================
+FAILED test_0362.py::test_task_func_success - FileNotFoundError: Excel file n...
+FAILED test_0362.py::test_task_func_invalid_sheet_name - FileNotFoundError: E...
+2 failed, 1 passed in 1.20s

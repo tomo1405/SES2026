@@ -1,0 +1,25 @@
+import pytest
+from src_0433 import task_func
+import pandas as pd
+import seaborn as sns
+from scipy.stats import chi2_contingency
+
+def test_task_func():
+    df1 = pd.DataFrame({"id": [1, 2, 3], "feature1": [1, 2, 3]})
+    df2 = pd.DataFrame({"id": [1, 2, 3], "feature2": [1, 2, 3]})
+    p, heatmap = task_func(df1, df2)
+    assert p > 0.05
+    assert isinstance(heatmap, sns.heatmap)
+
+def test_task_func_with_column_names():
+    df1 = pd.DataFrame({"id": [1, 2, 3], "feature1": [1, 2, 3]})
+    df2 = pd.DataFrame({"id": [1, 2, 3], "feature2": [1, 2, 3]})
+    p, heatmap = task_func(df1, df2, column1="feature1", column2="feature2")
+    assert p > 0.05
+    assert isinstance(heatmap, sns.heatmap)
+
+def test_task_func_with_invalid_column_names():
+    df1 = pd.DataFrame({"id": [1, 2, 3], "feature1": [1, 2, 3]})
+    df2 = pd.DataFrame({"id": [1, 2, 3], "feature2": [1, 2, 3]})
+    with pytest.raises(ValueError):
+        task_func(df1, df2, column1="invalid", column2="invalid")

@@ -1,0 +1,68 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_no_files ____________________________
+
+    def test_task_func_no_files():
+        pattern = '*.txt'
+>       assert task_func(pattern) == "No files found matching the pattern."
+E       AssertionError: assert '/tmp/archive...hive_1.tar.gz' == 'No files fou... the pattern.'
+E         
+E         - No files found matching the pattern.
+E         + /tmp/archive/archive_1.tar.gz
+
+test_0786.py:9: AssertionError
+___________________________ test_task_func_one_file ____________________________
+
+    def test_task_func_one_file():
+        pattern = 'test_file.txt'
+>       assert task_func(pattern) == 'archive.tar.gz'
+E       AssertionError: assert 'No files fou... the pattern.' == 'archive.tar.gz'
+E         
+E         - archive.tar.gz
+E         + No files found matching the pattern.
+
+test_0786.py:13: AssertionError
+________________________ test_task_func_multiple_files _________________________
+
+    def test_task_func_multiple_files():
+        pattern = 'test_file*.txt'
+>       assert task_func(pattern) == 'archive.tar.gz'
+E       AssertionError: assert 'No files fou... the pattern.' == 'archive.tar.gz'
+E         
+E         - archive.tar.gz
+E         + No files found matching the pattern.
+
+test_0786.py:17: AssertionError
+________________________ test_task_func_archive_exists _________________________
+
+    def test_task_func_archive_exists():
+        pattern = 'test_file*.txt'
+        archive_file = 'archive.tar.gz'
+        if os.path.exists(archive_file):
+            os.remove(archive_file)
+>       assert task_func(pattern) == 'archive.tar.gz'
+E       AssertionError: assert 'No files fou... the pattern.' == 'archive.tar.gz'
+E         
+E         - archive.tar.gz
+E         + No files found matching the pattern.
+
+test_0786.py:24: AssertionError
+_________________________ test_task_func_delete_files __________________________
+
+    def test_task_func_delete_files():
+        pattern = 'test_file*.txt'
+        file_list = glob.glob(pattern)
+>       assert task_func(pattern) == 'archive.tar.gz'
+E       AssertionError: assert 'No files fou... the pattern.' == 'archive.tar.gz'
+E         
+E         - archive.tar.gz
+E         + No files found matching the pattern.
+
+test_0786.py:30: AssertionError
+=========================== short test summary info ============================
+FAILED test_0786.py::test_task_func_no_files - AssertionError: assert '/tmp/a...
+FAILED test_0786.py::test_task_func_one_file - AssertionError: assert 'No fil...
+FAILED test_0786.py::test_task_func_multiple_files - AssertionError: assert '...
+FAILED test_0786.py::test_task_func_archive_exists - AssertionError: assert '...
+FAILED test_0786.py::test_task_func_delete_files - AssertionError: assert 'No...
+5 failed in 0.55s

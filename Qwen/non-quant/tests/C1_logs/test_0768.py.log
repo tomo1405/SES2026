@@ -1,0 +1,49 @@
+...FFF                                                                   [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_nested_lists __________________________
+
+    def test_task_func_nested_lists():
+        result = task_func([[1, 2], [3, 4, 5]])
+        assert isinstance(result, dict)
+        assert all(char in LETTERS for char in result.keys())
+>       assert sum(result.values()) == 5
+E       AssertionError: assert 2 == 5
+E        +  where 2 = sum(dict_values([1, 1]))
+E        +    where dict_values([1, 1]) = <built-in method values of dict object at 0x7aff3f4f0d40>()
+E        +      where <built-in method values of dict object at 0x7aff3f4f0d40> = {'Y': 1, 'O': 1}.values
+
+test_0768.py:29: AssertionError
+__________________________ test_task_func_large_input __________________________
+
+    def test_task_func_large_input():
+        result = task_func([[1]*100, [2]*200, [3]*300])
+        assert isinstance(result, dict)
+        assert all(char in LETTERS for char in result.keys())
+>       assert sum(result.values()) == 600
+E       AssertionError: assert 3 == 600
+E        +  where 3 = sum(dict_values([1, 1, 1]))
+E        +    where dict_values([1, 1, 1]) = <built-in method values of dict object at 0x7aff3f540300>()
+E        +      where <built-in method values of dict object at 0x7aff3f540300> = {'r': 1, 'C': 1, 'g': 1}.values
+
+test_0768.py:35: AssertionError
+__________________ test_task_func_repeated_calls_consistency ___________________
+
+    def test_task_func_repeated_calls_consistency():
+        result1 = task_func([[1, 2], [3, 4]])
+        result2 = task_func([[1, 2], [3, 4]])
+        assert isinstance(result1, dict)
+        assert isinstance(result2, dict)
+        assert all(char in LETTERS for char in result1.keys())
+        assert all(char in LETTERS for char in result2.keys())
+>       assert sum(result1.values()) == 4
+E       AssertionError: assert 2 == 4
+E        +  where 2 = sum(dict_values([2]))
+E        +    where dict_values([2]) = <built-in method values of dict object at 0x7aff3f4c3ac0>()
+E        +      where <built-in method values of dict object at 0x7aff3f4c3ac0> = {'z': 2}.values
+
+test_0768.py:44: AssertionError
+=========================== short test summary info ============================
+FAILED test_0768.py::test_task_func_nested_lists - AssertionError: assert 2 == 5
+FAILED test_0768.py::test_task_func_large_input - AssertionError: assert 3 ==...
+FAILED test_0768.py::test_task_func_repeated_calls_consistency - AssertionErr...
+3 failed, 3 passed in 0.47s

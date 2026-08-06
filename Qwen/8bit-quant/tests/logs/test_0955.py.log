@@ -1,0 +1,62 @@
+F...FFF                                                                  [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_positive ____________________________
+
+    def test_task_func_positive():
+        target_words = ["hello", "world"]
+        n_sentences = 2
+        vocabulary = ["hello", "world", "foo", "bar", "baz", "qux", "quux", "corge", "grault", "garply"]
+        result = task_func(target_words, n_sentences, vocabulary)
+        assert len(result) == n_sentences
+        for sentence in result:
+>           assert all(word.lower() in sentence for word in target_words)
+E           assert False
+E            +  where False = all(<generator object test_task_func_positive.<locals>.<genexpr> at 0x78f59b8eca00>)
+
+test_0955.py:11: AssertionError
+______________________ test_task_func_case_insensitivity _______________________
+
+    def test_task_func_case_insensitivity():
+        target_words = ["Hello", "WORLD"]
+        n_sentences = 2
+        vocabulary = ["hello", "world", "foo", "bar", "baz", "qux", "quux", "corge", "grault", "garply"]
+        result = task_func(target_words, n_sentences, vocabulary)
+        assert len(result) == n_sentences
+        for sentence in result:
+            assert "hello" in sentence
+>           assert "world" in sentence
+E           AssertionError: assert 'world' in 'quux quux qux hello corge foo grault quux foo foo'
+
+test_0955.py:39: AssertionError
+______________________ test_task_func_special_characters _______________________
+
+    def test_task_func_special_characters():
+        target_words = ["hello!", "world?"]
+        n_sentences = 2
+        vocabulary = ["hello!", "world?", "foo", "bar", "baz", "qux", "quux", "corge", "grault", "garply"]
+        result = task_func(target_words, n_sentences, vocabulary)
+        assert len(result) == n_sentences
+        for sentence in result:
+>           assert "hello!" in sentence
+E           AssertionError: assert 'hello!' in 'foo qux quux garply baz garply bar qux garply foo'
+
+test_0955.py:48: AssertionError
+________________________ test_task_func_long_vocabulary ________________________
+
+    def test_task_func_long_vocabulary():
+        target_words = ["hello"]
+        n_sentences = 2
+        vocabulary = [f"word_{i}" for i in range(100)]
+        result = task_func(target_words, n_sentences, vocabulary)
+        assert len(result) == n_sentences
+        for sentence in result:
+>           assert "hello" in sentence
+E           AssertionError: assert 'hello' in 'word_55 word_27 word_27 word_87 word_0 word_23 word_54 word_50 word_47 word_0'
+
+test_0955.py:58: AssertionError
+=========================== short test summary info ============================
+FAILED test_0955.py::test_task_func_positive - assert False
+FAILED test_0955.py::test_task_func_case_insensitivity - AssertionError: asse...
+FAILED test_0955.py::test_task_func_special_characters - AssertionError: asse...
+FAILED test_0955.py::test_task_func_long_vocabulary - AssertionError: assert ...
+4 failed, 3 passed in 0.53s

@@ -1,0 +1,38 @@
+...FF                                                                    [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_non_integer_dimension _____________________
+
+    def test_task_func_non_integer_dimension():
+        dimension = 5.5
+        with pytest.raises(ValueError):
+>           task_func(dimension)
+
+test_0803.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0803.py:9: in task_func
+    matrix = np.random.randint(1, 101, size=(dimension, dimension))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+numpy/random/mtrand.pyx:801: in numpy.random.mtrand.RandomState.randint
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   TypeError: 'float' object cannot be interpreted as an integer
+
+numpy/random/_bounded_integers.pyx:1343: TypeError
+_____________________________ test_task_func_seed ______________________________
+
+    def test_task_func_seed():
+        dimension = 5
+        seed = 42
+        matrix, flat_list = task_func(dimension, seed)
+        assert matrix.shape == (dimension, dimension)
+        assert len(flat_list) == dimension * dimension
+>       assert np.random.get_state()[1][0] == seed
+E       assert np.uint32(723970371) == 42
+
+test_0803.py:33: AssertionError
+=========================== short test summary info ============================
+FAILED test_0803.py::test_task_func_non_integer_dimension - TypeError: 'float...
+FAILED test_0803.py::test_task_func_seed - assert np.uint32(723970371) == 42
+2 failed, 3 passed in 0.63s

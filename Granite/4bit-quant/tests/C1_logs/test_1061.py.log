@@ -1,0 +1,35 @@
+...F                                                                     [100%]
+=================================== FAILURES ===================================
+_ test_task_func[df3-column_name-The distribution of values is not uniform.-Distribution of values in column_name] _
+
+df =    column_name
+0            1
+1            2
+2            3
+3            4
+column_name = 'column_name'
+expected_message = 'The distribution of values is not uniform.'
+expected_ax_title = 'Distribution of values in column_name'
+
+    @pytest.mark.parametrize(
+        "df, column_name, expected_message, expected_ax_title",
+        [
+            (pd.DataFrame(), "column_name", "The DataFrame is empty or the specified column has no data.", "Distribution of values in column_name (No Data)"),
+            (pd.DataFrame({"column_name": [1, 2, 3]}), "column_name", "The distribution of values is uniform.", "Distribution of values in column_name"),
+            (pd.DataFrame({"column_name": [1, 1, 1]}), "column_name", "The distribution of values is uniform.", "Distribution of values in column_name"),
+            (pd.DataFrame({"column_name": [1, 2, 3, 4]}), "column_name", "The distribution of values is not uniform.", "Distribution of values in column_name"),
+        ],
+    )
+    def test_task_func(df, column_name, expected_message, expected_ax_title):
+        message, ax = task_func(df, column_name)
+>       assert message == expected_message
+E       AssertionError: assert 'The distribu...s is uniform.' == 'The distribu... not uniform.'
+E         
+E         - The distribution of values is not uniform.
+E         ?                              ----
+E         + The distribution of values is uniform.
+
+test_1061.py:18: AssertionError
+=========================== short test summary info ============================
+FAILED test_1061.py::test_task_func[df3-column_name-The distribution of values is not uniform.-Distribution of values in column_name]
+1 failed, 3 passed in 2.85s

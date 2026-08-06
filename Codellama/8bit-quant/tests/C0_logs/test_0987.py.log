@@ -1,0 +1,105 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        json_data = '{"key1": [1, 2, 3], "key2": [4, 5, 6]}'
+        key_path = ["key1", "key2"]
+        expected_values = np.array([1, 2, 3, 4, 5, 6])
+    
+>       fig = task_func(json_data, key_path)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0987.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+json_data = '{"key1": [1, 2, 3], "key2": [4, 5, 6]}'
+key_path = ['key1', 'key2']
+
+    def task_func(json_data: str, key_path: list):
+        try:
+            data = json.loads(json_data)
+            for key in key_path:
+>               data = data[key]
+                       ^^^^^^^^^
+E               TypeError: list indices must be integers or slices, not str
+
+../../../src/src_0987.py:10: TypeError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        json_data = '{"key1": [1, 2, 3], "key2": [4, 5, 6]}'
+        key_path = ["key1", "key3"]
+    
+        with pytest.raises(KeyError):
+>           task_func(json_data, key_path)
+
+test_0987.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+json_data = '{"key1": [1, 2, 3], "key2": [4, 5, 6]}'
+key_path = ['key1', 'key3']
+
+    def task_func(json_data: str, key_path: list):
+        try:
+            data = json.loads(json_data)
+            for key in key_path:
+>               data = data[key]
+                       ^^^^^^^^^
+E               TypeError: list indices must be integers or slices, not str
+
+../../../src/src_0987.py:10: TypeError
+__________________________ test_task_func_empty_input __________________________
+
+    def test_task_func_empty_input():
+        json_data = '{"key1": [1, 2, 3], "key2": [4, 5, 6]}'
+        key_path = []
+    
+        with pytest.raises(ValueError):
+>           task_func(json_data, key_path)
+
+test_0987.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+json_data = '{"key1": [1, 2, 3], "key2": [4, 5, 6]}', key_path = []
+
+    def task_func(json_data: str, key_path: list):
+        try:
+            data = json.loads(json_data)
+            for key in key_path:
+                data = data[key]
+>           values = np.fromstring(data, sep=",")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           TypeError: a bytes-like object is required, not 'dict'
+
+../../../src/src_0987.py:11: TypeError
+________________________ test_task_func_malformed_input ________________________
+
+    def test_task_func_malformed_input():
+        json_data = '{"key1": [1, 2, 3], "key2": [4, 5, 6]}'
+        key_path = ["key1", "key2"]
+    
+        with pytest.raises(json.decoder.JSONDecodeError):
+>           task_func(json_data, key_path)
+
+test_0987.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+json_data = '{"key1": [1, 2, 3], "key2": [4, 5, 6]}'
+key_path = ['key1', 'key2']
+
+    def task_func(json_data: str, key_path: list):
+        try:
+            data = json.loads(json_data)
+            for key in key_path:
+>               data = data[key]
+                       ^^^^^^^^^
+E               TypeError: list indices must be integers or slices, not str
+
+../../../src/src_0987.py:10: TypeError
+=========================== short test summary info ============================
+FAILED test_0987.py::test_task_func_valid_input - TypeError: list indices mus...
+FAILED test_0987.py::test_task_func_invalid_input - TypeError: list indices m...
+FAILED test_0987.py::test_task_func_empty_input - TypeError: a bytes-like obj...
+FAILED test_0987.py::test_task_func_malformed_input - TypeError: list indices...
+4 failed in 3.51s

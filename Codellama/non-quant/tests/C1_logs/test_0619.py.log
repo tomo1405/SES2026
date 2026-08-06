@@ -1,0 +1,39 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that the function returns a DataFrame and a list of plots
+        results, plots = task_func(5, 2)
+        assert isinstance(results, pd.DataFrame)
+        assert isinstance(plots, list)
+        assert len(plots) == 2
+    
+        # Test that the DataFrame has the correct columns
+        assert set(results.columns) == {'Team', 'Goals', 'Penalty Cost'}
+    
+        # Test that the plots are correct
+>       assert isinstance(plots[0], sns.barplot)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: isinstance() arg 2 must be a type, a tuple of types, or a union
+
+test_0619.py:17: TypeError
+=============================== warnings summary ===============================
+Codellama/non-quant/tests/test_0619.py::test_task_func
+  /work/tomohiro-w/utg/src/src_0619.py:19: FutureWarning: 
+  
+  Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+  
+    plot1 = sns.barplot(x='Team', y='Goals', data=results_df, palette='viridis')
+
+Codellama/non-quant/tests/test_0619.py::test_task_func
+  /work/tomohiro-w/utg/src/src_0619.py:21: FutureWarning: 
+  
+  Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+  
+    plot2 = sns.barplot(x='Team', y='Penalty Cost', data=results_df, palette='viridis')
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0619.py::test_task_func - TypeError: isinstance() arg 2 must be a...
+1 failed, 2 warnings in 3.47s

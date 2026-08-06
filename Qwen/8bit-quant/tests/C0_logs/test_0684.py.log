@@ -1,0 +1,47 @@
+...FF                                                                    [100%]
+=================================== FAILURES ===================================
+____________________ test_task_func_with_non_numeric_value _____________________
+
+temp_yaml_file = '/tmp/tmpu1z2ao2s'
+
+    def test_task_func_with_non_numeric_value(temp_yaml_file):
+        with open(temp_yaml_file, 'w') as file:
+            yaml.safe_dump({'test_key': 'string'}, file)
+    
+>       result = task_func(temp_yaml_file, 'test_key')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0684.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+yaml_path = '/tmp/tmpu1z2ao2s', key = 'test_key'
+
+    def task_func(yaml_path, key):
+        with open(yaml_path, 'r') as file:
+            data = yaml.safe_load(file)
+    
+        if key in data:
+>           data[key] = math.cos(data[key])
+                        ^^^^^^^^^^^^^^^^^^^
+E           TypeError: must be real number, not str
+
+../../../src/src_0684.py:8: TypeError
+_______________________ test_task_func_with_nested_keys ________________________
+
+temp_yaml_file = '/tmp/tmp7xvk82me'
+
+    def test_task_func_with_nested_keys(temp_yaml_file):
+        with open(temp_yaml_file, 'w') as file:
+            yaml.safe_dump({'outer': {'inner': 2.0}}, file)
+    
+        result = task_func(temp_yaml_file, 'outer.inner')
+>       assert result['outer']['inner'] == math.cos(2.0)
+E       assert 2.0 == -0.4161468365471424
+E        +  where -0.4161468365471424 = <built-in function cos>(2.0)
+E        +    where <built-in function cos> = math.cos
+
+test_0684.py:46: AssertionError
+=========================== short test summary info ============================
+FAILED test_0684.py::test_task_func_with_non_numeric_value - TypeError: must ...
+FAILED test_0684.py::test_task_func_with_nested_keys - assert 2.0 == -0.41614...
+2 failed, 3 passed in 0.59s

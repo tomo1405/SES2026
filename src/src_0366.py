@@ -1,0 +1,17 @@
+from collections import Counter
+import json
+import random
+# Constants
+WORDS = ['apple', 'banana', 'cherry', 'date', 'elderberry', 'fig', 'grape', 'honeydew']
+def task_func(n, file_name, seed=77):
+    random.seed(seed)
+    if n < 1 or n > len(WORDS):
+        raise ValueError('n must be greater than 0')
+    random.shuffle(WORDS)
+    selected_words = WORDS[:n]
+    counts = Counter(selected_words)
+
+    with open(file_name, 'w') as f:
+        json.dump(dict(counts), f)
+
+    return file_name

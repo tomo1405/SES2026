@@ -1,0 +1,40 @@
+..FF                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_data ___________________________
+
+    def test_task_func_valid_data():
+        ax = task_func("2020-01-10,2020-02-20,2020-03-30")
+        assert isinstance(ax, plt.Axes)
+        expected_df = pd.DataFrame({
+            'Month': ['January', 'February', 'March'],
+            'Value': [10, 20, 30]
+        }).set_index('Month')
+        assert ax.get_title() == "Monthly Data for 2020"
+>       assert all(ax.get_xticklabels() == expected_df.index)
+E       AssertionError: assert False
+E        +  where False = all([Text(0, 0, '..., 0, 'March')] == Index(['Janua... name='Month')
+E           
+E           Use -v to get more diff)
+
+test_0561.py:23: AssertionError
+_________________________ test_task_func_single_entry __________________________
+
+    def test_task_func_single_entry():
+        ax = task_func("2020-01-10")
+        assert isinstance(ax, plt.Axes)
+        expected_df = pd.DataFrame({
+            'Month': ['January'],
+            'Value': [10]
+        }).set_index('Month')
+        assert ax.get_title() == "Monthly Data for 2020"
+>       assert all(ax.get_xticklabels() == expected_df.index)
+E       AssertionError: assert False
+E        +  where False = all([Text(0, 0, 'January')] == Index(['Janua... name='Month')
+E           
+E           Use -v to get more diff)
+
+test_0561.py:33: AssertionError
+=========================== short test summary info ============================
+FAILED test_0561.py::test_task_func_valid_data - AssertionError: assert False
+FAILED test_0561.py::test_task_func_single_entry - AssertionError: assert False
+2 failed, 2 passed in 2.16s

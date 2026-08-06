@@ -1,0 +1,32 @@
+.F.F                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_data ___________________________
+
+    def test_task_func_valid_data():
+        data = pd.DataFrame({
+            'A': [1, 2, 3],
+            'B': [4, 5, 6]
+        })
+        labels, kmeans = task_func(data, n_clusters=2, seed=42)
+>       assert isinstance(labels, list)
+E       assert False
+E        +  where False = isinstance(array([0, 0, 1], dtype=int32), list)
+
+test_0881.py:20: AssertionError
+_________________________ test_task_func_random_state __________________________
+
+    def test_task_func_random_state():
+        data = pd.DataFrame({
+            'A': [1, 2, 3],
+            'B': [4, 5, 6]
+        })
+        labels1, kmeans1 = task_func(data, seed=42)
+        labels2, kmeans2 = task_func(data, seed=42)
+>       assert labels1 == labels2
+E       ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+test_0881.py:40: ValueError
+=========================== short test summary info ============================
+FAILED test_0881.py::test_task_func_valid_data - assert False
+FAILED test_0881.py::test_task_func_random_state - ValueError: The truth valu...
+2 failed, 2 passed in 2.94s

@@ -1,0 +1,49 @@
+..F                                                                      [100%]
+=================================== FAILURES ===================================
+_______________________________ test_valid_input _______________________________
+
+sample_data =         dates  values
+0  2022-01-01      10
+1  2022-01-02      20
+2  2022-01-03      30
+3  2022-01-04      40
+4  2022-01-05      50
+
+    def test_valid_input(sample_data):
+>       ax = task_func(sample_data, '%Y-%m-%d', 'US')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0476.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data =         dates  values
+0  2022-01-01      10
+1  2022-01-02      20
+2  2022-01-03      30
+3  2022-01-04      40
+4  2022-01-05      50
+date_format = '%Y-%m-%d', country = 'US'
+country_codes = {'Russia': 'ru_RU', 'Germany': 'de_DE', 'France': 'fr_FR', 'Spain': 'es_ES', ...}
+
+    def task_func(data, date_format, country, country_codes=None):
+        default_country_codes = {
+            'Russia': 'ru_RU',
+            'Germany': 'de_DE',
+            'France': 'fr_FR',
+            'Spain': 'es_ES',
+            'Italy': 'it_IT'
+        }
+    
+        if country_codes is None:
+            country_codes = default_country_codes
+    
+        if not isinstance(data, pd.DataFrame) or not isinstance(date_format, str) or not isinstance(country_codes, dict):
+            raise ValueError("Invalid input types.")
+        if country not in country_codes:
+>           raise ValueError(f"Country '{country}' not found in country codes.")
+E           ValueError: Country 'US' not found in country codes.
+
+../../../src/src_0476.py:18: ValueError
+=========================== short test summary info ============================
+FAILED test_0476.py::test_valid_input - ValueError: Country 'US' not found in...
+1 failed, 2 passed in 1.09s

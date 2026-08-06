@@ -1,0 +1,31 @@
+F...F                                                                    [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_data ___________________________
+
+    def test_task_func_valid_data():
+        data = pd.DataFrame({'dates': ['2023-01-01', '2023-02-01', '2023-03-01']})
+        date_format = '%Y-%m-%d'
+        country = 'Russia'
+        ax = task_func(data, date_format, country)
+>       assert isinstance(ax, pd.plotting._matplotlib.hist.Plot)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'pandas.plotting._matplotlib.hist' has no attribute 'Plot'
+
+test_0476.py:11: AttributeError
+_____________________ test_task_func_custom_country_codes ______________________
+
+    def test_task_func_custom_country_codes():
+        data = pd.DataFrame({'dates': ['2023-01-01', '2023-02-01', '2023-03-01']})
+        date_format = '%Y-%m-%d'
+        country = 'Custom'
+        country_codes = {'Custom': 'custom_code'}
+        ax = task_func(data, date_format, country, country_codes=country_codes)
+>       assert isinstance(ax, pd.plotting._matplotlib.hist.Plot)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'pandas.plotting._matplotlib.hist' has no attribute 'Plot'
+
+test_0476.py:42: AttributeError
+=========================== short test summary info ============================
+FAILED test_0476.py::test_task_func_valid_data - AttributeError: module 'pand...
+FAILED test_0476.py::test_task_func_custom_country_codes - AttributeError: mo...
+2 failed, 3 passed in 2.01s

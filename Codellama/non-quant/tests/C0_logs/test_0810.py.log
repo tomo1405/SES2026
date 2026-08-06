@@ -1,0 +1,19 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data = np.array([[1, 2], [3, 4], [5, 6], [7, 8]])
+        n_clusters = 2
+        clusters = task_func(data, n_clusters)
+        assert len(clusters) == n_clusters
+        assert all(len(cluster) > 0 for cluster in clusters.values())
+        assert all(cluster.dtype == np.int64 for cluster in clusters.values())
+>       assert all(cluster.shape[0] == 2 for cluster in clusters.values())
+E       assert False
+E        +  where False = all(<generator object test_task_func.<locals>.<genexpr> at 0x76a77d9325a0>)
+
+test_0810.py:13: AssertionError
+=========================== short test summary info ============================
+FAILED test_0810.py::test_task_func - assert False
+1 failed in 2.86s

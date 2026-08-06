@@ -1,0 +1,32 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Sample data
+        X = np.array([1, 2, 3, 4, 5])
+        Y = np.array([2, 4, 6, 8, 10])
+    
+        # Expected parameters (a, b, c) for the quadratic function y = 2x^2 + 0x + 0
+        expected_params = [2, 0, 0]
+    
+        # Call the function
+        params, ax = task_func(X, Y)
+    
+        # Check if the parameters are close to the expected values
+>       assert np.allclose(params, expected_params, atol=1e-2), f"Parameters {params} do not match expected {expected_params}"
+E       AssertionError: Parameters [np.float64(-8.881784197001252e-16), np.float64(2.000000000000006), np.float64(-1.0658141036401503e-14)] do not match expected [2, 0, 0]
+E       assert False
+E        +  where False = <function allclose at 0x71e7bcd3a5f0>([np.float64(-8.881784197001252e-16), np.float64(2.000000000000006), np.float64(-1.0658141036401503e-14)], [2, 0, 0], atol=0.01)
+E        +    where <function allclose at 0x71e7bcd3a5f0> = np.allclose
+
+test_0477.py:18: AssertionError
+=============================== warnings summary ===============================
+Qwen/non-quant/tests/test_0477.py::test_task_func
+  /work/tomohiro-w/utg/src/src_0477.py:8: OptimizeWarning: Covariance of the parameters could not be estimated
+    popt, pcov = curve_fit(func, X, Y)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0477.py::test_task_func - AssertionError: Parameters [np.float64(...
+1 failed, 1 warning in 2.80s

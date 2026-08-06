@@ -1,0 +1,79 @@
+F..F                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_excel __________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1265/test_task_func_valid_excel0')
+
+    def test_task_func_valid_excel(tmpdir):
+        # Create a temporary Excel file
+        excel_file_path = tmpdir.mkdir("excel")
+        excel_file_name = "test.xlsx"
+        excel_file = excel_file_path.join(excel_file_name)
+    
+        wb = Workbook()
+        ws = wb.active
+        ws.append([1, 2, 3])
+        ws.append([4, 5, 6])
+        wb.save(str(excel_file))
+    
+        # Create a temporary CSV directory
+        csv_file_path = tmpdir.mkdir("csv")
+    
+        # Call the function
+        result = task_func(excel_file_name, str(excel_file_path), str(csv_file_path))
+    
+        # Check if the CSV file was created
+        csv_file = csv_file_path.join(result)
+        assert csv_file.exists()
+    
+        # Read the CSV file and check its contents
+        with open(str(csv_file), 'r', newline='', encoding='utf-8') as file:
+            reader = csv.reader(file)
+            rows = list(reader)
+>           assert rows == [[1, 2, 3], [4, 5, 6]]
+E           AssertionError: assert [['1', '2', '...4', '5', '6']] == [[1, 2, 3], [4, 5, 6]]
+E             
+E             At index 0 diff: ['1', '2', '3'] != [1, 2, 3]
+E             Use -v to get more diff
+
+test_0408.py:33: AssertionError
+_________________________ test_task_func_existing_csv __________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1265/test_task_func_existing_csv0')
+
+    def test_task_func_existing_csv(tmpdir):
+        excel_file_path = tmpdir.mkdir("excel")
+        csv_file_path = tmpdir.mkdir("csv")
+        excel_file_name = "test.xlsx"
+    
+        wb = Workbook()
+        ws = wb.active
+        ws.append([1, 2, 3])
+        wb.save(str(excel_file_path.join(excel_file_name)))
+    
+        # Create an existing CSV file
+        csv_file_name = "test.csv"
+        csv_file = csv_file_path.join(csv_file_name)
+        with open(str(csv_file), 'w', newline='', encoding='utf-8') as file:
+            writer = csv.writer(file)
+            writer.writerow([7, 8, 9])
+    
+        result = task_func(excel_file_name, str(excel_file_path), str(csv_file_path))
+    
+        csv_file = csv_file_path.join(result)
+        assert csv_file.exists()
+    
+        with open(str(csv_file), 'r', newline='', encoding='utf-8') as file:
+            reader = csv.reader(file)
+            rows = list(reader)
+>           assert rows == [[1, 2, 3]]
+E           AssertionError: assert [['1', '2', '3']] == [[1, 2, 3]]
+E             
+E             At index 0 diff: ['1', '2', '3'] != [1, 2, 3]
+E             Use -v to get more diff
+
+test_0408.py:89: AssertionError
+=========================== short test summary info ============================
+FAILED test_0408.py::test_task_func_valid_excel - AssertionError: assert [['1...
+FAILED test_0408.py::test_task_func_existing_csv - AssertionError: assert [['...
+2 failed, 2 passed in 1.00s

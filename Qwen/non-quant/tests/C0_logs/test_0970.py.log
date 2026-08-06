@@ -1,0 +1,35 @@
+F....                                                                    [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_numeric_data __________________________
+
+    def test_task_func_numeric_data():
+        df = pd.DataFrame({
+            'A': [1, 2, 3],
+            'B': [4, 5, 6]
+        })
+        expected_output = pd.DataFrame({
+            'A': [0.0, 0.333333, 0.666667],
+            'B': [0.0, 0.333333, 0.666667]
+        })
+        result = task_func(df)
+>       pd.testing.assert_frame_equal(result, expected_output)
+
+test_0970.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pandas/_libs/testing.pyx:53: in pandas._libs.testing.assert_almost_equal
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   AssertionError: DataFrame.iloc[:, 0] (column name="A") are different
+E   
+E   DataFrame.iloc[:, 0] (column name="A") values are different (66.66667 %)
+E   [index]: [0, 1, 2]
+E   [left]:  [0.0, 0.4000000000000001, 1.0000000000000002]
+E   [right]: [0.0, 0.333333, 0.666667]
+E   At positional index 1, first diff: 0.4000000000000001 != 0.333333
+
+pandas/_libs/testing.pyx:171: AssertionError
+=========================== short test summary info ============================
+FAILED test_0970.py::test_task_func_numeric_data - AssertionError: DataFrame....
+1 failed, 4 passed in 2.97s

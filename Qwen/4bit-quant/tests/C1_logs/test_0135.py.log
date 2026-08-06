@@ -1,0 +1,27 @@
+F...                                                                     [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_valid_dataframe ______________________
+
+    def test_task_func_with_valid_dataframe():
+        # Create a sample DataFrame
+        data = {'A': [1, 2, 3, 4, 5]}
+        df = pd.DataFrame(data)
+    
+        # Redirect the plot to a BytesIO object
+        fig, ax = plt.subplots()
+        with BytesIO() as buf:
+            plt.savefig(buf, format='png')
+            buf.seek(0)
+            img_str = base64.b64encode(buf.getvalue()).decode()
+    
+        # Call the function
+        result_ax = task_func(df)
+    
+        # Check if the returned axis is the same as the created axis
+>       assert result_ax == ax
+E       AssertionError: assert <Axes: title={'center': 'Histogram of A'}, xlabel='Value', ylabel='Frequency'> == <Axes: >
+
+test_0135.py:24: AssertionError
+=========================== short test summary info ============================
+FAILED test_0135.py::test_task_func_with_valid_dataframe - AssertionError: as...
+1 failed, 3 passed in 2.04s

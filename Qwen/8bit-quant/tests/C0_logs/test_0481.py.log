@@ -1,0 +1,35 @@
+.F..                                                                     [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_with_seed ___________________________
+
+    def test_task_func_with_seed():
+        data_list = ["apple, banana, cherry", "dog, elephant, fox"]
+        seed = 42
+        expected_columns = ["Original String", "Shuffled String"]
+    
+        result_df = task_func(data_list, seed=seed)
+    
+        assert isinstance(result_df, pd.DataFrame)
+        assert list(result_df.columns) == expected_columns
+        assert len(result_df) == len(data_list)
+    
+        # Check that the original strings are preserved
+        for i, original in enumerate(data_list):
+            assert result_df.loc[i, "Original String"] == original
+    
+        # Check that the shuffled strings are consistent with the seed
+        expected_shuffled = [
+            "banana, apple, cherry",
+            "elephant, dog, fox"
+        ]
+        for i, shuffled in enumerate(expected_shuffled):
+>           assert result_df.loc[i, "Shuffled String"] == shuffled
+E           AssertionError: assert 'fox, elephant, dog' == 'elephant, dog, fox'
+E             
+E             - elephant, dog, fox
+E             + fox, elephant, dog
+
+test_0481.py:40: AssertionError
+=========================== short test summary info ============================
+FAILED test_0481.py::test_task_func_with_seed - AssertionError: assert 'fox, ...
+1 failed, 3 passed in 1.69s

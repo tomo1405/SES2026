@@ -1,0 +1,50 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        n_data_points = 5000
+        min_value = 0.0
+        max_value = 10.0
+>       result = task_func(n_data_points, min_value, max_value)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0246.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+n_data_points = 5000, min_value = 0.0, max_value = 10.0
+
+    def task_func(n_data_points=5000, min_value=0.0, max_value=10.0):
+        data = [round(random.uniform(min_value, max_value), 3) for _ in range(n_data_points)]
+        data_df = pd.DataFrame(data, columns=['Value'])
+    
+        mean = data_df['Value'].mean()
+        median = data_df['Value'].median()
+>       mode = stats.mode(data_df['Value'].values)[0][0]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       IndexError: invalid index to scalar variable.
+
+test_0246.py:12: IndexError
+______________________ test_task_func_with_invalid_input _______________________
+
+    def test_task_func_with_invalid_input():
+        with pytest.raises(ValueError):
+>           task_func(n_data_points='invalid', min_value=0.0, max_value=10.0)
+
+test_0246.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+n_data_points = 'invalid', min_value = 0.0, max_value = 10.0
+
+    def task_func(n_data_points=5000, min_value=0.0, max_value=10.0):
+>       data = [round(random.uniform(min_value, max_value), 3) for _ in range(n_data_points)]
+                                                                        ^^^^^^^^^^^^^^^^^^^^
+E       TypeError: 'str' object cannot be interpreted as an integer
+
+test_0246.py:7: TypeError
+=========================== short test summary info ============================
+FAILED test_0246.py::test_task_func - IndexError: invalid index to scalar var...
+FAILED test_0246.py::test_task_func_with_invalid_input - TypeError: 'str' obj...
+2 failed in 2.50s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

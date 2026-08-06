@@ -1,0 +1,92 @@
+....F.FF                                                                 [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_none_value ___________________________
+
+    def test_task_func_none_value():
+        data = [{'Alice': None}]
+>       ax = task_func(data)
+             ^^^^^^^^^^^^^^^
+
+test_0523.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = [{'Alice': None}]
+
+    def task_func(data):
+        if not data:
+            return None
+    
+        combined_dict = {}
+        for d in data:
+            for k, v in d.items():
+                if v is None:
+                    continue
+                elif v < 0:
+                    raise ValueError("Scores must be non-negative.")
+                if k in combined_dict:
+                    combined_dict[k].append(v)
+                else:
+                    combined_dict[k] = [v]
+    
+        avg_scores = {k: sum(v) / len(v) for k, v in combined_dict.items()}
+        avg_scores = collections.OrderedDict(sorted(avg_scores.items()))
+>       labels, values = zip(*avg_scores.items())
+        ^^^^^^^^^^^^^^
+E       ValueError: not enough values to unpack (expected 2, got 0)
+
+../../../src/src_0523.py:21: ValueError
+___________________ test_task_func_no_data_with_none_values ____________________
+
+    def test_task_func_no_data_with_none_values():
+        data = [{'Alice': None}, {'Bob': None}]
+>       ax = task_func(data)
+             ^^^^^^^^^^^^^^^
+
+test_0523.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = [{'Alice': None}, {'Bob': None}]
+
+    def task_func(data):
+        if not data:
+            return None
+    
+        combined_dict = {}
+        for d in data:
+            for k, v in d.items():
+                if v is None:
+                    continue
+                elif v < 0:
+                    raise ValueError("Scores must be non-negative.")
+                if k in combined_dict:
+                    combined_dict[k].append(v)
+                else:
+                    combined_dict[k] = [v]
+    
+        avg_scores = {k: sum(v) / len(v) for k, v in combined_dict.items()}
+        avg_scores = collections.OrderedDict(sorted(avg_scores.items()))
+>       labels, values = zip(*avg_scores.items())
+        ^^^^^^^^^^^^^^
+E       ValueError: not enough values to unpack (expected 2, got 0)
+
+../../../src/src_0523.py:21: ValueError
+__________________________ test_task_func_plot_color ___________________________
+
+    def test_task_func_plot_color():
+        data = [{'Alice': 85}, {'Bob': 90}]
+        ax = task_func(data)
+        assert isinstance(ax, plt.Axes)
+        colors = [patch.get_facecolor()[0] for patch in ax.patches]
+>       assert colors == [1.0, 0.0]  # Red and Yellow in RGBA format
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert [1.0, 1.0] == [1.0, 0.0]
+E         
+E         At index 1 diff: 1.0 != 0.0
+E         Use -v to get more diff
+
+test_0523.py:59: AssertionError
+=========================== short test summary info ============================
+FAILED test_0523.py::test_task_func_none_value - ValueError: not enough value...
+FAILED test_0523.py::test_task_func_no_data_with_none_values - ValueError: no...
+FAILED test_0523.py::test_task_func_plot_color - assert [1.0, 1.0] == [1.0, 0.0]
+3 failed, 5 passed in 1.53s

@@ -1,0 +1,73 @@
+.FFF                                                                     [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_non_empty_array ______________________
+
+non_empty_array = array([[1, 2, 3],
+       [4, 5, 6],
+       [7, 8, 9]])
+
+    def test_task_func_with_non_empty_array(non_empty_array):
+        ax = task_func(non_empty_array)
+        assert isinstance(ax, plt.Axes)
+        assert ax.get_title() == "Time Series of Row Sums"
+    
+        # Check if the plot contains the correct data
+        fig = ax.get_figure()
+        buf = BytesIO()
+        fig.savefig(buf)
+        buf.seek(0)
+        loaded_fig = Figure()
+>       loaded_fig.from_string(buf.read())
+        ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Figure' object has no attribute 'from_string'
+
+test_1063.py:33: AttributeError
+_____________________ test_task_func_with_single_row_array _____________________
+
+    def test_task_func_with_single_row_array():
+        arr = np.array([[1, 2, 3]])
+        ax = task_func(arr)
+        assert isinstance(ax, plt.Axes)
+        assert ax.get_title() == "Time Series of Row Sums"
+    
+        # Check if the plot contains the correct data
+        fig = ax.get_figure()
+        buf = BytesIO()
+        fig.savefig(buf)
+        buf.seek(0)
+        loaded_fig = Figure()
+>       loaded_fig.from_string(buf.read())
+        ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Figure' object has no attribute 'from_string'
+
+test_1063.py:49: AttributeError
+___________________ test_task_func_with_single_column_array ____________________
+
+    def test_task_func_with_single_column_array():
+        arr = np.array([[1], [2], [3]])
+        ax = task_func(arr)
+        assert isinstance(ax, plt.Axes)
+        assert ax.get_title() == "Time Series of Row Sums"
+    
+        # Check if the plot contains the correct data
+        fig = ax.get_figure()
+        buf = BytesIO()
+        fig.savefig(buf)
+        buf.seek(0)
+        loaded_fig = Figure()
+>       loaded_fig.from_string(buf.read())
+        ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Figure' object has no attribute 'from_string'
+
+test_1063.py:65: AttributeError
+=============================== warnings summary ===============================
+Qwen/4bit-quant/tests/test_1063.py::test_task_func_with_single_row_array
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/pandas/plotting/_matplotlib/core.py:1613: UserWarning: Attempting to set identical low and high xlims makes transformation singular; automatically expanding.
+    ax.set_xlim(left, right)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_1063.py::test_task_func_with_non_empty_array - AttributeError: 'F...
+FAILED test_1063.py::test_task_func_with_single_row_array - AttributeError: '...
+FAILED test_1063.py::test_task_func_with_single_column_array - AttributeError...
+3 failed, 1 passed, 1 warning in 2.45s

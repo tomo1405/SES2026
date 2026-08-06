@@ -1,0 +1,85 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a sample dataframe
+        df = pd.DataFrame({
+            'id': [1, 1, 2, 2, 3, 3],
+            'age': [25, 30, 28, 32, 27, 35],
+            'income': [50000, 60000, 55000, 65000, 45000, 70000]
+        })
+    
+        # Call the function
+        df_grouped, (hist, bins) = task_func(df)
+    
+        # Check the output type
+        assert isinstance(df_grouped, pd.DataFrame)
+        assert isinstance(hist, np.ndarray)
+        assert isinstance(bins, np.ndarray)
+    
+        # Check the content of the output
+>       assert df_grouped.shape == (6, 3)
+E       assert (6, 2) == (6, 3)
+E         
+E         At index 1 diff: 2 != 3
+E         Use -v to get more diff
+
+test_0293.py:24: AssertionError
+___________________________ test_task_func_with_nan ____________________________
+
+    def test_task_func_with_nan():
+        # Create a sample dataframe with NaN values
+        df = pd.DataFrame({
+            'id': [1, 1, 2, 2, 3, 3],
+            'age': [25, 30, 28, np.nan, 27, 35],
+            'income': [50000, 60000, 55000, 65000, np.nan, 70000]
+        })
+    
+        # Call the function
+>       df_grouped, (hist, bins) = task_func(df)
+                                   ^^^^^^^^^^^^^
+
+test_0293.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0293.py:17: in task_func
+    hist, bins = np.histogram(df_grouped['income'], bins=10)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/numpy/lib/_histograms_impl.py:792: in histogram
+    bin_edges, uniform_bins = _get_bin_edges(a, bins, range, weights)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/numpy/lib/_histograms_impl.py:425: in _get_bin_edges
+    first_edge, last_edge = _get_outer_edges(a, range)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = array([ 0.,  1.,  0.,  1., nan,  0.]), range = None
+
+    def _get_outer_edges(a, range):
+        """
+        Determine the outer bin edges to use, from either the data or the range
+        argument
+        """
+        if range is not None:
+            first_edge, last_edge = range
+            if first_edge > last_edge:
+                raise ValueError(
+                    'max must be larger than min in range parameter.')
+            if not (np.isfinite(first_edge) and np.isfinite(last_edge)):
+                raise ValueError(
+                    f"supplied range of [{first_edge}, {last_edge}] is not finite")
+        elif a.size == 0:
+            # handle empty arrays. Can't determine range, so use 0-1.
+            first_edge, last_edge = 0, 1
+        else:
+            first_edge, last_edge = a.min(), a.max()
+            if not (np.isfinite(first_edge) and np.isfinite(last_edge)):
+>               raise ValueError(
+                    f"autodetected range of [{first_edge}, {last_edge}] is not finite")
+E               ValueError: autodetected range of [nan, nan] is not finite
+
+../../../.venv/lib/python3.12/site-packages/numpy/lib/_histograms_impl.py:317: ValueError
+=========================== short test summary info ============================
+FAILED test_0293.py::test_task_func - assert (6, 2) == (6, 3)
+FAILED test_0293.py::test_task_func_with_nan - ValueError: autodetected range...
+2 failed in 2.92s

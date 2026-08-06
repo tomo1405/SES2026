@@ -1,0 +1,66 @@
+F.FF                                                                     [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_valid_directory ______________________
+
+    def test_task_func_with_valid_directory():
+        with tempfile.TemporaryDirectory() as src_dir, tempfile.TemporaryDirectory() as dest_dir:
+            # Create some files in the source directory
+            file1 = pathlib.Path(src_dir) / 'file1.txt'
+            file2 = pathlib.Path(src_dir) / 'file2.txt'
+            file1.touch()
+            file2.touch()
+    
+            # Call the function
+            result = task_func(src_dir, dest_dir)
+    
+            # Check the result
+>           assert result == ('', ['file1.txt', 'file2.txt'])
+E           AssertionError: assert ('tmp4_3_6od7... 'file1.txt']) == ('', ['file1.... 'file2.txt'])
+E             
+E             At index 0 diff: 'tmp4_3_6od7' != ''
+E             Use -v to get more diff
+
+test_0975.py:19: AssertionError
+__________________ test_task_func_with_empty_source_directory __________________
+
+    def test_task_func_with_empty_source_directory():
+        with tempfile.TemporaryDirectory() as src_dir, tempfile.TemporaryDirectory() as dest_dir:
+            # Call the function with an empty source directory
+            result = task_func(src_dir, dest_dir)
+    
+            # Check the result
+>           assert result == ('', [])
+E           AssertionError: assert ('tmpl2fpv85h', []) == ('', [])
+E             
+E             At index 0 diff: 'tmpl2fpv85h' != ''
+E             Use -v to get more diff
+
+test_0975.py:40: AssertionError
+_______________________ test_task_func_with_nested_files _______________________
+
+    def test_task_func_with_nested_files():
+        with tempfile.TemporaryDirectory() as src_dir, tempfile.TemporaryDirectory() as dest_dir:
+            # Create nested directories and files in the source directory
+            subdir = pathlib.Path(src_dir) / 'subdir'
+            subdir.mkdir()
+            file1 = subdir / 'file1.txt'
+            file2 = subdir / 'file2.txt'
+            file1.touch()
+            file2.touch()
+    
+            # Call the function
+            result = task_func(src_dir, dest_dir)
+    
+            # Check the result
+>           assert result == ('', ['subdir/file1.txt', 'subdir/file2.txt'])
+E           AssertionError: assert ('tmpkrg9_1a_', []) == ('', ['subdir...r/file2.txt'])
+E             
+E             At index 0 diff: 'tmpkrg9_1a_' != ''
+E             Use -v to get more diff
+
+test_0975.py:59: AssertionError
+=========================== short test summary info ============================
+FAILED test_0975.py::test_task_func_with_valid_directory - AssertionError: as...
+FAILED test_0975.py::test_task_func_with_empty_source_directory - AssertionEr...
+FAILED test_0975.py::test_task_func_with_nested_files - AssertionError: asser...
+3 failed, 1 passed in 0.50s

@@ -1,0 +1,27 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data = np.array([[1, 2], [1, 4], [1, 0], [4, 2], [4, 4], [4, 0]])
+        n_clusters = 2
+        expected_output = {0: np.array([0, 2]), 1: np.array([1, 3, 4, 5])}
+        clusters = task_func(data, n_clusters)
+>       assert clusters == expected_output
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: operands could not be broadcast together with shapes (3,) (2,)
+
+test_0810.py:11: ValueError
+______________________ test_task_func_with_invalid_input _______________________
+
+    def test_task_func_with_invalid_input():
+        data = np.array([[1, 2], [1, 4], [1, 0], [4, 2], [4, 4], [4, 0]])
+        n_clusters = 3
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0810.py:16: Failed
+=========================== short test summary info ============================
+FAILED test_0810.py::test_task_func - ValueError: operands could not be broad...
+FAILED test_0810.py::test_task_func_with_invalid_input - Failed: DID NOT RAIS...
+2 failed in 3.61s

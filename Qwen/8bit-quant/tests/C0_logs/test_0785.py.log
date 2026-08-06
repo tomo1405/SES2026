@@ -1,0 +1,27 @@
+F...                                                                     [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_output _____________________________
+
+    def test_task_func_output():
+        # Test with a small number of entries
+        n = 5
+        df = task_func(n)
+    
+        # Check if the DataFrame has the correct number of rows
+        assert len(df) == n
+    
+        # Check if the DataFrame has the correct columns
+        expected_columns = ['Site', 'Category', 'Response', 'Value']
+        assert list(df.columns) == expected_columns
+    
+        # Check if the 'Value' column contains integers between 1 and 5
+        assert all(df['Value'].between(1, 5))
+    
+        # Clean up the created CSV file
+>       os.remove('news_survey_data.csv')
+E       FileNotFoundError: [Errno 2] No such file or directory: 'news_survey_data.csv'
+
+test_0785.py:22: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0785.py::test_task_func_output - FileNotFoundError: [Errno 2] No ...
+1 failed, 3 passed in 1.81s

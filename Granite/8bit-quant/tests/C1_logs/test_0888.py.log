@@ -1,0 +1,62 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+__________________ test_task_func[T10-100-42-expected_shape0] __________________
+
+T1 = [[1, 2, 3], [4, 5, 6]], row_num = 100, seed = 42
+expected_shape = (100, 12)
+
+    @pytest.mark.parametrize("T1, row_num, seed, expected_shape", [
+        (
+            [[1, 2, 3], [4, 5, 6]],  # T1
+            100,  # row_num
+            42,  # seed
+            (100, 12)  # expected_shape
+        ),
+        (
+            [[10, 20], [30, 40], [50, 60]],  # T1
+            50,  # row_num
+            13,  # seed
+            (50, 18)  # expected_shape
+        ),
+    ])
+    def test_task_func(T1, row_num, seed, expected_shape):
+        df = task_func(T1, row_num, seed)
+>       assert df.shape == expected_shape
+E       assert (100, 21) == (100, 12)
+E         
+E         At index 1 diff: 21 != 12
+E         Use -v to get more diff
+
+test_0888.py:24: AssertionError
+__________________ test_task_func[T11-50-13-expected_shape1] ___________________
+
+T1 = [[10, 20], [30, 40], [50, 60]], row_num = 50, seed = 13
+expected_shape = (50, 18)
+
+    @pytest.mark.parametrize("T1, row_num, seed, expected_shape", [
+        (
+            [[1, 2, 3], [4, 5, 6]],  # T1
+            100,  # row_num
+            42,  # seed
+            (100, 12)  # expected_shape
+        ),
+        (
+            [[10, 20], [30, 40], [50, 60]],  # T1
+            50,  # row_num
+            13,  # seed
+            (50, 18)  # expected_shape
+        ),
+    ])
+    def test_task_func(T1, row_num, seed, expected_shape):
+        df = task_func(T1, row_num, seed)
+>       assert df.shape == expected_shape
+E       assert (50, 210) == (50, 18)
+E         
+E         At index 1 diff: 210 != 18
+E         Use -v to get more diff
+
+test_0888.py:24: AssertionError
+=========================== short test summary info ============================
+FAILED test_0888.py::test_task_func[T10-100-42-expected_shape0] - assert (100...
+FAILED test_0888.py::test_task_func[T11-50-13-expected_shape1] - assert (50, ...
+2 failed in 1.26s

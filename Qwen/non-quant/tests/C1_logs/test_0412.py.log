@@ -1,0 +1,119 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_with_column_c _________________________
+
+    def test_task_func_with_column_c():
+        data = {
+            "a": [1, 2, 3],
+            "b": [4, 5, 6],
+            "c": [7, 8, 9]
+        }
+        output_path = "test_output.json"
+        result = task_func(data, output_path)
+    
+        assert result == output_path
+        assert os.path.exists(output_path)
+    
+        with open(output_path, "r") as file:
+            saved_data = json.load(file)
+    
+        expected_data = {
+            "a": {0: 1, 1: 2, 2: 3},
+            "b": {0: 4, 1: 5, 2: 6}
+        }
+>       assert saved_data == expected_data
+E       AssertionError: assert {'a': {'0': 1...': 5, '2': 6}} == {'a': {0: 1, ..., 1: 5, 2: 6}}
+E         
+E         Differing items:
+E         {'b': {'0': 4, '1': 5, '2': 6}} != {'b': {0: 4, 1: 5, 2: 6}}
+E         {'a': {'0': 1, '1': 2, '2': 3}} != {'a': {0: 1, 1: 2, 2: 3}}
+E         Use -v to get more diff
+
+test_0412.py:26: AssertionError
+_______________________ test_task_func_without_column_c ________________________
+
+    def test_task_func_without_column_c():
+        data = {
+            "a": [1, 2, 3],
+            "b": [4, 5, 6]
+        }
+        output_path = "test_output.json"
+        result = task_func(data, output_path)
+    
+        assert result == output_path
+        assert os.path.exists(output_path)
+    
+        with open(output_path, "r") as file:
+            saved_data = json.load(file)
+    
+        expected_data = {
+            "a": {0: 1, 1: 2, 2: 3},
+            "b": {0: 4, 1: 5, 2: 6}
+        }
+>       assert saved_data == expected_data
+E       AssertionError: assert {'a': {'0': 1...': 5, '2': 6}} == {'a': {0: 1, ..., 1: 5, 2: 6}}
+E         
+E         Differing items:
+E         {'b': {'0': 4, '1': 5, '2': 6}} != {'b': {0: 4, 1: 5, 2: 6}}
+E         {'a': {'0': 1, '1': 2, '2': 3}} != {'a': {0: 1, 1: 2, 2: 3}}
+E         Use -v to get more diff
+
+test_0412.py:48: AssertionError
+__________________________ test_task_func_empty_data ___________________________
+
+    def test_task_func_empty_data():
+        data = {}
+        output_path = "test_output.json"
+        result = task_func(data, output_path)
+    
+        assert result == output_path
+        assert os.path.exists(output_path)
+    
+        with open(output_path, "r") as file:
+            saved_data = json.load(file)
+    
+        expected_data = {"a": {}, "b": {}}
+>       assert saved_data == expected_data
+E       AssertionError: assert {} == {'a': {}, 'b': {}}
+E         
+E         Right contains 2 more items:
+E         {'a': {}, 'b': {}}
+E         Use -v to get more diff
+
+test_0412.py:64: AssertionError
+__________________________ test_task_func_single_row ___________________________
+
+    def test_task_func_single_row():
+        data = {
+            "a": [1],
+            "b": [4],
+            "c": [7]
+        }
+        output_path = "test_output.json"
+        result = task_func(data, output_path)
+    
+        assert result == output_path
+        assert os.path.exists(output_path)
+    
+        with open(output_path, "r") as file:
+            saved_data = json.load(file)
+    
+        expected_data = {
+            "a": {0: 1},
+            "b": {0: 4}
+        }
+>       assert saved_data == expected_data
+E       AssertionError: assert {'a': {'0': 1}, 'b': {'0': 4}} == {'a': {0: 1}, 'b': {0: 4}}
+E         
+E         Differing items:
+E         {'b': {'0': 4}} != {'b': {0: 4}}
+E         {'a': {'0': 1}} != {'a': {0: 1}}
+E         Use -v to get more diff
+
+test_0412.py:87: AssertionError
+=========================== short test summary info ============================
+FAILED test_0412.py::test_task_func_with_column_c - AssertionError: assert {'...
+FAILED test_0412.py::test_task_func_without_column_c - AssertionError: assert...
+FAILED test_0412.py::test_task_func_empty_data - AssertionError: assert {} ==...
+FAILED test_0412.py::test_task_func_single_row - AssertionError: assert {'a':...
+4 failed in 1.16s

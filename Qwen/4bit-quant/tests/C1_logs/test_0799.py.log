@@ -1,0 +1,80 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_no_backup_dir _________________________
+
+    def test_task_func_no_backup_dir():
+        # Test case: Backup directory does not exist
+        non_existent_dir = '/non/existent/dir'
+        result = task_func(non_existent_dir)
+>       assert result == f'Backup directory {BACKUP_DIR} does not exist. Cannot rollback update.'
+E       AssertionError: assert 'No backups f...lback update.' == 'Backup direc...lback update.'
+E         
+E         - Backup directory /tmp/tmpkzuaeoq4 does not exist. Cannot rollback update.
+E         + No backups found in /tmp/backup. Cannot rollback update.
+
+test_0799.py:21: AssertionError
+__________________________ test_task_func_no_backups ___________________________
+
+    def test_task_func_no_backups():
+        # Test case: No backups found in the backup directory
+        result = task_func('/test/directory')
+>       assert result == f'No backups found in {BACKUP_DIR}. Cannot rollback update.'
+E       AssertionError: assert 'No backups f...lback update.' == 'No backups f...lback update.'
+E         
+E         - No backups found in /tmp/tmpkzuaeoq4. Cannot rollback update.
+E         ?                          ^^ --------
+E         + No backups found in /tmp/backup. Cannot rollback update.
+E         ?                          ^^^^^
+
+test_0799.py:26: AssertionError
+__________________________ test_task_func_with_backup __________________________
+
+    def test_task_func_with_backup():
+        # Test case: Backup directory exists and contains a backup
+        test_dir = tempfile.mkdtemp()
+        backup_subdir = os.path.join(BACKUP_DIR, 'backup_1')
+        os.makedirs(backup_subdir)
+        with open(os.path.join(backup_subdir, 'testfile.txt'), 'w') as f:
+            f.write('This is a test file.')
+    
+        result = task_func(test_dir)
+>       assert os.path.exists(os.path.join(test_dir, 'testfile.txt'))
+E       AssertionError: assert False
+E        +  where False = <function exists at 0x73ec5a19b600>('/tmp/tmpox4o3kbi/testfile.txt')
+E        +    where <function exists at 0x73ec5a19b600> = <module 'posixpath' (frozen)>.exists
+E        +      where <module 'posixpath' (frozen)> = os.path
+E        +    and   '/tmp/tmpox4o3kbi/testfile.txt' = <function join at 0x73ec59f60cc0>('/tmp/tmpox4o3kbi', 'testfile.txt')
+E        +      where <function join at 0x73ec59f60cc0> = <module 'posixpath' (frozen)>.join
+E        +        where <module 'posixpath' (frozen)> = os.path
+
+test_0799.py:37: AssertionError
+_________________ test_task_func_overwrite_existing_directory __________________
+
+    def test_task_func_overwrite_existing_directory():
+        # Test case: The target directory already exists and should be overwritten
+        test_dir = tempfile.mkdtemp()
+        with open(os.path.join(test_dir, 'existing_file.txt'), 'w') as f:
+            f.write('Existing file content.')
+    
+        backup_subdir = os.path.join(BACKUP_DIR, 'backup_2')
+        os.makedirs(backup_subdir)
+        with open(os.path.join(backup_subdir, 'new_file.txt'), 'w') as f:
+            f.write('New file content.')
+    
+        result = task_func(test_dir)
+>       assert not os.path.exists(os.path.join(test_dir, 'existing_file.txt'))
+E       AssertionError: assert not True
+E        +  where True = <function exists at 0x73ec5a19b600>('/tmp/tmpflb6kj7p/existing_file.txt')
+E        +    where <function exists at 0x73ec5a19b600> = <module 'posixpath' (frozen)>.exists
+E        +      where <module 'posixpath' (frozen)> = os.path
+E        +    and   '/tmp/tmpflb6kj7p/existing_file.txt' = <function join at 0x73ec59f60cc0>('/tmp/tmpflb6kj7p', 'existing_file.txt')
+E        +      where <function join at 0x73ec59f60cc0> = <module 'posixpath' (frozen)>.join
+E        +        where <module 'posixpath' (frozen)> = os.path
+
+test_0799.py:55: AssertionError
+=========================== short test summary info ============================
+FAILED test_0799.py::test_task_func_no_backup_dir - AssertionError: assert 'N...
+FAILED test_0799.py::test_task_func_no_backups - AssertionError: assert 'No b...
+FAILED test_0799.py::test_task_func_with_backup - AssertionError: assert False
+FAILED test_0799.py::test_task_func_overwrite_existing_directory - AssertionE...
+4 failed in 0.48s

@@ -1,0 +1,61 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_timeout ____________________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d5ab4741700>
+
+    def test_task_func_timeout(monkeypatch):
+        script_path = "/path/to/script.sh"
+        mock_pid = 12345
+        mock_subprocess_popen(monkeypatch, mock_pid)
+        monkeypatch.setattr(psutil, 'Process', lambda pid: MockProcess(pid))
+    
+>       result = task_func(script_path, timeout=1)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0462.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+script_path = '/path/to/script.sh', timeout = 1
+
+    def task_func(script_path: str, timeout=10) -> dict:
+        if not os.path.exists(script_path):
+>           raise FileNotFoundError(f"'{script_path}' does not exist.")
+E           FileNotFoundError: '/path/to/script.sh' does not exist.
+
+../../../src/src_0462.py:7: FileNotFoundError
+______________________ test_task_func_process_terminated _______________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d5ab4741d60>
+
+    def test_task_func_process_terminated(monkeypatch):
+        script_path = "/path/to/script.sh"
+        mock_pid = 12345
+        mock_subprocess_popen(monkeypatch, mock_pid)
+        monkeypatch.setattr(psutil, 'Process', lambda pid: MockProcess(pid))
+    
+        class MockProcessTerminated(MockProcess):
+            def __init__(self, pid):
+                super().__init__(pid)
+                self._is_running = False
+    
+        monkeypatch.setattr(psutil, 'Process', lambda pid: MockProcessTerminated(pid))
+    
+>       result = task_func(script_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^
+
+test_0462.py:69: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+script_path = '/path/to/script.sh', timeout = 10
+
+    def task_func(script_path: str, timeout=10) -> dict:
+        if not os.path.exists(script_path):
+>           raise FileNotFoundError(f"'{script_path}' does not exist.")
+E           FileNotFoundError: '/path/to/script.sh' does not exist.
+
+../../../src/src_0462.py:7: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0462.py::test_task_func_timeout - FileNotFoundError: '/path/to/sc...
+FAILED test_0462.py::test_task_func_process_terminated - FileNotFoundError: '...
+2 failed, 1 passed in 0.46s

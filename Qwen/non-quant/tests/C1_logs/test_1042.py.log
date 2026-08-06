@@ -1,0 +1,68 @@
+FF.F                                                                     [100%]
+=================================== FAILURES ===================================
+____________________________ test_valid_get_request ____________________________
+
+    def test_valid_get_request():
+        with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+            temp_file.write(b"Hello, World!")
+            temp_file_name = temp_file.name
+    
+        request = f"GET {temp_file_name} HTTP/1.1"
+        expected_response = (
+            f"HTTP/1.1 200 OK\r\nContent-Length: 13\r\n\r\nHello, World!"
+        )
+>       assert task_func(request) == expected_response
+E       AssertionError: assert 'HTTP/1.1 400...\nBad Request' == 'HTTP/1.1 200...Hello, World!'
+E         
+E         + HTTP/1.1 400 BAD REQUEST
+E         - HTTP/1.1 200 OK
+E         - Content-Length: 13
+E           
+E         - Hello, World!
+E         + Bad Request
+
+test_1042.py:15: AssertionError
+_____________________________ test_file_not_found ______________________________
+
+    def test_file_not_found():
+        request = "GET non_existent_file.txt HTTP/1.1"
+        expected_response = "HTTP/1.1 404 NOT FOUND\r\n\r\nFile Not Found"
+>       assert task_func(request) == expected_response
+E       AssertionError: assert 'HTTP/1.1 400...\nBad Request' == 'HTTP/1.1 404...ile Not Found'
+E         
+E         - HTTP/1.1 404 NOT FOUND
+E         + HTTP/1.1 400 BAD REQUEST
+E           
+E         - File Not Found
+E         + Bad Request
+
+test_1042.py:22: AssertionError
+__________________________ test_internal_server_error __________________________
+
+    def test_internal_server_error():
+        with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+            temp_file_name = temp_file.name
+    
+        request = f"GET {temp_file_name} HTTP/1.1"
+        expected_response = (
+            "HTTP/1.1 500 INTERNAL SERVER ERROR\r\n\r\nInternal Server Error"
+        )
+    
+        # Simulate an error by renaming the file
+        os.rename(temp_file_name, temp_file_name + ".bak")
+    
+>       assert task_func(request) == expected_response
+E       AssertionError: assert 'HTTP/1.1 400...\nBad Request' == 'HTTP/1.1 500... Server Error'
+E         
+E         - HTTP/1.1 500 INTERNAL SERVER ERROR
+E         + HTTP/1.1 400 BAD REQUEST
+E           
+E         - Internal Server Error
+E         + Bad Request
+
+test_1042.py:41: AssertionError
+=========================== short test summary info ============================
+FAILED test_1042.py::test_valid_get_request - AssertionError: assert 'HTTP/1....
+FAILED test_1042.py::test_file_not_found - AssertionError: assert 'HTTP/1.1 4...
+FAILED test_1042.py::test_internal_server_error - AssertionError: assert 'HTT...
+3 failed, 1 passed in 0.49s

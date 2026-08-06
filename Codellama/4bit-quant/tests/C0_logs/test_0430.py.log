@@ -1,0 +1,50 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Merge dataframes based on 'id'
+        df1 = pd.DataFrame({'id': [1, 2, 3], 'feature1': [10, 20, 30], 'feature2': [100, 200, 300]})
+        df2 = pd.DataFrame({'id': [1, 2, 3], 'target': [0, 1, 0]})
+        expected_merged_df = pd.DataFrame({'id': [1, 2, 3], 'feature1': [10, 20, 30], 'feature2': [100, 200, 300], 'target': [0, 1, 0]})
+>       assert pd.testing.assert_frame_equal(task_func(df1, df2), expected_merged_df)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0430.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+left = (['feature1', 'feature2'], <Axes: >)
+right =    id  feature1  feature2  target
+0   1        10       100       0
+1   2        20       200       1
+2   3        30       300       0
+cls = <class 'pandas.DataFrame'>
+
+    def _check_isinstance(left, right, cls) -> None:
+        """
+        Helper method for our assert_* methods that ensures that
+        the two objects being compared have the right type before
+        proceeding with the comparison.
+    
+        Parameters
+        ----------
+        left : The first object being compared.
+        right : The second object being compared.
+        cls : The class type to check against.
+    
+        Raises
+        ------
+        AssertionError : Either `left` or `right` is not an instance of `cls`.
+        """
+        cls_name = cls.__name__
+    
+        if not isinstance(left, cls):
+>           raise AssertionError(
+                f"{cls_name} Expected type {cls}, found {type(left)} instead"
+            )
+E           AssertionError: DataFrame Expected type <class 'pandas.DataFrame'>, found <class 'tuple'> instead
+
+../../../.venv/lib/python3.12/site-packages/pandas/_testing/asserters.py:173: AssertionError
+=========================== short test summary info ============================
+FAILED test_0430.py::test_task_func - AssertionError: DataFrame Expected type...
+1 failed in 4.10s

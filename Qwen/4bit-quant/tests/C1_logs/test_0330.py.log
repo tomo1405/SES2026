@@ -1,0 +1,73 @@
+F..F                                                                     [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_valid_json_file ______________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1676/test_task_func_with_valid_json0')
+
+    def test_task_func_with_valid_json_file(tmpdir):
+        # Create a temporary directory and a JSON file within it
+        temp_dir = tmpdir.mkdir("temp")
+        json_file = temp_dir.join("test.json")
+        json_data = {
+            "key1": "value1",
+            "key2": "value2 (with parentheses)",
+            "key3": "value3"
+        }
+        json_file.write(json.dumps(json_data))
+    
+        # Define the expected output
+        expected_output = {
+            "test.json": ['value1', 'value2', '(', ')', 'with', 'parentheses', 'value3']
+        }
+    
+        # Call the function
+        result = task_func(str(json_file))
+    
+        # Assert the result
+>       assert result == expected_output
+E       AssertionError: assert {'test.json':...e', '1', ...]} == {'test.json':...theses', ...]}
+E         
+E         Differing items:
+E         {'test.json': ['v', 'a', 'l', 'u', 'e', '1', ...]} != {'test.json': ['value1', 'value2', '(', ')', 'with', 'parentheses', ...]}
+E         Use -v to get more diff
+
+test_0330.py:26: AssertionError
+_______________________ test_task_func_with_custom_regex _______________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1676/test_task_func_with_custom_reg0')
+
+    def test_task_func_with_custom_regex(tmpdir):
+        # Create a temporary directory and a JSON file within it
+        temp_dir = tmpdir.mkdir("temp")
+        json_file = temp_dir.join("custom_regex.json")
+        json_data = {
+            "key1": "value1",
+            "key2": "value2 (with parentheses)",
+            "key3": "value3"
+        }
+        json_file.write(json.dumps(json_data))
+    
+        # Define a custom regex pattern
+        regex_pattern = r'\d+'
+    
+        # Define the expected output
+        expected_output = {
+            "custom_regex.json": []
+        }
+    
+        # Call the function with the custom regex pattern
+        result = task_func(str(json_file), regex_pattern=regex_pattern)
+    
+        # Assert the result
+>       assert result == expected_output
+E       AssertionError: assert {'custom_rege...1', '2', '3']} == {'custom_regex.json': []}
+E         
+E         Differing items:
+E         {'custom_regex.json': ['1', '2', '3']} != {'custom_regex.json': []}
+E         Use -v to get more diff
+
+test_0330.py:76: AssertionError
+=========================== short test summary info ============================
+FAILED test_0330.py::test_task_func_with_valid_json_file - AssertionError: as...
+FAILED test_0330.py::test_task_func_with_custom_regex - AssertionError: asser...
+2 failed, 2 passed in 0.42s

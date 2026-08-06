@@ -1,0 +1,64 @@
+FF.F                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_valid_input ________________________
+
+    def test_task_func_with_valid_input():
+        kwargs = {"file1.txt": "file1 content", "file2.txt": "file2 content"}
+        target_dir = "non_none_files"
+        copied_files = task_func(kwargs, target_dir)
+        assert len(copied_files) == 2
+        assert os.path.exists(copied_files[0])
+        assert os.path.exists(copied_files[1])
+        assert os.path.isfile(copied_files[0])
+        assert os.path.isfile(copied_files[1])
+        assert os.path.getsize(copied_files[0]) > 0
+        assert os.path.getsize(copied_files[1]) > 0
+        assert os.path.getsize(copied_files[0]) == len(kwargs["file1.txt"])
+>       assert os.path.getsize(copied_files[1]) == len(kwargs["file2.txt"])
+E       AssertionError: assert 16 == 13
+E        +  where 16 = <function getsize at 0x7b881abf44a0>('non_none_files/file2.txt')
+E        +    where <function getsize at 0x7b881abf44a0> = <module 'posixpath' (frozen)>.getsize
+E        +      where <module 'posixpath' (frozen)> = os.path
+E        +  and   13 = len('file2 content')
+
+test_0766.py:18: AssertionError
+______________________ test_task_func_with_invalid_input _______________________
+
+    def test_task_func_with_invalid_input():
+        kwargs = {"file1.txt": "file1 content", "file2.txt": None}
+        target_dir = "non_none_files"
+        copied_files = task_func(kwargs, target_dir)
+        assert len(copied_files) == 1
+        assert os.path.exists(copied_files[0])
+        assert os.path.isfile(copied_files[0])
+        assert os.path.getsize(copied_files[0]) > 0
+        assert os.path.getsize(copied_files[0]) == len(kwargs["file1.txt"])
+        assert os.path.getmtime(copied_files[0]) > 0
+>       assert os.path.getmtime(copied_files[0]) == os.path.getmtime(kwargs["file1.txt"])
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0766.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+filename = 'file1 content'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'file1 content'
+
+<frozen genericpath>:67: FileNotFoundError
+____________________ test_task_func_with_invalid_target_dir ____________________
+
+    def test_task_func_with_invalid_target_dir():
+        kwargs = {"file1.txt": "file1 content", "file2.txt": "file2 content"}
+        target_dir = "non_existent_dir"
+        copied_files = task_func(kwargs, target_dir)
+>       assert len(copied_files) == 0
+E       AssertionError: assert 2 == 0
+E        +  where 2 = len(['non_existent_dir/file1.txt', 'non_existent_dir/file2.txt'])
+
+test_0766.py:49: AssertionError
+=========================== short test summary info ============================
+FAILED test_0766.py::test_task_func_with_valid_input - AssertionError: assert...
+FAILED test_0766.py::test_task_func_with_invalid_input - FileNotFoundError: [...
+FAILED test_0766.py::test_task_func_with_invalid_target_dir - AssertionError:...
+3 failed, 1 passed in 0.48s

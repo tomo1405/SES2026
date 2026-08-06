@@ -1,0 +1,66 @@
+F.FF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        n_sentences = random.randint(1, 10)
+        sentences = []
+        for _ in range(n_sentences):
+            sentence_len = random.randint(5, 10)
+            sentence = " ".join(random.choice(["sample", "text", "contains", "several", "words", "including"]) for _ in range(sentence_len)) + "."
+            sentences.append(sentence)
+    
+        text = " ".join(sentences)
+        text = re.sub(r'[^\w\s.]', '', text).lower()
+        text = re.sub(r'\s+\.', '.', text)
+        text = re.sub(r'\s+', ' ', text)
+    
+>       assert task_func(n_sentences) == text.strip()
+E       AssertionError: assert 'sample text ...g text words.' == 'contains tex...ntains words.'
+E         
+E         - contains text words words words including words text several sample. sample words contains sample several text several several text. including contains words text text words including words words sample. text contains sample several text sample including contains. contains text including contains words. text contains contains contains including. sample including several sample words text text several sample. contains text contains sample including words. contains sample text sample including including contains words.
+E         + sample text including text contains several text t...
+E         
+E         ...Full output truncated (1 line hidden), use '-vv' to show
+
+test_0844.py:19: AssertionError
+_______________________ test_task_func_with_one_sentence _______________________
+
+    def test_task_func_with_one_sentence():
+        sentence = " ".join(random.choice(["sample", "text", "contains", "several", "words", "including"]) for _ in range(random.randint(5, 10))) + "."
+>       assert task_func(1) == sentence.strip()
+E       AssertionError: assert 'sample sever...ins contains.' == 'contains sev...ains several.'
+E         
+E         - contains several including contains several.
+E         + sample several including contains including text contains including contains contains.
+
+test_0844.py:26: AssertionError
+____________________ test_task_func_with_multiple_sentences ____________________
+
+    def test_task_func_with_multiple_sentences():
+        n_sentences = random.randint(2, 10)
+        sentences = []
+        for _ in range(n_sentences):
+            sentence_len = random.randint(5, 10)
+            sentence = " ".join(random.choice(["sample", "text", "contains", "several", "words", "including"]) for _ in range(sentence_len)) + "."
+            sentences.append(sentence)
+    
+        text = " ".join(sentences)
+        text = re.sub(r'[^\w\s.]', '', text).lower()
+        text = re.sub(r'\s+\.', '.', text)
+        text = re.sub(r'\s+', ' ', text)
+    
+>       assert task_func(n_sentences) == text.strip()
+E       AssertionError: assert 'sample conta...ntains words.' == 'sample inclu...s text words.'
+E         
+E         - sample including contains contains text words including text words. sample text text text sample words several contains text. text words contains words words words text. sample text including contains sample text. several including contains sample contains contains several text sample including. text text sample sample contains several text sample text several. several sample text several several words. several text contains text words.
+E         + sample contains sample several contains words. sample sample text several sample words sample sample. several words sample words inc...
+E         
+E         ...Full output truncated (1 line hidden), use '-vv' to show
+
+test_0844.py:41: AssertionError
+=========================== short test summary info ============================
+FAILED test_0844.py::test_task_func - AssertionError: assert 'sample text ......
+FAILED test_0844.py::test_task_func_with_one_sentence - AssertionError: asser...
+FAILED test_0844.py::test_task_func_with_multiple_sentences - AssertionError:...
+3 failed, 1 passed in 0.48s

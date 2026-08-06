@@ -1,0 +1,41 @@
+.FFF                                                                     [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_processes_json_files ______________________
+
+    def test_task_func_processes_json_files():
+        path = 'path/to/data'
+        df = task_func(path)
+>       assert len(df) > 0
+E       assert 0 > 0
+E        +  where 0 = len(Empty DataFrame\nColumns: []\nIndex: [])
+
+test_0679.py:18: AssertionError
+_____________________ test_task_func_moves_processed_files _____________________
+
+    def test_task_func_moves_processed_files():
+        path = 'path/to/data'
+        processed_path = os.path.join(path, 'processed')
+        task_func(path)
+        assert os.path.exists(processed_path)
+>       assert len(os.listdir(processed_path)) > 0
+E       AssertionError: assert 0 > 0
+E        +  where 0 = len([])
+E        +    where [] = <built-in function listdir>('path/to/data/processed')
+E        +      where <built-in function listdir> = os.listdir
+
+test_0679.py:26: AssertionError
+_____________________ test_task_func_handles_scalar_values _____________________
+
+    def test_task_func_handles_scalar_values():
+        path = 'path/to/data'
+        df = task_func(path)
+>       assert len(df) > 0
+E       assert 0 > 0
+E        +  where 0 = len(Empty DataFrame\nColumns: []\nIndex: [])
+
+test_0679.py:32: AssertionError
+=========================== short test summary info ============================
+FAILED test_0679.py::test_task_func_processes_json_files - assert 0 > 0
+FAILED test_0679.py::test_task_func_moves_processed_files - AssertionError: a...
+FAILED test_0679.py::test_task_func_handles_scalar_values - assert 0 > 0
+3 failed, 1 passed in 1.18s

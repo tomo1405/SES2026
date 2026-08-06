@@ -1,0 +1,34 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        sentences_dict = {'1': 'the be to of and a', '2': 'in that have I'}
+        word_keys = ['the', 'be', 'to', 'of', 'and', 'a', 'in', 'that', 'have', 'I']
+        word_counts = collections.Counter(' '.join(sentences_dict.values()).split())
+        frequencies = [word_counts[word] for word in word_keys]
+        word_series = pd.Series(frequencies, index=word_keys)
+        with patch('matplotlib.pyplot.show') as mock_show:
+            task_func(sentences_dict, word_keys)
+>           mock_show.assert_called_once()
+
+test_0355.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='show' id='136886128523264'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'show' to have been called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:923: AssertionError
+=========================== short test summary info ============================
+FAILED test_0355.py::test_task_func - AssertionError: Expected 'show' to have...
+1 failed in 2.35s

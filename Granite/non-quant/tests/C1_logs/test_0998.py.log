@@ -1,0 +1,100 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_valid_url ___________________________
+
+    def test_task_func_valid_url():
+        url = "https://example.com/some_file.zip"
+>       result = task_func(url)
+                 ^^^^^^^^^^^^^^
+
+test_0998.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0998.py:13: in task_func
+    urllib.request.urlretrieve(url, TARGET_ZIP_FILE)
+/usr/lib/python3.12/urllib/request.py:240: in urlretrieve
+    with contextlib.closing(urlopen(url, data)) as fp:
+                            ^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:215: in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:521: in open
+    response = meth(req, response)
+               ^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:630: in http_response
+    response = self.parent.error(
+/usr/lib/python3.12/urllib/request.py:559: in error
+    return self._call_chain(*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:492: in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <urllib.request.HTTPDefaultErrorHandler object at 0x750e67b2dfa0>
+req = <urllib.request.Request object at 0x750e67b2e1e0>
+fp = <http.client.HTTPResponse object at 0x750e67b2e710>, code = 404
+msg = 'Not Found', hdrs = <http.client.HTTPMessage object at 0x750e67b2fb00>
+
+    def http_error_default(self, req, fp, code, msg, hdrs):
+>       raise HTTPError(req.full_url, code, msg, hdrs, fp)
+E       urllib.error.HTTPError: HTTP Error 404: Not Found
+
+/usr/lib/python3.12/urllib/request.py:639: HTTPError
+__________________________ test_task_func_invalid_url __________________________
+
+    def test_task_func_invalid_url():
+        url = "https://example.com/some_file.zip"
+        with pytest.raises(urllib.error.URLError):
+            task_func(url)
+>       assert not os.path.exists(TARGET_DIR)
+E       AssertionError: assert not True
+E        +  where True = <function exists at 0x750e6a39b600>('downloaded_files')
+E        +    where <function exists at 0x750e6a39b600> = <module 'posixpath' (frozen)>.exists
+E        +      where <module 'posixpath' (frozen)> = os.path
+
+test_0998.py:22: AssertionError
+_______________________ test_task_func_invalid_zip_file ________________________
+
+    def test_task_func_invalid_zip_file():
+        url = "https://example.com/some_file.txt"
+        with pytest.raises(zipfile.BadZipFile):
+>           task_func(url)
+
+test_0998.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0998.py:13: in task_func
+    urllib.request.urlretrieve(url, TARGET_ZIP_FILE)
+/usr/lib/python3.12/urllib/request.py:240: in urlretrieve
+    with contextlib.closing(urlopen(url, data)) as fp:
+                            ^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:215: in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:521: in open
+    response = meth(req, response)
+               ^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:630: in http_response
+    response = self.parent.error(
+/usr/lib/python3.12/urllib/request.py:559: in error
+    return self._call_chain(*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:492: in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <urllib.request.HTTPDefaultErrorHandler object at 0x750e67b2dfa0>
+req = <urllib.request.Request object at 0x750e677b1280>
+fp = <http.client.HTTPResponse object at 0x750e677b1360>, code = 404
+msg = 'Not Found', hdrs = <http.client.HTTPMessage object at 0x750e677b1580>
+
+    def http_error_default(self, req, fp, code, msg, hdrs):
+>       raise HTTPError(req.full_url, code, msg, hdrs, fp)
+E       urllib.error.HTTPError: HTTP Error 404: Not Found
+
+/usr/lib/python3.12/urllib/request.py:639: HTTPError
+=========================== short test summary info ============================
+FAILED test_0998.py::test_task_func_valid_url - urllib.error.HTTPError: HTTP ...
+FAILED test_0998.py::test_task_func_invalid_url - AssertionError: assert not ...
+FAILED test_0998.py::test_task_func_invalid_zip_file - urllib.error.HTTPError...
+3 failed in 1.02s

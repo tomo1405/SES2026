@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        values = [
+            {'ID': 1, 'Name': 'Alice', 'Age': 25},
+            {'ID': 2, 'Name': 'Bob', 'Age': 30},
+            {'ID': 3, 'Name': 'Charlie', 'Age': 35}
+        ]
+        filename = 'output.xls'
+    
+        result = task_func(values, filename)
+    
+        assert result == os.path.abspath(filename)
+        assert os.path.exists(filename)
+    
+        with open(filename, 'rb') as f:
+            data = f.read()
+            assert b'ID' in data
+            assert b'Name' in data
+            assert b'Age' in data
+            assert b'1' in data
+            assert b'Alice' in data
+>           assert b'25' in data
+E           AssertionError: assert b'25' in b'\xd0\xcf\x11\xe0\xa1\xb1\x1a\xe1\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00>\x00\x03\x00\xfe\xf...00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xfe\xff\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00'
+
+test_0501.py:26: AssertionError
+=========================== short test summary info ============================
+FAILED test_0501.py::test_task_func - AssertionError: assert b'25' in b'\xd0\...
+1 failed in 0.49s

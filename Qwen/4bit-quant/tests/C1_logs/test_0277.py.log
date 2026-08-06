@@ -1,0 +1,104 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a simple 2x2 matrix
+        matrix = [[1, 2], [3, 4]]
+        skewness, kurtosis, ax = task_func(matrix)
+    
+        # Check if the skewness and kurtosis are calculated correctly
+        expected_skewness = stats.skew([2, 4])
+        expected_kurtosis = stats.kurtosis([2, 4])
+        assert np.isclose(skewness, expected_skewness)
+        assert np.isclose(kurtosis, expected_kurtosis)
+    
+        # Check if the plot is created
+        assert isinstance(ax, plt.Axes)
+    
+        # Close the plot to prevent it from showing up during tests
+>       plt.close(fig)
+                  ^^^
+E       NameError: name 'fig' is not defined
+
+test_0277.py:22: NameError
+_____________________________ test_task_func_zeros _____________________________
+
+    def test_task_func_zeros():
+        matrix = [[0, 0], [0, 0]]
+        skewness, kurtosis, ax = task_func(matrix)
+    
+        # Check if the skewness and kurtosis are calculated correctly
+        expected_skewness = stats.skew([0, 0])
+        expected_kurtosis = stats.kurtosis([0, 0])
+>       assert np.isclose(skewness, expected_skewness)
+E       assert np.False_
+E        +  where np.False_ = <function isclose at 0x7e9d6214c570>(np.float64(nan), np.float64(nan))
+E        +    where <function isclose at 0x7e9d6214c570> = np.isclose
+
+test_0277.py:32: AssertionError
+_____________________________ test_task_func_ones ______________________________
+
+    def test_task_func_ones():
+        matrix = [[1, 1], [1, 1]]
+        skewness, kurtosis, ax = task_func(matrix)
+    
+        # Check if the skewness and kurtosis are calculated correctly
+        expected_skewness = stats.skew([1, 1])
+        expected_kurtosis = stats.kurtosis([1, 1])
+>       assert np.isclose(skewness, expected_skewness)
+E       assert np.False_
+E        +  where np.False_ = <function isclose at 0x7e9d6214c570>(np.float64(nan), np.float64(nan))
+E        +    where <function isclose at 0x7e9d6214c570> = np.isclose
+
+test_0277.py:49: AssertionError
+_________________________ test_task_func_large_matrix __________________________
+
+    def test_task_func_large_matrix():
+        matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        skewness, kurtosis, ax = task_func(matrix)
+    
+        # Check if the skewness and kurtosis are calculated correctly
+        expected_skewness = stats.skew([3, 6, 9])
+        expected_kurtosis = stats.kurtosis([3, 6, 9])
+        assert np.isclose(skewness, expected_skewness)
+        assert np.isclose(kurtosis, expected_kurtosis)
+    
+        # Check if the plot is created
+        assert isinstance(ax, plt.Axes)
+    
+        # Close the plot to prevent it from showing up during tests
+>       plt.close(fig)
+                  ^^^
+E       NameError: name 'fig' is not defined
+
+test_0277.py:73: NameError
+=============================== warnings summary ===============================
+Qwen/4bit-quant/tests/test_0277.py::test_task_func_zeros
+Qwen/4bit-quant/tests/test_0277.py::test_task_func_ones
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/scipy/stats/_distn_infrastructure.py:2079: RuntimeWarning: divide by zero encountered in divide
+    x = np.asarray((x - loc)/scale, dtype=dtyp)
+
+Qwen/4bit-quant/tests/test_0277.py::test_task_func_ones
+  /work/tomohiro-w/utg/src/src_0277.py:15: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+    skewness = stats.skew(max_values)
+
+Qwen/4bit-quant/tests/test_0277.py::test_task_func_ones
+  /work/tomohiro-w/utg/src/src_0277.py:16: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+    kurtosis = stats.kurtosis(max_values)
+
+Qwen/4bit-quant/tests/test_0277.py::test_task_func_ones
+  /work/tomohiro-w/utg/Qwen/4bit-quant/tests/test_0277.py:47: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+    expected_skewness = stats.skew([1, 1])
+
+Qwen/4bit-quant/tests/test_0277.py::test_task_func_ones
+  /work/tomohiro-w/utg/Qwen/4bit-quant/tests/test_0277.py:48: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+    expected_kurtosis = stats.kurtosis([1, 1])
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0277.py::test_task_func - NameError: name 'fig' is not defined
+FAILED test_0277.py::test_task_func_zeros - assert np.False_
+FAILED test_0277.py::test_task_func_ones - assert np.False_
+FAILED test_0277.py::test_task_func_large_matrix - NameError: name 'fig' is n...
+4 failed, 6 warnings in 2.86s

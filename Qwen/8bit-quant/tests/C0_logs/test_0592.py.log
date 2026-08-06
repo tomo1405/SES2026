@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        hours = 5
+        file_path = 'test_custom_data.csv'
+    
+        # Call the function
+        result_file_path, ax = task_func(hours, file_path)
+    
+        # Check if the returned file path is correct
+        assert result_file_path == file_path
+    
+        # Check if the file exists and can be read
+        df = pd.read_csv(file_path)
+        assert not df.empty
+    
+        # Check if the DataFrame has the correct columns
+        expected_columns = ['Time', 'Temperature', 'Category']
+        assert list(df.columns) == expected_columns
+    
+        # Check if the number of rows is equal to the number of hours
+>       assert len(df) == hours
+E       assert 6 == 5
+E        +  where 6 = len(              Time  Temperature Category\n0  14:04:06.750515         -2.0     Cold\n1  14:04:06.750540         25.0   No...14:04:06.750554         39.0      Hot\n4  14:04:06.750559         29.0      Hot\n5               al          NaN      NaN)
+
+test_0592.py:25: AssertionError
+=========================== short test summary info ============================
+FAILED test_0592.py::test_task_func - assert 6 == 5
+1 failed in 2.41s

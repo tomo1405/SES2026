@@ -1,0 +1,34 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        obj_list = [
+            {'a': 1, 'b': 2},
+            {'a': 3, 'b': 4},
+            {'a': 5, 'b': 6},
+            {'a': 7, 'b': 8},
+            {'a': 9, 'b': 10}
+        ]
+        top_n = 3
+        seed = 1234
+    
+>       top_values, random_value = task_func(obj_list, 'a', top_n, seed)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0849.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+obj_list = [{'a': 1, 'b': 2}, {'a': 3, 'b': 4}, {'a': 5, 'b': 6}, {'a': 7, 'b': 8}, {'a': 9, 'b': 10}]
+attr = 'a', top_n = 3, seed = 1234
+
+    def task_func(obj_list, attr, top_n=5, seed=None):
+        random.seed(seed)
+>       attr_values = [getattr(obj, attr) for obj in obj_list]
+                       ^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'dict' object has no attribute 'a'
+
+../../../src/src_0849.py:5: AttributeError
+=========================== short test summary info ============================
+FAILED test_0849.py::test_task_func - AttributeError: 'dict' object has no at...
+1 failed in 0.47s

@@ -1,0 +1,28 @@
+.F.                                                                      [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_invalid_prefix ______________________
+
+sample_data =   Employee ID  Age
+0      EMP123   28
+1      EMP456   34
+2      XYZ789   45
+3      EMP789   30
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1335/test_task_func_with_invalid_pr0')
+
+    def test_task_func_with_invalid_prefix(sample_data, tmpdir):
+        # Create a temporary CSV file
+        temp_file = tmpdir.join("temp_data.csv")
+        sample_data.to_csv(temp_file, index=False)
+    
+        # Call the function with an invalid prefix
+        df, ax = task_func(str(temp_file), 'XYZ')
+    
+        # Check if the returned DataFrame is empty
+>       assert df.empty
+E       assert False
+E        +  where False =   Employee ID  Age\n2      XYZ789   45.empty
+
+test_0069.py:37: AssertionError
+=========================== short test summary info ============================
+FAILED test_0069.py::test_task_func_with_invalid_prefix - assert False
+1 failed, 2 passed in 3.63s

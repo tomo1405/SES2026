@@ -1,0 +1,80 @@
+..FF                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_no_outliers ________________________
+
+sample_df =    closing_price
+0            100
+1            102
+2            101
+3            105
+4            110
+5           1000
+6            103
+
+    def test_task_func_with_no_outliers(sample_df):
+        # Modify the dataframe to have no outliers
+>       sample_df['closing_price'] = [100, 102, 101, 105, 110, 103]
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0916.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:4672: in __setitem__
+    self._set_item(key, value)
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:4872: in _set_item
+    value, refs = self._sanitize_column(value)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:5754: in _sanitize_column
+    com.require_length_match(value, self.index)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = [100, 102, 101, 105, 110, 103]
+index = RangeIndex(start=0, stop=7, step=1)
+
+    def require_length_match(data, index: Index) -> None:
+        """
+        Check the length of data matches the length of the index.
+        """
+        if len(data) != len(index):
+>           raise ValueError(
+                "Length of values "
+                f"({len(data)}) "
+                "does not match length of index "
+                f"({len(index)})"
+            )
+E           ValueError: Length of values (6) does not match length of index (7)
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/common.py:601: ValueError
+_______________________ test_task_func_with_all_outliers _______________________
+
+sample_df =    closing_price  Z_score
+0           1000      NaN
+1           1000      NaN
+2           1000      NaN
+3           1000      NaN
+4           1000      NaN
+5           1000      NaN
+6           1000      NaN
+
+    def test_task_func_with_all_outliers(sample_df):
+        # Modify the dataframe to have all entries as outliers
+        sample_df['closing_price'] = [1000, 1000, 1000, 1000, 1000, 1000, 1000]
+        outliers, ax = task_func(sample_df)
+    
+        # Check if all entries are identified as outliers
+>       assert outliers.equals(sample_df), "Not all entries were identified as outliers."
+E       AssertionError: Not all entries were identified as outliers.
+E       assert False
+E        +  where False = equals(   closing_price  Z_score\n0           1000      NaN\n1           1000      NaN\n2           1000      NaN\n3           1000      NaN\n4           1000      NaN\n5           1000      NaN\n6           1000      NaN)
+E        +    where equals = Empty DataFrame\nColumns: [closing_price, Z_score]\nIndex: [].equals
+
+test_0916.py:44: AssertionError
+=============================== warnings summary ===============================
+Qwen/4bit-quant/tests/test_0916.py::test_task_func_with_all_outliers
+  /work/tomohiro-w/utg/src/src_0916.py:6: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+    df['Z_score'] = zscore(df['closing_price'])
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0916.py::test_task_func_with_no_outliers - ValueError: Length of ...
+FAILED test_0916.py::test_task_func_with_all_outliers - AssertionError: Not a...
+2 failed, 2 passed, 1 warning in 3.93s

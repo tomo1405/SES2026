@@ -1,0 +1,60 @@
+FF..F                                                                    [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_default_data __________________________
+
+    def test_task_func_default_data():
+        result = task_func()
+        assert isinstance(result, pd.DataFrame)
+        assert result.shape == (100, 5)
+>       assert all(result >= 0)
+E       assert False
+E        +  where False = all(           0         1         2         3         4\n0  -1.002733  1.305816  1.251829 -0.918287 -0.928196\n1  -1.002733...33  1.242415 -0.990652  0.930506 -0.928196\n99  1.300905 -0.913216  1.131975 -0.918287 -0.928196\n\n[100 rows x 5 columns] >= 0)
+
+test_1089.py:11: AssertionError
+__________________________ test_task_func_custom_data __________________________
+
+    def test_task_func_custom_data():
+        custom_data = np.array([[0.6, 0.4, 0.7, 0.3, 0.9], [0.2, 0.8, 0.1, 0.5, 0.0]])
+        result = task_func(custom_data)
+        expected_result = pd.DataFrame({
+            0: [0.70710678, -0.70710678],
+            1: [0.0, 0.0],
+            2: [1.41421356, -1.41421356],
+            3: [0.0, 0.0],
+            4: [1.73205081, -1.73205081]
+        })
+>       pd.testing.assert_frame_equal(result.round(6), expected_result)
+
+test_1089.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pandas/_libs/testing.pyx:53: in pandas._libs.testing.assert_almost_equal
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   AssertionError: DataFrame.iloc[:, 0] (column name="0") are different
+E   
+E   DataFrame.iloc[:, 0] (column name="0") values are different (100.0 %)
+E   [index]: [0, 1]
+E   [left]:  [1.0, -1.0]
+E   [right]: [0.70710678, -0.70710678]
+E   At positional index 0, first diff: 1.0 != 0.70710678
+
+pandas/_libs/testing.pyx:171: AssertionError
+__________________________ test_task_func_large_data ___________________________
+
+    def test_task_func_large_data():
+        custom_data = np.random.rand(1000, 10)
+        result = task_func(custom_data)
+        assert isinstance(result, pd.DataFrame)
+        assert result.shape == (1000, 10)
+>       assert all(result >= 0)
+E       assert False
+E        +  where False = all(            0         1         2  ...         7         8         9\n0    1.452256 -0.955552 -0.984329  ...  1.466788 ...9016  0.388345  1.273447\n999  1.295420 -0.955552  0.820957  ... -0.968643  0.444762  1.549480\n\n[1000 rows x 10 columns] >= 0)
+
+test_1089.py:42: AssertionError
+=========================== short test summary info ============================
+FAILED test_1089.py::test_task_func_default_data - assert False
+FAILED test_1089.py::test_task_func_custom_data - AssertionError: DataFrame.i...
+FAILED test_1089.py::test_task_func_large_data - assert False
+3 failed, 2 passed in 2.99s

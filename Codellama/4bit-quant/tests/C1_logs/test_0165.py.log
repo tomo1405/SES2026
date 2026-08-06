@@ -1,0 +1,22 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that the function returns a figure object
+        fig = task_func()
+        assert isinstance(fig, matplotlib.figure.Figure)
+    
+        # Test that the function creates a bar plot with the correct number of bars
+        num_labels = 5
+        data = pd.DataFrame(np.random.uniform(0, 1, size=(num_labels, num_labels)), columns=['Label1', 'Label2', 'Label3', 'Label4', 'Label5'])
+        fig = task_func(num_labels=num_labels, data_range=(0, 1))
+>       assert len(fig.axes[0].patches) == num_labels
+E       assert 25 == 5
+E        +  where 25 = len(<Axes.ArtistList of 25 patches>)
+E        +    where <Axes.ArtistList of 25 patches> = <Axes: >.patches
+
+test_0165.py:16: AssertionError
+=========================== short test summary info ============================
+FAILED test_0165.py::test_task_func - assert 25 == 5
+1 failed in 2.16s

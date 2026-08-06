@@ -1,0 +1,143 @@
+FFFFEFF                                                                  [100%]
+==================================== ERRORS ====================================
+____________________ ERROR at setup of test_task_func_plot _____________________
+file /work/tomohiro-w/utg/Qwen/non-quant/tests/test_1086.py, line 50
+  def test_task_func_plot(mock_plt):
+file /work/tomohiro-w/utg/Qwen/non-quant/tests/test_1086.py, line 21
+  @pytest.fixture
+  def mock_plt(mocker):
+E       fixture 'mocker' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, cov, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, mock_plt, monkeypatch, no_cover, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/work/tomohiro-w/utg/Qwen/non-quant/tests/test_1086.py:21
+=================================== FAILURES ===================================
+________________________ test_task_func_no_punctuation _________________________
+
+    def test_task_func_no_punctuation():
+        text = "Hello world! Hello everyone."
+        expected_output = [('hello', 2), ('world', 1), ('everyone', 1)]
+>       result, _ = task_func(text)
+                    ^^^^^^^^^^^^^^^
+
+test_1086.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = 'Hello world! Hello everyone.'
+
+    def task_func(text):
+        # Process text and count words
+>       cleaned_text = re.sub(f"[{punctuation}]", "", text).lower()
+                                  ^^^^^^^^^^^
+E       NameError: name 'punctuation' is not defined
+
+../../../src/src_1086.py:6: NameError
+_________________________ test_task_func_empty_string __________________________
+
+    def test_task_func_empty_string():
+        text = ""
+        expected_output = []
+>       result, _ = task_func(text)
+                    ^^^^^^^^^^^^^^^
+
+test_1086.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = ''
+
+    def task_func(text):
+        # Process text and count words
+>       cleaned_text = re.sub(f"[{punctuation}]", "", text).lower()
+                                  ^^^^^^^^^^^
+E       NameError: name 'punctuation' is not defined
+
+../../../src/src_1086.py:6: NameError
+__________________________ test_task_func_single_word __________________________
+
+    def test_task_func_single_word():
+        text = "Test"
+        expected_output = [('test', 1)]
+>       result, _ = task_func(text)
+                    ^^^^^^^^^^^^^^^
+
+test_1086.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = 'Test'
+
+    def task_func(text):
+        # Process text and count words
+>       cleaned_text = re.sub(f"[{punctuation}]", "", text).lower()
+                                  ^^^^^^^^^^^
+E       NameError: name 'punctuation' is not defined
+
+../../../src/src_1086.py:6: NameError
+________________ test_task_func_multiple_words_with_same_count _________________
+
+    def test_task_func_multiple_words_with_same_count():
+        text = "One two three two one"
+        expected_output = [('one', 2), ('two', 2), ('three', 1)]
+>       result, _ = task_func(text)
+                    ^^^^^^^^^^^^^^^
+
+test_1086.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = 'One two three two one'
+
+    def task_func(text):
+        # Process text and count words
+>       cleaned_text = re.sub(f"[{punctuation}]", "", text).lower()
+                                  ^^^^^^^^^^^
+E       NameError: name 'punctuation' is not defined
+
+../../../src/src_1086.py:6: NameError
+_____________________ test_task_func_punctuation_handling ______________________
+
+    def test_task_func_punctuation_handling():
+        text = "Punctuation, should be; ignored!"
+        expected_output = [('punctuation', 1), ('should', 1), ('be', 1), ('ignored', 1)]
+>       result, _ = task_func(text)
+                    ^^^^^^^^^^^^^^^
+
+test_1086.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = 'Punctuation, should be; ignored!'
+
+    def task_func(text):
+        # Process text and count words
+>       cleaned_text = re.sub(f"[{punctuation}]", "", text).lower()
+                                  ^^^^^^^^^^^
+E       NameError: name 'punctuation' is not defined
+
+../../../src/src_1086.py:6: NameError
+______________________ test_task_func_case_insensitivity _______________________
+
+    def test_task_func_case_insensitivity():
+        text = "Case CASE case"
+        expected_output = [('case', 3)]
+>       result, _ = task_func(text)
+                    ^^^^^^^^^^^^^^^
+
+test_1086.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = 'Case CASE case'
+
+    def task_func(text):
+        # Process text and count words
+>       cleaned_text = re.sub(f"[{punctuation}]", "", text).lower()
+                                  ^^^^^^^^^^^
+E       NameError: name 'punctuation' is not defined
+
+../../../src/src_1086.py:6: NameError
+=========================== short test summary info ============================
+FAILED test_1086.py::test_task_func_no_punctuation - NameError: name 'punctua...
+FAILED test_1086.py::test_task_func_empty_string - NameError: name 'punctuati...
+FAILED test_1086.py::test_task_func_single_word - NameError: name 'punctuatio...
+FAILED test_1086.py::test_task_func_multiple_words_with_same_count - NameErro...
+FAILED test_1086.py::test_task_func_punctuation_handling - NameError: name 'p...
+FAILED test_1086.py::test_task_func_case_insensitivity - NameError: name 'pun...
+ERROR test_1086.py::test_task_func_plot
+6 failed, 1 error in 1.59s

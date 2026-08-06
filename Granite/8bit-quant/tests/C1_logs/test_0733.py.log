@@ -1,0 +1,80 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        content = "This is a test sentence."
+        expected_output = {'this': 1, 'is': 1, 'a': 1, 'test': 1, 'sentenc': 1}
+        actual_output = task_func(content)
+>       assert actual_output == expected_output
+E       AssertionError: assert {'thi': 1, 'i... 1, 'test': 1} == {'this': 1, '...test': 1, ...}
+E         
+E         Omitting 3 identical items, use -vv to show
+E         Left contains 1 more item:
+E         {'thi': 1}
+E         Right contains 2 more items:
+E         {'sentenc': 1, 'this': 1}
+E         Use -v to get more diff
+
+test_0733.py:12: AssertionError
+_______________________ test_task_func_with_punctuation ________________________
+
+    def test_task_func_with_punctuation():
+        content = "This, is a test! sentence."
+        expected_output = {'this': 1, 'is': 1, 'a': 1, 'test': 1, 'sentenc': 1}
+        actual_output = task_func(content)
+>       assert actual_output == expected_output
+E       AssertionError: assert {'thi': 1, 'i...test': 1, ...} == {'this': 1, '...test': 1, ...}
+E         
+E         Omitting 3 identical items, use -vv to show
+E         Left contains 2 more items:
+E         {'': 1, 'thi': 1}
+E         Right contains 2 more items:
+E         {'sentenc': 1, 'this': 1}
+E         Use -v to get more diff
+
+test_0733.py:18: AssertionError
+____________________ test_task_func_with_multiple_sentences ____________________
+
+    def test_task_func_with_multiple_sentences():
+        content = "This is a test sentence. This is another test sentence."
+        expected_output = {'this': 2, 'is': 2, 'a': 2, 'test': 2, 'sentenc': 2}
+        actual_output = task_func(content)
+>       assert actual_output == expected_output
+E       AssertionError: assert {'thi': 2, 'i...test': 2, ...} == {'this': 2, '...test': 2, ...}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Differing items:
+E         {'sentenc': 1} != {'sentenc': 2}
+E         {'a': 1} != {'a': 2}
+E         Left contains 2 more items:
+E         {'anoth': 1, 'thi': 2}...
+E         
+E         ...Full output truncated (3 lines hidden), use '-vv' to show
+
+test_0733.py:24: AssertionError
+____________________ test_task_func_with_unicode_characters ____________________
+
+    def test_task_func_with_unicode_characters():
+        content = "This is a test sentence with unicode characters like é, ñ, and ú."
+        expected_output = {'this': 1, 'is': 1, 'a': 1, 'test': 1, 'sentenc': 1, 'e': 1, 'n': 1, 'u': 1}
+        actual_output = task_func(content)
+>       assert actual_output == expected_output
+E       AssertionError: assert {'thi': 1, 'i...test': 1, ...} == {'this': 1, '...test': 1, ...}
+E         
+E         Omitting 4 identical items, use -vv to show
+E         Left contains 8 more items:
+E         {'and': 1,
+E          'charact': 1,
+E          'like': 1,
+E          'thi': 1,...
+E         
+E         ...Full output truncated (7 lines hidden), use '-vv' to show
+
+test_0733.py:30: AssertionError
+=========================== short test summary info ============================
+FAILED test_0733.py::test_task_func - AssertionError: assert {'thi': 1, 'i......
+FAILED test_0733.py::test_task_func_with_punctuation - AssertionError: assert...
+FAILED test_0733.py::test_task_func_with_multiple_sentences - AssertionError:...
+FAILED test_0733.py::test_task_func_with_unicode_characters - AssertionError:...
+4 failed in 3.40s

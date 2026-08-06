@@ -1,0 +1,89 @@
+F.FFF                                                                    [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_valid_directory ______________________
+
+    def test_task_func_with_valid_directory():
+        directory = '/path/to/logs'
+        backup_dir = '/path/to/backup'
+        expected_backup_file = '/path/to/backup/logs_backup.tar.gz'
+>       assert task_func(directory, backup_dir) == expected_backup_file
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0017.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = '/path/to/logs', backup_dir = '/path/to/backup'
+
+    def task_func(directory, backup_dir='/path/to/backup'):
+        if not os.path.exists(directory):
+>           raise FileNotFoundError(f"Directory '{directory}' not found.")
+E           FileNotFoundError: Directory '/path/to/logs' not found.
+
+../../../src/src_0017.py:6: FileNotFoundError
+_________________________ test_task_func_with_no_logs __________________________
+
+    def test_task_func_with_no_logs():
+        directory = '/path/to/empty_directory'
+        backup_dir = '/path/to/backup'
+        expected_output = "No logs found to backup"
+>       assert task_func(directory, backup_dir) == expected_output
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0017.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = '/path/to/empty_directory', backup_dir = '/path/to/backup'
+
+    def task_func(directory, backup_dir='/path/to/backup'):
+        if not os.path.exists(directory):
+>           raise FileNotFoundError(f"Directory '{directory}' not found.")
+E           FileNotFoundError: Directory '/path/to/empty_directory' not found.
+
+../../../src/src_0017.py:6: FileNotFoundError
+______________________ test_task_func_with_no_backup_dir _______________________
+
+    def test_task_func_with_no_backup_dir():
+        directory = '/path/to/logs'
+        backup_dir = '/path/to/invalid_backup_dir'
+        expected_backup_file = '/path/to/invalid_backup_dir/logs_backup.tar.gz'
+>       assert task_func(directory, backup_dir) == expected_backup_file
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0017.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = '/path/to/logs', backup_dir = '/path/to/invalid_backup_dir'
+
+    def task_func(directory, backup_dir='/path/to/backup'):
+        if not os.path.exists(directory):
+>           raise FileNotFoundError(f"Directory '{directory}' not found.")
+E           FileNotFoundError: Directory '/path/to/logs' not found.
+
+../../../src/src_0017.py:6: FileNotFoundError
+___________________ test_task_func_with_existing_backup_dir ____________________
+
+    def test_task_func_with_existing_backup_dir():
+        directory = '/path/to/logs'
+        backup_dir = '/path/to/existing_backup_dir'
+>       os.makedirs(backup_dir, exist_ok=True)
+
+test_0017.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<frozen os>:215: in makedirs
+    ???
+<frozen os>:215: in makedirs
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = '/path', mode = 511, exist_ok = True
+
+>   ???
+E   PermissionError: [Errno 13] Permission denied: '/path'
+
+<frozen os>:225: PermissionError
+=========================== short test summary info ============================
+FAILED test_0017.py::test_task_func_with_valid_directory - FileNotFoundError:...
+FAILED test_0017.py::test_task_func_with_no_logs - FileNotFoundError: Directo...
+FAILED test_0017.py::test_task_func_with_no_backup_dir - FileNotFoundError: D...
+FAILED test_0017.py::test_task_func_with_existing_backup_dir - PermissionErro...
+4 failed, 1 passed in 0.46s

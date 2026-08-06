@@ -1,0 +1,42 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_valid_student _________________________
+
+    def test_task_func_valid_student():
+        test_scores = [
+            {'Student': 'Alice', 'Score': 85},
+            {'Student': 'Alice', 'Score': 90},
+            {'Student': 'Bob', 'Score': 92}
+        ]
+        student = 'Alice'
+        expected_average = (85 + 90) / 2
+        expected_std = np.std([85, 90])
+        result, df = task_func(test_scores, student)
+        assert np.isclose(result[0], expected_average)
+>       assert np.isclose(result[1], expected_std)
+E       assert np.False_
+E        +  where np.False_ = <function isclose at 0x7b628291e770>(np.float64(3.5355339059327378), np.float64(2.5))
+E        +    where <function isclose at 0x7b628291e770> = np.isclose
+
+test_0816.py:27: AssertionError
+_________________________ test_task_func_single_score __________________________
+
+    def test_task_func_single_score():
+        test_scores = [
+            {'Student': 'Alice', 'Score': 85}
+        ]
+        student = 'Alice'
+        expected_average = 85
+        expected_std = 0
+        result, df = task_func(test_scores, student)
+        assert np.isclose(result[0], expected_average)
+>       assert np.isclose(result[1], expected_std)
+E       assert np.False_
+E        +  where np.False_ = <function isclose at 0x7b628291e770>(np.float64(nan), 0)
+E        +    where <function isclose at 0x7b628291e770> = np.isclose
+
+test_0816.py:40: AssertionError
+=========================== short test summary info ============================
+FAILED test_0816.py::test_task_func_valid_student - assert np.False_
+FAILED test_0816.py::test_task_func_single_score - assert np.False_
+2 failed, 1 passed in 1.18s

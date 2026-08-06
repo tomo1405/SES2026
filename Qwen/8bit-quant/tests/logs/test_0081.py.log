@@ -1,0 +1,92 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_______________________________ test_handle_post _______________________________
+
+client = <FlaskClient <Flask 'src_0081'>>
+
+    def test_handle_post(client):
+        with patch('src_0081.logging') as mock_logging, \
+             patch('builtins.open', new_callable=mock_open()) as mock_file:
+    
+            response = client.post('/', json={'key': 'value'})
+    
+>           assert response.status_code == 200
+E           assert 500 == 200
+E            +  where 500 = <WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]>.status_code
+
+test_0081.py:19: AssertionError
+------------------------------ Captured log call -------------------------------
+ERROR    src_0081:app.py:875 Exception on / [POST]
+Traceback (most recent call last):
+  File "/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/tomohiro-w/utg/src/src_0081.py", line 13, in handle_post
+    return render_template('index.html', data=data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/flask/templating.py", line 150, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/jinja2/environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/jinja2/loaders.py", line 126, in load
+    source, filename, uptodate = self.get_source(environment, name)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/flask/templating.py", line 66, in get_source
+    return self._get_source_fast(environment, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/flask/templating.py", line 100, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: index.html
+________________________ test_handle_post_invalid_json _________________________
+
+client = <FlaskClient <Flask 'src_0081'>>
+
+    def test_handle_post_invalid_json(client):
+        with patch('src_0081.logging') as mock_logging:
+    
+            response = client.post('/', data='invalid json', content_type='application/json')
+    
+            assert response.status_code == 400
+>           assert response.content_type == 'application/json'
+E           AssertionError: assert 'text/html; charset=utf-8' == 'application/json'
+E             
+E             - application/json
+E             + text/html; charset=utf-8
+
+test_0081.py:31: AssertionError
+___________________________ test_handle_post_no_data ___________________________
+
+client = <FlaskClient <Flask 'src_0081'>>
+
+    def test_handle_post_no_data(client):
+        with patch('src_0081.logging') as mock_logging:
+    
+            response = client.post('/')
+    
+>           assert response.status_code == 400
+E           assert 415 == 400
+E            +  where 415 = <WrapperTestResponse streamed [415 UNSUPPORTED MEDIA TYPE]>.status_code
+
+test_0081.py:41: AssertionError
+=========================== short test summary info ============================
+FAILED test_0081.py::test_handle_post - assert 500 == 200
+FAILED test_0081.py::test_handle_post_invalid_json - AssertionError: assert '...
+FAILED test_0081.py::test_handle_post_no_data - assert 415 == 400
+3 failed in 0.75s

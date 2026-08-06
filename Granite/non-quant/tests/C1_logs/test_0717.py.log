@@ -1,0 +1,44 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        sys.path.append('/path/to/whatever')
+>       with open('/path/to/json_file.json', 'r+') as file:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/path/to/json_file.json'
+
+test_0717.py:9: FileNotFoundError
+_______________________ test_task_func_with_default_args _______________________
+
+    def test_task_func_with_default_args():
+>       assert task_func() is not None
+               ^^^^^^^^^^^
+
+test_0717.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path_to_append = '/path/to/whatever', json_file = '/path/to/json_file.json'
+
+    def task_func(path_to_append=PATH_TO_APPEND, json_file=JSON_FILE):
+        sys.path.append(path_to_append)
+    
+>       with open(json_file, 'r+') as file:
+             ^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/path/to/json_file.json'
+
+../../../src/src_0717.py:10: FileNotFoundError
+_______________________ test_task_func_with_custom_args ________________________
+
+    def test_task_func_with_custom_args():
+        sys.path.append('/custom/path/to/whatever')
+>       with open('/custom/path/to/json_file.json', 'r+') as file:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/custom/path/to/json_file.json'
+
+test_0717.py:22: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0717.py::test_task_func - FileNotFoundError: [Errno 2] No such fi...
+FAILED test_0717.py::test_task_func_with_default_args - FileNotFoundError: [E...
+FAILED test_0717.py::test_task_func_with_custom_args - FileNotFoundError: [Er...
+3 failed in 0.49s

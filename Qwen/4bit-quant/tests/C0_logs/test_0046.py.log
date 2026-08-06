@@ -1,0 +1,279 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_show = <MagicMock name='show' id='129110834340272'>
+
+    @patch('matplotlib.pyplot.show')
+    def test_task_func(mock_show):
+        # Create a sample DataFrame with numeric and non-numeric columns
+        data = {
+            'A': [1, 2, np.nan, 4],
+            'B': [5, np.nan, 7, 8],
+            'C': ['x', 'y', 'z', 'w']
+        }
+        df = pd.DataFrame(data)
+    
+        # Call the function
+        principalDf, ax = task_func(df)
+    
+        # Check that the returned DataFrame has the correct shape
+        assert principalDf.shape == (4, 2)
+    
+        # Check that the returned DataFrame has the correct column names
+        assert list(principalDf.columns) == ["Component 1", "Component 2"]
+    
+        # Check that the returned Axes object is of the correct type
+>       assert isinstance(ax, sns.axisgrid.FacetGrid)
+E       AssertionError: assert False
+E        +  where False = isinstance(<Axes: xlabel='Component 1', ylabel='Component 2'>, <class 'seaborn.axisgrid.FacetGrid'>)
+E        +    where <class 'seaborn.axisgrid.FacetGrid'> = <module 'seaborn.axisgrid' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/axisgrid.py'>.FacetGrid
+E        +      where <module 'seaborn.axisgrid' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/axisgrid.py'> = sns.axisgrid
+
+test_0046.py:30: AssertionError
+____________________ test_task_func_with_no_numeric_columns ____________________
+
+mock_show = <MagicMock name='show' id='129104668886128'>
+
+    @patch('matplotlib.pyplot.show')
+    def test_task_func_with_no_numeric_columns(mock_show):
+        # Create a sample DataFrame with no numeric columns
+        data = {
+            'A': ['x', 'y', 'z', 'w'],
+            'B': ['p', 'q', 'r', 's']
+        }
+        df = pd.DataFrame(data)
+    
+        # Call the function
+>       principalDf, ax = task_func(df)
+                          ^^^^^^^^^^^^^
+
+test_0046.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0046.py:13: in task_func
+    principalComponents = pca.fit_transform(df_numeric)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/utils/_set_output.py:319: in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/base.py:1403: in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/decomposition/_pca.py:466: in fit_transform
+    U, S, _, X, x_is_centered, xp = self._fit(X)
+                                    ^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/decomposition/_pca.py:503: in _fit
+    X = validate_data(
+../../../.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:3038: in validate_data
+    out = check_array(X, input_name="X", **check_params)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+array = Empty DataFrame
+Columns: []
+Index: [0, 1, 2, 3]
+accept_sparse = ('csr', 'csc'), accept_large_sparse = True
+dtype = [<class 'numpy.float64'>, <class 'numpy.float32'>], order = None
+copy = False, force_writeable = True, ensure_all_finite = True
+ensure_non_negative = False, ensure_2d = True, allow_nd = False
+ensure_min_samples = 1, ensure_min_features = 1, estimator = PCA(n_components=2)
+input_name = 'X'
+
+    def check_array(
+        array,
+        accept_sparse=False,
+        *,
+        accept_large_sparse=True,
+        dtype="numeric",
+        order=None,
+        copy=False,
+        force_writeable=False,
+        ensure_all_finite=True,
+        ensure_non_negative=False,
+        ensure_2d=True,
+        allow_nd=False,
+        ensure_min_samples=1,
+        ensure_min_features=1,
+        estimator=None,
+        input_name="",
+    ):
+        """Input validation on an array, list, sparse matrix or similar.
+    
+        By default, the input is checked to be a non-empty 2D array containing
+        only finite values. If the dtype of the array is object, attempt
+        converting to float, raising on failure.
+    
+        Parameters
+        ----------
+        array : object
+            Input object to check / convert.
+    
+        accept_sparse : str, bool or list/tuple of str, default=False
+            String[s] representing allowed sparse matrix formats, such as 'csc',
+            'csr', etc. If the input is sparse but not in the allowed format,
+            it will be converted to the first listed format. True allows the input
+            to be any format. False means that a sparse matrix input will
+            raise an error.
+    
+        accept_large_sparse : bool, default=True
+            If a CSR, CSC, COO or BSR sparse matrix is supplied and accepted by
+            accept_sparse, accept_large_sparse=False will cause it to be accepted
+            only if its indices are stored with a 32-bit dtype.
+    
+            .. versionadded:: 0.20
+    
+        dtype : 'numeric', type, list of type or None, default='numeric'
+            Data type of result. If None, the dtype of the input is preserved.
+            If "numeric", dtype is preserved unless array.dtype is object.
+            If dtype is a list of types, conversion on the first type is only
+            performed if the dtype of the input is not in the list.
+    
+        order : {'F', 'C'} or None, default=None
+            Whether an array will be forced to be fortran or c-style.
+            When order is None (default), then if copy=False, nothing is ensured
+            about the memory layout of the output array; otherwise (copy=True)
+            the memory layout of the returned array is kept as close as possible
+            to the original array.
+    
+        copy : bool, default=False
+            Whether a forced copy will be triggered. If copy=False, a copy might
+            be triggered by a conversion.
+    
+        force_writeable : bool, default=False
+            Whether to force the output array to be writeable. If True, the returned array
+            is guaranteed to be writeable, which may require a copy. Otherwise the
+            writeability of the input array is preserved.
+    
+            .. versionadded:: 1.6
+    
+        ensure_all_finite : bool or 'allow-nan', default=True
+            Whether to raise an error on np.inf, np.nan, pd.NA in array. The
+            possibilities are:
+    
+            - True: Force all values of array to be finite.
+            - False: accepts np.inf, np.nan, pd.NA in array.
+            - 'allow-nan': accepts only np.nan and pd.NA values in array. Values
+              cannot be infinite.
+    
+            .. versionadded:: 1.6
+               `force_all_finite` was renamed to `ensure_all_finite`.
+    
+        ensure_non_negative : bool, default=False
+            Make sure the array has only non-negative values. If True, an array that
+            contains negative values will raise a ValueError.
+    
+            .. versionadded:: 1.6
+    
+        ensure_2d : bool, default=True
+            Whether to raise a value error if array is not 2D.
+    
+        allow_nd : bool, default=False
+            Whether to allow array.ndim > 2.
+    
+        ensure_min_samples : int, default=1
+            Make sure that the array has a minimum number of samples in its first
+            axis (rows for a 2D array). Setting to 0 disables this check.
+    
+        ensure_min_features : int, default=1
+            Make sure that the 2D array has some minimum number of features
+            (columns). The default value of 1 rejects empty datasets.
+            This check is only enforced when the input data has effectively 2
+            dimensions or is originally 1D and ``ensure_2d`` is True. Setting to 0
+            disables this check.
+    
+        estimator : str or estimator instance, default=None
+            If passed, include the name of the estimator in warning messages.
+    
+        input_name : str, default=""
+            The data name used to construct the error message. In particular
+            if `input_name` is "X" and the data has NaN values and
+            allow_nan is False, the error message will link to the imputer
+            documentation.
+    
+            .. versionadded:: 1.1.0
+    
+        Returns
+        -------
+        array_converted : object
+            The converted and validated array.
+    
+        Examples
+        --------
+        >>> from sklearn.utils.validation import check_array
+        >>> X = [[1, 2, 3], [4, 5, 6]]
+        >>> X_checked = check_array(X)
+        >>> X_checked
+        array([[1, 2, 3], [4, 5, 6]])
+        """
+        if isinstance(array, np.matrix):
+            raise TypeError(
+                "np.matrix is not supported. Please convert to a numpy array with "
+                "np.asarray. For more information see: "
+                "https://numpy.org/doc/stable/reference/generated/numpy.matrix.html"
+            )
+    
+        xp, is_array_api_compliant = get_namespace(array)
+    
+        # store reference to original array to check if copy is needed when
+        # function returns
+        array_orig = array
+    
+        # store whether originally we wanted numeric dtype
+        dtype_numeric = isinstance(dtype, str) and dtype == "numeric"
+    
+        dtype_orig = getattr(array, "dtype", None)
+        if not is_array_api_compliant and not hasattr(dtype_orig, "kind"):
+            # not a data type (e.g. a column named dtype in a pandas DataFrame)
+            dtype_orig = None
+    
+        # check if the object contains several dtypes (typically a pandas
+        # DataFrame), and store them. If not, store None.
+        dtypes_orig = None
+        pandas_requires_conversion = False
+        # track if we have a Series-like object to raise a better error message
+        type_if_series = None
+        # For dataframes, use narwhals
+        if _nw_into_df_or_series(array):
+            array_df = nw.from_native(array, allow_series=True)
+        else:
+            array_df = None
+    
+        # pandas.DataFrame may have sparse columns
+        is_pandas_fully_sparse_df = False
+        if (
+            array_df is not None
+            and array_df.implementation.is_pandas()
+            and len(array_df.shape) >= 2
+        ):
+            # Throw warning if some columns are sparse. If all columns are sparse, then
+            # array.sparse exists and sparsity will be preserved (later).
+            from pandas import SparseDtype
+    
+            def is_pd_sparse(dtype):
+                return isinstance(dtype, SparseDtype)
+    
+            if hasattr(array, "sparse") and array.dtypes.apply(is_pd_sparse).all():
+                # All columns of the pandas.DataFrame are sparse. Note that the `sparse`
+                # attribute is not a guaranteed detection for all sparse columns.
+                is_pandas_fully_sparse_df = True
+            elif array.dtypes.apply(is_pd_sparse).any():
+                warnings.warn(
+                    "pandas.DataFrame with sparse columns found."
+                    "It will be converted to a dense numpy array."
+                )
+    
+            dtypes_orig = list(array.dtypes)
+            pandas_requires_conversion = any(
+                _pandas_dtype_needs_early_conversion(i) for i in dtypes_orig
+            )
+            has_pandas_string = any(_is_pandas_string_dtype(d) for d in dtypes_orig)
+            if all(isinstance(dtype_iter, np.dtype) for dtype_iter in dtypes_orig):
+>               dtype_orig = np.result_type(*dtypes_orig)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               ValueError: at least one array or dtype is required
+
+../../../.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:922: ValueError
+=========================== short test summary info ============================
+FAILED test_0046.py::test_task_func - AssertionError: assert False
+FAILED test_0046.py::test_task_func_with_no_numeric_columns - ValueError: at ...
+2 failed in 4.50s

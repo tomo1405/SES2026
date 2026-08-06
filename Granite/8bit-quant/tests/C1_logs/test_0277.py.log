@@ -1,0 +1,39 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_zero_matrix ________________________
+
+    def test_task_func_with_zero_matrix():
+        matrix = np.zeros((100, 100))
+        skewness, kurtosis, ax = task_func(matrix)
+>       assert skewness == 0
+E       assert np.float64(nan) == 0
+
+test_0277.py:16: AssertionError
+_____________________ test_task_func_with_identity_matrix ______________________
+
+    def test_task_func_with_identity_matrix():
+        matrix = np.eye(100)
+        skewness, kurtosis, ax = task_func(matrix)
+>       assert skewness == 0
+E       assert np.float64(nan) == 0
+
+test_0277.py:22: AssertionError
+=============================== warnings summary ===============================
+Granite/8bit-quant/tests/test_0277.py::test_task_func_with_zero_matrix
+Granite/8bit-quant/tests/test_0277.py::test_task_func_with_identity_matrix
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/scipy/stats/_distn_infrastructure.py:2079: RuntimeWarning: divide by zero encountered in divide
+    x = np.asarray((x - loc)/scale, dtype=dtyp)
+
+Granite/8bit-quant/tests/test_0277.py::test_task_func_with_identity_matrix
+  /work/tomohiro-w/utg/src/src_0277.py:15: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+    skewness = stats.skew(max_values)
+
+Granite/8bit-quant/tests/test_0277.py::test_task_func_with_identity_matrix
+  /work/tomohiro-w/utg/src/src_0277.py:16: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+    kurtosis = stats.kurtosis(max_values)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0277.py::test_task_func_with_zero_matrix - assert np.float64(nan)...
+FAILED test_0277.py::test_task_func_with_identity_matrix - assert np.float64(...
+2 failed, 1 passed, 4 warnings in 2.68s

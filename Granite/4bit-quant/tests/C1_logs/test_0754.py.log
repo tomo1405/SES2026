@@ -1,0 +1,26 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        n = 1000  # Number of iterations to test
+        distances = []
+    
+        for _ in range(n):
+            theta = 2 * math.pi * random.random()
+            r = RADIUS * math.sqrt(random.random())
+            x = r * math.cos(theta)
+            y = r * math.sin(theta)
+            distance = math.sqrt(x**2 + y**2)
+            distances.append(distance)
+    
+        expected_mean = round(statistics.mean(distances), 4)
+        actual_mean = task_func(n)
+>       assert actual_mean == expected_mean, "Expected mean: {}, Actual mean: {}".format(expected_mean, actual_mean)
+E       AssertionError: Expected mean: 3.3485, Actual mean: 3.3387
+E       assert 3.3387 == 3.3485
+
+test_0754.py:23: AssertionError
+=========================== short test summary info ============================
+FAILED test_0754.py::test_task_func - AssertionError: Expected mean: 3.3485, ...
+1 failed in 0.52s

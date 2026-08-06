@@ -1,0 +1,30 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test 1: Check that the function returns a matplotlib figure object
+        fig = task_func(mu=0, sigma=1)
+        assert isinstance(fig, plt.Figure)
+    
+        # Test 2: Check that the function plots a histogram with the correct number of bins
+        num_bins = 30
+        fig = task_func(mu=0, sigma=1, num_samples=1000, seed=77)
+        ax = fig.axes[0]
+        assert len(ax.patches) == num_bins
+    
+        # Test 3: Check that the function plots a probability plot with the correct distribution
+        dist = "norm"
+        fig = task_func(mu=0, sigma=1, num_samples=1000, seed=77)
+        ax = fig.axes[1]
+        assert ax.get_title() == "Probability Plot"
+>       assert ax.get_xlabel() == "Sample Values"
+E       AssertionError: assert 'Theoretical quantiles' == 'Sample Values'
+E         
+E         - Sample Values
+E         + Theoretical quantiles
+
+test_0394.py:23: AssertionError
+=========================== short test summary info ============================
+FAILED test_0394.py::test_task_func - AssertionError: assert 'Theoretical qua...
+1 failed in 3.00s

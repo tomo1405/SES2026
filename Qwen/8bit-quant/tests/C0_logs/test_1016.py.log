@@ -1,0 +1,53 @@
+FE.EE                                                                    [100%]
+==================================== ERRORS ====================================
+__________________ ERROR at setup of test_task_func_with_http __________________
+file /work/tomohiro-w/utg/Qwen/8bit-quant/tests/test_1016.py, line 28
+  def test_task_func_with_http(mocker, temp_db):
+E       fixture 'mocker' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, cov, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, no_cover, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, temp_db, temp_file, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/work/tomohiro-w/utg/Qwen/8bit-quant/tests/test_1016.py:28
+______________ ERROR at setup of test_task_func_request_exception ______________
+file /work/tomohiro-w/utg/Qwen/8bit-quant/tests/test_1016.py, line 58
+  def test_task_func_request_exception(mocker, temp_db):
+E       fixture 'mocker' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, cov, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, no_cover, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, temp_db, temp_file, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/work/tomohiro-w/utg/Qwen/8bit-quant/tests/test_1016.py:58
+_______________ ERROR at setup of test_task_func_database_error ________________
+file /work/tomohiro-w/utg/Qwen/8bit-quant/tests/test_1016.py, line 65
+  def test_task_func_database_error(mocker, temp_file, temp_db):
+E       fixture 'mocker' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, cov, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, no_cover, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, temp_db, temp_file, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/work/tomohiro-w/utg/Qwen/8bit-quant/tests/test_1016.py:65
+=================================== FAILURES ===================================
+___________________________ test_task_func_with_file ___________________________
+
+temp_file = 'file:///tmp/pytest-of-tomohiro-w/pytest-2213/test_task_func_with_file0/test.html'
+temp_db = '/tmp/pytest-of-tomohiro-w/pytest-2213/test_task_func_with_file0/test.db'
+
+    def test_task_func_with_file(temp_file, temp_db):
+        result = task_func(temp_file, temp_db)
+        assert result == 2
+    
+        conn = sqlite3.connect(temp_db)
+        df = pd.read_sql_query("SELECT * FROM my_table", conn)
+        conn.close()
+        assert df.shape == (2, 2)
+>       assert list(df.columns) == [0, 1]
+E       AssertionError: assert ['0', '1'] == [0, 1]
+E         
+E         At index 0 diff: '0' != 0
+E         Use -v to get more diff
+
+test_1016.py:26: AssertionError
+=========================== short test summary info ============================
+FAILED test_1016.py::test_task_func_with_file - AssertionError: assert ['0', ...
+ERROR test_1016.py::test_task_func_with_http
+ERROR test_1016.py::test_task_func_request_exception
+ERROR test_1016.py::test_task_func_database_error
+1 failed, 1 passed, 3 errors in 1.78s

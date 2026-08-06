@@ -1,0 +1,47 @@
+import os
+import logging
+import pytest
+
+def task_func(directory):
+    # Configure logging
+    logging.basicConfig(filename='jquery_removal.log', level=logging.INFO,
+                        format='%(asctime)s - %(levelname)s - %(message)s')
+    
+    # Check if directory exists
+    if not os.path.exists(directory):
+        raise FileNotFoundError(f"Directory '{directory}' does not exist.")
+
+    # Get all files in the directory
+    files = os.listdir(directory)
+
+    # Remove jQuery files
+    removed_files = 0
+    removed_file_names = []
+    for file in files:
+        if 'jquery' in file and file.endswith('.js'):
+            try:
+                os.remove(os.path.join(directory, file))
+                removed_files += 1
+                removed_file_names.append(file)
+                logging.info(f"Removed jQuery file: {file}")
+            except Exception as e:
+                logging.error(f"Error while removing file {file}: {e}")
+
+    return removed_files, removed_file_names
+
+def test_task_func():
+    test_dir = "/path/to/test/directory"
+    with pytest.raises(FileNotFoundError):
+        task_func(test_dir)
+    test_dir = "/path/to/test/directory"
+    os.makedirs(test_dir, exist_ok=True)
+    test_files = ["file1.js", "file2.js", "jquery.js", "file3.js"]
+    for file in test_files:
+        with open(os.path.join(test_dir, file), "w") as f:
+            f.write("test content")
+    removed_files, removed_file_names = task_func(test_dir)
+    assert removed_files == 2
+    assert removed_file_names == ["jquery.js", "file3.js"]
+    for file in test_files:
+        os.remove(os.path.join(test_dir, file))
+    os.rmdir(test_dir)

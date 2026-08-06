@@ -1,0 +1,37 @@
+F...F                                                                    [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_length _____________________________
+
+    def test_task_func_length():
+        length = 10
+        result = task_func(length)
+>       assert len(result) == length // 2, f"Expected length of {length // 2}, got {len(result)}"
+E       AssertionError: Expected length of 5, got 4
+E       assert 4 == (10 // 2)
+E        +  where 4 = len("'\x17\x00\x14")
+
+test_0992.py:9: AssertionError
+__________________________ test_task_func_odd_length ___________________________
+
+    def test_task_func_odd_length():
+        length = 9
+>       result = task_func(length)
+                 ^^^^^^^^^^^^^^^^^
+
+test_0992.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+length = 9
+
+    def task_func(length):
+        HEX_CHARS = string.hexdigits.lower()
+        hex_string = "".join(random.choice(HEX_CHARS) for _ in range(length))
+>       return binascii.unhexlify(hex_string).decode("utf-8", "ignore")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       binascii.Error: Odd-length string
+
+../../../src/src_0992.py:7: Error
+=========================== short test summary info ============================
+FAILED test_0992.py::test_task_func_length - AssertionError: Expected length ...
+FAILED test_0992.py::test_task_func_odd_length - binascii.Error: Odd-length s...
+2 failed, 3 passed in 0.54s

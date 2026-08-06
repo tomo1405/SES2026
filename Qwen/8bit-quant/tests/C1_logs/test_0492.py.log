@@ -1,0 +1,42 @@
+.FF.F                                                                    [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_future_start __________________________
+
+mock_datetime = None, mock_random = None
+
+    def test_task_func_future_start(mock_datetime, mock_random):
+>       with pytest.raises(ValueError) as exc_info:
+E       Failed: DID NOT RAISE ValueError
+
+test_0492.py:41: Failed
+__________________________ test_task_func_valid_input __________________________
+
+mock_datetime = None, mock_random = None
+
+    def test_task_func_valid_input(mock_datetime, mock_random):
+        sales_data, ax = task_func(MockDatetime.utcfromtimestamp(0).timestamp() * 1000)
+        expected_categories = ["Electronics", "Clothing", "Home", "Books", "Sports"]
+        assert list(sales_data.keys()) == expected_categories
+        for sales in sales_data.values():
+>           assert len(sales) == 365  # 365 days between January 1, 2022 and January 1, 2023
+            ^^^^^^^^^^^^^^^^^^^^^^^^
+E           assert 31 == 365
+E            +  where 31 = len([30, 30, 30, 30, 30, 30, ...])
+
+test_0492.py:50: AssertionError
+_________________________ test_task_func_without_seed __________________________
+
+mock_datetime = None, mock_random = None
+
+    def test_task_func_without_seed(mock_datetime, mock_random):
+        sales_data_1, _ = task_func(MockDatetime.utcfromtimestamp(0).timestamp() * 1000)
+        sales_data_2, _ = task_func(MockDatetime.utcfromtimestamp(0).timestamp() * 1000)
+>       assert sales_data_1 != sales_data_2
+E       AssertionError: assert {'Electronics': [30, 30, 30, 30, 30, 30, ...], 'Clothing': [30, 30, 30, 30, 30, 30, ...], 'Home': [30, 30, 30, 30, 30, 30, ...], 'Books': [30, 30, 30, 30, 30, 30, ...], ...} != {'Electronics': [30, 30, 30, 30, 30, 30, ...], 'Clothing': [30, 30, 30, 30, 30, 30, ...], 'Home': [30, 30, 30, 30, 30, 30, ...], 'Books': [30, 30, 30, 30, 30, 30, ...], ...}
+
+test_0492.py:67: AssertionError
+=========================== short test summary info ============================
+FAILED test_0492.py::test_task_func_future_start - Failed: DID NOT RAISE Valu...
+FAILED test_0492.py::test_task_func_valid_input - assert 31 == 365
+FAILED test_0492.py::test_task_func_without_seed - AssertionError: assert {'E...
+3 failed, 2 passed in 2.39s

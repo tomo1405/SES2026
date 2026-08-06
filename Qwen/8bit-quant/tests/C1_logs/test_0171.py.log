@@ -1,0 +1,45 @@
+.F.                                                                      [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_sort_by_year __________________________
+
+mock_get = <MagicMock name='get' id='132601573275168'>
+
+    @patch('requests.get')
+    def test_task_func_sort_by_year(mock_get):
+        # Mock the response from requests.get
+        mock_response = requests.Response()
+        mock_response.status_code = 200
+        mock_response._content = MOCK_CSV_DATA.encode('utf-8')
+        mock_get.return_value = mock_response
+    
+        # Expected DataFrame after sorting by 'year'
+        expected_df = pd.DataFrame({
+            'title': ['The Matrix', 'Inception', 'Interstellar'],
+            'year': [1999, 2010, 2014],
+            'rating': [8.7, 8.8, 8.6]
+        })
+    
+        # Call the function with the mock CSV URL and sort by 'year'
+        result_df = task_func('http://mock-csv-url.com', sort_by_column='year')
+    
+        # Check if the result matches the expected DataFrame
+>       pd.testing.assert_frame_equal(result_df, expected_df)
+
+test_0171.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pandas/_libs/testing.pyx:53: in pandas._libs.testing.assert_almost_equal
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   AssertionError: DataFrame.index are different
+E   
+E   DataFrame.index values are different (100.0 %)
+E   [left]:  Index([2, 0, 1], dtype='int64')
+E   [right]: RangeIndex(start=0, stop=3, step=1)
+E   At positional index 0, first diff: 2 != 0
+
+pandas/_libs/testing.pyx:171: AssertionError
+=========================== short test summary info ============================
+FAILED test_0171.py::test_task_func_sort_by_year - AssertionError: DataFrame....
+1 failed, 2 passed in 1.50s

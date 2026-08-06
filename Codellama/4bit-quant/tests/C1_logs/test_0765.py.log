@@ -1,0 +1,47 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that the function raises a TypeError if csv_file is not a string
+        with pytest.raises(TypeError):
+            task_func(csv_file=123)
+    
+        # Test that the function raises a TypeError if names is not a list
+        with pytest.raises(TypeError):
+            task_func(names='Smith')
+    
+        # Test that the function raises a TypeError if latin_names is not a list
+        with pytest.raises(TypeError):
+            task_func(latin_names='Sopetón')
+    
+        # Test that the function returns the correct csv_file
+        csv_file = task_func(csv_file='names.csv', names=['Smith', 'Johnson', 'Williams', 'Brown', 'Jones'], latin_names=['Sopetón', 'Méndez', 'Gómez', 'Pérez', 'Muñoz'])
+        assert csv_file == 'names.csv'
+    
+        # Test that the function writes the correct data to the csv file
+        with open(csv_file, 'r') as f:
+            reader = csv.DictReader(f)
+>           rows = [row for row in reader]
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0765.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/csv.py:115: in __next__
+    self.fieldnames
+/usr/lib/python3.12/csv.py:102: in fieldnames
+    self._fieldnames = next(self.reader)
+                       ^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <encodings.utf_8.IncrementalDecoder object at 0x7c2fd6b7f8c0>
+input = b'Name,Age\r\nSopet\xf3n,48\r\nJones,26\r\nMu\xf1oz,47\r\nSmith,34\r\nG\xf3mez,31\r\nJones,35\r\nP\xe9rez,37\r\nJones,...\r\nP\xe9rez,41\r\nJohnson,38\r\nMu\xf1oz,25\r\nSmith,41\r\nP\xe9rez,33\r\nSmith,28\r\nM\xe9ndez,31\r\nWilliams,31\r\n'
+final = False
+
+>   ???
+E   UnicodeDecodeError: 'utf-8' codec can't decode byte 0xf3 in position 15: invalid continuation byte
+
+<frozen codecs>:322: UnicodeDecodeError
+=========================== short test summary info ============================
+FAILED test_0765.py::test_task_func - UnicodeDecodeError: 'utf-8' codec can't...
+1 failed in 0.60s

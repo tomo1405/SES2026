@@ -1,0 +1,39 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sample_data = (array([[0, 0],
+       [0, 1],
+       [1, 0],
+       [1, 1]]), array([0, 1, 1, 1]))
+
+    def test_task_func(sample_data):
+        X, Y = sample_data
+        model, ax = task_func(X, Y)
+    
+        # Check if the model is an instance of keras.Sequential
+        assert isinstance(model, keras.Sequential)
+    
+        # Check if the axes object is an instance of matplotlib.axes.Axes
+        assert isinstance(ax, plt.Axes)
+    
+        # Check if the model has been trained (by checking the number of layers)
+        assert len(model.layers) == 1
+    
+        # Check if the AUC score is within a reasonable range (0 to 1)
+>       fpr, tpr, _ = roc_curve(Y, model.predict(X).ravel())
+                      ^^^^^^^^^
+E       NameError: name 'roc_curve' is not defined
+
+test_0419.py:28: NameError
+----------------------------- Captured stderr call -----------------------------
+E0000 00:00:1785258546.974284 1457422 cuda_platform.cc:52] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: UNKNOWN ERROR (303)
+=============================== warnings summary ===============================
+Qwen/4bit-quant/tests/test_0419.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/keras/src/layers/core/dense.py:107: UserWarning: Do not pass an `input_shape`/`input_dim` argument to a layer. When using Sequential models, prefer using an `Input(shape)` object as the first layer in the model instead.
+    super().__init__(activity_regularizer=activity_regularizer, **kwargs)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0419.py::test_task_func - NameError: name 'roc_curve' is not defined
+1 failed, 1 warning in 16.38s

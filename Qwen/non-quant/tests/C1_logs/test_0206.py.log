@@ -1,0 +1,55 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_____________________________ test_execute_command _____________________________
+
+    def test_execute_command():
+        # Test a simple command that should succeed
+        result = execute_command("echo Hello, World!")
+        assert result.decode('utf-8').strip() == "Hello, World!"
+    
+        # Test a command that should fail
+        result = execute_command("invalid_command")
+>       assert result.decode('utf-8').strip() != ""
+E       AssertionError: assert '' != ''
+E        +  where '' = <built-in method strip of str object at 0xb3b3f0>()
+E        +    where <built-in method strip of str object at 0xb3b3f0> = ''.strip
+E        +      where '' = <built-in method decode of bytes object at 0xb380a8>('utf-8')
+E        +        where <built-in method decode of bytes object at 0xb380a8> = b''.decode
+
+test_0206.py:11: AssertionError
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a list of commands
+        commands = ["echo Hello, World!", "echo Goodbye, World!"]
+        results = task_func(commands)
+        assert len(results) == len(commands)
+        assert results[0].decode('utf-8').strip() == "Hello, World!"
+        assert results[1].decode('utf-8').strip() == "Goodbye, World!"
+    
+        # Test with an empty list of commands
+        results = task_func([])
+        assert results == []
+    
+        # Test with a single command
+        commands = ["echo Single Command"]
+        results = task_func(commands)
+        assert len(results) == 1
+        assert results[0].decode('utf-8').strip() == "Single Command"
+    
+        # Test with a command that should fail
+        commands = ["invalid_command"]
+        results = task_func(commands)
+        assert len(results) == 1
+>       assert results[0].decode('utf-8').strip() != ""
+E       AssertionError: assert '' != ''
+E        +  where '' = <built-in method strip of str object at 0xb3b3f0>()
+E        +    where <built-in method strip of str object at 0xb3b3f0> = ''.strip
+E        +      where '' = <built-in method decode of bytes object at 0xb380a8>('utf-8')
+E        +        where <built-in method decode of bytes object at 0xb380a8> = b''.decode
+
+test_0206.py:35: AssertionError
+=========================== short test summary info ============================
+FAILED test_0206.py::test_execute_command - AssertionError: assert '' != ''
+FAILED test_0206.py::test_task_func - AssertionError: assert '' != ''
+2 failed in 0.41s

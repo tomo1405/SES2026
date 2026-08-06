@@ -1,0 +1,42 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        list_of_lists = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        seed(42)  # Set the seed for reproducibility
+        expected_output = [
+            Counter({'banana': 2, 'apple': 1, 'cherry': 1, 'date': 1, 'elderberry': 1}),
+            Counter({'banana': 2, 'apple': 1, 'cherry': 1, 'date': 1, 'elderberry': 1}),
+            Counter({'banana': 2, 'apple': 1, 'cherry': 1, 'date': 1, 'elderberry': 1})
+        ]
+        actual_output = task_func(list_of_lists)
+>       assert actual_output == expected_output
+E       AssertionError: assert [Counter({'ap...erberry': 1})] == [Counter({'ba...erberry': 1})]
+E         
+E         At index 0 diff: Counter({'apple': 2, 'cherry': 1}) != Counter({'banana': 2, 'apple': 1, 'cherry': 1, 'date': 1, 'elderberry': 1})
+E         Use -v to get more diff
+
+test_0862.py:16: AssertionError
+_____________________ test_task_func_with_single_item_list _____________________
+
+    def test_task_func_with_single_item_list():
+        list_of_lists = [['apple'], ['banana'], ['cherry']]
+        seed(42)  # Set the seed for reproducibility
+        expected_output = [
+            Counter({'apple': 1}),
+            Counter({'banana': 1}),
+            Counter({'cherry': 1})
+        ]
+        actual_output = task_func(list_of_lists)
+>       assert actual_output == expected_output
+E       AssertionError: assert [Counter({'ap...'cherry': 1})] == [Counter({'ap...'cherry': 1})]
+E         
+E         At index 1 diff: Counter({'apple': 1}) != Counter({'banana': 1})
+E         Use -v to get more diff
+
+test_0862.py:38: AssertionError
+=========================== short test summary info ============================
+FAILED test_0862.py::test_task_func - AssertionError: assert [Counter({'ap......
+FAILED test_0862.py::test_task_func_with_single_item_list - AssertionError: a...
+2 failed, 1 passed in 0.49s

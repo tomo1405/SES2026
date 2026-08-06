@@ -1,0 +1,120 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_valid_directory ________________________
+
+    def test_task_func_valid_directory():
+        directory = "/fake/directory"
+        backup_dir, errors = task_func(directory)
+>       assert backup_dir == "/fake/backup/path"
+E       AssertionError: assert None == '/fake/backup/path'
+
+test_0780.py:10: AssertionError
+_______________________ test_task_func_invalid_directory _______________________
+
+    def test_task_func_invalid_directory():
+        directory = "/nonexistent/directory"
+        backup_dir, errors = task_func(directory)
+        assert backup_dir is None
+>       assert len(errors) == 2
+E       AssertionError: assert 1 == 2
+E        +  where 1 = len(['Directory does not exist: /nonexistent/directory'])
+
+test_0780.py:17: AssertionError
+_________________________ test_task_func_backup_error __________________________
+
+    def test_task_func_backup_error():
+        directory = "/fake/directory"
+        backup_dir = "/fake/backup/path"
+>       shutil.rmtree(backup_dir)  # Simulate backup error
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0780.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/shutil.py:775: in rmtree
+    onexc(os.lstat, path, err)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = '/fake/backup/path', ignore_errors = False, onerror = None
+onexc = <function rmtree.<locals>.onexc at 0x72844ff26f20>, dir_fd = None
+
+    def rmtree(path, ignore_errors=False, onerror=None, *, onexc=None, dir_fd=None):
+        """Recursively delete a directory tree.
+    
+        If dir_fd is not None, it should be a file descriptor open to a directory;
+        path will then be relative to that directory.
+        dir_fd may not be implemented on your platform.
+        If it is unavailable, using it will raise a NotImplementedError.
+    
+        If ignore_errors is set, errors are ignored; otherwise, if onexc or
+        onerror is set, it is called to handle the error with arguments (func,
+        path, exc_info) where func is platform and implementation dependent;
+        path is the argument to that function that caused it to fail; and
+        the value of exc_info describes the exception. For onexc it is the
+        exception instance, and for onerror it is a tuple as returned by
+        sys.exc_info().  If ignore_errors is false and both onexc and
+        onerror are None, the exception is reraised.
+    
+        onerror is deprecated and only remains for backwards compatibility.
+        If both onerror and onexc are set, onerror is ignored and onexc is used.
+        """
+    
+        sys.audit("shutil.rmtree", path, dir_fd)
+        if ignore_errors:
+            def onexc(*args):
+                pass
+        elif onerror is None and onexc is None:
+            def onexc(*args):
+                raise
+        elif onexc is None:
+            if onerror is None:
+                def onexc(*args):
+                    raise
+            else:
+                # delegate to onerror
+                def onexc(*args):
+                    func, path, exc = args
+                    if exc is None:
+                        exc_info = None, None, None
+                    else:
+                        exc_info = type(exc), exc, exc.__traceback__
+                    return onerror(func, path, exc_info)
+    
+        if _use_fd_functions:
+            # While the unsafe rmtree works fine on bytes, the fd based does not.
+            if isinstance(path, bytes):
+                path = os.fsdecode(path)
+            # Note: To guard against symlink races, we use the standard
+            # lstat()/open()/fstat() trick.
+            try:
+>               orig_st = os.lstat(path, dir_fd=dir_fd)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               FileNotFoundError: [Errno 2] No such file or directory: '/fake/backup/path'
+
+/usr/lib/python3.12/shutil.py:773: FileNotFoundError
+_________________________ test_task_func_cleanup_error _________________________
+
+    def test_task_func_cleanup_error():
+        directory = "/fake/directory"
+        backup_dir = "/fake/backup/path"
+>       os.makedirs(backup_dir)
+
+test_0780.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<frozen os>:215: in makedirs
+    ???
+<frozen os>:215: in makedirs
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = '/fake', mode = 511, exist_ok = False
+
+>   ???
+E   PermissionError: [Errno 13] Permission denied: '/fake'
+
+<frozen os>:225: PermissionError
+=========================== short test summary info ============================
+FAILED test_0780.py::test_task_func_valid_directory - AssertionError: assert ...
+FAILED test_0780.py::test_task_func_invalid_directory - AssertionError: asser...
+FAILED test_0780.py::test_task_func_backup_error - FileNotFoundError: [Errno ...
+FAILED test_0780.py::test_task_func_cleanup_error - PermissionError: [Errno 1...
+4 failed in 0.55s

@@ -1,0 +1,37 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        start_time = 1609459200000
+        end_time = 1609459300000
+        step = 1000
+        expected_columns = ["Timestamp", "Sensor1", "Sensor2", "Sensor3", "SensorStatus"]
+        expected_sensor_statuses = ["OK", "MAINTENANCE_REQUIRED", "ERROR"]
+        random_seed = 42
+        df = task_func(start_time, end_time, step, random_seed=random_seed)
+        assert df.columns.tolist() == expected_columns
+>       assert df["SensorStatus"].unique().tolist() == expected_sensor_statuses
+E       AssertionError: assert ['ERROR', 'OK...NCE_REQUIRED'] == ['OK', 'MAINT...RED', 'ERROR']
+E         
+E         At index 0 diff: 'ERROR' != 'OK'
+E         Use -v to get more diff
+
+test_0485.py:13: AssertionError
+______________________ test_task_func_invalid_start_time _______________________
+
+    def test_task_func_invalid_start_time():
+>       with pytest.raises(ValueError) as excinfo:
+E       Failed: DID NOT RAISE ValueError
+
+test_0485.py:16: Failed
+=============================== warnings summary ===============================
+Granite/8bit-quant/tests/test_0485.py: 200 warnings
+  /work/tomohiro-w/utg/src/src_0485.py:24: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+    dt = datetime.utcfromtimestamp(ts / 1000).strftime("%Y-%m-%d %H:%M:%S.%f")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0485.py::test_task_func - AssertionError: assert ['ERROR', 'OK......
+FAILED test_0485.py::test_task_func_invalid_start_time - Failed: DID NOT RAIS...
+2 failed, 1 passed, 200 warnings in 1.17s

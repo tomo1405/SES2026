@@ -1,0 +1,38 @@
+....F.....FF                                                             [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_windows_path __________________________
+
+    def test_task_func_windows_path():
+>       assert task_func("C:\\Users\\User\\Documents") == ["C:", "Users", "User", "Documents"]
+E       AssertionError: assert [] == ['C:', 'Users..., 'Documents']
+E         
+E         Right contains 4 more items, first extra item: 'C:'
+E         Use -v to get more diff
+
+test_0973.py:17: AssertionError
+________________________ test_task_func_dot_components _________________________
+
+    def test_task_func_dot_components():
+>       assert task_func("/home/./user/..") == ["home", "user"]
+E       AssertionError: assert ['home', 'user', '..'] == ['home', 'user']
+E         
+E         Left contains one more item: '..'
+E         Use -v to get more diff
+
+test_0973.py:35: AssertionError
+_________________________ test_task_func_hidden_files __________________________
+
+    def test_task_func_hidden_files():
+>       assert task_func("/home/.hidden") == [".hidden"]
+E       AssertionError: assert ['home', '.hidden'] == ['.hidden']
+E         
+E         At index 0 diff: 'home' != '.hidden'
+E         Left contains one more item: '.hidden'
+E         Use -v to get more diff
+
+test_0973.py:38: AssertionError
+=========================== short test summary info ============================
+FAILED test_0973.py::test_task_func_windows_path - AssertionError: assert [] ...
+FAILED test_0973.py::test_task_func_dot_components - AssertionError: assert [...
+FAILED test_0973.py::test_task_func_hidden_files - AssertionError: assert ['h...
+3 failed, 9 passed in 0.50s

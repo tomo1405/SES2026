@@ -1,0 +1,36 @@
+F...F                                                                    [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_valid_data ________________________
+
+    def test_task_func_with_valid_data():
+        data = {
+            "Score_String": ["85", "90", "78", "92"],
+            "Grade": ["A", "B", "C", "A"]
+        }
+        expected_correlation = 0.816496580927726  # This is an approximate value
+>       assert np.isclose(task_func(data), expected_correlation, atol=1e-6)
+E       AssertionError: assert np.False_
+E        +  where np.False_ = <function isclose at 0x7019ecf03170>(np.float64(-0.7115663354850345), 0.816496580927726, atol=1e-06)
+E        +    where <function isclose at 0x7019ecf03170> = np.isclose
+E        +    and   np.float64(-0.7115663354850345) = task_func({'Score_String': ['85', '90', '78', '92'], 'Grade': ['A', 'B', 'C', 'A']})
+
+test_1083.py:12: AssertionError
+__________________ test_task_func_with_non_categorical_grade ___________________
+
+    def test_task_func_with_non_categorical_grade():
+        data = {
+            "Score_String": ["85", "90", "78", "92"],
+            "Grade": [1, 2, 3, 1]
+        }
+        expected_correlation = 0.816496580927726  # This is an approximate value
+>       assert np.isclose(task_func(data), expected_correlation, atol=1e-6)
+E       AssertionError: assert np.False_
+E        +  where np.False_ = <function isclose at 0x7019ecf03170>(np.float64(-0.7115663354850345), 0.816496580927726, atol=1e-06)
+E        +    where <function isclose at 0x7019ecf03170> = np.isclose
+E        +    and   np.float64(-0.7115663354850345) = task_func({'Score_String': ['85', '90', '78', '92'], 'Grade': [1, 2, 3, 1]})
+
+test_1083.py:39: AssertionError
+=========================== short test summary info ============================
+FAILED test_1083.py::test_task_func_with_valid_data - AssertionError: assert ...
+FAILED test_1083.py::test_task_func_with_non_categorical_grade - AssertionErr...
+2 failed, 3 passed in 2.85s

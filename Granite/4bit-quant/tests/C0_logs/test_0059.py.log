@@ -1,0 +1,28 @@
+.F                                                                       [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        with pytest.raises(ValueError):
+            task_func(mu='foo', sigma=1, num_samples=1000)
+        with pytest.raises(ValueError):
+            task_func(mu=0, sigma='bar', num_samples=1000)
+        with pytest.raises(ValueError):
+>           task_func(mu=0, sigma=1, num_samples='baz')
+
+test_0059.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0059.py:5: in task_func
+    samples = np.random.normal(mu, sigma, num_samples)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+numpy/random/mtrand.pyx:1579: in numpy.random.mtrand.RandomState.normal
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   TypeError: 'str' object cannot be interpreted as an integer
+
+numpy/random/_common.pyx:654: TypeError
+=========================== short test summary info ============================
+FAILED test_0059.py::test_task_func_invalid_input - TypeError: 'str' object c...
+1 failed, 1 passed in 3.35s

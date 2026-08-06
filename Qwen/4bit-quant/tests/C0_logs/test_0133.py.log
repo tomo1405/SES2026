@@ -1,0 +1,23 @@
+F...                                                                     [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_valid_hex ___________________________
+
+    def test_task_func_valid_hex():
+        hex_str = "48656c6c6f20576f726c64"
+        df, ax = task_func(hex_str)
+        assert isinstance(df, pd.DataFrame)
+        assert isinstance(ax, plt.Axes)
+        assert 'Byte Value' in df.columns
+        assert 'Frequency' in df.columns
+>       assert df['Byte Value'].equals(pd.Series([72, 101, 108, 108, 111, 32, 87, 111, 114, 108, 100], dtype=np.uint8))
+E       AssertionError: assert False
+E        +  where False = equals(0      72\n1     101\n2     108\n3     108\n4     111\n5      32\n6      87\n7     111\n8     114\n9     108\n10    100\ndtype: uint8)
+E        +    where equals = 0     32\n1     72\n2     87\n3    100\n4    101\n5    108\n6    111\n7    114\nName: Byte Value, dtype: uint8.equals
+E        +    and   0      72\n1     101\n2     108\n3     108\n4     111\n5      32\n6      87\n7     111\n8     114\n9     108\n10    100\ndtype: uint8 = <class 'pandas.Series'>([72, 101, 108, 108, 111, 32, ...], dtype=<class 'numpy.uint8'>)
+E        +      where <class 'pandas.Series'> = pd.Series
+E        +      and   <class 'numpy.uint8'> = np.uint8
+
+test_0133.py:15: AssertionError
+=========================== short test summary info ============================
+FAILED test_0133.py::test_task_func_valid_hex - AssertionError: assert False
+1 failed, 3 passed in 2.05s

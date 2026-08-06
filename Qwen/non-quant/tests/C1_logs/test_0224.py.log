@@ -1,0 +1,204 @@
+.FF.F.                                                                   [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_replace_values _________________________
+
+values = array([1, 2, 'c'], dtype=object), return_inverse = True
+return_counts = False
+
+    def _unique_python(values, *, return_inverse, return_counts):
+        # Only used in `_uniques`, see docstring there for details
+        try:
+            uniques_set = set(values)
+            uniques_set, missing_values = _extract_missing(uniques_set)
+    
+>           uniques = sorted(uniques_set)
+                      ^^^^^^^^^^^^^^^^^^^
+E           TypeError: '<' not supported between instances of 'str' and 'int'
+
+../../../.venv/lib/python3.12/site-packages/sklearn/utils/_encode.py:177: TypeError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func_replace_values():
+        df = pd.DataFrame({'A': ['a', 'b', 'c'], 'B': [1, 2, 3]})
+        dct = {'a': 1, 'b': 2}
+        expected_df = pd.DataFrame({'A': [1, 2, 'c'], 'B': [1, 2, 3]})
+>       result_df = task_func(df, dct)
+                    ^^^^^^^^^^^^^^^^^^
+
+test_0224.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0224.py:19: in task_func
+    df[column] = le.fit_transform(df[column])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/preprocessing/_label.py:121: in fit_transform
+    self.classes_, y = _unique(y, return_inverse=True)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/utils/_encode.py:46: in _unique
+    return _unique_python(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+values = array([1, 2, 'c'], dtype=object), return_inverse = True
+return_counts = False
+
+    def _unique_python(values, *, return_inverse, return_counts):
+        # Only used in `_uniques`, see docstring there for details
+        try:
+            uniques_set = set(values)
+            uniques_set, missing_values = _extract_missing(uniques_set)
+    
+            uniques = sorted(uniques_set)
+            uniques.extend(missing_values.to_list())
+            uniques = np.array(uniques, dtype=values.dtype)
+        except TypeError:
+            types = sorted(t.__qualname__ for t in set(type(v) for v in values))
+>           raise TypeError(
+                "Encoders require their input argument must be uniformly "
+                f"strings or numbers. Got {types}"
+            )
+E           TypeError: Encoders require their input argument must be uniformly strings or numbers. Got ['int', 'str']
+
+../../../.venv/lib/python3.12/site-packages/sklearn/utils/_encode.py:182: TypeError
+________________________ test_task_func_label_encoding _________________________
+
+    def test_task_func_label_encoding():
+        df = pd.DataFrame({'A': ['cat', 'dog', 'bird'], 'B': [1, 2, 3]})
+        dct = {}
+>       result_df = task_func(df, dct)
+                    ^^^^^^^^^^^^^^^^^^
+
+test_0224.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0224.py:22: in task_func
+    df = (df - df.mean()) / df.std()
+               ^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/util/_decorators.py:336: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:14473: in mean
+    result = super().mean(
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:11831: in mean
+    return self._stat_function(
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:11785: in _stat_function
+    return self._reduce(
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:13633: in _reduce
+    res = df._mgr.reduce(blk_func)
+          ^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/managers.py:1681: in reduce
+    res_blocks = [blk.reduce(func) for blk in self.blocks]
+                  ^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/blocks.py:358: in reduce
+    result = func(self.values)
+             ^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:13561: in blk_func
+    return values._reduce(name, skipna=skipna, keepdims=True, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <ArrowStringArray>
+['cat', 'dog', 'bird']
+Length: 3, dtype: str
+name = 'mean', skipna = True, keepdims = True, kwargs = {}
+
+    def _reduce(
+        self, name: str, *, skipna: bool = True, keepdims: bool = False, **kwargs
+    ):
+        if self.dtype.na_value is np.nan and name in ["any", "all"]:
+            if not skipna:
+                nas = pc.is_null(self._pa_array)
+                arr = pc.or_kleene(nas, pc.not_equal(self._pa_array, ""))
+            else:
+                arr = pc.not_equal(self._pa_array, "")
+            result = ArrowExtensionArray(arr)._reduce(
+                name, skipna=skipna, keepdims=keepdims, **kwargs
+            )
+            if keepdims:
+                # ArrowExtensionArray will return a length-1 bool[pyarrow] array
+                return result.astype(np.bool_)
+            return result
+    
+        if name in ("min", "max", "sum", "argmin", "argmax"):
+            result = self._reduce_calc(name, skipna=skipna, keepdims=keepdims, **kwargs)
+        else:
+>           raise TypeError(f"Cannot perform reduction '{name}' with string dtype")
+E           TypeError: Cannot perform reduction 'mean' with string dtype
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/string_arrow.py:563: TypeError
+_______________________ test_task_func_specific_columns ________________________
+
+    def test_task_func_specific_columns():
+        df = pd.DataFrame({'A': ['cat', 'dog', 'bird'], 'B': [1, 2, 3]})
+        dct = {}
+        columns = ['A']
+>       result_df = task_func(df, dct, columns=columns)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0224.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0224.py:22: in task_func
+    df = (df - df.mean()) / df.std()
+               ^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/util/_decorators.py:336: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:14473: in mean
+    result = super().mean(
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:11831: in mean
+    return self._stat_function(
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:11785: in _stat_function
+    return self._reduce(
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:13633: in _reduce
+    res = df._mgr.reduce(blk_func)
+          ^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/managers.py:1681: in reduce
+    res_blocks = [blk.reduce(func) for blk in self.blocks]
+                  ^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/blocks.py:358: in reduce
+    result = func(self.values)
+             ^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:13561: in blk_func
+    return values._reduce(name, skipna=skipna, keepdims=True, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <ArrowStringArray>
+['cat', 'dog', 'bird']
+Length: 3, dtype: str
+name = 'mean', skipna = True, keepdims = True, kwargs = {}
+
+    def _reduce(
+        self, name: str, *, skipna: bool = True, keepdims: bool = False, **kwargs
+    ):
+        if self.dtype.na_value is np.nan and name in ["any", "all"]:
+            if not skipna:
+                nas = pc.is_null(self._pa_array)
+                arr = pc.or_kleene(nas, pc.not_equal(self._pa_array, ""))
+            else:
+                arr = pc.not_equal(self._pa_array, "")
+            result = ArrowExtensionArray(arr)._reduce(
+                name, skipna=skipna, keepdims=keepdims, **kwargs
+            )
+            if keepdims:
+                # ArrowExtensionArray will return a length-1 bool[pyarrow] array
+                return result.astype(np.bool_)
+            return result
+    
+        if name in ("min", "max", "sum", "argmin", "argmax"):
+            result = self._reduce_calc(name, skipna=skipna, keepdims=keepdims, **kwargs)
+        else:
+>           raise TypeError(f"Cannot perform reduction '{name}' with string dtype")
+E           TypeError: Cannot perform reduction 'mean' with string dtype
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/string_arrow.py:563: TypeError
+=============================== warnings summary ===============================
+Qwen/non-quant/tests/test_0224.py::test_task_func_label_encoding
+  /work/tomohiro-w/utg/src/src_0224.py:13: Pandas4Warning: For backward compatibility, 'str' dtypes are included by select_dtypes when 'object' dtype is specified. This behavior is deprecated and will be removed in a future version. Explicitly pass 'str' to `include` to select them, or to `exclude` to remove them and silence this warning.
+  See https://pandas.pydata.org/docs/user_guide/migration-3-strings.html#string-migration-select-dtypes for details on how to write code that works with pandas 2 and 3.
+    columns = df.select_dtypes(include=['object']).columns.tolist()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0224.py::test_task_func_replace_values - TypeError: Encoders requ...
+FAILED test_0224.py::test_task_func_label_encoding - TypeError: Cannot perfor...
+FAILED test_0224.py::test_task_func_specific_columns - TypeError: Cannot perf...
+3 failed, 3 passed, 1 warning in 3.53s

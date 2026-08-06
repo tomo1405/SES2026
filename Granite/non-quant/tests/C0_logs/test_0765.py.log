@@ -1,0 +1,50 @@
+FF....F                                                                  [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_latin_names ________________________
+
+    def test_task_func_with_latin_names():
+        csv_file = task_func(latin_names=['Foo', 'Bar', 'Baz'])
+        with open(csv_file, 'r', newline='') as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+>               assert row['Name'] in ['Foo', 'Bar', 'Baz']
+E               AssertionError: assert 'Jones' in ['Foo', 'Bar', 'Baz']
+
+test_0765.py:12: AssertionError
+__________________________ test_task_func_with_names ___________________________
+
+    def test_task_func_with_names():
+        csv_file = task_func(names=['Alice', 'Bob', 'Charlie'])
+        with open(csv_file, 'r', newline='') as csvfile:
+            reader = csv.DictReader(csvfile)
+>           for row in reader:
+
+test_0765.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/csv.py:115: in __next__
+    self.fieldnames
+/usr/lib/python3.12/csv.py:102: in fieldnames
+    self._fieldnames = next(self.reader)
+                       ^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <encodings.utf_8.IncrementalDecoder object at 0x75b67ccf8dd0>
+input = b'Name,Age\r\nM\xe9ndez,34\r\nBob,25\r\nSopet\xf3n,50\r\nBob,29\r\nG\xf3mez,49\r\nBob,33\r\nP\xe9rez,38\r\nAlice,39\r\...42\r\nMu\xf1oz,31\r\nCharlie,47\r\nSopet\xf3n,49\r\nAlice,50\r\nSopet\xf3n,27\r\nBob,47\r\nG\xf3mez,37\r\nAlice,47\r\n'
+final = False
+
+>   ???
+E   UnicodeDecodeError: 'utf-8' codec can't decode byte 0xe9 in position 11: invalid continuation byte
+
+<frozen codecs>:322: UnicodeDecodeError
+_____________________ test_task_func_with_invalid_rng_seed _____________________
+
+    def test_task_func_with_invalid_rng_seed():
+>       with pytest.raises(TypeError):
+E       Failed: DID NOT RAISE TypeError
+
+test_0765.py:38: Failed
+=========================== short test summary info ============================
+FAILED test_0765.py::test_task_func_with_latin_names - AssertionError: assert...
+FAILED test_0765.py::test_task_func_with_names - UnicodeDecodeError: 'utf-8' ...
+FAILED test_0765.py::test_task_func_with_invalid_rng_seed - Failed: DID NOT R...
+3 failed, 4 passed in 0.52s

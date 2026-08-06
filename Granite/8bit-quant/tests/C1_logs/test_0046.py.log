@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a sample DataFrame with numeric and non-numeric columns
+        df = pd.DataFrame({
+            'A': [1, 2, 3],
+            'B': [4, 5, 6],
+            'C': ['a', 'b', 'c']
+        })
+    
+        # Mock the show function to avoid showing the plot
+        with patch('matplotlib.pyplot.show') as mock_show:
+            # Call the task function
+            principal_df, ax = task_func(df)
+    
+            # Assert that the returned DataFrame has the expected columns
+            assert set(principal_df.columns) == {"Component 1", "Component 2"}
+    
+            # Assert that the scatter plot was called with the correct arguments
+>           ax.assert_called_with(data=principal_df, x="Component 1", y="Component 2")
+            ^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: 'Axes' object has no attribute 'assert_called_with'
+
+test_0046.py:43: AttributeError
+=========================== short test summary info ============================
+FAILED test_0046.py::test_task_func - AttributeError: 'Axes' object has no at...
+1 failed in 3.99s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

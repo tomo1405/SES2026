@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        directory = 'path/to/directory'
+>       files_info = task_func(directory)
+                     ^^^^^^^^^^^^^^^^^^^^
+
+test_0578.py:6: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0578.py:8: in task_func
+    for file_path in pathlib.Path(directory).iterdir():
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('path/to/directory')
+
+    def iterdir(self):
+        """Yield path objects of the directory contents.
+    
+        The children are yielded in arbitrary order, and the
+        special entries '.' and '..' are not included.
+        """
+>       for name in os.listdir(self):
+                    ^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'path/to/directory'
+
+/usr/lib/python3.12/pathlib.py:1058: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0578.py::test_task_func - FileNotFoundError: [Errno 2] No such fi...
+1 failed in 0.45s

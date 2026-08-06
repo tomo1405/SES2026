@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that the function raises a ValueError when the dictionary is missing 'Lon' or 'Lat' keys
+        with pytest.raises(ValueError):
+            task_func({'Lon': (-180, 180)})
+    
+        with pytest.raises(ValueError):
+            task_func({'Lat': (-90, 90)})
+    
+        # Test that the function raises a ValueError when the dictionary values are not tuples
+        with pytest.raises(ValueError):
+            task_func({'Lon': 180, 'Lat': (-90, 90)})
+    
+        with pytest.raises(ValueError):
+            task_func({'Lon': (-180, 180), 'Lat': 90})
+    
+        # Test that the function returns a valid map and dataframe when the dictionary is valid
+        m, df = task_func({'Lon': (-180, 180), 'Lat': (-90, 90)})
+        assert isinstance(m, folium.Map)
+        assert isinstance(df, pd.DataFrame)
+>       assert len(df) == len(cities)
+                              ^^^^^^
+E       NameError: name 'cities' is not defined
+
+test_0186.py:26: NameError
+=========================== short test summary info ============================
+FAILED test_0186.py::test_task_func - NameError: name 'cities' is not defined
+1 failed in 1.66s

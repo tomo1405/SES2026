@@ -1,0 +1,58 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        password_length = 10
+        salt = "salty"
+        password_chars = string.ascii_letters + string.digits + string.punctuation
+        password = ''.join(random.choice(password_chars) for i in range(password_length))
+        salted_password = (password + salt).encode('utf-8')
+        hashed_password = hashlib.sha256(salted_password).hexdigest()
+        result = task_func(password_length, salt)
+>       assert result == hashed_password
+E       AssertionError: assert 'dc44a95c4cef...d080025675920' == '8fd5b3e4e55a...42433b7146ba6'
+E         
+E         - 8fd5b3e4e55a0d94ecb4bff5682c051be4920a72a7288f3b56742433b7146ba6
+E         + dc44a95c4cefed94166725f80d0c0d8eb0832b1c0da7f9daa04d080025675920
+
+test_1120.py:16: AssertionError
+_________________________ test_task_func_default_args __________________________
+
+    def test_task_func_default_args():
+        password_chars = string.ascii_letters + string.digits + string.punctuation
+        password = ''.join(random.choice(password_chars) for i in range(10))
+        salted_password = (password + "salty").encode('utf-8')
+        hashed_password = hashlib.sha256(salted_password).hexdigest()
+        result = task_func()
+>       assert result == hashed_password
+E       AssertionError: assert '4ae8794f21b7...78646c2616d71' == '306e7615629c...27a2986af176e'
+E         
+E         - 306e7615629c114e28054ae3067d8be6243d0aeefbecd75853d27a2986af176e
+E         + 4ae8794f21b7c04b9a289b450ce5dfadb275ede4c7e38a8cb1b78646c2616d71
+
+test_1120.py:24: AssertionError
+____________________ test_task_func_invalid_password_length ____________________
+
+    def test_task_func_invalid_password_length():
+>       with pytest.raises(ValueError) as excinfo:
+E       Failed: DID NOT RAISE ValueError
+
+test_1120.py:27: Failed
+_________________________ test_task_func_invalid_salt __________________________
+
+    def test_task_func_invalid_salt():
+        with pytest.raises(TypeError) as excinfo:
+            task_func(10, 123)
+>       assert "salt must be a string" in str(excinfo.value)
+E       assert 'salt must be a string' in 'can only concatenate str (not "int") to str'
+E        +  where 'can only concatenate str (not "int") to str' = str(TypeError('can only concatenate str (not "int") to str'))
+E        +    where TypeError('can only concatenate str (not "int") to str') = <ExceptionInfo TypeError('can only concatenate str (not "int") to str') tblen=2>.value
+
+test_1120.py:34: AssertionError
+=========================== short test summary info ============================
+FAILED test_1120.py::test_task_func - AssertionError: assert 'dc44a95c4cef......
+FAILED test_1120.py::test_task_func_default_args - AssertionError: assert '4a...
+FAILED test_1120.py::test_task_func_invalid_password_length - Failed: DID NOT...
+FAILED test_1120.py::test_task_func_invalid_salt - assert 'salt must be a str...
+4 failed in 0.52s

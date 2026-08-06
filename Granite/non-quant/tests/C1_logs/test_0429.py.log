@@ -1,0 +1,38 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        df1 = pd.DataFrame({
+            'id': [1, 2, 3],
+            'feature1': [4.5, 6.7, 8.9],
+            'feature2': [10, 11, 12]
+        })
+        df2 = pd.DataFrame({
+            'id': [1, 2, 3],
+            'feature3': [13.4, 14.6, 15.8],
+            'feature4': [16, 17, 18]
+        })
+        expected_merged_df = pd.DataFrame({
+            'id': [1, 2, 3],
+            'feature1': [4.5, 6.7, 8.9],
+            'feature2': [10, 11, 12],
+            'feature3': [13.4, 14.6, 15.8],
+            'feature4': [16, 17, 18]
+        })
+        expected_numeric_features_df1 = ['feature1', 'feature2']
+        expected_pair_plot = sns.pairplot(expected_merged_df[expected_numeric_features_df1])
+    
+        merged_df, pair_plot = task_func(df1, df2)
+    
+>       assert merged_df.equals(expected_merged_df)
+E       assert False
+E        +  where False = equals(   id  feature1  feature2  feature3  feature4\n0   1       4.5        10      13.4        16\n1   2       6.7        11      14.6        17\n2   3       8.9        12      15.8        18)
+E        +    where equals =    id  feature1  feature2  feature3  feature4\n0   1 -1.224745 -1.224745      13.4        16\n1   2  0.000000  0.000000      14.6        17\n2   3  1.224745  1.224745      15.8        18.equals
+
+test_0429.py:50: AssertionError
+=========================== short test summary info ============================
+FAILED test_0429.py::test_task_func - assert False
+1 failed in 4.55s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

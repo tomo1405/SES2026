@@ -1,0 +1,21 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        db_name = "test.db"
+        table_name = "test_table"
+        num_entries = 5
+        random_seed = 42
+    
+        seed(random_seed)
+    
+        conn = sqlite3.connect(db_name)
+        cur = conn.cursor()
+>       cur.execute(f"CREATE TABLE {table_name} (name TEXT, age INTEGER, height INTEGER)")
+E       sqlite3.OperationalError: table test_table already exists
+
+test_0540.py:21: OperationalError
+=========================== short test summary info ============================
+FAILED test_0540.py::test_task_func - sqlite3.OperationalError: table test_ta...
+1 failed, 1 passed in 0.46s

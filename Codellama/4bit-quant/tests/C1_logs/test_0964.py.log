@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        source_directory = "path/to/source/directory"
+        target_directory = "path/to/target/directory"
+        zip_name = "test_zip"
+    
+        # Test that the function raises an error if the source directory does not exist
+        with pytest.raises(OSError):
+            task_func("invalid_source_directory", target_directory, zip_name)
+    
+        # Test that the function creates the target directory if it does not exist
+>       task_func(source_directory, "invalid_target_directory", zip_name)
+
+test_0964.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+source_directory = 'path/to/source/directory'
+target_directory = 'invalid_target_directory', zip_name = 'test_zip'
+
+    def task_func(source_directory, target_directory, zip_name):
+        if not os.path.exists(source_directory):
+>           raise OSError("source_directory must exist.")
+E           OSError: source_directory must exist.
+
+../../../src/src_0964.py:7: OSError
+=========================== short test summary info ============================
+FAILED test_0964.py::test_task_func - OSError: source_directory must exist.
+1 failed in 0.47s

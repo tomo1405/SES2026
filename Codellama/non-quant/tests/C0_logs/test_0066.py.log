@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data = [
+            {'col1': 'A', 'col2': 'B', 'col3': 'C'},
+            {'col1': 'A', 'col2': 'B', 'col3': 'D'},
+            {'col1': 'A', 'col2': 'C', 'col3': 'D'},
+            {'col1': 'B', 'col2': 'C', 'col3': 'D'},
+            {'col1': 'B', 'col2': 'C', 'col3': 'E'},
+            {'col1': 'B', 'col2': 'D', 'col3': 'E'},
+            {'col1': 'C', 'col2': 'D', 'col3': 'E'},
+            {'col1': 'C', 'col2': 'D', 'col3': 'F'},
+            {'col1': 'C', 'col2': 'E', 'col3': 'F'},
+            {'col1': 'D', 'col2': 'E', 'col3': 'F'},
+        ]
+        expected_analyzed_df = pd.DataFrame(
+            {'col1': ['A', 'B', 'C', 'D', 'E'],
+             'col2': ['B', 'C', 'D', 'E', 'F'],
+             'col3': [2, 3, 2, 2, 1]
+            })
+        expected_ax = plt.subplots()
+>       expected_ax.plot(expected_analyzed_df[['col1', 'col2']].astype(str).agg('-'.join, axis=1), expected_analyzed_df['col3'])
+        ^^^^^^^^^^^^^^^^
+E       AttributeError: 'tuple' object has no attribute 'plot'
+
+test_0066.py:25: AttributeError
+=========================== short test summary info ============================
+FAILED test_0066.py::test_task_func - AttributeError: 'tuple' object has no a...
+1 failed in 2.12s

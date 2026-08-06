@@ -1,0 +1,97 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Sample data
+        data = np.array([[1, 2], [3, 4], [5, 6], [100, 101]])
+        column = 0
+        outlier_z_score = 2.0
+    
+        # Expected results
+        expected_outliers = (np.array([3]),)
+        expected_data_without_outliers = np.array([[1, 2], [3, 4], [5, 6]])
+    
+        # Run the function
+        data_copy, data_without_outliers, outliers = task_func(data, column, outlier_z_score)
+    
+        # Check if the original data is copied correctly
+        assert np.array_equal(data_copy, data)
+    
+        # Check if the outliers are identified correctly
+>       assert np.array_equal(outliers, expected_outliers)
+E       assert False
+E        +  where False = <function array_equal at 0x7f1a4c73f330>((array([], dtype=int64), array([], dtype=int64)), (array([3]),))
+E        +    where <function array_equal at 0x7f1a4c73f330> = np.array_equal
+
+test_0090.py:28: AssertionError
+__________________________ test_task_func_no_outliers __________________________
+
+    def test_task_func_no_outliers():
+        data = np.array([[1, 2], [3, 4], [5, 6], [7, 8]])
+        column = 0
+        outlier_z_score = 2.0
+    
+        expected_outliers = (np.array([]),)
+        expected_data_without_outliers = np.array([[1, 2], [3, 4], [5, 6], [7, 8]])
+    
+        data_copy, data_without_outliers, outliers = task_func(data, column, outlier_z_score)
+    
+        assert np.array_equal(data_copy, data)
+>       assert np.array_equal(outliers, expected_outliers)
+E       assert False
+E        +  where False = <function array_equal at 0x7f1a4c73f330>((array([], dtype=int64), array([], dtype=int64)), (array([], dtype=float64),))
+E        +    where <function array_equal at 0x7f1a4c73f330> = np.array_equal
+
+test_0090.py:48: AssertionError
+_________________________ test_task_func_all_outliers __________________________
+
+    def test_task_func_all_outliers():
+        data = np.array([[100, 200], [300, 400], [500, 600]])
+        column = 0
+        outlier_z_score = 0.0
+    
+        expected_outliers = (np.array([0, 1, 2]),)
+        expected_data_without_outliers = np.array([])
+    
+        data_copy, data_without_outliers, outliers = task_func(data, column, outlier_z_score)
+    
+        assert np.array_equal(data_copy, data)
+>       assert np.array_equal(outliers, expected_outliers)
+E       assert False
+E        +  where False = <function array_equal at 0x7f1a4c73f330>((array([0, 2]), array([0, 0])), (array([0, 1, 2]),))
+E        +    where <function array_equal at 0x7f1a4c73f330> = np.array_equal
+
+test_0090.py:64: AssertionError
+__________________________ test_task_func_empty_data ___________________________
+
+    def test_task_func_empty_data():
+        data = np.array([])
+        column = 0
+        outlier_z_score = 2.0
+    
+        expected_outliers = (np.array([]),)
+        expected_data_without_outliers = np.array([])
+    
+>       data_copy, data_without_outliers, outliers = task_func(data, column, outlier_z_score)
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0090.py:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = array([], dtype=float64), column = 0, outlier_z_score = 2.0
+
+    def task_func(data, column, outlier_z_score):
+        # Copy the data to avoid modifying the original array
+        data_copy = np.copy(data)
+>       column_data = data_copy[:, column]
+                      ^^^^^^^^^^^^^^^^^^^^
+E       IndexError: too many indices for array: array is 1-dimensional, but 2 were indexed
+
+../../../src/src_0090.py:8: IndexError
+=========================== short test summary info ============================
+FAILED test_0090.py::test_task_func - assert False
+FAILED test_0090.py::test_task_func_no_outliers - assert False
+FAILED test_0090.py::test_task_func_all_outliers - assert False
+FAILED test_0090.py::test_task_func_empty_data - IndexError: too many indices...
+4 failed in 3.78s

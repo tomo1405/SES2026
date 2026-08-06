@@ -1,0 +1,58 @@
+.FF.                                                                     [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func[df1-ValueError] ________________________
+
+df =         Date  Sales
+0 2023-01-01     10
+1 2023-01-02     20
+2 2023-01-03     30
+expected_exception = <class 'ValueError'>
+
+    @pytest.mark.parametrize("df, expected_exception", [
+        (pd.DataFrame({'Date': ['2023-01-01', '2023-01-02', '2023-01-03'], 'Sales': [10, 20, 30]}), None),
+        (pd.DataFrame({'Date': ['2023-01-01', '2023-01-02', '2023-01-03'], 'Sales': [10, 20, 30]}), ValueError),
+        (pd.DataFrame({'Date': ['2023-01-01', '2023-01-02', '2023-01-03'], 'Sales': [10, 20, 30]}), ValueError),
+        (pd.DataFrame({'Date': ['2023-01-01', '2023-01-02', '2023-01-03'], 'Sales': [10, 20, 30]}), None),
+    ])
+    def test_task_func(df, expected_exception):
+        if expected_exception is None:
+            try:
+                ax = task_func(df)
+                assert isinstance(ax, plt.Axes)
+            except Exception as e:
+                pytest.fail(f"Unexpected exception: {e}")
+        else:
+>           with pytest.raises(expected_exception):
+E           Failed: DID NOT RAISE ValueError
+
+test_0111.py:21: Failed
+________________________ test_task_func[df2-ValueError] ________________________
+
+df =         Date  Sales
+0 2023-01-01     10
+1 2023-01-02     20
+2 2023-01-03     30
+expected_exception = <class 'ValueError'>
+
+    @pytest.mark.parametrize("df, expected_exception", [
+        (pd.DataFrame({'Date': ['2023-01-01', '2023-01-02', '2023-01-03'], 'Sales': [10, 20, 30]}), None),
+        (pd.DataFrame({'Date': ['2023-01-01', '2023-01-02', '2023-01-03'], 'Sales': [10, 20, 30]}), ValueError),
+        (pd.DataFrame({'Date': ['2023-01-01', '2023-01-02', '2023-01-03'], 'Sales': [10, 20, 30]}), ValueError),
+        (pd.DataFrame({'Date': ['2023-01-01', '2023-01-02', '2023-01-03'], 'Sales': [10, 20, 30]}), None),
+    ])
+    def test_task_func(df, expected_exception):
+        if expected_exception is None:
+            try:
+                ax = task_func(df)
+                assert isinstance(ax, plt.Axes)
+            except Exception as e:
+                pytest.fail(f"Unexpected exception: {e}")
+        else:
+>           with pytest.raises(expected_exception):
+E           Failed: DID NOT RAISE ValueError
+
+test_0111.py:21: Failed
+=========================== short test summary info ============================
+FAILED test_0111.py::test_task_func[df1-ValueError] - Failed: DID NOT RAISE V...
+FAILED test_0111.py::test_task_func[df2-ValueError] - Failed: DID NOT RAISE V...
+2 failed, 2 passed in 2.22s

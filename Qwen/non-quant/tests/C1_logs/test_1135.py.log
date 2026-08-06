@@ -1,0 +1,87 @@
+..FFF                                                                    [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_single_file __________________________
+
+    def test_task_func_single_file():
+        with tempfile.TemporaryDirectory() as source_dir:
+            with tempfile.TemporaryDirectory() as target_dir:
+                source_file_path = os.path.join(source_dir, 'test.txt')
+                with open(source_file_path, 'w') as f:
+                    f.write('Hello, World!')
+    
+                result = task_func(source_dir, target_dir)
+                assert len(result) == 1
+                target_file_path = result[0]
+                assert os.path.basename(target_file_path) == 'test.txt'
+    
+                with open(target_file_path, 'r') as f:
+                    lines = f.readlines()
+                    assert len(lines) == 2
+                    assert lines[0].startswith('#Hash: ')
+>                   assert lines[1] == 'Hello, World!\n'
+E                   AssertionError: assert 'Hello, World!' == 'Hello, World!\n'
+E                     
+E                     - Hello, World!
+E                     ?              -
+E                     + Hello, World!
+
+test_1135.py:34: AssertionError
+________________________ test_task_func_multiple_files _________________________
+
+    def test_task_func_multiple_files():
+        with tempfile.TemporaryDirectory() as source_dir:
+            with tempfile.TemporaryDirectory() as target_dir:
+                file_paths = [
+                    os.path.join(source_dir, 'file1.txt'),
+                    os.path.join(source_dir, 'file2.txt')
+                ]
+                for file_path in file_paths:
+                    with open(file_path, 'w') as f:
+                        f.write(f'Content of {os.path.basename(file_path)}')
+    
+                result = task_func(source_dir, target_dir)
+                assert len(result) == 2
+                for target_file_path in result:
+                    assert os.path.basename(target_file_path) in ['file1.txt', 'file2.txt']
+                    with open(target_file_path, 'r') as f:
+                        lines = f.readlines()
+                        assert len(lines) == 2
+                        assert lines[0].startswith('#Hash: ')
+>                       assert lines[1].endswith('\n')
+E                       AssertionError: assert False
+E                        +  where False = <built-in method endswith of str object at 0x79d9cb67f6f0>('\n')
+E                        +    where <built-in method endswith of str object at 0x79d9cb67f6f0> = 'Content of file2.txt'.endswith
+
+test_1135.py:55: AssertionError
+_________________________ test_task_func_custom_prefix _________________________
+
+    def test_task_func_custom_prefix():
+        with tempfile.TemporaryDirectory() as source_dir:
+            with tempfile.TemporaryDirectory() as target_dir:
+                source_file_path = os.path.join(source_dir, 'test.txt')
+                with open(source_file_path, 'w') as f:
+                    f.write('Hello, World!')
+    
+                custom_prefix = '#CustomPrefix: '
+                result = task_func(source_dir, target_dir, prefix=custom_prefix)
+                assert len(result) == 1
+                target_file_path = result[0]
+                assert os.path.basename(target_file_path) == 'test.txt'
+    
+                with open(target_file_path, 'r') as f:
+                    lines = f.readlines()
+                    assert len(lines) == 2
+                    assert lines[0].startswith(custom_prefix)
+>                   assert lines[1] == 'Hello, World!\n'
+E                   AssertionError: assert 'Hello, World!' == 'Hello, World!\n'
+E                     
+E                     - Hello, World!
+E                     ?              -
+E                     + Hello, World!
+
+test_1135.py:74: AssertionError
+=========================== short test summary info ============================
+FAILED test_1135.py::test_task_func_single_file - AssertionError: assert 'Hel...
+FAILED test_1135.py::test_task_func_multiple_files - AssertionError: assert F...
+FAILED test_1135.py::test_task_func_custom_prefix - AssertionError: assert 'H...
+3 failed, 2 passed in 0.51s

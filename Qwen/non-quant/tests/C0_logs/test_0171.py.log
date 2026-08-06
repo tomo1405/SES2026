@@ -1,0 +1,66 @@
+FF..                                                                     [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_valid_url ___________________________
+
+    def test_task_func_valid_url():
+        # Mock the requests.get call to return a valid CSV response
+        mock_response = Mock()
+        mock_response.status_code = 200
+        mock_response.text = "title,year\nMovie A,2001\nMovie B,2000"
+    
+        with patch('requests.get', return_value=mock_response):
+            result = task_func("http://example.com/movies.csv")
+    
+        expected_df = pd.DataFrame({
+            'title': ['Movie B', 'Movie A'],
+            'year': [2000, 2001]
+        })
+>       pd.testing.assert_frame_equal(result.reset_index(drop=True), expected_df)
+
+test_0171.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/_testing/asserters.py:846: in assert_extension_array_equal
+    _testing.assert_almost_equal(
+pandas/_libs/testing.pyx:53: in pandas._libs.testing.assert_almost_equal
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   AssertionError: DataFrame.iloc[:, 0] (column name="title") are different
+E   
+E   DataFrame.iloc[:, 0] (column name="title") values are different (100.0 %)
+E   [index]: [0, 1]
+E   [left]:  [Movie A, Movie B]
+E   [right]: [Movie B, Movie A]
+E   At positional index 0, first diff: Movie A != Movie B
+
+pandas/_libs/testing.pyx:171: AssertionError
+__________________________ test_task_func_invalid_url __________________________
+
+    def test_task_func_invalid_url():
+        # Mock the requests.get call to return a 404 error
+        mock_response = Mock()
+        mock_response.status_code = 404
+    
+        with patch('requests.get', return_value=mock_response):
+            with pytest.raises(requests.exceptions.HTTPError):
+>               task_func("http://example.com/nonexistent.csv")
+
+test_0171.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+csv_url = 'http://example.com/nonexistent.csv', sort_by_column = 'title'
+
+    def task_func(csv_url, sort_by_column="title"):
+        response = requests.get(csv_url)
+        response.raise_for_status()  # Raise an exception for invalid responses
+        csv_data = response.text
+>       df = pd.read_csv(StringIO(csv_data))
+                         ^^^^^^^^^^^^^^^^^^
+E       TypeError: initial_value must be str or None, not Mock
+
+../../../src/src_0171.py:8: TypeError
+=========================== short test summary info ============================
+FAILED test_0171.py::test_task_func_valid_url - AssertionError: DataFrame.ilo...
+FAILED test_0171.py::test_task_func_invalid_url - TypeError: initial_value mu...
+2 failed, 2 passed in 1.36s

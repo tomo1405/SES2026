@@ -1,0 +1,30 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        df = pd.DataFrame({'closing_price': [10, 20, 30, 40, 50]})
+        boxplot_ax, histplot_ax = task_func(df)
+    
+        assert isinstance(boxplot_ax, plt.Axes)
+        assert isinstance(histplot_ax, plt.Axes)
+    
+        assert boxplot_ax.get_title() == 'Box Plot of Closing Prices'
+        assert histplot_ax.get_title() == 'Histogram of Closing Prices'
+    
+>       assert len(boxplot_ax.get_xticklabels()) == 5
+E       AssertionError: assert 11 == 5
+E        +  where 11 = len([Text(5.0, 0, '5'), Text(10.0, 0, '10'), Text(15.0, 0, '15'), Text(20.0, 0, '20'), Text(25.0, 0, '25'), Text(30.0, 0, '30'), ...])
+E        +    where [Text(5.0, 0, '5'), Text(10.0, 0, '10'), Text(15.0, 0, '15'), Text(20.0, 0, '20'), Text(25.0, 0, '25'), Text(30.0, 0, '30'), ...] = get_xticklabels()
+E        +      where get_xticklabels = <Axes: title={'center': 'Box Plot of Closing Prices'}, xlabel='closing_price'>.get_xticklabels
+
+test_0917.py:17: AssertionError
+=============================== warnings summary ===============================
+Codellama/non-quant/tests/test_0917.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/categorical.py:700: MatplotlibDeprecationWarning: vert: bool was deprecated in Matplotlib 3.11 and will be removed in 3.13. Use orientation: {'vertical', 'horizontal'} instead.
+    artists = ax.bxp(**boxplot_kws)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0917.py::test_task_func - AssertionError: assert 11 == 5
+1 failed, 1 warning in 3.51s

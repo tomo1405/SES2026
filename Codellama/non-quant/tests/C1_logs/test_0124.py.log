@@ -1,0 +1,55 @@
+..F                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        my_list = [1, 2, 3]
+        file_dir = './data_files/'
+        file_ext = '.csv'
+>       expected_output = pd.concat([pd.read_csv(file) for file in glob.glob(os.path.join(file_dir, '*' + file_ext))], ignore_index=True)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0124.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/reshape/concat.py:407: in concat
+    objs, keys, ndims = _clean_keys_and_objs(objs, keys)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+objs = [], keys = None
+
+    def _clean_keys_and_objs(
+        objs: Iterable[Series | DataFrame] | Mapping[HashableT, Series | DataFrame],
+        keys,
+    ) -> tuple[list[Series | DataFrame], Index | None, set[int]]:
+        """
+        Returns
+        -------
+        clean_objs : list[Series | DataFrame]
+            List of DataFrame and Series with Nones removed.
+        keys : Index | None
+            None if keys was None
+            Index if objs was a Mapping or keys was not None. Filtered where objs was None.
+        ndim : set[int]
+            Unique .ndim attribute of obj encountered.
+        """
+        if isinstance(objs, abc.Mapping):
+            if keys is None:
+                keys = objs.keys()
+            objs = [objs[k] for k in keys]
+        elif isinstance(objs, (ABCSeries, ABCDataFrame)) or is_scalar(objs):
+            raise TypeError(
+                "first argument must be an iterable of pandas "
+                f'objects, you passed an object of type "{type(objs).__name__}"'
+            )
+        elif not isinstance(objs, abc.Sized):
+            objs = list(objs)
+    
+        if len(objs) == 0:
+>           raise ValueError("No objects to concatenate")
+E           ValueError: No objects to concatenate
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/reshape/concat.py:808: ValueError
+=========================== short test summary info ============================
+FAILED test_0124.py::test_task_func_valid_input - ValueError: No objects to c...
+1 failed, 2 passed in 1.14s

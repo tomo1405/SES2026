@@ -1,0 +1,43 @@
+F.F.                                                                     [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_valid_prefixes _________________________
+
+    def test_task_func_valid_prefixes():
+        department_data = {
+            'EMP$$': 2,
+            'DEV$$': 3,
+            'HR$$': 1
+        }
+        result = task_func(department_data)
+        level_data = json.loads(result)
+    
+        assert isinstance(level_data, dict)
+        for prefix in department_data.keys():
+            assert prefix in level_data
+            assert len(level_data[prefix]) == department_data[prefix]
+            for level in level_data[prefix]:
+>               assert level in LEVELS
+                                ^^^^^^
+E               NameError: name 'LEVELS' is not defined
+
+test_1118.py:20: NameError
+________________________ test_task_func_zero_employees _________________________
+
+    def test_task_func_zero_employees():
+        department_data = {
+            'EMP$$': 0,
+            'DEV$$': 0
+        }
+        result = task_func(department_data)
+        level_data = json.loads(result)
+    
+        assert isinstance(level_data, dict)
+        for prefix in department_data.keys():
+>           assert prefix in level_data
+E           AssertionError: assert 'EMP$$' in {}
+
+test_1118.py:43: AssertionError
+=========================== short test summary info ============================
+FAILED test_1118.py::test_task_func_valid_prefixes - NameError: name 'LEVELS'...
+FAILED test_1118.py::test_task_func_zero_employees - AssertionError: assert '...
+2 failed, 2 passed in 0.50s

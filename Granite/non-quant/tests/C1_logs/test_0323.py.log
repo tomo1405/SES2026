@@ -1,0 +1,20 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Test successful backup and execution
+        with patch('subprocess.Popen') as mock_popen:
+            mock_popen.return_value.poll.return_value = 0  # Simulate successful execution
+>           assert task_func('test_file.txt') == 0
+E           AssertionError: assert -1 == 0
+E            +  where -1 = task_func('test_file.txt')
+
+test_0323.py:34: AssertionError
+----------------------------- Captured stderr call -----------------------------
+Failed to backup the file: [Errno 2] No such file or directory: 'c:\\Program Files\\VMware\\VMware Server/test_file.txt'
+=========================== short test summary info ============================
+FAILED test_0323.py::test_task_func - AssertionError: assert -1 == 0
+1 failed in 0.44s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

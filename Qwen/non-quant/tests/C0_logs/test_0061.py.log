@@ -1,0 +1,43 @@
+..F                                                                      [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_no_data ____________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1206/test_task_func_no_data0')
+
+    def test_task_func_no_data(tmpdir):
+        result = []
+        csv_file_path = str(tmpdir.join("empty_test.csv"))
+        json_file_path = str(tmpdir.join("empty_test.json"))
+    
+        task_func(result, csv_file_path, json_file_path)
+    
+        # Check CSV file
+>       df = pd.read_csv(csv_file_path)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0061.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:873: in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:300: in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:1645: in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py:1922: in _make_engine
+    return mapping[engine](f, **self.options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/parsers/c_parser_wrapper.py:95: in __init__
+    self._reader = parsers.TextReader(src, **kwds)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   pandas.errors.EmptyDataError: No columns to parse from file
+
+pandas/_libs/parsers.pyx:575: EmptyDataError
+=========================== short test summary info ============================
+FAILED test_0061.py::test_task_func_no_data - pandas.errors.EmptyDataError: N...
+1 failed, 2 passed in 1.23s

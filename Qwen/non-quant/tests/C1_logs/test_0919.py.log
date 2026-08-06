@@ -1,0 +1,214 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_no_acronyms ________________________
+
+    def test_task_func_with_no_acronyms():
+        data = {'Column1': ['Hello world'], 'Column2': [123]}
+        mapping = {}
+        expected_output = pd.DataFrame({'Column1': ['Hello world'], 'Column2': [123]})
+>       assert task_func(data, mapping).equals(expected_output)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0919.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0919.py:11: in task_func
+    df = df.applymap(lambda x: pattern.sub(replace_match, x) if isinstance(x, str) else x)
+         ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =        Column1  Column2
+0  Hello world      123, name = 'applymap'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute 'applymap'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+______________________ test_task_func_with_single_acronym ______________________
+
+    def test_task_func_with_single_acronym():
+        data = {'Column1': ['ABC is short for Alpha Beta Charlie']}
+        mapping = {'ABC': 'Alpha Beta Charlie'}
+        expected_output = pd.DataFrame({'Column1': ['Alpha Beta Charlie is short for Alpha Beta Charlie']})
+>       assert task_func(data, mapping).equals(expected_output)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0919.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0919.py:11: in task_func
+    df = df.applymap(lambda x: pattern.sub(replace_match, x) if isinstance(x, str) else x)
+         ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =                                Column1
+0  ABC is short for Alpha Beta Charlie
+name = 'applymap'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute 'applymap'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+____________________ test_task_func_with_multiple_acronyms _____________________
+
+    def test_task_func_with_multiple_acronyms():
+        data = {'Column1': ['ABC and DEF are acronyms'], 'Column2': ['GHI stands for Golf Hotel India']}
+        mapping = {'ABC': 'Alpha Beta Charlie', 'DEF': 'Delta Echo Foxtrot', 'GHI': 'Golf Hotel India'}
+        expected_output = pd.DataFrame({
+            'Column1': ['Alpha Beta Charlie and Delta Echo Foxtrot are acronyms'],
+            'Column2': ['Golf Hotel India stands for Golf Hotel India']
+        })
+>       assert task_func(data, mapping).equals(expected_output)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0919.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0919.py:11: in task_func
+    df = df.applymap(lambda x: pattern.sub(replace_match, x) if isinstance(x, str) else x)
+         ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =                     Column1                          Column2
+0  ABC and DEF are acronyms  GHI stands for Golf Hotel India
+name = 'applymap'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute 'applymap'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+_____________________ test_task_func_with_mixed_data_types _____________________
+
+    def test_task_func_with_mixed_data_types():
+        data = {'Column1': ['XYZ is an acronym', 456], 'Column2': ['LMN is also an acronym', 'Not an acronym']}
+        mapping = {'XYZ': 'Xylophone Yacht Zeppelin', 'LMN': 'Lemon Melon Nectarine'}
+        expected_output = pd.DataFrame({
+            'Column1': ['Xylophone Yacht Zeppelin is an acronym', 456],
+            'Column2': ['Lemon Melon Nectarine is also an acronym', 'Not an acronym']
+        })
+>       assert task_func(data, mapping).equals(expected_output)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0919.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0919.py:11: in task_func
+    df = df.applymap(lambda x: pattern.sub(replace_match, x) if isinstance(x, str) else x)
+         ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =              Column1                 Column2
+0  XYZ is an acronym  LMN is also an acronym
+1                456          Not an acronym
+name = 'applymap'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute 'applymap'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+___________________ test_task_func_with_no_matching_acronyms ___________________
+
+    def test_task_func_with_no_matching_acronyms():
+        data = {'Column1': ['No acronyms here']}
+        mapping = {'ABC': 'Alpha Beta Charlie'}
+        expected_output = pd.DataFrame({'Column1': ['No acronyms here']})
+>       assert task_func(data, mapping).equals(expected_output)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0919.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0919.py:11: in task_func
+    df = df.applymap(lambda x: pattern.sub(replace_match, x) if isinstance(x, str) else x)
+         ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =             Column1
+0  No acronyms here, name = 'applymap'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute 'applymap'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+=========================== short test summary info ============================
+FAILED test_0919.py::test_task_func_with_no_acronyms - AttributeError: 'DataF...
+FAILED test_0919.py::test_task_func_with_single_acronym - AttributeError: 'Da...
+FAILED test_0919.py::test_task_func_with_multiple_acronyms - AttributeError: ...
+FAILED test_0919.py::test_task_func_with_mixed_data_types - AttributeError: '...
+FAILED test_0919.py::test_task_func_with_no_matching_acronyms - AttributeErro...
+5 failed in 1.65s

@@ -1,0 +1,58 @@
+FFF.                                                                     [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_default_parameters _______________________
+
+    def test_task_func_default_parameters():
+        # Test with default parameters
+        result = task_func()
+        assert os.path.exists(result)
+        assert zipfile.is_zipfile(result)
+        with zipfile.ZipFile(result, 'r') as zip_ref:
+            file_list = zip_ref.namelist()
+            assert len(file_list) == 3
+            for file_name in ['file1.txt', 'file2.txt', 'file3.txt']:
+>               assert file_name in file_list
+E               AssertionError: assert 'file1.txt' in ['latin_files/file2.txt', 'latin_files/file3.txt', 'latin_files/file1.txt']
+
+test_0763.py:15: AssertionError
+_______________________ test_task_func_custom_parameters _______________________
+
+    def test_task_func_custom_parameters():
+        # Test with custom parameters
+        directory_name = "custom_dir"
+        content = "Custom Content"
+        file_names = ["a.txt", "b.txt"]
+        encoding = "utf-8"
+        result = task_func(directory_name, content, file_names, encoding)
+        assert os.path.exists(result)
+        assert zipfile.is_zipfile(result)
+        with zipfile.ZipFile(result, 'r') as zip_ref:
+            file_list = zip_ref.namelist()
+            assert len(file_list) == 2
+            for file_name in file_names:
+>               assert file_name in file_list
+E               AssertionError: assert 'a.txt' in ['custom_dir/a.txt', 'custom_dir/b.txt']
+
+test_0763.py:33: AssertionError
+______________________ test_task_func_existing_directory _______________________
+
+    def test_task_func_existing_directory():
+        # Test with an existing directory
+        directory_name = "existing_dir"
+        os.makedirs(directory_name, exist_ok=True)
+        result = task_func(directory_name)
+        assert os.path.exists(result)
+        assert zipfile.is_zipfile(result)
+        with zipfile.ZipFile(result, 'r') as zip_ref:
+            file_list = zip_ref.namelist()
+            assert len(file_list) == 3
+            for file_name in ['file1.txt', 'file2.txt', 'file3.txt']:
+>               assert file_name in file_list
+E               AssertionError: assert 'file1.txt' in ['existing_dir/file2.txt', 'existing_dir/file3.txt', 'existing_dir/file1.txt']
+
+test_0763.py:49: AssertionError
+=========================== short test summary info ============================
+FAILED test_0763.py::test_task_func_default_parameters - AssertionError: asse...
+FAILED test_0763.py::test_task_func_custom_parameters - AssertionError: asser...
+FAILED test_0763.py::test_task_func_existing_directory - AssertionError: asse...
+3 failed, 1 passed in 0.65s

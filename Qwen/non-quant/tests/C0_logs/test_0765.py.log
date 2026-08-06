@@ -1,0 +1,28 @@
+.....F...                                                                [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_rng_seed ____________________________
+
+    def test_task_func_rng_seed():
+        # Test with a specific random seed
+        rng_seed = 42
+        result = task_func(rng_seed=rng_seed)
+        assert os.path.exists(result)
+        with open(result, 'r', encoding='latin-1') as csvfile:
+            reader = csv.DictReader(csvfile)
+            rows = list(reader)
+            first_row = rows[0]
+        # Repeat with the same seed to ensure consistency
+        result2 = task_func(rng_seed=rng_seed)
+        with open(result2, 'r', encoding='latin-1') as csvfile2:
+            reader2 = csv.DictReader(csvfile2)
+            rows2 = list(reader2)
+            first_row2 = rows2[0]
+        assert first_row == first_row2
+        os.remove(result)
+>       os.remove(result2)
+E       FileNotFoundError: [Errno 2] No such file or directory: 'names.csv'
+
+test_0765.py:72: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0765.py::test_task_func_rng_seed - FileNotFoundError: [Errno 2] N...
+1 failed, 8 passed in 0.49s

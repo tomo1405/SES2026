@@ -1,0 +1,33 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sample_data = 'temp.csv'
+
+    def test_task_func(sample_data):
+        model, predictions = task_func(sample_data, 'target', test_size=0.2, random_state=42)
+    
+>       assert isinstance(model, LinearRegression)
+                                 ^^^^^^^^^^^^^^^^
+E       NameError: name 'LinearRegression' is not defined
+
+test_0892.py:25: NameError
+__________________ test_task_func_with_different_random_state __________________
+
+sample_data = 'temp.csv'
+
+    def test_task_func_with_different_random_state(sample_data):
+        model1, predictions1 = task_func(sample_data, 'target', test_size=0.2, random_state=0)
+        model2, predictions2 = task_func(sample_data, 'target', test_size=0.2, random_state=1)
+    
+>       assert not np.array_equal(predictions1, predictions2), "Predictions should differ with different random states"
+E       AssertionError: Predictions should differ with different random states
+E       assert not True
+E        +  where True = <function array_equal at 0x700b3b7d6030>(array([4.]), array([4.]))
+E        +    where <function array_equal at 0x700b3b7d6030> = np.array_equal
+
+test_0892.py:33: AssertionError
+=========================== short test summary info ============================
+FAILED test_0892.py::test_task_func - NameError: name 'LinearRegression' is n...
+FAILED test_0892.py::test_task_func_with_different_random_state - AssertionEr...
+2 failed in 3.46s

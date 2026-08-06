@@ -1,0 +1,55 @@
+...FFF                                                                   [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_data ___________________________
+
+    def test_task_func_valid_data():
+        data = {
+            "date_column": ["2023-10-01", "2023-10-02", "2023-10-03"],
+            "value": [10, 20, 30]
+        }
+        df = pd.DataFrame(data)
+        df.to_csv("test_file.csv", index=False)
+        result = task_func("test_file.csv", "date_column")
+>       assert result.equals(df)
+E       assert False
+E        +  where False = equals(  date_column  value\n0  2023-10-01     10\n1  2023-10-02     20\n2  2023-10-03     30)
+E        +    where equals = Empty DataFrame\nColumns: [date_column, value]\nIndex: [].equals
+
+test_1023.py:35: AssertionError
+_________________________ test_task_func_future_dates __________________________
+
+    def test_task_func_future_dates():
+        future_date = (datetime.now() + pd.Timedelta(days=1)).strftime("%Y-%m-%d")
+        data = {
+            "date_column": [future_date],
+            "value": [10]
+        }
+        df = pd.DataFrame(data)
+        df.to_csv("test_file.csv", index=False)
+        result = task_func("test_file.csv", "date_column")
+>       assert result.empty
+E       assert False
+E        +  where False =   date_column  value\n0  2026-07-30     10.empty
+
+test_1023.py:47: AssertionError
+__________________________ test_task_func_past_dates ___________________________
+
+    def test_task_func_past_dates():
+        past_date = (datetime.now() - pd.Timedelta(days=1)).strftime("%Y-%m-%d")
+        data = {
+            "date_column": [past_date],
+            "value": [10]
+        }
+        df = pd.DataFrame(data)
+        df.to_csv("test_file.csv", index=False)
+        result = task_func("test_file.csv", "date_column")
+>       assert not result.empty
+E       assert not True
+E        +  where True = Empty DataFrame\nColumns: [date_column, value]\nIndex: [].empty
+
+test_1023.py:59: AssertionError
+=========================== short test summary info ============================
+FAILED test_1023.py::test_task_func_valid_data - assert False
+FAILED test_1023.py::test_task_func_future_dates - assert False
+FAILED test_1023.py::test_task_func_past_dates - assert not True
+3 failed, 3 passed in 1.24s

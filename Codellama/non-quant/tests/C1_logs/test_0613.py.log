@@ -1,0 +1,23 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with valid inputs
+        goals = {'Team A': 10, 'Team B': 5, 'Team C': 15, 'Team D': 20, 'Team E': 25}
+        penalties = {'Team A': 2, 'Team B': 3, 'Team C': 1, 'Team D': 0, 'Team E': 1}
+        report_df = task_func(goals, penalties)
+        assert report_df.shape == (5, 5)
+        assert report_df['Team'].tolist() == ['Team A', 'Team B', 'Team C', 'Team D', 'Team E']
+        assert report_df['Goals'].tolist() == [10, 5, 15, 20, 25]
+        assert report_df['Penalties'].tolist() == [2, 3, 1, 0, 1]
+>       assert report_df['Penalties Cost'].tolist() == [200, 600, 300, 0, 500]
+E       assert [1000, 1500, 500, 0, 500] == [200, 600, 300, 0, 500]
+E         
+E         At index 0 diff: 1000 != 200
+E         Use -v to get more diff
+
+test_0613.py:13: AssertionError
+=========================== short test summary info ============================
+FAILED test_0613.py::test_task_func - assert [1000, 1500, 500, 0, 500] == [20...
+1 failed in 1.05s

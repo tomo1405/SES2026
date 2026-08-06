@@ -1,0 +1,95 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_isfile = <MagicMock name='isfile' id='139516961593664'>
+mock_listdir = <MagicMock name='listdir' id='139516964747504'>
+mock_post = <MagicMock name='post' id='139516961601152'>
+mock_directory = '/tmp/pytest-of-tomohiro-w/pytest-1593/test_task_func0/test_dir'
+mock_url = 'http://mock.url', mock_metadata = {'key': 'value'}
+
+    @patch('requests.post')
+    @patch('os.listdir')
+    @patch('os.path.isfile')
+    def test_task_func(mock_isfile, mock_listdir, mock_post, mock_directory, mock_url, mock_metadata):
+        # Mock os.listdir to return the files in the directory
+        mock_listdir.return_value = ["file1.txt", "file2.txt"]
+    
+        # Mock os.path.isfile to always return True
+        mock_isfile.return_value = True
+    
+        # Mock the response from requests.post
+>       mock_response = mock.Mock()
+                        ^^^^
+E       NameError: name 'mock' is not defined
+
+test_0422.py:35: NameError
+___________________________ test_task_func_non_file ____________________________
+
+mock_isfile = <MagicMock name='isfile' id='139516961741744'>
+mock_listdir = <MagicMock name='listdir' id='139516981863696'>
+mock_directory = '/tmp/pytest-of-tomohiro-w/pytest-1593/test_task_func_non_file0/test_dir'
+mock_url = 'http://mock.url', mock_metadata = {'key': 'value'}
+
+    @patch('os.listdir')
+    @patch('os.path.isfile')
+    def test_task_func_non_file(mock_isfile, mock_listdir, mock_directory, mock_url, mock_metadata):
+        # Mock os.listdir to return a non-file item
+        mock_listdir.return_value = ["file1.txt", "nonfile"]
+    
+        # Mock os.path.isfile to return False for the non-file item
+        mock_isfile.side_effect = [True, False]
+    
+        # Call the function
+>       result = task_func(mock_url, mock_directory, mock_metadata)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0422.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0422.py:19: in task_func
+    response = requests.post(url, files=files, headers=HEADERS, data=json.dumps(metadata))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/requests/api.py:134: in post
+    return request("post", url, data=data, json=json, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/requests/api.py:71: in request
+    return session.request(method=method, url=url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/requests/sessions.py:635: in request
+    prep = self.prepare_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/requests/sessions.py:541: in prepare_request
+    p.prepare(
+../../../.venv/lib/python3.12/site-packages/requests/models.py:442: in prepare
+    self.prepare_body(data, files, json)
+../../../.venv/lib/python3.12/site-packages/requests/models.py:635: in prepare_body
+    (body, content_type) = self._encode_files(files, raw_data)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+files = {'file': <_io.BufferedReader name='/tmp/pytest-of-tomohiro-w/pytest-1593/test_task_func_non_file0/test_dir/file1.txt'>}
+data = '{"key": "value"}'
+
+    @staticmethod
+    def _encode_files(
+        files: _t.FilesType, data: _t.RawDataType | None
+    ) -> tuple[bytes, str]:
+        """Build the body for a multipart/form-data request.
+    
+        Will successfully encode files when passed as a dict or a list of
+        tuples. Order is retained if data is a list of tuples but arbitrary
+        if parameters are supplied as a dict.
+        The tuples may be 2-tuples (filename, fileobj), 3-tuples (filename, fileobj, contentype)
+        or 4-tuples (filename, fileobj, contentype, custom_headers).
+        """
+        if not files:
+            raise ValueError("Files must be provided.")
+        elif isinstance(data, basestring):
+>           raise ValueError("Data must not be a string.")
+E           ValueError: Data must not be a string.
+
+../../../.venv/lib/python3.12/site-packages/requests/models.py:198: ValueError
+=========================== short test summary info ============================
+FAILED test_0422.py::test_task_func - NameError: name 'mock' is not defined
+FAILED test_0422.py::test_task_func_non_file - ValueError: Data must not be a...
+2 failed, 1 passed in 0.76s

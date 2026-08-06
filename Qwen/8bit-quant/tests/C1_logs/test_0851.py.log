@@ -1,0 +1,90 @@
+F..F                                                                     [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_with_seed ___________________________
+
+    def test_task_func_with_seed():
+        students = ['Alice', 'Bob']
+        subjects = ['Math', 'Science']
+        seed = 42
+        df = task_func(students, subjects, seed=seed)
+    
+        expected_data = [
+            ('Alice', 71, 39, 55.0),
+            ('Bob', 91, 85, 88.0)
+        ]
+        expected_df = pd.DataFrame(expected_data, columns=['Student'] + subjects + ['Average Grade'])
+    
+>       pd.testing.assert_frame_equal(df, expected_df)
+
+test_0851.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+left = array([81,  3]), right = array([71, 91]), err_msg = None
+
+    def _raise(left, right, err_msg) -> NoReturn:
+        if err_msg is None:
+            if left.shape != right.shape:
+                raise_assert_detail(
+                    obj, f"{obj} shapes are different", left.shape, right.shape
+                )
+    
+            diff = 0
+            for left_arr, right_arr in zip(left, right, strict=True):
+                # count up differences
+                if not array_equivalent(left_arr, right_arr, strict_nan=strict_nan):
+                    diff += 1
+    
+            diff = diff * 100.0 / left.size
+            msg = f"{obj} values are different ({np.round(diff, 5)} %)"
+>           raise_assert_detail(obj, msg, left, right, index_values=index_values)
+E           AssertionError: DataFrame.iloc[:, 1] (column name="Math") are different
+E           
+E           DataFrame.iloc[:, 1] (column name="Math") values are different (100.0 %)
+E           [index]: [0, 1]
+E           [left]:  [81, 3]
+E           [right]: [71, 91]
+
+../../../.venv/lib/python3.12/site-packages/pandas/_testing/asserters.py:689: AssertionError
+__________________________ test_task_func_no_subjects __________________________
+
+    def test_task_func_no_subjects():
+        students = ['Frank']
+        subjects = []
+>       df = task_func(students, subjects)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0851.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0851.py:12: in task_func
+    avg_grade = statistics.mean(grades)
+                ^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = []
+
+    def mean(data):
+        """Return the sample arithmetic mean of data.
+    
+        >>> mean([1, 2, 3, 4, 4])
+        2.8
+    
+        >>> from fractions import Fraction as F
+        >>> mean([F(3, 7), F(1, 21), F(5, 3), F(1, 3)])
+        Fraction(13, 21)
+    
+        >>> from decimal import Decimal as D
+        >>> mean([D("0.5"), D("0.75"), D("0.625"), D("0.375")])
+        Decimal('0.5625')
+    
+        If ``data`` is empty, StatisticsError will be raised.
+        """
+        T, total, n = _sum(data)
+        if n < 1:
+>           raise StatisticsError('mean requires at least one data point')
+E           statistics.StatisticsError: mean requires at least one data point
+
+/usr/lib/python3.12/statistics.py:486: StatisticsError
+=========================== short test summary info ============================
+FAILED test_0851.py::test_task_func_with_seed - AssertionError: DataFrame.ilo...
+FAILED test_0851.py::test_task_func_no_subjects - statistics.StatisticsError:...
+2 failed, 2 passed in 1.42s

@@ -1,0 +1,57 @@
+..F.                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_empty_input ________________________
+
+    def test_task_func_with_empty_input():
+        # Define an empty input array
+        array = []
+        random_seed = 42
+    
+        # Call the function
+>       df, results = task_func(array, random_seed)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0517.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0517.py:21: in task_func
+    model = sm.OLS(y, X)
+            ^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/statsmodels/regression/linear_model.py:921: in __init__
+    super().__init__(endog, exog, missing=missing,
+../../../.venv/lib/python3.12/site-packages/statsmodels/regression/linear_model.py:746: in __init__
+    super().__init__(endog, exog, missing=missing,
+../../../.venv/lib/python3.12/site-packages/statsmodels/regression/linear_model.py:200: in __init__
+    super().__init__(endog, exog, **kwargs)
+../../../.venv/lib/python3.12/site-packages/statsmodels/base/model.py:270: in __init__
+    super().__init__(endog, exog, **kwargs)
+../../../.venv/lib/python3.12/site-packages/statsmodels/base/model.py:95: in __init__
+    self.data = self._handle_data(endog, exog, missing, hasconst,
+../../../.venv/lib/python3.12/site-packages/statsmodels/base/model.py:135: in _handle_data
+    data = handle_data(endog, exog, missing, hasconst, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/statsmodels/base/data.py:694: in handle_data
+    return klass(endog, exog=exog, missing=missing, hasconst=hasconst, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/statsmodels/base/data.py:86: in __init__
+    self.endog, self.exog = self._convert_endog_exog(endog, exog)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <statsmodels.base.data.PandasData object at 0x7558e77605f0>
+endog = array([], dtype=object), exog = array([], shape=(0, 5), dtype=object)
+
+    def _convert_endog_exog(self, endog, exog=None):
+        # TODO: remove this when we handle dtype systematically
+        endog = np.asarray(endog)
+        exog = exog if exog is None else np.asarray(exog)
+        if endog.dtype == object or exog is not None and exog.dtype == object:
+>           raise ValueError(
+                "Pandas data cast to numpy dtype of object. "
+                "Check input data with np.asarray(data)."
+            )
+E           ValueError: Pandas data cast to numpy dtype of object. Check input data with np.asarray(data).
+
+../../../.venv/lib/python3.12/site-packages/statsmodels/base/data.py:523: ValueError
+=========================== short test summary info ============================
+FAILED test_0517.py::test_task_func_with_empty_input - ValueError: Pandas dat...
+1 failed, 3 passed in 3.74s

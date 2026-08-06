@@ -1,0 +1,29 @@
+.F                                                                       [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_non_empty_list ______________________
+
+    def test_task_func_with_non_empty_list():
+        l = list(ELEMENTS)
+        random.shuffle(l)
+        expected_counter = Counter(l[:30])
+        actual_counter = task_func(l)
+        expected_keys = list(expected_counter.keys())
+        actual_keys = list(actual_counter.keys())
+        expected_counter = Counter({k: expected_counter[k] for k in expected_keys[3:] + expected_keys[:3]})
+        actual_counter = Counter({k: actual_counter[k] for k in actual_keys[3:] + actual_keys[:3]})
+>       assert actual_counter == expected_counter
+E       AssertionError: assert Counter({'B':...': 3, 'F': 3}) == Counter({'H':...': 1, 'J': 1})
+E         
+E         Differing items:
+E         {'I': 3} != {'I': 1}
+E         {'H': 3} != {'H': 1}
+E         {'J': 3} != {'J': 1}
+E         {'F': 3} != {'F': 1}
+E         {'D': 3} != {'D': 1}...
+E         
+E         ...Full output truncated (6 lines hidden), use '-vv' to show
+
+test_0792.py:21: AssertionError
+=========================== short test summary info ============================
+FAILED test_0792.py::test_task_func_with_non_empty_list - AssertionError: ass...
+1 failed, 1 passed in 0.47s

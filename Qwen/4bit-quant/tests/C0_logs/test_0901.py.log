@@ -1,0 +1,46 @@
+....FF                                                                   [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_valid_data ________________________
+
+    def test_task_func_with_valid_data():
+        data = [{'x': 1, 'y': 2, 'z': 3}, {'x': 4, 'y': 5, 'z': 6}]
+        result = task_func(data)
+        expected = {
+            'x': {'mean': 2.5, 'sum': 5, 'max': 4, 'min': 1, 'std': 1.5811388300841898},
+            'y': {'mean': 3.5, 'sum': 7, 'max': 5, 'min': 2, 'std': 1.5811388300841898},
+            'z': {'mean': 4.5, 'sum': 9, 'max': 6, 'min': 3, 'std': 1.5811388300841898}
+        }
+>       assert result == expected
+E       AssertionError: assert {'x': {'mean'...nt64(3), ...}} == {'x': {'mean'...min': 3, ...}}
+E         
+E         Differing items:
+E         {'z': {'mean': np.float64(4.5), 'sum': np.int64(9), 'max': np.int64(6), 'min': np.int64(3), ...}} != {'z': {'mean': 4.5, 'sum': 9, 'max': 6, 'min': 3, ...}}
+E         {'x': {'mean': np.float64(2.5), 'sum': np.int64(5), 'max': np.int64(4), 'min': np.int64(1), ...}} != {'x': {'mean': 2.5, 'sum': 5, 'max': 4, 'min': 1, ...}}
+E         {'y': {'mean': np.float64(3.5), 'sum': np.int64(7), 'max': np.int64(5), 'min': np.int64(2), ...}} != {'y': {'mean': 3.5, 'sum': 7, 'max': 5, 'min': 2, ...}}
+E         Use -v to get more diff
+
+test_0901.py:28: AssertionError
+______________________ test_task_func_with_missing_values ______________________
+
+    def test_task_func_with_missing_values():
+        data = [{'x': 1, 'y': None, 'z': 3}, {'x': 4, 'y': 5, 'z': None}]
+        result = task_func(data)
+        expected = {
+            'x': {'mean': 2.5, 'sum': 5, 'max': 4, 'min': 1, 'std': 1.5811388300841898},
+            'y': {'mean': 5.0, 'sum': 5, 'max': 5, 'min': 5, 'std': 0.0},
+            'z': {'mean': 3.0, 'sum': 3, 'max': 3, 'min': 3, 'std': 0.0}
+        }
+>       assert result == expected
+E       AssertionError: assert {'x': {'mean'...64(0.0), ...}} == {'x': {'mean'...min': 3, ...}}
+E         
+E         Differing items:
+E         {'z': {'mean': np.float64(1.5), 'sum': np.float64(3.0), 'max': np.float64(3.0), 'min': np.float64(0.0), ...}} != {'z': {'mean': 3.0, 'sum': 3, 'max': 3, 'min': 3, ...}}
+E         {'x': {'mean': np.float64(2.5), 'sum': np.int64(5), 'max': np.int64(4), 'min': np.int64(1), ...}} != {'x': {'mean': 2.5, 'sum': 5, 'max': 4, 'min': 1, ...}}
+E         {'y': {'mean': np.float64(2.5), 'sum': np.float64(5.0), 'max': np.float64(5.0), 'min': np.float64(0.0), ...}} != {'y': {'mean': 5.0, 'sum': 5, 'max': 5, 'min': 5, ...}}
+E         Use -v to get more diff
+
+test_0901.py:38: AssertionError
+=========================== short test summary info ============================
+FAILED test_0901.py::test_task_func_with_valid_data - AssertionError: assert ...
+FAILED test_0901.py::test_task_func_with_missing_values - AssertionError: ass...
+2 failed, 4 passed in 1.24s

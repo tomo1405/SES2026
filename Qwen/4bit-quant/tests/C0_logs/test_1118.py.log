@@ -1,0 +1,50 @@
+F..                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Mocking the random.choice to always return 'Junior'
+        random.choice = MockRandom(['Junior'])
+    
+        # Test case data
+        department_data = {
+            'EMP$$': 3,
+            'MAN$$': 2,
+            'DEV$$': 1,
+            'HR$$': 0,
+            'INVALID$$': 5  # This should be ignored
+        }
+    
+        # Expected result
+        expected_result = {
+            'EMP$$': ['Junior', 'Junior', 'Junior'],
+            'MAN$$': ['Junior', 'Junior'],
+            'DEV$$': ['Junior'],
+            'HR$$': []
+        }
+    
+        # Call the function
+>       result = task_func(department_data)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1118.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+department_data = {'EMP$$': 3, 'MAN$$': 2, 'DEV$$': 1, 'HR$$': 0, ...}
+
+    def task_func(department_data):
+        level_data = collections.defaultdict(list)
+    
+        for prefix, num_employees in department_data.items():
+            if prefix not in PREFICES:
+                continue
+    
+            for _ in range(num_employees):
+>               level = random.choice(LEVELS)
+                        ^^^^^^^^^^^^^^^^^^^^^
+E               TypeError: 'MockRandom' object is not callable
+
+../../../src/src_1118.py:15: TypeError
+=========================== short test summary info ============================
+FAILED test_1118.py::test_task_func - TypeError: 'MockRandom' object is not c...
+1 failed, 2 passed in 0.49s

@@ -1,0 +1,58 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_plot = <test_0968.MockPlot object at 0x78353d6e9a60>
+
+    def test_task_func(mock_plot):
+        # Define a simple function to test
+        def test_func(x):
+            return np.sin(x)
+    
+        # Call the function with default parameters
+>       ax = task_func(test_func)
+             ^^^^^^^^^^^^^^^^^^^^
+
+test_0968.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0968.py:9: in task_func
+    fig, ax = plt.subplots()
+              ^^^^^^^^^^^^^^
+test_0968.py:14: in subplots
+    fig, ax = plt.subplots()
+              ^^^^^^^^^^^^^^
+test_0968.py:14: in subplots
+    fig, ax = plt.subplots()
+              ^^^^^^^^^^^^^^
+E   RecursionError: maximum recursion depth exceeded
+!!! Recursion detected (same locals & position)
+_________________________ test_task_func_custom_params _________________________
+
+mock_plot = <test_0968.MockPlot object at 0x78353d78cda0>
+
+    def test_task_func_custom_params(mock_plot):
+        # Define a simple function to test
+        def test_func(x):
+            return x**2
+    
+        # Call the function with custom parameters
+>       ax = task_func(test_func, x_range=(0, 5), num_points=500)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0968.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0968.py:9: in task_func
+    fig, ax = plt.subplots()
+              ^^^^^^^^^^^^^^
+test_0968.py:14: in subplots
+    fig, ax = plt.subplots()
+              ^^^^^^^^^^^^^^
+test_0968.py:14: in subplots
+    fig, ax = plt.subplots()
+              ^^^^^^^^^^^^^^
+E   RecursionError: maximum recursion depth exceeded
+!!! Recursion detected (same locals & position)
+=========================== short test summary info ============================
+FAILED test_0968.py::test_task_func - RecursionError: maximum recursion depth...
+FAILED test_0968.py::test_task_func_custom_params - RecursionError: maximum r...
+2 failed in 2.70s

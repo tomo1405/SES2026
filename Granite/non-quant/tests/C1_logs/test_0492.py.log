@@ -1,0 +1,37 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Test with valid input
+        epoch_milliseconds = 1631840000000
+        seed = 42
+        sales_data, ax = task_func(epoch_milliseconds, seed)
+        assert isinstance(sales_data, dict)
+        assert isinstance(ax, object)
+    
+        # Test case 2: Test with invalid input (negative epoch_milliseconds)
+        with pytest.raises(ValueError) as excinfo:
+            task_func(-1, seed)
+        assert "Start time cannot be negative." in str(excinfo.value)
+    
+        # Test case 3: Test with invalid input (start date after current time)
+>       with pytest.raises(ValueError) as excinfo:
+E       Failed: DID NOT RAISE ValueError
+
+test_0492.py:18: Failed
+=============================== warnings summary ===============================
+Granite/non-quant/tests/test_0492.py::test_task_func
+Granite/non-quant/tests/test_0492.py::test_task_func
+  /work/tomohiro-w/utg/src/src_0492.py:13: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+    start_time = datetime.utcfromtimestamp(epoch_milliseconds / 1000.0)
+
+Granite/non-quant/tests/test_0492.py::test_task_func
+Granite/non-quant/tests/test_0492.py::test_task_func
+  /work/tomohiro-w/utg/src/src_0492.py:14: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    current_time = datetime.utcnow()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0492.py::test_task_func - Failed: DID NOT RAISE ValueError
+1 failed, 4 warnings in 1.56s

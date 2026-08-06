@@ -1,0 +1,41 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_urlopen = <MagicMock name='urlopen' id='136576295067168'>
+mock_response = <MagicMock name='urlopen()' id='136576298950848'>
+
+    @patch('urllib.request.urlopen')
+    def test_task_func(mock_urlopen, mock_response):
+        mock_urlopen.return_value = mock_response
+        url = "http://example.com"
+>       word_freq, ax = task_func(url)
+                        ^^^^^^^^^^^^^^
+
+test_1005.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1005.py:8: in task_func
+    words = re.findall(r"\b\w+\b", text)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pattern = '\\b\\w+\\b'
+string = <MagicMock name='urlopen().__enter__().read().decode()' id='136576293978960'>
+flags = 0
+
+    def findall(pattern, string, flags=0):
+        """Return a list of all non-overlapping matches in the string.
+    
+        If one or more capturing groups are present in the pattern, return
+        a list of groups; this will be a list of tuples if the pattern
+        has more than one group.
+    
+        Empty matches are included in the result."""
+>       return _compile(pattern, flags).findall(string)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: expected string or bytes-like object, got 'MagicMock'
+
+/usr/lib/python3.12/re/__init__.py:217: TypeError
+=========================== short test summary info ============================
+FAILED test_1005.py::test_task_func - TypeError: expected string or bytes-lik...
+1 failed in 1.57s

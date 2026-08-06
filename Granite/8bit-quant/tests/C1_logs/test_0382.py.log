@@ -1,0 +1,29 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: file_path does not exist
+        with pytest.raises(FileNotFoundError):
+            task_func(file_path='nonexistent_file.csv')
+    
+        # Test case 2: target_column does not exist in the CSV file
+        with pytest.raises(ValueError):
+>           task_func(target_column='Invalid Column')
+
+test_0382.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = 'arena.csv', target_column = 'Invalid Column', seed = 42
+
+    def task_func(file_path='arena.csv', target_column='Index', seed=42):
+        if not os.path.exists(file_path):
+>           raise FileNotFoundError(f"The file '{file_path}' does not exist.")
+E           FileNotFoundError: The file 'arena.csv' does not exist.
+
+test_0382.py:10: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0382.py::test_task_func - FileNotFoundError: The file 'arena.csv'...
+1 failed in 3.72s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

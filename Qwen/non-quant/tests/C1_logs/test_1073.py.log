@@ -1,0 +1,69 @@
+.FFFFF                                                                   [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_single_sublist ______________________
+
+    def test_task_func_with_single_sublist():
+        input_data = [['a', 'b', 'c']]
+        result = task_func(input_data)
+        assert len(result) == 1
+        assert isinstance(result[0], pd.Series)
+        assert result[0].index.tolist() == ['a', 'b', 'c']
+>       assert all(isinstance(value, int) for value in result[0].values)
+E       assert False
+E        +  where False = all(<generator object test_task_func_with_single_sublist.<locals>.<genexpr> at 0x79be93271e00>)
+
+test_1073.py:16: AssertionError
+____________________ test_task_func_with_multiple_sublists _____________________
+
+    def test_task_func_with_multiple_sublists():
+        input_data = [['x', 'y'], ['m', 'n', 'o']]
+        result = task_func(input_data)
+        assert len(result) == 2
+        assert isinstance(result[0], pd.Series)
+        assert result[0].index.tolist() == ['x', 'y']
+>       assert all(isinstance(value, int) for value in result[0].values)
+E       assert False
+E        +  where False = all(<generator object test_task_func_with_multiple_sublists.<locals>.<genexpr> at 0x79be93273760>)
+
+test_1073.py:24: AssertionError
+____________________ test_task_func_with_duplicate_indices _____________________
+
+    def test_task_func_with_duplicate_indices():
+        input_data = [['a', 'b', 'a']]
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_1073.py:31: Failed
+____________________ test_task_func_with_non_string_indices ____________________
+
+    def test_task_func_with_non_string_indices():
+        input_data = [[1, 2, 3]]
+        result = task_func(input_data)
+        assert len(result) == 1
+        assert isinstance(result[0], pd.Series)
+        assert result[0].index.tolist() == [1, 2, 3]
+>       assert all(isinstance(value, int) for value in result[0].values)
+E       assert False
+E        +  where False = all(<generator object test_task_func_with_non_string_indices.<locals>.<genexpr> at 0x79be932e8ba0>)
+
+test_1073.py:40: AssertionError
+______________________ test_task_func_with_large_sublist _______________________
+
+    def test_task_func_with_large_sublist():
+        input_data = [['item' + str(i) for i in range(100)]]
+        result = task_func(input_data)
+        assert len(result) == 1
+        assert isinstance(result[0], pd.Series)
+        assert result[0].index.tolist() == ['item' + str(i) for i in range(100)]
+>       assert all(isinstance(value, int) for value in result[0].values)
+E       assert False
+E        +  where False = all(<generator object test_task_func_with_large_sublist.<locals>.<genexpr> at 0x79be932e9620>)
+
+test_1073.py:48: AssertionError
+=========================== short test summary info ============================
+FAILED test_1073.py::test_task_func_with_single_sublist - assert False
+FAILED test_1073.py::test_task_func_with_multiple_sublists - assert False
+FAILED test_1073.py::test_task_func_with_duplicate_indices - Failed: DID NOT ...
+FAILED test_1073.py::test_task_func_with_non_string_indices - assert False
+FAILED test_1073.py::test_task_func_with_large_sublist - assert False
+5 failed, 1 passed in 1.14s

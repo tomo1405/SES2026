@@ -1,0 +1,33 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a simple dataset
+        data = {
+            'A': [1, 2, 3, 4],
+            'B': [4, 3, 2, 1],
+            'C': [2, 3, 4, 5]
+        }
+        ax = task_func(data)
+    
+        # Check if the returned object is a matplotlib Axes
+        assert isinstance(ax, plt.Axes)
+    
+        # Check if the title is set correctly
+        assert ax.get_title() == 'Correlation Matrix'
+    
+        # Check if the heatmap has annotations
+        text = [text.get_text() for text in ax.texts]
+        expected_annotations = ['1.00', '-1.00', '1.00', '-1.00', '1.00', '0.83']
+>       assert sorted(text) == sorted(expected_annotations)
+E       AssertionError: assert ['-1', '-1', ...'1', '1', ...] == ['-1.00', '-1...1.00', '1.00']
+E         
+E         At index 0 diff: '-1' != '-1.00'
+E         Left contains 3 more items, first extra item: '1'
+E         Use -v to get more diff
+
+test_0921.py:23: AssertionError
+=========================== short test summary info ============================
+FAILED test_0921.py::test_task_func - AssertionError: assert ['-1', '-1', ......
+1 failed in 3.41s

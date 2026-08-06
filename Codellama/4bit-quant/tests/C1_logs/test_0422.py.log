@@ -1,0 +1,60 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        url = 'https://example.com/api/upload'
+        directory = 'path/to/files'
+        metadata = {'name': 'John Doe', 'age': 30}
+    
+>       status_codes = task_func(url, directory, metadata)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0422.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0422.py:19: in task_func
+    response = requests.post(url, files=files, headers=HEADERS, data=json.dumps(metadata))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/requests/api.py:134: in post
+    return request("post", url, data=data, json=json, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/requests/api.py:71: in request
+    return session.request(method=method, url=url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/requests/sessions.py:635: in request
+    prep = self.prepare_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/requests/sessions.py:541: in prepare_request
+    p.prepare(
+../../../.venv/lib/python3.12/site-packages/requests/models.py:442: in prepare
+    self.prepare_body(data, files, json)
+../../../.venv/lib/python3.12/site-packages/requests/models.py:635: in prepare_body
+    (body, content_type) = self._encode_files(files, raw_data)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+files = {'file': <_io.BufferedReader name='path/to/files/invalid.json'>}
+data = '{"name": "John Doe", "age": 30}'
+
+    @staticmethod
+    def _encode_files(
+        files: _t.FilesType, data: _t.RawDataType | None
+    ) -> tuple[bytes, str]:
+        """Build the body for a multipart/form-data request.
+    
+        Will successfully encode files when passed as a dict or a list of
+        tuples. Order is retained if data is a list of tuples but arbitrary
+        if parameters are supplied as a dict.
+        The tuples may be 2-tuples (filename, fileobj), 3-tuples (filename, fileobj, contentype)
+        or 4-tuples (filename, fileobj, contentype, custom_headers).
+        """
+        if not files:
+            raise ValueError("Files must be provided.")
+        elif isinstance(data, basestring):
+>           raise ValueError("Data must not be a string.")
+E           ValueError: Data must not be a string.
+
+../../../.venv/lib/python3.12/site-packages/requests/models.py:198: ValueError
+=========================== short test summary info ============================
+FAILED test_0422.py::test_task_func - ValueError: Data must not be a string.
+1 failed in 0.74s

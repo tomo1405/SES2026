@@ -1,0 +1,58 @@
+F.FF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        text = "This is a sample text. It contains some words."
+        expected_output = {'sample': 1, 'text.': 1, 'words.': 1}
+        actual_output = task_func(text)
+>       assert actual_output == expected_output, "Output does not match expected output"
+E       AssertionError: Output does not match expected output
+E       assert {'sample': 1,...1, 'words': 1} == {'sample': 1,..., 'words.': 1}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Left contains 3 more items:
+E         {'contains': 1, 'text': 1, 'words': 1}
+E         Right contains 2 more items:
+E         {'text.': 1, 'words.': 1}
+E         Use -v to get more diff
+
+test_0333.py:8: AssertionError
+___________________________ test_task_func_no_words ____________________________
+
+    def test_task_func_no_words():
+        text = "This is a test."
+        expected_output = {}
+        actual_output = task_func(text)
+>       assert actual_output == expected_output, "Output does not match expected output"
+E       AssertionError: Output does not match expected output
+E       assert {'test': 1} == {}
+E         
+E         Left contains 1 more item:
+E         {'test': 1}
+E         Use -v to get more diff
+
+test_0333.py:20: AssertionError
+___________________________ test_task_func_stopwords ___________________________
+
+    def test_task_func_stopwords():
+        text = "This is a sample text. It contains some stopwords like 'is' and 'some'."
+        expected_output = {'sample': 1, 'text.': 1, 'contains': 1}
+        actual_output = task_func(text)
+>       assert actual_output == expected_output, "Output does not match expected output"
+E       AssertionError: Output does not match expected output
+E       assert {'sample': 1,...ords': 1, ...} == {'sample': 1,...'contains': 1}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Left contains 3 more items:
+E         {'like': 1, 'stopwords': 1, 'text': 1}
+E         Right contains 1 more item:
+E         {'text.': 1}
+E         Use -v to get more diff
+
+test_0333.py:26: AssertionError
+=========================== short test summary info ============================
+FAILED test_0333.py::test_task_func - AssertionError: Output does not match e...
+FAILED test_0333.py::test_task_func_no_words - AssertionError: Output does no...
+FAILED test_0333.py::test_task_func_stopwords - AssertionError: Output does n...
+3 failed, 1 passed in 3.69s

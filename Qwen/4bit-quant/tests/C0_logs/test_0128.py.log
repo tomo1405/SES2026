@@ -1,0 +1,67 @@
+EEE                                                                      [100%]
+==================================== ERRORS ====================================
+_______________________ ERROR at setup of test_task_func _______________________
+
+    @pytest.fixture
+    def setup_directories():
+        root_dir = tempfile.mkdtemp()
+        dest_dir = tempfile.mkdtemp()
+>       specific_hash = calculate_md5(os.path.join(root_dir, 'specific_file.txt'))
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0128.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = '/tmp/tmpp3oly9_k/specific_file.txt'
+
+    def calculate_md5(file_path):
+>       with open(file_path, 'rb') as f:
+             ^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmpp3oly9_k/specific_file.txt'
+
+test_0128.py:20: FileNotFoundError
+__________________ ERROR at setup of test_task_func_no_match ___________________
+
+    @pytest.fixture
+    def setup_directories():
+        root_dir = tempfile.mkdtemp()
+        dest_dir = tempfile.mkdtemp()
+>       specific_hash = calculate_md5(os.path.join(root_dir, 'specific_file.txt'))
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0128.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = '/tmp/tmpbxc5gft9/specific_file.txt'
+
+    def calculate_md5(file_path):
+>       with open(file_path, 'rb') as f:
+             ^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmpbxc5gft9/specific_file.txt'
+
+test_0128.py:20: FileNotFoundError
+_______________ ERROR at setup of test_task_func_empty_root_dir ________________
+
+    @pytest.fixture
+    def setup_directories():
+        root_dir = tempfile.mkdtemp()
+        dest_dir = tempfile.mkdtemp()
+>       specific_hash = calculate_md5(os.path.join(root_dir, 'specific_file.txt'))
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0128.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = '/tmp/tmp1gfng88u/specific_file.txt'
+
+    def calculate_md5(file_path):
+>       with open(file_path, 'rb') as f:
+             ^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmp1gfng88u/specific_file.txt'
+
+test_0128.py:20: FileNotFoundError
+=========================== short test summary info ============================
+ERROR test_0128.py::test_task_func - FileNotFoundError: [Errno 2] No such fil...
+ERROR test_0128.py::test_task_func_no_match - FileNotFoundError: [Errno 2] No...
+ERROR test_0128.py::test_task_func_empty_root_dir - FileNotFoundError: [Errno...
+3 errors in 0.46s

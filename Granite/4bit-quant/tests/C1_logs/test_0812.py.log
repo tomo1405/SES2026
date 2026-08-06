@@ -1,0 +1,130 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_________________ test_task_func[1-None-None-expected_output0] _________________
+
+dictionary = {'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]}, item = 1
+sample_size = None, random_seed = None
+expected_output = [((0, 'A'), (0, 'B'), (0, 'C')), ((1, 'A'), (1, 'B'), (1, 'C')), ((2, 'A'), (2, 'B'), (2, 'C'))]
+
+    @pytest.mark.parametrize("item, sample_size, random_seed, expected_output", [
+        (1, None, None, [
+            ((0, 'A'), (0, 'B'), (0, 'C')),
+            ((1, 'A'), (1, 'B'), (1, 'C')),
+            ((2, 'A'), (2, 'B'), (2, 'C'))
+        ]),
+        (2, 1, None, [
+            ((1, 'B'),)
+        ]),
+        (3, None, 42, [
+            ((2, 'C'),)
+        ]),
+        (4, 2, 123, [
+            ((0, 'B'), (1, 'B')),
+        ]),
+    ])
+    def test_task_func(dictionary, item, sample_size, random_seed, expected_output):
+        positions, dataframe = task_func(dictionary, item, sample_size, random_seed)
+>       assert positions == expected_output
+E       AssertionError: assert [(0, 'A')] == [((0, 'A'), (...'), (2, 'C'))]
+E         
+E         At index 0 diff: (0, 'A') != ((0, 'A'), (0, 'B'), (0, 'C'))
+E         Right contains 2 more items, first extra item: ((1, 'A'), (1, 'B'), (1, 'C'))
+E         Use -v to get more diff
+
+test_0812.py:28: AssertionError
+__________________ test_task_func[2-1-None-expected_output1] ___________________
+
+dictionary = {'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]}, item = 2
+sample_size = 1, random_seed = None, expected_output = [((1, 'B'),)]
+
+    @pytest.mark.parametrize("item, sample_size, random_seed, expected_output", [
+        (1, None, None, [
+            ((0, 'A'), (0, 'B'), (0, 'C')),
+            ((1, 'A'), (1, 'B'), (1, 'C')),
+            ((2, 'A'), (2, 'B'), (2, 'C'))
+        ]),
+        (2, 1, None, [
+            ((1, 'B'),)
+        ]),
+        (3, None, 42, [
+            ((2, 'C'),)
+        ]),
+        (4, 2, 123, [
+            ((0, 'B'), (1, 'B')),
+        ]),
+    ])
+    def test_task_func(dictionary, item, sample_size, random_seed, expected_output):
+        positions, dataframe = task_func(dictionary, item, sample_size, random_seed)
+>       assert positions == expected_output
+E       AssertionError: assert [(1, 'A')] == [((1, 'B'),)]
+E         
+E         At index 0 diff: (1, 'A') != ((1, 'B'),)
+E         Use -v to get more diff
+
+test_0812.py:28: AssertionError
+__________________ test_task_func[3-None-42-expected_output2] __________________
+
+dictionary = {'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]}, item = 3
+sample_size = None, random_seed = 42, expected_output = [((2, 'C'),)]
+
+    @pytest.mark.parametrize("item, sample_size, random_seed, expected_output", [
+        (1, None, None, [
+            ((0, 'A'), (0, 'B'), (0, 'C')),
+            ((1, 'A'), (1, 'B'), (1, 'C')),
+            ((2, 'A'), (2, 'B'), (2, 'C'))
+        ]),
+        (2, 1, None, [
+            ((1, 'B'),)
+        ]),
+        (3, None, 42, [
+            ((2, 'C'),)
+        ]),
+        (4, 2, 123, [
+            ((0, 'B'), (1, 'B')),
+        ]),
+    ])
+    def test_task_func(dictionary, item, sample_size, random_seed, expected_output):
+        positions, dataframe = task_func(dictionary, item, sample_size, random_seed)
+>       assert positions == expected_output
+E       AssertionError: assert [(2, 'A')] == [((2, 'C'),)]
+E         
+E         At index 0 diff: (2, 'A') != ((2, 'C'),)
+E         Use -v to get more diff
+
+test_0812.py:28: AssertionError
+___________________ test_task_func[4-2-123-expected_output3] ___________________
+
+dictionary = {'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]}, item = 4
+sample_size = 2, random_seed = 123, expected_output = [((0, 'B'), (1, 'B'))]
+
+    @pytest.mark.parametrize("item, sample_size, random_seed, expected_output", [
+        (1, None, None, [
+            ((0, 'A'), (0, 'B'), (0, 'C')),
+            ((1, 'A'), (1, 'B'), (1, 'C')),
+            ((2, 'A'), (2, 'B'), (2, 'C'))
+        ]),
+        (2, 1, None, [
+            ((1, 'B'),)
+        ]),
+        (3, None, 42, [
+            ((2, 'C'),)
+        ]),
+        (4, 2, 123, [
+            ((0, 'B'), (1, 'B')),
+        ]),
+    ])
+    def test_task_func(dictionary, item, sample_size, random_seed, expected_output):
+        positions, dataframe = task_func(dictionary, item, sample_size, random_seed)
+>       assert positions == expected_output
+E       AssertionError: assert [(0, 'B')] == [((0, 'B'), (1, 'B'))]
+E         
+E         At index 0 diff: (0, 'B') != ((0, 'B'), (1, 'B'))
+E         Use -v to get more diff
+
+test_0812.py:28: AssertionError
+=========================== short test summary info ============================
+FAILED test_0812.py::test_task_func[1-None-None-expected_output0] - Assertion...
+FAILED test_0812.py::test_task_func[2-1-None-expected_output1] - AssertionErr...
+FAILED test_0812.py::test_task_func[3-None-42-expected_output2] - AssertionEr...
+FAILED test_0812.py::test_task_func[4-2-123-expected_output3] - AssertionErro...
+4 failed in 1.26s

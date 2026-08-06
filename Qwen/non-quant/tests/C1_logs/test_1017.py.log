@@ -1,0 +1,116 @@
+F...                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_subplots = <MagicMock name='subplots' id='126219339227472'>
+mock_np_array = <MagicMock name='array' id='126219339231408'>
+mock_image_open = <MagicMock name='open' id='126219339235200'>
+mock_requests_get = <MagicMock name='get' id='126219339419280'>
+
+    @patch('requests.get')
+    @patch('PIL.Image.open')
+    @patch('numpy.array')
+    @patch('matplotlib.pyplot.subplots')
+    def test_task_func(mock_subplots, mock_np_array, mock_image_open, mock_requests_get):
+        # Mock the response object
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.raw = MagicMock()
+    
+        # Mock the image object
+        mock_image = MagicMock()
+        mock_image.convert.return_value = mock_image
+    
+        # Mock the numpy array
+        mock_np_array.return_value = np.zeros((100, 100))
+    
+        # Mock the subplots
+        mock_ax = MagicMock()
+        mock_fig, mock_ax = MagicMock(), mock_ax
+        mock_subplots.return_value = (mock_fig, mock_ax)
+    
+        # Set up the mocks
+        mock_requests_get.return_value = mock_response
+        mock_image_open.return_value = mock_image
+    
+        # Call the function
+        ax = task_func("http://example.com/image.jpg")
+    
+        # Assertions
+        mock_requests_get.assert_called_once_with("http://example.com/image.jpg", stream=True, timeout=10)
+        mock_image_open.assert_called_once_with(mock_response.raw)
+        mock_image.convert.assert_called_once_with("L")
+        mock_np_array.assert_called_once_with(mock_image)
+>       mock_ax.hist.assert_called_once_with(np.zeros((100, 100)).ravel(), bins=256, color="gray", alpha=0.7)
+
+test_1017.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/unittest/mock.py:956: in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/unittest/mock.py:942: in assert_called_with
+    if actual != expected:
+       ^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = call(array([0., 0., 0., ..., 0., 0., 0.], shape=(10000,)), bins=256, color='gray', alpha=0.7)
+other = call(array([0., 0., 0., ..., 0., 0., 0.], shape=(10000,)), bins=256, color='gray', alpha=0.7)
+
+    def __eq__(self, other):
+        try:
+            len_other = len(other)
+        except TypeError:
+            return NotImplemented
+    
+        self_name = ''
+        if len(self) == 2:
+            self_args, self_kwargs = self
+        else:
+            self_name, self_args, self_kwargs = self
+    
+        if (getattr(self, '_mock_parent', None) and getattr(other, '_mock_parent', None)
+                and self._mock_parent != other._mock_parent):
+            return False
+    
+        other_name = ''
+        if len_other == 0:
+            other_args, other_kwargs = (), {}
+        elif len_other == 3:
+            other_name, other_args, other_kwargs = other
+        elif len_other == 1:
+            value, = other
+            if isinstance(value, tuple):
+                other_args = value
+                other_kwargs = {}
+            elif isinstance(value, str):
+                other_name = value
+                other_args, other_kwargs = (), {}
+            else:
+                other_args = ()
+                other_kwargs = value
+        elif len_other == 2:
+            # could be (name, args) or (name, kwargs) or (args, kwargs)
+            first, second = other
+            if isinstance(first, str):
+                other_name = first
+                if isinstance(second, tuple):
+                    other_args, other_kwargs = second, {}
+                else:
+                    other_args, other_kwargs = (), second
+            else:
+                other_args, other_kwargs = first, second
+        else:
+            return False
+    
+        if self_name and other_name != self_name:
+            return False
+    
+        # this order is important for ANY to work!
+>       return (other_args, other_kwargs) == (self_args, self_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+/usr/lib/python3.12/unittest/mock.py:2597: ValueError
+=========================== short test summary info ============================
+FAILED test_1017.py::test_task_func - ValueError: The truth value of an array...
+1 failed, 3 passed in 1.95s

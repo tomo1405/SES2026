@@ -1,0 +1,34 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        test_directory_path = "/path/to/test/directory"
+        test_file_details = [
+            ("test_file_1.txt", 1024, "2023-01-01T00:00:00+00:00", "2023-01-01T00:00:00+00:00"),
+            ("test_file_2.txt", 2048, "2023-01-02T00:00:00+00:00", "2023-01-02T00:00:00+00:00")
+        ]
+    
+        with pytest.raises(ValueError) as exc_info:
+            task_func("/invalid/directory/path")
+        assert "The path /invalid/directory/path is not a valid directory." in str(exc_info.value)
+    
+        with pytest.raises(FileNotFoundError) as exc_info:
+>           task_func("/nonexistent/directory")
+
+test_0972.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory_path = '/nonexistent/directory'
+
+    def task_func(directory_path: str):
+        if not Path(directory_path).is_dir():
+>           raise ValueError(f"The path {directory_path} is not a valid directory.")
+E           ValueError: The path /nonexistent/directory is not a valid directory.
+
+test_0972.py:8: ValueError
+=========================== short test summary info ============================
+FAILED test_0972.py::test_task_func - ValueError: The path /nonexistent/direc...
+1 failed in 0.48s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

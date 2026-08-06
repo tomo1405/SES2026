@@ -1,0 +1,113 @@
+FF.FF                                                                    [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_empty_dataframe ______________________
+
+    def test_task_func_with_empty_dataframe():
+        temperatures = pd.DataFrame()
+        with pytest.raises(ValueError) as excinfo:
+            task_func(temperatures)
+>       assert str(excinfo.value) == "Input temperatures must be a non-empty pandas DataFrame."
+E       AssertionError: assert 'An error occ...as DataFrame.' == 'Input temper...as DataFrame.'
+E         
+E         - Input temperatures must be a non-empty pandas DataFrame.
+E         + An error occurred: Input temperatures must be a non-empty pandas DataFrame.
+E         ? +++++++++++++++++++
+
+test_0104.py:11: AssertionError
+___________________ test_task_func_with_non_dataframe_input ____________________
+
+    def test_task_func_with_non_dataframe_input():
+        temperatures = [1, 2, 3]
+        with pytest.raises(ValueError) as excinfo:
+            task_func(temperatures)
+>       assert str(excinfo.value) == "Input temperatures must be a non-empty pandas DataFrame."
+E       assert "An error occ...ibute 'empty'" == 'Input temper...as DataFrame.'
+E         
+E         - Input temperatures must be a non-empty pandas DataFrame.
+E         + An error occurred: 'list' object has no attribute 'empty'
+
+test_0104.py:17: AssertionError
+________________ test_task_func_with_missing_temperature_column ________________
+
+temperatures = Empty DataFrame
+Columns: []
+Index: [2023-01-01 00:00:00, 2023-01-02 00:00:00, 2023-01-03 00:00:00]
+
+    def task_func(temperatures):
+        try:
+            if temperatures.empty or not isinstance(temperatures, pd.DataFrame):
+>               raise ValueError("Input temperatures must be a non-empty pandas DataFrame.")
+E               ValueError: Input temperatures must be a non-empty pandas DataFrame.
+
+../../../src/src_0104.py:6: ValueError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func_with_missing_temperature_column():
+        data = {
+            'date': ['2023-01-01', '2023-01-02', '2023-01-03']
+        }
+        temperatures = pd.DataFrame(data)
+        temperatures['date'] = pd.to_datetime(temperatures['date'])
+        temperatures.set_index('date', inplace=True)
+    
+        with pytest.raises(KeyError) as excinfo:
+>           task_func(temperatures)
+
+test_0104.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+temperatures = Empty DataFrame
+Columns: []
+Index: [2023-01-01 00:00:00, 2023-01-02 00:00:00, 2023-01-03 00:00:00]
+
+    def task_func(temperatures):
+        try:
+            if temperatures.empty or not isinstance(temperatures, pd.DataFrame):
+                raise ValueError("Input temperatures must be a non-empty pandas DataFrame.")
+    
+            # Setting the font to Arial
+            font = {'sans-serif': 'Arial', 'family': 'sans-serif'}
+            plt.rc('font', **font)
+    
+            fig, ax = plt.subplots(figsize=(10, 6))
+            ax.plot(temperatures.index, temperatures['temperature'])
+            ax.set_xlabel('Date')
+            ax.set_ylabel('Temperature (°C)')
+            ax.set_title('Daily Temperatures in New York')
+    
+            return ax
+    
+        except Exception as e:
+>           raise ValueError(f"An error occurred: {e}")
+E           ValueError: An error occurred: Input temperatures must be a non-empty pandas DataFrame.
+
+../../../src/src_0104.py:21: ValueError
+________________________ test_task_func_with_exception _________________________
+
+    def test_task_func_with_exception():
+        data = {
+            'date': ['2023-01-01', '2023-01-02', '2023-01-03'],
+            'temperature': [15, 18, 20]
+        }
+        temperatures = pd.DataFrame(data)
+        temperatures['date'] = pd.to_datetime(temperatures['date'])
+        temperatures.set_index('date', inplace=True)
+    
+        # Intentionally raise an exception in the plotting process
+        def mock_plot(*args, **kwargs):
+            raise Exception("Mocked exception")
+    
+        with pytest.raises(ValueError) as excinfo:
+            with pytest.MonkeyPatch.context() as mp:
+>               mp.setattr(ax, 'plot', mock_plot)
+                           ^^
+E               NameError: name 'ax' is not defined
+
+test_0104.py:61: NameError
+=========================== short test summary info ============================
+FAILED test_0104.py::test_task_func_with_empty_dataframe - AssertionError: as...
+FAILED test_0104.py::test_task_func_with_non_dataframe_input - assert "An err...
+FAILED test_0104.py::test_task_func_with_missing_temperature_column - ValueEr...
+FAILED test_0104.py::test_task_func_with_exception - NameError: name 'ax' is ...
+4 failed, 1 passed in 2.14s

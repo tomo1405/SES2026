@@ -1,0 +1,19 @@
+import re
+import nltk
+nltk.download('stopwords')
+from nltk.corpus import stopwords
+from collections import Counter
+# Constants
+STOPWORDS = set(stopwords.words('english'))
+def task_func(text, n=2):
+    # Normalize spaces and remove punctuation
+    text = re.sub(r'[^\w\s]', '', text)  # Remove all punctuation
+    text = re.sub(r'\s+', ' ', text)  # Normalize whitespace
+
+    # Filter out stopwords and split into words
+    words = [word.lower() for word in text.split() if word.lower() not in STOPWORDS]
+
+    # Generate n-grams
+    ngrams = zip(*[words[i:] for i in range(n)])
+
+    return Counter(ngrams)

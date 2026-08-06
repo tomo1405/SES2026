@@ -1,0 +1,56 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        df = task_func()
+        assert isinstance(df, pd.DataFrame)
+        assert len(df) == 26**3
+        assert all(df.columns == ["Letter 1", "Letter 2", "Letter 3"])
+>       assert all(df["Letter 1"].isin(string.ascii_lowercase))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1031.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/series.py:6076: in isin
+    result = algorithms.isin(self._values, values)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+comps = <ArrowStringArray>
+['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a',
+ ...
+ 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z']
+Length: 17576, dtype: str
+values = 'abcdefghijklmnopqrstuvwxyz'
+
+    def isin(comps: ListLike, values: ListLike) -> npt.NDArray[np.bool_]:
+        """
+        Compute the isin boolean array.
+    
+        Parameters
+        ----------
+        comps : list-like
+        values : list-like
+    
+        Returns
+        -------
+        ndarray[bool]
+            Same length as `comps`.
+        """
+        if not is_list_like(comps):
+            raise TypeError(
+                "only list-like objects are allowed to be passed "
+                f"to isin(), you passed a `{type(comps).__name__}`"
+            )
+        if not is_list_like(values):
+>           raise TypeError(
+                "only list-like objects are allowed to be passed "
+                f"to isin(), you passed a `{type(values).__name__}`"
+            )
+E           TypeError: only list-like objects are allowed to be passed to isin(), you passed a `str`
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/algorithms.py:513: TypeError
+=========================== short test summary info ============================
+FAILED test_1031.py::test_task_func - TypeError: only list-like objects are a...
+1 failed in 1.28s

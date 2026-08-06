@@ -1,0 +1,50 @@
+..FFF                                                                    [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_with_none ___________________________
+
+    def test_task_func_with_none():
+        strings = None
+>       with pytest.raises(TypeError):
+E       Failed: DID NOT RAISE TypeError
+
+test_0730.py:20: Failed
+_________________________ test_task_func_with_filename _________________________
+
+    def test_task_func_with_filename():
+        strings = ['date', 'fig', 'grape']
+        filename = 'test.pkl'
+        loaded_strings = task_func(strings, filename)
+        assert loaded_strings == strings
+>       os.remove(filename)
+E       FileNotFoundError: [Errno 2] No such file or directory: 'test.pkl'
+
+test_0730.py:28: FileNotFoundError
+_____________________ test_task_func_with_invalid_filename _____________________
+
+    def test_task_func_with_invalid_filename():
+        strings = ['elderberry', 'fig', 'honeydew']
+        filename = 123
+        with pytest.raises(TypeError):
+>           task_func(strings, filename)
+
+test_0730.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+strings = ['elderberry', 'fig', 'honeydew'], filename = 123
+
+    def task_func(strings, filename=None):
+    
+        if filename is None:
+            # Generate a unique filename using a random string
+            filename = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(10)) + ".pkl"
+    
+>       with open(filename, 'wb') as file:
+             ^^^^^^^^^^^^^^^^^^^^
+E       OSError: [Errno 9] Bad file descriptor
+
+../../../src/src_0730.py:11: OSError
+=========================== short test summary info ============================
+FAILED test_0730.py::test_task_func_with_none - Failed: DID NOT RAISE TypeError
+FAILED test_0730.py::test_task_func_with_filename - FileNotFoundError: [Errno...
+FAILED test_0730.py::test_task_func_with_invalid_filename - OSError: [Errno 9...
+3 failed, 2 passed in 0.50s

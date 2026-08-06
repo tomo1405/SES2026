@@ -1,0 +1,33 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_valid_url ___________________________
+
+    def test_task_func_valid_url():
+        url = "https://www.example.com/file.zip"
+        save_path = "downloaded_file.zip"
+        extract_path = "extracted_files"
+        expected_extract_path = "extracted_files"
+    
+>       assert task_func(url, save_path, extract_path) == expected_extract_path
+E       AssertionError: assert 'URL Error: Not Found' == 'extracted_files'
+E         
+E         - extracted_files
+E         + URL Error: Not Found
+
+test_1006.py:13: AssertionError
+__________________________ test_task_func_invalid_url __________________________
+
+    def test_task_func_invalid_url():
+        url = "https://www.example.com/file.zip"
+        save_path = "downloaded_file.zip"
+        extract_path = "extracted_files"
+        expected_error = "URL Error: <error message>"
+    
+>       with pytest.raises(urllib.error.URLError) as e:
+E       Failed: DID NOT RAISE URLError
+
+test_1006.py:21: Failed
+=========================== short test summary info ============================
+FAILED test_1006.py::test_task_func_valid_url - AssertionError: assert 'URL E...
+FAILED test_1006.py::test_task_func_invalid_url - Failed: DID NOT RAISE URLError
+2 failed in 0.55s

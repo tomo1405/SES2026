@@ -1,0 +1,36 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_invalid_xml __________________________
+
+    def test_task_func_invalid_xml():
+        url = "https://www.example.com/data.xml"
+        expected_data = pd.DataFrame({"name": ["John", "Jane", "Jim"], "age": [25, 30, 35]})
+    
+        with pytest.raises(ValueError) as e:
+            task_func(url)
+    
+>       assert "Invalid XML syntax" in str(e.value)
+E       AssertionError: assert 'Invalid XML syntax' in 'Error fetching the XML file: HTTP Error 404: Not Found'
+E        +  where 'Error fetching the XML file: HTTP Error 404: Not Found' = str(ValueError('Error fetching the XML file: HTTP Error 404: Not Found'))
+E        +    where ValueError('Error fetching the XML file: HTTP Error 404: Not Found') = <ExceptionInfo ValueError('Error fetching the XML file: HTTP Error 404: Not Found') tblen=2>.value
+
+test_1004.py:22: AssertionError
+_______________________ test_task_func_invalid_structure _______________________
+
+    def test_task_func_invalid_structure():
+        url = "https://www.example.com/data.xml"
+        expected_data = pd.DataFrame({"name": ["John", "Jane", "Jim"], "age": [25, 30, 35]})
+    
+        with pytest.raises(ValueError) as e:
+            task_func(url)
+    
+>       assert "XML structure does not match expected format." in str(e.value)
+E       AssertionError: assert 'XML structure does not match expected format.' in 'Error fetching the XML file: HTTP Error 404: Not Found'
+E        +  where 'Error fetching the XML file: HTTP Error 404: Not Found' = str(ValueError('Error fetching the XML file: HTTP Error 404: Not Found'))
+E        +    where ValueError('Error fetching the XML file: HTTP Error 404: Not Found') = <ExceptionInfo ValueError('Error fetching the XML file: HTTP Error 404: Not Found') tblen=2>.value
+
+test_1004.py:31: AssertionError
+=========================== short test summary info ============================
+FAILED test_1004.py::test_task_func_invalid_xml - AssertionError: assert 'Inv...
+FAILED test_1004.py::test_task_func_invalid_structure - AssertionError: asser...
+2 failed, 1 passed in 1.22s

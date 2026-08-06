@@ -1,0 +1,9 @@
+from nltk.tokenize import RegexpTokenizer
+from collections import Counter
+def task_func(text):
+
+    tokenizer = RegexpTokenizer(r'\$\$+\w*|\$\w+')
+    dollar_prefixed_words = tokenizer.tokenize(text)
+    normalized_words = [word.lstrip("$") if len(word.lstrip("$")) > 0 else word for word in dollar_prefixed_words]
+    word_counts = Counter(normalized_words)
+    return word_counts.most_common(5)

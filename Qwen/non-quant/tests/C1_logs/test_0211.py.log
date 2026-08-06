@@ -1,0 +1,27 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sample_data = [('a', 10), ('b', 20), ('c', 15), ('a', 25)]
+
+    def test_task_func(sample_data):
+        fig = task_func(sample_data)
+        assert isinstance(fig, plt.Axes)
+    
+        # Check if the bar chart is plotted correctly
+        bars = fig.patches
+        expected_letters = ['a', 'b', 'c']
+        expected_counts = [2, 20, 15]
+    
+        for i, bar in enumerate(bars):
+            assert bar.get_height() == expected_counts[i]
+>           assert bar.get_x() == i * 0.8  # Assuming default bar width and spacing
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           assert np.float64(-0.4) == (0 * 0.8)
+E            +  where np.float64(-0.4) = get_x()
+E            +    where get_x = <matplotlib.patches.Rectangle object at 0x7a6aad21dca0>.get_x
+
+test_0211.py:22: AssertionError
+=========================== short test summary info ============================
+FAILED test_0211.py::test_task_func - assert np.float64(-0.4) == (0 * 0.8)
+1 failed in 1.48s

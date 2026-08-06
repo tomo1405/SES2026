@@ -1,0 +1,35 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_valid_directory ________________________
+
+    def test_task_func_valid_directory():
+        directory_path = "path/to/directory"
+>       processed_files = task_func(directory_path)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0371.py:6: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory_path = 'path/to/directory'
+
+    def task_func(directory_path: str) -> list:
+        # Check if directory exists
+        if not os.path.exists(directory_path):
+>           raise FileNotFoundError(f"Directory {directory_path} not found.")
+E           FileNotFoundError: Directory path/to/directory not found.
+
+../../../src/src_0371.py:8: FileNotFoundError
+_______________________ test_task_func_invalid_json_file _______________________
+
+    def test_task_func_invalid_json_file():
+        directory_path = "path/to/directory"
+        json_file = f"{directory_path}/invalid.json"
+>       with open(json_file, "w") as file:
+             ^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'path/to/directory/invalid.json'
+
+test_0371.py:17: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0371.py::test_task_func_valid_directory - FileNotFoundError: Dire...
+FAILED test_0371.py::test_task_func_invalid_json_file - FileNotFoundError: [E...
+2 failed, 1 passed in 0.44s

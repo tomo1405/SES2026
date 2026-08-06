@@ -1,0 +1,66 @@
+..FFF                                                                    [100%]
+=================================== FAILURES ===================================
+___________________________ test_goals_penalty_cost ____________________________
+
+    def test_goals_penalty_cost():
+        goals = 10
+        penalties = 5
+        rng_seed = 1234
+        teams = ['Team A', 'Team B', 'Team C', 'Team D', 'Team E']
+        results_df = task_func(goals, penalties, rng_seed, teams)
+>       assert results_df['Goals'].sum() == goals * len(teams)
+E       AssertionError: assert np.int64(27) == (10 * 5)
+E        +  where np.int64(27) = sum()
+E        +    where sum = 0     7\n1     0\n2     9\n3    10\n4     1\nName: Goals, dtype: int64.sum
+E        +  and   5 = len(['Team A', 'Team B', 'Team C', 'Team D', 'Team E'])
+
+test_0618.py:32: AssertionError
+______________________________ test_match_results ______________________________
+
+    def test_match_results():
+        goals = 10
+        penalties = 5
+        rng_seed = 1234
+        teams = ['Team A', 'Team B', 'Team C', 'Team D', 'Team E']
+        results_df = task_func(goals, penalties, rng_seed, teams)
+        expected_results = [
+            ['Team A', '(0 goals, $0)'],
+            ['Team B', '(0 goals, $0)'],
+            ['Team C', '(0 goals, $0)'],
+            ['Team D', '(0 goals, $0)'],
+            ['Team E', '(0 goals, $0)']
+        ]
+>       assert results_df.to_dict('records') == expected_results
+E       AssertionError: assert [{'Team': 'Te...lty Cost': 0}] == [['Team A', '... goals, $0)']]
+E         
+E         At index 0 diff: {'Team': 'Team A', 'Match Result': '(7 goals, $0)', 'Goals': 7, 'Penalty Cost': 0} != ['Team A', '(0 goals, $0)']
+E         Use -v to get more diff
+
+test_0618.py:49: AssertionError
+______________________________ test_visualization ______________________________
+
+    def test_visualization():
+        goals = 10
+        penalties = 5
+        rng_seed = 1234
+        teams = ['Team A', 'Team B', 'Team C', 'Team D', 'Team E']
+        results_df = task_func(goals, penalties, rng_seed, teams)
+        ax = results_df.set_index('Team')[['Goals', 'Penalty Cost']].plot(kind='bar', stacked=True)
+        plt.ylabel('Counts')
+        plt.title('Football Match Results Analysis')
+        plt.tight_layout()
+        plt.show()
+        assert ax.get_title() == 'Football Match Results Analysis'
+        assert ax.get_ylabel() == 'Counts'
+        assert ax.get_xlabel() == 'Team'
+>       assert ax.get_legend() == ['Goals', 'Penalty Cost']
+E       AssertionError: assert <matplotlib.legend.Legend object at 0x797287ca1460> == ['Goals', 'Penalty Cost']
+E        +  where <matplotlib.legend.Legend object at 0x797287ca1460> = get_legend()
+E        +    where get_legend = <Axes: title={'center': 'Football Match Results Analysis'}, xlabel='Team', ylabel='Counts'>.get_legend
+
+test_0618.py:66: AssertionError
+=========================== short test summary info ============================
+FAILED test_0618.py::test_goals_penalty_cost - AssertionError: assert np.int6...
+FAILED test_0618.py::test_match_results - AssertionError: assert [{'Team': 'T...
+FAILED test_0618.py::test_visualization - AssertionError: assert <matplotlib....
+3 failed, 2 passed in 3.55s

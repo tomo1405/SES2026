@@ -1,0 +1,45 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with 0 strings
+        result = task_func(0, 10)
+        assert result == []
+    
+        # Test with 1 string of length 0
+        result = task_func(1, 0)
+        assert result == []
+    
+        # Test with 1 string of length 1
+        result = task_func(1, 1)
+        assert len(result) == 1 and all(isinstance(item, tuple) and len(item) == 2 for item in result)
+    
+        # Test with multiple strings of varying lengths
+        result = task_func(5, 5)
+        assert len(result) <= 26 and all(isinstance(item, tuple) and len(item) == 2 for item in result)
+    
+        # Test with a large number of strings and characters
+        result = task_func(1000, 10)
+        assert len(result) <= 26 and all(isinstance(item, tuple) and len(item) == 2 for item in result)
+    
+        # Test with all possible lowercase characters
+        expected_characters = set(string.ascii_lowercase)
+        result = task_func(len(expected_characters), 1)
+        result_characters = {char for char, count in result}
+>       assert result_characters == expected_characters
+E       AssertionError: assert {'b', 'c', 'd...'g', 'j', ...} == {'a', 'b', 'c...'e', 'f', ...}
+E         
+E         Extra items in the right set:
+E         'u'
+E         'y'
+E         'a'
+E         'i'
+E         'r'...
+E         
+E         ...Full output truncated (6 lines hidden), use '-vv' to show
+
+test_0099.py:32: AssertionError
+=========================== short test summary info ============================
+FAILED test_0099.py::test_task_func - AssertionError: assert {'b', 'c', 'd......
+1 failed in 0.39s

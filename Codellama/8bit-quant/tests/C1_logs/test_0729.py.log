@@ -1,0 +1,51 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a valid filename
+        filename = 'test_data.csv'
+        from_encoding = 'cp1251'
+        to_encoding = 'utf8'
+        delimiter = ','
+        data, converted_csv = task_func(filename, from_encoding, to_encoding, delimiter)
+        assert data is not None
+        assert converted_csv is not None
+    
+        # Test with a non-existent filename
+        filename = 'non_existent_file.csv'
+        with pytest.raises(FileNotFoundError):
+            task_func(filename, from_encoding, to_encoding, delimiter)
+    
+        # Test with a filename that is not a CSV file
+        filename = 'test_data.txt'
+        with pytest.raises(ValueError):
+            task_func(filename, from_encoding, to_encoding, delimiter)
+    
+        # Test with a filename that has invalid encoding
+        filename = 'test_data.csv'
+        from_encoding = 'invalid_encoding'
+        with pytest.raises(LookupError):
+            task_func(filename, from_encoding, to_encoding, delimiter)
+    
+        # Test with a filename that has invalid delimiter
+        filename = 'test_data.csv'
+        delimiter = 'invalid_delimiter'
+        with pytest.raises(ValueError):
+>           task_func(filename, from_encoding, to_encoding, delimiter)
+
+test_0729.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+filename = 'test_data.csv', from_encoding = 'invalid_encoding'
+to_encoding = 'utf8', delimiter = 'invalid_delimiter'
+
+    def task_func(filename, from_encoding='cp1251', to_encoding='utf8', delimiter=','):
+>       with io.open(filename, 'r', encoding=from_encoding) as file:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       LookupError: unknown encoding: invalid_encoding
+
+../../../src/src_0729.py:4: LookupError
+=========================== short test summary info ============================
+FAILED test_0729.py::test_task_func - LookupError: unknown encoding: invalid_...
+1 failed in 0.46s

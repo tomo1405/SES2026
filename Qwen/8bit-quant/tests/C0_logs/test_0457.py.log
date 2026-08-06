@@ -1,0 +1,38 @@
+...FF                                                                    [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_cbar_label ___________________________
+
+sample_data =    A  B  C
+0  1  5  2
+1  2  4  3
+2  3  3  4
+3  4  2  5
+4  5  1  6
+
+    def test_task_func_cbar_label(sample_data):
+        _, ax = task_func(sample_data)
+>       assert ax.collections[0].cbar.ax.get_ylabel() == 'Normalized Value'
+               ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'QuadMesh' object has no attribute 'cbar'
+
+test_0457.py:35: AttributeError
+____________________________ test_task_func_figsize ____________________________
+
+sample_data =    A  B  C
+0  1  5  2
+1  2  4  3
+2  3  3  4
+3  4  2  5
+4  5  1  6
+
+    def test_task_func_figsize(sample_data):
+        _, ax = task_func(sample_data)
+        fig = ax.get_figure()
+>       assert fig.get_size_inches() == (10, 8)
+E       ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+test_0457.py:40: ValueError
+=========================== short test summary info ============================
+FAILED test_0457.py::test_task_func_cbar_label - AttributeError: 'QuadMesh' o...
+FAILED test_0457.py::test_task_func_figsize - ValueError: The truth value of ...
+2 failed, 3 passed in 6.28s

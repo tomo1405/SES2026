@@ -1,0 +1,60 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+setup_test_directory = '/tmp/tmppndp8imc'
+
+    def test_task_func(setup_test_directory):
+        test_dir = setup_test_directory
+        result_df = task_func(test_dir)
+    
+        # Check if the processed directory exists
+        processed_dir = os.path.join(test_dir, 'processed')
+        assert os.path.exists(processed_dir)
+    
+        # Check if the original JSON files have been moved to the processed directory
+        assert not os.path.exists(os.path.join(test_dir, 'file1.json'))
+        assert not os.path.exists(os.path.join(test_dir, 'file2.json'))
+        assert os.path.exists(os.path.join(processed_dir, 'file1.json'))
+        assert os.path.exists(os.path.join(processed_dir, 'file2.json'))
+    
+        # Check the contents of the resulting DataFrame
+        expected_data = [
+            {'key1': 'value1', 'source': 'file1.json'},
+            {'key2': 'value2', 'source': 'file2.json'},
+            {'key3': 'value3', 'source': 'file2.json'}
+        ]
+        expected_df = pd.DataFrame(expected_data)
+>       pd.testing.assert_frame_equal(result_df.reset_index(drop=True), expected_df)
+
+test_0679.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pandas/_libs/testing.pyx:53: in pandas._libs.testing.assert_almost_equal
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   AssertionError: DataFrame.columns are different
+E   
+E   DataFrame.columns values are different (100.0 %)
+E   [left]:  Index(['key2', 'key3', 'source', 'key1'], dtype='str')
+E   [right]: Index(['key1', 'source', 'key2', 'key3'], dtype='str')
+E   At positional index 0, first diff: key2 != key1
+
+pandas/_libs/testing.pyx:171: AssertionError
+________________________ test_task_func_empty_directory ________________________
+
+setup_test_directory = '/tmp/tmp63ma83gc'
+
+    def test_task_func_empty_directory(setup_test_directory):
+        test_dir = setup_test_directory
+        # Remove all files
+        for filename in os.listdir(test_dir):
+>           os.remove(os.path.join(test_dir, filename))
+E           IsADirectoryError: [Errno 21] Is a directory: '/tmp/tmp63ma83gc/processed'
+
+test_0679.py:73: IsADirectoryError
+=========================== short test summary info ============================
+FAILED test_0679.py::test_task_func - AssertionError: DataFrame.columns are d...
+FAILED test_0679.py::test_task_func_empty_directory - IsADirectoryError: [Err...
+2 failed, 1 passed in 1.43s

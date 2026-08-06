@@ -1,0 +1,154 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+ftp_server = 'ftp.dlptest.com', ftp_user = 'dlpuser'
+ftp_password = 'rNrKYTX9g7z3RgJRmxWuGHbeu', ftp_dir = '/ftp/test'
+
+    def task_func(ftp_server='ftp.dlptest.com', ftp_user='dlpuser', ftp_password='rNrKYTX9g7z3RgJRmxWuGHbeu', ftp_dir='/ftp/test'):
+        # Attempt to connect to the FTP server
+        try:
+            ftp_obj = ftplib.FTP(ftp_server)
+        except Exception as e:
+            raise Exception(f'Failed to connect to FTP server {ftp_server}: {str(e)}')
+    
+        # Attempt to login to the FTP server
+        try:
+            ftp_obj.login(ftp_user, ftp_password)
+        except Exception as e:
+            raise Exception(f'Failed to log into FTP server {ftp_server} with user {ftp_user}: {str(e)}')
+    
+        # Attempt to change to the specified directory
+        try:
+>           ftp_obj.cwd(ftp_dir)
+
+../../../src/src_0014.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/ftplib.py:619: in cwd
+    return self.voidcmd(cmd)
+           ^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/ftplib.py:286: in voidcmd
+    return self.voidresp()
+           ^^^^^^^^^^^^^^^
+/usr/lib/python3.12/ftplib.py:259: in voidresp
+    resp = self.getresp()
+           ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <ftplib.FTP object at 0x777adb22a120>
+
+    def getresp(self):
+        resp = self.getmultiline()
+        if self.debugging:
+            print('*resp*', self.sanitize(resp))
+        self.lastresp = resp[:3]
+        c = resp[:1]
+        if c in {'1', '2', '3'}:
+            return resp
+        if c == '4':
+            raise error_temp(resp)
+        if c == '5':
+>           raise error_perm(resp)
+E           ftplib.error_perm: 550 Failed to change directory.
+
+/usr/lib/python3.12/ftplib.py:254: error_perm
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func():
+        # Test that the function can connect to the FTP server
+        ftp_server = 'ftp.dlptest.com'
+        ftp_user = 'dlpuser'
+        ftp_password = 'rNrKYTX9g7z3RgJRmxWuGHbeu'
+        ftp_dir = '/ftp/test'
+>       downloaded_files = task_func(ftp_server, ftp_user, ftp_password, ftp_dir)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0014.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ftp_server = 'ftp.dlptest.com', ftp_user = 'dlpuser'
+ftp_password = 'rNrKYTX9g7z3RgJRmxWuGHbeu', ftp_dir = '/ftp/test'
+
+    def task_func(ftp_server='ftp.dlptest.com', ftp_user='dlpuser', ftp_password='rNrKYTX9g7z3RgJRmxWuGHbeu', ftp_dir='/ftp/test'):
+        # Attempt to connect to the FTP server
+        try:
+            ftp_obj = ftplib.FTP(ftp_server)
+        except Exception as e:
+            raise Exception(f'Failed to connect to FTP server {ftp_server}: {str(e)}')
+    
+        # Attempt to login to the FTP server
+        try:
+            ftp_obj.login(ftp_user, ftp_password)
+        except Exception as e:
+            raise Exception(f'Failed to log into FTP server {ftp_server} with user {ftp_user}: {str(e)}')
+    
+        # Attempt to change to the specified directory
+        try:
+            ftp_obj.cwd(ftp_dir)
+        except Exception as e:
+>           raise Exception(f'Failed to change to directory {ftp_dir} on server {ftp_server}: {str(e)}')
+E           Exception: Failed to change to directory /ftp/test on server ftp.dlptest.com: 550 Failed to change directory.
+
+../../../src/src_0014.py:21: Exception
+______________________ test_task_func_invalid_ftp_server _______________________
+
+    def test_task_func_invalid_ftp_server():
+        # Test that the function raises an exception if the FTP server is invalid
+        ftp_server = 'invalid_ftp_server'
+        ftp_user = 'dlpuser'
+        ftp_password = 'rNrKYTX9g7z3RgJRmxWuGHbeu'
+        ftp_dir = '/ftp/test'
+        with pytest.raises(Exception) as e:
+            task_func(ftp_server, ftp_user, ftp_password, ftp_dir)
+>       assert str(e.value) == f'Failed to connect to FTP server {ftp_server}: [Errno 11001] getaddrinfo failed'
+E       AssertionError: assert 'Failed to co...me resolution' == 'Failed to co...drinfo failed'
+E         
+E         Skipping 49 identical leading characters in diff, use -v to show
+E         - r: [Errno 11001] getaddrinfo failed
+E         + r: [Errno -3] Temporary failure in name resolution
+
+test_0014.py:21: AssertionError
+_______________________ test_task_func_invalid_ftp_user ________________________
+
+    def test_task_func_invalid_ftp_user():
+        # Test that the function raises an exception if the FTP user is invalid
+        ftp_server = 'ftp.dlptest.com'
+        ftp_user = 'invalid_ftp_user'
+        ftp_password = 'rNrKYTX9g7z3RgJRmxWuGHbeu'
+        ftp_dir = '/ftp/test'
+        with pytest.raises(Exception) as e:
+            task_func(ftp_server, ftp_user, ftp_password, ftp_dir)
+>       assert str(e.value) == f'Failed to log into FTP server {ftp_server} with user {ftp_user}: [Errno 530] Login incorrect.'
+E       AssertionError: assert 'Failed to lo...in incorrect.' == 'Failed to lo...in incorrect.'
+E         
+E         Skipping 64 identical leading characters in diff, use -v to show
+E         - ftp_user: [Errno 530] Login incorrect.
+E         ?           -------   -
+E         + ftp_user: 530 Login incorrect.
+
+test_0014.py:31: AssertionError
+________________________ test_task_func_invalid_ftp_dir ________________________
+
+    def test_task_func_invalid_ftp_dir():
+        # Test that the function raises an exception if the FTP directory is invalid
+        ftp_server = 'ftp.dlptest.com'
+        ftp_user = 'dlpuser'
+        ftp_password = 'rNrKYTX9g7z3RgJRmxWuGHbeu'
+        ftp_dir = '/invalid/ftp/dir'
+        with pytest.raises(Exception) as e:
+            task_func(ftp_server, ftp_user, ftp_password, ftp_dir)
+>       assert str(e.value) == f'Failed to change to directory {ftp_dir} on server {ftp_server}: [Errno 550] File not found.'
+E       AssertionError: assert 'Failed to ch...ge directory.' == 'Failed to ch...le not found.'
+E         
+E         Skipping 64 identical leading characters in diff, use -v to show
+E         - test.com: [Errno 550] File not found.
+E         + test.com: 550 Failed to change directory.
+
+test_0014.py:41: AssertionError
+=========================== short test summary info ============================
+FAILED test_0014.py::test_task_func - Exception: Failed to change to director...
+FAILED test_0014.py::test_task_func_invalid_ftp_server - AssertionError: asse...
+FAILED test_0014.py::test_task_func_invalid_ftp_user - AssertionError: assert...
+FAILED test_0014.py::test_task_func_invalid_ftp_dir - AssertionError: assert ...
+4 failed in 5.42s

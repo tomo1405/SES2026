@@ -1,0 +1,62 @@
+F....FF                                                                  [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_default_parameters _______________________
+
+    def test_task_func_default_parameters():
+        df = task_func()
+        assert isinstance(df, pd.DataFrame)
+        assert len(df) == 100
+        assert all(df['ID'].unique() == range(1, 101))
+        assert all(df['Name'].isin(['Sopetón', 'Méndez', 'Gómez', 'Pérez', 'Muñoz', 'Smith', 'Johnson', 'Williams', 'Brown', 'Jones']))
+>       assert all(isinstance(dob, datetime.datetime) for dob in df['Date of Birth'])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0761.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <generator object DatetimeArray.__iter__ at 0x7d263c67d120>
+
+>   assert all(isinstance(dob, datetime.datetime) for dob in df['Date of Birth'])
+                               ^^^^^^^^^^^^^^^^^
+E   AttributeError: type object 'datetime.datetime' has no attribute 'datetime'
+
+test_0761.py:14: AttributeError
+________________________ test_task_func_no_latin_names _________________________
+
+    def test_task_func_no_latin_names():
+>       df = task_func(latin_names=[])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0761.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0761.py:20: in task_func
+    name = np.random.choice(latin_names) if is_latin else np.random.choice(other_names)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   ValueError: 'a' cannot be empty unless no samples are taken
+
+numpy/random/mtrand.pyx:975: ValueError
+________________________ test_task_func_no_other_names _________________________
+
+    def test_task_func_no_other_names():
+>       df = task_func(other_names=[])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0761.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0761.py:20: in task_func
+    name = np.random.choice(latin_names) if is_latin else np.random.choice(other_names)
+                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   ValueError: 'a' cannot be empty unless no samples are taken
+
+numpy/random/mtrand.pyx:975: ValueError
+=========================== short test summary info ============================
+FAILED test_0761.py::test_task_func_default_parameters - AttributeError: type...
+FAILED test_0761.py::test_task_func_no_latin_names - ValueError: 'a' cannot b...
+FAILED test_0761.py::test_task_func_no_other_names - ValueError: 'a' cannot b...
+3 failed, 4 passed in 1.16s

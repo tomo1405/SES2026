@@ -1,0 +1,37 @@
+..F                                                                      [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_invalid_input _________________________
+
+mock_photon = None
+
+    def test_task_func_invalid_input(mock_photon):
+        input_data = {
+            "Location1": "Invalid Address",
+            "Location2": {"Lat": 37.7749}  # Missing 'Lon'
+        }
+        with pytest.raises(ValueError):
+>           task_func(input_data)
+
+test_0189.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dic = {'Location1': 'Invalid Address', 'Location2': {'Lat': 37.7749}}
+
+    def task_func(dic):
+        geolocator = Photon(user_agent="geoapiExercises")
+    
+        # Preprocess to handle both coordinates and string addresses
+        preprocessed_locations = []
+        for location, value in dic.items():
+            if isinstance(value, dict) and 'Lat' in value and 'Lon' in value:
+                preprocessed_locations.append({'Location': location, 'Lat': value['Lat'], 'Lon': value['Lon']})
+            elif isinstance(value, str):
+                geocoded_location = geolocator.geocode(value)
+>               preprocessed_locations.append({'Location': location, 'Lat': geocoded_location.latitude, 'Lon': geocoded_location.longitude})
+                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               AttributeError: 'NoneType' object has no attribute 'latitude'
+
+../../../src/src_0189.py:14: AttributeError
+=========================== short test summary info ============================
+FAILED test_0189.py::test_task_func_invalid_input - AttributeError: 'NoneType...
+1 failed, 2 passed in 2.01s

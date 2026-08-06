@@ -1,0 +1,27 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        input_string = "Hello\nWorld\n"
+        expected_file_paths = [
+            "./hashed_files/1234567890.txt",
+            "./hashed_files/abcdef0123.txt"
+        ]
+    
+        file_paths = task_func(input_string)
+    
+        assert len(file_paths) == len(expected_file_paths)
+        for file_path in file_paths:
+            assert os.path.exists(file_path)
+            with open(file_path, "r", encoding="utf-8") as file:
+>               assert file.read() == os.path.basename(file_path)
+E               AssertionError: assert '185f8db32271...1764826381969' == '185f8db322.txt'
+E                 
+E                 - 185f8db322.txt
+E                 + 185f8db32271fe25f561a6fc938b2e264306ec304eda518007d1764826381969
+
+test_1051.py:19: AssertionError
+=========================== short test summary info ============================
+FAILED test_1051.py::test_task_func - AssertionError: assert '185f8db32271......
+1 failed in 0.48s

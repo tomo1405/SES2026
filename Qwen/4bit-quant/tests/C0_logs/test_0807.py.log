@@ -1,0 +1,39 @@
+FF....F                                                                  [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_default_n _________________________
+
+    def test_task_func_with_default_n():
+        text = "This is a test text with some common words"
+        result = task_func(text)
+        assert isinstance(result, Counter)
+>       assert ('this', 'is') in result
+E       AssertionError: assert ('this', 'is') in Counter({('test', 'text'): 1, ('text', 'common'): 1, ('common', 'words'): 1})
+
+test_0807.py:10: AssertionError
+_________________________ test_task_func_with_custom_n _________________________
+
+    def test_task_func_with_custom_n():
+        text = "Python is a great programming language"
+        n = 3
+        result = task_func(text, n)
+        assert isinstance(result, Counter)
+>       assert ('python', 'is', 'a') in result
+E       AssertionError: assert ('python', 'is', 'a') in Counter({('python', 'great', 'programming'): 1, ('great', 'programming', 'language'): 1})
+
+test_0807.py:24: AssertionError
+_______________________ test_task_func_with_punctuation ________________________
+
+    def test_task_func_with_punctuation():
+        text = "Hello, world! This is a test."
+        result = task_func(text)
+        assert isinstance(result, Counter)
+        assert ('hello', 'world') in result
+>       assert ('world', 'this') in result
+E       AssertionError: assert ('world', 'this') in Counter({('hello', 'world'): 1, ('world', 'test'): 1})
+
+test_0807.py:58: AssertionError
+=========================== short test summary info ============================
+FAILED test_0807.py::test_task_func_with_default_n - AssertionError: assert (...
+FAILED test_0807.py::test_task_func_with_custom_n - AssertionError: assert ('...
+FAILED test_0807.py::test_task_func_with_punctuation - AssertionError: assert...
+3 failed, 4 passed in 3.89s

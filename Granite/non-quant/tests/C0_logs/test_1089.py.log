@@ -1,0 +1,53 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_with_no_input _________________________
+
+    def test_task_func_with_no_input():
+        """
+        Test the function with no input data
+        """
+        expected_output = pd.DataFrame(np.random.rand(100, 5))
+        output = task_func()
+>       assert output.equals(expected_output)
+E       assert False
+E        +  where False = equals(           0         1         2         3         4\n0   0.983983  0.826086  0.731223  0.597900  0.675298\n1   0.340156...21  0.171717  0.783248  0.979609  0.658556\n99  0.451810  0.394043  0.492748  0.360272  0.834996\n\n[100 rows x 5 columns])
+E        +    where equals =            0         1         2         3         4\n0   1.134576  1.384176  1.608175 -0.911979 -1.020494\n1  -1.001446...36  0.473011 -0.893972 -0.911979 -1.020494\n99  0.705141  1.564816  0.572007 -0.911979  0.872737\n\n[100 rows x 5 columns].equals
+
+test_1089.py:13: AssertionError
+__________________________ test_task_func_with_input ___________________________
+
+    def test_task_func_with_input():
+        """
+        Test the function with input data
+        """
+        input_data = np.random.rand(100, 5)
+        expected_output = pd.DataFrame(StandardScaler().fit_transform(input_data))
+        output = task_func(input_data)
+>       assert output.equals(expected_output)
+E       assert False
+E        +  where False = equals(           0         1         2         3         4\n0  -0.831058 -0.869424 -1.530052  0.946025 -1.292518\n1   0.484807...36  0.141671 -0.236848 -1.127009  1.737512\n99 -0.731618  1.169009 -1.073519 -1.544846 -1.493579\n\n[100 rows x 5 columns])
+E        +    where equals =            0         1         2         3         4\n0  -0.892254 -0.978452 -0.890863  1.004836 -0.961070\n1   0.732123...54  0.441207 -0.890863 -1.026088  1.599700\n99 -0.892254  1.176430 -0.890863 -1.026088 -0.961070\n\n[100 rows x 5 columns].equals
+
+test_1089.py:22: AssertionError
+______________________ test_task_func_with_input_and_mask ______________________
+
+    def test_task_func_with_input_and_mask():
+        """
+        Test the function with input data and a mask
+        """
+        input_data = np.random.rand(100, 5)
+        mask = np.random.rand(100, 5) < 0.5
+        input_data[mask] = 0
+        expected_output = pd.DataFrame(StandardScaler().fit_transform(input_data))
+        output = task_func(input_data)
+>       assert output.equals(expected_output)
+E       assert False
+E        +  where False = equals(           0         1         2         3         4\n0  -0.788571 -0.497899  1.593102 -0.834317 -0.729329\n1   2.100669...71 -0.828763 -0.392893  0.589801 -0.729329\n99 -0.135843  0.503141 -0.786133  1.015342  0.237999\n\n[100 rows x 5 columns])
+E        +    where equals =            0         1         2         3         4\n0  -0.566034 -0.578578  1.736415 -0.590970 -0.545696\n1   2.225594...34 -0.578578 -0.550306 -0.590970 -0.545696\n99 -0.566034 -0.578578 -0.550306  1.170002 -0.545696\n\n[100 rows x 5 columns].equals
+
+test_1089.py:33: AssertionError
+=========================== short test summary info ============================
+FAILED test_1089.py::test_task_func_with_no_input - assert False
+FAILED test_1089.py::test_task_func_with_input - assert False
+FAILED test_1089.py::test_task_func_with_input_and_mask - assert False
+3 failed in 3.09s

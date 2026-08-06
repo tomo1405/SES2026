@@ -1,0 +1,43 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        test_cases = [
+            (
+                "/home/user/Documents",
+                "/",
+                [
+                    ("home", {"total": 100000000000, "used": 2000000000, "free": 80000000000}),
+                    ("user", {"total": 100000000000, "used": 1500000000, "free": 85000000000}),
+                    ("Documents", {"total": 100000000000, "used": 500000000, "free": 95000000000}),
+                ],
+            ),
+            (
+                "C:/Users/John/Pictures",
+                "\\",
+                [
+                    ("C:", {"total": 100000000000, "used": 2000000000, "free": 80000000000}),
+                    ("Users", {"total": 100000000000, "used": 1500000000, "free": 85000000000}),
+                    ("John", {"total": 100000000000, "used": 500000000, "free": 95000000000}),
+                    ("Pictures", {"total": 100000000000, "used": 200000000, "free": 98000000000}),
+                ],
+            ),
+        ]
+    
+        for test_case in test_cases:
+            path, delimiter, expected_output = test_case
+            with pytest.raises(Exception) as exc_info:
+                task_func(path, delimiter)
+>           assert str(exc_info.value) == "Path must be a non-empty string"
+E           assert "Path '/home/...oes not exist" == 'Path must be...-empty string'
+E             
+E             - Path must be a non-empty string
+E             + Path '/home/user/Documents' does not exist
+
+test_0974.py:54: AssertionError
+=========================== short test summary info ============================
+FAILED test_0974.py::test_task_func - assert "Path '/home/...oes not exist" =...
+1 failed in 0.50s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

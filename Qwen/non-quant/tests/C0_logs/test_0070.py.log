@@ -1,0 +1,28 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_random_int = None
+
+    def test_task_func(mock_random_int):
+        input_dict = {'EMPXX001': 3, 'EMPXX002': 2, 'NOTEMPXX001': 1}
+        ax = task_func(input_dict)
+    
+        assert len(ax.patches) == 10  # 10 bins
+        assert ax.get_title() == 'Salary Distribution in EMPXX Department'
+        assert ax.get_xlabel() == 'Salary'
+        assert ax.get_ylabel() == 'Number of Employees'
+    
+        # Check that only salaries within the range are plotted
+        for patch in ax.patches:
+            height = patch.get_height()
+            width = patch.get_width()
+            x = patch.get_x()
+>           assert x >= SALARY_RANGE[0]
+                        ^^^^^^^^^^^^
+E           NameError: name 'SALARY_RANGE' is not defined
+
+test_0070.py:28: NameError
+=========================== short test summary info ============================
+FAILED test_0070.py::test_task_func - NameError: name 'SALARY_RANGE' is not d...
+1 failed in 1.54s

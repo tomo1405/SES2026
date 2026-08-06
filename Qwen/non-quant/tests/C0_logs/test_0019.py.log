@@ -1,0 +1,31 @@
+...F.                                                                    [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_shuffled_rows _________________________
+
+setup_test_data = '/tmp/pytest-of-tomohiro-w/pytest-1202/test_task_func_shuffled_rows0/test.csv'
+
+    def test_task_func_shuffled_rows(setup_test_data):
+        test_file = setup_test_data
+        result = task_func(test_file)
+        assert len(result) == 5
+    
+        # Read and compare the contents of the split files
+        original_content = []
+        with open(test_file, 'r') as csvfile:
+            reader = csv.reader(csvfile)
+            next(reader)  # Skip header
+            original_content.extend(reader)
+    
+        for split_file in result:
+            with open(split_file, 'r') as csvfile:
+                reader = csv.reader(csvfile)
+                next(reader)  # Skip header
+                split_content = list(reader)
+>               assert set(original_content) == set(split_content)  # Ensure all rows are present but order may differ
+                       ^^^^^^^^^^^^^^^^^^^^^
+E               TypeError: unhashable type: 'list'
+
+test_0019.py:57: TypeError
+=========================== short test summary info ============================
+FAILED test_0019.py::test_task_func_shuffled_rows - TypeError: unhashable typ...
+1 failed, 4 passed in 0.48s

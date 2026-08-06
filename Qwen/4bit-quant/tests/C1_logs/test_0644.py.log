@@ -1,0 +1,52 @@
+...F                                                                     [100%]
+=================================== FAILURES ===================================
+____________________ test_task_func_with_non_string_values _____________________
+
+    def test_task_func_with_non_string_values():
+        data = {
+            'A': [12.34, 56.78, None, 90.12],
+            'B': ['>34.56<', '>78.90<', '>12.34<', None]
+        }
+        df = pd.DataFrame(data)
+        with pytest.raises(AttributeError):
+>           task_func(df)
+
+test_0644.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0644.py:8: in task_func
+    dataframe[col] = dataframe[col].apply(lambda x: float(re.search(data_pattern, x).group(0)[1:-1])
+../../../.venv/lib/python3.12/site-packages/pandas/core/series.py:5084: in apply
+    ).apply()
+      ^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/apply.py:1520: in apply
+    return self.apply_standard()
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/apply.py:1578: in apply_standard
+    mapped = obj._map_values(mapper=curried)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/base.py:1022: in _map_values
+    return algorithms.map_array(arr, mapper, na_action=na_action)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/algorithms.py:1715: in map_array
+    return lib.map_infer(values, mapper)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pandas/_libs/lib.pyx:3071: in pandas._libs.lib.map_infer
+    ???
+../../../src/src_0644.py:9: in <lambda>
+    if pd.notnull(x) and re.search(data_pattern, x) else np.nan)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pattern = '>\\d+\\.\\d+<', string = 12.34, flags = 0
+
+    def search(pattern, string, flags=0):
+        """Scan through string looking for a match to the pattern, returning
+        a Match object, or None if no match was found."""
+>       return _compile(pattern, flags).search(string)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: expected string or bytes-like object, got 'float'
+
+/usr/lib/python3.12/re/__init__.py:177: TypeError
+=========================== short test summary info ============================
+FAILED test_0644.py::test_task_func_with_non_string_values - TypeError: expec...
+1 failed, 3 passed in 1.28s

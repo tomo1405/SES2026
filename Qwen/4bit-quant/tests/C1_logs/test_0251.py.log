@@ -1,0 +1,93 @@
+FFFF.                                                                    [100%]
+=================================== FAILURES ===================================
+____________________ test_task_func_with_default_json_file _____________________
+
+    def test_task_func_with_default_json_file():
+        data_list = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        expected_mean_values = {
+            'Position 1': 5.0,
+            'Position 2': 6.0,
+            'Position 3': 7.0
+        }
+    
+        result = task_func(data_list)
+    
+>       assert result == expected_mean_values
+E       AssertionError: assert {'Position 1'....float64(6.0)} == {'Position 1'...ition 3': 7.0}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Right contains 1 more item:
+E         {'Position 3': 7.0}
+E         Use -v to get more diff
+
+test_0251.py:16: AssertionError
+_____________________ test_task_func_with_custom_json_file _____________________
+
+    def test_task_func_with_custom_json_file():
+        data_list = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        custom_json_file_name = "custom_mean_values.json"
+        expected_mean_values = {
+            'Position 1': 5.0,
+            'Position 2': 6.0,
+            'Position 3': 7.0
+        }
+    
+        result = task_func(data_list, json_file_name=custom_json_file_name)
+    
+>       assert result == expected_mean_values
+E       AssertionError: assert {'Position 1'....float64(6.0)} == {'Position 1'...ition 3': 7.0}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Right contains 1 more item:
+E         {'Position 3': 7.0}
+E         Use -v to get more diff
+
+test_0251.py:34: AssertionError
+______________________ test_task_func_with_missing_values ______________________
+
+    def test_task_func_with_missing_values():
+        data_list = [[1, 2, np.nan], [4, np.nan, 6], [np.nan, 8, 9]]
+        expected_mean_values = {
+            'Position 1': 2.0,
+            'Position 2': 5.0,
+            'Position 3': 7.5
+        }
+    
+        result = task_func(data_list)
+    
+>       assert result == expected_mean_values
+E       AssertionError: assert {'Position 1'....float64(7.5)} == {'Position 1'...ition 3': 7.5}
+E         
+E         Differing items:
+E         {'Position 1': np.float64(5.0)} != {'Position 1': 2.0}
+E         {'Position 2': np.float64(7.5)} != {'Position 2': 5.0}
+E         Right contains 1 more item:
+E         {'Position 3': 7.5}
+E         Use -v to get more diff
+
+test_0251.py:51: AssertionError
+______________________ test_task_func_with_single_column _______________________
+
+    def test_task_func_with_single_column():
+        data_list = [[1, 2, 3]]
+        expected_mean_values = {
+            'Position 1': 2.0
+        }
+    
+        result = task_func(data_list)
+    
+>       assert result == expected_mean_values
+E       AssertionError: assert {'Position 1'....float64(3.0)} == {'Position 1': 2.0}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Left contains 1 more item:
+E         {'Position 2': np.float64(3.0)}
+E         Use -v to get more diff
+
+test_0251.py:66: AssertionError
+=========================== short test summary info ============================
+FAILED test_0251.py::test_task_func_with_default_json_file - AssertionError: ...
+FAILED test_0251.py::test_task_func_with_custom_json_file - AssertionError: a...
+FAILED test_0251.py::test_task_func_with_missing_values - AssertionError: ass...
+FAILED test_0251.py::test_task_func_with_single_column - AssertionError: asse...
+4 failed, 1 passed in 0.59s

@@ -1,0 +1,27 @@
+python
+import numpy as np
+import matplotlib.pyplot as plt
+from random import randint
+import math
+
+def task_func(POINTS=100):
+    x = np.zeros(POINTS)
+    y = np.zeros(POINTS)
+
+    for i in range(1, POINTS):
+        val = randint(0, 1)
+        if val == 1:
+            x[i] = x[i - 1] + math.cos(2 * math.pi * val)
+            y[i] = y[i - 1] + math.sin(2 * math.pi * val)
+        else:
+            x[i] = x[i - 1] - math.cos(2 * math.pi * val)
+            y[i] = y[i - 1] - math.sin(2 * math.pi * val)
+
+    fig, ax = plt.subplots()
+    ax.plot(x, y)
+    plt.show()
+    return fig
+
+def test_task_func():
+    fig = task_func()
+    assert isinstance(fig, plt.Figure)

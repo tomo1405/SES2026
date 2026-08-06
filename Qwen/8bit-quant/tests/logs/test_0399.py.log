@@ -1,0 +1,100 @@
+.FFFF                                                                    [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_invalid_json __________________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f0554399130>
+
+    def test_task_func_invalid_json(monkeypatch):
+        monkeypatch.setattr(os.path, 'exists', MockOsPathExists(True))
+        monkeypatch.setattr('builtins.open', MockOpen('{invalid_json'))
+>       assert task_func('invalid_json_file.json') is False
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0399.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = 'invalid_json_file.json'
+
+    def task_func(file_path):
+        if not os.path.exists(file_path):
+            return False
+    
+>       with open(file_path, 'r') as file:
+E       TypeError: 'MockOpen' object does not support the context manager protocol
+
+../../../src/src_0399.py:7: TypeError
+___________________ test_task_func_valid_json_list_of_dicts ____________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f0554398a10>
+
+    def test_task_func_valid_json_list_of_dicts(monkeypatch):
+        monkeypatch.setattr(os.path, 'exists', MockOsPathExists(True))
+        monkeypatch.setattr('builtins.open', MockOpen(json.dumps([{"key": "value"}, {"another_key": "another_value"}])))
+>       assert task_func('valid_json_file.json') is True
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0399.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = 'valid_json_file.json'
+
+    def task_func(file_path):
+        if not os.path.exists(file_path):
+            return False
+    
+>       with open(file_path, 'r') as file:
+E       TypeError: 'MockOpen' object does not support the context manager protocol
+
+../../../src/src_0399.py:7: TypeError
+______________________ test_task_func_valid_json_not_list ______________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f05543996d0>
+
+    def test_task_func_valid_json_not_list(monkeypatch):
+        monkeypatch.setattr(os.path, 'exists', MockOsPathExists(True))
+        monkeypatch.setattr('builtins.open', MockOpen(json.dumps({"key": "value"})))
+>       assert task_func('valid_json_file.json') is False
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0399.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = 'valid_json_file.json'
+
+    def task_func(file_path):
+        if not os.path.exists(file_path):
+            return False
+    
+>       with open(file_path, 'r') as file:
+E       TypeError: 'MockOpen' object does not support the context manager protocol
+
+../../../src/src_0399.py:7: TypeError
+______________ test_task_func_valid_json_list_with_non_dict_items ______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f0554399f10>
+
+    def test_task_func_valid_json_list_with_non_dict_items(monkeypatch):
+        monkeypatch.setattr(os.path, 'exists', MockOsPathExists(True))
+        monkeypatch.setattr('builtins.open', MockOpen(json.dumps([{"key": "value"}, "not_a_dict"])))
+>       assert task_func('valid_json_file.json') is False
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0399.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = 'valid_json_file.json'
+
+    def task_func(file_path):
+        if not os.path.exists(file_path):
+            return False
+    
+>       with open(file_path, 'r') as file:
+E       TypeError: 'MockOpen' object does not support the context manager protocol
+
+../../../src/src_0399.py:7: TypeError
+=========================== short test summary info ============================
+FAILED test_0399.py::test_task_func_invalid_json - TypeError: 'MockOpen' obje...
+FAILED test_0399.py::test_task_func_valid_json_list_of_dicts - TypeError: 'Mo...
+FAILED test_0399.py::test_task_func_valid_json_not_list - TypeError: 'MockOpe...
+FAILED test_0399.py::test_task_func_valid_json_list_with_non_dict_items - Typ...
+4 failed, 1 passed in 0.45s

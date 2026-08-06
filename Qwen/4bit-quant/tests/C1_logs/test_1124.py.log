@@ -1,0 +1,63 @@
+..FF.                                                                    [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_multiple_urls _________________________
+
+    def test_task_func_multiple_urls():
+        input_string = "Visit https://example.com or https://test.com"
+        # Similar to the single URL test, this assumes both URLs are reachable and return valid SSL certificates.
+>       result = task_func(input_string)
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1124.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1124.py:13: in task_func
+    with socket.create_connection((domain, 443)) as sock:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/socket.py:828: in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+host = 'test.com', port = 443, family = 0, type = <SocketKind.SOCK_STREAM: 1>
+proto = 0, flags = 0
+
+    def getaddrinfo(host, port, family=0, type=0, proto=0, flags=0):
+        """Resolve host and port into list of address info entries.
+    
+        Translate the host/port argument into a sequence of 5-tuples that contain
+        all the necessary arguments for creating a socket connected to that service.
+        host is a domain name, a string representation of an IPv4/v6 address or
+        None. port is a string service name such as 'http', a numeric port number or
+        None. By passing None as the value of host and port, you can pass NULL to
+        the underlying C API.
+    
+        The family, type and proto arguments can be optionally specified in order to
+        narrow the list of addresses returned. Passing zero as a value for each of
+        these arguments selects the full range of results.
+        """
+        # We override this function since we want to translate the numeric family
+        # and socket type values to enum constants.
+        addrlist = []
+>       for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       socket.gaierror: [Errno -5] No address associated with hostname
+
+/usr/lib/python3.12/socket.py:963: gaierror
+__________________________ test_task_func_invalid_ssl __________________________
+
+    def test_task_func_invalid_ssl():
+        input_string = "This URL has invalid SSL: https://invalid-ssl-url.com"
+        # Mocking the SSL error to ensure the function handles it gracefully
+        def mock_getpeercert(*args, **kwargs):
+            raise ssl.SSLError("Mocked SSL Error")
+    
+        # Monkey patching the getpeercert method to simulate an SSL error
+>       original_getpeercert = ssl.SSLContext.getpeercert
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: type object 'SSLContext' has no attribute 'getpeercert'
+
+test_1124.py:31: AttributeError
+=========================== short test summary info ============================
+FAILED test_1124.py::test_task_func_multiple_urls - socket.gaierror: [Errno -...
+FAILED test_1124.py::test_task_func_invalid_ssl - AttributeError: type object...
+2 failed, 3 passed in 0.59s

@@ -1,0 +1,52 @@
+.FFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_no_substitution ________________________
+
+    def test_task_func_no_substitution():
+        mystrings = ["hello", "world"]
+        text = "This is a test text."
+        ax = task_func(mystrings, text)
+    
+        # Check if the plot is created correctly
+        assert isinstance(ax, plt.Axes)
+        words, frequencies = zip(*Counter(text.split()).items())
+>       indices = np.arange(len(word_counts))
+                                ^^^^^^^^^^^
+E       NameError: name 'word_counts' is not defined
+
+test_0956.py:21: NameError
+_______________________ test_task_func_with_substitution _______________________
+
+    def test_task_func_with_substitution():
+        mystrings = ["hello world"]
+        text = "Hello World is a test text."
+        ax = task_func(mystrings, text)
+    
+        # Check if the plot is created correctly
+        assert isinstance(ax, plt.Axes)
+        words, frequencies = zip(*Counter(text.replace(" ", "_").split("_")).items())
+>       indices = np.arange(len(word_counts))
+                                ^^^^^^^^^^^
+E       NameError: name 'word_counts' is not defined
+
+test_0956.py:40: NameError
+______________________ test_task_func_case_insensitivity _______________________
+
+    def test_task_func_case_insensitivity():
+        mystrings = ["HELLO world"]
+        text = "hello World is a test text."
+        ax = task_func(mystrings, text)
+    
+        # Check if the plot is created correctly
+        assert isinstance(ax, plt.Axes)
+        words, frequencies = zip(*Counter(text.replace(" ", "_").split("_")).items())
+>       indices = np.arange(len(word_counts))
+                                ^^^^^^^^^^^
+E       NameError: name 'word_counts' is not defined
+
+test_0956.py:59: NameError
+=========================== short test summary info ============================
+FAILED test_0956.py::test_task_func_no_substitution - NameError: name 'word_c...
+FAILED test_0956.py::test_task_func_with_substitution - NameError: name 'word...
+FAILED test_0956.py::test_task_func_case_insensitivity - NameError: name 'wor...
+3 failed, 1 passed in 1.72s

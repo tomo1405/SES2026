@@ -1,0 +1,48 @@
+.FFF                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_invalid_log_file ________________________
+
+    def test_task_func_invalid_log_file():
+        log_file = 'invalid_log.log'
+        with pytest.raises(ValueError):
+>           task_func(log_file)
+
+test_0162.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+log_file = 'invalid_log.log'
+
+    def task_func(log_file):
+        log_pattern = r'(ERROR|INFO): \[\s*(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\s*\] - (.*)'
+        parsed_data = []
+    
+>       with open(log_file, 'r') as file:
+             ^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'invalid_log.log'
+
+../../../src/src_0162.py:8: FileNotFoundError
+_______________________ test_task_func_invalid_timestamp _______________________
+
+    def test_task_func_invalid_timestamp():
+        log_file = 'test_log.log'
+        with open(log_file, 'w') as file:
+            file.write('ERROR: [2022-01-01 12:00:00] - Invalid timestamp')
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0162.py:18: Failed
+_____________________ test_task_func_no_valid_log_entries ______________________
+
+    def test_task_func_no_valid_log_entries():
+        log_file = 'test_log.log'
+        with open(log_file, 'w') as file:
+            file.write('ERROR: [2022-01-01 12:00:00] - Invalid timestamp')
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0162.py:25: Failed
+=========================== short test summary info ============================
+FAILED test_0162.py::test_task_func_invalid_log_file - FileNotFoundError: [Er...
+FAILED test_0162.py::test_task_func_invalid_timestamp - Failed: DID NOT RAISE...
+FAILED test_0162.py::test_task_func_no_valid_log_entries - Failed: DID NOT RA...
+3 failed, 1 passed in 1.12s

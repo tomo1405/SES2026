@@ -1,0 +1,69 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+_______________________ TestTaskFunc.test_column_exists ________________________
+
+self = <test_0925.TestTaskFunc object at 0x7602f8bc9880>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7602f8bc9e50>
+
+    def test_column_exists(self, monkeypatch):
+        # Create a mock DataFrame
+        data = {'some_column': ['value1\nvalue2', 'value3']}
+        df = pd.DataFrame(data)
+    
+        # Mock the read_csv function to return our mock DataFrame
+        monkeypatch.setattr(pd, 'read_csv', lambda x: df)
+    
+        # Call the function
+>       result_df = task_func('some_file.csv', 'some_column')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0925.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = 'some_file.csv', column_name = 'some_column'
+
+    def task_func(file_path: str, column_name: str) -> pd.DataFrame:
+        if not os.path.exists(file_path):
+            print(f'File does not exist: {file_path}')
+>           sys.exit(1)
+E           SystemExit: 1
+
+../../../src/src_0925.py:7: SystemExit
+----------------------------- Captured stdout call -----------------------------
+File does not exist: some_file.csv
+___________________ TestTaskFunc.test_column_does_not_exist ____________________
+
+self = <test_0925.TestTaskFunc object at 0x7602f8bc9af0>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7602f8c213d0>
+capsys = <_pytest.capture.CaptureFixture object at 0x7602f8c200b0>
+
+    def test_column_does_not_exist(self, monkeypatch, capsys):
+        # Create a mock DataFrame
+        data = {'another_column': ['value1', 'value2']}
+        df = pd.DataFrame(data)
+    
+        # Mock the read_csv function to return our mock DataFrame
+        monkeypatch.setattr(pd, 'read_csv', lambda x: df)
+    
+        # Call the function
+>       result_df = task_func('some_file.csv', 'some_column')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0925.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = 'some_file.csv', column_name = 'some_column'
+
+    def task_func(file_path: str, column_name: str) -> pd.DataFrame:
+        if not os.path.exists(file_path):
+            print(f'File does not exist: {file_path}')
+>           sys.exit(1)
+E           SystemExit: 1
+
+../../../src/src_0925.py:7: SystemExit
+----------------------------- Captured stdout call -----------------------------
+File does not exist: some_file.csv
+=========================== short test summary info ============================
+FAILED test_0925.py::TestTaskFunc::test_column_exists - SystemExit: 1
+FAILED test_0925.py::TestTaskFunc::test_column_does_not_exist - SystemExit: 1
+2 failed, 1 passed in 1.45s

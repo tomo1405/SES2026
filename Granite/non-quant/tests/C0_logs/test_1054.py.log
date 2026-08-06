@@ -1,0 +1,54 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_without_save_path _______________________
+
+mock_read_csv = <MagicMock name='read_csv' id='127385531172576'>
+mock_show = <MagicMock name='show' id='127384453947728'>
+
+    @patch("matplotlib.pyplot.show")
+    @patch("pandas.read_csv")
+    def test_task_func_without_save_path(mock_read_csv, mock_show):
+        mock_read_csv.return_value = pd.DataFrame({"Text": ["Hello", "World"]})
+        mock_ax = MagicMock()
+        mock_show.return_value = mock_ax
+        result = task_func("test_file.csv")
+        mock_read_csv.assert_called_once_with("test_file.csv", usecols=[0], names=["Text"], header=None)
+>       mock_show.assert_called_once()
+
+test_1054.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='show' id='127384453947728'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'show' to have been called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:923: AssertionError
+________________________ test_task_func_with_exception _________________________
+
+mock_task_func = <MagicMock name='task_func' id='127384454310672'>
+
+    @patch("src_1054.task_func")
+    def test_task_func_with_exception(mock_task_func):
+        mock_task_func.side_effect = FileNotFoundError("Test error")
+        with patch("sys.stderr", new=io.StringIO()) as fake_stderr:
+            result = task_func("test_file.csv", save_path="test_plot.png")
+        assert result is None
+>       assert "File not found: test_file.csv" in fake_stderr.getvalue()
+E       AssertionError: assert 'File not found: test_file.csv' in ''
+E        +  where '' = <built-in method getvalue of _io.StringIO object at 0x73db012bc1c0>()
+E        +    where <built-in method getvalue of _io.StringIO object at 0x73db012bc1c0> = <_io.StringIO object at 0x73db012bc1c0>.getvalue
+
+test_1054.py:36: AssertionError
+=========================== short test summary info ============================
+FAILED test_1054.py::test_task_func_without_save_path - AssertionError: Expec...
+FAILED test_1054.py::test_task_func_with_exception - AssertionError: assert '...
+2 failed, 1 passed in 3.99s

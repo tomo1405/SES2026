@@ -1,0 +1,25 @@
+..F                                                                      [100%]
+=================================== FAILURES ===================================
+____________________ test_task_func_with_exception_handling ____________________
+
+mock_subprocess = None, mock_os = None
+
+    def test_task_func_with_exception_handling(mock_subprocess, mock_os):
+        # Simulate an exception in subprocess.check_output
+        def raise_exception(*args, **kwargs):
+            raise Exception("Unexpected error")
+    
+        with pytest.raises(Exception) as excinfo:
+            with monkeypatch.context() as m:
+                m.setattr(subprocess, 'check_output', raise_exception)
+                task_func('unexpected_error_process')
+>       assert str(excinfo.value) == "Unexpected error"
+E       assert "name 'monkey...s not defined" == 'Unexpected error'
+E         
+E         - Unexpected error
+E         + name 'monkeypatch' is not defined
+
+test_0349.py:47: AssertionError
+=========================== short test summary info ============================
+FAILED test_0349.py::test_task_func_with_exception_handling - assert "name 'm...
+1 failed, 2 passed in 2.47s

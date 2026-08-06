@@ -1,0 +1,99 @@
+FFFFF.FF                                                                 [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_no_stopwords _______________________
+
+    def test_task_func_with_no_stopwords():
+        text = "This is a test sentence with no stopwords."
+        expected_output = [('test', 1), ('sentence', 1), ('no', 1), ('stopwords', 1)]
+>       assert task_func(text) == expected_output
+E       AssertionError: assert [('is', 1), (..., ('with', 1)] == [('test', 1),...topwords', 1)]
+E         
+E         At index 0 diff: ('is', 1) != ('test', 1)
+E         Right contains one more item: ('stopwords', 1)
+E         Use -v to get more diff
+
+test_1100.py:7: AssertionError
+______________________ test_task_func_with_all_stopwords _______________________
+
+    def test_task_func_with_all_stopwords():
+        text = "This is a test sentence with all stopwords."
+        expected_output = []
+>       assert task_func(text) == expected_output
+E       AssertionError: assert [('is', 1), (..., ('with', 1)] == []
+E         
+E         Left contains 3 more items, first extra item: ('is', 1)
+E         Use -v to get more diff
+
+test_1100.py:12: AssertionError
+______________________ test_task_func_with_mixed_content _______________________
+
+    def test_task_func_with_mixed_content():
+        text = "Hello world! This is a test sentence with mixed content."
+        expected_output = [('hello', 1), ('world', 1), ('test', 1), ('sentence', 1), ('mixed', 1), ('content', 1)]
+>       assert task_func(text) == expected_output
+E       AssertionError: assert [('is', 1), (..., ('with', 1)] == [('hello', 1)...'content', 1)]
+E         
+E         At index 0 diff: ('is', 1) != ('hello', 1)
+E         Right contains 3 more items, first extra item: ('sentence', 1)
+E         Use -v to get more diff
+
+test_1100.py:17: AssertionError
+_________________________ test_task_func_with_numbers __________________________
+
+    def test_task_func_with_numbers():
+        text = "This is a test sentence with numbers 123 and symbols #@$."
+        expected_output = [('test', 1), ('sentence', 1), ('numbers', 1), ('and', 1), ('symbols', 1)]
+>       assert task_func(text) == expected_output
+E       AssertionError: assert [('is', 1), (...), ('and', 1)] == [('test', 1),...'symbols', 1)]
+E         
+E         At index 0 diff: ('is', 1) != ('test', 1)
+E         Right contains one more item: ('symbols', 1)
+E         Use -v to get more diff
+
+test_1100.py:22: AssertionError
+___________________________ test_task_func_with_urls ___________________________
+
+    def test_task_func_with_urls():
+        text = "Check out this URL http://example.com and see what happens."
+        expected_output = [('check', 1), ('out', 1), ('this', 1), ('url', 1), ('and', 1), ('see', 1), ('what', 1), ('happens', 1)]
+>       assert task_func(text) == expected_output
+E       AssertionError: assert [('out', 1), ..., ('what', 1)] == [('check', 1)...see', 1), ...]
+E         
+E         At index 0 diff: ('out', 1) != ('check', 1)
+E         Right contains 4 more items, first extra item: ('and', 1)
+E         Use -v to get more diff
+
+test_1100.py:27: AssertionError
+_______________________ test_task_func_with_single_word ________________________
+
+    def test_task_func_with_single_word():
+        text = "word"
+        expected_output = [('word', 1)]
+>       assert task_func(text) == expected_output
+E       AssertionError: assert [] == [('word', 1)]
+E         
+E         Right contains one more item: ('word', 1)
+E         Use -v to get more diff
+
+test_1100.py:37: AssertionError
+______________________ test_task_func_with_repeated_words ______________________
+
+    def test_task_func_with_repeated_words():
+        text = "repeat repeat repeat"
+        expected_output = [('repeat', 3)]
+>       assert task_func(text) == expected_output
+E       AssertionError: assert [] == [('repeat', 3)]
+E         
+E         Right contains one more item: ('repeat', 3)
+E         Use -v to get more diff
+
+test_1100.py:42: AssertionError
+=========================== short test summary info ============================
+FAILED test_1100.py::test_task_func_with_no_stopwords - AssertionError: asser...
+FAILED test_1100.py::test_task_func_with_all_stopwords - AssertionError: asse...
+FAILED test_1100.py::test_task_func_with_mixed_content - AssertionError: asse...
+FAILED test_1100.py::test_task_func_with_numbers - AssertionError: assert [('...
+FAILED test_1100.py::test_task_func_with_urls - AssertionError: assert [('out...
+FAILED test_1100.py::test_task_func_with_single_word - AssertionError: assert...
+FAILED test_1100.py::test_task_func_with_repeated_words - AssertionError: ass...
+7 failed, 1 passed in 0.52s

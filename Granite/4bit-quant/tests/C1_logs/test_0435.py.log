@@ -1,0 +1,112 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        s = "1 2 ABC 3.45 This is a test\n2 3 XYZ 4.56 This is another test"
+>       df = task_func(s)
+             ^^^^^^^^^^^^
+
+test_0435.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0435.py:28: in task_func
+    df["Price"] = df["Price"].astype(int)
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6541: in astype
+    new_data = self._mgr.astype(dtype=dtype, errors=errors)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/managers.py:614: in astype
+    return self.apply("astype", dtype=dtype, errors=errors)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/managers.py:445: in apply
+    applied = getattr(b, f)(**kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/blocks.py:607: in astype
+    new_values = astype_array_safe(values, dtype, errors=errors)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/dtypes/astype.py:240: in astype_array_safe
+    new_values = astype_array(values, dtype, copy=copy)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/dtypes/astype.py:182: in astype_array
+    values = values.astype(dtype, copy=copy)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/string_arrow.py:338: in astype
+    return super().astype(dtype, copy=copy)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/base.py:881: in astype
+    return np.asarray(self, dtype=dtype)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/arrow/array.py:864: in __array__
+    return self.to_numpy(dtype=dtype, copy=copy)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <ArrowStringArray>
+['3.45', '4.56']
+Length: 2, dtype: str
+dtype = dtype('int64'), copy = False, na_value = nan
+
+    @doc(ExtensionArray.to_numpy)
+    def to_numpy(
+        self,
+        dtype: npt.DTypeLike | None = None,
+        copy: bool = False,
+        na_value: object = lib.no_default,
+    ) -> np.ndarray:
+        original_na_value = na_value
+        dtype, na_value = to_numpy_dtype_inference(self, dtype, na_value, self._hasna)
+        pa_type = self._pa_array.type
+        if not self._hasna or isna(na_value) or pa.types.is_null(pa_type):
+            data = self
+        else:
+            data = self.fillna(na_value)
+            copy = False
+    
+        if pa.types.is_timestamp(pa_type) or pa.types.is_duration(pa_type):
+            # GH 55997
+            if dtype != object and na_value is self.dtype.na_value:
+                na_value = lib.no_default
+            result = data._maybe_convert_datelike_array().to_numpy(
+                dtype=dtype, na_value=na_value
+            )
+        elif pa.types.is_time(pa_type) or pa.types.is_date(pa_type):
+            # convert to list of python datetime.time objects before
+            # wrapping in ndarray
+            result = np.array(list(data), dtype=dtype)
+            if data._hasna:
+                result[data.isna()] = na_value
+        elif pa.types.is_null(pa_type):
+            if dtype is not None and isna(na_value):
+                na_value = None
+            result = np.full(len(data), fill_value=na_value, dtype=dtype)
+        elif not data._hasna or (
+            pa.types.is_floating(pa_type)
+            and (
+                na_value is np.nan
+                or (
+                    original_na_value is lib.no_default
+                    and is_float_dtype(dtype)
+                    and is_nan_na()
+                )
+            )
+        ):
+            result = data._pa_array.to_numpy()
+            if dtype is not None:
+>               result = result.astype(dtype, copy=False)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               ValueError: invalid literal for int() with base 10: '3.45'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/arrow/array.py:1729: ValueError
+_____________________________ test_task_func_error _____________________________
+
+    def test_task_func_error():
+        with pytest.raises(ValueError):
+            task_func("")
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0435.py:20: Failed
+=========================== short test summary info ============================
+FAILED test_0435.py::test_task_func - ValueError: invalid literal for int() w...
+FAILED test_0435.py::test_task_func_error - Failed: DID NOT RAISE ValueError
+2 failed in 1.45s

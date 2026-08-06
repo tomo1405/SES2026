@@ -1,0 +1,102 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        l1 = [1, 2, 3, 4, 5]
+        l2 = [6, 7, 8, 9, 10]
+        K = 5
+        expected = {1: 1, 2: 1, 3: 1, 4: 1, 5: 1}
+>       assert task_func(l1, l2, K) == expected
+E       assert Counter({7: 3, 6: 1, 3: 1}) == {1: 1, 2: 1, 3: 1, 4: 1, ...}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Left contains 2 more items:
+E         {6: 1, 7: 3}
+E         Right contains 4 more items:
+E         {1: 1, 2: 1, 4: 1, 5: 1}
+E         Use -v to get more diff
+
+test_0023.py:9: AssertionError
+____________________ test_task_func_with_different_lengths _____________________
+
+    def test_task_func_with_different_lengths():
+        l1 = [1, 2, 3, 4, 5]
+        l2 = [6, 7, 8, 9]
+        K = 5
+        expected = {1: 1, 2: 1, 3: 1, 4: 1, 5: 1}
+>       assert task_func(l1, l2, K) == expected
+E       assert Counter({7: 2..., 6: 1, 4: 1}) == {1: 1, 2: 1, 3: 1, 4: 1, ...}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Left contains 2 more items:
+E         {6: 1, 7: 2}
+E         Right contains 3 more items:
+E         {1: 1, 2: 1, 5: 1}
+E         Use -v to get more diff
+
+test_0023.py:16: AssertionError
+_______________________ test_task_func_with_empty_lists ________________________
+
+    def test_task_func_with_empty_lists():
+        l1 = []
+        l2 = []
+        K = 5
+        expected = {}
+>       assert task_func(l1, l2, K) == expected
+               ^^^^^^^^^^^^^^^^^^^^
+
+test_0023.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0023.py:6: in task_func
+    sample = choices(combined, k=K)
+             ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <random.Random object at 0x12488330>, population = [], weights = None
+cum_weights = None, k = 5
+
+    def choices(self, population, weights=None, *, cum_weights=None, k=1):
+        """Return a k sized list of population elements chosen with replacement.
+    
+        If the relative weights or cumulative weights are not specified,
+        the selections are made with equal probability.
+    
+        """
+        random = self.random
+        n = len(population)
+        if cum_weights is None:
+            if weights is None:
+                floor = _floor
+                n += 0.0    # convert to float for a small speed improvement
+>               return [population[floor(random() * n)] for i in _repeat(None, k)]
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               IndexError: list index out of range
+
+/usr/lib/python3.12/random.py:467: IndexError
+______________ test_task_func_with_K_greater_than_length_of_lists ______________
+
+    def test_task_func_with_K_greater_than_length_of_lists():
+        l1 = [1, 2, 3, 4, 5]
+        l2 = [6, 7, 8, 9, 10]
+        K = 100
+        expected = {1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1, 10: 1}
+>       assert task_func(l1, l2, K) == expected
+E       AssertionError: assert Counter({7: 1..., 6: 6, 4: 4}) == {1: 1, 2: 1, 3: 1, 4: 1, ...}
+E         
+E         Differing items:
+E         {1: 10} != {1: 1}
+E         {2: 8} != {2: 1}
+E         {3: 12} != {3: 1}
+E         {4: 4} != {4: 1}
+E         {5: 9} != {5: 1}...
+E         
+E         ...Full output truncated (6 lines hidden), use '-vv' to show
+
+test_0023.py:30: AssertionError
+=========================== short test summary info ============================
+FAILED test_0023.py::test_task_func - assert Counter({7: 3, 6: 1, 3: 1}) == {...
+FAILED test_0023.py::test_task_func_with_different_lengths - assert Counter({...
+FAILED test_0023.py::test_task_func_with_empty_lists - IndexError: list index...
+FAILED test_0023.py::test_task_func_with_K_greater_than_length_of_lists - Ass...
+4 failed in 0.41s

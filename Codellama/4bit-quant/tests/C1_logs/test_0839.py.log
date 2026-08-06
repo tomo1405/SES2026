@@ -1,0 +1,36 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: input is a string
+        input_text = "Hello, World!"
+        expected_output = "hello, world!"
+>       assert task_func(input_text) == expected_output
+               ^^^^^^^^^^^^^^^^^^^^^
+
+test_0839.py:8: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text_series = 'Hello, World!'
+
+    def task_func(text_series):
+        stemmer = PorterStemmer()
+    
+        def process_text(text):
+            # Remove non-alphanumeric characters (except spaces)
+            text = re.sub('[^\sa-zA-Z0-9]', '', text).lower().strip()
+            # Stem each word in the text
+            text = " ".join([stemmer.stem(word) for word in text.split()])
+    
+            return text
+    
+        # Apply the processing to each entry in the Series
+>       return text_series.apply(process_text)
+               ^^^^^^^^^^^^^^^^^
+E       AttributeError: 'str' object has no attribute 'apply'
+
+../../../src/src_0839.py:15: AttributeError
+=========================== short test summary info ============================
+FAILED test_0839.py::test_task_func - AttributeError: 'str' object has no att...
+1 failed in 4.16s

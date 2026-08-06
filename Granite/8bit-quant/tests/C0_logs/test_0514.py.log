@@ -1,0 +1,50 @@
+.F..                                                                     [100%]
+=================================== FAILURES ===================================
+_____________________________ test_invalid_column ______________________________
+
+    def test_invalid_column():
+        column = "Invalid Column"
+        data = [
+            ["2023-01-01", 100, 200, 5],
+            ["2023-01-02", 200, 300, 10],
+            ["2023-01-03", 300, 400, 15],
+        ]
+        with patch("sys.stdout", new=StringIO()) as fake_stdout:
+            try:
+>               task_func(column, data)
+
+test_0514.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+column = 'Invalid Column'
+data = [['2023-01-01', 100, 200, 5], ['2023-01-02', 200, 300, 10], ['2023-01-03', 300, 400, 15]]
+
+    def task_func(column, data):
+        COLUMNS = ["Date", "Steps", "Calories Burned", "Distance Walked"]
+        if column not in COLUMNS:
+>           raise KeyError(f"{column} is not a valid column. Choose from {COLUMNS}.")
+E           KeyError: "Invalid Column is not a valid column. Choose from ['Date', 'Steps', 'Calories Burned', 'Distance Walked']."
+
+../../../src/src_0514.py:7: KeyError
+
+During handling of the above exception, another exception occurred:
+
+    def test_invalid_column():
+        column = "Invalid Column"
+        data = [
+            ["2023-01-01", 100, 200, 5],
+            ["2023-01-02", 200, 300, 10],
+            ["2023-01-03", 300, 400, 15],
+        ]
+        with patch("sys.stdout", new=StringIO()) as fake_stdout:
+            try:
+                task_func(column, data)
+            except KeyError as e:
+>               assert str(e) == f"{column} is not a valid column. Choose from {task_func.COLUMNS}."
+                                                                                ^^^^^^^^^^^^^^^^^
+E               AttributeError: 'function' object has no attribute 'COLUMNS'
+
+test_0514.py:39: AttributeError
+=========================== short test summary info ============================
+FAILED test_0514.py::test_invalid_column - AttributeError: 'function' object ...
+1 failed, 3 passed in 2.03s

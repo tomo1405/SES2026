@@ -1,0 +1,62 @@
+.F                                                                       [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_invalid_url ________________________
+
+self = <mechanize._mechanize.Browser object at 0x755c5ae54e60>
+url = 'invalid_url', data = None, update_history = True, visit = None
+timeout = <object object at 0x755c5e578980>
+
+    def _mech_open(self,
+                   url,
+                   data=None,
+                   update_history=True,
+                   visit=None,
+                   timeout=_sockettimeout._GLOBAL_DEFAULT_TIMEOUT):
+        try:
+>           url.get_full_url
+E           AttributeError: 'str' object has no attribute 'get_full_url'
+
+../../../.venv/lib/python3.12/site-packages/mechanize/_mechanize.py:266: AttributeError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func_with_invalid_url():
+        with pytest.raises(ValueError):
+>           task_func("invalid_url")
+
+test_0285.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0285.py:6: in task_func
+    response = br.open(url)
+               ^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/mechanize/_mechanize.py:257: in open
+    return self._mech_open(url_or_request, data, timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <mechanize._mechanize.Browser object at 0x755c5ae54e60>
+url = 'invalid_url', data = None, update_history = True, visit = None
+timeout = <object object at 0x755c5e578980>
+
+    def _mech_open(self,
+                   url,
+                   data=None,
+                   update_history=True,
+                   visit=None,
+                   timeout=_sockettimeout._GLOBAL_DEFAULT_TIMEOUT):
+        try:
+            url.get_full_url
+        except AttributeError:
+            # string URL -- convert to absolute URL if required
+            scheme, authority = _rfc3986.urlsplit(url)[:2]
+            if scheme is None:
+                # relative URL
+                if self._response is None:
+>                   raise BrowserStateError("can't fetch relative reference: "
+                                            "not viewing any document")
+E                   mechanize._mechanize.BrowserStateError: can't fetch relative reference: not viewing any document
+
+../../../.venv/lib/python3.12/site-packages/mechanize/_mechanize.py:273: BrowserStateError
+=========================== short test summary info ============================
+FAILED test_0285.py::test_task_func_with_invalid_url - mechanize._mechanize.B...
+1 failed, 1 passed in 1.29s

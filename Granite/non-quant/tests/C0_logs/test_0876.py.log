@@ -1,0 +1,34 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_with_seed ___________________________
+
+input_data = {'Name': ['Alice', 'Bob', 'Charlie'], 'Age': [25, 30, None], 'Occupation': ['Engineer', 'Doctor', 'Teacher']}
+
+    def test_task_func_with_seed(input_data):
+        seed = 42
+        random.seed(seed)
+        df = task_func(input_data, fill_missing=True, seed=seed)
+        expected_output = pd.DataFrame({'Name': ['Alice', 'Bob', 'Charlie'], 'Age': [25, 30, 42], 'Occupation': ['Engineer', 'Doctor', 'Teacher']})
+>       assert df.equals(expected_output)
+E       assert False
+E        +  where False = equals(      Name  Age Occupation\n0    Alice   25   Engineer\n1      Bob   30     Doctor\n2  Charlie   42    Teacher)
+E        +    where equals =       Name   Age Occupation\n0    Alice  25.0   Engineer\n1      Bob  30.0     Doctor\n2  Charlie  81.0    Teacher.equals
+
+test_0876.py:15: AssertionError
+_________________________ test_task_func_without_seed __________________________
+
+input_data = {'Name': ['Alice', 'Bob', 'Charlie'], 'Age': [25, 30, None], 'Occupation': ['Engineer', 'Doctor', 'Teacher']}
+
+    def test_task_func_without_seed(input_data):
+        df = task_func(input_data, fill_missing=True)
+        expected_output = pd.DataFrame({'Name': ['Alice', 'Bob', 'Charlie'], 'Age': [25, 30, random.randint(0, 100)], 'Occupation': ['Engineer', 'Doctor', 'Teacher']})
+>       assert df.equals(expected_output)
+E       assert False
+E        +  where False = equals(      Name  Age Occupation\n0    Alice   25   Engineer\n1      Bob   30     Doctor\n2  Charlie    3    Teacher)
+E        +    where equals =       Name   Age Occupation\n0    Alice  25.0   Engineer\n1      Bob  30.0     Doctor\n2  Charlie  14.0    Teacher.equals
+
+test_0876.py:20: AssertionError
+=========================== short test summary info ============================
+FAILED test_0876.py::test_task_func_with_seed - assert False
+FAILED test_0876.py::test_task_func_without_seed - assert False
+2 failed, 1 passed in 1.34s

@@ -1,0 +1,39 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        df = pd.DataFrame({'Name': ['Alice', 'Bob', 'Charlie'],
+                           'Age': [25, 30, 35],
+                           'Country': ['USA', 'Canada', 'Mexico'],
+                           'Score': [90, 80, 70]})
+        fig = task_func(df)
+        assert isinstance(fig, plt.Figure)
+>       assert fig.shape == (10, 5)
+               ^^^^^^^^^
+E       AttributeError: 'Figure' object has no attribute 'shape'. Did you mean: 'stale'?
+
+test_0231.py:14: AttributeError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        df = pd.DataFrame({'Name': ['Alice', 'Bob', 'Charlie'],
+                           'Age': [25, 30, 35],
+                           'Country': ['USA', 'Canada', 'Mexico'],
+                           'Score': [90, 80, 70]})
+        fig = task_func(df)
+>       assert fig == "Invalid input"
+E       AssertionError: assert <Figure size 1000x500 with 2 Axes> == 'Invalid input'
+
+test_0231.py:25: AssertionError
+=============================== warnings summary ===============================
+Codellama/8bit-quant/tests/test_0231.py::test_task_func_valid_input
+Codellama/8bit-quant/tests/test_0231.py::test_task_func_invalid_input
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/categorical.py:700: MatplotlibDeprecationWarning: vert: bool was deprecated in Matplotlib 3.11 and will be removed in 3.13. Use orientation: {'vertical', 'horizontal'} instead.
+    artists = ax.bxp(**boxplot_kws)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0231.py::test_task_func_valid_input - AttributeError: 'Figure' ob...
+FAILED test_0231.py::test_task_func_invalid_input - AssertionError: assert <F...
+2 failed, 2 warnings in 3.72s

@@ -1,0 +1,39 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_empty_input __________________________
+
+    def test_task_func_empty_input():
+        goals = {}
+        penalties = {}
+        df, plot = task_func(goals, penalties)
+    
+        # Check DataFrame
+        expected_columns = ['Team', 'Goals', 'Penalties']
+        assert list(df.columns) == expected_columns
+>       assert len(df) == 0
+E       assert 5 == 0
+E        +  where 5 = len(     Team  Goals  Penalties\n0  Team A      0          0\n1  Team B      0          0\n2  Team C      0          0\n3  Team D      0          0\n4  Team E      0          0)
+
+test_0615.py:54: AssertionError
+_________________________ test_task_func_partial_input _________________________
+
+sample_data = ({'Team B': 15, 'Team C': 7, 'Team D': 8, 'Team E': 12}, {'Team A': 3, 'Team C': 2, 'Team D': 4, 'Team E': 6})
+
+    def test_task_func_partial_input(sample_data):
+        goals, penalties = sample_data
+        del goals['Team A']
+        del penalties['Team B']
+        df, plot = task_func(goals, penalties)
+    
+        # Check DataFrame
+        expected_columns = ['Team', 'Goals', 'Penalties']
+        assert list(df.columns) == expected_columns
+>       assert len(df) == 4
+E       assert 5 == 4
+E        +  where 5 = len(     Team  Goals  Penalties\n0  Team A      0          3\n1  Team B     15          0\n2  Team C      7          2\n3  Team D      8          4\n4  Team E     12          6)
+
+test_0615.py:69: AssertionError
+=========================== short test summary info ============================
+FAILED test_0615.py::test_task_func_empty_input - assert 5 == 0
+FAILED test_0615.py::test_task_func_partial_input - assert 5 == 4
+2 failed, 1 passed in 4.63s

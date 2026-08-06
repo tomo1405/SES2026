@@ -1,0 +1,65 @@
+F...                                                                     [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_valid_url ___________________________
+
+url = 'https://www.example.com/data.xml'
+
+    def task_func(url):
+        try:
+>           with urllib.request.urlopen(url) as response:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../../../src/src_1004.py:6: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/urllib/request.py:215: in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:521: in open
+    response = meth(req, response)
+               ^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:630: in http_response
+    response = self.parent.error(
+/usr/lib/python3.12/urllib/request.py:559: in error
+    return self._call_chain(*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:492: in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <urllib.request.HTTPDefaultErrorHandler object at 0x772006c255b0>
+req = <urllib.request.Request object at 0x77200cacb020>
+fp = <http.client.HTTPResponse object at 0x772006494b50>, code = 404
+msg = 'Not Found', hdrs = <http.client.HTTPMessage object at 0x772006495fd0>
+
+    def http_error_default(self, req, fp, code, msg, hdrs):
+>       raise HTTPError(req.full_url, code, msg, hdrs, fp)
+E       urllib.error.HTTPError: HTTP Error 404: Not Found
+
+/usr/lib/python3.12/urllib/request.py:639: HTTPError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func_valid_url():
+        url = "https://www.example.com/data.xml"
+        expected_data = pd.DataFrame({"name": ["John", "Jane"], "age": [25, 30]})
+>       result = task_func(url)
+                 ^^^^^^^^^^^^^^
+
+test_1004.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'https://www.example.com/data.xml'
+
+    def task_func(url):
+        try:
+            with urllib.request.urlopen(url) as response:
+                xml_data = response.read()
+        except Exception as e:
+>           raise ValueError(f"Error fetching the XML file: {e}")
+E           ValueError: Error fetching the XML file: HTTP Error 404: Not Found
+
+../../../src/src_1004.py:9: ValueError
+=========================== short test summary info ============================
+FAILED test_1004.py::test_task_func_valid_url - ValueError: Error fetching th...
+1 failed, 3 passed in 1.40s

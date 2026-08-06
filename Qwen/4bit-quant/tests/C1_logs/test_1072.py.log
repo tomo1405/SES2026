@@ -1,0 +1,30 @@
+....F.F                                                                  [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_color_cycle ________________________
+
+    def test_task_func_with_color_cycle():
+        fig, ax = task_func([[1, 2], [3, 4], [5, 6, 7], [8, 9, 10, 11]])
+        assert isinstance(fig, plt.Figure)
+        assert isinstance(ax, plt.Axes)
+        assert len(ax.lines) == 4  # Four lines should be plotted
+        colors = [line.get_color() for line in ax.lines]
+>       assert colors == ["b", "g", "r", "c"]  # Colors should cycle through the list
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert [(0.0, 0.0, 1....75, 0.75, 1)] == ['b', 'g', 'r', 'c']
+E         
+E         At index 0 diff: (0.0, 0.0, 1.0, 1) != 'b'
+E         Use -v to get more diff
+
+test_1072.py:37: AssertionError
+________________________ test_task_func_with_no_shuffle ________________________
+
+    def test_task_func_with_no_shuffle():
+>       fig, ax = task_func([[1, 2, 3]], shuffle=False)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: task_func() got an unexpected keyword argument 'shuffle'
+
+test_1072.py:47: TypeError
+=========================== short test summary info ============================
+FAILED test_1072.py::test_task_func_with_color_cycle - AssertionError: assert...
+FAILED test_1072.py::test_task_func_with_no_shuffle - TypeError: task_func() ...
+2 failed, 5 passed in 1.66s

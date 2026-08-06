@@ -1,0 +1,52 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_______________________________ test_valid_input _______________________________
+
+    def test_valid_input():
+        # Create sample input
+        df = pd.DataFrame({
+            'feature1': [1, 2, 3, 4, 5],
+            'feature2': [5, 4, 3, 2, 1],
+            'feature3': [10, 20, 30, 40, 50],
+            'feature4': [50, 40, 30, 20, 10],
+            'feature5': [100, 200, 300, 400, 500]
+        })
+        dct = {'feature1': 1, 'feature2': 2, 'feature3': 3, 'feature4': 4, 'feature5': 5}
+    
+        # Call the function
+        result = task_func(df, dct)
+    
+        # Check if the result is a dictionary
+>       assert isinstance(result, dict)
+E       AssertionError: assert False
+E        +  where False = isinstance('Invalid input', dict)
+
+test_0222.py:23: AssertionError
+______________________________ test_invalid_input ______________________________
+
+    def test_invalid_input():
+        # Create sample input
+        df = 'invalid input'
+        dct = 'invalid input'
+    
+        # Call the function
+>       result = task_func(df, dct)
+                 ^^^^^^^^^^^^^^^^^^
+
+test_0222.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df = 'invalid input', dct = 'invalid input'
+
+    def task_func(df, dct):
+    
+        # Replace values using dictionary mapping
+>       df = df.replace(dct)
+             ^^^^^^^^^^^^^^^
+E       TypeError: replace expected at least 2 arguments, got 1
+
+../../../src/src_0222.py:8: TypeError
+=========================== short test summary info ============================
+FAILED test_0222.py::test_valid_input - AssertionError: assert False
+FAILED test_0222.py::test_invalid_input - TypeError: replace expected at leas...
+2 failed in 2.72s

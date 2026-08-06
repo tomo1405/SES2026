@@ -1,0 +1,87 @@
+F.FF..                                                                   [100%]
+=================================== FAILURES ===================================
+__________________ test_task_func_start_time_before_end_time ___________________
+
+    def test_task_func_start_time_before_end_time():
+        with pytest.raises(ValueError):
+>           task_func(1633072800000, 1633072800000, 60000, 0.1)
+
+test_0487.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0487.py:20: in task_func
+    ax = df.plot(x="Time", y="Value")
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/plotting/_core.py:1185: in __call__
+    return plot_backend.plot(data, kind=kind, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/plotting/_matplotlib/__init__.py:71: in plot
+    plot_obj.generate()
+../../../.venv/lib/python3.12/site-packages/pandas/plotting/_matplotlib/core.py:516: in generate
+    self._compute_plot_data()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.plotting._matplotlib.core.LinePlot object at 0x73369e105730>
+
+    @final
+    def _compute_plot_data(self) -> None:
+        data = self.data
+    
+        # GH15079 reconstruct data if by is defined
+        if self.by is not None:
+            self.subplots = True
+            data = reconstruct_data_with_by(self.data, by=self.by, cols=self.columns)
+    
+        # GH16953, infer_objects is needed as fallback, for ``Series``
+        # with ``dtype == object``
+        data = data.infer_objects()
+        include_type = [np.number, "datetime", "datetimetz", "timedelta"]
+    
+        # GH23719, allow plotting boolean
+        if self.include_bool is True:
+            include_type.append(np.bool_)
+    
+        # GH22799, exclude datetime-like type for boxplot
+        exclude_type = None
+        if self._kind == "box":
+            # TODO: change after solving issue 27881
+            include_type = [np.number]
+            exclude_type = ["timedelta"]
+    
+        # GH 18755, include object and category type for scatter plot
+        if self._kind == "scatter":
+            include_type.extend(["object", "category", "string"])
+    
+        numeric_data = data.select_dtypes(include=include_type, exclude=exclude_type)
+    
+        is_empty = numeric_data.shape[-1] == 0
+        # no non-numeric frames or series allowed
+        if is_empty:
+>           raise TypeError("no numeric data to plot")
+E           TypeError: no numeric data to plot
+
+../../../.venv/lib/python3.12/site-packages/pandas/plotting/_matplotlib/core.py:716: TypeError
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        ax = task_func(1633072800000, 1633076400000, 60000, 0.1)
+>       assert isinstance(ax, matplotlib.axes._subplots.AxesSubplot)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'matplotlib.axes' has no attribute '_subplots'. Did you mean: 'Subplot'?
+
+test_0487.py:17: AttributeError
+___________________________ test_task_func_no_trend ____________________________
+
+    def test_task_func_no_trend():
+        ax = task_func(1633072800000, 1633076400000, 60000, 0)
+        df = ax.get_lines()[0].get_data()
+>       assert np.allclose(df[1], df[1][0])
+E       assert False
+E        +  where False = <function allclose at 0x73373299c670>(array([ 0.49671415, -0.1382643 ,  0.64768854,  1.52302986, -0.23415337,\n       -0.23413696,  1.57921282,  0.76743473, ...508228, -0.676922  ,  0.61167629,  1.03099952,\n        0.93128012, -0.83921752, -0.30921238,  0.33126343,  0.97554513]), np.float64(0.4967141530112327))
+E        +    where <function allclose at 0x73373299c670> = np.allclose
+
+test_0487.py:25: AssertionError
+=========================== short test summary info ============================
+FAILED test_0487.py::test_task_func_start_time_before_end_time - TypeError: n...
+FAILED test_0487.py::test_task_func_valid_input - AttributeError: module 'mat...
+FAILED test_0487.py::test_task_func_no_trend - assert False
+3 failed, 3 passed in 2.65s

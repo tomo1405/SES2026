@@ -1,0 +1,12 @@
+import numpy as np
+from scipy.stats import mode
+from scipy.stats import entropy
+def task_func(numbers):
+    if len(numbers) == 0:
+        raise ValueError
+    my_dict = {'array': np.array(numbers)}
+    mode_value = mode(my_dict['array']).mode[0]
+    ent = entropy(my_dict['array'], base=2)
+    my_dict['mode'] = mode_value
+    my_dict['entropy'] = ent
+    return my_dict

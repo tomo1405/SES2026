@@ -1,0 +1,26 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Test with an empty dictionary
+        country_dict = {}
+        expected_output = pd.DataFrame(columns=['GDP'])
+        actual_output = task_func(country_dict)
+        assert actual_output.equals(expected_output)
+    
+        # Test case 2: Test with a dictionary containing some countries
+        country_dict = {'USA': 'United States', 'UK': 'United Kingdom', 'China': 'People\'s Republic of China'}
+        expected_output = pd.DataFrame({
+            'GDP': [np.random.randint(1000000000, 100000000000), np.random.randint(1000000000, 100000000000), np.random.randint(1000000000, 100000000000)]
+        }, index=['United States', 'United Kingdom', 'People\'s Republic of China'], columns=['GDP'])
+        actual_output = task_func(country_dict)
+>       assert actual_output.equals(expected_output)
+E       AssertionError: assert False
+E        +  where False = equals(                                    GDP\nUnited States                7432973694\nUnited Kingdom              17949233846\nPeople's Republic of China  67327006362)
+E        +    where equals = Empty DataFrame\nColumns: [GDP]\nIndex: [].equals
+
+test_0174.py:19: AssertionError
+=========================== short test summary info ============================
+FAILED test_0174.py::test_task_func - AssertionError: assert False
+1 failed in 1.06s

@@ -1,0 +1,41 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a sample DataFrame
+        data = {
+            'feature1': [1, 2, 3, 4, 5],
+            'feature2': [5, 4, 3, 2, 1],
+            'target': [0, 1, 0, 1, 0]
+        }
+        df = pd.DataFrame(data)
+    
+        # Expected split sizes
+        expected_train_size = 3
+        expected_test_size = 2
+    
+        # Call the function
+        X_train, X_test, y_train, y_test = task_func(df)
+    
+        # Check the sizes of the splits
+        assert len(X_train) == expected_train_size
+        assert len(X_test) == expected_test_size
+        assert len(y_train) == expected_train_size
+        assert len(y_test) == expected_test_size
+    
+        # Check that the splits are correct
+        combined_X = pd.concat([X_train, X_test])
+        combined_y = pd.concat([y_train, y_test])
+    
+>       assert combined_X.equals(df.drop('target', axis=1))
+E       AssertionError: assert False
+E        +  where False = equals(   feature1  feature2\n0         1         5\n1         2         4\n2         3         3\n3         4         2\n4         5         1)
+E        +    where equals =    feature1  feature2\n2         3         3\n0         1         5\n3         4         2\n1         2         4\n4         5         1.equals
+E        +    and      feature1  feature2\n0         1         5\n1         2         4\n2         3         3\n3         4         2\n4         5         1 = drop('target', axis=1)
+E        +      where drop =    feature1  feature2  target\n0         1         5       0\n1         2         4       1\n2         3         3       0\n3         4         2       1\n4         5         1       0.drop
+
+test_0699.py:32: AssertionError
+=========================== short test summary info ============================
+FAILED test_0699.py::test_task_func - AssertionError: assert False
+1 failed in 3.36s

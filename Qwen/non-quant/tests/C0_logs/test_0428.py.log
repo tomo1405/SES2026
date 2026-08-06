@@ -1,0 +1,74 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sample_data = (   id  feature1  feature2  feature3
+0   1        10         5         2
+1   2        20        15         4
+2   3        30        25         6,    id  target
+0   1     100
+1   2     200
+2   3     300)
+
+    def test_task_func(sample_data):
+        df1, df2 = sample_data
+        result = task_func(df1, df2)
+    
+        # Check coefficients and intercept
+        assert isinstance(result["coefficients"], list)
+        assert len(result["coefficients"]) == 3
+        assert isinstance(result["intercept"], float)
+    
+        # Check residuals plot
+        assert isinstance(result["residuals_plot"], plt.Axes)
+    
+        # Check that the plot has the correct title and labels
+        assert result["residuals_plot"].get_title() == "Residuals Plot"
+        assert result["residuals_plot"].get_xlabel() == "Predicted Values"
+        assert result["residuals_plot"].get_ylabel() == "Residuals"
+    
+        # Check that the horizontal line at y=0 exists
+        lines = result["residuals_plot"].lines
+>       assert any(line.get_ydata() == 0 for line in lines)
+E       assert False
+E        +  where False = any(<generator object test_task_func.<locals>.<genexpr> at 0x729c2a9e7c60>)
+
+test_0428.py:40: AssertionError
+_____________________ test_task_func_with_custom_features ______________________
+
+sample_data = (   id  feature1  feature2  feature3
+0   1        10         5         2
+1   2        20        15         4
+2   3        30        25         6,    id  target
+0   1     100
+1   2     200
+2   3     300)
+
+    def test_task_func_with_custom_features(sample_data):
+        df1, df2 = sample_data
+        result = task_func(df1, df2, features=["feature1", "feature2"])
+    
+        # Check coefficients and intercept
+        assert isinstance(result["coefficients"], list)
+        assert len(result["coefficients"]) == 2
+        assert isinstance(result["intercept"], float)
+    
+        # Check residuals plot
+        assert isinstance(result["residuals_plot"], plt.Axes)
+    
+        # Check that the plot has the correct title and labels
+        assert result["residuals_plot"].get_title() == "Residuals Plot"
+        assert result["residuals_plot"].get_xlabel() == "Predicted Values"
+        assert result["residuals_plot"].get_ylabel() == "Residuals"
+    
+        # Check that the horizontal line at y=0 exists
+        lines = result["residuals_plot"].lines
+>       assert any(line.get_ydata() == 0 for line in lines)
+E       assert False
+E        +  where False = any(<generator object test_task_func_with_custom_features.<locals>.<genexpr> at 0x729be8686dc0>)
+
+test_0428.py:61: AssertionError
+=========================== short test summary info ============================
+FAILED test_0428.py::test_task_func - assert False
+FAILED test_0428.py::test_task_func_with_custom_features - assert False
+2 failed, 1 passed in 3.81s

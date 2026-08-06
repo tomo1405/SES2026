@@ -1,0 +1,16 @@
+from nltk.tokenize import RegexpTokenizer
+from string import punctuation
+import os
+def task_func(text, output_filename):
+
+    punctuation_set = set(punctuation)
+    tokenizer = RegexpTokenizer(r'\$\w+')
+    dollar_prefixed_words = tokenizer.tokenize(text)
+    valid_dollar_words = [word for word in dollar_prefixed_words if
+                          not all(char in punctuation_set for char in word[1:])]
+
+    with open(output_filename, 'w') as file:
+        for word in valid_dollar_words:
+            file.write(word + '\n')
+
+    return os.path.abspath(output_filename)

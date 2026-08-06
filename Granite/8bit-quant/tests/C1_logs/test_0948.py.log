@@ -1,0 +1,30 @@
+FF..                                                                     [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_default_args __________________________
+
+    def test_task_func_default_args():
+        matrix = task_func()
+        assert matrix.shape == (3, 2)
+>       assert matrix.dtype == np.dtype("datetime64[D]")
+E       AssertionError: assert dtype('<M8[us]') == dtype('<M8[D]')
+E        +  where dtype('<M8[us]') = array([['2021-01-21T00:00:00.000000', '2021-05-13T00:00:00.000000'],\n       ['2021-07-17T00:00:00.000000', '2021-08-04T00:00:00.000000'],\n       ['2021-09-06T00:00:00.000000', '2021-09-19T00:00:00.000000']],\n      dtype='datetime64[us]').dtype
+E        +  and   dtype('<M8[D]') = <class 'numpy.dtype'>('datetime64[D]')
+E        +    where <class 'numpy.dtype'> = np.dtype
+
+test_0948.py:10: AssertionError
+__________________________ test_task_func_custom_args __________________________
+
+    def test_task_func_custom_args():
+        matrix = task_func(rows=5, columns=4, start_date=datetime(2022, 1, 1), end_date=datetime(2022, 12, 31))
+        assert matrix.shape == (5, 4)
+>       assert matrix.dtype == np.dtype("datetime64[D]")
+E       AssertionError: assert dtype('<M8[us]') == dtype('<M8[D]')
+E        +  where dtype('<M8[us]') = array([['2022-01-21T00:00:00.000000', '2022-02-18T00:00:00.000000',\n        '2022-03-13T00:00:00.000000', '2022-04-22T...6T00:00:00.000000',\n        '2022-11-13T00:00:00.000000', '2022-12-28T00:00:00.000000']],\n      dtype='datetime64[us]').dtype
+E        +  and   dtype('<M8[D]') = <class 'numpy.dtype'>('datetime64[D]')
+E        +    where <class 'numpy.dtype'> = np.dtype
+
+test_0948.py:15: AssertionError
+=========================== short test summary info ============================
+FAILED test_0948.py::test_task_func_default_args - AssertionError: assert dty...
+FAILED test_0948.py::test_task_func_custom_args - AssertionError: assert dtyp...
+2 failed, 2 passed in 0.64s

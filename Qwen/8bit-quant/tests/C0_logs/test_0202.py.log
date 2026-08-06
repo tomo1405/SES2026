@@ -1,0 +1,96 @@
+..FFF                                                                    [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_data ___________________________
+
+    def test_task_func_valid_data():
+        df = pd.DataFrame({'A': [1, 2, 3, 4, 5]})
+>       greater_avg, num_greater_value, ax = task_func(df, 'A', 3)
+                                             ^^^^^^^^^^^^^^^^^^^^^
+
+test_0202.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df =    A
+0  1
+1  2
+2  3
+3  4
+4  5, column = 'A', value = 3
+
+    def task_func(df, column, value):
+        if column not in df.columns:
+            raise ValueError(f"Column '{column}' does not exist in DataFrame")
+        if not isinstance(value, (int, float)):
+            raise ValueError("Value must be a number")
+    
+        data = df[column].values
+        avg = statistics.mean(data)
+        greater_avg = data[data > avg]
+    
+>       data.sort()
+E       ValueError: sort array is read-only
+
+../../../src/src_0202.py:13: ValueError
+____________________ test_task_func_no_greater_than_average ____________________
+
+    def test_task_func_no_greater_than_average():
+        df = pd.DataFrame({'A': [1, 2, 3]})
+>       greater_avg, num_greater_value, ax = task_func(df, 'A', 3)
+                                             ^^^^^^^^^^^^^^^^^^^^^
+
+test_0202.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df =    A
+0  1
+1  2
+2  3, column = 'A', value = 3
+
+    def task_func(df, column, value):
+        if column not in df.columns:
+            raise ValueError(f"Column '{column}' does not exist in DataFrame")
+        if not isinstance(value, (int, float)):
+            raise ValueError("Value must be a number")
+    
+        data = df[column].values
+        avg = statistics.mean(data)
+        greater_avg = data[data > avg]
+    
+>       data.sort()
+E       ValueError: sort array is read-only
+
+../../../src/src_0202.py:13: ValueError
+____________________ test_task_func_all_greater_than_value _____________________
+
+    def test_task_func_all_greater_than_value():
+        df = pd.DataFrame({'A': [6, 7, 8]})
+>       greater_avg, num_greater_value, ax = task_func(df, 'A', 3)
+                                             ^^^^^^^^^^^^^^^^^^^^^
+
+test_0202.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df =    A
+0  6
+1  7
+2  8, column = 'A', value = 3
+
+    def task_func(df, column, value):
+        if column not in df.columns:
+            raise ValueError(f"Column '{column}' does not exist in DataFrame")
+        if not isinstance(value, (int, float)):
+            raise ValueError("Value must be a number")
+    
+        data = df[column].values
+        avg = statistics.mean(data)
+        greater_avg = data[data > avg]
+    
+>       data.sort()
+E       ValueError: sort array is read-only
+
+../../../src/src_0202.py:13: ValueError
+=========================== short test summary info ============================
+FAILED test_0202.py::test_task_func_valid_data - ValueError: sort array is re...
+FAILED test_0202.py::test_task_func_no_greater_than_average - ValueError: sor...
+FAILED test_0202.py::test_task_func_all_greater_than_value - ValueError: sort...
+3 failed, 2 passed in 1.25s

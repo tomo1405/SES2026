@@ -1,0 +1,44 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_valid_script_path _______________________
+
+    def test_task_func_valid_script_path():
+        script_path = "path/to/script.sh"
+        timeout = 10
+>       result = task_func(script_path, timeout)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0462.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+script_path = 'path/to/script.sh', timeout = 10
+
+    def task_func(script_path: str, timeout=10) -> dict:
+        if not os.path.exists(script_path):
+>           raise FileNotFoundError(f"'{script_path}' does not exist.")
+E           FileNotFoundError: 'path/to/script.sh' does not exist.
+
+../../../src/src_0462.py:7: FileNotFoundError
+____________________________ test_task_func_timeout ____________________________
+
+    def test_task_func_timeout():
+        script_path = "path/to/script.sh"
+        timeout = 0.01
+>       result = task_func(script_path, timeout)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0462.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+script_path = 'path/to/script.sh', timeout = 0.01
+
+    def task_func(script_path: str, timeout=10) -> dict:
+        if not os.path.exists(script_path):
+>           raise FileNotFoundError(f"'{script_path}' does not exist.")
+E           FileNotFoundError: 'path/to/script.sh' does not exist.
+
+../../../src/src_0462.py:7: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0462.py::test_task_func_valid_script_path - FileNotFoundError: 'p...
+FAILED test_0462.py::test_task_func_timeout - FileNotFoundError: 'path/to/scr...
+2 failed, 1 passed in 0.45s

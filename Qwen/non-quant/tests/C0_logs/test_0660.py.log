@@ -1,0 +1,24 @@
+...F                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_plots_correct_pdf _______________________
+
+sample_data = ([array([-3.        , -2.93939394, -2.87878788, -2.81818182, -2.75757576,
+       -2.6969697 , -2.63636364, -2.57575758...7406839,
+        1.76302937,  0.6407857 ,  1.06772144,  1.21773511,  1.2594042 ])], ['Normal(0, 1)', 'Normal(1, 0.5)'])
+
+    def test_task_func_plots_correct_pdf(sample_data):
+        x, y, labels = sample_data
+        fig = task_func(x, y, labels)
+        ax = fig.axes[0]
+    
+        for i, line in enumerate(ax.lines):
+            mu = np.mean(y[i])
+            sigma = np.std(y[i])
+>           expected_pdf = stats.norm.pdf(x[i], mu, sigma)
+                           ^^^^^
+E           NameError: name 'stats' is not defined
+
+test_0660.py:40: NameError
+=========================== short test summary info ============================
+FAILED test_0660.py::test_task_func_plots_correct_pdf - NameError: name 'stat...
+1 failed, 3 passed in 2.69s

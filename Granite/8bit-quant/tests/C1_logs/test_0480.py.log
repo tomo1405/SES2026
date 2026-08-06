@@ -1,0 +1,22 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data_list = ["apple, banana, carrot", "dog, cat, fish", "", ""]
+        seed = 0
+        df = task_func(data_list, seed)
+        assert df["Original String"].tolist() == data_list
+        assert df["Modified String"].tolist() != data_list
+>       assert df["Modified String"].str.contains(", ").all()
+E       AssertionError: assert np.False_
+E        +  where np.False_ = all()
+E        +    where all = 0     True\n1     True\n2    False\n3    False\nName: Modified String, dtype: bool.all
+E        +      where 0     True\n1     True\n2    False\n3    False\nName: Modified String, dtype: bool = contains(', ')
+E        +        where contains = <pandas.core.strings.accessor.StringMethods object at 0x7a2a19dfac30>.contains
+E        +          where <pandas.core.strings.accessor.StringMethods object at 0x7a2a19dfac30> = 0    apple, tkgnku, carrot\n1           dog, zjx, fish\n2                         \n3                         \nName: Modified String, dtype: str.str
+
+test_0480.py:10: AssertionError
+=========================== short test summary info ============================
+FAILED test_0480.py::test_task_func - AssertionError: assert np.False_
+1 failed in 1.08s

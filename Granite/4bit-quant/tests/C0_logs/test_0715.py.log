@@ -1,0 +1,64 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+self = PosixPath('/path/to/whatever'), mode = 511, parents = True
+exist_ok = True
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileNotFoundError: [Errno 2] No such file or directory: '/path/to/whatever'
+
+/usr/lib/python3.12/pathlib.py:1313: FileNotFoundError
+
+During handling of the above exception, another exception occurred:
+
+self = PosixPath('/path/to'), mode = 511, parents = True, exist_ok = True
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileNotFoundError: [Errno 2] No such file or directory: '/path/to'
+
+/usr/lib/python3.12/pathlib.py:1313: FileNotFoundError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func():
+        # Test case 1: Check if the directory is created
+>       path = task_func()
+               ^^^^^^^^^^^
+
+test_0715.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test_0715.py:6: in task_func
+    Path(path_to_append).mkdir(parents=True, exist_ok=True)
+/usr/lib/python3.12/pathlib.py:1317: in mkdir
+    self.parent.mkdir(parents=True, exist_ok=True)
+/usr/lib/python3.12/pathlib.py:1317: in mkdir
+    self.parent.mkdir(parents=True, exist_ok=True)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/path'), mode = 511, parents = True, exist_ok = True
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           PermissionError: [Errno 13] Permission denied: '/path'
+
+/usr/lib/python3.12/pathlib.py:1313: PermissionError
+=========================== short test summary info ============================
+FAILED test_0715.py::test_task_func - PermissionError: [Errno 13] Permission ...
+1 failed in 0.56s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

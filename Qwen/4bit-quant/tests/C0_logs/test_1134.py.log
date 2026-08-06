@@ -1,0 +1,44 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_success ____________________________
+
+mock_get = <MagicMock name='get' id='131246769330400'>
+
+    @patch('src_1134.requests.get')
+    def test_task_func_success(mock_get):
+        # Mock the response from requests.get
+        mock_response = Mock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = {'key': 'value'}
+        mock_get.return_value = mock_response
+    
+        API_URL = "https://api.example.com"
+        endpoint = "/data"
+        PREFIX = "test_"
+    
+        # Call the function
+>       result = task_func(API_URL, endpoint, PREFIX)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1134.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+API_URL = 'https://api.example.com', endpoint = '/data', PREFIX = 'test_'
+
+    def task_func(API_URL, endpoint, PREFIX):
+        try:
+            response = requests.get(API_URL + endpoint)
+            response.raise_for_status()  # Raises an HTTPError for bad responses
+            data = response.json()
+        except requests.RequestException as e:
+            raise RuntimeError(f"Error fetching data from API: {e}")
+    
+        filename = PREFIX + endpoint + '.json'
+>       with open(filename, 'w') as f:
+             ^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'test_/data.json'
+
+../../../src/src_1134.py:12: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_1134.py::test_task_func_success - FileNotFoundError: [Errno 2] No...
+1 failed, 1 passed in 0.73s

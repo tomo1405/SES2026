@@ -1,0 +1,104 @@
+F.FF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        myList = [1, 2, 3, 4, 5]
+        expected_output = np.array([0., 0.2, 0.4, 0.6, 0.8]).flatten()
+    
+        actual_output = task_func(myList)
+    
+>       assert np.array_equal(actual_output, expected_output)
+E       assert False
+E        +  where False = <function array_equal at 0x7efe9bf81a70>(array([0.  , 0.25, 0.5 , 0.75, 1.  ]), array([0. , 0.2, 0.4, 0.6, 0.8]))
+E        +    where <function array_equal at 0x7efe9bf81a70> = np.array_equal
+
+test_0750.py:12: AssertionError
+______________________ test_task_func_with_negative_input ______________________
+
+    def test_task_func_with_negative_input():
+        myList = [-1, -2, -3, -4, -5]
+        expected_output = np.array([0., 0., 0., 0., 0.]).flatten()
+    
+        actual_output = task_func(myList)
+    
+>       assert np.array_equal(actual_output, expected_output)
+E       assert False
+E        +  where False = <function array_equal at 0x7efe9bf81a70>(array([1.  , 0.75, 0.5 , 0.25, 0.  ]), array([0., 0., 0., 0., 0.]))
+E        +    where <function array_equal at 0x7efe9bf81a70> = np.array_equal
+
+test_0750.py:28: AssertionError
+_______________________ test_task_func_with_string_input _______________________
+
+    def test_task_func_with_string_input():
+        myList = ['a', 'b', 'c', 'd', 'e']
+        with pytest.raises(TypeError):
+>           task_func(myList)
+
+test_0750.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0750.py:6: in task_func
+    normalized_list = scaler.fit_transform(myList)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/utils/_set_output.py:319: in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/base.py:969: in fit_transform
+    return self.fit(X, **fit_params).transform(X)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/preprocessing/_data.py:473: in fit
+    return self.partial_fit(X, y)
+           ^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/base.py:1403: in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/preprocessing/_data.py:513: in partial_fit
+    X = validate_data(
+../../../.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:3038: in validate_data
+    out = check_array(X, input_name="X", **check_params)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:1035: in check_array
+    array = _asarray_with_order(array, order=order, dtype=dtype, xp=xp)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+array = array([['a'],
+       ['b'],
+       ['c'],
+       ['d'],
+       ['e']], dtype='<U1')
+dtype = dtype('float64'), order = None, copy = None
+xp = <module 'sklearn.externals.array_api_compat.numpy' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/sklearn/externals/array_api_compat/numpy/__init__.py'>
+device = None
+
+    def _asarray_with_order(
+        array, dtype=None, order=None, copy=None, *, xp=None, device=None
+    ):
+        """Helper to support the order kwarg only for NumPy-backed arrays
+    
+        Memory layout parameter `order` is not exposed in the Array API standard,
+        however some input validation code in scikit-learn needs to work both
+        for classes and functions that will leverage Array API only operations
+        and for code that inherently relies on NumPy backed data containers with
+        specific memory layout constraints (e.g. our own Cython code). The
+        purpose of this helper is to make it possible to share code for data
+        container validation without memory copies for both downstream use cases:
+        the `order` parameter is only enforced if the input array implementation
+        is NumPy based, otherwise `order` is just silently ignored.
+        """
+        xp, _ = get_namespace(array, xp=xp)
+        if _is_numpy_namespace(xp):
+            # Use NumPy API to support order
+            if copy is True:
+                array = numpy.array(array, order=order, dtype=dtype)
+            else:
+>               array = numpy.asarray(array, order=order, dtype=dtype)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               ValueError: could not convert string to float: np.str_('a')
+
+../../../.venv/lib/python3.12/site-packages/sklearn/utils/_array_api.py:976: ValueError
+=========================== short test summary info ============================
+FAILED test_0750.py::test_task_func - assert False
+FAILED test_0750.py::test_task_func_with_negative_input - assert False
+FAILED test_0750.py::test_task_func_with_string_input - ValueError: could not...
+3 failed, 1 passed in 2.98s

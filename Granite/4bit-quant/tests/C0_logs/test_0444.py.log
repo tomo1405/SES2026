@@ -1,0 +1,27 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        P = np.random.rand(3, 3)
+        T = np.random.rand(3, 3, 3)
+        n_clusters = 3
+        random_state = 0
+        n_init = 10
+        expected_shape = (3, 3, 3)
+        expected_result = np.random.randint(low=0, high=n_clusters, size=3)
+        expected_ax_title = "KMeans Clustering Visualization"
+    
+        cluster_result, ax = task_func(P, T, n_clusters, random_state, n_init)
+    
+        assert T.shape == expected_shape, "Provided tensor does not match the expected shape."
+>       assert np.array_equal(cluster_result, expected_result), "KMeans clustering result is incorrect."
+E       AssertionError: KMeans clustering result is incorrect.
+E       assert False
+E        +  where False = <function array_equal at 0x7e51177a4f30>(array([0, 2, 0, 1, 1, 1, 0, 2, 0], dtype=int32), array([1, 2, 1]))
+E        +    where <function array_equal at 0x7e51177a4f30> = np.array_equal
+
+test_0444.py:19: AssertionError
+=========================== short test summary info ============================
+FAILED test_0444.py::test_task_func - AssertionError: KMeans clustering resul...
+1 failed, 1 passed in 4.08s

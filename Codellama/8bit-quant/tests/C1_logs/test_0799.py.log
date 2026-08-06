@@ -1,0 +1,36 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+___________________ test_task_func_backup_dir_does_not_exist ___________________
+
+    def test_task_func_backup_dir_does_not_exist():
+        directory = '/tmp/test_dir'
+        BACKUP_DIR = '/tmp/backup'
+        os.environ['BACKUP_DIR'] = BACKUP_DIR
+        os.environ['directory'] = directory
+        result = task_func(directory)
+>       assert result == f'Backup directory {BACKUP_DIR} does not exist. Cannot rollback update.'
+E       AssertionError: assert 'No backups f...lback update.' == 'Backup direc...lback update.'
+E         
+E         - Backup directory /tmp/backup does not exist. Cannot rollback update.
+E         + No backups found in /tmp/backup. Cannot rollback update.
+
+test_0799.py:12: AssertionError
+_______________________ test_task_func_directory_exists ________________________
+
+    def test_task_func_directory_exists():
+        directory = '/tmp/test_dir'
+        BACKUP_DIR = '/tmp/backup'
+        os.environ['BACKUP_DIR'] = BACKUP_DIR
+        os.environ['directory'] = directory
+        result = task_func(directory)
+>       assert result == directory
+E       AssertionError: assert 'No backups f...lback update.' == '/tmp/test_dir'
+E         
+E         - /tmp/test_dir
+E         + No backups found in /tmp/backup. Cannot rollback update.
+
+test_0799.py:28: AssertionError
+=========================== short test summary info ============================
+FAILED test_0799.py::test_task_func_backup_dir_does_not_exist - AssertionErro...
+FAILED test_0799.py::test_task_func_directory_exists - AssertionError: assert...
+2 failed, 1 passed in 0.49s

@@ -1,0 +1,35 @@
+...FF.                                                                   [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_target_words _______________________
+
+    def test_task_func_with_target_words():
+        vocabulary = ["apple", "banana", "cherry", "date"]
+        target_words = ["apple", "banana"]
+        sentences = task_func(target_words, 2, vocabulary)
+        assert len(sentences) == 2
+        for sentence in sentences:
+            assert all(word in vocabulary for word in sentence.split())
+            for word in target_words:
+>               assert word.replace(" ", "_") in sentence
+E               AssertionError: assert 'apple' in 'cherry cherry cherry date date date cherry date banana cherry'
+E                +  where 'apple' = <built-in method replace of str object at 0x7b8769ce7630>(' ', '_')
+E                +    where <built-in method replace of str object at 0x7b8769ce7630> = 'apple'.replace
+
+test_0955.py:27: AssertionError
+______________________ test_task_func_case_insensitivity _______________________
+
+    def test_task_func_case_insensitivity():
+        vocabulary = ["Apple", "Banana", "Cherry", "Date"]
+        target_words = ["apple", "banana"]
+        sentences = task_func(target_words, 2, vocabulary)
+        assert len(sentences) == 2
+        for sentence in sentences:
+>           assert all(word.lower() in sentence for word in vocabulary)
+E           assert False
+E            +  where False = all(<generator object test_task_func_case_insensitivity.<locals>.<genexpr> at 0x7b8769ea2cf0>)
+
+test_0955.py:35: AssertionError
+=========================== short test summary info ============================
+FAILED test_0955.py::test_task_func_with_target_words - AssertionError: asser...
+FAILED test_0955.py::test_task_func_case_insensitivity - assert False
+2 failed, 4 passed in 0.48s

@@ -1,0 +1,24 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+students = ['Alice', 'Bob', 'Charlie']
+subjects = ['Math', 'English', 'Physics'], seed = 42
+
+    def test_task_func(students, subjects, seed):
+        random.seed(seed)
+        report_df = task_func(students, subjects, seed)
+        assert isinstance(report_df, pd.DataFrame)
+        assert report_df.shape == (len(students), len(subjects) + 2)
+        assert report_df.columns.tolist() == ['Student'] + subjects + ['Average Grade']
+        for student, row in report_df.iterrows():
+            grades = row[subjects].tolist()
+            avg_grade = row['Average Grade']
+>           assert isinstance(student, str)
+E           assert False
+E            +  where False = isinstance(0, str)
+
+test_0851.py:28: AssertionError
+=========================== short test summary info ============================
+FAILED test_0851.py::test_task_func - assert False
+1 failed in 1.19s

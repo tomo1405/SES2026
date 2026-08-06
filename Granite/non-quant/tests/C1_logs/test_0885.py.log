@@ -1,0 +1,103 @@
+F...F                                                                    [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+df =    A  B   C   D
+0  a  1   7  13
+1  a  2   8  14
+2  b  3   9  15
+3  b  4  10  16
+4  c  5  11  17
+5  c  6  12  18
+
+    def test_task_func_valid_input(df):
+>       assert task_func(df, columns=['A', 'B', 'C'], larger=5, equal=11) is not None
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0885.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df =    A  B   C   D
+0  a  1   7  13
+1  a  2   8  14
+2  b  3   9  15
+3  b  4  10  16
+4  c  5  11  17
+5  c  6  12  18
+columns = ['A', 'B', 'C'], larger = 5, equal = 11
+
+    def task_func(df, columns=['A', 'B', 'C'], larger=50, equal=900):
+        if len(columns) != 3:
+            raise ValueError("Exactly three columns should be specified.")
+    
+        for column in columns:
+            if column not in df.columns:
+                raise ValueError('The specified columns should exist in the DataFrame.')
+    
+        col_categorical, col_numerical, col_filter = columns
+    
+        # Filtering the data based on the specified conditions
+        selected = df[(df[col_numerical] > larger) & (df[col_filter] == equal)][[col_categorical, col_numerical]]
+    
+        # Creating a contingency table for the chi-square test
+        contingency_table = pd.crosstab(selected[col_categorical], selected[col_numerical])
+    
+        # Check if the contingency table is empty (no data meeting the criteria)
+        if contingency_table.size == 0:
+>           raise ValueError("Insufficient data - no matching data for the applied conditions.")
+E           ValueError: Insufficient data - no matching data for the applied conditions.
+
+../../../src/src_0885.py:21: ValueError
+________________________ test_task_func_expected_output ________________________
+
+df =    A  B   C   D
+0  a  1   7  13
+1  a  2   8  14
+2  b  3   9  15
+3  b  4  10  16
+4  c  5  11  17
+5  c  6  12  18
+
+    def test_task_func_expected_output(df):
+        expected_p_value = chi2_contingency(pd.crosstab(df['A'], df['B']))[1]
+>       assert task_func(df, columns=['A', 'B', 'C']) == expected_p_value
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0885.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df =    A  B   C   D
+0  a  1   7  13
+1  a  2   8  14
+2  b  3   9  15
+3  b  4  10  16
+4  c  5  11  17
+5  c  6  12  18
+columns = ['A', 'B', 'C'], larger = 50, equal = 900
+
+    def task_func(df, columns=['A', 'B', 'C'], larger=50, equal=900):
+        if len(columns) != 3:
+            raise ValueError("Exactly three columns should be specified.")
+    
+        for column in columns:
+            if column not in df.columns:
+                raise ValueError('The specified columns should exist in the DataFrame.')
+    
+        col_categorical, col_numerical, col_filter = columns
+    
+        # Filtering the data based on the specified conditions
+        selected = df[(df[col_numerical] > larger) & (df[col_filter] == equal)][[col_categorical, col_numerical]]
+    
+        # Creating a contingency table for the chi-square test
+        contingency_table = pd.crosstab(selected[col_categorical], selected[col_numerical])
+    
+        # Check if the contingency table is empty (no data meeting the criteria)
+        if contingency_table.size == 0:
+>           raise ValueError("Insufficient data - no matching data for the applied conditions.")
+E           ValueError: Insufficient data - no matching data for the applied conditions.
+
+../../../src/src_0885.py:21: ValueError
+=========================== short test summary info ============================
+FAILED test_0885.py::test_task_func_valid_input - ValueError: Insufficient da...
+FAILED test_0885.py::test_task_func_expected_output - ValueError: Insufficien...
+2 failed, 3 passed in 2.63s

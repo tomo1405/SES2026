@@ -1,0 +1,37 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_edge_cases ___________________________
+
+    def test_task_func_edge_cases():
+        # Test with minimum number of students
+        df_min, _ = task_func(1)
+        assert df_min.shape == (1, 5), "DataFrame shape is incorrect for minimum students"
+    
+        # Test with maximum number of students
+        df_max, _ = task_func(100)
+        assert df_max.shape == (100, 5), "DataFrame shape is incorrect for maximum students"
+    
+        # Test with zero students (should raise an error or handle gracefully)
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0638.py:35: Failed
+__________________________ test_task_func_data_types ___________________________
+
+    def test_task_func_data_types():
+        num_students = 10
+        df, _ = task_func(num_students)
+    
+        # Check if the DataFrame is of type pandas.DataFrame
+        assert isinstance(df, pd.DataFrame), "Return value is not a pandas DataFrame"
+    
+        # Check if the plot object is of type matplotlib.axes._subplots.AxesSubplot
+>       assert isinstance(ax, plt.Axes), "Plot object is not of type plt.Axes"
+                          ^^
+E       NameError: name 'ax' is not defined
+
+test_0638.py:46: NameError
+=========================== short test summary info ============================
+FAILED test_0638.py::test_task_func_edge_cases - Failed: DID NOT RAISE ValueE...
+FAILED test_0638.py::test_task_func_data_types - NameError: name 'ax' is not ...
+2 failed, 1 passed in 2.29s

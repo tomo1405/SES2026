@@ -1,0 +1,54 @@
+...F.                                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_non_numeric_input _______________________
+
+    def test_task_func_non_numeric_input():
+        df = pd.DataFrame({'A': ['a', 'b', 'c'], 'B': ['d', 'e', 'f']})
+        with pytest.raises(ValueError):
+>           task_func(df)
+
+test_0138.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0138.py:8: in task_func
+    skewness = skew(df[last_col].dropna())  # dropna() to handle NaN values
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:601: in axis_nan_policy_wrapper
+    res = hypotest_fun_out(*samples, **kwds)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/scipy/stats/_stats_py.py:1315: in skew
+    mean = xp.mean(a, axis=axis, keepdims=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:3862: in mean
+    return _methods._mean(a, axis=axis, dtype=dtype,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = array(['d', 'e', 'f'], dtype=object), axis = 0, dtype = None, out = None
+keepdims = True, where = True
+
+    def _mean(a, axis=None, dtype=None, out=None, keepdims=False, *, where=True):
+        arr = asanyarray(a)
+    
+        is_float16_result = False
+    
+        rcount = _count_reduce_items(arr, axis, keepdims=keepdims, where=where)
+        if rcount == 0 if where is True else umr_any(rcount == 0, axis=None):
+            warnings.warn("Mean of empty slice", RuntimeWarning, stacklevel=2)
+    
+        # Cast bool, unsigned int, and int to float64 by default
+        if dtype is None:
+            if issubclass(arr.dtype.type, (nt.integer, nt.bool)):
+                dtype = mu.dtype('f8')
+            elif issubclass(arr.dtype.type, nt.float16):
+                dtype = mu.dtype('f4')
+                is_float16_result = True
+    
+        ret = umr_sum(arr, axis, dtype, out, keepdims, where=where)
+        if isinstance(ret, mu.ndarray):
+>           ret = um.true_divide(
+                    ret, rcount, out=ret, casting='unsafe', subok=False)
+E           TypeError: unsupported operand type(s) for /: 'str' and 'int'
+
+../../../.venv/lib/python3.12/site-packages/numpy/_core/_methods.py:134: TypeError
+=========================== short test summary info ============================
+FAILED test_0138.py::test_task_func_non_numeric_input - TypeError: unsupporte...
+1 failed, 4 passed in 2.49s

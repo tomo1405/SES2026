@@ -1,0 +1,41 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Mock the cursor object
+        mock_cursor = Mock()
+        # Set up the expected SQL queries and responses
+        mock_cursor.execute.side_effect = [
+            # First call to execute is to get the list of users
+            [
+                (1, 'password1'),
+                (2, 'password2')
+            ],
+            # Second call to execute is to update the passwords
+            None
+        ]
+    
+        # Call the function with the mock cursor
+>       result = task_func('salt', mock_cursor)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1132.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+salt = 'salt', cursor = <Mock id='125191505292672'>
+
+    def task_func(salt, cursor):
+        if not isinstance(salt, str):
+            raise TypeError
+        cursor.execute("SELECT id, password FROM users")
+        users = cursor.fetchall()
+        count_updated = 0
+    
+>       for user in users:
+E       TypeError: 'Mock' object is not iterable
+
+../../../src/src_1132.py:10: TypeError
+=========================== short test summary info ============================
+FAILED test_1132.py::test_task_func - TypeError: 'Mock' object is not iterable
+1 failed in 0.70s

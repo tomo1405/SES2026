@@ -1,0 +1,50 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_fixed_seed ________________________
+
+    def test_task_func_with_fixed_seed():
+        # Test with a fixed seed to ensure reproducibility
+        utc_datetime = datetime(2023, 10, 1, 12, 0, 0)
+        expected_person = {
+            'name': 'John',
+            'age': 30,
+            'city': 'New York',
+            'timestamp': '2023-10-01T12:00:00'
+        }
+        expected_json_str = json.dumps(expected_person)
+    
+        result = task_func(utc_datetime, seed=0)
+>       assert result == expected_json_str
+E       assert '{"name": "Da...01T12:00:00"}' == '{"name": "Jo...01T12:00:00"}'
+E         
+E         - {"name": "John", "age": 30, "city": "New York", "timestamp": "2023-10-01T12:00:00"}
+E         ?           ^^^^           ^           ^^^^^^^^
+E         + {"name": "David", "age": 33, "city": "Mumbai", "timestamp": "2023-10-01T12:00:00"}
+E         ?           ^^^^^           ^           ^^^^^^
+
+test_0259.py:20: AssertionError
+_______________________ test_task_func_with_random_seed ________________________
+
+    def test_task_func_with_random_seed():
+        # Test with a random seed to check if the function handles it correctly
+        utc_datetime = datetime(2023, 10, 1, 12, 0, 0)
+        random.seed(None)  # Use system time as seed for randomness
+        result = task_func(utc_datetime)
+    
+        # Parse the JSON string to a dictionary
+        result_dict = json.loads(result)
+    
+        # Check if 'timestamp' is present and matches the input datetime
+        assert 'timestamp' in result_dict
+        assert result_dict['timestamp'] == utc_datetime.isoformat()
+    
+        # Check if the person data is one of the entries in DATA
+>       assert result_dict in DATA
+                              ^^^^
+E       NameError: name 'DATA' is not defined
+
+test_0259.py:36: NameError
+=========================== short test summary info ============================
+FAILED test_0259.py::test_task_func_with_fixed_seed - assert '{"name": "Da......
+FAILED test_0259.py::test_task_func_with_random_seed - NameError: name 'DATA'...
+2 failed, 1 passed in 0.41s

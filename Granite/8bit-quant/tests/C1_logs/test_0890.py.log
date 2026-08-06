@@ -1,0 +1,126 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_numeric_columns ______________________
+
+data_dir = 'path/to/data/dir', csv_file = 'data.csv'
+
+    def test_task_func_with_numeric_columns(data_dir, csv_file):
+        df = pd.DataFrame({
+            "A": [1, 2, np.nan, 4],
+            "B": [5, 6, 7, 8],
+            "C": [9, 10, 11, 12]
+        })
+>       df.to_csv(os.path.join(data_dir, csv_file), index=False)
+
+test_0890.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:3988: in to_csv
+    return DataFrameRenderer(formatter).to_csv(
+../../../.venv/lib/python3.12/site-packages/pandas/io/formats/format.py:1025: in to_csv
+    csv_formatter.save()
+../../../.venv/lib/python3.12/site-packages/pandas/io/formats/csvs.py:251: in save
+    with get_handle(
+../../../.venv/lib/python3.12/site-packages/pandas/io/common.py:797: in get_handle
+    check_parent_directory(str(handle))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = 'path/to/data/dir/data.csv'
+
+    def check_parent_directory(path: Path | str) -> None:
+        """
+        Check if parent directory of a file exists, raise OSError if it does not
+    
+        Parameters
+        ----------
+        path: Path or str
+            Path to check parent directory of
+        """
+        parent = Path(path).parent
+        if not parent.is_dir():
+>           raise OSError(rf"Cannot save file into a non-existent directory: '{parent}'")
+E           OSError: Cannot save file into a non-existent directory: 'path/to/data/dir'
+
+../../../.venv/lib/python3.12/site-packages/pandas/io/common.py:656: OSError
+________________________ test_task_func_with_empty_data ________________________
+
+data_dir = 'path/to/data/dir', csv_file = 'data.csv'
+
+    def test_task_func_with_empty_data(data_dir, csv_file):
+        df = pd.DataFrame()
+>       df.to_csv(os.path.join(data_dir, csv_file), index=False)
+
+test_0890.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:3988: in to_csv
+    return DataFrameRenderer(formatter).to_csv(
+../../../.venv/lib/python3.12/site-packages/pandas/io/formats/format.py:1025: in to_csv
+    csv_formatter.save()
+../../../.venv/lib/python3.12/site-packages/pandas/io/formats/csvs.py:251: in save
+    with get_handle(
+../../../.venv/lib/python3.12/site-packages/pandas/io/common.py:797: in get_handle
+    check_parent_directory(str(handle))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = 'path/to/data/dir/data.csv'
+
+    def check_parent_directory(path: Path | str) -> None:
+        """
+        Check if parent directory of a file exists, raise OSError if it does not
+    
+        Parameters
+        ----------
+        path: Path or str
+            Path to check parent directory of
+        """
+        parent = Path(path).parent
+        if not parent.is_dir():
+>           raise OSError(rf"Cannot save file into a non-existent directory: '{parent}'")
+E           OSError: Cannot save file into a non-existent directory: 'path/to/data/dir'
+
+../../../.venv/lib/python3.12/site-packages/pandas/io/common.py:656: OSError
+___________________ test_task_func_with_non_numeric_columns ____________________
+
+data_dir = 'path/to/data/dir', csv_file = 'data.csv'
+
+    def test_task_func_with_non_numeric_columns(data_dir, csv_file):
+        df = pd.DataFrame({
+            "A": ["a", "b", "c", "d"],
+            "B": [1, 2, 3, 4],
+            "C": [5, 6, 7, 8]
+        })
+>       df.to_csv(os.path.join(data_dir, csv_file), index=False)
+
+test_0890.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:3988: in to_csv
+    return DataFrameRenderer(formatter).to_csv(
+../../../.venv/lib/python3.12/site-packages/pandas/io/formats/format.py:1025: in to_csv
+    csv_formatter.save()
+../../../.venv/lib/python3.12/site-packages/pandas/io/formats/csvs.py:251: in save
+    with get_handle(
+../../../.venv/lib/python3.12/site-packages/pandas/io/common.py:797: in get_handle
+    check_parent_directory(str(handle))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = 'path/to/data/dir/data.csv'
+
+    def check_parent_directory(path: Path | str) -> None:
+        """
+        Check if parent directory of a file exists, raise OSError if it does not
+    
+        Parameters
+        ----------
+        path: Path or str
+            Path to check parent directory of
+        """
+        parent = Path(path).parent
+        if not parent.is_dir():
+>           raise OSError(rf"Cannot save file into a non-existent directory: '{parent}'")
+E           OSError: Cannot save file into a non-existent directory: 'path/to/data/dir'
+
+../../../.venv/lib/python3.12/site-packages/pandas/io/common.py:656: OSError
+=========================== short test summary info ============================
+FAILED test_0890.py::test_task_func_with_numeric_columns - OSError: Cannot sa...
+FAILED test_0890.py::test_task_func_with_empty_data - OSError: Cannot save fi...
+FAILED test_0890.py::test_task_func_with_non_numeric_columns - OSError: Canno...
+3 failed in 1.59s

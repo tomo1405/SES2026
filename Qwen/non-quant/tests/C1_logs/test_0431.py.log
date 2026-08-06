@@ -1,0 +1,162 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_output _____________________________
+
+sample_data = (   id  feature1
+0   1       1.0
+1   2       2.0
+2   3       3.0
+3   4       4.0,    id  feature2
+0   1       4.0
+1   2       3.0
+2   3       2.0
+3   4       1.0)
+
+    def test_task_func_output(sample_data):
+        df1, df2 = sample_data
+>       labels, ax = task_func(df1, df2)
+                     ^^^^^^^^^^^^^^^^^^^
+
+test_0431.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df1 =    id  feature1
+0   1       1.0
+1   2       2.0
+2   3       3.0
+3   4       4.0
+df2 =    id  feature2
+0   1       4.0
+1   2       3.0
+2   3       2.0
+3   4       1.0
+column1 = 'feature1', column2 = 'feature2'
+
+    def task_func(df1, df2, column1="feature1", column2="feature2"):
+>       df = pd.merge(df1, df2, on="id")
+             ^^
+E       NameError: name 'pd' is not defined
+
+../../../src/src_0431.py:4: NameError
+______________________ test_task_func_with_custom_columns ______________________
+
+sample_data = (   id  feature1
+0   1       1.0
+1   2       2.0
+2   3       3.0
+3   4       4.0,    id  feature2
+0   1       4.0
+1   2       3.0
+2   3       2.0
+3   4       1.0)
+
+    def test_task_func_with_custom_columns(sample_data):
+        df1, df2 = sample_data
+>       labels, ax = task_func(df1, df2, column1="feature1", column2="feature2")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0431.py:30: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df1 =    id  feature1
+0   1       1.0
+1   2       2.0
+2   3       3.0
+3   4       4.0
+df2 =    id  feature2
+0   1       4.0
+1   2       3.0
+2   3       2.0
+3   4       1.0
+column1 = 'feature1', column2 = 'feature2'
+
+    def task_func(df1, df2, column1="feature1", column2="feature2"):
+>       df = pd.merge(df1, df2, on="id")
+             ^^
+E       NameError: name 'pd' is not defined
+
+../../../src/src_0431.py:4: NameError
+____________________ test_task_func_with_different_columns _____________________
+
+sample_data = (   id  feature1  featureA
+0   1       1.0       1.0
+1   2       2.0       2.0
+2   3       3.0       3.0
+3   4       4...ure2  featureB
+0   1       4.0       4.0
+1   2       3.0       3.0
+2   3       2.0       2.0
+3   4       1.0       1.0)
+
+    def test_task_func_with_different_columns(sample_data):
+        df1, df2 = sample_data
+        # Add new columns to test with different feature names
+        df1['featureA'] = df1['feature1']
+        df2['featureB'] = df2['feature2']
+    
+>       labels, ax = task_func(df1, df2, column1="featureA", column2="featureB")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0431.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df1 =    id  feature1  featureA
+0   1       1.0       1.0
+1   2       2.0       2.0
+2   3       3.0       3.0
+3   4       4.0       4.0
+df2 =    id  feature2  featureB
+0   1       4.0       4.0
+1   2       3.0       3.0
+2   3       2.0       2.0
+3   4       1.0       1.0
+column1 = 'featureA', column2 = 'featureB'
+
+    def task_func(df1, df2, column1="feature1", column2="feature2"):
+>       df = pd.merge(df1, df2, on="id")
+             ^^
+E       NameError: name 'pd' is not defined
+
+../../../src/src_0431.py:4: NameError
+_______________________ test_task_func_with_no_common_id _______________________
+
+    def test_task_func_with_no_common_id():
+        df1 = pd.DataFrame({
+            'id': [5, 6, 7, 8],
+            'feature1': [1.0, 2.0, 3.0, 4.0]
+        })
+        df2 = pd.DataFrame({
+            'id': [9, 10, 11, 12],
+            'feature2': [4.0, 3.0, 2.0, 1.0]
+        })
+    
+        with pytest.raises(KeyError):
+>           task_func(df1, df2)
+
+test_0431.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df1 =    id  feature1
+0   5       1.0
+1   6       2.0
+2   7       3.0
+3   8       4.0
+df2 =    id  feature2
+0   9       4.0
+1  10       3.0
+2  11       2.0
+3  12       1.0
+column1 = 'feature1', column2 = 'feature2'
+
+    def task_func(df1, df2, column1="feature1", column2="feature2"):
+>       df = pd.merge(df1, df2, on="id")
+             ^^
+E       NameError: name 'pd' is not defined
+
+../../../src/src_0431.py:4: NameError
+=========================== short test summary info ============================
+FAILED test_0431.py::test_task_func_output - NameError: name 'pd' is not defined
+FAILED test_0431.py::test_task_func_with_custom_columns - NameError: name 'pd...
+FAILED test_0431.py::test_task_func_with_different_columns - NameError: name ...
+FAILED test_0431.py::test_task_func_with_no_common_id - NameError: name 'pd' ...
+4 failed in 3.79s

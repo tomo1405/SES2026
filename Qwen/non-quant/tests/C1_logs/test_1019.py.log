@@ -1,0 +1,67 @@
+F...FF                                                                   [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_success ____________________________
+
+mock_requests = None
+
+    def test_task_func_success(mock_requests):
+        result = task_func("http://example.com")
+        assert isinstance(result, BeautifulSoup)
+>       assert result.prettify() == "<html><body><h1>Test</h1></body></html>"
+E       AssertionError: assert '<html>\n <bo...y>\n</html>\n' == '<html><body>.../body></html>'
+E         
+E         - <html><body><h1>Test</h1></body></html>
+E         + <html>
+E         +  <body>
+E         +   <h1>
+E         +    Test
+E         +   </h1>
+E         +  </body>
+E         + </html>
+
+test_1019.py:31: AssertionError
+_______________________ test_task_func_with_lxml_parser ________________________
+
+mock_requests = None
+
+    def test_task_func_with_lxml_parser(mock_requests):
+        result = task_func("http://example.com", use_lxml=True)
+        assert isinstance(result, BeautifulSoup)
+>       assert result.prettify() == "<html><body><h1>Test</h1></body></html>"
+E       AssertionError: assert '<html>\n <bo...y>\n</html>\n' == '<html><body>.../body></html>'
+E         
+E         - <html><body><h1>Test</h1></body></html>
+E         + <html>
+E         +  <body>
+E         +   <h1>
+E         +    Test
+E         +   </h1>
+E         +  </body>
+E         + </html>
+
+test_1019.py:48: AssertionError
+_______________________ test_task_func_with_html_parser ________________________
+
+mock_requests = None
+
+    def test_task_func_with_html_parser(mock_requests):
+        result = task_func("http://example.com", use_lxml=False)
+        assert isinstance(result, BeautifulSoup)
+>       assert result.prettify() == "<html><body><h1>Test</h1></body></html>"
+E       AssertionError: assert '<html>\n <bo...y>\n</html>\n' == '<html><body>.../body></html>'
+E         
+E         - <html><body><h1>Test</h1></body></html>
+E         + <html>
+E         +  <body>
+E         +   <h1>
+E         +    Test
+E         +   </h1>
+E         +  </body>
+E         + </html>
+
+test_1019.py:53: AssertionError
+=========================== short test summary info ============================
+FAILED test_1019.py::test_task_func_success - AssertionError: assert '<html>\...
+FAILED test_1019.py::test_task_func_with_lxml_parser - AssertionError: assert...
+FAILED test_1019.py::test_task_func_with_html_parser - AssertionError: assert...
+3 failed, 3 passed in 1.18s

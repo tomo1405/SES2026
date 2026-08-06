@@ -1,0 +1,42 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        text = "This is a sample text. It contains some words."
+        expected_output = {'sample': 1, 'text.': 1, 'contains': 1, 'some': 1, 'words.': 1}
+        actual_output = task_func(text)
+>       assert actual_output == expected_output
+E       AssertionError: assert {'sample': 1,...1, 'words': 1} == {'sample': 1,...some': 1, ...}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Left contains 2 more items:
+E         {'text': 1, 'words': 1}
+E         Right contains 3 more items:
+E         {'some': 1, 'text.': 1, 'words.': 1}
+E         Use -v to get more diff
+
+test_0333.py:8: AssertionError
+________________________ test_task_func_only_stopwords _________________________
+
+    def test_task_func_only_stopwords():
+        text = "This is a sample text. It contains some stopwords like 'the' and 'is'."
+        expected_output = {'stopwords': 2, 'like': 1, 'the': 1, 'and': 1}
+        actual_output = task_func(text)
+>       assert actual_output == expected_output
+E       AssertionError: assert {'sample': 1,...ords': 1, ...} == {'stopwords':...: 1, 'and': 1}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'stopwords': 1} != {'stopwords': 2}
+E         Left contains 3 more items:
+E         {'contains': 1, 'sample': 1, 'text': 1}
+E         Right contains 2 more items:
+E         {'and': 1, 'the': 1}
+E         Use -v to get more diff
+
+test_0333.py:20: AssertionError
+=========================== short test summary info ============================
+FAILED test_0333.py::test_task_func - AssertionError: assert {'sample': 1,......
+FAILED test_0333.py::test_task_func_only_stopwords - AssertionError: assert {...
+2 failed, 1 passed in 3.21s

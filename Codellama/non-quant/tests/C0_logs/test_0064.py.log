@@ -1,0 +1,23 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        car_dict = {"car1": "red", "car2": "blue", "car3": "red", "car4": "green", "car5": "blue"}
+        df, ax = task_func(car_dict)
+    
+        assert isinstance(df, pd.DataFrame)
+        assert isinstance(ax, plt.Axes)
+    
+        assert df.shape == (5, 2)
+        assert df.columns.tolist() == ["Car", "Color"]
+>       assert df["Color"].value_counts().tolist() == ["red", "blue", "green"]
+E       AssertionError: assert [2, 2, 1] == ['red', 'blue', 'green']
+E         
+E         At index 0 diff: 2 != 'red'
+E         Use -v to get more diff
+
+test_0064.py:15: AssertionError
+=========================== short test summary info ============================
+FAILED test_0064.py::test_task_func - AssertionError: assert [2, 2, 1] == ['r...
+1 failed in 2.02s

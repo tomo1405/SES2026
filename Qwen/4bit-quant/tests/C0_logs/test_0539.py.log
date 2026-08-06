@@ -1,0 +1,82 @@
+.FF.                                                                     [100%]
+=================================== FAILURES ===================================
+________________ test_task_func_insufficient_numerical_columns _________________
+
+create_test_db = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1373/test_task_func_insufficient_nu0/test.db')
+
+    def test_task_func_insufficient_numerical_columns(create_test_db):
+        db_path = create_test_db
+>       with pytest.raises(ValueError, match="The table must have at least two numerical columns to plot."):
+E       Failed: DID NOT RAISE ValueError
+
+test_0539.py:32: Failed
+______________________ test_task_func_non_existent_table _______________________
+
+self = <pandas.io.sql.SQLiteDatabase object at 0x7c75ed167f80>
+sql = 'SELECT * from non_existent_table', params = None
+
+    def execute(self, sql: str | Select | TextClause, params=None):
+        from sqlite3 import Error
+    
+        if not isinstance(sql, str):
+            raise TypeError("Query must be a string unless using sqlalchemy.")
+        args = [] if params is None else [params]
+        cur = self.con.cursor()
+        try:
+>           cur.execute(sql, *args)
+E           sqlite3.OperationalError: no such table: non_existent_table
+
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:2702: OperationalError
+
+The above exception was the direct cause of the following exception:
+
+create_test_db = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1373/test_task_func_non_existent_ta0/test.db')
+
+    def test_task_func_non_existent_table(create_test_db):
+        db_path = create_test_db
+        with pytest.raises(sqlite3.OperationalError, match="no such table: non_existent_table"):
+>           task_func(db_path, 'non_existent_table')
+
+test_0539.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0539.py:8: in task_func
+    df = pd.read_sql_query(f"SELECT * from {table_name}", conn)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:497: in read_sql_query
+    return pandas_sql.read_query(
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:2766: in read_query
+    cursor = self.execute(sql, params)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.io.sql.SQLiteDatabase object at 0x7c75ed167f80>
+sql = 'SELECT * from non_existent_table', params = None
+
+    def execute(self, sql: str | Select | TextClause, params=None):
+        from sqlite3 import Error
+    
+        if not isinstance(sql, str):
+            raise TypeError("Query must be a string unless using sqlalchemy.")
+        args = [] if params is None else [params]
+        cur = self.con.cursor()
+        try:
+            cur.execute(sql, *args)
+            return cur
+        except Error as exc:
+            try:
+                self.con.rollback()
+            except Error as inner_exc:  # pragma: no cover
+                ex = DatabaseError(
+                    f"Execution failed on sql: {sql}\n{exc}\nunable to rollback"
+                )
+                raise ex from inner_exc
+    
+            ex = DatabaseError(f"Execution failed on sql '{sql}': {exc}")
+>           raise ex from exc
+E           pandas.errors.DatabaseError: Execution failed on sql 'SELECT * from non_existent_table': no such table: non_existent_table
+
+../../../.venv/lib/python3.12/site-packages/pandas/io/sql.py:2714: DatabaseError
+=========================== short test summary info ============================
+FAILED test_0539.py::test_task_func_insufficient_numerical_columns - Failed: ...
+FAILED test_0539.py::test_task_func_non_existent_table - pandas.errors.Databa...
+2 failed, 2 passed in 2.36s

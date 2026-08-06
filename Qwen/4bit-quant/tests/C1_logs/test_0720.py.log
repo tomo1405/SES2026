@@ -1,0 +1,27 @@
+...F..                                                                   [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_multiple_files _________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1712/test_task_func_multiple_files0')
+
+    def test_task_func_multiple_files(tmpdir):
+        # Create a directory and add multiple files with different matches
+        dir_with_files = tmpdir.mkdir("dir_with_files")
+        file1 = dir_with_files.join("file1.txt")
+        file1.write("This is a test file with the word example.")
+        file2 = dir_with_files.join("file2.txt")
+        file2.write("This is another test file with the word example.")
+        file3 = dir_with_files.join("file3.txt")
+        file3.write("This file does not have the word example.")
+    
+        # Call the function with the directory and a word that matches in two files
+        result = task_func(str(dir_with_files), "example")
+    
+        # Assert that the count is 2 since there are two matches
+>       assert result == 2
+E       assert 3 == 2
+
+test_0720.py:52: AssertionError
+=========================== short test summary info ============================
+FAILED test_0720.py::test_task_func_multiple_files - assert 3 == 2
+1 failed, 5 passed in 0.46s

@@ -1,0 +1,37 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        file_path = 'path/to/test/file.json'
+        key = 'column_to_drop'
+        expected_df = pd.DataFrame({
+            'column1': [1, 2, 3],
+            'column2': ['a', 'b', 'c']
+        })
+    
+        # Mock the open() function to read the test data
+        def mock_open(file_path, mode):
+            if file_path == file_path and mode == 'r':
+                return mock_file
+            else:
+                return mock_file_write
+    
+>       mock_file = mock_open(file_path, 'r')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0682.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = 'path/to/test/file.json', mode = 'r'
+
+    def mock_open(file_path, mode):
+        if file_path == file_path and mode == 'r':
+>           return mock_file
+                   ^^^^^^^^^
+E           NameError: cannot access free variable 'mock_file' where it is not associated with a value in enclosing scope
+
+test_0682.py:18: NameError
+=========================== short test summary info ============================
+FAILED test_0682.py::test_task_func - NameError: cannot access free variable ...
+1 failed in 1.18s

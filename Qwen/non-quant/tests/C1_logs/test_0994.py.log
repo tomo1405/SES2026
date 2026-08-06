@@ -1,0 +1,97 @@
+.FFFFF                                                                   [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_single_word __________________________
+
+    def test_task_func_single_word():
+        ax = task_func("hello")
+        assert ax.has_data() == True
+        lines, labels = ax.get_legend_handles_labels()
+>       assert len(lines) == 1  # Only histogram
+        ^^^^^^^^^^^^^^^^^^^^^^
+E       assert 0 == 1
+E        +  where 0 = len([])
+
+test_0994.py:12: AssertionError
+________________________ test_task_func_multiple_words _________________________
+
+    def test_task_func_multiple_words():
+>       ax = task_func("hello world")
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0994.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = 'hello world'
+
+    def task_func(text):
+        words = re.split(r"\W+", text)
+        word_counts = [len(word) for word in words if word]
+    
+        _, ax = plt.subplots()
+    
+        if word_counts:  # Check if word_counts is not empty
+            ax.hist(word_counts, bins=30, edgecolor='black', alpha=0.7)
+    
+            # Add KDE plot if applicable
+>           if len(word_counts) > 1 and np.var(word_counts) != 0:
+                                        ^^
+E           NameError: name 'np' is not defined
+
+../../../src/src_0994.py:15: NameError
+__________________________ test_task_func_no_variance __________________________
+
+    def test_task_func_no_variance():
+>       ax = task_func("aaaaa aaaaa")
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0994.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = 'aaaaa aaaaa'
+
+    def task_func(text):
+        words = re.split(r"\W+", text)
+        word_counts = [len(word) for word in words if word]
+    
+        _, ax = plt.subplots()
+    
+        if word_counts:  # Check if word_counts is not empty
+            ax.hist(word_counts, bins=30, edgecolor='black', alpha=0.7)
+    
+            # Add KDE plot if applicable
+>           if len(word_counts) > 1 and np.var(word_counts) != 0:
+                                        ^^
+E           NameError: name 'np' is not defined
+
+../../../src/src_0994.py:15: NameError
+_____________________ test_task_func_singular_matrix_error _____________________
+
+    def test_task_func_singular_matrix_error():
+        ax = task_func("a" * 1000)
+        assert ax.has_data() == True
+        lines, labels = ax.get_legend_handles_labels()
+>       assert len(lines) == 1  # Only histogram
+        ^^^^^^^^^^^^^^^^^^^^^^
+E       assert 0 == 1
+E        +  where 0 = len([])
+
+test_0994.py:33: AssertionError
+__________________ test_task_func_non_alphanumeric_characters __________________
+
+    def test_task_func_non_alphanumeric_characters():
+        ax = task_func("hello!@# $%^&*()")
+        assert ax.has_data() == True
+        lines, labels = ax.get_legend_handles_labels()
+>       assert len(lines) == 1  # Only histogram
+        ^^^^^^^^^^^^^^^^^^^^^^
+E       assert 0 == 1
+E        +  where 0 = len([])
+
+test_0994.py:40: AssertionError
+=========================== short test summary info ============================
+FAILED test_0994.py::test_task_func_single_word - assert 0 == 1
+FAILED test_0994.py::test_task_func_multiple_words - NameError: name 'np' is ...
+FAILED test_0994.py::test_task_func_no_variance - NameError: name 'np' is not...
+FAILED test_0994.py::test_task_func_singular_matrix_error - assert 0 == 1
+FAILED test_0994.py::test_task_func_non_alphanumeric_characters - assert 0 == 1
+5 failed, 1 passed in 2.82s

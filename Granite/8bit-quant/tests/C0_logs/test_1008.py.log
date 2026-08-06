@@ -1,0 +1,211 @@
+FF.F                                                                     [100%]
+=================================== FAILURES ===================================
+_ test_task_func[https://jsonplaceholder.typicode.com/todos/1-expected_output0] _
+
+url = 'https://jsonplaceholder.typicode.com/todos/1'
+
+    def task_func(url: str) -> pd.DataFrame:
+        try:
+            response = requests.get(url, timeout=5)
+            response.raise_for_status()  # Raises an HTTPError if the HTTP request returned an unsuccessful status code
+            data = response.json()  # Directly converts the response content to JSON
+>           df = pd.DataFrame(data)
+                 ^^^^^^^^^^^^^^^^^^
+
+../../../src/src_1008.py:8: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:769: in __init__
+    mgr = dict_to_mgr(data, index, columns, dtype=dtype, copy=copy)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:460: in dict_to_mgr
+    return arrays_to_mgr(arrays, columns, index, dtype=dtype, consolidate=copy)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:113: in arrays_to_mgr
+    index = _extract_index(arrays)
+            ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = [1, 1, 'delectus aut autem', False]
+
+    def _extract_index(data) -> Index:
+        """
+        Try to infer an Index from the passed data, raise ValueError on failure.
+        """
+        index: Index
+        if len(data) == 0:
+            return default_index(0)
+    
+        raw_lengths = set()
+        indexes: list[list[Hashable] | Index] = []
+    
+        have_raw_arrays = False
+        have_series = False
+        have_dicts = False
+    
+        for val in data:
+            if isinstance(val, ABCSeries):
+                have_series = True
+                indexes.append(val.index)
+            elif isinstance(val, dict):
+                have_dicts = True
+                indexes.append(list(val.keys()))
+            elif is_list_like(val) and getattr(val, "ndim", 1) == 1:
+                have_raw_arrays = True
+                raw_lengths.add(len(val))
+            elif isinstance(val, np.ndarray) and val.ndim > 1:
+                raise ValueError("Per-column arrays must each be 1-dimensional")
+    
+        if not indexes and not raw_lengths:
+>           raise ValueError("If using all scalar values, you must pass an index")
+E           ValueError: If using all scalar values, you must pass an index
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:634: ValueError
+
+The above exception was the direct cause of the following exception:
+
+url = 'https://jsonplaceholder.typicode.com/todos/1'
+expected_output =    userId  id               title  completed
+0       1   1  delectus aut autem      False
+
+    @pytest.mark.parametrize("url, expected_output", [
+        ("https://jsonplaceholder.typicode.com/todos/1", pd.DataFrame({"userId": [1], "id": [1], "title": ["delectus aut autem"], "completed": [False]})),
+        ("https://jsonplaceholder.typicode.com/todos/2", pd.DataFrame({"userId": [1], "id": [2], "title": ["quis ut distinctio"], "completed": [True]})),
+    ])
+    def test_task_func(url, expected_output):
+        """
+        Test the task_func function with different input URLs and expected outputs.
+        """
+>       df = task_func(url)
+             ^^^^^^^^^^^^^^
+
+test_1008.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'https://jsonplaceholder.typicode.com/todos/1'
+
+    def task_func(url: str) -> pd.DataFrame:
+        try:
+            response = requests.get(url, timeout=5)
+            response.raise_for_status()  # Raises an HTTPError if the HTTP request returned an unsuccessful status code
+            data = response.json()  # Directly converts the response content to JSON
+            df = pd.DataFrame(data)
+            return df
+        except requests.RequestException as e:
+            raise SystemError(f"Network error occurred: {e}") from e
+        except ValueError as exc:
+>           raise ValueError("Invalid JSON format for DataFrame conversion") from exc
+E           ValueError: Invalid JSON format for DataFrame conversion
+
+../../../src/src_1008.py:13: ValueError
+_ test_task_func[https://jsonplaceholder.typicode.com/todos/2-expected_output1] _
+
+url = 'https://jsonplaceholder.typicode.com/todos/2'
+
+    def task_func(url: str) -> pd.DataFrame:
+        try:
+            response = requests.get(url, timeout=5)
+            response.raise_for_status()  # Raises an HTTPError if the HTTP request returned an unsuccessful status code
+            data = response.json()  # Directly converts the response content to JSON
+>           df = pd.DataFrame(data)
+                 ^^^^^^^^^^^^^^^^^^
+
+../../../src/src_1008.py:8: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:769: in __init__
+    mgr = dict_to_mgr(data, index, columns, dtype=dtype, copy=copy)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:460: in dict_to_mgr
+    return arrays_to_mgr(arrays, columns, index, dtype=dtype, consolidate=copy)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:113: in arrays_to_mgr
+    index = _extract_index(arrays)
+            ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = [1, 2, 'quis ut nam facilis et officia qui', False]
+
+    def _extract_index(data) -> Index:
+        """
+        Try to infer an Index from the passed data, raise ValueError on failure.
+        """
+        index: Index
+        if len(data) == 0:
+            return default_index(0)
+    
+        raw_lengths = set()
+        indexes: list[list[Hashable] | Index] = []
+    
+        have_raw_arrays = False
+        have_series = False
+        have_dicts = False
+    
+        for val in data:
+            if isinstance(val, ABCSeries):
+                have_series = True
+                indexes.append(val.index)
+            elif isinstance(val, dict):
+                have_dicts = True
+                indexes.append(list(val.keys()))
+            elif is_list_like(val) and getattr(val, "ndim", 1) == 1:
+                have_raw_arrays = True
+                raw_lengths.add(len(val))
+            elif isinstance(val, np.ndarray) and val.ndim > 1:
+                raise ValueError("Per-column arrays must each be 1-dimensional")
+    
+        if not indexes and not raw_lengths:
+>           raise ValueError("If using all scalar values, you must pass an index")
+E           ValueError: If using all scalar values, you must pass an index
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:634: ValueError
+
+The above exception was the direct cause of the following exception:
+
+url = 'https://jsonplaceholder.typicode.com/todos/2'
+expected_output =    userId  id               title  completed
+0       1   2  quis ut distinctio       True
+
+    @pytest.mark.parametrize("url, expected_output", [
+        ("https://jsonplaceholder.typicode.com/todos/1", pd.DataFrame({"userId": [1], "id": [1], "title": ["delectus aut autem"], "completed": [False]})),
+        ("https://jsonplaceholder.typicode.com/todos/2", pd.DataFrame({"userId": [1], "id": [2], "title": ["quis ut distinctio"], "completed": [True]})),
+    ])
+    def test_task_func(url, expected_output):
+        """
+        Test the task_func function with different input URLs and expected outputs.
+        """
+>       df = task_func(url)
+             ^^^^^^^^^^^^^^
+
+test_1008.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'https://jsonplaceholder.typicode.com/todos/2'
+
+    def task_func(url: str) -> pd.DataFrame:
+        try:
+            response = requests.get(url, timeout=5)
+            response.raise_for_status()  # Raises an HTTPError if the HTTP request returned an unsuccessful status code
+            data = response.json()  # Directly converts the response content to JSON
+            df = pd.DataFrame(data)
+            return df
+        except requests.RequestException as e:
+            raise SystemError(f"Network error occurred: {e}") from e
+        except ValueError as exc:
+>           raise ValueError("Invalid JSON format for DataFrame conversion") from exc
+E           ValueError: Invalid JSON format for DataFrame conversion
+
+../../../src/src_1008.py:13: ValueError
+_________________________ test_task_func_invalid_json __________________________
+
+    def test_task_func_invalid_json():
+        """
+        Test the task_func function with a URL that returns invalid JSON and check if it raises a ValueError.
+        """
+>       with pytest.raises(ValueError, match="Invalid JSON format for DataFrame conversion"):
+E       Failed: DID NOT RAISE ValueError
+
+test_1008.py:28: Failed
+=========================== short test summary info ============================
+FAILED test_1008.py::test_task_func[https://jsonplaceholder.typicode.com/todos/1-expected_output0]
+FAILED test_1008.py::test_task_func[https://jsonplaceholder.typicode.com/todos/2-expected_output1]
+FAILED test_1008.py::test_task_func_invalid_json - Failed: DID NOT RAISE Valu...
+3 failed, 1 passed in 2.35s

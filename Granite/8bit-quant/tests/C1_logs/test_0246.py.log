@@ -1,0 +1,33 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        n_data_points = 5000
+        min_value = 0.0
+        max_value = 10.0
+        expected_result = {'mean': 5.0, 'median': 5.0, 'mode': 5.0}
+>       result = task_func(n_data_points, min_value, max_value)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0246.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+n_data_points = 5000, min_value = 0.0, max_value = 10.0
+
+    def task_func(n_data_points=5000, min_value=0.0, max_value=10.0):
+        data = [round(random.uniform(min_value, max_value), 3) for _ in range(n_data_points)]
+        data_df = pd.DataFrame(data, columns=['Value'])
+    
+        mean = data_df['Value'].mean()
+        median = data_df['Value'].median()
+>       mode = stats.mode(data_df['Value'].values)[0][0]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       IndexError: invalid index to scalar variable.
+
+test_0246.py:12: IndexError
+=========================== short test summary info ============================
+FAILED test_0246.py::test_task_func - IndexError: invalid index to scalar var...
+1 failed in 2.30s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

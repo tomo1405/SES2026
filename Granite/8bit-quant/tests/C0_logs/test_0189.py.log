@@ -1,0 +1,62 @@
+.FFFF                                                                    [100%]
+=================================== FAILURES ===================================
+__________________________ test_preprocess_locations ___________________________
+
+sample_input = {'Location 1': {'Lat': 37.7749, 'Lon': -122.4194}, 'Location 2': 'San Francisco, CA, USA', 'Location 3': {'Lat': 40.7128, 'Lon': -74.006}, 'Location 4': 'New York, NY, USA'}
+
+    def test_preprocess_locations(sample_input):
+        preprocessed_locations = []
+        for location, value in sample_input.items():
+            if isinstance(value, dict) and 'Lat' in value and 'Lon' in value:
+                preprocessed_locations.append({'Location': location, 'Lat': value['Lat'], 'Lon': value['Lon']})
+            elif isinstance(value, str):
+                geocoded_location = Photon(user_agent="geoapiExercises").geocode(value)
+                preprocessed_locations.append({'Location': location, 'Lat': geocoded_location.latitude, 'Lon': geocoded_location.longitude})
+            else:
+                raise ValueError("Location value must be either a dict with 'Lat' and 'Lon' keys or a string.")
+        expected_result = pd.DataFrame(preprocessed_locations)
+        result = task_func(sample_input)
+>       assert result.locations_df.equals(expected_result)
+               ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Map' object has no attribute 'locations_df'
+
+test_0189.py:32: AttributeError
+_______________________________ test_folium_map ________________________________
+
+sample_input = {'Location 1': {'Lat': 37.7749, 'Lon': -122.4194}, 'Location 2': 'San Francisco, CA, USA', 'Location 3': {'Lat': 40.7128, 'Lon': -74.006}, 'Location 4': 'New York, NY, USA'}
+
+    def test_folium_map(sample_input):
+        result = task_func(sample_input)
+>       assert isinstance(result.folium_map, folium.Map)
+                          ^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Map' object has no attribute 'folium_map'
+
+test_0189.py:36: AttributeError
+__________________________ test_first_row_coordinates __________________________
+
+sample_input = {'Location 1': {'Lat': 37.7749, 'Lon': -122.4194}, 'Location 2': 'San Francisco, CA, USA', 'Location 3': {'Lat': 40.7128, 'Lon': -74.006}, 'Location 4': 'New York, NY, USA'}
+
+    def test_first_row_coordinates(sample_input):
+        result = task_func(sample_input)
+>       assert result.folium_map.location == (result.locations_df.iloc[0]['Lat'], result.locations_df.iloc[0]['Lon'])
+               ^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Map' object has no attribute 'folium_map'
+
+test_0189.py:40: AttributeError
+_______________________________ test_add_markers _______________________________
+
+sample_input = {'Location 1': {'Lat': 37.7749, 'Lon': -122.4194}, 'Location 2': 'San Francisco, CA, USA', 'Location 3': {'Lat': 40.7128, 'Lon': -74.006}, 'Location 4': 'New York, NY, USA'}
+
+    def test_add_markers(sample_input):
+        result = task_func(sample_input)
+>       for _, row in result.locations_df.iterrows():
+                      ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Map' object has no attribute 'locations_df'
+
+test_0189.py:44: AttributeError
+=========================== short test summary info ============================
+FAILED test_0189.py::test_preprocess_locations - AttributeError: 'Map' object...
+FAILED test_0189.py::test_folium_map - AttributeError: 'Map' object has no at...
+FAILED test_0189.py::test_first_row_coordinates - AttributeError: 'Map' objec...
+FAILED test_0189.py::test_add_markers - AttributeError: 'Map' object has no a...
+4 failed, 1 passed in 12.35s

@@ -1,0 +1,32 @@
+..FF.                                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_salt_length ________________________
+
+    def test_task_func_with_salt_length():
+        password = "secure_password"
+        salt, hashed_password = task_func(password, SALT_LENGTH=16)
+        assert len(base64.b64decode(salt)) == 16
+>       assert len(base64.b64decode(hashed_password)) == 64
+E       AssertionError: assert 32 == 64
+E        +  where 32 = len(b'\\\xfd(\x89v\xfb\x92d\x90\xae\xe9tJ\x16\xce\x8aC\x88i\xa11\xf2\xfb\x02%\xdd\xe4! \xad\x03\xdc')
+E        +    where b'\\\xfd(\x89v\xfb\x92d\x90\xae\xe9tJ\x16\xce\x8aC\x88i\xa11\xf2\xfb\x02%\xdd\xe4! \xad\x03\xdc' = <function b64decode at 0x7a522f16ce00>(b'XP0oiXb7kmSQrul0ShbOikOIaaEx8vsCJd3kISCtA9w=')
+E        +      where <function b64decode at 0x7a522f16ce00> = base64.b64decode
+
+test_0025.py:21: AssertionError
+___________________ test_task_func_with_default_salt_length ____________________
+
+    def test_task_func_with_default_salt_length():
+        password = "secure_password"
+        salt, hashed_password = task_func(password)
+        assert len(base64.b64decode(salt)) == 32
+>       assert len(base64.b64decode(hashed_password)) == 64
+E       AssertionError: assert 32 == 64
+E        +  where 32 = len(b'\xa1X\xa8^rh\xcd\x93\xe2g\xc5\x0e\xf1]\xe3p;\xfa@\x04\x15\xbd\x8dM\x96\x95\\\x18\xd3A!\xa1')
+E        +    where b'\xa1X\xa8^rh\xcd\x93\xe2g\xc5\x0e\xf1]\xe3p;\xfa@\x04\x15\xbd\x8dM\x96\x95\\\x18\xd3A!\xa1' = <function b64decode at 0x7a522f16ce00>(b'oVioXnJozZPiZ8UO8V3jcDv6QAQVvY1NlpVcGNNBIaE=')
+E        +      where <function b64decode at 0x7a522f16ce00> = base64.b64decode
+
+test_0025.py:27: AssertionError
+=========================== short test summary info ============================
+FAILED test_0025.py::test_task_func_with_salt_length - AssertionError: assert...
+FAILED test_0025.py::test_task_func_with_default_salt_length - AssertionError...
+2 failed, 3 passed in 0.53s

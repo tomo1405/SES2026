@@ -1,0 +1,39 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        P = np.array([[1, 2], [3, 4]])
+        T = np.array([[[1, 2, 3], [4, 5, 6]], [[7, 8, 9], [10, 11, 12]]])
+>       result, ax = task_func(P, T)
+                     ^^^^^^^^^^^^^^^
+
+test_0442.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+P = array([[1, 2],
+       [3, 4]])
+T = array([[[ 1,  2,  3],
+        [ 4,  5,  6]],
+
+       [[ 7,  8,  9],
+        [10, 11, 12]]])
+
+    def task_func(P, T):
+        if not (isinstance(P, np.ndarray) and isinstance(T, np.ndarray)):
+            raise TypeError("Expected inputs to be numpy arrays")
+    
+        # Compute the matrix-tensor product to ensure the result has the desired shape
+        result = np.einsum("ij,jkl->ik", P, T)
+    
+        # Visualize the result in 3D
+        fig = plt.figure()
+        ax = fig.add_subplot(111, projection="3d")
+>       ax.scatter(result[:, 0], result[:, 1], result[:, 2])
+                                               ^^^^^^^^^^^^
+E       IndexError: index 2 is out of bounds for axis 1 with size 2
+
+../../../src/src_0442.py:13: IndexError
+=========================== short test summary info ============================
+FAILED test_0442.py::test_task_func - IndexError: index 2 is out of bounds fo...
+1 failed in 1.51s

@@ -1,0 +1,61 @@
+FF.F.                                                                    [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_default_values ______________________
+
+    def test_task_func_with_default_values():
+        num = 5
+        numbers, sorted_list = task_func(num)
+        assert len(numbers) == 5
+>       assert all(min_value <= n <= max_value for n in numbers)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0332.py:8: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <list_iterator object at 0x7f91d7f74ca0>
+
+>   assert all(min_value <= n <= max_value for n in numbers)
+               ^^^^^^^^^
+E   NameError: name 'min_value' is not defined
+
+test_0332.py:8: NameError
+______________________ test_task_func_with_custom_values _______________________
+
+    def test_task_func_with_custom_values():
+        num = 10
+        list_length = 7
+        min_value = 1
+        max_value = 20
+        numbers, sorted_list = task_func(num, list_length, min_value, max_value)
+        assert len(numbers) == 7
+        assert all(min_value <= n <= max_value for n in numbers)
+        assert num in sorted_list
+>       assert sorted_list == sorted(numbers + [num])
+E       assert [14, 3, 8, 10, 13, 12, ...] == [3, 8, 10, 11, 12, 13, ...]
+E         
+E         At index 0 diff: 14 != 3
+E         Use -v to get more diff
+
+test_0332.py:21: AssertionError
+_____________________ test_task_func_with_num_out_of_range _____________________
+
+    def test_task_func_with_num_out_of_range():
+        num = 25
+        min_value = 0
+        max_value = 20
+        numbers, sorted_list = task_func(num, min_value=min_value, max_value=max_value)
+        assert len(numbers) == 5
+        assert all(min_value <= n <= max_value for n in numbers)
+        assert num in sorted_list
+>       assert sorted_list == sorted(numbers + [num])
+E       assert [5, 15, 14, 10, 9, 25] == [5, 9, 10, 14, 15, 25]
+E         
+E         At index 1 diff: 15 != 9
+E         Use -v to get more diff
+
+test_0332.py:41: AssertionError
+=========================== short test summary info ============================
+FAILED test_0332.py::test_task_func_with_default_values - NameError: name 'mi...
+FAILED test_0332.py::test_task_func_with_custom_values - assert [14, 3, 8, 10...
+FAILED test_0332.py::test_task_func_with_num_out_of_range - assert [5, 15, 14...
+3 failed, 2 passed in 0.44s

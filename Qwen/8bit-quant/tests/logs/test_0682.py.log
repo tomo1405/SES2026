@@ -1,0 +1,82 @@
+..F                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_empty_file ___________________________
+
+    def test_task_func_empty_file():
+        # Create a temporary empty JSON file
+        temp_file = create_temp_json_file([])
+    
+        # Call the function to be tested
+>       result_df = task_func(temp_file, 'age')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0682.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0682.py:8: in task_func
+    df.drop(key, axis=1, inplace=True)
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:6300: in drop
+    return super().drop(
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:4644: in drop
+    obj = obj._drop_axis(labels, axis, level=level, errors=errors)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:4686: in _drop_axis
+    new_axis = axis.drop(labels, errors=errors)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = RangeIndex(start=0, stop=0, step=1)
+labels = array(['age'], dtype=object), errors = 'raise'
+
+    def drop(
+        self,
+        labels: Index | np.ndarray | Iterable[Hashable],
+        errors: IgnoreRaise = "raise",
+    ) -> Index:
+        """
+        Make new Index with passed list of labels deleted.
+    
+        Parameters
+        ----------
+        labels : array-like or scalar
+            Array-like object or a scalar value, representing the labels to be removed
+            from the Index.
+        errors : {'ignore', 'raise'}, default 'raise'
+            If 'ignore', suppress error and existing labels are dropped.
+    
+        Returns
+        -------
+        Index
+            Will be same type as self, except for RangeIndex.
+    
+        Raises
+        ------
+        KeyError
+            If not all of the labels are found in the selected axis
+    
+        See Also
+        --------
+        Index.dropna : Return Index without NA/NaN values.
+        Index.drop_duplicates : Return Index with duplicate values removed.
+    
+        Examples
+        --------
+        >>> idx = pd.Index(["a", "b", "c"])
+        >>> idx.drop(["a"])
+        Index(['b', 'c'], dtype='str')
+        """
+        if not isinstance(labels, Index):
+            # avoid materializing e.g. RangeIndex
+            arr_dtype = "object" if self.dtype == "object" else None
+            labels = com.index_labels_to_array(labels, dtype=arr_dtype)
+    
+        indexer = self.get_indexer_for(labels)
+        mask = indexer == -1
+        if mask.any():
+            if errors != "ignore":
+>               raise KeyError(f"{labels[mask].tolist()} not found in axis")
+E               KeyError: "['age'] not found in axis"
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py:7268: KeyError
+=========================== short test summary info ============================
+FAILED test_0682.py::test_task_func_empty_file - KeyError: "['age'] not found...
+1 failed, 2 passed in 1.67s

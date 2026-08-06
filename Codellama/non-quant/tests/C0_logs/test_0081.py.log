@@ -1,0 +1,88 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        template_folder = "templates"
+        app = task_func(template_folder)
+        assert app.template_folder == template_folder
+    
+>       @app.route('/', methods=['POST'])
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0081.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/flask/sansio/scaffold.py:362: in decorator
+    self.add_url_rule(rule, endpoint, f, **options)
+../../../.venv/lib/python3.12/site-packages/flask/sansio/scaffold.py:47: in wrapper_func
+    return f(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Flask 'src_0081'>, rule = '/', endpoint = 'handle_post'
+view_func = <function test_task_func.<locals>.handle_post at 0x784f55240cc0>
+provide_automatic_options = True, options = {'endpoint': 'handle_post'}
+
+    @setupmethod
+    def add_url_rule(
+        self,
+        rule: str,
+        endpoint: str | None = None,
+        view_func: ft.RouteCallable | None = None,
+        provide_automatic_options: bool | None = None,
+        **options: t.Any,
+    ) -> None:
+        if endpoint is None:
+            endpoint = _endpoint_from_view_func(view_func)  # type: ignore
+        options["endpoint"] = endpoint
+        methods = options.pop("methods", None)
+    
+        # if the methods are not given and the view_func object knows its
+        # methods we can use that instead.  If neither exists, we go with
+        # a tuple of only ``GET`` as default.
+        if methods is None:
+            methods = getattr(view_func, "methods", None) or ("GET",)
+        if isinstance(methods, str):
+            raise TypeError(
+                "Allowed methods must be a list of strings, for"
+                ' example: @app.route(..., methods=["POST"])'
+            )
+        methods = {item.upper() for item in methods}
+    
+        # Methods that should always be added
+        required_methods: set[str] = set(getattr(view_func, "required_methods", ()))
+    
+        # starting with Flask 0.8 the view_func object can disable and
+        # force-enable the automatic options handling.
+        if provide_automatic_options is None:
+            provide_automatic_options = getattr(
+                view_func, "provide_automatic_options", None
+            )
+    
+        if provide_automatic_options is None:
+            if "OPTIONS" not in methods and self.config["PROVIDE_AUTOMATIC_OPTIONS"]:
+                provide_automatic_options = True
+                required_methods.add("OPTIONS")
+            else:
+                provide_automatic_options = False
+    
+        # Add the required methods now.
+        methods |= required_methods
+    
+        rule_obj = self.url_rule_class(rule, methods=methods, **options)
+        rule_obj.provide_automatic_options = provide_automatic_options  # type: ignore[attr-defined]
+    
+        self.url_map.add(rule_obj)
+        if view_func is not None:
+            old_func = self.view_functions.get(endpoint)
+            if old_func is not None and old_func != view_func:
+>               raise AssertionError(
+                    "View function mapping is overwriting an existing"
+                    f" endpoint function: {endpoint}"
+                )
+E               AssertionError: View function mapping is overwriting an existing endpoint function: handle_post
+
+../../../.venv/lib/python3.12/site-packages/flask/sansio/app.py:657: AssertionError
+=========================== short test summary info ============================
+FAILED test_0081.py::test_task_func - AssertionError: View function mapping i...
+1 failed in 0.93s

@@ -1,0 +1,28 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Test with an empty word
+        expected_df = pd.DataFrame({'Letter': [], 'Position': []})
+        actual_df = task_func('')
+        assert actual_df.equals(expected_df)
+    
+        # Test case 2: Test with a word containing non-alphabetic characters
+        with pytest.raises(ValueError):
+            task_func('Hello!}')
+    
+        # Test case 3: Test with a word containing alphabetic characters
+        expected_df = pd.DataFrame({'Letter': list('hello'), 'Position': [5, 4, 3, 2, 1]})
+        actual_df = task_func('hello')
+>       assert actual_df.equals(expected_df)
+E       assert False
+E        +  where False = equals(  Letter  Position\n0      h         5\n1      e         4\n2      l         3\n3      l         2\n4      o         1)
+E        +    where equals =   Letter  Position\n0      h         8\n1      e         5\n2      l        12\n3      l        12\n4      o        15.equals
+
+test_0936.py:30: AssertionError
+=========================== short test summary info ============================
+FAILED test_0936.py::test_task_func - assert False
+1 failed in 1.98s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

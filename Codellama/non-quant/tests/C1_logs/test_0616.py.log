@@ -1,0 +1,26 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with valid inputs
+        goals = 10
+        penalties = 5
+        rng_seed = 1234
+        expected_results = [
+            ['Team A', '(0 goals, $0)'],
+            ['Team B', '(1 goals, $500)'],
+            ['Team C', '(2 goals, $1000)'],
+            ['Team D', '(3 goals, $1500)'],
+            ['Team E', '(4 goals, $2000)']
+        ]
+        results_df = task_func(goals, penalties, rng_seed)
+>       assert results_df.equals(expected_results)
+E       AssertionError: assert False
+E        +  where False = equals([['Team A', '(0 goals, $0)'], ['Team B', '(1 goals, $500)'], ['Team C', '(2 goals, $1000)'], ['Team D', '(3 goals, $1500)'], ['Team E', '(4 goals, $2000)']])
+E        +    where equals =      Team       Match Result\n0  Team A      (7 goals, $0)\n1  Team B      (0 goals, $0)\n2  Team C      (9 goals, $0)\n3  Team D  (10 goals, $5000)\n4  Team E      (1 goals, $0).equals
+
+test_0616.py:17: AssertionError
+=========================== short test summary info ============================
+FAILED test_0616.py::test_task_func - AssertionError: assert False
+1 failed in 1.16s

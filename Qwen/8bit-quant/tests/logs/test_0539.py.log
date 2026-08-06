@@ -1,0 +1,55 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a temporary SQLite database
+        conn = create_test_db()
+    
+        # Call the function
+>       ax = task_func(conn, 'test_table')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0539.py:30: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+db_name = <sqlite3.Connection object at 0x7adb8be12890>
+table_name = 'test_table'
+
+    def task_func(db_name, table_name):
+        # Connect to the SQLite database
+>       conn = sqlite3.connect(db_name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: expected str, bytes or os.PathLike object, not Connection
+
+../../../src/src_0539.py:5: TypeError
+_____________________ test_task_func_insufficient_columns ______________________
+
+    def test_task_func_insufficient_columns():
+        # Create a temporary SQLite database with only one numerical column
+        conn = create_test_db()
+        cursor = conn.cursor()
+        cursor.execute('ALTER TABLE test_table DROP COLUMN num2')
+        conn.commit()
+    
+        # Call the function and expect a ValueError
+        with pytest.raises(ValueError) as excinfo:
+>           task_func(conn, 'test_table')
+
+test_0539.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+db_name = <sqlite3.Connection object at 0x7adb8be131f0>
+table_name = 'test_table'
+
+    def task_func(db_name, table_name):
+        # Connect to the SQLite database
+>       conn = sqlite3.connect(db_name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: expected str, bytes or os.PathLike object, not Connection
+
+../../../src/src_0539.py:5: TypeError
+=========================== short test summary info ============================
+FAILED test_0539.py::test_task_func - TypeError: expected str, bytes or os.Pa...
+FAILED test_0539.py::test_task_func_insufficient_columns - TypeError: expecte...
+2 failed in 2.20s

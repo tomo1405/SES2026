@@ -1,0 +1,43 @@
+.F.F..F                                                                  [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_invalid_json_data _______________________
+
+    def test_task_func_invalid_json_data():
+        json_data = '{"Invalid": "Data"}'
+        with pytest.raises(ValueError) as exc_info:
+            task_func(json_data)
+>       assert "Invalid JSON data provided." in str(exc_info.value)
+E       AssertionError: assert 'Invalid JSON data provided.' in 'No valid country population data found in JSON.'
+E        +  where 'No valid country population data found in JSON.' = str(ValueError('No valid country population data found in JSON.'))
+E        +    where ValueError('No valid country population data found in JSON.') = <ExceptionInfo ValueError('No valid country population data found in JSON.') tblen=2>.value
+
+test_0986.py:24: AssertionError
+_____________________ test_task_func_invalid_country_name ______________________
+
+    def test_task_func_invalid_country_name():
+        json_data = '{"Countries": {"USA": 328239523, 123: 37661811}}'
+        with pytest.raises(ValueError) as exc_info:
+            task_func(json_data)
+>       assert "Country name must be a string. Invalid entry: 123" in str(exc_info.value)
+E       AssertionError: assert 'Country name must be a string. Invalid entry: 123' in 'Invalid JSON data provided.'
+E        +  where 'Invalid JSON data provided.' = str(ValueError('Invalid JSON data provided.'))
+E        +    where ValueError('Invalid JSON data provided.') = <ExceptionInfo ValueError('Invalid JSON data provided.') tblen=2>.value
+
+test_0986.py:36: AssertionError
+______________________ test_task_func_invalid_output_dir _______________________
+
+    def test_task_func_invalid_output_dir():
+        json_data = '{"Countries": {"USA": 328239523, "Canada": 37661811}}'
+        with pytest.raises(IOError) as exc_info:
+            task_func(json_data, output_dir="/invalid/path")
+>       assert "Failed to write the CSV file to /invalid/path: " in str(exc_info.value)
+E       assert 'Failed to write the CSV file to /invalid/path: ' in "[Errno 13] Permission denied: '/invalid'"
+E        +  where "[Errno 13] Permission denied: '/invalid'" = str(PermissionError(13, 'Permission denied'))
+E        +    where PermissionError(13, 'Permission denied') = <ExceptionInfo PermissionError(13, 'Permission denied') tblen=4>.value
+
+test_0986.py:54: AssertionError
+=========================== short test summary info ============================
+FAILED test_0986.py::test_task_func_invalid_json_data - AssertionError: asser...
+FAILED test_0986.py::test_task_func_invalid_country_name - AssertionError: as...
+FAILED test_0986.py::test_task_func_invalid_output_dir - assert 'Failed to wr...
+3 failed, 4 passed in 1.20s

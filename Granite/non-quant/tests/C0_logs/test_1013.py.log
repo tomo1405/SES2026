@@ -1,0 +1,36 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        url = "https://example.com/file.zip"
+        filename = "file.zip"
+        expected_output = ("Download and extraction successful", ["file1.txt", "file2.txt"])
+        output = task_func(url, filename)
+>       assert output == expected_output, "Task function returned unexpected output"
+E       AssertionError: Task function returned unexpected output
+E       assert ('Download fa...code 404', []) == ('Download an... 'file2.txt'])
+E         
+E         At index 0 diff: 'Download failed: HTTP status code 404' != 'Download and extraction successful'
+E         Use -v to get more diff
+
+test_1013.py:9: AssertionError
+___________________________ test_task_func_zip_error ___________________________
+
+    def test_task_func_zip_error():
+        url = "https://example.com/invalid_zip_file.zip"
+        filename = "invalid_zip_file.zip"
+        expected_output = ("Error: Invalid zip file:BadZipFile('File is not a zip file',)", [])
+        output = task_func(url, filename)
+>       assert output == expected_output, "Task function returned unexpected output"
+E       AssertionError: Task function returned unexpected output
+E       assert ('Download fa...code 404', []) == ("Error: Inva... file',)", [])
+E         
+E         At index 0 diff: 'Download failed: HTTP status code 404' != "Error: Invalid zip file:BadZipFile('File is not a zip file',)"
+E         Use -v to get more diff
+
+test_1013.py:23: AssertionError
+=========================== short test summary info ============================
+FAILED test_1013.py::test_task_func - AssertionError: Task function returned ...
+FAILED test_1013.py::test_task_func_zip_error - AssertionError: Task function...
+2 failed, 1 passed in 0.83s

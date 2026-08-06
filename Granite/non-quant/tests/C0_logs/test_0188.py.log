@@ -1,0 +1,23 @@
+.F                                                                       [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        dic = {'Lon': (-180, 180), 'Lat': (-90, 90)}
+        cities = ['New York', 'London', 'Beijing', 'Tokyo', 'Sydney']
+        dic['Lon'] = 'invalid'
+        with pytest.raises(ValueError):
+            task_func(dic, cities)
+        dic['Lon'] = (-180, 180)
+        dic['Lat'] = 'invalid'
+        with pytest.raises(ValueError):
+            task_func(dic, cities)
+        dic['Lat'] = (-90, 90)
+        cities = 'invalid'
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0188.py:28: Failed
+=========================== short test summary info ============================
+FAILED test_0188.py::test_task_func_invalid_input - Failed: DID NOT RAISE Val...
+1 failed, 1 passed in 1.72s

@@ -1,0 +1,52 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Validate if 'Word' column exists in df
+        df_invalid = pd.DataFrame({'Letter': ['A', 'B', 'C']})
+        with pytest.raises(ValueError) as exc_info:
+            task_func(df_invalid, 'A')
+        assert "The DataFrame should contain a 'Word' column." in str(exc_info.value)
+    
+        # Test case 2: Handle empty DataFrame
+        df_empty = pd.DataFrame()
+        with pytest.warns(UserWarning) as record:
+>           result = task_func(df_empty, 'A')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0602.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df = Empty DataFrame
+Columns: []
+Index: [], letter = 'A'
+
+    def task_func(df, letter):
+        start_time = time.time()
+        # Validate if 'Word' column exists in df
+        if 'Word' not in df.columns:
+>           raise ValueError("The DataFrame should contain a 'Word' column.")
+E           ValueError: The DataFrame should contain a 'Word' column.
+
+../../../src/src_0602.py:7: ValueError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func():
+        # Test case 1: Validate if 'Word' column exists in df
+        df_invalid = pd.DataFrame({'Letter': ['A', 'B', 'C']})
+        with pytest.raises(ValueError) as exc_info:
+            task_func(df_invalid, 'A')
+        assert "The DataFrame should contain a 'Word' column." in str(exc_info.value)
+    
+        # Test case 2: Handle empty DataFrame
+        df_empty = pd.DataFrame()
+>       with pytest.warns(UserWarning) as record:
+E       Failed: DID NOT WARN. No warnings of type (<class 'UserWarning'>,) were emitted.
+E        Emitted warnings: [].
+
+test_0602.py:16: Failed
+=========================== short test summary info ============================
+FAILED test_0602.py::test_task_func - Failed: DID NOT WARN. No warnings of ty...
+1 failed in 3.73s

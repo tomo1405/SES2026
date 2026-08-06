@@ -1,0 +1,29 @@
+.F....                                                                   [100%]
+=================================== FAILURES ===================================
+__________________ test_task_func_with_empty_source_directory __________________
+
+    def test_task_func_with_empty_source_directory():
+        with tempfile.TemporaryDirectory() as temp_dir:
+            source_dir = os.path.join(temp_dir, "source")
+            target_dir = os.path.join(temp_dir, "target")
+>           assert task_func(source_dir, target_dir) == 0
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0965.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+source_directory = '/tmp/tmpzahy7n0t/source'
+target_directory = '/tmp/tmpzahy7n0t/target'
+
+    def task_func(source_directory: str, target_directory: str) -> int:
+        converted_files = 0
+        extensions = [".txt", ".docx", ".xlsx", ".csv"]
+    
+        if not os.path.exists(source_directory):
+>           raise FileNotFoundError("source_directory must exist.")
+E           FileNotFoundError: source_directory must exist.
+
+../../../src/src_0965.py:10: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0965.py::test_task_func_with_empty_source_directory - FileNotFoun...
+1 failed, 5 passed in 1.75s

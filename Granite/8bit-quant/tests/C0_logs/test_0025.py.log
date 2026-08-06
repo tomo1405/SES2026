@@ -1,0 +1,30 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_valid_password ______________________
+
+    def test_task_func_with_valid_password():
+        password = "password"
+        salt, hashed_password = task_func(password)
+        assert isinstance(salt, bytes)
+        assert isinstance(hashed_password, bytes)
+>       assert len(salt) == 32
+E       AssertionError: assert 44 == 32
+E        +  where 44 = len(b'JHCdIHcy+mtOnUQBQldCGJdHccX1QVs/RgA+pVDYYds=')
+
+test_0025.py:12: AssertionError
+______________________ test_task_func_with_long_password _______________________
+
+    def test_task_func_with_long_password():
+        password = "a" * 10000
+        salt, hashed_password = task_func(password)
+        assert isinstance(salt, bytes)
+        assert isinstance(hashed_password, bytes)
+>       assert len(salt) == 32
+E       AssertionError: assert 44 == 32
+E        +  where 44 = len(b'RAVLz7/Nf+jvguD+PGZzAr593REb18DxmW9aTECBh5g=')
+
+test_0025.py:24: AssertionError
+=========================== short test summary info ============================
+FAILED test_0025.py::test_task_func_with_valid_password - AssertionError: ass...
+FAILED test_0025.py::test_task_func_with_long_password - AssertionError: asse...
+2 failed, 1 passed in 0.43s

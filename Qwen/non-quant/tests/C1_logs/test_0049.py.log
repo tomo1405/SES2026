@@ -1,0 +1,31 @@
+.....FF                                                                  [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_no_output_file _________________________
+
+    def test_task_func_no_output_file():
+>       with pytest.raises(AssertionError):
+E       Failed: DID NOT RAISE AssertionError
+
+test_0049.py:22: Failed
+________________________ test_task_func_timestamp_order ________________________
+
+    def test_task_func_timestamp_order():
+        timestamps = task_func(5)
+        sorted_timestamps = sorted(timestamps, key=lambda x: datetime.strptime(x, "%Y-%m-%d %H:%M:%S"))
+>       assert timestamps == sorted_timestamps
+E       AssertionError: assert ['2002-01-29 ...-01 20:50:19'] == ['1977-01-06 ...-29 14:19:28']
+E         
+E         At index 0 diff: '2002-01-29 14:19:28' != '1977-01-06 22:00:22'
+E         Use -v to get more diff
+
+test_0049.py:28: AssertionError
+=============================== warnings summary ===============================
+Qwen/non-quant/tests/test_0049.py: 14 warnings
+  /work/tomohiro-w/utg/src/src_0049.py:11: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+    formatted_time = datetime.utcfromtimestamp(timestamp).strftime(DATE_FORMAT)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0049.py::test_task_func_no_output_file - Failed: DID NOT RAISE As...
+FAILED test_0049.py::test_task_func_timestamp_order - AssertionError: assert ...
+2 failed, 5 passed, 14 warnings in 1.55s

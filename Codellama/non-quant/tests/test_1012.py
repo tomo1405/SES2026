@@ -1,0 +1,16 @@
+import pytest
+from src_1012 import task_func
+
+def test_task_func():
+    csv_file_path = "path/to/csv/file.csv"
+    col1_name = "column1"
+    col2_name = "column2"
+
+    ax = task_func(csv_file_path, col1_name, col2_name)
+
+    assert isinstance(ax, matplotlib.axes.Axes)
+    assert ax.get_title() == f"Mean of {col2_name} Grouped by {col1_name}"
+    assert ax.get_xlabel() == col1_name
+    assert ax.get_ylabel() == f"Mean of {col2_name}"
+    assert ax.get_xticks() == groupby_data.index
+    assert ax.get_yticks() == groupby_data.values

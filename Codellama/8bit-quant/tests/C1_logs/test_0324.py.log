@@ -1,0 +1,34 @@
+F..                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        text = "Hello [World] [Python] [Testing]"
+        num_gaussians = 2
+        seed = 42
+        expected_word_freqs = {'Hello': 1, 'World': 1, 'Python': 1, 'Testing': 1}
+        expected_means = [1, 1, 1]
+    
+>       word_freqs, means = task_func(text, num_gaussians, seed)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0324.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = 'Hello [World] [Python] [Testing]', num_gaussians = 2, seed = 42
+
+    def task_func(text, num_gaussians=1, seed=42):
+        np.random.seed(seed)
+        names = re.findall(r'(.*?)(?:\[.*?\]|$)', text)
+        words = ' '.join(names).split()
+        word_freqs = Counter(words)
+        if num_gaussians <= 0:
+            raise ValueError('Number of Gaussians must be greater than 0.')
+        if len(word_freqs) < num_gaussians:
+>           raise Exception('Number of Gaussians must be less than or equal to the number of unique words.')
+E           Exception: Number of Gaussians must be less than or equal to the number of unique words.
+
+../../../src/src_0324.py:13: Exception
+=========================== short test summary info ============================
+FAILED test_0324.py::test_task_func - Exception: Number of Gaussians must be ...
+1 failed, 2 passed in 3.12s

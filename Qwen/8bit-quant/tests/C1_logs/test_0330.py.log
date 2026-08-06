@@ -1,0 +1,69 @@
+F..F.                                                                    [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_default_pattern ______________________
+
+    def test_task_func_with_default_pattern():
+        # Create a temporary JSON file
+        with tempfile.NamedTemporaryFile(delete=False, mode='w', suffix='.json') as temp_file:
+            temp_file.write(json.dumps({'key1': 'value1', 'key2': 'value2'}))
+            temp_file_path = temp_file.name
+    
+        try:
+            result = task_func(temp_file_path)
+            expected_result = {os.path.basename(temp_file_path): ['value1', 'value2']}
+>           assert result == expected_result
+E           AssertionError: assert {'tmp9z8jmyt1...e', '1', ...]} == {'tmp9z8jmyt1...1', 'value2']}
+E             
+E             Differing items:
+E             {'tmp9z8jmyt1.json': ['v', 'a', 'l', 'u', 'e', '1', ...]} != {'tmp9z8jmyt1.json': ['value1', 'value2']}
+E             Use -v to get more diff
+
+test_0330.py:16: AssertionError
+________________________ test_task_func_empty_json_file ________________________
+
+    def test_task_func_empty_json_file():
+        # Create a temporary empty JSON file
+        with tempfile.NamedTemporaryFile(delete=False, mode='w', suffix='.json') as temp_file:
+            temp_file_path = temp_file.name
+    
+        try:
+>           result = task_func(temp_file_path)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0330.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0330.py:6: in task_func
+    data = json.load(file)
+           ^^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/__init__.py:293: in load
+    return loads(fp.read(),
+/usr/lib/python3.12/json/__init__.py:346: in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/decoder.py:337: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <json.decoder.JSONDecoder object at 0x7f546db7f920>, s = '', idx = 0
+
+    def raw_decode(self, s, idx=0):
+        """Decode a JSON document from ``s`` (a ``str`` beginning with
+        a JSON document) and return a 2-tuple of the Python
+        representation and the index in ``s`` where the document ended.
+    
+        This can be used to decode a JSON document from a string that may
+        have extraneous data at the end.
+    
+        """
+        try:
+            obj, end = self.scan_once(s, idx)
+        except StopIteration as err:
+>           raise JSONDecodeError("Expecting value", s, err.value) from None
+E           json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+/usr/lib/python3.12/json/decoder.py:355: JSONDecodeError
+=========================== short test summary info ============================
+FAILED test_0330.py::test_task_func_with_default_pattern - AssertionError: as...
+FAILED test_0330.py::test_task_func_empty_json_file - json.decoder.JSONDecode...
+2 failed, 3 passed in 0.51s

@@ -1,0 +1,66 @@
+FFF.                                                                     [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_valid_xml ___________________________
+
+url = 'valid_url'
+
+    def task_func(url):
+        try:
+>           with urllib.request.urlopen(url) as response:
+E           TypeError: 'MockResponse' object does not support the context manager protocol
+
+../../../src/src_1004.py:6: TypeError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func_valid_xml():
+>       df = task_func("valid_url")
+             ^^^^^^^^^^^^^^^^^^^^^^
+
+test_1004.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'valid_url'
+
+    def task_func(url):
+        try:
+            with urllib.request.urlopen(url) as response:
+                xml_data = response.read()
+        except Exception as e:
+>           raise ValueError(f"Error fetching the XML file: {e}")
+E           ValueError: Error fetching the XML file: 'MockResponse' object does not support the context manager protocol
+
+../../../src/src_1004.py:9: ValueError
+__________________________ test_task_func_invalid_xml __________________________
+
+    def test_task_func_invalid_xml():
+>       with pytest.raises(ValueError, match="Invalid XML syntax"):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'Invalid XML syntax'
+E         Actual message: "Error fetching the XML file: 'MockResponse' object does not support the context manager protocol"
+
+test_1004.py:48: AssertionError
+___________________________ test_task_func_no_items ____________________________
+
+    def test_task_func_no_items():
+        xml_content = b"""
+        <root>
+            <no_item_here>
+                <name>Item1</name>
+                <value>Value1</value>
+            </no_item_here>
+        </root>
+        """
+        def mock_urlopen_no_items(url):
+            return MockResponse(xml_content)
+    
+>       with pytest.monkeypatch.context() as m:
+             ^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'pytest' has no attribute 'monkeypatch'. Did you mean: 'MonkeyPatch'?
+
+test_1004.py:63: AttributeError
+=========================== short test summary info ============================
+FAILED test_1004.py::test_task_func_valid_xml - ValueError: Error fetching th...
+FAILED test_1004.py::test_task_func_invalid_xml - AssertionError: Regex patte...
+FAILED test_1004.py::test_task_func_no_items - AttributeError: module 'pytest...
+3 failed, 1 passed in 1.41s

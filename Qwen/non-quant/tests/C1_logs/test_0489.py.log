@@ -1,0 +1,21 @@
+....F.                                                                   [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_timestamp_format ________________________
+
+    def test_task_func_timestamp_format():
+        ax = task_func(0, 1000, 1, 1, 1)
+        df = pd.DataFrame(ax.get_lines()[0].get_xydata(), columns=["Timestamp", "Value"])
+>       assert all(isinstance(ts, str) and len(ts.split()) == 2 for ts in df["Timestamp"])
+E       assert False
+E        +  where False = all(<generator object test_task_func_timestamp_format.<locals>.<genexpr> at 0x7ff33f2be340>)
+
+test_0489.py:27: AssertionError
+=============================== warnings summary ===============================
+Qwen/non-quant/tests/test_0489.py: 4000 warnings
+  /work/tomohiro-w/utg/src/src_0489.py:22: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+    dt = datetime.utcfromtimestamp(ts / 1000).strftime("%Y-%m-%d %H:%M:%S.%f")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0489.py::test_task_func_timestamp_format - assert False
+1 failed, 5 passed, 4000 warnings in 2.12s

@@ -1,0 +1,31 @@
+.F....F                                                                  [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_single_element _________________________
+
+    def test_task_func_single_element():
+        result = task_func([1])
+>       assert result.equals(pd.DataFrame([[1]]))
+E       AssertionError: assert False
+E        +  where False = equals(   0\n0  1)
+E        +    where equals =    0\n0  1\n1  1\n2  1\n3  1\n4  1.equals
+E        +    and      0\n0  1 = <class 'pandas.DataFrame'>([[1]])
+E        +      where <class 'pandas.DataFrame'> = pd.DataFrame
+
+test_0576.py:12: AssertionError
+________________________ test_task_func_mixed_elements _________________________
+
+    def test_task_func_mixed_elements():
+        l = [1, 'a', 3.14]
+        result = task_func(l)
+        assert result.shape == (5, 3)
+>       assert all(result.iloc[0] == np.roll(l, -5))
+E       AssertionError: assert False
+E        +  where False = all(0       a\n1  ... dtype: object == array(['a', '... dtype='<U32')
+E           
+E           Use -v to get more diff)
+
+test_0576.py:43: AssertionError
+=========================== short test summary info ============================
+FAILED test_0576.py::test_task_func_single_element - AssertionError: assert F...
+FAILED test_0576.py::test_task_func_mixed_elements - AssertionError: assert F...
+2 failed, 5 passed in 1.17s

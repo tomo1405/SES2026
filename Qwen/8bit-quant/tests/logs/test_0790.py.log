@@ -1,0 +1,37 @@
+FF.F                                                                     [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_output_shape __________________________
+
+    def test_task_func_output_shape():
+        result = task_func()
+>       assert result.shape == (ARRAY_LENGTH, 1), "The output shape should be (10, 1)"
+                                ^^^^^^^^^^^^
+E       NameError: name 'ARRAY_LENGTH' is not defined
+
+test_0790.py:8: NameError
+________________________ test_task_func_min_max_values _________________________
+
+    def test_task_func_min_max_values():
+        result = task_func()
+        assert np.min(result) == 0, "The minimum value of the scaled array should be 0"
+>       assert np.max(result) == 1, "The maximum value of the scaled array should be 1"
+E       AssertionError: The maximum value of the scaled array should be 1
+E       assert np.float64(0.9999999999999999) == 1
+E        +  where np.float64(0.9999999999999999) = <function max at 0x7de03ffd5070>(array([[0.57142857],\n       [0.14285714],\n       [0.71428571],\n       [0.28571429],\n       [0.57142857],\n       [1.        ],\n       [0.        ],\n       [0.57142857],\n       [0.71428571],\n       [0.28571429]]))
+E        +    where <function max at 0x7de03ffd5070> = np.max
+
+test_0790.py:13: AssertionError
+_________________________ test_task_func_random_state __________________________
+
+    def test_task_func_random_state():
+        np.random.seed(42)
+>       array = np.random.randint(0, 10, ARRAY_LENGTH).reshape(-1, 1)
+                                         ^^^^^^^^^^^^
+E       NameError: name 'ARRAY_LENGTH' is not defined
+
+test_0790.py:22: NameError
+=========================== short test summary info ============================
+FAILED test_0790.py::test_task_func_output_shape - NameError: name 'ARRAY_LEN...
+FAILED test_0790.py::test_task_func_min_max_values - AssertionError: The maxi...
+FAILED test_0790.py::test_task_func_random_state - NameError: name 'ARRAY_LEN...
+3 failed, 1 passed in 3.29s

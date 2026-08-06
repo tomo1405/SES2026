@@ -1,0 +1,108 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        obj_list = [object() for _ in range(10)]
+        attr = 'attr'
+>       df = task_func(obj_list, attr)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0847.py:8: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+obj_list = [<object object at 0x70f8d5971870>, <object object at 0x70f8d5971880>, <object object at 0x70f8d5971890>, <object object at 0x70f8d59718a0>, <object object at 0x70f8d59718b0>, <object object at 0x70f8d59718c0>, ...]
+attr = 'attr'
+
+    def task_func(obj_list, attr):
+>       attr_values = [getattr(obj, attr) for obj in obj_list]
+                       ^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'object' object has no attribute 'attr'
+
+../../../src/src_0847.py:4: AttributeError
+___________________________ test_task_func_with_data ___________________________
+
+    def test_task_func_with_data():
+        class MyObject:
+            def __init__(self, attr):
+                self.attr = attr
+        obj_list = [MyObject(attr) for attr in ['a', 'b', 'a', 'c', 'a']]
+        attr = 'attr'
+        df = task_func(obj_list, attr)
+        assert isinstance(df, pd.DataFrame)
+        assert df.shape == (3, 2)
+>       assert df.loc['a', 'count'] == 3
+               ^^^^^^^^^^^^^^^^^^^^
+
+test_0847.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexing.py:1199: in __getitem__
+    return self.obj._get_value(*key, takeable=self._takeable)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:4495: in _get_value
+    row = self.index.get_loc(index)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = RangeIndex(start=0, stop=3, step=1), key = 'a'
+
+    def get_loc(self, key) -> int:
+        """
+        Get integer location for requested label.
+    
+        Parameters
+        ----------
+        key : int or float
+            Label to locate. Integer-like floats (e.g. 3.0) are accepted and
+            treated as the corresponding integer. Non-integer floats and other
+            non-integer labels are not valid and will raise KeyError or
+            InvalidIndexError.
+    
+        Returns
+        -------
+        int
+            Integer location of the label within the RangeIndex.
+    
+        Raises
+        ------
+        KeyError
+            If the label is not present in the RangeIndex or the label is a
+            non-integer value.
+        InvalidIndexError
+            If the label is of an invalid type for the RangeIndex.
+    
+        See Also
+        --------
+        RangeIndex.get_slice_bound : Calculate slice bound that corresponds to
+            given label.
+        RangeIndex.get_indexer : Computes indexer and mask for new index given
+            the current index.
+        RangeIndex.get_non_unique : Returns indexer and masks for new index given
+            the current index.
+        RangeIndex.get_indexer_for : Returns an indexer even when non-unique.
+    
+        Examples
+        --------
+        >>> idx = pd.RangeIndex(5)
+        >>> idx.get_loc(3)
+        3
+    
+        >>> idx = pd.RangeIndex(2, 10, 2)  # values [2, 4, 6, 8]
+        >>> idx.get_loc(6)
+        2
+        """
+        if is_integer(key) or (is_float(key) and key.is_integer()):
+            new_key = int(key)
+            try:
+                return self._range.index(new_key)
+            except ValueError as err:
+                raise KeyError(key) from err
+        if isinstance(key, Hashable):
+>           raise KeyError(key)
+E           KeyError: 'a'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/range.py:525: KeyError
+=========================== short test summary info ============================
+FAILED test_0847.py::test_task_func - AttributeError: 'object' object has no ...
+FAILED test_0847.py::test_task_func_with_data - KeyError: 'a'
+2 failed in 1.26s

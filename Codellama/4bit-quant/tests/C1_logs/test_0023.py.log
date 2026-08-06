@@ -1,0 +1,92 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        l1 = [1, 2, 3]
+        l2 = [4, 5, 6]
+        K = 2
+        expected = {1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1}
+>       assert task_func(l1, l2, K) == expected
+E       assert Counter({1: 1, 6: 1}) == {1: 1, 2: 1, 3: 1, 4: 1, ...}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Right contains 4 more items:
+E         {2: 1, 3: 1, 4: 1, 5: 1}
+E         Use -v to get more diff
+
+test_0023.py:9: AssertionError
+__________________________ test_task_func_empty_lists __________________________
+
+    def test_task_func_empty_lists():
+        l1 = []
+        l2 = []
+        K = 10
+        expected = {}
+>       assert task_func(l1, l2, K) == expected
+               ^^^^^^^^^^^^^^^^^^^^
+
+test_0023.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0023.py:6: in task_func
+    sample = choices(combined, k=K)
+             ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <random.Random object at 0x1640410>, population = [], weights = None
+cum_weights = None, k = 10
+
+    def choices(self, population, weights=None, *, cum_weights=None, k=1):
+        """Return a k sized list of population elements chosen with replacement.
+    
+        If the relative weights or cumulative weights are not specified,
+        the selections are made with equal probability.
+    
+        """
+        random = self.random
+        n = len(population)
+        if cum_weights is None:
+            if weights is None:
+                floor = _floor
+                n += 0.0    # convert to float for a small speed improvement
+>               return [population[floor(random() * n)] for i in _repeat(None, k)]
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               IndexError: list index out of range
+
+/usr/lib/python3.12/random.py:467: IndexError
+_______________________ test_task_func_different_lengths _______________________
+
+    def test_task_func_different_lengths():
+        l1 = [1, 2, 3]
+        l2 = [4, 5, 6, 7]
+        K = 10
+        expected = {1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1}
+>       assert task_func(l1, l2, K) == expected
+E       assert Counter({2: 3..., 4: 1, 7: 1}) == {1: 1, 2: 1, 3: 1, 4: 1, ...}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Differing items:
+E         {1: 3} != {1: 1}
+E         {2: 3} != {2: 1}
+E         {3: 2} != {3: 1}
+E         Right contains 2 more items:
+E         {5: 1, 6: 1}
+E         Use -v to get more diff
+
+test_0023.py:23: AssertionError
+___________________________ test_task_func_invalid_K ___________________________
+
+    def test_task_func_invalid_K():
+        l1 = [1, 2, 3]
+        l2 = [4, 5, 6]
+        K = 0
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0023.py:29: Failed
+=========================== short test summary info ============================
+FAILED test_0023.py::test_task_func - assert Counter({1: 1, 6: 1}) == {1: 1, ...
+FAILED test_0023.py::test_task_func_empty_lists - IndexError: list index out ...
+FAILED test_0023.py::test_task_func_different_lengths - assert Counter({2: 3....
+FAILED test_0023.py::test_task_func_invalid_K - Failed: DID NOT RAISE ValueError
+4 failed in 0.40s

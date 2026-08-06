@@ -1,0 +1,45 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        goals = 10
+        penalties = 5
+        rng_seed = 42
+        expected_result = pd.DataFrame([
+            ['Team A', '(10 goals, $5000)'],
+            ['Team B', '(8 goals, $4000)'],
+            ['Team C', '(6 goals, $3000)'],
+            ['Team D', '(4 goals, $2000)'],
+            ['Team E', '(2 goals, $1000)']
+        ], columns=['Team', 'Match Result'])
+        actual_result = task_func(goals, penalties, rng_seed)
+>       assert actual_result.equals(expected_result)
+E       assert False
+E        +  where False = equals(     Team       Match Result\n0  Team A  (10 goals, $5000)\n1  Team B   (8 goals, $4000)\n2  Team C   (6 goals, $3000)\n3  Team D   (4 goals, $2000)\n4  Team E   (2 goals, $1000))
+E        +    where equals =      Team      Match Result\n0  Team A    (10 goals, $0)\n1  Team B  (0 goals, $5000)\n2  Team C  (4 goals, $1000)\n3  Team D  (3 goals, $1000)\n4  Team E  (1 goals, $5000).equals
+
+test_0616.py:17: AssertionError
+_______________________ test_task_func_default_rng_seed ________________________
+
+    def test_task_func_default_rng_seed():
+        goals = 5
+        penalties = 3
+        expected_result = pd.DataFrame([
+            ['Team A', '(5 goals, $3000)'],
+            ['Team B', '(4 goals, $2000)'],
+            ['Team C', '(3 goals, $1000)'],
+            ['Team D', '(2 goals, $0)'],
+            ['Team E', '(1 goal, $0)']
+        ], columns=['Team', 'Match Result'])
+        actual_result = task_func(goals, penalties)
+>       assert actual_result.equals(expected_result)
+E       assert False
+E        +  where False = equals(     Team      Match Result\n0  Team A  (5 goals, $3000)\n1  Team B  (4 goals, $2000)\n2  Team C  (3 goals, $1000)\n3  Team D     (2 goals, $0)\n4  Team E      (1 goal, $0))
+E        +    where equals =      Team      Match Result\n0  Team A     (5 goals, $0)\n1  Team B  (4 goals, $3000)\n2  Team C     (0 goals, $0)\n3  Team D  (0 goals, $1000)\n4  Team E     (1 goals, $0).equals
+
+test_0616.py:30: AssertionError
+=========================== short test summary info ============================
+FAILED test_0616.py::test_task_func - assert False
+FAILED test_0616.py::test_task_func_default_rng_seed - assert False
+2 failed in 1.11s

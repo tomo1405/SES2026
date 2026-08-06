@@ -1,0 +1,41 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Testing with a random array
+        arr = np.random.rand(10, 10)
+        ax, normalized_data = task_func(arr)
+        assert isinstance(ax, plt.Axes)
+        assert isinstance(normalized_data, np.ndarray)
+        assert normalized_data.shape == (10,)
+        assert np.allclose(normalized_data, (arr.sum(axis=1) - np.mean(arr.sum(axis=1))) / np.std(arr.sum(axis=1)))
+    
+        # Test case 2: Testing with a zero-mean array
+        arr = np.random.rand(10, 10) - 0.5
+        ax, normalized_data = task_func(arr)
+        assert isinstance(ax, plt.Axes)
+        assert isinstance(normalized_data, np.ndarray)
+        assert normalized_data.shape == (10,)
+        assert np.allclose(normalized_data, (arr.sum(axis=1) - np.mean(arr.sum(axis=1))) / np.std(arr.sum(axis=1)))
+    
+        # Test case 3: Testing with a zero-variance array
+        arr = np.random.rand(10, 10)
+        arr = arr - np.mean(arr, axis=1, keepdims=True)
+        ax, normalized_data = task_func(arr)
+        assert isinstance(ax, plt.Axes)
+        assert isinstance(normalized_data, np.ndarray)
+        assert normalized_data.shape == (10,)
+>       assert np.allclose(normalized_data, np.zeros_like(arr.sum(axis=1)))
+E       assert False
+E        +  where False = <function allclose at 0x74cb6bd14930>(array([ 1.35620816, -0.08656648, -0.95223126, -0.66367634,  1.64476309,\n       -0.95223126, -1.24078619,  0.77909831, -0.66367634,  0.77909831]), array([0., 0., 0., 0., 0., 0., 0., 0., 0., 0.]))
+E        +    where <function allclose at 0x74cb6bd14930> = np.allclose
+E        +    and   array([0., 0., 0., 0., 0., 0., 0., 0., 0., 0.]) = <function zeros_like at 0x74cb6c39d830>(array([ 6.66133815e-16,  1.11022302e-16, -2.22044605e-16, -1.11022302e-16,\n        7.77156117e-16, -2.22044605e-16, -3.33066907e-16,  4.44089210e-16,\n       -1.11022302e-16,  4.44089210e-16]))
+E        +      where <function zeros_like at 0x74cb6c39d830> = np.zeros_like
+E        +      and   array([ 6.66133815e-16,  1.11022302e-16, -2.22044605e-16, -1.11022302e-16,\n        7.77156117e-16, -2.22044605e-16, -3.33066907e-16,  4.44089210e-16,\n       -1.11022302e-16,  4.44089210e-16]) = <built-in method sum of numpy.ndarray object at 0x74ca4d141fb0>(axis=1)
+E        +        where <built-in method sum of numpy.ndarray object at 0x74ca4d141fb0> = array([[-0.51436454, -0.23956007,  0.40100656, -0.38967552,  0.32473058,\n        -0.30595676,  0.32503942,  0.40897435...3757,  0.34611069,  0.46695503,  0.18350186,\n        -0.27911313,  0.04016226,  0.01794936, -0.2844205 , -0.03886025]]).sum
+
+test_1062.py:31: AssertionError
+=========================== short test summary info ============================
+FAILED test_1062.py::test_task_func - assert False
+1 failed in 2.87s

@@ -1,0 +1,36 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1284/test_task_func0')
+
+    def test_task_func(tmpdir):
+        # Create a temporary directory and add some files to it
+        temp_dir = tmpdir.mkdir("temp")
+        file1 = temp_dir.join("test1.txt")
+        file1.write("Hello, World!")
+        file2 = temp_dir.join("test2.txt")
+        file2.write("This is a test.")
+    
+        # Call the function
+        pub_key, zipfile_name = task_func(str(temp_dir))
+    
+        # Check if the zipfile exists
+        assert os.path.exists(zipfile_name)
+    
+        # Open the zipfile and check its contents
+        with zipfile.ZipFile(zipfile_name, 'r') as zipf:
+            # Check if all files are in the zipfile
+            assert set(zipf.namelist()) == {'test1.txt', 'test2.txt'}
+    
+            # Decrypt and read the contents of each file
+            for filename in zipf.namelist():
+                with zipf.open(filename) as f:
+>                   encrypted_data = f.read().encode('utf-8')
+                                     ^^^^^^^^^^^^^^^
+E                   AttributeError: 'bytes' object has no attribute 'encode'. Did you mean: 'decode'?
+
+test_0586.py:30: AttributeError
+=========================== short test summary info ============================
+FAILED test_0586.py::test_task_func - AttributeError: 'bytes' object has no a...
+1 failed in 0.57s

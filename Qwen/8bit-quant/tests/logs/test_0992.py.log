@@ -1,0 +1,57 @@
+F..FF.                                                                   [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_length _____________________________
+
+    def test_task_func_length():
+        length = 10
+        result = task_func(length)
+>       assert len(result) == length // 2
+E       AssertionError: assert 1 == (10 // 2)
+E        +  where 1 = len('\x1e')
+
+test_0992.py:9: AssertionError
+__________________________ test_task_func_odd_length ___________________________
+
+    def test_task_func_odd_length():
+        length = 15
+>       result = task_func(length)
+                 ^^^^^^^^^^^^^^^^^
+
+test_0992.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+length = 15
+
+    def task_func(length):
+        HEX_CHARS = string.hexdigits.lower()
+        hex_string = "".join(random.choice(HEX_CHARS) for _ in range(length))
+>       return binascii.unhexlify(hex_string).decode("utf-8", "ignore")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       binascii.Error: Odd-length string
+
+../../../src/src_0992.py:7: Error
+________________________ test_task_func_repeated_calls _________________________
+
+    def test_task_func_repeated_calls():
+        length = 5
+>       results = [task_func(length) for _ in range(5)]
+                   ^^^^^^^^^^^^^^^^^
+
+test_0992.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+length = 5
+
+    def task_func(length):
+        HEX_CHARS = string.hexdigits.lower()
+        hex_string = "".join(random.choice(HEX_CHARS) for _ in range(length))
+>       return binascii.unhexlify(hex_string).decode("utf-8", "ignore")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       binascii.Error: Odd-length string
+
+../../../src/src_0992.py:7: Error
+=========================== short test summary info ============================
+FAILED test_0992.py::test_task_func_length - AssertionError: assert 1 == (10 ...
+FAILED test_0992.py::test_task_func_odd_length - binascii.Error: Odd-length s...
+FAILED test_0992.py::test_task_func_repeated_calls - binascii.Error: Odd-leng...
+3 failed, 3 passed in 0.54s

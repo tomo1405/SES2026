@@ -1,0 +1,70 @@
+F.F..FF                                                                  [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_valid_urls ________________________
+
+    def test_task_func_with_valid_urls():
+        result = [
+            {"url1": "https://example.com", "url2": "http://example.org"},
+            {"url3": "ftp://example.net", "url4": "https://example.com"}
+        ]
+        expected_output = {"https://example.com": 2}
+>       assert task_func(result) == expected_output
+E       AssertionError: assert {} == {'https://example.com': 2}
+E         
+E         Right contains 1 more item:
+E         {'https://example.com': 2}
+E         Use -v to get more diff
+
+test_1109.py:10: AssertionError
+_______________ test_task_func_with_mixed_valid_and_invalid_urls _______________
+
+    def test_task_func_with_mixed_valid_and_invalid_urls():
+        result = [
+            {"valid_url": "https://example.com", "invalid_url": "not-a-url"},
+            {"another_valid_url": "https://example.com", "another_invalid": "still-not-a-url"}
+        ]
+        expected_output = {"https://example.com": 2}
+>       assert task_func(result) == expected_output
+E       AssertionError: assert {} == {'https://example.com': 2}
+E         
+E         Right contains 1 more item:
+E         {'https://example.com': 2}
+E         Use -v to get more diff
+
+test_1109.py:26: AssertionError
+________________________ test_task_func_with_single_url ________________________
+
+    def test_task_func_with_single_url():
+        result = [{"single_url": "https://example.com"}]
+        expected_output = {"https://example.com": 1}
+>       assert task_func(result) == expected_output
+E       AssertionError: assert {} == {'https://example.com': 1}
+E         
+E         Right contains 1 more item:
+E         {'https://example.com': 1}
+E         Use -v to get more diff
+
+test_1109.py:41: AssertionError
+____________________ test_task_func_with_multiple_same_urls ____________________
+
+    def test_task_func_with_multiple_same_urls():
+        result = [
+            {"same_url": "https://example.com"},
+            {"same_url": "https://example.com"},
+            {"same_url": "https://example.com"}
+        ]
+        expected_output = {"https://example.com": 3}
+>       assert task_func(result) == expected_output
+E       AssertionError: assert {} == {'https://example.com': 3}
+E         
+E         Right contains 1 more item:
+E         {'https://example.com': 3}
+E         Use -v to get more diff
+
+test_1109.py:50: AssertionError
+=========================== short test summary info ============================
+FAILED test_1109.py::test_task_func_with_valid_urls - AssertionError: assert ...
+FAILED test_1109.py::test_task_func_with_mixed_valid_and_invalid_urls - Asser...
+FAILED test_1109.py::test_task_func_with_single_url - AssertionError: assert ...
+FAILED test_1109.py::test_task_func_with_multiple_same_urls - AssertionError:...
+4 failed, 3 passed in 0.49s

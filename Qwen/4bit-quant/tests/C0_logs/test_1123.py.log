@@ -1,0 +1,58 @@
+.FFF.F.                                                                  [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_single_http_url ________________________
+
+    def test_task_func_single_http_url():
+        result = task_func("Check out this website: http://example.com")
+>       assert result == {'example.com': '93.184.216.34'}
+E       AssertionError: assert {'example.com...04.20.23.154'} == {'example.com...3.184.216.34'}
+E         
+E         Differing items:
+E         {'example.com': '104.20.23.154'} != {'example.com': '93.184.216.34'}
+E         Use -v to get more diff
+
+test_1123.py:10: AssertionError
+_______________________ test_task_func_single_https_url ________________________
+
+    def test_task_func_single_https_url():
+        result = task_func("Visit our secure site: https://secure.example.com")
+>       assert result == {'secure.example.com': '93.184.216.34'}
+E       AssertionError: assert {'secure.example.com': None} == {'secure.exam...3.184.216.34'}
+E         
+E         Differing items:
+E         {'secure.example.com': None} != {'secure.example.com': '93.184.216.34'}
+E         Use -v to get more diff
+
+test_1123.py:14: AssertionError
+_________________________ test_task_func_multiple_urls _________________________
+
+    def test_task_func_multiple_urls():
+        result = task_func("Here are some URLs: http://example.com and https://secure.example.com")
+>       assert result == {'example.com': '93.184.216.34', 'secure.example.com': '93.184.216.34'}
+E       AssertionError: assert {'example.com...le.com': None} == {'example.com...3.184.216.34'}
+E         
+E         Differing items:
+E         {'secure.example.com': None} != {'secure.example.com': '93.184.216.34'}
+E         {'example.com': '172.66.147.243'} != {'example.com': '93.184.216.34'}
+E         Use -v to get more diff
+
+test_1123.py:18: AssertionError
+______________________ test_task_func_mixed_urls_and_text ______________________
+
+    def test_task_func_mixed_urls_and_text():
+        result = task_func("Some text with http://example.com and more text with https://secure.example.com and some more text.")
+>       assert result == {'example.com': '93.184.216.34', 'secure.example.com': '93.184.216.34'}
+E       AssertionError: assert {'example.com...le.com': None} == {'example.com...3.184.216.34'}
+E         
+E         Differing items:
+E         {'secure.example.com': None} != {'secure.example.com': '93.184.216.34'}
+E         {'example.com': '104.20.23.154'} != {'example.com': '93.184.216.34'}
+E         Use -v to get more diff
+
+test_1123.py:26: AssertionError
+=========================== short test summary info ============================
+FAILED test_1123.py::test_task_func_single_http_url - AssertionError: assert ...
+FAILED test_1123.py::test_task_func_single_https_url - AssertionError: assert...
+FAILED test_1123.py::test_task_func_multiple_urls - AssertionError: assert {'...
+FAILED test_1123.py::test_task_func_mixed_urls_and_text - AssertionError: ass...
+4 failed, 3 passed in 0.52s

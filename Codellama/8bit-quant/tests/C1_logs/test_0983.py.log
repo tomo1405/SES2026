@@ -1,0 +1,104 @@
+FFFFFF                                                                   [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        df = pd.DataFrame({"A": np.random.normal(0, 1, 100)})
+        ax = task_func(df, "A")
+        assert isinstance(ax, plt.Axes)
+        assert ax.get_title() == "Normal Fit for 'A'"
+        assert ax.get_ylabel() == "Density"
+        assert ax.get_xlabel() == "A"
+>       assert ax.get_xlim() == (0, 1)
+E       assert (np.float64(-...188199740955)) == (0, 1)
+E         
+E         At index 0 diff: np.float64(-3.2520914303805544) != 0
+E         Use -v to get more diff
+
+test_0983.py:14: AssertionError
+___________________________ test_task_func_with_bins ___________________________
+
+    def test_task_func_with_bins():
+        df = pd.DataFrame({"A": np.random.normal(0, 1, 100)})
+        ax = task_func(df, "A", bins=50)
+        assert isinstance(ax, plt.Axes)
+        assert ax.get_title() == "Normal Fit for 'A'"
+        assert ax.get_ylabel() == "Density"
+        assert ax.get_xlabel() == "A"
+>       assert ax.get_xlim() == (0, 1)
+E       assert (np.float64(-...115543884875)) == (0, 1)
+E         
+E         At index 0 diff: np.float64(-3.0660101638043638) != 0
+E         Use -v to get more diff
+
+test_0983.py:28: AssertionError
+_________________________ test_task_func_with_density __________________________
+
+    def test_task_func_with_density():
+        df = pd.DataFrame({"A": np.random.normal(0, 1, 100)})
+        ax = task_func(df, "A", density=False)
+        assert isinstance(ax, plt.Axes)
+        assert ax.get_title() == "Normal Fit for 'A'"
+>       assert ax.get_ylabel() == "Frequency"
+E       AssertionError: assert 'Density' == 'Frequency'
+E         
+E         - Frequency
+E         + Density
+
+test_0983.py:40: AssertionError
+__________________________ test_task_func_with_alpha ___________________________
+
+    def test_task_func_with_alpha():
+        df = pd.DataFrame({"A": np.random.normal(0, 1, 100)})
+        ax = task_func(df, "A", alpha=0.8)
+        assert isinstance(ax, plt.Axes)
+        assert ax.get_title() == "Normal Fit for 'A'"
+        assert ax.get_ylabel() == "Density"
+        assert ax.get_xlabel() == "A"
+>       assert ax.get_xlim() == (0, 1)
+E       assert (np.float64(-...206470611293)) == (0, 1)
+E         
+E         At index 0 diff: np.float64(-3.1630205767363444) != 0
+E         Use -v to get more diff
+
+test_0983.py:56: AssertionError
+__________________________ test_task_func_with_color ___________________________
+
+    def test_task_func_with_color():
+        df = pd.DataFrame({"A": np.random.normal(0, 1, 100)})
+        ax = task_func(df, "A", color="r")
+        assert isinstance(ax, plt.Axes)
+        assert ax.get_title() == "Normal Fit for 'A'"
+        assert ax.get_ylabel() == "Density"
+        assert ax.get_xlabel() == "A"
+>       assert ax.get_xlim() == (0, 1)
+E       assert (np.float64(-...063371354542)) == (0, 1)
+E         
+E         At index 0 diff: np.float64(-3.369030541456354) != 0
+E         Use -v to get more diff
+
+test_0983.py:70: AssertionError
+___________________________ test_task_func_with_seed ___________________________
+
+    def test_task_func_with_seed():
+        df = pd.DataFrame({"A": np.random.normal(0, 1, 100)})
+        ax = task_func(df, "A", seed=42)
+        assert isinstance(ax, plt.Axes)
+        assert ax.get_title() == "Normal Fit for 'A'"
+        assert ax.get_ylabel() == "Density"
+        assert ax.get_xlabel() == "A"
+>       assert ax.get_xlim() == (0, 1)
+E       assert (np.float64(-...338649013412)) == (0, 1)
+E         
+E         At index 0 diff: np.float64(-2.7411408209587558) != 0
+E         Use -v to get more diff
+
+test_0983.py:84: AssertionError
+=========================== short test summary info ============================
+FAILED test_0983.py::test_task_func - assert (np.float64(-...188199740955)) =...
+FAILED test_0983.py::test_task_func_with_bins - assert (np.float64(-...115543...
+FAILED test_0983.py::test_task_func_with_density - AssertionError: assert 'De...
+FAILED test_0983.py::test_task_func_with_alpha - assert (np.float64(-...20647...
+FAILED test_0983.py::test_task_func_with_color - assert (np.float64(-...06337...
+FAILED test_0983.py::test_task_func_with_seed - assert (np.float64(-...338649...
+6 failed in 3.63s

@@ -1,0 +1,108 @@
+FF.F                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_valid_input ________________________
+
+    def test_task_func_with_valid_input():
+        db_name = "test.db"
+        table_name = "test_table"
+        num_entries = 5
+        random_seed = 42
+    
+>       result = task_func(db_name, table_name, num_entries, random_seed)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0540.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+db_name = 'test.db', table_name = 'test_table', num_entries = 5
+random_seed = 42
+
+    def task_func(db_name, table_name, num_entries, random_seed=None):
+        NAMES = ["John", "Jane", "Steve", "Emma", "Liam", "Olivia"]
+        AGES = range(18, 65)
+        HEIGHTS = range(150, 200)
+    
+        if random_seed:
+            seed(random_seed)
+    
+        if num_entries < 0:
+            raise ValueError("num_entries must not be negative")
+    
+        conn = sqlite3.connect(db_name)
+        cur = conn.cursor()
+>       cur.execute(f"CREATE TABLE {table_name} (name TEXT, age INTEGER, height INTEGER)")
+E       sqlite3.OperationalError: table test_table already exists
+
+../../../src/src_0540.py:17: OperationalError
+_______________________ test_task_func_with_zero_entries _______________________
+
+    def test_task_func_with_zero_entries():
+        db_name = "test.db"
+        table_name = "test_table"
+        num_entries = 0
+        random_seed = 42
+    
+>       result = task_func(db_name, table_name, num_entries, random_seed)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0540.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+db_name = 'test.db', table_name = 'test_table', num_entries = 0
+random_seed = 42
+
+    def task_func(db_name, table_name, num_entries, random_seed=None):
+        NAMES = ["John", "Jane", "Steve", "Emma", "Liam", "Olivia"]
+        AGES = range(18, 65)
+        HEIGHTS = range(150, 200)
+    
+        if random_seed:
+            seed(random_seed)
+    
+        if num_entries < 0:
+            raise ValueError("num_entries must not be negative")
+    
+        conn = sqlite3.connect(db_name)
+        cur = conn.cursor()
+>       cur.execute(f"CREATE TABLE {table_name} (name TEXT, age INTEGER, height INTEGER)")
+E       sqlite3.OperationalError: table test_table already exists
+
+../../../src/src_0540.py:17: OperationalError
+______________________ test_task_func_without_random_seed ______________________
+
+    def test_task_func_without_random_seed():
+        db_name = "test.db"
+        table_name = "test_table"
+        num_entries = 5
+    
+>       result = task_func(db_name, table_name, num_entries)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0540.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+db_name = 'test.db', table_name = 'test_table', num_entries = 5
+random_seed = None
+
+    def task_func(db_name, table_name, num_entries, random_seed=None):
+        NAMES = ["John", "Jane", "Steve", "Emma", "Liam", "Olivia"]
+        AGES = range(18, 65)
+        HEIGHTS = range(150, 200)
+    
+        if random_seed:
+            seed(random_seed)
+    
+        if num_entries < 0:
+            raise ValueError("num_entries must not be negative")
+    
+        conn = sqlite3.connect(db_name)
+        cur = conn.cursor()
+>       cur.execute(f"CREATE TABLE {table_name} (name TEXT, age INTEGER, height INTEGER)")
+E       sqlite3.OperationalError: table test_table already exists
+
+../../../src/src_0540.py:17: OperationalError
+=========================== short test summary info ============================
+FAILED test_0540.py::test_task_func_with_valid_input - sqlite3.OperationalErr...
+FAILED test_0540.py::test_task_func_with_zero_entries - sqlite3.OperationalEr...
+FAILED test_0540.py::test_task_func_without_random_seed - sqlite3.Operational...
+3 failed, 1 passed in 0.46s

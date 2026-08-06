@@ -1,0 +1,52 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        students_data = []
+    
+        for student in STUDENTS:
+            grades = [randint(0, 100) for _ in COURSES]
+            average_grade = np.mean(grades)
+            students_data.append([student] + grades + [average_grade])
+    
+        columns = ['Name'] + COURSES + ['Average Grade']
+        expected_df = pd.DataFrame(students_data, columns=columns)
+    
+        actual_df = task_func()
+    
+>       pd.testing.assert_frame_equal(actual_df, expected_df)
+
+test_0153.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+left = array([91, 23, 29, 24, 79, 77, 46, 93])
+right = array([85, 57, 59, 41, 42, 27, 64, 24]), err_msg = None
+
+    def _raise(left, right, err_msg) -> NoReturn:
+        if err_msg is None:
+            if left.shape != right.shape:
+                raise_assert_detail(
+                    obj, f"{obj} shapes are different", left.shape, right.shape
+                )
+    
+            diff = 0
+            for left_arr, right_arr in zip(left, right, strict=True):
+                # count up differences
+                if not array_equivalent(left_arr, right_arr, strict_nan=strict_nan):
+                    diff += 1
+    
+            diff = diff * 100.0 / left.size
+            msg = f"{obj} values are different ({np.round(diff, 5)} %)"
+>           raise_assert_detail(obj, msg, left, right, index_values=index_values)
+E           AssertionError: DataFrame.iloc[:, 1] (column name="Math") are different
+E           
+E           DataFrame.iloc[:, 1] (column name="Math") values are different (100.0 %)
+E           [index]: [0, 1, 2, 3, 4, 5, 6, 7]
+E           [left]:  [91, 23, 29, 24, 79, 77, 46, 93]
+E           [right]: [85, 57, 59, 41, 42, 27, 64, 24]
+
+../../../.venv/lib/python3.12/site-packages/pandas/_testing/asserters.py:689: AssertionError
+=========================== short test summary info ============================
+FAILED test_0153.py::test_task_func - AssertionError: DataFrame.iloc[:, 1] (c...
+1 failed in 1.05s

@@ -1,0 +1,76 @@
+FFF.                                                                     [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_with_column_c _________________________
+
+sample_data = {'a': [1, 2, 3], 'b': [4, 5, 6], 'c': [7, 8, 9]}
+expected_json = {'a': {0: 1, 1: 2, 2: 3}, 'b': {0: 4, 1: 5, 2: 6}}
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-2086/test_task_func_with_column_c0')
+
+    def test_task_func_with_column_c(sample_data, expected_json, tmpdir):
+        output_path = str(tmpdir / "test_output.json")
+        result_path = task_func(sample_data, output_path)
+        assert result_path == output_path
+        with open(output_path, "r") as file:
+            actual_json = json.load(file)
+>       assert actual_json == expected_json
+E       AssertionError: assert {'a': {'0': 1...': 5, '2': 6}} == {'a': {0: 1, ..., 1: 5, 2: 6}}
+E         
+E         Differing items:
+E         {'a': {'0': 1, '1': 2, '2': 3}} != {'a': {0: 1, 1: 2, 2: 3}}
+E         {'b': {'0': 4, '1': 5, '2': 6}} != {'b': {0: 4, 1: 5, 2: 6}}
+E         Use -v to get more diff
+
+test_0412.py:26: AssertionError
+_______________________ test_task_func_without_column_c ________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-2086/test_task_func_without_column_0')
+
+    def test_task_func_without_column_c(tmpdir):
+        sample_data = {
+            "a": [1, 2, 3],
+            "b": [4, 5, 6]
+        }
+        expected_json = {
+            "a": {0: 1, 1: 2, 2: 3},
+            "b": {0: 4, 1: 5, 2: 6}
+        }
+        output_path = str(tmpdir / "test_output.json")
+        result_path = task_func(sample_data, output_path)
+        assert result_path == output_path
+        with open(output_path, "r") as file:
+            actual_json = json.load(file)
+>       assert actual_json == expected_json
+E       AssertionError: assert {'a': {'0': 1...': 5, '2': 6}} == {'a': {0: 1, ..., 1: 5, 2: 6}}
+E         
+E         Differing items:
+E         {'a': {'0': 1, '1': 2, '2': 3}} != {'a': {0: 1, 1: 2, 2: 3}}
+E         {'b': {'0': 4, '1': 5, '2': 6}} != {'b': {0: 4, 1: 5, 2: 6}}
+E         Use -v to get more diff
+
+test_0412.py:42: AssertionError
+______________________ test_task_func_default_output_path ______________________
+
+sample_data = {'a': [1, 2, 3], 'b': [4, 5, 6], 'c': [7, 8, 9]}
+expected_json = {'a': {0: 1, 1: 2, 2: 3}, 'b': {0: 4, 1: 5, 2: 6}}
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-2086/test_task_func_default_output_0')
+
+    def test_task_func_default_output_path(sample_data, expected_json, tmpdir):
+        output_path = "./default_data_output.json"
+        result_path = task_func(sample_data)
+        assert result_path == output_path
+        with open(output_path, "r") as file:
+            actual_json = json.load(file)
+>       assert actual_json == expected_json
+E       AssertionError: assert {'a': {'0': 1...': 5, '2': 6}} == {'a': {0: 1, ..., 1: 5, 2: 6}}
+E         
+E         Differing items:
+E         {'a': {'0': 1, '1': 2, '2': 3}} != {'a': {0: 1, 1: 2, 2: 3}}
+E         {'b': {'0': 4, '1': 5, '2': 6}} != {'b': {0: 4, 1: 5, 2: 6}}
+E         Use -v to get more diff
+
+test_0412.py:50: AssertionError
+=========================== short test summary info ============================
+FAILED test_0412.py::test_task_func_with_column_c - AssertionError: assert {'...
+FAILED test_0412.py::test_task_func_without_column_c - AssertionError: assert...
+FAILED test_0412.py::test_task_func_default_output_path - AssertionError: ass...
+3 failed, 1 passed in 1.81s

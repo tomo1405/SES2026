@@ -1,0 +1,97 @@
+.F.FF                                                                    [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_file_path _________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1541/test_task_func_with_file_path0')
+
+    def test_task_func_with_file_path(tmpdir):
+        csv_content = "name,age\nCharlie,35\nDavid,40"
+        csv_file = tmpdir.join("test.csv")
+        csv_file.write(csv_content)
+    
+>       result_df = task_func(str(csv_file))
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0191.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0191.py:20: in task_func
+    cols = dr.fieldnames
+           ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <csv.DictReader object at 0x78cf10b9a840>
+
+    @property
+    def fieldnames(self):
+        if self._fieldnames is None:
+            try:
+>               self._fieldnames = next(self.reader)
+                                   ^^^^^^^^^^^^^^^^^
+E               ValueError: I/O operation on closed file.
+
+/usr/lib/python3.12/csv.py:102: ValueError
+________________________ test_task_func_with_empty_csv _________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1541/test_task_func_with_empty_csv0')
+
+    def test_task_func_with_empty_csv(tmpdir):
+        csv_content = ""
+        csv_file = tmpdir.join("empty.csv")
+        csv_file.write(csv_content)
+    
+        with pytest.raises(csv.Error):
+>           task_func(str(csv_file))
+
+test_0191.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0191.py:20: in task_func
+    cols = dr.fieldnames
+           ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <csv.DictReader object at 0x78cf10bead80>
+
+    @property
+    def fieldnames(self):
+        if self._fieldnames is None:
+            try:
+>               self._fieldnames = next(self.reader)
+                                   ^^^^^^^^^^^^^^^^^
+E               ValueError: I/O operation on closed file.
+
+/usr/lib/python3.12/csv.py:102: ValueError
+________________________ test_task_func_with_no_columns ________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1541/test_task_func_with_no_columns0')
+
+    def test_task_func_with_no_columns(tmpdir):
+        csv_content = "\n\n"
+        csv_file = tmpdir.join("no_columns.csv")
+        csv_file.write(csv_content)
+    
+        with pytest.raises(csv.Error):
+>           task_func(str(csv_file))
+
+test_0191.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0191.py:20: in task_func
+    cols = dr.fieldnames
+           ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <csv.DictReader object at 0x78cf10bebb60>
+
+    @property
+    def fieldnames(self):
+        if self._fieldnames is None:
+            try:
+>               self._fieldnames = next(self.reader)
+                                   ^^^^^^^^^^^^^^^^^
+E               ValueError: I/O operation on closed file.
+
+/usr/lib/python3.12/csv.py:102: ValueError
+=========================== short test summary info ============================
+FAILED test_0191.py::test_task_func_with_file_path - ValueError: I/O operatio...
+FAILED test_0191.py::test_task_func_with_empty_csv - ValueError: I/O operatio...
+FAILED test_0191.py::test_task_func_with_no_columns - ValueError: I/O operati...
+3 failed, 2 passed in 1.21s

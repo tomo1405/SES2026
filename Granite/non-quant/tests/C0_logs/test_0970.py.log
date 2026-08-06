@@ -1,0 +1,32 @@
+...F                                                                     [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_output_range __________________________
+
+input_df =            A         B   C
+0   0.960840  0.132344  35
+1   0.247241  0.040068  69
+2   0.168603  0.196875  29
+3   0.7810...  0.132265  53
+97  0.548513  0.135872  27
+98  0.629049  0.978662  55
+99  0.335132  0.634772  14
+
+[100 rows x 3 columns]
+
+    def test_task_func_output_range(input_df):
+        output_df = task_func(input_df)
+>       assert (output_df.min() >= 0).all() and (output_df.max() <= 1).all()
+E       assert (np.True_ and np.False_)
+E        +  where np.True_ = all()
+E        +    where all = A    0.0\nB    0.0\nC    0.0\ndtype: float64 >= 0.all
+E        +      where A    0.0\nB    0.0\nC    0.0\ndtype: float64 = min()
+E        +        where min =            A         B         C\n0   0.000000  0.000000  0.000000\n1   0.004808  0.000726  0.014447\n2   0.008087  0.004... 0.981248  0.970773  0.985553\n98  0.993482  0.988501  0.997069\n99  1.000000  1.000000  1.000000\n\n[100 rows x 3 columns].min
+E        +  and   np.False_ = all()
+E        +    where all = A    1.0\nB    1.0\nC    1.0\ndtype: float64 <= 1.all
+E        +      where A    1.0\nB    1.0\nC    1.0\ndtype: float64 = max()
+E        +        where max =            A         B         C\n0   0.000000  0.000000  0.000000\n1   0.004808  0.000726  0.014447\n2   0.008087  0.004... 0.981248  0.970773  0.985553\n98  0.993482  0.988501  0.997069\n99  1.000000  1.000000  1.000000\n\n[100 rows x 3 columns].max
+
+test_0970.py:29: AssertionError
+=========================== short test summary info ============================
+FAILED test_0970.py::test_task_func_output_range - assert (np.True_ and np.Fa...
+1 failed, 3 passed in 3.48s

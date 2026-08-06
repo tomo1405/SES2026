@@ -1,0 +1,13 @@
+from django.http import HttpResponse
+import uuid
+def task_func(data):
+
+    response = HttpResponse(data, content_type='application/json')
+
+    # Generate a UUID
+    request_uuid = uuid.uuid4()
+
+    # Add the UUID to the response headers
+    response['UUID'] = str(request_uuid)
+
+    return response

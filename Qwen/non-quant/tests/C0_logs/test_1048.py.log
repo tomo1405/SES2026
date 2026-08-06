@@ -1,0 +1,39 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_date_str = '2023-10-05', mock_random_values = [34, 91]
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x790cc73ba0f0>
+
+    def test_task_func(mock_date_str, mock_random_values, monkeypatch):
+        # Mock the random.randint function to return specific values
+        def mock_randint(a, b):
+            return mock_random_values.pop(0)
+    
+        monkeypatch.setattr(random, 'randint', mock_randint)
+    
+        # Redirect stdout to capture any print statements
+        captured_output = io.StringIO()
+        sys.stdout = captured_output
+    
+        # Call the function
+        ax = task_func(mock_date_str)
+    
+        # Restore stdout
+        sys.stdout = sys.__stdout__
+    
+        # Check if the correct number of random values were generated
+        assert len(ax.lines[0].get_ydata()) == 5
+    
+        # Check if the plot was created correctly
+        assert isinstance(ax, plt.Axes)
+    
+        # Check if the plot contains the correct data
+>       assert all(ax.lines[0].get_ydata() == mock_random_values)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: operands could not be broadcast together with shapes (5,) (2,)
+
+test_1048.py:42: ValueError
+=========================== short test summary info ============================
+FAILED test_1048.py::test_task_func - ValueError: operands could not be broad...
+1 failed in 1.62s

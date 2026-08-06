@@ -1,0 +1,98 @@
+FF.FFF                                                                   [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_source_not_exist ________________________
+
+create_temp_directories = (PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1406/test_task_func_source_not_exis0/source'), PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1406/test_task_func_source_not_exis0/target'))
+
+    def test_task_func_source_not_exist(create_temp_directories):
+        source_dir, target_dir = create_temp_directories
+>       with pytest.raises(FileNotFoundError):
+E       Failed: DID NOT RAISE FileNotFoundError
+
+test_0963.py:48: Failed
+_______________________ test_task_func_target_not_exist ________________________
+
+create_temp_directories = (PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1406/test_task_func_target_not_exis0/source'), PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1406/test_task_func_target_not_exis0/target'))
+
+    def test_task_func_target_not_exist(create_temp_directories):
+        source_dir, target_dir = create_temp_directories
+        mock_exists.append(str(source_dir))
+        moved_files = task_func(str(source_dir), str(target_dir))
+        assert moved_files == 0
+>       assert str(target_dir) in mock_makedirs
+E       AssertionError: assert '/tmp/pytest-of-tomohiro-w/pytest-1406/test_task_func_target_not_exis0/target' in []
+E        +  where '/tmp/pytest-of-tomohiro-w/pytest-1406/test_task_func_target_not_exis0/target' = str(PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1406/test_task_func_target_not_exis0/target'))
+
+test_0963.py:56: AssertionError
+__________________________ test_task_func_move_files ___________________________
+
+create_temp_directories = (PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1406/test_task_func_move_files0/source'), PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1406/test_task_func_move_files0/target'))
+
+    def test_task_func_move_files(create_temp_directories):
+        source_dir, target_dir = create_temp_directories
+        mock_exists.append(str(source_dir))
+        mock_exists.append(str(target_dir))
+        mock_globs[os.path.join(str(source_dir), "**", "*.txt")] = [
+            str(source_dir / "file1.txt"),
+            str(source_dir / "subdir" / "file2.txt")
+        ]
+        mock_globs[os.path.join(str(source_dir), "**", "*.docx")] = [
+            str(source_dir / "file3.docx")
+        ]
+    
+        moved_files = task_func(str(source_dir), str(target_dir))
+>       assert moved_files == 3
+E       assert 0 == 3
+
+test_0963.py:78: AssertionError
+________________________ test_task_func_handle_conflict ________________________
+
+create_temp_directories = (PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1406/test_task_func_handle_conflict0/source'), PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1406/test_task_func_handle_conflict0/target'))
+
+    def test_task_func_handle_conflict(create_temp_directories):
+        source_dir, target_dir = create_temp_directories
+        mock_exists.append(str(source_dir))
+        mock_exists.append(str(target_dir))
+        mock_globs[os.path.join(str(source_dir), "**", "*.txt")] = [
+            str(source_dir / "file1.txt"),
+            str(source_dir / "file1.txt")
+        ]
+    
+        moved_files = task_func(str(source_dir), str(target_dir))
+>       assert moved_files == 2
+E       assert 0 == 2
+
+test_0963.py:93: AssertionError
+______________________ test_task_func_multiple_extensions ______________________
+
+create_temp_directories = (PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1406/test_task_func_multiple_extens0/source'), PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1406/test_task_func_multiple_extens0/target'))
+
+    def test_task_func_multiple_extensions(create_temp_directories):
+        source_dir, target_dir = create_temp_directories
+        mock_exists.append(str(source_dir))
+        mock_exists.append(str(target_dir))
+        mock_globs[os.path.join(str(source_dir), "**", "*.txt")] = [
+            str(source_dir / "file1.txt")
+        ]
+        mock_globs[os.path.join(str(source_dir), "**", "*.docx")] = [
+            str(source_dir / "file2.docx")
+        ]
+        mock_globs[os.path.join(str(source_dir), "**", "*.xlsx")] = [
+            str(source_dir / "file3.xlsx")
+        ]
+        mock_globs[os.path.join(str(source_dir), "**", "*.csv")] = [
+            str(source_dir / "file4.csv")
+        ]
+    
+        moved_files = task_func(str(source_dir), str(target_dir))
+>       assert moved_files == 4
+E       assert 0 == 4
+
+test_0963.py:115: AssertionError
+=========================== short test summary info ============================
+FAILED test_0963.py::test_task_func_source_not_exist - Failed: DID NOT RAISE ...
+FAILED test_0963.py::test_task_func_target_not_exist - AssertionError: assert...
+FAILED test_0963.py::test_task_func_move_files - assert 0 == 3
+FAILED test_0963.py::test_task_func_handle_conflict - assert 0 == 2
+FAILED test_0963.py::test_task_func_multiple_extensions - assert 0 == 4
+5 failed, 1 passed in 0.53s

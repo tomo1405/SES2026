@@ -1,0 +1,39 @@
+.FFF.                                                                    [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_adds_key_a ___________________________
+
+    def test_task_func_adds_key_a():
+        data_dict = {'a': 1, 'b': 2, 'c': 3}
+        result = task_func(data_dict)
+        assert 'a' in result
+>       assert result['a'] == 1
+E       AssertionError: assert '373f3d39a5d5075dfb4503ebe44f70eed8a48e1a32be02d182b2a26695c6f694' == 1
+
+test_0272.py:15: AssertionError
+_____________________ test_task_func_generates_random_salt _____________________
+
+    def test_task_func_generates_random_salt():
+        data_dict = {'a': 1, 'b': 2, 'c': 3}
+        result = task_func(data_dict)
+>       assert 'salt' in result
+E       AssertionError: assert 'salt' in {'a': '373f3d39a5d5075dfb4503ebe44f70eed8a48e1a32be02d182b2a26695c6f694', 'b': '41773904295de9118410891232b279dc73389d...103d932d2e8', 'c': 'd44102d8228e6bb8d7b2c965e87e9abb3305455eabd7ee1e732ac3a922d67168', 'timestamp': 1785234347.8217769}
+
+test_0272.py:20: AssertionError
+_________________ test_task_func_concatenates_values_with_salt _________________
+
+    def test_task_func_concatenates_values_with_salt():
+        data_dict = {'a': 1, 'b': 2, 'c': 3}
+        result = task_func(data_dict)
+        assert 'a' in result
+        assert 'b' in result
+        assert 'c' in result
+>       assert result['a'] == hashlib.sha256((str(1) + result['salt']).encode()).hexdigest()
+                                                       ^^^^^^^^^^^^^^
+E       KeyError: 'salt'
+
+test_0272.py:29: KeyError
+=========================== short test summary info ============================
+FAILED test_0272.py::test_task_func_adds_key_a - AssertionError: assert '373f...
+FAILED test_0272.py::test_task_func_generates_random_salt - AssertionError: a...
+FAILED test_0272.py::test_task_func_concatenates_values_with_salt - KeyError:...
+3 failed, 2 passed in 0.44s

@@ -1,0 +1,132 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        url = 'https://www.example.com'
+        form_id = 0
+        data = {'username': 'john', 'password': 'secret'}
+    
+>       title = task_func(url, form_id, data)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0286.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0286.py:6: in task_func
+    br.select_form(nr=form_id)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <mechanize._mechanize.Browser object at 0x731806df4b60>, name = None
+predicate = None, nr = 0, attrs = {}
+
+    def select_form(self, name=None, predicate=None, nr=None, **attrs):
+        """Select an HTML form for input.
+    
+        This is a bit like giving a form the "input focus" in a browser.
+    
+        If a form is selected, the Browser object supports the HTMLForm
+        interface, so you can call methods like :meth:`set_value()`,
+        :meth:`set()`, and :meth:`click()`.
+    
+        Another way to select a form is to assign to the .form attribute.  The
+        form assigned should be one of the objects returned by the
+        :meth:`forms()` method.
+    
+        If no matching form is found,
+        :class:`mechanize.FormNotFoundError` is raised.
+    
+        If `name` is specified, then the form must have the indicated name.
+    
+        If `predicate` is specified, then the form must match that function.
+        The predicate function is passed the :class:`mechanize.HTMLForm` as its
+        single argument, and should return a boolean value indicating whether
+        the form matched.
+    
+        `nr`, if supplied, is the sequence number of the form (where 0 is the
+        first).  Note that control 0 is the first form matching all the other
+        arguments (if supplied); it is not necessarily the first control in the
+        form.  The "global form" (consisting of all form controls not contained
+        in any FORM element) is considered not to be part of this sequence and
+        to have no name, so will not be matched unless both name and nr are
+        None.
+    
+        You can also match on any HTML attribute of the `<form>` tag by passing
+        in the attribute name and value as keyword arguments. To convert HTML
+        attributes into syntactically valid python keyword arguments, the
+        following simple rule is used. The python keyword argument name is
+        converted to an HTML attribute name by: Replacing all underscores with
+        hyphens and removing any trailing underscores. You can pass in strings,
+        functions or regular expression objects as the values to match. For
+        example:
+    
+        .. code-block:: python
+    
+            # Match form with the exact action specified
+            br.select_form(action='http://foo.com/submit.php')
+            # Match form with a class attribute that contains 'login'
+            br.select_form(class_=lambda x: 'login' in x)
+            # Match form with a data-form-type attribute that matches a regex
+            br.select_form(data_form_type=re.compile(r'a|b'))
+    
+        """
+        if not self.viewing_html():
+            raise BrowserStateError("not viewing HTML")
+        if name is None and predicate is None and nr is None and not attrs:
+            raise ValueError(
+                "at least one argument must be supplied to specify form")
+    
+        global_form = self._factory.global_form
+        if nr is None and name is None and predicate is not None and predicate(
+                global_form):
+            self.form = global_form
+            return
+    
+        def attr_selector(q):
+            if is_string(q):
+                return lambda x: x == q
+            if callable(q):
+                return q
+            return lambda x: q.match(x) is not None
+        attrsq = {aname.rstrip('_').replace('_', '-'): attr_selector(v)
+                  for aname, v in iteritems(attrs)}
+    
+        def form_attrs_match(form_attrs):
+            for aname, q in iteritems(attrsq):
+                val = form_attrs.get(aname)
+                if val is None or not q(val):
+                    return False
+            return True
+    
+        orig_nr = nr
+        for form in self.forms():
+            if name is not None and name != form.name:
+                continue
+            if predicate is not None and not predicate(form):
+                continue
+            if nr:
+                nr -= 1
+                continue
+            if attrs and not form_attrs_match(form.attrs):
+                continue
+            self.form = form
+            break  # success
+        else:
+            # failure
+            description = []
+            if name is not None:
+                description.append("name '%s'" % name)
+            if predicate is not None:
+                description.append("predicate %s" % predicate)
+            if orig_nr is not None:
+                description.append("nr %d" % orig_nr)
+            if attrs:
+                for k, v in iteritems(attrs):
+                    description.append('%s = %r' % (k, v))
+            description = ", ".join(description)
+>           raise FormNotFoundError("no form matching " + description)
+E           mechanize._mechanize.FormNotFoundError: no form matching nr 0
+
+../../../.venv/lib/python3.12/site-packages/mechanize/_mechanize.py:681: FormNotFoundError
+=========================== short test summary info ============================
+FAILED test_0286.py::test_task_func - mechanize._mechanize.FormNotFoundError:...
+1 failed in 1.21s

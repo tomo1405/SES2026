@@ -1,0 +1,30 @@
+F..F.                                                                    [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_valid_url ___________________________
+
+    def test_task_func_valid_url():
+        csv_url_dict = {"URL": "http://example.com/data.csv"}
+        expected_output = pd.DataFrame({"title": ["Movie B", "Movie A"], "year": [2019, 2020]})
+        result = task_func(csv_url_dict)
+>       assert result.equals(expected_output)
+E       assert False
+E        +  where False = equals(     title  year\n0  Movie B  2019\n1  Movie A  2020)
+E        +    where equals =      title  year\n0  Movie A  2020\n1  Movie B  2019.equals
+
+test_0391.py:29: AssertionError
+_________________________ test_task_func_sort_by_year __________________________
+
+    def test_task_func_sort_by_year():
+        csv_url_dict = {"URL": "http://example.com/data.csv"}
+        expected_output = pd.DataFrame({"title": ["Movie B", "Movie A"], "year": [2019, 2020]})
+        result = task_func(csv_url_dict, sort_by_column="year")
+>       assert result.equals(expected_output)
+E       assert False
+E        +  where False = equals(     title  year\n0  Movie B  2019\n1  Movie A  2020)
+E        +    where equals =      title  year\n1  Movie B  2019\n0  Movie A  2020.equals
+
+test_0391.py:45: AssertionError
+=========================== short test summary info ============================
+FAILED test_0391.py::test_task_func_valid_url - assert False
+FAILED test_0391.py::test_task_func_sort_by_year - assert False
+2 failed, 3 passed in 1.33s

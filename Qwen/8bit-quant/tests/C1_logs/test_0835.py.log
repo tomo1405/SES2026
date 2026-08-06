@@ -1,0 +1,83 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_valid_compression _______________________
+
+    def test_task_func_valid_compression():
+        # Example of a valid compressed hex string
+        compressed_hex = "1f8b0800000000000003edc9b17e2a49cf495504000676d64e4d0ac00"
+        expected_output = "hello world"
+>       assert task_func(compressed_hex) == expected_output
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0835.py:8: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+compressed_hex = '1f8b0800000000000003edc9b17e2a49cf495504000676d64e4d0ac00'
+
+    def task_func(compressed_hex):
+        try:
+>           compressed_bytes = binascii.unhexlify(compressed_hex)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           binascii.Error: Odd-length string
+
+../../../src/src_0835.py:6: Error
+______________________ test_task_func_invalid_compression ______________________
+
+    def test_task_func_invalid_compression():
+        # Example of an invalid compressed hex string
+        compressed_hex = "1f8b0800000000000003edc9b17e2a49cf495504000676m64e4d0ac00"
+        expected_output = "Error during decompression: Not a gzipped file"
+>       assert task_func(compressed_hex) == expected_output
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0835.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+compressed_hex = '1f8b0800000000000003edc9b17e2a49cf495504000676m64e4d0ac00'
+
+    def task_func(compressed_hex):
+        try:
+>           compressed_bytes = binascii.unhexlify(compressed_hex)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           binascii.Error: Odd-length string
+
+../../../src/src_0835.py:6: Error
+__________________________ test_task_func_empty_input __________________________
+
+    def test_task_func_empty_input():
+        # Example of an empty input
+        compressed_hex = ""
+        expected_output = "Error during decompression: invalid header"
+>       assert task_func(compressed_hex) == expected_output
+E       AssertionError: assert '' == 'Error during...nvalid header'
+E         
+E         - Error during decompression: invalid header
+
+test_0835.py:20: AssertionError
+_________________________ test_task_func_non_hex_input _________________________
+
+    def test_task_func_non_hex_input():
+        # Example of a non-hex input
+        compressed_hex = "not_a_hex_string"
+        expected_output = "Error during decompression: Non-hexadecimal digit found"
+>       assert task_func(compressed_hex) == expected_output
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0835.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+compressed_hex = 'not_a_hex_string'
+
+    def task_func(compressed_hex):
+        try:
+>           compressed_bytes = binascii.unhexlify(compressed_hex)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           binascii.Error: Non-hexadecimal digit found
+
+../../../src/src_0835.py:6: Error
+=========================== short test summary info ============================
+FAILED test_0835.py::test_task_func_valid_compression - binascii.Error: Odd-l...
+FAILED test_0835.py::test_task_func_invalid_compression - binascii.Error: Odd...
+FAILED test_0835.py::test_task_func_empty_input - AssertionError: assert '' =...
+FAILED test_0835.py::test_task_func_non_hex_input - binascii.Error: Non-hexad...
+4 failed in 0.52s

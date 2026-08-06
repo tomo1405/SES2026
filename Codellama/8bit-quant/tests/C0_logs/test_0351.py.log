@@ -1,0 +1,53 @@
+..FFF                                                                    [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_invalid_src_folder _______________________
+
+    def test_task_func_invalid_src_folder():
+        src_folder = 'test_src'
+        dst_folder = 'test_dst'
+        os.makedirs(dst_folder, exist_ok=True)
+>       result = task_func(src_folder, dst_folder)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0351.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+src_folder = 'test_src', dst_folder = 'test_dst'
+
+    def task_func(src_folder, dst_folder):
+        # Check if source and destination folders exist
+        if not os.path.isdir(src_folder):
+>           raise ValueError(f"Source folder '{src_folder}' does not exist.")
+E           ValueError: Source folder 'test_src' does not exist.
+
+../../../src/src_0351.py:8: ValueError
+______________________ test_task_func_invalid_dst_folder _______________________
+
+    def test_task_func_invalid_dst_folder():
+        src_folder = 'test_src'
+        dst_folder = 'test_dst'
+        os.makedirs(src_folder, exist_ok=True)
+        result = task_func(src_folder, dst_folder)
+>       assert not result['success']
+E       assert not True
+
+test_0351.py:60: AssertionError
+_________________________ test_task_func_invalid_file __________________________
+
+    def test_task_func_invalid_file():
+        src_folder = 'test_src'
+        dst_folder = 'test_dst'
+        os.makedirs(src_folder, exist_ok=True)
+        os.makedirs(dst_folder, exist_ok=True)
+        with open(os.path.join(src_folder, 'file.txt'), 'w') as f:
+            f.write('test')
+        result = task_func(src_folder, dst_folder)
+>       assert not result['success']
+E       assert not True
+
+test_0351.py:73: AssertionError
+=========================== short test summary info ============================
+FAILED test_0351.py::test_task_func_invalid_src_folder - ValueError: Source f...
+FAILED test_0351.py::test_task_func_invalid_dst_folder - assert not True
+FAILED test_0351.py::test_task_func_invalid_file - assert not True
+3 failed, 2 passed in 0.49s

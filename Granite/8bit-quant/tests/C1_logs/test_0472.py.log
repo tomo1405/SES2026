@@ -1,0 +1,43 @@
+FF.F                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        myList = ["Hello", "World", "Hello", "World", "hello", "world"]
+        expected_report_df = pd.DataFrame({"Count": [2, 2]}, index=["hello", "world"])
+        report_df = task_func(myList)
+>       assert report_df.equals(expected_report_df)
+E       assert False
+E        +  where False = equals(       Count\nhello      2\nworld      2)
+E        +    where equals =        Count\nhello      3\nworld      3.equals
+
+test_0472.py:10: AssertionError
+__________________________ test_task_func_empty_list ___________________________
+
+    def test_task_func_empty_list():
+        myList = []
+        expected_report_df = pd.DataFrame({"Count": []})
+        report_df = task_func(myList)
+>       assert report_df.equals(expected_report_df)
+E       assert False
+E        +  where False = equals(Empty DataFrame\nColumns: [Count]\nIndex: [])
+E        +    where equals = Empty DataFrame\nColumns: [Count]\nIndex: [].equals
+
+test_0472.py:16: AssertionError
+_________________________ test_task_func_with_numbers __________________________
+
+    def test_task_func_with_numbers():
+        myList = ["Hello", "1", "2", "3"]
+        expected_report_df = pd.DataFrame({"Count": [1, 1, 1]}, index=["hello", "1", "2"])
+        report_df = task_func(myList)
+>       assert report_df.equals(expected_report_df)
+E       assert False
+E        +  where False = equals(       Count\nhello      1\n1          1\n2          1)
+E        +    where equals =        Count\nhello      1\n1          1\n2          1\n3          1.equals
+
+test_0472.py:28: AssertionError
+=========================== short test summary info ============================
+FAILED test_0472.py::test_task_func - assert False
+FAILED test_0472.py::test_task_func_empty_list - assert False
+FAILED test_0472.py::test_task_func_with_numbers - assert False
+3 failed, 1 passed in 1.15s

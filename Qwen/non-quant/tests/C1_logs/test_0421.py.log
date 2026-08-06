@@ -1,0 +1,87 @@
+FFF.                                                                     [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_numeric_columns ______________________
+
+sample_data = {'A': [1, 2, 3], 'B': ['4', '5', '6'], 'C': ['7', 'eight', '9']}
+
+    def test_task_func_with_numeric_columns(sample_data):
+        expected_output = pd.DataFrame({
+            'A': [0.0, 1.0, 2.0],
+            'B': [-1.22474487, 0.0, 1.22474487],
+            'C': [np.nan, np.nan, np.nan]
+        })
+        result = task_func(sample_data)
+>       pd.testing.assert_frame_equal(result, expected_output)
+
+test_0421.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pandas/_libs/testing.pyx:53: in pandas._libs.testing.assert_almost_equal
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   AssertionError: DataFrame.iloc[:, 0] (column name="A") are different
+E   
+E   DataFrame.iloc[:, 0] (column name="A") values are different (100.0 %)
+E   [index]: [0, 1, 2]
+E   [left]:  [-1.224744871391589, 0.0, 1.224744871391589]
+E   [right]: [0.0, 1.0, 2.0]
+E   At positional index 0, first diff: -1.224744871391589 != 0.0
+
+pandas/_libs/testing.pyx:171: AssertionError
+___________________ test_task_func_with_non_numeric_columns ____________________
+
+sample_data = {'A': [1, 2, 3], 'B': ['4', '5', '6'], 'C': ['7', 'eight', '9'], 'D': ['ten', 'eleven', 'twelve']}
+
+    def test_task_func_with_non_numeric_columns(sample_data):
+        sample_data['D'] = ['ten', 'eleven', 'twelve']
+        expected_output = pd.DataFrame({
+            'A': [0.0, 1.0, 2.0],
+            'B': [-1.22474487, 0.0, 1.22474487],
+            'C': [np.nan, np.nan, np.nan],
+            'D': [np.nan, np.nan, np.nan]
+        })
+        result = task_func(sample_data)
+>       pd.testing.assert_frame_equal(result, expected_output)
+
+test_0421.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pandas/_libs/testing.pyx:53: in pandas._libs.testing.assert_almost_equal
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   AssertionError: DataFrame.iloc[:, 0] (column name="A") are different
+E   
+E   DataFrame.iloc[:, 0] (column name="A") values are different (100.0 %)
+E   [index]: [0, 1, 2]
+E   [left]:  [-1.224744871391589, 0.0, 1.224744871391589]
+E   [right]: [0.0, 1.0, 2.0]
+E   At positional index 0, first diff: -1.224744871391589 != 0.0
+
+pandas/_libs/testing.pyx:171: AssertionError
+_________________ test_task_func_with_all_non_numeric_columns __________________
+
+    def test_task_func_with_all_non_numeric_columns():
+        sample_data = {
+            'A': ['one', 'two', 'three'],
+            'B': ['four', 'five', 'six']
+        }
+        expected_output = pd.DataFrame({
+            'A': [np.nan, np.nan, np.nan],
+            'B': [np.nan, np.nan, np.nan]
+        })
+        result = task_func(sample_data)
+>       pd.testing.assert_frame_equal(result, expected_output)
+E       AssertionError: Attributes of DataFrame.iloc[:, 0] (column name="A") are different
+E       
+E       Attribute "dtype" are different
+E       [left]:  <StringDtype(na_value=nan)>
+E       [right]: float64
+
+test_0421.py:44: AssertionError
+=========================== short test summary info ============================
+FAILED test_0421.py::test_task_func_with_numeric_columns - AssertionError: Da...
+FAILED test_0421.py::test_task_func_with_non_numeric_columns - AssertionError...
+FAILED test_0421.py::test_task_func_with_all_non_numeric_columns - AssertionE...
+3 failed, 1 passed in 2.88s

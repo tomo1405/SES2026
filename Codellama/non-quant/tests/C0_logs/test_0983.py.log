@@ -1,0 +1,38 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        df = pd.DataFrame({'A': [1, 2, 3, 4, 5], 'B': [2, 4, 6, 8, 10]})
+        column = 'A'
+        bins = 30
+        density = True
+        alpha = 0.6
+        color = 'g'
+        seed = None
+    
+        ax = task_func(df, column, bins, density, alpha, color, seed)
+    
+        assert isinstance(ax, plt.Axes)
+        assert ax.get_title() == f"Normal Fit for '{column}'"
+        assert ax.get_ylabel() == "Density"
+        assert ax.get_xlabel() == column
+    
+        data = df[column]
+        mu, std = norm.fit(data)
+    
+        xmin, xmax = plt.xlim()
+        x = np.linspace(xmin, xmax, 100)
+        p = norm.pdf(x, mu, std)
+    
+>       assert np.allclose(ax.lines[0].get_xdata(), x)
+E       assert False
+E        +  where False = <function allclose at 0x7a3a56bbe330>(array([0.8       , 0.84444444, 0.88888889, 0.93333333, 0.97777778,\n       1.02222222, 1.06666667, 1.11111111, 1.155555...  , 4.84444444, 4.88888889, 4.93333333, 4.97777778,\n       5.02222222, 5.06666667, 5.11111111, 5.15555556, 5.2       ]), array([0.58      , 0.62888889, 0.67777778, 0.72666667, 0.77555556,\n       0.82444444, 0.87333333, 0.92222222, 0.971111...  , 5.02888889, 5.07777778, 5.12666667, 5.17555556,\n       5.22444444, 5.27333333, 5.32222222, 5.37111111, 5.42      ]))
+E        +    where <function allclose at 0x7a3a56bbe330> = np.allclose
+E        +    and   array([0.8       , 0.84444444, 0.88888889, 0.93333333, 0.97777778,\n       1.02222222, 1.06666667, 1.11111111, 1.155555...  , 4.84444444, 4.88888889, 4.93333333, 4.97777778,\n       5.02222222, 5.06666667, 5.11111111, 5.15555556, 5.2       ]) = get_xdata()
+E        +      where get_xdata = <matplotlib.lines.Line2D object at 0x7a38eb20e1b0>.get_xdata
+
+test_0983.py:31: AssertionError
+=========================== short test summary info ============================
+FAILED test_0983.py::test_task_func - assert False
+1 failed in 3.54s

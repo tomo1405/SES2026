@@ -1,0 +1,43 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        file_path = "path/to/test/file.json"
+        unknown_key = "some_key"
+>       new_file_path = task_func(file_path, unknown_key)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1129.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = 'path/to/test/file.json', unknown_key = 'some_key'
+
+    def task_func(file_path, unknown_key):
+>       with open(file_path, 'r') as f:
+             ^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'path/to/test/file.json'
+
+../../../src/src_1129.py:7: FileNotFoundError
+__________________________ test_task_func_invalid_key __________________________
+
+    def test_task_func_invalid_key():
+        file_path = "path/to/test/file.json"
+        with pytest.raises(KeyError):
+>           task_func(file_path, "invalid_key")
+
+test_1129.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = 'path/to/test/file.json', unknown_key = 'invalid_key'
+
+    def task_func(file_path, unknown_key):
+>       with open(file_path, 'r') as f:
+             ^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'path/to/test/file.json'
+
+../../../src/src_1129.py:7: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_1129.py::test_task_func - FileNotFoundError: [Errno 2] No such fi...
+FAILED test_1129.py::test_task_func_invalid_key - FileNotFoundError: [Errno 2...
+2 failed, 1 passed in 0.77s

@@ -1,0 +1,24 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        url = "https://www.example.com"
+        output_path = "output.json"
+        expected_phone_numbers = ["+1234567890", "+9876543210"]
+    
+        # Mock the requests.get() function to return a mock response
+        with patch("requests.get") as mock_get:
+            mock_get.return_value.text = "<html><body>+1234567890</body></html>"
+            phone_numbers = task_func(url, output_path)
+    
+>       assert phone_numbers == expected_phone_numbers
+E       AssertionError: assert ['+1234567890'] == ['+1234567890', '+9876543210']
+E         
+E         Right contains one more item: '+9876543210'
+E         Use -v to get more diff
+
+test_1138.py:17: AssertionError
+=========================== short test summary info ============================
+FAILED test_1138.py::test_task_func - AssertionError: assert ['+1234567890'] ...
+1 failed in 1.24s

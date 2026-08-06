@@ -1,0 +1,23 @@
+...F..                                                                   [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_no_data_points _________________________
+
+    def test_task_func_no_data_points():
+        start_time = 1633072800000  # Example timestamp in milliseconds
+        end_time = 1633072800001    # Example timestamp in milliseconds
+        step = 900000               # Step in milliseconds (15 minutes)
+        trend = 0.1                 # Trend value
+    
+        ax = task_func(start_time, end_time, step, trend)
+        assert isinstance(ax, matplotlib.axes.Axes)
+>       assert len(ax.get_lines()) == 0  # No data points should be plotted
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 1 == 0
+E        +  where 1 = len(<a list of 1 Line2D objects>)
+E        +    where <a list of 1 Line2D objects> = get_lines()
+E        +      where get_lines = <Axes: xlabel='Time', ylabel='Value'>.get_lines
+
+test_0487.py:32: AssertionError
+=========================== short test summary info ============================
+FAILED test_0487.py::test_task_func_no_data_points - AssertionError: assert 1...
+1 failed, 5 passed in 2.18s

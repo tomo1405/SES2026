@@ -1,0 +1,46 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a known date and timezone
+        date_str = "2023-10-01 12:00:00"
+        from_tz = "America/New_York"
+        expected_timezones = ['America/New_York', 'Europe/London', 'Asia/Shanghai', 'Asia/Tokyo', 'Australia/Sydney']
+    
+        # Parse the date string to get the original datetime object
+        original_date = parse(date_str).replace(tzinfo=pytz.timezone(from_tz))
+    
+        # Call the function
+        converted_date_str, to_tz = task_func(date_str, from_tz)
+    
+        # Parse the converted date string to get the datetime object
+        converted_date = parse(converted_date_str).replace(tzinfo=pytz.timezone(to_tz))
+    
+        # Check if the timezone is one of the expected timezones
+        assert to_tz in expected_timezones
+    
+        # Check if the conversion is correct by comparing the naive times (ignoring the timezone)
+>       assert original_date.replace(tzinfo=None) == converted_date.replace(tzinfo=None)
+E       AssertionError: assert datetime.datetime(2023, 10, 1, 12, 0) == datetime.datetime(2023, 10, 1, 17, 56)
+E        +  where datetime.datetime(2023, 10, 1, 12, 0) = <built-in method replace of datetime.datetime object at 0x705a901faf70>(tzinfo=None)
+E        +    where <built-in method replace of datetime.datetime object at 0x705a901faf70> = datetime.datetime(2023, 10, 1, 12, 0, tzinfo=<DstTzInfo 'America/New_York' LMT-1 day, 19:04:00 STD>).replace
+E        +  and   datetime.datetime(2023, 10, 1, 17, 56) = <built-in method replace of datetime.datetime object at 0x705a8fe971b0>(tzinfo=None)
+E        +    where <built-in method replace of datetime.datetime object at 0x705a8fe971b0> = datetime.datetime(2023, 10, 1, 17, 56, tzinfo=<DstTzInfo 'Europe/London' LMT-1 day, 23:59:00 STD>).replace
+
+test_0627.py:25: AssertionError
+______________________ test_task_func_invalid_date_format ______________________
+
+    def test_task_func_invalid_date_format():
+        # Test with an invalid date format
+        date_str = "2023-10-01"
+        from_tz = "America/New_York"
+    
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0627.py:40: Failed
+=========================== short test summary info ============================
+FAILED test_0627.py::test_task_func - AssertionError: assert datetime.datetim...
+FAILED test_0627.py::test_task_func_invalid_date_format - Failed: DID NOT RAI...
+2 failed, 1 passed in 0.72s

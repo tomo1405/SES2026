@@ -1,0 +1,107 @@
+FF..                                                                     [100%]
+=================================== FAILURES ===================================
+_____________________________ test_task_func_basic _____________________________
+
+    def test_task_func_basic():
+        # Create a sample DataFrame
+        data = {
+            'id': [1, 1, 2, 2],
+            'age': [25, 30, 35, 40],
+            'income': [50000, 60000, 70000, 80000]
+        }
+        df = pd.DataFrame(data)
+    
+        # Expected result after scaling
+        scaler = StandardScaler()
+        expected_age = scaler.fit_transform(df[df['id'] == 1][['age']])
+        expected_income = scaler.fit_transform(df[df['id'] == 1][['income']])
+        expected_df_1 = pd.DataFrame({'age': expected_age.flatten(), 'income': expected_income.flatten()}, index=[0, 1])
+    
+        scaler = StandardScaler()
+        expected_age = scaler.fit_transform(df[df['id'] == 2][['age']])
+        expected_income = scaler.fit_transform(df[df['id'] == 2][['income']])
+        expected_df_2 = pd.DataFrame({'age': expected_age.flatten(), 'income': expected_income.flatten()}, index=[2, 3])
+    
+        expected_result = pd.concat([expected_df_1, expected_df_2]).sort_index()
+    
+        # Run the function
+        result = task_func(df)
+    
+        # Check if the result matches the expected output
+>       pd.testing.assert_frame_equal(result, expected_result)
+
+test_0295.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+left = MultiIndex([(1, 0),
+            (1, 1),
+            (2, 2),
+            (2, 3)],
+           names=['id', None])
+right = Index([0, 1, 2, 3], dtype='int64'), obj = 'DataFrame.index'
+
+    def _check_types(left, right, obj: str = "Index") -> None:
+        if not exact:
+            return
+    
+>       assert_class_equal(left, right, exact=exact, obj=obj)
+E       AssertionError: DataFrame.index are different
+E       
+E       DataFrame.index classes are different
+E       [left]:  MultiIndex([(1, 0),
+E                   (1, 1),
+E                   (2, 2),
+E                   (2, 3)],
+E                  names=['id', None])
+E       [right]: Index([0, 1, 2, 3], dtype='int64')
+
+../../../.venv/lib/python3.12/site-packages/pandas/_testing/asserters.py:252: AssertionError
+_________________________ test_task_func_single_group __________________________
+
+    def test_task_func_single_group():
+        # Create a sample DataFrame with a single group
+        data = {
+            'id': [1, 1],
+            'age': [25, 30],
+            'income': [50000, 60000]
+        }
+        df = pd.DataFrame(data)
+    
+        # Expected result after scaling
+        scaler = StandardScaler()
+        expected_age = scaler.fit_transform(df[['age']])
+        expected_income = scaler.fit_transform(df[['income']])
+        expected_df = pd.DataFrame({'age': expected_age.flatten(), 'income': expected_income.flatten()}, index=[0, 1])
+    
+        # Run the function
+        result = task_func(df)
+    
+        # Check if the result matches the expected output
+>       pd.testing.assert_frame_equal(result, expected_df)
+
+test_0295.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+left = MultiIndex([(1, 0),
+            (1, 1)],
+           names=['id', None])
+right = Index([0, 1], dtype='int64'), obj = 'DataFrame.index'
+
+    def _check_types(left, right, obj: str = "Index") -> None:
+        if not exact:
+            return
+    
+>       assert_class_equal(left, right, exact=exact, obj=obj)
+E       AssertionError: DataFrame.index are different
+E       
+E       DataFrame.index classes are different
+E       [left]:  MultiIndex([(1, 0),
+E                   (1, 1)],
+E                  names=['id', None])
+E       [right]: Index([0, 1], dtype='int64')
+
+../../../.venv/lib/python3.12/site-packages/pandas/_testing/asserters.py:252: AssertionError
+=========================== short test summary info ============================
+FAILED test_0295.py::test_task_func_basic - AssertionError: DataFrame.index a...
+FAILED test_0295.py::test_task_func_single_group - AssertionError: DataFrame....
+2 failed, 2 passed in 3.23s

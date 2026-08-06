@@ -1,0 +1,43 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        amplitude = 10
+        frequency = 100
+        time = np.linspace(0, 1, 1000)
+        wave, fig, ax = task_func(amplitude, frequency, time)
+    
+        # Test that the wave is a complex numpy array
+        assert isinstance(wave, np.ndarray)
+        assert wave.dtype == np.complex128
+    
+        # Test that the wave has the correct shape
+        assert wave.shape == (1000,)
+    
+        # Test that the wave has the correct values
+        expected_wave = amplitude * np.exp(1j * 2 * math.pi * frequency * time)
+>       np.testing.assert_allclose(wave, expected_wave)
+E       AssertionError: 
+E       Not equal to tolerance rtol=1e-07, atol=0
+E       
+E       Mismatched elements: 999 / 1000 (99.9%)
+E       First 5 mismatches are at indices:
+E        [0]: 0j (ACTUAL), (10+0j) (DESIRED)
+E        [1]: (7.981001197635713e-05+5.806209606382779e-05j) (ACTUAL), (8.086471483337549+5.8829396520080515j) (DESIRED)
+E        [2]: (0.00012152103211513767+0.0003756102801168577j) (ACTUAL), (3.0782042101662777+9.514444746831767j) (DESIRED)
+E        [3]: (-0.0002760741149058145+0.0008442452239634192j) (ACTUAL), (-3.1081093702577123+9.504717573001114j) (DESIRED)
+E        [4]: (-0.0012798121552448343+0.0009249276008708533j) (ACTUAL), (-8.10493176810292+5.857480775418393j) (DESIRED)
+E       Max absolute difference among violations: 10.
+E       Max relative difference among violations: 1.
+E        ACTUAL: array([ 0.000000e+00+0.000000e+00j,  7.981001e-05+5.806210e-05j,
+E               1.215210e-04+3.756103e-04j, -2.760741e-04+8.442452e-04j,
+E              -1.279812e-03+9.249276e-04j, -2.467186e-03-7.758678e-06j,...
+E        DESIRED: array([10.      +0.000000e+00j,  8.086471+5.882940e+00j,
+E               3.078204+9.514445e+00j, -3.108109+9.504718e+00j,
+E              -8.104932+5.857481e+00j, -9.999951-3.144732e-02j,...
+
+test_0356.py:23: AssertionError
+=========================== short test summary info ============================
+FAILED test_0356.py::test_task_func - AssertionError: 
+1 failed in 2.81s

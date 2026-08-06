@@ -1,0 +1,22 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        text = "This is a test sentence. It contains a $dollar word."
+        filename = "test_file.csv"
+        result = task_func(text, filename)
+        assert result == os.path.abspath(filename)
+        with open(filename, 'r') as f:
+            reader = csv.reader(f)
+            rows = list(reader)
+>           assert rows == [["Word"], ["dollar"]]
+E           AssertionError: assert [['Word'], ['$dollar']] == [['Word'], ['dollar']]
+E             
+E             At index 1 diff: ['$dollar'] != ['dollar']
+E             Use -v to get more diff
+
+test_1097.py:16: AssertionError
+=========================== short test summary info ============================
+FAILED test_1097.py::test_task_func - AssertionError: assert [['Word'], ['$do...
+1 failed in 4.58s

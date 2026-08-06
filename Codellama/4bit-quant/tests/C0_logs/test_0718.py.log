@@ -1,0 +1,34 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that the function appends the path to the system path
+        path_to_append = '/path/to/whatever'
+        config_file = '/path/to/config.ini'
+>       config, config_file = task_func(path_to_append, config_file)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0718.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path_to_append = '/path/to/whatever', config_file = '/path/to/config.ini'
+
+    def task_func(path_to_append=PATH_TO_APPEND, config_file=CONFIG_FILE):
+        if isinstance(path_to_append, list):
+            for path in path_to_append:
+                sys.path.append(path)
+        else:
+            sys.path.append(path_to_append)
+    
+        config = ConfigParser()
+    
+        # Create the file if it doesn't exist
+>       if not os.path.exists(config_file):
+               ^^
+E       NameError: name 'os' is not defined. Did you forget to import 'os'
+
+../../../src/src_0718.py:16: NameError
+=========================== short test summary info ============================
+FAILED test_0718.py::test_task_func - NameError: name 'os' is not defined. Di...
+1 failed in 0.46s

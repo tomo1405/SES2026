@@ -1,0 +1,44 @@
+..F.                                                                     [100%]
+=================================== FAILURES ===================================
+___________________ test_task_func_with_non_processed_files ____________________
+
+    def test_task_func_with_non_processed_files():
+        source_dir = 'test_source'
+        target_dir = 'test_target'
+        archive_name = 'test_archive.zip'
+    
+        os.makedirs(source_dir, exist_ok=True)
+        os.makedirs(target_dir, exist_ok=True)
+    
+        non_processed_file = os.path.join(source_dir, 'file1.txt')
+        open(non_processed_file, 'w').close()
+    
+        try:
+            archive_path = task_func(source_dir, target_dir, archive_name)
+            assert os.path.exists(archive_path)
+>           with zipfile.ZipFile(archive_path, 'r') as archive:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0907.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/zipfile/__init__.py:1365: in __init__
+    self._RealGetContents()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <zipfile.ZipFile [closed]>
+
+    def _RealGetContents(self):
+        """Read in the table of contents for the ZIP file."""
+        fp = self.fp
+        try:
+            endrec = _EndRecData(fp)
+        except OSError:
+            raise BadZipFile("File is not a zip file")
+        if not endrec:
+>           raise BadZipFile("File is not a zip file")
+E           zipfile.BadZipFile: File is not a zip file
+
+/usr/lib/python3.12/zipfile/__init__.py:1432: BadZipFile
+=========================== short test summary info ============================
+FAILED test_0907.py::test_task_func_with_non_processed_files - zipfile.BadZip...
+1 failed, 3 passed in 0.67s

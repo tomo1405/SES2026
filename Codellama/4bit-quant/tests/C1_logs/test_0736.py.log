@@ -1,0 +1,68 @@
+FF.FF                                                                    [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        L = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        result = task_func(L)
+        assert result['mean'] == 5.0
+>       assert result['variance'] == 2.25
+E       assert np.float64(6.666666666666667) == 2.25
+
+test_0736.py:9: AssertionError
+__________________________ test_task_func_empty_list ___________________________
+
+    def test_task_func_empty_list():
+        L = []
+        result = task_func(L)
+>       assert result['mean'] == 0.0
+E       assert np.float64(nan) == 0.0
+
+test_0736.py:14: AssertionError
+________________________ test_task_func_negative_values ________________________
+
+    def test_task_func_negative_values():
+        L = [[-1, -2, -3], [-4, -5, -6], [-7, -8, -9]]
+        result = task_func(L)
+        assert result['mean'] == -5.0
+>       assert result['variance'] == 2.25
+E       assert np.float64(6.666666666666667) == 2.25
+
+test_0736.py:27: AssertionError
+_________________________ test_task_func_mixed_values __________________________
+
+    def test_task_func_mixed_values():
+        L = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [-1, -2, -3]]
+        result = task_func(L)
+>       assert result['mean'] == 2.0
+E       assert np.float64(3.25) == 2.0
+
+test_0736.py:32: AssertionError
+=============================== warnings summary ===============================
+Codellama/4bit-quant/tests/test_0736.py::test_task_func_empty_list
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:3862: RuntimeWarning: Mean of empty slice
+    return _methods._mean(a, axis=axis, dtype=dtype,
+
+Codellama/4bit-quant/tests/test_0736.py::test_task_func_empty_list
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/_methods.py:142: RuntimeWarning: invalid value encountered in scalar divide
+    ret = ret.dtype.type(ret / rcount)
+
+Codellama/4bit-quant/tests/test_0736.py::test_task_func_empty_list
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:4270: RuntimeWarning: Degrees of freedom <= 0 for slice
+    return _methods._var(a, axis=axis, dtype=dtype, out=out, ddof=ddof,
+
+Codellama/4bit-quant/tests/test_0736.py::test_task_func_empty_list
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/_methods.py:178: RuntimeWarning: invalid value encountered in divide
+    arrmean = um.true_divide(arrmean, div, out=arrmean,
+
+Codellama/4bit-quant/tests/test_0736.py::test_task_func_empty_list
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/_methods.py:211: RuntimeWarning: invalid value encountered in scalar divide
+    ret = ret.dtype.type(ret / rcount)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0736.py::test_task_func - assert np.float64(6.666666666666667) ==...
+FAILED test_0736.py::test_task_func_empty_list - assert np.float64(nan) == 0.0
+FAILED test_0736.py::test_task_func_negative_values - assert np.float64(6.666...
+FAILED test_0736.py::test_task_func_mixed_values - assert np.float64(3.25) ==...
+4 failed, 1 passed, 5 warnings in 1.06s

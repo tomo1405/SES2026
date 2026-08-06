@@ -1,0 +1,24 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        start_date = datetime(2022, 1, 1)
+        end_date = datetime(2022, 1, 31)
+        seed = 42
+    
+        df, ax = task_func(start_date, end_date, seed)
+    
+        assert isinstance(df, pd.DataFrame)
+        assert isinstance(ax, matplotlib.axes.Axes)
+        assert df.shape == (31, 2)
+        assert df.columns.tolist() == ["Date", "Sales"]
+>       assert df["Date"].dtype == np.datetime64
+E       AssertionError: assert dtype('<M8[us]') == <class 'numpy.datetime64'>
+E        +  where dtype('<M8[us]') = 0    2022-01-01\n1    2022-01-02\n2    2022-01-03\n3    2022-01-04\n4    2022-01-05\n5    2022-01-06\n6    2022-01-07\n7    2...01-26\n26   2022-01-27\n27   2022-01-28\n28   2022-01-29\n29   2022-01-30\n30   2022-01-31\nName: Date, dtype: datetime64[us].dtype
+E        +  and   <class 'numpy.datetime64'> = np.datetime64
+
+test_0089.py:20: AssertionError
+=========================== short test summary info ============================
+FAILED test_0089.py::test_task_func - AssertionError: assert dtype('<M8[us]')...
+1 failed in 1.99s

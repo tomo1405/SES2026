@@ -1,0 +1,27 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Mock the input data
+        df = pd.DataFrame(data, columns=COLUMNS)
+    
+        # Mock the output of sns.distplot()
+        def mock_distplot(*args, **kwargs):
+            return expected_ax
+    
+        # Monkey patch the sns.distplot() function
+        monkeypatch = pytest.MonkeyPatch()
+        monkeypatch.setattr(sns, 'distplot', mock_distplot)
+    
+        # Call the function and compare the output with the expected output
+        analyzed_df, ax = task_func(df)
+>       assert analyzed_df.equals(expected_analyzed_df)
+E       assert False
+E        +  where False = equals(   col1  col2  col3\n0     1     2     2\n1     4     5     2\n2     7     8     2)
+E        +    where equals =    col1  col2  col3\n0     1     2     1\n1     4     5     1\n2     7     8     1.equals
+
+test_0067.py:30: AssertionError
+=========================== short test summary info ============================
+FAILED test_0067.py::test_task_func - assert False
+1 failed in 3.40s

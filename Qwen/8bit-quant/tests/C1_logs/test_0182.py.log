@@ -1,0 +1,178 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+___________________ test_task_func[{'key': 'value'}-0.1-0.5] ___________________
+
+mock_sleep = <MagicMock name='sleep' id='126031415437856'>
+data = "{'key': 'value'}", min_delay = 0.1, max_delay = 0.5
+
+    @pytest.mark.parametrize("data, min_delay, max_delay", [
+        ("{'key': 'value'}", 0.1, 0.5),
+        ("[1, 2, 3]", 0.2, 0.3),
+        ("'string'", 0.01, 0.1)
+    ])
+    @patch('time.sleep')
+    def test_task_func(mock_sleep, data, min_delay, max_delay):
+        # Call the function
+>       response = task_func(data, min_delay, max_delay)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0182.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0182.py:13: in task_func
+    response = HttpResponse(data, content_type='application/json')
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/django/http/response.py:384: in __init__
+    self.content = content
+    ^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/django/http/response.py:416: in content
+    content = self.make_bytes(value)
+              ^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/django/http/response.py:324: in make_bytes
+    return bytes(value.encode(self.charset))
+                              ^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/django/http/response.py:172: in charset
+    return settings.DEFAULT_CHARSET
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/django/conf/__init__.py:75: in __getattr__
+    self._setup(name)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <LazySettings [Unevaluated]>, name = 'DEFAULT_CHARSET'
+
+    def _setup(self, name=None):
+        """
+        Load the settings module pointed to by the environment variable. This
+        is used the first time settings are needed, if the user hasn't
+        configured settings manually.
+        """
+        settings_module = os.environ.get(ENVIRONMENT_VARIABLE)
+        if not settings_module:
+            desc = ("setting %s" % name) if name else "settings"
+>           raise ImproperlyConfigured(
+                "Requested %s, but settings are not configured. "
+                "You must either define the environment variable %s "
+                "or call settings.configure() before accessing settings."
+                % (desc, ENVIRONMENT_VARIABLE)
+            )
+E           django.core.exceptions.ImproperlyConfigured: Requested setting DEFAULT_CHARSET, but settings are not configured. You must either define the environment variable DJANGO_SETTINGS_MODULE or call settings.configure() before accessing settings.
+
+../../../.venv/lib/python3.12/site-packages/django/conf/__init__.py:55: ImproperlyConfigured
+______________________ test_task_func[[1, 2, 3]-0.2-0.3] _______________________
+
+mock_sleep = <MagicMock name='sleep' id='126031415778608'>, data = '[1, 2, 3]'
+min_delay = 0.2, max_delay = 0.3
+
+    @pytest.mark.parametrize("data, min_delay, max_delay", [
+        ("{'key': 'value'}", 0.1, 0.5),
+        ("[1, 2, 3]", 0.2, 0.3),
+        ("'string'", 0.01, 0.1)
+    ])
+    @patch('time.sleep')
+    def test_task_func(mock_sleep, data, min_delay, max_delay):
+        # Call the function
+>       response = task_func(data, min_delay, max_delay)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0182.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0182.py:13: in task_func
+    response = HttpResponse(data, content_type='application/json')
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/django/http/response.py:384: in __init__
+    self.content = content
+    ^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/django/http/response.py:416: in content
+    content = self.make_bytes(value)
+              ^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/django/http/response.py:324: in make_bytes
+    return bytes(value.encode(self.charset))
+                              ^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/django/http/response.py:172: in charset
+    return settings.DEFAULT_CHARSET
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/django/conf/__init__.py:75: in __getattr__
+    self._setup(name)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <LazySettings [Unevaluated]>, name = 'DEFAULT_CHARSET'
+
+    def _setup(self, name=None):
+        """
+        Load the settings module pointed to by the environment variable. This
+        is used the first time settings are needed, if the user hasn't
+        configured settings manually.
+        """
+        settings_module = os.environ.get(ENVIRONMENT_VARIABLE)
+        if not settings_module:
+            desc = ("setting %s" % name) if name else "settings"
+>           raise ImproperlyConfigured(
+                "Requested %s, but settings are not configured. "
+                "You must either define the environment variable %s "
+                "or call settings.configure() before accessing settings."
+                % (desc, ENVIRONMENT_VARIABLE)
+            )
+E           django.core.exceptions.ImproperlyConfigured: Requested setting DEFAULT_CHARSET, but settings are not configured. You must either define the environment variable DJANGO_SETTINGS_MODULE or call settings.configure() before accessing settings.
+
+../../../.venv/lib/python3.12/site-packages/django/conf/__init__.py:55: ImproperlyConfigured
+______________________ test_task_func['string'-0.01-0.1] _______________________
+
+mock_sleep = <MagicMock name='sleep' id='126031416001648'>, data = "'string'"
+min_delay = 0.01, max_delay = 0.1
+
+    @pytest.mark.parametrize("data, min_delay, max_delay", [
+        ("{'key': 'value'}", 0.1, 0.5),
+        ("[1, 2, 3]", 0.2, 0.3),
+        ("'string'", 0.01, 0.1)
+    ])
+    @patch('time.sleep')
+    def test_task_func(mock_sleep, data, min_delay, max_delay):
+        # Call the function
+>       response = task_func(data, min_delay, max_delay)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0182.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0182.py:13: in task_func
+    response = HttpResponse(data, content_type='application/json')
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/django/http/response.py:384: in __init__
+    self.content = content
+    ^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/django/http/response.py:416: in content
+    content = self.make_bytes(value)
+              ^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/django/http/response.py:324: in make_bytes
+    return bytes(value.encode(self.charset))
+                              ^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/django/http/response.py:172: in charset
+    return settings.DEFAULT_CHARSET
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/django/conf/__init__.py:75: in __getattr__
+    self._setup(name)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <LazySettings [Unevaluated]>, name = 'DEFAULT_CHARSET'
+
+    def _setup(self, name=None):
+        """
+        Load the settings module pointed to by the environment variable. This
+        is used the first time settings are needed, if the user hasn't
+        configured settings manually.
+        """
+        settings_module = os.environ.get(ENVIRONMENT_VARIABLE)
+        if not settings_module:
+            desc = ("setting %s" % name) if name else "settings"
+>           raise ImproperlyConfigured(
+                "Requested %s, but settings are not configured. "
+                "You must either define the environment variable %s "
+                "or call settings.configure() before accessing settings."
+                % (desc, ENVIRONMENT_VARIABLE)
+            )
+E           django.core.exceptions.ImproperlyConfigured: Requested setting DEFAULT_CHARSET, but settings are not configured. You must either define the environment variable DJANGO_SETTINGS_MODULE or call settings.configure() before accessing settings.
+
+../../../.venv/lib/python3.12/site-packages/django/conf/__init__.py:55: ImproperlyConfigured
+=========================== short test summary info ============================
+FAILED test_0182.py::test_task_func[{'key': 'value'}-0.1-0.5] - django.core.e...
+FAILED test_0182.py::test_task_func[[1, 2, 3]-0.2-0.3] - django.core.exceptio...
+FAILED test_0182.py::test_task_func['string'-0.01-0.1] - django.core.exceptio...
+3 failed in 0.86s

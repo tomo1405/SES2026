@@ -1,0 +1,62 @@
+F.FF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a temporary directory and some files with special characters
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Create some files with special characters in their names
+            file_paths = [
+                os.path.join(temp_dir, 'file@name#1.txt'),
+                os.path.join(temp_dir, 'another$file%name&2.txt'),
+                os.path.join(temp_dir, 'yet-another_file(name).txt')
+            ]
+            for file_path in file_paths:
+                open(file_path, 'a').close()  # Create empty files
+    
+            # Call the function
+            result = task_func(temp_dir)
+    
+            # Check that the files have been renamed correctly
+            expected_names = ['filename1.txt', 'anotherfilename2.txt', 'yetanotherfilename.txt']
+>           assert sorted(result) == sorted(expected_names)
+E           AssertionError: assert ['anotherfile...rfilenametxt'] == ['anotherfile...filename.txt']
+E             
+E             At index 0 diff: 'anotherfilename2txt' != 'anotherfilename2.txt'
+E             Use -v to get more diff
+
+test_0940.py:25: AssertionError
+___________________________ test_task_func_no_files ____________________________
+
+    def test_task_func_no_files():
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Create a subdirectory to ensure it doesn't interfere
+            os.mkdir(os.path.join(temp_dir, 'subdir'))
+            result = task_func(temp_dir)
+>           assert result == []
+E           AssertionError: assert ['subdir'] == []
+E             
+E             Left contains one more item: 'subdir'
+E             Use -v to get more diff
+
+test_0940.py:43: AssertionError
+_____________________ test_task_func_non_renameable_files ______________________
+
+    def test_task_func_non_renameable_files():
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Create a file that is already clean
+            file_path = os.path.join(temp_dir, 'cleanfilename.txt')
+            open(file_path, 'a').close()
+            result = task_func(temp_dir)
+>           assert result == ['cleanfilename.txt']
+E           AssertionError: assert ['cleanfilenametxt'] == ['cleanfilename.txt']
+E             
+E             At index 0 diff: 'cleanfilenametxt' != 'cleanfilename.txt'
+E             Use -v to get more diff
+
+test_0940.py:52: AssertionError
+=========================== short test summary info ============================
+FAILED test_0940.py::test_task_func - AssertionError: assert ['anotherfile......
+FAILED test_0940.py::test_task_func_no_files - AssertionError: assert ['subdi...
+FAILED test_0940.py::test_task_func_non_renameable_files - AssertionError: as...
+3 failed, 1 passed in 0.51s

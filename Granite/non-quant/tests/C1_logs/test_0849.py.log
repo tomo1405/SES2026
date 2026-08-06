@@ -1,0 +1,29 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        obj_list = [object() for _ in range(10)]
+        attr = 'attr'
+        top_n = 5
+        seed = 42
+    
+>       top_values, random_value = task_func(obj_list, attr, top_n, seed)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0849.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+obj_list = [<object object at 0x7cdb8d179d20>, <object object at 0x7cdb8d179d30>, <object object at 0x7cdb8d179d40>, <object object at 0x7cdb8d179d50>, <object object at 0x7cdb8d179d60>, <object object at 0x7cdb8d179d70>, ...]
+attr = 'attr', top_n = 5, seed = 42
+
+    def task_func(obj_list, attr, top_n=5, seed=None):
+        random.seed(seed)
+>       attr_values = [getattr(obj, attr) for obj in obj_list]
+                       ^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'object' object has no attribute 'attr'
+
+../../../src/src_0849.py:5: AttributeError
+=========================== short test summary info ============================
+FAILED test_0849.py::test_task_func - AttributeError: 'object' object has no ...
+1 failed in 0.48s

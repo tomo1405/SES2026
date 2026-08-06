@@ -1,0 +1,71 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        dictionary = {'a': [1, 2, 3], 'b': [4, 5, 6], 'c': [7, 8, 9]}
+        item = 5
+        sample_size = 2
+        random_seed = 1234
+    
+        positions, dataframe = task_func(dictionary, item, sample_size, random_seed)
+    
+>       assert positions == [(1, 'b'), (2, 'b')]
+E       AssertionError: assert [(1, 'b')] == [(1, 'b'), (2, 'b')]
+E         
+E         Right contains one more item: (2, 'b')
+E         Use -v to get more diff
+
+test_0812.py:12: AssertionError
+________________________ test_task_func_no_sample_size _________________________
+
+    def test_task_func_no_sample_size():
+        dictionary = {'a': [1, 2, 3], 'b': [4, 5, 6], 'c': [7, 8, 9]}
+        item = 5
+        sample_size = None
+        random_seed = 1234
+    
+        positions, dataframe = task_func(dictionary, item, sample_size, random_seed)
+    
+>       assert positions == [(1, 'b'), (2, 'b')]
+E       AssertionError: assert [(1, 'b')] == [(1, 'b'), (2, 'b')]
+E         
+E         Right contains one more item: (2, 'b')
+E         Use -v to get more diff
+
+test_0812.py:23: AssertionError
+________________________ test_task_func_no_random_seed _________________________
+
+    def test_task_func_no_random_seed():
+        dictionary = {'a': [1, 2, 3], 'b': [4, 5, 6], 'c': [7, 8, 9]}
+        item = 5
+        sample_size = 2
+        random_seed = None
+    
+        positions, dataframe = task_func(dictionary, item, sample_size, random_seed)
+    
+>       assert positions == [(1, 'b'), (2, 'b')]
+E       AssertionError: assert [(1, 'b')] == [(1, 'b'), (2, 'b')]
+E         
+E         Right contains one more item: (2, 'b')
+E         Use -v to get more diff
+
+test_0812.py:34: AssertionError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        dictionary = {'a': [1, 2, 3], 'b': [4, 5, 6], 'c': [7, 8, 9]}
+        item = 10
+        sample_size = 2
+        random_seed = 1234
+    
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0812.py:43: Failed
+=========================== short test summary info ============================
+FAILED test_0812.py::test_task_func - AssertionError: assert [(1, 'b')] == [(...
+FAILED test_0812.py::test_task_func_no_sample_size - AssertionError: assert [...
+FAILED test_0812.py::test_task_func_no_random_seed - AssertionError: assert [...
+FAILED test_0812.py::test_task_func_invalid_input - Failed: DID NOT RAISE Val...
+4 failed in 1.23s

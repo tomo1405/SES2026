@@ -1,0 +1,37 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        url = 'https://www.example.com/file.zip'
+        destination_directory = 'tests/data'
+        headers = {'accept': 'application/octet-stream'}
+    
+>       extracted_files = task_func(url, destination_directory, headers)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0212.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'https://www.example.com/file.zip', destination_directory = 'tests/data'
+headers = {'accept': 'application/octet-stream'}
+
+    def task_func(url, destination_directory, headers=None):
+    
+        if headers is None:
+            headers = {
+                'accept': 'application/octet-stream'
+            }
+    
+        response = requests.get(url, headers=headers)
+        filename = os.path.basename(url)
+        zip_path = os.path.join(destination_directory, filename)
+    
+>       with open(zip_path, 'wb') as f:
+             ^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'tests/data/file.zip'
+
+../../../src/src_0212.py:15: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0212.py::test_task_func - FileNotFoundError: [Errno 2] No such fi...
+1 failed in 0.69s

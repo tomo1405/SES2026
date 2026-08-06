@@ -1,0 +1,45 @@
+..F.F.                                                                   [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_input_key_not_string ______________________
+
+    def test_task_func_input_key_not_string():
+        data = pd.DataFrame({"a": [1, 2, 3], "b": [4, 5, 6]})
+        key = 123
+        min_value = 0
+        max_value = 10
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0175.py:31: Failed
+____________________ test_task_func_input_max_value_not_int ____________________
+
+    def test_task_func_input_max_value_not_int():
+        data = pd.DataFrame({"a": [1, 2, 3], "b": [4, 5, 6]})
+        key = "random_generated"
+        min_value = 0
+        max_value = "not an int"
+        with pytest.raises(ValueError):
+>           task_func(data, key, min_value, max_value)
+
+test_0175.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data =    a  b
+0  1  4
+1  2  5
+2  3  6, key = 'random_generated', min_value = 0
+max_value = 'not an int'
+
+    def task_func(data, key, min_value, max_value):
+        if not isinstance(data, pd.DataFrame):
+            raise ValueError("Input 'data' must be a pandas DataFrame.")
+    
+>       random_generated = np.random.randint(min_value, max_value + 1, size=len(data))
+                                                        ^^^^^^^^^^^^^
+E       TypeError: can only concatenate str (not "int") to str
+
+../../../src/src_0175.py:7: TypeError
+=========================== short test summary info ============================
+FAILED test_0175.py::test_task_func_input_key_not_string - Failed: DID NOT RA...
+FAILED test_0175.py::test_task_func_input_max_value_not_int - TypeError: can ...
+2 failed, 4 passed in 1.19s

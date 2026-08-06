@@ -1,0 +1,73 @@
+F.FF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        directory = "path/to/directory"
+        extensions = [".txt", ".docx", ".xlsx", ".csv"]
+        keep_zero = True
+    
+>       counter = task_func(directory, extensions, keep_zero)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0962.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = 'path/to/directory', extensions = ['.txt', '.docx', '.xlsx', '.csv']
+keep_zero = True
+
+    def task_func(directory, extensions=[".txt", ".docx", ".xlsx", ".csv"], keep_zero=True):
+        if not os.path.exists(directory):
+>           raise OSError("directory must exist.")
+E           OSError: directory must exist.
+
+../../../src/src_0962.py:6: OSError
+____________________ test_task_func_with_invalid_extensions ____________________
+
+    def test_task_func_with_invalid_extensions():
+        directory = "path/to/directory"
+        extensions = ["invalid_extension"]
+        keep_zero = True
+    
+        with pytest.raises(ValueError):
+>           task_func(directory, extensions, keep_zero)
+
+test_0962.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = 'path/to/directory', extensions = ['invalid_extension']
+keep_zero = True
+
+    def task_func(directory, extensions=[".txt", ".docx", ".xlsx", ".csv"], keep_zero=True):
+        if not os.path.exists(directory):
+>           raise OSError("directory must exist.")
+E           OSError: directory must exist.
+
+../../../src/src_0962.py:6: OSError
+_____________________ test_task_func_with_keep_zero_false ______________________
+
+    def test_task_func_with_keep_zero_false():
+        directory = "path/to/directory"
+        extensions = [".txt", ".docx", ".xlsx", ".csv"]
+        keep_zero = False
+    
+>       counter = task_func(directory, extensions, keep_zero)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0962.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = 'path/to/directory', extensions = ['.txt', '.docx', '.xlsx', '.csv']
+keep_zero = False
+
+    def task_func(directory, extensions=[".txt", ".docx", ".xlsx", ".csv"], keep_zero=True):
+        if not os.path.exists(directory):
+>           raise OSError("directory must exist.")
+E           OSError: directory must exist.
+
+../../../src/src_0962.py:6: OSError
+=========================== short test summary info ============================
+FAILED test_0962.py::test_task_func - OSError: directory must exist.
+FAILED test_0962.py::test_task_func_with_invalid_extensions - OSError: direct...
+FAILED test_0962.py::test_task_func_with_keep_zero_false - OSError: directory...
+3 failed, 1 passed in 0.50s

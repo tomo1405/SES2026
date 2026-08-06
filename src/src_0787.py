@@ -1,0 +1,29 @@
+import pandas as pd
+import csv
+import random
+def task_func(
+    n, 
+    countries=['USA', 'UK', 'China', 'India', 'Germany'], 
+    products=['Product A', 'Product B', 'Product C', 'Product D', 'Product E'], 
+    output_path=None,
+    random_seed=None):
+    
+    random.seed(random_seed)
+    
+    sales_data = []
+    
+    for _ in range(n):
+        country = random.choice(countries)
+        product = random.choice(products)
+        sales = random.randint(1, 100)
+        sales_data.append({'Country': country, 'Product': product, 'Sales': sales})
+
+    # If an output path is provided, save the data to a CSV file
+    if output_path:
+        with open(output_path, 'w', newline='') as csvfile:
+            fieldnames = ['Country', 'Product', 'Sales']
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerows(sales_data)
+        
+    return pd.DataFrame(sales_data)

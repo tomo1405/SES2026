@@ -1,0 +1,61 @@
+..FF.F                                                                   [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_multiple_words _________________________
+
+    def test_task_func_multiple_words():
+        result = task_func("Hello world hello")
+>       assert result.equals(pd.Series([2], index=['hello']))
+E       AssertionError: assert False
+E        +  where False = equals(hello    2\ndtype: int64)
+E        +    where equals = hello    2\nworld    1\ndtype: int64.equals
+E        +    and   hello    2\ndtype: int64 = <class 'pandas.Series'>([2], index=['hello'])
+E        +      where <class 'pandas.Series'> = pd.Series
+
+test_0053.py:15: AssertionError
+________________________ test_task_func_with_stopwords _________________________
+
+    def test_task_func_with_stopwords():
+        result = task_func("The quick brown fox jumps over the lazy dog")
+>       expected = pd.Series([1, 1, 1, 1, 1], index=['quick', 'brown', 'fox', 'jumps', 'over', 'lazy', 'dog'])
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0053.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/series.py:503: in __init__
+    com.require_length_match(data, index)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = [1, 1, 1, 1, 1]
+index = Index(['quick', 'brown', 'fox', 'jumps', 'over', 'lazy', 'dog'], dtype='str')
+
+    def require_length_match(data, index: Index) -> None:
+        """
+        Check the length of data matches the length of the index.
+        """
+        if len(data) != len(index):
+>           raise ValueError(
+                "Length of values "
+                f"({len(data)}) "
+                "does not match length of index "
+                f"({len(index)})"
+            )
+E           ValueError: Length of values (5) does not match length of index (7)
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/common.py:601: ValueError
+__________________________ test_task_func_punctuation __________________________
+
+    def test_task_func_punctuation():
+        result = task_func("Hello, world!")
+>       assert result.equals(pd.Series([1], index=['hello']))
+E       AssertionError: assert False
+E        +  where False = equals(hello    1\ndtype: int64)
+E        +    where equals = hello    1\nworld    1\ndtype: int64.equals
+E        +    and   hello    1\ndtype: int64 = <class 'pandas.Series'>([1], index=['hello'])
+E        +      where <class 'pandas.Series'> = pd.Series
+
+test_0053.py:28: AssertionError
+=========================== short test summary info ============================
+FAILED test_0053.py::test_task_func_multiple_words - AssertionError: assert F...
+FAILED test_0053.py::test_task_func_with_stopwords - ValueError: Length of va...
+FAILED test_0053.py::test_task_func_punctuation - AssertionError: assert False
+3 failed, 3 passed in 1.25s

@@ -1,0 +1,38 @@
+.F...                                                                    [100%]
+=================================== FAILURES ===================================
+___________________ test_task_func_with_interesting_articles ___________________
+
+    def test_task_func_with_interesting_articles():
+        df = pd.DataFrame({
+            'Title': ['What is this?', 'Like this', 'Unrelated title'],
+            'Content': ['This is a test content.', 'Another test content with like.', 'Irrelevant content.']
+        })
+        result = task_func(df)
+        expected_result = {
+            'This': 2,
+            'is': 2,
+            'a': 1,
+            'test': 2,
+            'content': 2,
+            'Another': 1,
+            'with': 1,
+            'like': 1,
+            'Irrelevant': 1,
+            'content.': 1
+        }
+>       assert result == expected_result
+E       AssertionError: assert {'This': 1, '...test': 2, ...} == {'This': 2, '...test': 2, ...}
+E         
+E         Omitting 5 identical items, use -vv to show
+E         Differing items:
+E         {'content': 1} != {'content': 2}
+E         {'This': 1} != {'This': 2}
+E         {'is': 1} != {'is': 2}
+E         Left contains 1 more item:...
+E         
+E         ...Full output truncated (4 lines hidden), use '-vv' to show
+
+test_0178.py:40: AssertionError
+=========================== short test summary info ============================
+FAILED test_0178.py::test_task_func_with_interesting_articles - AssertionErro...
+1 failed, 4 passed in 3.81s

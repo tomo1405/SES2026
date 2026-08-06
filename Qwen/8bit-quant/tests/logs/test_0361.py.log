@@ -1,0 +1,35 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_file_not_found _________________________
+
+mock_file_exists = None
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d710231dca0>
+
+    def test_task_func_file_not_found(mock_file_exists, monkeypatch):
+        file_location = "non_existent_file.xlsx"
+        sheet_name = "Sheet1"
+        with pytest.raises(FileNotFoundError) as excinfo:
+            task_func(file_location, sheet_name)
+>       assert str(excinfo.value) == f"No file found at {file_location}"
+E       assert "[Errno 2] No...nt_file.xlsx'" == 'No file foun...ent_file.xlsx'
+E         
+E         - No file found at non_existent_file.xlsx
+E         + [Errno 2] No such file or directory: 'non_existent_file.xlsx'
+
+test_0361.py:53: AssertionError
+______________________ test_task_func_invalid_sheet_name _______________________
+
+mock_file_exists = None, mock_excel_reader = None
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d7102398590>
+
+    def test_task_func_invalid_sheet_name(mock_file_exists, mock_excel_reader, monkeypatch):
+        file_location = "test.xlsx"
+        sheet_name = "NonExistentSheet"
+>       with pytest.raises(ValueError) as excinfo:
+E       Failed: DID NOT RAISE ValueError
+
+test_0361.py:58: Failed
+=========================== short test summary info ============================
+FAILED test_0361.py::test_task_func_file_not_found - assert "[Errno 2] No...n...
+FAILED test_0361.py::test_task_func_invalid_sheet_name - Failed: DID NOT RAIS...
+2 failed, 1 passed in 2.14s

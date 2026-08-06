@@ -1,0 +1,49 @@
+FF.F                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        d = {'x': [1, 2, 3, 4, 5], 'y': [1, 2, 3, 4, 5], 'z': [1, 2, 3, 4, 5]}
+        counts = task_func(d)
+>       assert counts['x'] == Counter({1: 2, 2: 2, 3: 2, 4: 2, 5: 2})
+E       assert Counter({1: 1..., 4: 1, 5: 1}) == Counter({1: 2..., 4: 2, 5: 2})
+E         
+E         Differing items:
+E         {1: 1} != {1: 2}
+E         {2: 1} != {2: 2}
+E         {3: 1} != {3: 2}
+E         {4: 1} != {4: 2}
+E         {5: 1} != {5: 2}
+E         Use -v to get more diff
+
+test_0903.py:10: AssertionError
+______________________ test_task_func_with_missing_column ______________________
+
+    def test_task_func_with_missing_column():
+        d = {'x': [1, 2, 3, 4, 5], 'y': [1, 2, 3, 4, 5]}
+        counts = task_func(d)
+>       assert counts['x'] == Counter({1: 2, 2: 2, 3: 2, 4: 2, 5: 2})
+E       assert Counter({1: 1..., 4: 1, 5: 1}) == Counter({1: 2..., 4: 2, 5: 2})
+E         
+E         Differing items:
+E         {1: 1} != {1: 2}
+E         {2: 1} != {2: 2}
+E         {3: 1} != {3: 2}
+E         {4: 1} != {4: 2}
+E         {5: 1} != {5: 2}
+E         Use -v to get more diff
+
+test_0903.py:17: AssertionError
+______________________ test_task_func_with_invalid_input _______________________
+
+    def test_task_func_with_invalid_input():
+        d = {'x': [1, 2, 3, 4, 5], 'y': [1, 2, 3, 4, 5], 'z': [1, 2, 3, 4, 5], 'a': [1, 2, 3, 4, 5]}
+>       with pytest.raises(KeyError):
+E       Failed: DID NOT RAISE KeyError
+
+test_0903.py:30: Failed
+=========================== short test summary info ============================
+FAILED test_0903.py::test_task_func - assert Counter({1: 1..., 4: 1, 5: 1}) =...
+FAILED test_0903.py::test_task_func_with_missing_column - assert Counter({1: ...
+FAILED test_0903.py::test_task_func_with_invalid_input - Failed: DID NOT RAIS...
+3 failed, 1 passed in 1.23s

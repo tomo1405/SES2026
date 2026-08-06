@@ -1,0 +1,48 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Given date is a business day
+        given_date = parse("2022-01-01")
+        expected_result = parse("2022-01-04")
+>       assert task_func(given_date) == expected_result
+               ^^^^^^^^^^^^^^^^^^^^^
+
+test_0649.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0649.py:4: in task_func
+    given_date = parse(date_str)
+                 ^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/dateutil/parser/_parser.py:1368: in parse
+    return DEFAULTPARSER.parse(timestr, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/dateutil/parser/_parser.py:640: in parse
+    res, skipped_tokens = self._parse(timestr, **kwargs)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/dateutil/parser/_parser.py:719: in _parse
+    l = _timelex.split(timestr)         # Splits the timestr into tokens
+        ^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/dateutil/parser/_parser.py:201: in split
+    return list(cls(s))
+                ^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <dateutil.parser._parser._timelex object at 0x707760f13b60>
+instream = datetime.datetime(2022, 1, 1, 0, 0)
+
+    def __init__(self, instream):
+        if isinstance(instream, (bytes, bytearray)):
+            instream = instream.decode()
+    
+        if isinstance(instream, text_type):
+            instream = StringIO(instream)
+        elif getattr(instream, 'read', None) is None:
+>           raise TypeError('Parser must be a string or character stream, not '
+                            '{itype}'.format(itype=instream.__class__.__name__))
+E           TypeError: Parser must be a string or character stream, not datetime
+
+../../../.venv/lib/python3.12/site-packages/dateutil/parser/_parser.py:69: TypeError
+=========================== short test summary info ============================
+FAILED test_0649.py::test_task_func - TypeError: Parser must be a string or c...
+1 failed in 0.57s

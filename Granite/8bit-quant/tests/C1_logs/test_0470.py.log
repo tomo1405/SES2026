@@ -1,0 +1,37 @@
+.F                                                                       [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_valid_input ________________________
+
+    def test_task_func_with_valid_input():
+        student_grades = ["A", "B", "C", "D", "F", "A", "B", "C", "D", "F"]
+        expected_report_data = {"A": 2, "B": 2, "C": 2, "D": 2, "F": 2}
+        expected_report_df = pd.DataFrame.from_dict(expected_report_data, orient="index", columns=["Count"])
+        expected_report_df.index.name = "Grade"
+    
+        with patch("src_0470.plt.show") as mock_show:
+            report_df, ax = task_func(student_grades)
+            assert report_df.equals(expected_report_df)
+            assert ax.get_ylabel() == "Number of Students"
+            assert ax.get_xlabel() == "Grade"
+>           mock_show.assert_called_once()
+
+test_0470.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='show' id='126565479850320'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'show' to have been called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:923: AssertionError
+=========================== short test summary info ============================
+FAILED test_0470.py::test_task_func_with_valid_input - AssertionError: Expect...
+1 failed, 1 passed in 2.10s

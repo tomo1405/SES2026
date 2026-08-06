@@ -1,0 +1,23 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Mock the json.load function to return a test data
+        with patch('json.load', return_value=[{'email': 'test@example.com', 'list': [1, 2, 3]}]):
+            # Mock the pd.DataFrame.plot function to return a dummy axis object
+            with patch.object(pd.DataFrame, 'plot', return_value=None) as mock_plot:
+                # Call the function with a test JSON file
+                df, ax = task_func('test.json')
+                # Assert that the returned DataFrame has the expected columns
+                assert df.columns.tolist() == COLUMNS + ["sum", "mean"]
+                # Assert that the returned axis object is not None
+>               assert ax is not None
+E               assert None is not None
+
+test_0071.py:34: AssertionError
+=========================== short test summary info ============================
+FAILED test_0071.py::test_task_func - assert None is not None
+1 failed in 1.38s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

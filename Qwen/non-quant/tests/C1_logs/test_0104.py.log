@@ -1,0 +1,33 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_empty_dataframe ______________________
+
+    def test_task_func_with_empty_dataframe():
+        temperatures = pd.DataFrame()
+        with pytest.raises(ValueError) as excinfo:
+            task_func(temperatures)
+>       assert str(excinfo.value) == "Input temperatures must be a non-empty pandas DataFrame."
+E       AssertionError: assert 'An error occ...as DataFrame.' == 'Input temper...as DataFrame.'
+E         
+E         - Input temperatures must be a non-empty pandas DataFrame.
+E         + An error occurred: Input temperatures must be a non-empty pandas DataFrame.
+E         ? +++++++++++++++++++
+
+test_0104.py:12: AssertionError
+___________________ test_task_func_with_non_dataframe_input ____________________
+
+    def test_task_func_with_non_dataframe_input():
+        temperatures = [1, 2, 3]
+        with pytest.raises(ValueError) as excinfo:
+            task_func(temperatures)
+>       assert str(excinfo.value) == "Input temperatures must be a non-empty pandas DataFrame."
+E       assert "An error occ...ibute 'empty'" == 'Input temper...as DataFrame.'
+E         
+E         - Input temperatures must be a non-empty pandas DataFrame.
+E         + An error occurred: 'list' object has no attribute 'empty'
+
+test_0104.py:18: AssertionError
+=========================== short test summary info ============================
+FAILED test_0104.py::test_task_func_with_empty_dataframe - AssertionError: as...
+FAILED test_0104.py::test_task_func_with_non_dataframe_input - assert "An err...
+2 failed, 1 passed in 2.23s

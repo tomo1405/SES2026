@@ -1,0 +1,121 @@
+F.F.F                                                                    [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+sample_df =   Customer  Sales     Category
+0        A    100  Electronics
+1        B    200     Clothing
+2        C    150  Electronics
+3        D    300     Clothing
+4        E    250  Electronics
+
+    def test_task_func_valid_input(sample_df):
+>       assert task_func(sample_df) == {'Total Sales': 900, 'Most Popular Category': 'Electronics'}
+E       AssertionError: assert {'Total Sales...'Electronics'} == {'Total Sales...'Electronics'}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'Total Sales': np.int64(1000)} != {'Total Sales': 900}
+E         Use -v to get more diff
+
+test_0233.py:14: AssertionError
+_________________________ test_task_func_no_duplicates _________________________
+
+sample_df =   Customer  Sales     Category
+0        A    100  Electronics
+1        B    200     Clothing
+2        C    150  Electronics
+3        D    300     Clothing
+4        E    250  Electronics
+
+    def test_task_func_no_duplicates(sample_df):
+        sample_df = sample_df.drop_duplicates(subset='Customer')
+>       assert task_func(sample_df) == {'Total Sales': 900, 'Most Popular Category': 'Electronics'}
+E       AssertionError: assert {'Total Sales...'Electronics'} == {'Total Sales...'Electronics'}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'Total Sales': np.int64(1000)} != {'Total Sales': 900}
+E         Use -v to get more diff
+
+test_0233.py:22: AssertionError
+___________________________ test_task_func_empty_df ____________________________
+
+    def test_task_func_empty_df():
+        empty_df = pd.DataFrame()
+        with pytest.raises(ValueError):
+>           task_func(empty_df)
+
+test_0233.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0233.py:9: in task_func
+    total_sales = df['Sales'].sum()
+                  ^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:4378: in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = RangeIndex(start=0, stop=0, step=1), key = 'Sales'
+
+    def get_loc(self, key) -> int:
+        """
+        Get integer location for requested label.
+    
+        Parameters
+        ----------
+        key : int or float
+            Label to locate. Integer-like floats (e.g. 3.0) are accepted and
+            treated as the corresponding integer. Non-integer floats and other
+            non-integer labels are not valid and will raise KeyError or
+            InvalidIndexError.
+    
+        Returns
+        -------
+        int
+            Integer location of the label within the RangeIndex.
+    
+        Raises
+        ------
+        KeyError
+            If the label is not present in the RangeIndex or the label is a
+            non-integer value.
+        InvalidIndexError
+            If the label is of an invalid type for the RangeIndex.
+    
+        See Also
+        --------
+        RangeIndex.get_slice_bound : Calculate slice bound that corresponds to
+            given label.
+        RangeIndex.get_indexer : Computes indexer and mask for new index given
+            the current index.
+        RangeIndex.get_non_unique : Returns indexer and masks for new index given
+            the current index.
+        RangeIndex.get_indexer_for : Returns an indexer even when non-unique.
+    
+        Examples
+        --------
+        >>> idx = pd.RangeIndex(5)
+        >>> idx.get_loc(3)
+        3
+    
+        >>> idx = pd.RangeIndex(2, 10, 2)  # values [2, 4, 6, 8]
+        >>> idx.get_loc(6)
+        2
+        """
+        if is_integer(key) or (is_float(key) and key.is_integer()):
+            new_key = int(key)
+            try:
+                return self._range.index(new_key)
+            except ValueError as err:
+                raise KeyError(key) from err
+        if isinstance(key, Hashable):
+>           raise KeyError(key)
+E           KeyError: 'Sales'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/range.py:525: KeyError
+=========================== short test summary info ============================
+FAILED test_0233.py::test_task_func_valid_input - AssertionError: assert {'To...
+FAILED test_0233.py::test_task_func_no_duplicates - AssertionError: assert {'...
+FAILED test_0233.py::test_task_func_empty_df - KeyError: 'Sales'
+3 failed, 2 passed in 1.28s

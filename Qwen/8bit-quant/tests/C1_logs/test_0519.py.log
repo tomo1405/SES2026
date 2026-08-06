@@ -1,0 +1,54 @@
+F...F.                                                                   [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_valid_input ________________________
+
+    def test_task_func_with_valid_input():
+        input_data = [[1, 2], [3, 4], [5, 6]]
+        df, distance_matrix = task_func(input_data)
+        assert isinstance(df, pd.DataFrame)
+        assert isinstance(distance_matrix, pd.DataFrame)
+        assert df.equals(pd.DataFrame([[1, 2], [3, 4], [5, 6]], columns=['A', 'B']))
+>       assert distance_matrix.equals(pd.DataFrame({
+            0: [0.0, 2.828427, 5.656854],
+            1: [2.828427, 0.0, 2.828427],
+            2: [5.656854, 2.828427, 0.0]
+        }, index=[0, 1, 2]))
+E       AssertionError: assert False
+E        +  where False = equals(          0         1         2\n0  0.000000  2.828427  5.656854\n1  2.828427  0.000000  2.828427\n2  5.656854  2.828427  0.000000)
+E        +    where equals =           0         1         2\n0  0.000000  2.828427  5.656854\n1  2.828427  0.000000  2.828427\n2  5.656854  2.828427  0.000000.equals
+E        +    and             0         1         2\n0  0.000000  2.828427  5.656854\n1  2.828427  0.000000  2.828427\n2  5.656854  2.828427  0.000000 = <class 'pandas.DataFrame'>({0: [0.0, 2.828427, 5.656854], 1: [2.828427, 0.0, 2.828427], 2: [5.656854, 2.828427, 0.0]}, index=[0, 1, 2])
+E        +      where <class 'pandas.DataFrame'> = pd.DataFrame
+
+test_0519.py:12: AssertionError
+________________________ test_task_func_with_empty_list ________________________
+
+    def test_task_func_with_empty_list():
+        input_data = []
+>       df, distance_matrix = task_func(input_data)
+                              ^^^^^^^^^^^^^^^^^^^^^
+
+test_0519.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+array = []
+
+    def task_func(array):
+        if not isinstance(array, list):
+            raise TypeError("Input must be a list.")
+    
+        if not all(isinstance(sublist, list) for sublist in array):
+            raise TypeError("Input must be a list of lists.")
+    
+        for sublist in array:
+            if not all(isinstance(item, (int, float)) for item in sublist):
+                raise TypeError("All elements in the sublists must be int or float.")
+    
+>       columns = [chr(65 + i) for i in range(len(array[0]))]
+                                                  ^^^^^^^^
+E       IndexError: list index out of range
+
+../../../src/src_0519.py:14: IndexError
+=========================== short test summary info ============================
+FAILED test_0519.py::test_task_func_with_valid_input - AssertionError: assert...
+FAILED test_0519.py::test_task_func_with_empty_list - IndexError: list index ...
+2 failed, 4 passed in 2.16s

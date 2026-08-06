@@ -1,0 +1,38 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create mock files
+        file1 = MockFile('data/file1.txt', ['{"key": "value1"}', '{"key": "value2"}'])
+        file2 = MockFile('data/file2.txt', ['{"key": "value3"}'])
+    
+        # Create a mock directory with the mock files
+        mock_directory = MockDirectory([file1, file2])
+    
+        # Monkey patch the glob module to use our mock directory
+        original_glob = glob.glob
+        glob.glob = mock_directory.glob
+    
+        # Call the function
+        result = task_func('data')
+    
+        # Restore the original glob function
+        glob.glob = original_glob
+    
+        # Assert the results
+        expected_result = [
+            {'key': 'value1'},
+            {'key': 'value2'},
+            {'key': 'value3'}
+        ]
+>       assert result == expected_result
+E       AssertionError: assert [] == [{'key': 'val...y': 'value3'}]
+E         
+E         Right contains 3 more items, first extra item: {'key': 'value1'}
+E         Use -v to get more diff
+
+test_1092.py:46: AssertionError
+=========================== short test summary info ============================
+FAILED test_1092.py::test_task_func - AssertionError: assert [] == [{'key': '...
+1 failed in 0.50s

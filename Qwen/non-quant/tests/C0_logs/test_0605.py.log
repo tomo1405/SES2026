@@ -1,0 +1,50 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+___________________________ test_failed_compilation ____________________________
+
+mock_subprocess = <test_0605.MockSubprocess object at 0x737d113d07d0>
+mock_logger = <test_0605.MockLogger object at 0x737d113d0950>
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1289/test_failed_compilation0')
+
+    def test_failed_compilation(mock_subprocess, mock_logger, tmp_path):
+        # Create a temporary C++ file with a syntax error
+        cpp_file = tmp_path / "test_failure.cpp"
+        cpp_file.write_text("int main() { return; }")  # Missing return value
+    
+        task_func(str(cpp_file))
+    
+>       assert mock_logger.logs == [
+            (logging.ERROR, 'Failed to compile %s: %s' % (str(cpp_file), subprocess.CalledProcessError(1, ['g++', str(cpp_file), '-o', 'test_failure'])))
+        ]
+E       assert [(20, 'Succes...failure.cpp')] == [(40, 'Failed...t status 1.')]
+E         
+E         At index 0 diff: (20, 'Successfully compiled /tmp/pytest-of-tomohiro-w/pytest-1289/test_failed_compilation0/test_failure.cpp') != (40, "Failed to compile /tmp/pytest-of-tomohiro-w/pytest-1289/test_failed_compilation0/test_failure.cpp: Command '['g++', '/tmp/pytest-of-tomohiro-w/pytest-1289/test_failed_compilation0/test_failure.cpp', '-o', 'test_failure']' returned non-zero exit status 1.")
+E         Use -v to get more diff
+
+test_0605.py:58: AssertionError
+____________________________ test_missing_compiler _____________________________
+
+mock_subprocess = <test_0605.MockSubprocess object at 0x737d113d3110>
+mock_logger = <test_0605.MockLogger object at 0x737d113d3a40>
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1289/test_missing_compiler0')
+
+    def test_missing_compiler(mock_subprocess, mock_logger, tmp_path):
+        # Create a temporary C++ file
+        cpp_file = tmp_path / "missing_compiler.cpp"
+        cpp_file.write_text("int main() { return 0; }")
+    
+        task_func(str(cpp_file))
+    
+>       assert mock_logger.logs == [
+            (logging.ERROR, 'Compiler not found or file does not exist: %s' % FileNotFoundError("Compiler not found"))
+        ]
+E       AssertionError: assert [(20, 'Succes...ompiler.cpp')] == [(40, 'Compil...r not found')]
+E         
+E         At index 0 diff: (20, 'Successfully compiled /tmp/pytest-of-tomohiro-w/pytest-1289/test_missing_compiler0/missing_compiler.cpp') != (40, 'Compiler not found or file does not exist: Compiler not found')
+E         Use -v to get more diff
+
+test_0605.py:69: AssertionError
+=========================== short test summary info ============================
+FAILED test_0605.py::test_failed_compilation - assert [(20, 'Succes...failure...
+FAILED test_0605.py::test_missing_compiler - AssertionError: assert [(20, 'Su...
+2 failed, 1 passed in 0.46s

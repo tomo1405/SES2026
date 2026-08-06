@@ -1,0 +1,27 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        dic = {'Lon': (-180, 180), 'Lat': (-90, 90)}
+        cities = ['New York', 'London', 'Beijing', 'Tokyo', 'Sydney']
+        gdf = task_func(dic, cities)
+>       assert isinstance(gdf, gpd.GeoDataFrame)
+                               ^^^
+E       NameError: name 'gpd' is not defined
+
+test_0188.py:9: NameError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        dic = {'Lon': (-180, 180), 'Lat': (-90, 90)}
+        cities = ['New York', 'London', 'Beijing', 'Tokyo', 'Sydney']
+        with pytest.raises(ValueError):
+>           task_func(dic, cities, 'invalid_arg')
+E           TypeError: task_func() takes from 0 to 2 positional arguments but 3 were given
+
+test_0188.py:20: TypeError
+=========================== short test summary info ============================
+FAILED test_0188.py::test_task_func_valid_input - NameError: name 'gpd' is no...
+FAILED test_0188.py::test_task_func_invalid_input - TypeError: task_func() ta...
+2 failed in 1.70s

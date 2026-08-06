@@ -1,0 +1,24 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        n_rows = 10
+        scale_cols = [0, 2, 4]
+        columns = ['A', 'B', 'C', 'D', 'E']
+        random_seed = 42
+    
+        df = task_func(n_rows, scale_cols, columns, random_seed)
+    
+        assert df.shape == (n_rows, len(columns))
+        assert df.columns.tolist() == columns
+>       assert df.dtypes.tolist() == [np.int64] * len(columns)
+E       AssertionError: assert [dtype('float...pe('float64')] == [<class 'nump...numpy.int64'>]
+E         
+E         At index 0 diff: dtype('float64') != <class 'numpy.int64'>
+E         Use -v to get more diff
+
+test_0838.py:15: AssertionError
+=========================== short test summary info ============================
+FAILED test_0838.py::test_task_func - AssertionError: assert [dtype('float......
+1 failed in 3.02s

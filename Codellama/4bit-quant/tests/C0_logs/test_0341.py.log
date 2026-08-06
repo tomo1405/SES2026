@@ -1,0 +1,28 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Test that the function returns a tuple with two elements
+        req_data = {'name': 'John Doe', 'age': 30}
+        result = task_func(req_data)
+        assert isinstance(result, tuple)
+        assert len(result) == 2
+    
+        # Test case 2: Test that the first element of the tuple is a string
+        assert isinstance(result[0], str)
+    
+        # Test case 3: Test that the second element of the tuple is a string
+        assert isinstance(result[1], str)
+    
+        # Test case 4: Test that the first element of the tuple is a valid BLAKE3 hash
+        assert len(result[0]) == 64
+>       assert result[0].startswith('0x')
+E       AssertionError: assert False
+E        +  where False = <built-in method startswith of str object at 0x7eb1d44c0500>('0x')
+E        +    where <built-in method startswith of str object at 0x7eb1d44c0500> = 'faf4f60928131591b5bf61468a4f496765e9faa155b8b60cfa964224a6530148'.startswith
+
+test_0341.py:19: AssertionError
+=========================== short test summary info ============================
+FAILED test_0341.py::test_task_func - AssertionError: assert False
+1 failed in 0.42s

@@ -1,0 +1,54 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_with_csv_file _________________________
+
+    def test_task_func_with_csv_file():
+        goals = {'Team A': 2, 'Team B': 1, 'Team C': 3}
+        penalties = {'Team A': 1, 'Team B': 2, 'Team C': 0}
+>       setup_csv()
+
+test_0801.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test_0801.py:22: in setup_csv
+    create_test_csv('test_data/test_case_2.csv', content)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+filename = 'test_data/test_case_2.csv'
+content = [['team', 'goals', 'penalties'], ['Team A', '2', '1'], ['Team B', '1', '2'], ['Team C', '3', '0']]
+
+    def create_test_csv(filename, content):
+>       with open(filename, 'w', newline='') as file:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'test_data/test_case_2.csv'
+
+test_0801.py:11: FileNotFoundError
+__________________ test_task_func_with_csv_file_and_io_error ___________________
+
+mock_open = <MagicMock name='open' id='140045833296048'>
+
+    @patch('src_0801.open', create=True)
+    def test_task_func_with_csv_file_and_io_error(mock_open):
+        mock_open.side_effect = IOError('Test error')
+        goals = {'Team A': 2, 'Team B': 1, 'Team C': 3}
+        penalties = {'Team A': 1, 'Team B': 2, 'Team C': 0}
+>       setup_csv()
+
+test_0801.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test_0801.py:22: in setup_csv
+    create_test_csv('test_data/test_case_2.csv', content)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+filename = 'test_data/test_case_2.csv'
+content = [['team', 'goals', 'penalties'], ['Team A', '2', '1'], ['Team B', '1', '2'], ['Team C', '3', '0']]
+
+    def create_test_csv(filename, content):
+>       with open(filename, 'w', newline='') as file:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'test_data/test_case_2.csv'
+
+test_0801.py:11: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0801.py::test_task_func_with_csv_file - FileNotFoundError: [Errno...
+FAILED test_0801.py::test_task_func_with_csv_file_and_io_error - FileNotFound...
+2 failed, 1 passed in 0.49s

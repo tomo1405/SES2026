@@ -1,0 +1,75 @@
+F.FF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_valid_csv _________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1415/test_task_func_with_valid_csv0')
+
+    def test_task_func_with_valid_csv(tmpdir):
+        # Create a temporary CSV file with some data
+        data = "1\n2\n3\n4\n5\n6\n7\n8\n9\n10"
+        temp_file = tmpdir.join("test_data.csv")
+        temp_file.write(data)
+    
+        # Call the function with the path to the temporary CSV file
+>       mean, std_dev, ax = task_func(str(temp_file))
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1055.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1055.py:15: in task_func
+    sample = np.random.choice(population, 30, replace=False)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   ValueError: Cannot take a larger sample than population when 'replace=False'
+
+numpy/random/mtrand.pyx:1025: ValueError
+________________________ test_task_func_with_empty_csv _________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1415/test_task_func_with_empty_csv0')
+
+    def test_task_func_with_empty_csv(tmpdir):
+        # Create a temporary empty CSV file
+        temp_file = tmpdir.join("empty_data.csv")
+        temp_file.write("")
+    
+        # Call the function with the path to the empty CSV file
+        with pytest.raises(ValueError) as excinfo:
+            task_func(str(temp_file))
+    
+        # Check if the correct error message is raised
+>       assert str(excinfo.value) == "could not convert string to float: ''"
+E       assert "'a' cannot b...les are taken" == "could not co... to float: ''"
+E         
+E         - could not convert string to float: ''
+E         + 'a' cannot be empty unless no samples are taken
+
+test_1055.py:43: AssertionError
+_______________________ test_task_func_with_invalid_data _______________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1415/test_task_func_with_invalid_da0')
+
+    def test_task_func_with_invalid_data(tmpdir):
+        # Create a temporary CSV file with invalid data
+        data = "a\nb\nc"
+        temp_file = tmpdir.join("invalid_data.csv")
+        temp_file.write(data)
+    
+        # Call the function with the path to the invalid CSV file
+        with pytest.raises(ValueError) as excinfo:
+            task_func(str(temp_file))
+    
+        # Check if the correct error message is raised
+>       assert str(excinfo.value) == "could not convert string to float: 'a'"
+E       assert "invalid lite... base 10: 'a'" == "could not co...to float: 'a'"
+E         
+E         - could not convert string to float: 'a'
+E         + invalid literal for int() with base 10: 'a'
+
+test_1055.py:56: AssertionError
+=========================== short test summary info ============================
+FAILED test_1055.py::test_task_func_with_valid_csv - ValueError: Cannot take ...
+FAILED test_1055.py::test_task_func_with_empty_csv - assert "'a' cannot b...l...
+FAILED test_1055.py::test_task_func_with_invalid_data - assert "invalid lite....
+3 failed, 1 passed in 2.91s

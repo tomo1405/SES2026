@@ -1,0 +1,20 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with plot=False
+        df = pd.DataFrame({'Date': ['2022-01-01', '2022-01-02', '2022-01-03'],
+                           'Value': [10, 20, 30]})
+        df_expected = pd.DataFrame({'Date': ['2022-01-01', '2022-01-02', '2022-01-03'],
+                                   'Value': [10, 20, 30]})
+        df_expected['Date'] = pd.to_datetime(df_expected['Date'])
+        df_expected = pd.concat([df_expected['Date'], df_expected['Value'].apply(pd.Series)], axis=1)
+>       scaler = StandardScaler()
+                 ^^^^^^^^^^^^^^
+E       NameError: name 'StandardScaler' is not defined
+
+test_0299.py:13: NameError
+=========================== short test summary info ============================
+FAILED test_0299.py::test_task_func - NameError: name 'StandardScaler' is not...
+1 failed in 3.53s

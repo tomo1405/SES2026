@@ -1,0 +1,10 @@
+import numpy as np
+from scipy import stats
+def task_func(word: str) -> np.ndarray:
+    if not word:  # Handling the case for empty string
+        return np.array([])
+    word_ascii_values = np.array([ord(x) for x in word])
+    difference = np.diff(word_ascii_values)
+    entropy = stats.entropy(difference)
+    
+    return difference, entropy

@@ -1,0 +1,53 @@
+.F..F..                                                                  [100%]
+=================================== FAILURES ===================================
+_________________ test_task_func_nonexistent_target_directory __________________
+
+    def test_task_func_nonexistent_target_directory():
+        with tempfile.TemporaryDirectory() as source_dir:
+            target_dir = "/nonexistent/target"
+>           result = task_func(source_dir, target_dir, "test_zip")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0964.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0964.py:9: in task_func
+    os.makedirs(target_directory, exist_ok=True)
+<frozen os>:215: in makedirs
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = '/nonexistent', mode = 511, exist_ok = True
+
+>   ???
+E   PermissionError: [Errno 13] Permission denied: '/nonexistent'
+
+<frozen os>:225: PermissionError
+__________________________ test_task_func_with_files ___________________________
+
+    def test_task_func_with_files():
+        with tempfile.TemporaryDirectory() as source_dir:
+            with tempfile.TemporaryDirectory() as target_dir:
+                # Create some files with supported extensions
+                for ext in [".txt", ".docx", ".xlsx", ".csv"]:
+                    Path(source_dir, f"file{ext}").touch()
+>                   Path(source_dir, "subdir", f"file{ext}").parent.mkdir(parents=True)
+
+test_0964.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/tmpcnff6fdz/subdir'), mode = 511, parents = True
+exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileExistsError: [Errno 17] File exists: '/tmp/tmpcnff6fdz/subdir'
+
+/usr/lib/python3.12/pathlib.py:1313: FileExistsError
+=========================== short test summary info ============================
+FAILED test_0964.py::test_task_func_nonexistent_target_directory - Permission...
+FAILED test_0964.py::test_task_func_with_files - FileExistsError: [Errno 17] ...
+2 failed, 5 passed in 0.50s

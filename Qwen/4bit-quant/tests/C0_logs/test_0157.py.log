@@ -1,0 +1,29 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a sample DataFrame with random data
+        data = np.random.rand(10, 8)  # 10 rows and 8 columns
+        df, ax = task_func(data)
+    
+        # Check if the returned DataFrame has the correct shape
+        assert df.shape == (10, 9), "The DataFrame should have 10 rows and 9 columns."
+    
+        # Check if the returned DataFrame has the correct column names
+        expected_columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'Average']
+        assert list(df.columns) == expected_columns, "The DataFrame should have the correct column names."
+    
+        # Check if the 'Average' column is calculated correctly
+        df_copy = pd.DataFrame(data, columns=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'])
+        df_copy['Average'] = df_copy.mean(axis=1)
+>       assert df['Average'].equals(df_copy['Average']), "The 'Average' column should be calculated correctly."
+E       AssertionError: The 'Average' column should be calculated correctly.
+E       assert False
+E        +  where False = equals(0    0.591248\n1    0.492103\n2    0.531312\n3    0.588626\n4    0.438503\n5    0.237126\n6    0.462734\n7    0.599401\n8    0.564152\n9    0.392029\nName: Average, dtype: float64)
+E        +    where equals = 0    0.604263\n1    0.474650\n2    0.538066\n3    0.584671\n4    0.409423\n5    0.179882\n6    0.464680\n7    0.610482\n8    0.569021\n9    0.369696\nName: Average, dtype: float64.equals
+
+test_0157.py:22: AssertionError
+=========================== short test summary info ============================
+FAILED test_0157.py::test_task_func - AssertionError: The 'Average' column sh...
+1 failed in 3.84s

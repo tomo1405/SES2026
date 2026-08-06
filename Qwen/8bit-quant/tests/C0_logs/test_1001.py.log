@@ -1,0 +1,45 @@
+.F.                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_invalid_url __________________________
+
+    def test_task_func_invalid_url():
+        url = "https://example.com/nonexistentfile.json"
+        with pytest.raises(json.JSONDecodeError):
+>           task_func(url)
+
+test_1001.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1001.py:8: in task_func
+    urllib.request.urlretrieve(url, TARGET_JSON_FILE)
+/usr/lib/python3.12/urllib/request.py:240: in urlretrieve
+    with contextlib.closing(urlopen(url, data)) as fp:
+                            ^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:215: in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:521: in open
+    response = meth(req, response)
+               ^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:630: in http_response
+    response = self.parent.error(
+/usr/lib/python3.12/urllib/request.py:559: in error
+    return self._call_chain(*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/urllib/request.py:492: in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <urllib.request.HTTPDefaultErrorHandler object at 0x73a1da713fe0>
+req = <urllib.request.Request object at 0x73a13fbab4d0>
+fp = <http.client.HTTPResponse object at 0x73a13fbab520>, code = 404
+msg = 'Not Found', hdrs = <http.client.HTTPMessage object at 0x73a13fbab650>
+
+    def http_error_default(self, req, fp, code, msg, hdrs):
+>       raise HTTPError(req.full_url, code, msg, hdrs, fp)
+E       urllib.error.HTTPError: HTTP Error 404: Not Found
+
+/usr/lib/python3.12/urllib/request.py:639: HTTPError
+=========================== short test summary info ============================
+FAILED test_1001.py::test_task_func_invalid_url - urllib.error.HTTPError: HTT...
+1 failed, 2 passed in 4.08s

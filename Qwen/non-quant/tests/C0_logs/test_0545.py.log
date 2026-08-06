@@ -1,0 +1,47 @@
+FF..FF                                                                   [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_default ____________________________
+
+    def test_task_func_default():
+        expected_output = b'x\x9c\xcbH\xcd\xc9\xc9\x07\x00\x06,\x02\x00'
+>       assert task_func() == expected_output
+E       AssertionError: assert b'x\x9c\xf3\x...3\xb0\x01\x88' == b'x\x9c\xcbH\...\x06,\x02\x00'
+E         
+E         At index 2 diff: b'\xf3' != b'\xcb'
+E         Use -v to get more diff
+
+test_0545.py:6: AssertionError
+_______________________ test_task_func_custom_hex_string _______________________
+
+    def test_task_func_custom_hex_string():
+        custom_hex_string = '1A2B3C4D'
+        expected_output = b'x\x9c\xcbM\xcd\xc9\xc9\x07\x00\x06,\x02\x00'
+>       assert task_func(custom_hex_string) == expected_output
+E       AssertionError: assert b'x\x9c\xf3\x...x00\x05?\x02Z' == b'x\x9c\xcbM\...\x06,\x02\x00'
+E         
+E         At index 2 diff: b'\xf3' != b'\xcb'
+E         Use -v to get more diff
+
+test_0545.py:11: AssertionError
+_______________________ test_task_func_short_hex_string ________________________
+
+    def test_task_func_short_hex_string():
+        short_hex_string = '123'
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0545.py:25: Failed
+________________________ test_task_func_long_hex_string ________________________
+
+    def test_task_func_long_hex_string():
+        long_hex_string = '123456789ABCDEF0123456789ABCDEF0'
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0545.py:30: Failed
+=========================== short test summary info ============================
+FAILED test_0545.py::test_task_func_default - AssertionError: assert b'x\x9c\...
+FAILED test_0545.py::test_task_func_custom_hex_string - AssertionError: asser...
+FAILED test_0545.py::test_task_func_short_hex_string - Failed: DID NOT RAISE ...
+FAILED test_0545.py::test_task_func_long_hex_string - Failed: DID NOT RAISE V...
+4 failed, 2 passed in 0.43s

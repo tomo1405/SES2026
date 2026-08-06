@@ -1,0 +1,67 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        with patch('matplotlib.pyplot.show') as mock_show:
+            ax = task_func()
+            assert ax is not None
+>           mock_show.assert_called_once()
+
+test_0101.py:30: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='show' id='124165003119840'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'show' to have been called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:923: AssertionError
+_____________________________ test_task_func_seed ______________________________
+
+    def test_task_func_seed():
+        ax1 = task_func(seed=42)
+        ax2 = task_func(seed=42)
+>       assert ax1.lines[0].get_ydata() == ax2.lines[0].get_ydata()
+E       ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+test_0101.py:35: ValueError
+___________________________ test_task_func_seed_diff ___________________________
+
+    def test_task_func_seed_diff():
+        ax1 = task_func(seed=42)
+        ax2 = task_func(seed=43)
+>       assert ax1.lines[0].get_ydata() != ax2.lines[0].get_ydata()
+E       ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+test_0101.py:40: ValueError
+___________________________ test_task_func_exception ___________________________
+
+    def test_task_func_exception():
+        with patch('matplotlib.pyplot.show') as mock_show:
+            try:
+                task_func(seed='abc')
+            except ValueError:
+                pass
+            else:
+>               assert False, "Expected ValueError not raised"
+E               AssertionError: Expected ValueError not raised
+E               assert False
+
+test_0101.py:49: AssertionError
+=========================== short test summary info ============================
+FAILED test_0101.py::test_task_func - AssertionError: Expected 'show' to have...
+FAILED test_0101.py::test_task_func_seed - ValueError: The truth value of an ...
+FAILED test_0101.py::test_task_func_seed_diff - ValueError: The truth value o...
+FAILED test_0101.py::test_task_func_exception - AssertionError: Expected Valu...
+4 failed in 2.29s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

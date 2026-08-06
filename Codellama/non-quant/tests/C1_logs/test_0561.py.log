@@ -1,0 +1,32 @@
+..F                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_data ___________________________
+
+    def test_task_func_valid_data():
+        data = "2020-01-01, 2020-02-01, 2020-03-01"
+>       ax = task_func(data)
+             ^^^^^^^^^^^^^^^
+
+test_0561.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = '2020-01-01, 2020-02-01, 2020-03-01'
+
+    def task_func(data):
+        # Handle empty data
+        if not data.strip():
+            raise ValueError("The provided data string is empty.")
+    
+        data_entries = data.split(',')
+        months_data = [d.split('-')[1] for d in data_entries]
+        unique_years = {d.split('-')[0] for d in data_entries}
+    
+        # Check if the data is from the same year
+        if len(unique_years) != 1:
+>           raise ValueError("The provided data contains entries from multiple years.")
+E           ValueError: The provided data contains entries from multiple years.
+
+../../../src/src_0561.py:15: ValueError
+=========================== short test summary info ============================
+FAILED test_0561.py::test_task_func_valid_data - ValueError: The provided dat...
+1 failed, 2 passed in 2.10s

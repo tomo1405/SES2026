@@ -1,0 +1,26 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that the function returns a tuple of (fig, ax)
+        result = task_func()
+        assert isinstance(result, tuple)
+        assert len(result) == 2
+    
+        # Test that the fig is a matplotlib figure
+        fig, ax = result
+        assert isinstance(fig, matplotlib.figure.Figure)
+    
+        # Test that the ax is a matplotlib axis
+        assert isinstance(ax, matplotlib.axes.Axes)
+    
+        # Test that the data is a pandas DataFrame
+>       data = pd.DataFrame({label: [randint(*integer_range) for _ in range(num_types)] for label in LABELS})
+                                                                                                     ^^^^^^
+E       NameError: name 'LABELS' is not defined
+
+test_0168.py:20: NameError
+=========================== short test summary info ============================
+FAILED test_0168.py::test_task_func - NameError: name 'LABELS' is not defined
+1 failed in 2.00s

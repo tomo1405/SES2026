@@ -1,0 +1,22 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        file_path = 'test_file.json'
+        with open(file_path, 'w') as file:
+            file.write('not a json string')
+        assert not task_func(file_path)
+        os.remove(file_path)
+    
+        file_path = 'test_file.json'
+        with open(file_path, 'w') as file:
+            file.write('["valid", "json", "list"]')
+>       assert task_func(file_path)
+E       AssertionError: assert False
+E        +  where False = task_func('test_file.json')
+
+test_0399.py:17: AssertionError
+=========================== short test summary info ============================
+FAILED test_0399.py::test_task_func - AssertionError: assert False
+1 failed in 0.56s

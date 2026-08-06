@@ -1,0 +1,46 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        url = "https://www.example.com"
+        file_name = "Output.txt"
+        response = requests.get(url, timeout=5)
+        soup = BeautifulSoup(response.text, "html.parser")
+        title = soup.title.string if soup.title else None
+        data = {"title": title}
+        json_data = json.dumps(data)
+        with open(file_name, "a", encoding="utf-8") as f:
+            f.write(json_data + "\n")
+        assert task_func(url, file_name) == file_name
+        assert os.path.exists(file_name)
+        with open(file_name, "r", encoding="utf-8") as f:
+>           assert json.loads(f.read()) == data
+                   ^^^^^^^^^^^^^^^^^^^^
+
+test_0997.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/json/__init__.py:346: in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <json.decoder.JSONDecoder object at 0x79692b477b30>
+s = '{"title": "Example Domain"}\n{"title": "Example Domain"}\n'
+_w = <built-in method match of re.Pattern object at 0x79692b436dc0>
+
+    def decode(self, s, _w=WHITESPACE.match):
+        """Return the Python representation of ``s`` (a ``str`` instance
+        containing a JSON document).
+    
+        """
+        obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+        end = _w(s, end).end()
+        if end != len(s):
+>           raise JSONDecodeError("Extra data", s, end)
+E           json.decoder.JSONDecodeError: Extra data: line 2 column 1 (char 28)
+
+/usr/lib/python3.12/json/decoder.py:340: JSONDecodeError
+=========================== short test summary info ============================
+FAILED test_0997.py::test_task_func - json.decoder.JSONDecodeError: Extra dat...
+1 failed in 1.27s

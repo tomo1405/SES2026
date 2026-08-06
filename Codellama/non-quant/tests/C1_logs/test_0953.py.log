@@ -1,0 +1,31 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_positive_n_tasks ________________________
+
+    def test_task_func_positive_n_tasks():
+        task_list = ["Task 1", "Task 2", "Task 3"]
+        n_tasks = 3
+        employees = ["John Doe", "Jane Smith", "James Brown", "Mary Johnson", "Robert Davis"]
+        seed = 1234
+    
+        expected_assignment_data = [
+            ["Task_1", "John Doe", "2023-02-28"],
+            ["Task_2", "Jane Smith", "2023-02-28"],
+            ["Task_3", "James Brown", "2023-02-28"]
+        ]
+    
+        expected_assignment_df = pd.DataFrame(
+            expected_assignment_data, columns=["Task Name", "Assigned To", "Due Date"]
+        )
+    
+        assignment_df = task_func(task_list, n_tasks, employees, seed)
+    
+>       assert assignment_df.equals(expected_assignment_df)
+E       assert False
+E        +  where False = equals(  Task Name  Assigned To    Due Date\n0    Task_1     John Doe  2023-02-28\n1    Task_2   Jane Smith  2023-02-28\n2    Task_3  James Brown  2023-02-28)
+E        +    where equals =   Task Name Assigned To    Due Date\n0    Task_2    John Doe  2026-07-29\n1    Task_1    John Doe  2026-07-29\n2    Task_3    John Doe  2026-07-29.equals
+
+test_0953.py:24: AssertionError
+=========================== short test summary info ============================
+FAILED test_0953.py::test_task_func_positive_n_tasks - assert False
+1 failed, 1 passed in 1.14s

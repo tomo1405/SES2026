@@ -1,0 +1,48 @@
+FF..                                                                     [100%]
+=================================== FAILURES ===================================
+______________________________ test_valid_column _______________________________
+
+    def test_valid_column():
+        column = "Steps"
+        data = [
+            ["2022-01-01", 100, 200, 5],
+            ["2022-01-02", 200, 300, 10],
+            ["2022-01-03", 300, 400, 15],
+        ]
+        expected_result = {
+            "sum": 600,
+            "mean": 200.0,
+            "min": 100,
+            "max": 300,
+        }
+        expected_ax = None  # We don't test the plot here
+    
+        result, ax = task_func(column, data)
+    
+        assert result == expected_result
+>       assert ax == expected_ax
+E       AssertionError: assert <Axes: title={'center': 'Line Chart of Steps'}, xlabel='Date', ylabel='Steps'> == None
+
+test_0514.py:23: AssertionError
+_____________________________ test_invalid_column ______________________________
+
+    def test_invalid_column():
+        column = "Invalid Column"
+        data = [
+            ["2022-01-01", 100, 200, 5],
+            ["2022-01-02", 200, 300, 10],
+            ["2022-01-03", 300, 400, 15],
+        ]
+    
+        with pytest.raises(KeyError) as exc_info:
+            task_func(column, data)
+    
+>       assert str(exc_info.value) == f"{column} is not a valid column. Choose from {COLUMNS}."
+                                                                                     ^^^^^^^
+E       NameError: name 'COLUMNS' is not defined
+
+test_0514.py:36: NameError
+=========================== short test summary info ============================
+FAILED test_0514.py::test_valid_column - AssertionError: assert <Axes: title=...
+FAILED test_0514.py::test_invalid_column - NameError: name 'COLUMNS' is not d...
+2 failed, 2 passed in 2.17s

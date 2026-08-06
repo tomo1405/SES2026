@@ -1,0 +1,35 @@
+...F..                                                                   [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_quadratic_model ________________________
+
+    def test_task_func_quadratic_model():
+        ax = task_func(mu=0, sigma=1)
+        lines = ax.get_lines()
+        quadratic_model_line = lines[1]
+        xdata, ydata = quadratic_model_line.get_data()
+        model = ols('count ~ bins + np.power(bins, 2)', data={'count': np.histogram(xdata, bins=30, density=True)[0], 'bins': xdata}).fit()
+        expected_ydata = model.params['Intercept'] + model.params['bins'] * xdata + model.params['np.power(bins, 2)'] * np.power(xdata, 2)
+>       np.testing.assert_array_almost_equal(ydata, expected_ydata, decimal=5)
+E       AssertionError: 
+E       Arrays are not almost equal to 5 decimals
+E       
+E       Mismatched elements: 30 / 30 (100%)
+E       First 5 mismatches are at indices:
+E        [0]: -0.0982744704198798 (ACTUAL), 0.17819017912646845 (DESIRED)
+E        [1]: -0.04462140748490023 (ACTUAL), 0.17819017912646845 (DESIRED)
+E        [2]: 0.005282066024106025 (ACTUAL), 0.17819017912646848 (DESIRED)
+E        [3]: 0.05143595010713886 (ACTUAL), 0.17819017912646848 (DESIRED)
+E        [4]: 0.09384024476419814 (ACTUAL), 0.1781901791264685 (DESIRED)
+E       Max absolute difference among violations: 0.27646465
+E       Max relative difference among violations: 1.55151452
+E        ACTUAL: array([-0.09827, -0.04462,  0.00528,  0.05144,  0.09384,  0.13249,
+E               0.1674 ,  0.19856,  0.22596,  0.24962,  0.26952,  0.28568,
+E               0.29809,  0.30675,  0.31166,  0.31281,  0.31022,  0.30388,...
+E        DESIRED: array([0.17819, 0.17819, 0.17819, 0.17819, 0.17819, 0.17819, 0.17819,
+E              0.17819, 0.17819, 0.17819, 0.17819, 0.17819, 0.17819, 0.17819,
+E              0.17819, 0.17819, 0.17819, 0.17819, 0.17819, 0.17819, 0.17819,...
+
+test_0236.py:31: AssertionError
+=========================== short test summary info ============================
+FAILED test_0236.py::test_task_func_quadratic_model - AssertionError: 
+1 failed, 5 passed in 4.12s

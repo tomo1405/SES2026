@@ -1,0 +1,34 @@
+....FF                                                                   [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_revenue_calculation ______________________
+
+    def test_task_func_revenue_calculation():
+        product_list = ['ProductA', 'ProductB']
+        categories = ['Category1', 'Category2']
+        min_value = 10
+        max_value = 100
+        result = task_func(product_list, categories, min_value, max_value)
+        for index, row in result.iterrows():
+>           assert row['Revenue'] == row['Quantity Sold'] * random.randint(min_value, max_value)
+E           assert 6650 == (70 * 25)
+E            +  where 25 = randint(10, 100)
+E            +    where randint = random.randint
+
+test_0352.py:41: AssertionError
+______________________ test_task_func_default_parameters _______________________
+
+    def test_task_func_default_parameters():
+        product_list = ['ProductA', 'ProductB']
+        categories = ['Category1', 'Category2']
+        result = task_func(product_list, categories)
+>       assert result.equals(task_func(product_list, categories, 10, 100))
+E       AssertionError: assert False
+E        +  where False = equals(    Product   Category  Quantity Sold  Revenue\n0  ProductA  Category2             33     2409\n1  ProductB  Category2             70     5390)
+E        +    where equals =     Product   Category  Quantity Sold  Revenue\n0  ProductA  Category2             24     1704\n1  ProductB  Category2             59     3658.equals
+E        +    and       Product   Category  Quantity Sold  Revenue\n0  ProductA  Category2             33     2409\n1  ProductB  Category2             70     5390 = task_func(['ProductA', 'ProductB'], ['Category1', 'Category2'], 10, 100)
+
+test_0352.py:47: AssertionError
+=========================== short test summary info ============================
+FAILED test_0352.py::test_task_func_revenue_calculation - assert 6650 == (70 ...
+FAILED test_0352.py::test_task_func_default_parameters - AssertionError: asse...
+2 failed, 4 passed in 1.04s

@@ -1,0 +1,30 @@
+.F.                                                                      [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func[5-2-500] ____________________________
+
+mean = 5, std_dev = 2, num_samples = 500
+
+    @pytest.mark.parametrize("mean, std_dev, num_samples", [
+        (0, 1, 1000),
+        (5, 2, 500),
+        (-1, 0.5, 2000)
+    ])
+    def test_task_func(mean, std_dev, num_samples):
+        samples, fig = task_func(mean, std_dev, num_samples)
+    
+        # Check if samples are of the correct shape
+        assert samples.shape == (num_samples,), f"Expected {num_samples} samples, got {samples.shape[0]}"
+    
+        # Check if the mean and standard deviation of the samples are close to the input parameters
+>       assert np.isclose(np.mean(samples), mean, atol=0.1), f"Mean mismatch: expected {mean}, got {np.mean(samples)}"
+E       AssertionError: Mean mismatch: expected 5, got 5.2186068313138785
+E       assert np.False_
+E        +  where np.False_ = <function isclose at 0x75b814dc8330>(np.float64(5.2186068313138785), 5, atol=0.1)
+E        +    where <function isclose at 0x75b814dc8330> = np.isclose
+E        +    and   np.float64(5.2186068313138785) = <function mean at 0x75b814db4fb0>(array([ 3.90284714,  6.65150309,  5.51975425,  8.21348359,  3.65545346,\n        4.34618924,  2.55638641,  3.4961425 , ...853825,  7.91172483,  5.01632932,  5.76355545,\n        6.21205513,  5.00868143,  7.05909144,  7.11404037,  8.85918232]))
+E        +      where <function mean at 0x75b814db4fb0> = np.mean
+
+test_0095.py:18: AssertionError
+=========================== short test summary info ============================
+FAILED test_0095.py::test_task_func[5-2-500] - AssertionError: Mean mismatch:...
+1 failed, 2 passed in 2.72s

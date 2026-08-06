@@ -1,0 +1,59 @@
+.......FF.                                                               [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        result = task_func(["product1", "product2"], n_samples=5, random_seed=42)
+        assert len(result) <= 2
+>       assert all(isinstance(row["Product"], str) for row in result.itertuples(index=False))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0085.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <map object at 0x7230855515a0>
+
+>   assert all(isinstance(row["Product"], str) for row in result.itertuples(index=False))
+                          ^^^^^^^^^^^^^^
+E   TypeError: tuple indices must be integers or slices, not str
+
+test_0085.py:36: TypeError
+_____________________ test_task_func_grouping_and_sorting ______________________
+
+    def test_task_func_grouping_and_sorting():
+        result = task_func(["product1", "product2"], n_samples=10, random_seed=42)
+>       assert result.is_unique
+               ^^^^^^^^^^^^^^^^
+
+test_0085.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =     Product  Sales      Profit
+0  product1    776  156.049623
+1  product2    298   51.685788
+name = 'is_unique'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute 'is_unique'. Did you mean: 'nunique'?
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+=========================== short test summary info ============================
+FAILED test_0085.py::test_task_func_valid_input - TypeError: tuple indices mu...
+FAILED test_0085.py::test_task_func_grouping_and_sorting - AttributeError: 'D...
+2 failed, 8 passed in 1.41s

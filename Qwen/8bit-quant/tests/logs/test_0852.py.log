@@ -1,0 +1,91 @@
+FF.F.F.F                                                                 [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_single_line __________________________
+
+    def test_task_func_single_line():
+        input_string = "This is a test string."
+        width = 10
+        expected_output = "This was a\ntest string."
+>       assert task_func(input_string, width) == expected_output
+E       AssertionError: assert 'This was a\ntest\nstring.' == 'This was a\ntest string.'
+E         
+E           This was a
+E         - test string.
+E         + test
+E         + string.
+
+test_0852.py:8: AssertionError
+________________________ test_task_func_multiple_lines _________________________
+
+    def test_task_func_multiple_lines():
+        input_string = "This is the first line.\nThis is the second line."
+        width = 10
+        expected_output = "This was the\nfirst line.\nThis was the\nsecond line."
+>       assert task_func(input_string, width) == expected_output
+E       AssertionError: assert 'This was\nth...second\nline.' == 'This was the...nsecond line.'
+E         
+E         - This was the
+E         ?         ----
+E         + This was
+E         - first line.
+E         + the first
+E         + line. This...
+E         
+E         ...Full output truncated (6 lines hidden), use '-vv' to show
+
+test_0852.py:14: AssertionError
+___________________________ test_task_func_long_word ___________________________
+
+    def test_task_func_long_word():
+        input_string = "A verylongwordthatwillnotbreak"
+        width = 10
+        expected_output = "A verylongwordthatwillnotbreak"
+>       assert task_func(input_string, width) == expected_output
+E       AssertionError: assert 'A\nverylongw...twillnotbreak' == 'A verylongwo...twillnotbreak'
+E         
+E         + A
+E         - A verylongwordthatwillnotbreak
+E         ? --
+E         + verylongwordthatwillnotbreak
+
+test_0852.py:26: AssertionError
+_____________________________ test_task_func_no_is _____________________________
+
+    def test_task_func_no_is():
+        input_string = "There is no 'is' here."
+        width = 10
+        expected_output = "There was no\n'was' here."
+>       assert task_func(input_string, width) == expected_output
+E       assert "There was\nno 'was'\nhere." == "There was no\n'was' here."
+E         
+E         - There was no
+E         ?          ---
+E         + There was
+E         - 'was' here.
+E         + no 'was'
+E         + here.
+
+test_0852.py:38: AssertionError
+__________________________ test_task_func_is_at_start __________________________
+
+    def test_task_func_is_at_start():
+        input_string = "Is this at the start?"
+        width = 10
+        expected_output = "Was this at\nthe start?"
+>       assert task_func(input_string, width) == expected_output
+E       AssertionError: assert 'Is this at\nthe start?' == 'Was this at\nthe start?'
+E         
+E         - Was this at
+E         ? ^^
+E         + Is this at
+E         ? ^
+E           the start?
+
+test_0852.py:50: AssertionError
+=========================== short test summary info ============================
+FAILED test_0852.py::test_task_func_single_line - AssertionError: assert 'Thi...
+FAILED test_0852.py::test_task_func_multiple_lines - AssertionError: assert '...
+FAILED test_0852.py::test_task_func_long_word - AssertionError: assert 'A\nve...
+FAILED test_0852.py::test_task_func_no_is - assert "There was\nno 'was'\nhere...
+FAILED test_0852.py::test_task_func_is_at_start - AssertionError: assert 'Is ...
+5 failed, 3 passed in 0.47s

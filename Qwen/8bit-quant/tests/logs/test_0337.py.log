@@ -1,0 +1,57 @@
+.FFF....                                                                 [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_single_match __________________________
+
+    def test_task_func_single_match():
+        pattern = "hello"
+        directory = "test_data"
+        extensions = ["*.txt"]
+        result = task_func(pattern, directory, extensions)
+        expected = [Path("test_data/hello.txt").resolve()]
+>       assert result == expected
+E       AssertionError: assert [] == [PosixPath('/...a/hello.txt')]
+E         
+E         Right contains one more item: PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1441/test_task_func_single_match0/test_data/hello.txt')
+E         Use -v to get more diff
+
+/work/tomohiro-w/utg/Qwen/8bit-quant/tests/test_0337.py:20: AssertionError
+_______________________ test_task_func_multiple_matches ________________________
+
+    def test_task_func_multiple_matches():
+        pattern = "world"
+        directory = "test_data"
+        extensions = ["*.txt", "*.md"]
+        result = task_func(pattern, directory, extensions)
+        expected = [
+            Path("test_data/world.txt").resolve(),
+            Path("test_data/another_world.md").resolve()
+        ]
+>       assert set(result) == set(expected)
+E       AssertionError: assert set() == {PosixPath('/...a/world.txt')}
+E         
+E         Extra items in the right set:
+E         PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1441/test_task_func_multiple_matche0/test_data/world.txt')
+E         PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1441/test_task_func_multiple_matche0/test_data/another_world.md')
+E         Use -v to get more diff
+
+/work/tomohiro-w/utg/Qwen/8bit-quant/tests/test_0337.py:31: AssertionError
+______________________ test_task_func_case_insensitivity _______________________
+
+    def test_task_func_case_insensitivity():
+        pattern = "HELLO"
+        directory = "test_data"
+        extensions = ["*.txt"]
+        result = task_func(pattern, directory, extensions)
+        expected = [Path("test_data/hello.txt").resolve()]
+>       assert result == expected
+E       AssertionError: assert [] == [PosixPath('/...a/hello.txt')]
+E         
+E         Right contains one more item: PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1441/test_task_func_case_insensitiv0/test_data/hello.txt')
+E         Use -v to get more diff
+
+/work/tomohiro-w/utg/Qwen/8bit-quant/tests/test_0337.py:39: AssertionError
+=========================== short test summary info ============================
+FAILED test_0337.py::test_task_func_single_match - AssertionError: assert [] ...
+FAILED test_0337.py::test_task_func_multiple_matches - AssertionError: assert...
+FAILED test_0337.py::test_task_func_case_insensitivity - AssertionError: asse...
+3 failed, 5 passed in 0.45s

@@ -1,0 +1,27 @@
+..F..                                                                    [100%]
+=================================== FAILURES ===================================
+________________ test_task_func_backup_directory_already_exists ________________
+
+    def test_task_func_backup_directory_already_exists():
+        with tempfile.TemporaryDirectory() as directory:
+            with tempfile.TemporaryDirectory() as backup_directory:
+                # Create a JSON file in the source directory
+                json_file = 'file1.json'
+                with open(os.path.join(directory, json_file), 'w') as f:
+                    f.write('{"key": "value"}')
+    
+                # Ensure the backup directory exists
+>               os.makedirs(backup_directory)
+
+test_0119.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = '/tmp/tmp7ldlfif8', mode = 511, exist_ok = False
+
+>   ???
+E   FileExistsError: [Errno 17] File exists: '/tmp/tmp7ldlfif8'
+
+<frozen os>:225: FileExistsError
+=========================== short test summary info ============================
+FAILED test_0119.py::test_task_func_backup_directory_already_exists - FileExi...
+1 failed, 4 passed in 0.39s

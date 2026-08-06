@@ -1,0 +1,74 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data = [
+            ["Age", "Salary", "Experience"],
+            [25, 50000, 3],
+            [30, 60000, 5],
+            [35, 70000, 7],
+            [40, 80000, 10]
+        ]
+        column = "Salary"
+        expected_result = {
+            "sum": 300000,
+            "mean": 60000.0,
+            "min": 50000.0,
+            "max": 80000.0
+        }
+        expected_ax_title = "Pie Chart of Salary"
+    
+>       result, ax = task_func(column, data)
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0512.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0512.py:16: in task_func
+    "sum": np.sum(column_data),
+           ^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:2463: in sum
+    return _wrapreduction(
+../../../.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:81: in _wrapreduction
+    return reduction(axis=axis, out=out, **passkwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/util/_decorators.py:336: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/series.py:7969: in sum
+    return NDFrame.sum(
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:11907: in sum
+    return self._min_count_stat_function(
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:11889: in _min_count_stat_function
+    return self._reduce(
+../../../.venv/lib/python3.12/site-packages/pandas/core/series.py:7494: in _reduce
+    result = op(delegate, skipna=skipna, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/nanops.py:87: in _f
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/nanops.py:408: in new_func
+    result = func(values, axis=axis, skipna=skipna, mask=mask, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/nanops.py:480: in newfunc
+    return func(values, axis=axis, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/nanops.py:639: in nansum
+    the_sum = values.sum(axis, dtype=dtype_sum)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = array(['Salary', 50000, 60000, 70000, 80000], dtype=object), axis = None
+dtype = dtype('O'), out = None, keepdims = False, initial = <no value>
+where = True
+
+    def _sum(a, axis=None, dtype=None, out=None, keepdims=False,
+             initial=_NoValue, where=True):
+>       return umr_sum(a, axis, dtype, out, keepdims, initial, where)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: can only concatenate str (not "int") to str
+
+../../../.venv/lib/python3.12/site-packages/numpy/_core/_methods.py:49: TypeError
+=========================== short test summary info ============================
+FAILED test_0512.py::test_task_func - TypeError: can only concatenate str (no...
+1 failed in 2.45s

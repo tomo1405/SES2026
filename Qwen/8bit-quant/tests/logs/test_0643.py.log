@@ -1,0 +1,196 @@
+FFFFFFF                                                                  [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_no_files ____________________________
+
+temp_dir = '/tmp/tmp5yamtq6b'
+
+    def test_task_func_no_files(temp_dir):
+>       result = task_func(temp_dir)
+                 ^^^^^^^^^^^^^^^^^^^
+
+test_0643.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = '/tmp/tmp5yamtq6b', pattern = '(?<!Distillr)\\\\AcroTray\\.exe'
+
+    def task_func(directory: str, pattern: str = r"(?<!Distillr)\\AcroTray\.exe") -> dict:
+        hashes = {}
+>       for root, _, files in os.walk(directory):
+                              ^^
+E       NameError: name 'os' is not defined. Did you forget to import 'os'
+
+../../../src/src_0643.py:7: NameError
+__________________________ test_task_func_single_file __________________________
+
+temp_dir = '/tmp/tmpky228m8i'
+
+    def test_task_func_single_file(temp_dir):
+        file_path = os.path.join(temp_dir, "AcroTray.exe")
+        with open(file_path, 'wb') as f:
+            f.write(b'some binary data')
+    
+        expected_hash = hashlib.sha256(b'some binary data').digest()
+        expected_result = {file_path: binascii.hexlify(expected_hash).decode()}
+    
+>       result = task_func(temp_dir)
+                 ^^^^^^^^^^^^^^^^^^^
+
+test_0643.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = '/tmp/tmpky228m8i', pattern = '(?<!Distillr)\\\\AcroTray\\.exe'
+
+    def task_func(directory: str, pattern: str = r"(?<!Distillr)\\AcroTray\.exe") -> dict:
+        hashes = {}
+>       for root, _, files in os.walk(directory):
+                              ^^
+E       NameError: name 'os' is not defined. Did you forget to import 'os'
+
+../../../src/src_0643.py:7: NameError
+________________________ test_task_func_multiple_files _________________________
+
+temp_dir = '/tmp/tmpymsgwxux'
+
+    def test_task_func_multiple_files(temp_dir):
+        file1_path = os.path.join(temp_dir, "AcroTray.exe")
+        file2_path = os.path.join(temp_dir, "DistillrAcroTray.exe")
+        with open(file1_path, 'wb') as f:
+            f.write(b'some binary data')
+        with open(file2_path, 'wb') as f:
+            f.write(b'different binary data')
+    
+        expected_hash1 = hashlib.sha256(b'some binary data').digest()
+        expected_hash2 = hashlib.sha256(b'different binary data').digest()
+        expected_result = {
+            file1_path: binascii.hexlify(expected_hash1).decode(),
+            file2_path: binascii.hexlify(expected_hash2).decode()
+        }
+    
+>       result = task_func(temp_dir)
+                 ^^^^^^^^^^^^^^^^^^^
+
+test_0643.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = '/tmp/tmpymsgwxux', pattern = '(?<!Distillr)\\\\AcroTray\\.exe'
+
+    def task_func(directory: str, pattern: str = r"(?<!Distillr)\\AcroTray\.exe") -> dict:
+        hashes = {}
+>       for root, _, files in os.walk(directory):
+                              ^^
+E       NameError: name 'os' is not defined. Did you forget to import 'os'
+
+../../../src/src_0643.py:7: NameError
+________________________ test_task_func_subdirectories _________________________
+
+temp_dir = '/tmp/tmpvja3s6vl'
+
+    def test_task_func_subdirectories(temp_dir):
+        sub_dir = os.path.join(temp_dir, "subdir")
+        os.makedirs(sub_dir)
+        file_path = os.path.join(sub_dir, "AcroTray.exe")
+        with open(file_path, 'wb') as f:
+            f.write(b'some binary data')
+    
+        expected_hash = hashlib.sha256(b'some binary data').digest()
+        expected_result = {file_path: binascii.hexlify(expected_hash).decode()}
+    
+>       result = task_func(temp_dir)
+                 ^^^^^^^^^^^^^^^^^^^
+
+test_0643.py:60: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = '/tmp/tmpvja3s6vl', pattern = '(?<!Distillr)\\\\AcroTray\\.exe'
+
+    def task_func(directory: str, pattern: str = r"(?<!Distillr)\\AcroTray\.exe") -> dict:
+        hashes = {}
+>       for root, _, files in os.walk(directory):
+                              ^^
+E       NameError: name 'os' is not defined. Did you forget to import 'os'
+
+../../../src/src_0643.py:7: NameError
+_________________________ test_task_func_pattern_match _________________________
+
+temp_dir = '/tmp/tmph3dbrilf'
+
+    def test_task_func_pattern_match(temp_dir):
+        file_path = os.path.join(temp_dir, "AcroTray.exe")
+        with open(file_path, 'wb') as f:
+            f.write(b'some binary data')
+    
+        expected_hash = hashlib.sha256(b'some binary data').digest()
+        expected_result = {file_path: binascii.hexlify(expected_hash).decode()}
+    
+>       result = task_func(temp_dir, pattern=r"AcroTray\.exe")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0643.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = '/tmp/tmph3dbrilf', pattern = 'AcroTray\\.exe'
+
+    def task_func(directory: str, pattern: str = r"(?<!Distillr)\\AcroTray\.exe") -> dict:
+        hashes = {}
+>       for root, _, files in os.walk(directory):
+                              ^^
+E       NameError: name 'os' is not defined. Did you forget to import 'os'
+
+../../../src/src_0643.py:7: NameError
+_______________________ test_task_func_pattern_no_match ________________________
+
+temp_dir = '/tmp/tmp56yjupmj'
+
+    def test_task_func_pattern_no_match(temp_dir):
+        file_path = os.path.join(temp_dir, "AcroTray.exe")
+        with open(file_path, 'wb') as f:
+            f.write(b'some binary data')
+    
+>       result = task_func(temp_dir, pattern=r"NonMatchingPattern")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0643.py:79: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = '/tmp/tmp56yjupmj', pattern = 'NonMatchingPattern'
+
+    def task_func(directory: str, pattern: str = r"(?<!Distillr)\\AcroTray\.exe") -> dict:
+        hashes = {}
+>       for root, _, files in os.walk(directory):
+                              ^^
+E       NameError: name 'os' is not defined. Did you forget to import 'os'
+
+../../../src/src_0643.py:7: NameError
+________________________ test_task_func_distillr_prefix ________________________
+
+temp_dir = '/tmp/tmppwgx7vn7'
+
+    def test_task_func_distillr_prefix(temp_dir):
+        file_path = os.path.join(temp_dir, "DistillrAcroTray.exe")
+        with open(file_path, 'wb') as f:
+            f.write(b'some binary data')
+    
+>       result = task_func(temp_dir)
+                 ^^^^^^^^^^^^^^^^^^^
+
+test_0643.py:87: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = '/tmp/tmppwgx7vn7', pattern = '(?<!Distillr)\\\\AcroTray\\.exe'
+
+    def task_func(directory: str, pattern: str = r"(?<!Distillr)\\AcroTray\.exe") -> dict:
+        hashes = {}
+>       for root, _, files in os.walk(directory):
+                              ^^
+E       NameError: name 'os' is not defined. Did you forget to import 'os'
+
+../../../src/src_0643.py:7: NameError
+=========================== short test summary info ============================
+FAILED test_0643.py::test_task_func_no_files - NameError: name 'os' is not de...
+FAILED test_0643.py::test_task_func_single_file - NameError: name 'os' is not...
+FAILED test_0643.py::test_task_func_multiple_files - NameError: name 'os' is ...
+FAILED test_0643.py::test_task_func_subdirectories - NameError: name 'os' is ...
+FAILED test_0643.py::test_task_func_pattern_match - NameError: name 'os' is n...
+FAILED test_0643.py::test_task_func_pattern_no_match - NameError: name 'os' i...
+FAILED test_0643.py::test_task_func_distillr_prefix - NameError: name 'os' is...
+7 failed in 0.48s

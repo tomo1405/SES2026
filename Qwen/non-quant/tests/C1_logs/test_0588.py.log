@@ -1,0 +1,91 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1612/test_task_func0')
+
+    def test_task_func(tmpdir):
+        # Create a temporary file and write some data to it
+        temp_file = tmpdir.join('testfile.txt')
+        temp_file.write_binary(b'This is a test file.')
+    
+        # Call the task_func
+        pub_key, encrypted_file, encrypted_key_file = task_func(str(temp_file))
+    
+        # Check that the encrypted file exists
+        assert os.path.exists(encrypted_file)
+    
+        # Check that the encrypted key file exists
+        assert os.path.exists(encrypted_key_file)
+    
+        # Read the encrypted AES key from the file
+        with open(encrypted_key_file, 'rb') as f:
+            encrypted_aes_key = b64decode(f.read())
+    
+        # Decrypt the AES key using the private key
+>       aes_key = rsa.decrypt(encrypted_aes_key, rsa.PrivateKey.load_pkcs1(pub_key.save_pkcs1()))
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0588.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/rsa/key.py:125: in load_pkcs1
+    return method(keyfile)
+           ^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/rsa/key.py:612: in _load_pkcs1_pem
+    der = rsa.pem.load_pem(keyfile, b"RSA PRIVATE KEY")
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/rsa/pem.py:103: in load_pem
+    pem_lines = [line for line in _pem_lines(contents, pem_start, pem_end)]
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+contents = b'-----BEGIN RSA PUBLIC KEY-----\nMEgCQQDQDM+ELd5ESCY02BmwQR6P97MegXWhMsWmpw2X+l+MhnDO7mPatZdatrmb\nbZmHXI7EZi+onBIszkbhrvXQWV2rAgMBAAE=\n-----END RSA PUBLIC KEY-----\n'
+pem_start = b'-----BEGIN RSA PRIVATE KEY-----'
+pem_end = b'-----END RSA PRIVATE KEY-----'
+
+    def _pem_lines(contents: bytes, pem_start: bytes, pem_end: bytes) -> typing.Iterator[bytes]:
+        """Generator over PEM lines between pem_start and pem_end."""
+    
+        in_pem_part = False
+        seen_pem_start = False
+    
+        for line in contents.splitlines():
+            line = line.strip()
+    
+            # Skip empty lines
+            if not line:
+                continue
+    
+            # Handle start marker
+            if line == pem_start:
+                if in_pem_part:
+                    raise ValueError('Seen start marker "%r" twice' % pem_start)
+    
+                in_pem_part = True
+                seen_pem_start = True
+                continue
+    
+            # Skip stuff before first marker
+            if not in_pem_part:
+                continue
+    
+            # Handle end marker
+            if in_pem_part and line == pem_end:
+                in_pem_part = False
+                break
+    
+            # Load fields
+            if b":" in line:
+                continue
+    
+            yield line
+    
+        # Do some sanity checks
+        if not seen_pem_start:
+>           raise ValueError('No PEM start marker "%r" found' % pem_start)
+E           ValueError: No PEM start marker "b'-----BEGIN RSA PRIVATE KEY-----'" found
+
+../../../.venv/lib/python3.12/site-packages/rsa/pem.py:77: ValueError
+=========================== short test summary info ============================
+FAILED test_0588.py::test_task_func - ValueError: No PEM start marker "b'----...
+1 failed in 0.60s

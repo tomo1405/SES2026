@@ -1,0 +1,45 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_n_waves_less_than_1 ______________________
+
+    def test_task_func_n_waves_less_than_1():
+        sine_wave_series, fft_data, ax = task_func(n_waves=0)
+        assert sine_wave_series == []
+>       assert fft_data == np.array([])
+E       ValueError: The truth value of an empty array is ambiguous. Use `array.size > 0` to check that an array is not empty.
+
+test_0247.py:8: ValueError
+____________________ test_task_func_n_waves_greater_than_1 _____________________
+
+    def test_task_func_n_waves_greater_than_1():
+        sine_wave_series, fft_data, ax = task_func(n_waves=2)
+        assert len(sine_wave_series) == 2
+>       assert len(fft_data) == 2
+E       assert 629 == 2
+E        +  where 629 = len(array([-0.00325605-0.00000000e+00j,  1.06815258-3.14780604e+02j,\n        2.13335111-3.13864711e+02j, -0.01424262+1.075...-6.36999860e-01j,\n       -0.01424262-1.07589311e+00j,  2.13335111+3.13864711e+02j,\n        1.06815258+3.14780604e+02j]))
+
+test_0247.py:14: AssertionError
+____________________________ test_task_func_seed_0 _____________________________
+
+    def test_task_func_seed_0():
+        sine_wave_series, fft_data, ax = task_func(n_waves=2, seed=0)
+>       assert sine_wave_series[0] == np.sin(1 * ANGLES)
+                                                 ^^^^^^
+E       NameError: name 'ANGLES' is not defined
+
+test_0247.py:20: NameError
+____________________________ test_task_func_seed_1 _____________________________
+
+    def test_task_func_seed_1():
+        sine_wave_series, fft_data, ax = task_func(n_waves=2, seed=1)
+>       assert sine_wave_series[0] == np.sin(1 * ANGLES)
+                                                 ^^^^^^
+E       NameError: name 'ANGLES' is not defined
+
+test_0247.py:28: NameError
+=========================== short test summary info ============================
+FAILED test_0247.py::test_task_func_n_waves_less_than_1 - ValueError: The tru...
+FAILED test_0247.py::test_task_func_n_waves_greater_than_1 - assert 629 == 2
+FAILED test_0247.py::test_task_func_seed_0 - NameError: name 'ANGLES' is not ...
+FAILED test_0247.py::test_task_func_seed_1 - NameError: name 'ANGLES' is not ...
+4 failed in 2.12s

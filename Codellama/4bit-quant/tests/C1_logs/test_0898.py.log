@@ -1,0 +1,29 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with default seed
+        frequencies, ax = task_func(1000)
+        assert len(frequencies) == 6
+        assert all(frequency >= 0 for frequency in frequencies)
+        assert ax.get_title() == 'Histogram of Dice Rolls'
+        assert ax.get_xlabel() == 'Dice Value'
+        assert ax.get_ylabel() == 'Frequency'
+    
+        # Test with custom seed
+        frequencies, ax = task_func(1000, seed=42)
+        assert len(frequencies) == 6
+        assert all(frequency >= 0 for frequency in frequencies)
+        assert ax.get_title() == 'Histogram of Dice Rolls'
+        assert ax.get_xlabel() == 'Dice Value'
+        assert ax.get_ylabel() == 'Frequency'
+    
+        # Test with invalid input
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0898.py:22: Failed
+=========================== short test summary info ============================
+FAILED test_0898.py::test_task_func - Failed: DID NOT RAISE ValueError
+1 failed in 1.64s

@@ -1,0 +1,30 @@
+..F                                                                      [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_scaling ____________________________
+
+sample_df =           A         B  C
+0 -1.414214  1.414214  a
+1 -0.707107  0.707107  b
+2  0.000000  0.000000  c
+3  0.707107 -0.707107  d
+4  1.414214 -1.414214  e
+
+    def test_task_func_scaling(sample_df):
+        df, _ = task_func(sample_df)
+    
+        # Check if the numeric columns are scaled
+        numeric_cols = ['A', 'B']
+        for col in numeric_cols:
+            mean = df[col].mean()
+            std = df[col].std()
+            assert np.isclose(mean, 0), f"Mean of {col} is not close to 0"
+>           assert np.isclose(std, 1), f"Standard deviation of {col} is not close to 1"
+E           AssertionError: Standard deviation of A is not close to 1
+E           assert np.False_
+E            +  where np.False_ = <function isclose at 0x7987b6b98730>(np.float64(1.1180339887498947), 1)
+E            +    where <function isclose at 0x7987b6b98730> = np.isclose
+
+test_0981.py:49: AssertionError
+=========================== short test summary info ============================
+FAILED test_0981.py::test_task_func_scaling - AssertionError: Standard deviat...
+1 failed, 2 passed in 4.39s

@@ -1,0 +1,134 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________ TestPostRequestHandler.test_valid_json_request ________________
+
+self = <test_0273.TestPostRequestHandler object at 0x7ad6b19434d0>
+make_request = <function TestPostRequestHandler.make_request.<locals>._make_request at 0x7ad6b117f380>
+
+    def test_valid_json_request(self, make_request):
+        body = '{"data": "some data"}'
+>       handler, environ = make_request(body)
+                           ^^^^^^^^^^^^^^^^^^
+
+test_0273.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+body = '{"data": "some data"}', content_type = 'application/json'
+
+    def _make_request(body, content_type='application/json'):
+        request = BytesIO(body.encode('utf-8'))
+        request.seek(0)
+        headers = {'Content-Length': str(len(body)), 'Content-Type': content_type}
+        environ = {
+            'REQUEST_METHOD': 'POST',
+            'wsgi.input': request,
+            'CONTENT_LENGTH': str(len(body)),
+            'CONTENT_TYPE': content_type
+        }
+>       return handler_class(), environ
+               ^^^^^^^^^^^^^^^
+E       TypeError: BaseRequestHandler.__init__() missing 3 required positional arguments: 'request', 'client_address', and 'server'
+
+test_0273.py:23: TypeError
+_______________ TestPostRequestHandler.test_invalid_content_type _______________
+
+self = <test_0273.TestPostRequestHandler object at 0x7ad6b0f8c620>
+make_request = <function TestPostRequestHandler.make_request.<locals>._make_request at 0x7ad6b117fa60>
+
+    def test_invalid_content_type(self, make_request):
+        body = '{"data": "some data"}'
+>       handler, environ = make_request(body, content_type='text/plain')
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0273.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+body = '{"data": "some data"}', content_type = 'text/plain'
+
+    def _make_request(body, content_type='application/json'):
+        request = BytesIO(body.encode('utf-8'))
+        request.seek(0)
+        headers = {'Content-Length': str(len(body)), 'Content-Type': content_type}
+        environ = {
+            'REQUEST_METHOD': 'POST',
+            'wsgi.input': request,
+            'CONTENT_LENGTH': str(len(body)),
+            'CONTENT_TYPE': content_type
+        }
+>       return handler_class(), environ
+               ^^^^^^^^^^^^^^^
+E       TypeError: BaseRequestHandler.__init__() missing 3 required positional arguments: 'request', 'client_address', and 'server'
+
+test_0273.py:23: TypeError
+_________________ TestPostRequestHandler.test_missing_data_key _________________
+
+self = <test_0273.TestPostRequestHandler object at 0x7ad6b0f8c920>
+make_request = <function TestPostRequestHandler.make_request.<locals>._make_request at 0x7ad6b117fd80>
+
+    def test_missing_data_key(self, make_request):
+        body = '{"not_data": "some data"}'
+>       handler, environ = make_request(body)
+                           ^^^^^^^^^^^^^^^^^^
+
+test_0273.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+body = '{"not_data": "some data"}', content_type = 'application/json'
+
+    def _make_request(body, content_type='application/json'):
+        request = BytesIO(body.encode('utf-8'))
+        request.seek(0)
+        headers = {'Content-Length': str(len(body)), 'Content-Type': content_type}
+        environ = {
+            'REQUEST_METHOD': 'POST',
+            'wsgi.input': request,
+            'CONTENT_LENGTH': str(len(body)),
+            'CONTENT_TYPE': content_type
+        }
+>       return handler_class(), environ
+               ^^^^^^^^^^^^^^^
+E       TypeError: BaseRequestHandler.__init__() missing 3 required positional arguments: 'request', 'client_address', and 'server'
+
+test_0273.py:23: TypeError
+________________ TestPostRequestHandler.test_empty_request_body ________________
+
+self = <test_0273.TestPostRequestHandler object at 0x7ad6b0f8cc20>
+make_request = <function TestPostRequestHandler.make_request.<locals>._make_request at 0x7ad6b0fe0180>
+
+    def test_empty_request_body(self, make_request):
+        body = ''
+>       handler, environ = make_request(body)
+                           ^^^^^^^^^^^^^^^^^^
+
+test_0273.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+body = '', content_type = 'application/json'
+
+    def _make_request(body, content_type='application/json'):
+        request = BytesIO(body.encode('utf-8'))
+        request.seek(0)
+        headers = {'Content-Length': str(len(body)), 'Content-Type': content_type}
+        environ = {
+            'REQUEST_METHOD': 'POST',
+            'wsgi.input': request,
+            'CONTENT_LENGTH': str(len(body)),
+            'CONTENT_TYPE': content_type
+        }
+>       return handler_class(), environ
+               ^^^^^^^^^^^^^^^
+E       TypeError: BaseRequestHandler.__init__() missing 3 required positional arguments: 'request', 'client_address', and 'server'
+
+test_0273.py:23: TypeError
+=============================== warnings summary ===============================
+../../../src/src_0273.py:1
+  /work/tomohiro-w/utg/src/src_0273.py:1: DeprecationWarning: 'cgi' is deprecated and slated for removal in Python 3.13
+    import cgi
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0273.py::TestPostRequestHandler::test_valid_json_request - TypeEr...
+FAILED test_0273.py::TestPostRequestHandler::test_invalid_content_type - Type...
+FAILED test_0273.py::TestPostRequestHandler::test_missing_data_key - TypeErro...
+FAILED test_0273.py::TestPostRequestHandler::test_empty_request_body - TypeEr...
+4 failed, 1 warning in 0.57s

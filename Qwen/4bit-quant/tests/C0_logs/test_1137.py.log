@@ -1,0 +1,37 @@
+.F                                                                       [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_no_emails ___________________________
+
+mock_requests_get = None
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1423/test_task_func_no_emails0')
+
+    def test_task_func_no_emails(mock_requests_get, tmpdir):
+        # Create a temporary directory and set the CSV path within it
+        csv_path = str(tmpdir.join('emails.csv'))
+    
+        # Call the function with the temporary CSV path
+        result = task_func(csv_path=csv_path)
+    
+        # Assert that the result is the correct CSV path
+        assert result == csv_path
+    
+        # Check if the CSV file was created
+        assert os.path.exists(csv_path)
+    
+        # Read the CSV file and check its contents
+        with open(csv_path, 'r') as f:
+            reader = csv.reader(f)
+            rows = list(reader)
+    
+        # The first row should be the header
+        assert rows[0] == ['Emails']
+    
+        # There should be no additional rows with email addresses
+>       assert len(rows) == 1
+E       AssertionError: assert 2 == 1
+E        +  where 2 = len([['Emails'], ['test@example.com']])
+
+test_1137.py:68: AssertionError
+=========================== short test summary info ============================
+FAILED test_1137.py::test_task_func_no_emails - AssertionError: assert 2 == 1
+1 failed, 1 passed in 1.16s

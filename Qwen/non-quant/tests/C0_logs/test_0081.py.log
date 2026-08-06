@@ -1,0 +1,70 @@
+FE.E                                                                     [100%]
+==================================== ERRORS ====================================
+____________________ ERROR at teardown of test_handle_post _____________________
+
+    @pytest.fixture
+    def client():
+        # Create a temporary directory for templates
+        template_dir = os.path.join(os.getcwd(), 'templates')
+        os.makedirs(template_dir, exist_ok=True)
+    
+        # Create a simple index.html template
+        with open(os.path.join(template_dir, 'index.html'), 'w') as f:
+            f.write("{{ data }}")
+    
+        app = task_func(template_dir)
+        app.config['TESTING'] = True
+    
+        with app.test_client() as client:
+            yield client
+    
+        # Clean up the temporary directory
+>       os.rmdir(template_dir)
+E       OSError: [Errno 39] Directory not empty: '/work/tomohiro-w/utg/Qwen/non-quant/tests/templates'
+
+test_0081.py:25: OSError
+______________________ ERROR at teardown of test_logging _______________________
+
+    @pytest.fixture
+    def client():
+        # Create a temporary directory for templates
+        template_dir = os.path.join(os.getcwd(), 'templates')
+        os.makedirs(template_dir, exist_ok=True)
+    
+        # Create a simple index.html template
+        with open(os.path.join(template_dir, 'index.html'), 'w') as f:
+            f.write("{{ data }}")
+    
+        app = task_func(template_dir)
+        app.config['TESTING'] = True
+    
+        with app.test_client() as client:
+            yield client
+    
+        # Clean up the temporary directory
+>       os.rmdir(template_dir)
+E       OSError: [Errno 39] Directory not empty: '/work/tomohiro-w/utg/Qwen/non-quant/tests/templates'
+
+test_0081.py:25: OSError
+------------------------------ Captured log call -------------------------------
+INFO     root:src_0081.py:12 {"key": "value"}
+=================================== FAILURES ===================================
+_______________________________ test_handle_post _______________________________
+
+client = <FlaskClient <Flask 'src_0081'>>
+
+    def test_handle_post(client):
+        response = client.post('/', json={'key': 'value'})
+        assert response.status_code == 200
+>       assert response.data.decode('utf-8') == '{"key": "value"}'
+E       assert '{&#39;key&#3...9;value&#39;}' == '{"key": "value"}'
+E         
+E         - {"key": "value"}
+E         + {&#39;key&#39;: &#39;value&#39;}
+
+test_0081.py:30: AssertionError
+=========================== short test summary info ============================
+FAILED test_0081.py::test_handle_post - assert '{&#39;key&#3...9;value&#39;}'...
+ERROR test_0081.py::test_handle_post - OSError: [Errno 39] Directory not empt...
+ERROR test_0081.py::test_logging - OSError: [Errno 39] Directory not empty: '...
+1 failed, 1 passed, 2 errors in 0.84s

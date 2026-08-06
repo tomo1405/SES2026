@@ -1,0 +1,58 @@
+F.FF                                                                     [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_valid_directory ______________________
+
+    def test_task_func_with_valid_directory():
+>       df = task_func(directory='./test_data', file_pattern='*.txt', regex=r'([0-9]+)')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0396.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = './test_data', file_pattern = '*.txt', regex = '([0-9]+)'
+
+    def task_func(directory='./', file_pattern='*.txt', regex=r'([0-9]+)'):
+        if not os.path.exists(directory):
+>           raise FileNotFoundError(f"The directory '{directory}' does not exist.")
+E           FileNotFoundError: The directory './test_data' does not exist.
+
+../../../src/src_0396.py:8: FileNotFoundError
+________________ test_task_func_with_no_files_matching_pattern _________________
+
+    def test_task_func_with_no_files_matching_pattern():
+        with pytest.raises(ValueError):
+>           task_func(directory='./test_data', file_pattern='*.csv', regex=r'([0-9]+)')
+
+test_0396.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = './test_data', file_pattern = '*.csv', regex = '([0-9]+)'
+
+    def task_func(directory='./', file_pattern='*.txt', regex=r'([0-9]+)'):
+        if not os.path.exists(directory):
+>           raise FileNotFoundError(f"The directory '{directory}' does not exist.")
+E           FileNotFoundError: The directory './test_data' does not exist.
+
+../../../src/src_0396.py:8: FileNotFoundError
+______________________ test_task_func_with_invalid_regex _______________________
+
+    def test_task_func_with_invalid_regex():
+        with pytest.raises(re.error):
+>           task_func(directory='./test_data', file_pattern='*.txt', regex=r'([0-9]+')
+
+test_0396.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = './test_data', file_pattern = '*.txt', regex = '([0-9]+'
+
+    def task_func(directory='./', file_pattern='*.txt', regex=r'([0-9]+)'):
+        if not os.path.exists(directory):
+>           raise FileNotFoundError(f"The directory '{directory}' does not exist.")
+E           FileNotFoundError: The directory './test_data' does not exist.
+
+../../../src/src_0396.py:8: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0396.py::test_task_func_with_valid_directory - FileNotFoundError:...
+FAILED test_0396.py::test_task_func_with_no_files_matching_pattern - FileNotF...
+FAILED test_0396.py::test_task_func_with_invalid_regex - FileNotFoundError: T...
+3 failed, 1 passed in 1.23s

@@ -1,0 +1,50 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        utc_datetime = datetime.datetime.utcnow()
+        seed = 0
+        random.seed(seed)
+>       person = random.choice(DATA)
+                               ^^^^
+E       NameError: name 'DATA' is not defined
+
+test_0259.py:13: NameError
+__________________________ test_task_func_with_seed_1 __________________________
+
+    def test_task_func_with_seed_1():
+        utc_datetime = datetime.datetime.utcnow()
+        seed = 1
+        random.seed(seed)
+>       person = random.choice(DATA)
+                               ^^^^
+E       NameError: name 'DATA' is not defined
+
+test_0259.py:22: NameError
+_______________________ test_task_func_with_invalid_seed _______________________
+
+    def test_task_func_with_invalid_seed():
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0259.py:28: Failed
+=============================== warnings summary ===============================
+Granite/non-quant/tests/test_0259.py::test_task_func
+  /work/tomohiro-w/utg/Granite/non-quant/tests/test_0259.py:10: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    utc_datetime = datetime.datetime.utcnow()
+
+Granite/non-quant/tests/test_0259.py::test_task_func_with_seed_1
+  /work/tomohiro-w/utg/Granite/non-quant/tests/test_0259.py:19: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    utc_datetime = datetime.datetime.utcnow()
+
+Granite/non-quant/tests/test_0259.py::test_task_func_with_invalid_seed
+  /work/tomohiro-w/utg/Granite/non-quant/tests/test_0259.py:29: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    task_func(datetime.datetime.utcnow(), 'invalid_seed')
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0259.py::test_task_func - NameError: name 'DATA' is not defined
+FAILED test_0259.py::test_task_func_with_seed_1 - NameError: name 'DATA' is n...
+FAILED test_0259.py::test_task_func_with_invalid_seed - Failed: DID NOT RAISE...
+3 failed, 3 warnings in 0.43s

@@ -1,0 +1,112 @@
+....FF..                                                                 [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_with_zero_sum _________________________
+
+    def test_task_func_with_zero_sum():
+        T1 = [['0', '0', '0'], ['0', '0']]
+>       mean, median, mode = task_func(T1)
+                             ^^^^^^^^^^^^^
+
+test_0011.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0011.py:14: in task_func
+    mode = statistics.mode(random_nums)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = []
+
+    def mode(data):
+        """Return the most common data point from discrete or nominal data.
+    
+        ``mode`` assumes discrete data, and returns a single value. This is the
+        standard treatment of the mode as commonly taught in schools:
+    
+            >>> mode([1, 1, 2, 3, 3, 3, 3, 4])
+            3
+    
+        This also works with nominal (non-numeric) data:
+    
+            >>> mode(["red", "blue", "blue", "red", "green", "red", "red"])
+            'red'
+    
+        If there are multiple modes with same frequency, return the first one
+        encountered:
+    
+            >>> mode(['red', 'red', 'green', 'blue', 'blue'])
+            'red'
+    
+        If *data* is empty, ``mode``, raises StatisticsError.
+    
+        """
+        pairs = Counter(iter(data)).most_common(1)
+        try:
+            return pairs[0][0]
+        except IndexError:
+>           raise StatisticsError('no mode for empty data') from None
+E           statistics.StatisticsError: no mode for empty data
+
+/usr/lib/python3.12/statistics.py:765: StatisticsError
+_____________________ test_task_func_with_negative_numbers _____________________
+
+    def test_task_func_with_negative_numbers():
+        T1 = [['-1', '-2', '-3'], ['-4', '-5']]
+>       mean, median, mode = task_func(T1)
+                             ^^^^^^^^^^^^^
+
+test_0011.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0011.py:14: in task_func
+    mode = statistics.mode(random_nums)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = []
+
+    def mode(data):
+        """Return the most common data point from discrete or nominal data.
+    
+        ``mode`` assumes discrete data, and returns a single value. This is the
+        standard treatment of the mode as commonly taught in schools:
+    
+            >>> mode([1, 1, 2, 3, 3, 3, 3, 4])
+            3
+    
+        This also works with nominal (non-numeric) data:
+    
+            >>> mode(["red", "blue", "blue", "red", "green", "red", "red"])
+            'red'
+    
+        If there are multiple modes with same frequency, return the first one
+        encountered:
+    
+            >>> mode(['red', 'red', 'green', 'blue', 'blue'])
+            'red'
+    
+        If *data* is empty, ``mode``, raises StatisticsError.
+    
+        """
+        pairs = Counter(iter(data)).most_common(1)
+        try:
+            return pairs[0][0]
+        except IndexError:
+>           raise StatisticsError('no mode for empty data') from None
+E           statistics.StatisticsError: no mode for empty data
+
+/usr/lib/python3.12/statistics.py:765: StatisticsError
+=============================== warnings summary ===============================
+Qwen/4bit-quant/tests/test_0011.py::test_task_func_with_zero_sum
+Qwen/4bit-quant/tests/test_0011.py::test_task_func_with_negative_numbers
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:3862: RuntimeWarning: Mean of empty slice
+    return _methods._mean(a, axis=axis, dtype=dtype,
+
+Qwen/4bit-quant/tests/test_0011.py::test_task_func_with_zero_sum
+Qwen/4bit-quant/tests/test_0011.py::test_task_func_with_negative_numbers
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/_core/_methods.py:142: RuntimeWarning: invalid value encountered in scalar divide
+    ret = ret.dtype.type(ret / rcount)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0011.py::test_task_func_with_zero_sum - statistics.StatisticsErro...
+FAILED test_0011.py::test_task_func_with_negative_numbers - statistics.Statis...
+2 failed, 6 passed, 4 warnings in 0.58s

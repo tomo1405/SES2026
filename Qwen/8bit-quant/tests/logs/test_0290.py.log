@@ -1,0 +1,29 @@
+..F                                                                      [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_zero_epochs ________________________
+
+sample_data = (array([[0.35434383, 0.80514987, 0.37686297, 0.57387921, 0.12729426],
+       [0.70060724, 0.58912348, 0.84480554, 0.78...,
+       0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
+       1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0]))
+
+    def test_task_func_with_zero_epochs(sample_data):
+        X, y = sample_data
+        n_splits = 3
+        batch_size = 10
+        epochs = 0
+    
+        history = task_func(X, y, n_splits, batch_size, epochs)
+    
+        assert len(history) == n_splits, "The number of histories should match the number of splits"
+        for hist in history:
+            assert isinstance(hist, tf.keras.callbacks.History), "Each history should be an instance of tf.keras.callbacks.History"
+>           assert 'loss' in hist.history, "History should contain 'loss' key"
+E           AssertionError: History should contain 'loss' key
+E           assert 'loss' in {}
+E            +  where {} = <keras.src.callbacks.history.History object at 0x78a51041d8b0>.history
+
+test_0290.py:49: AssertionError
+=========================== short test summary info ============================
+FAILED test_0290.py::test_task_func_with_zero_epochs - AssertionError: Histor...
+1 failed, 2 passed in 13.73s

@@ -1,0 +1,35 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        f_list = [lambda x: x**2, lambda x, y: x*y, lambda x, y, z: x+y+z]
+>       df = task_func(f_list)
+             ^^^^^^^^^^^^^^^^^
+
+test_0569.py:6: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+f_list = [<function test_task_func.<locals>.<lambda> at 0x78d25e534fe0>, <function test_task_func.<locals>.<lambda> at 0x78d25e535080>, <function test_task_func.<locals>.<lambda> at 0x78d25e535120>]
+
+    def task_func(f_list):
+        func_info = []
+        for f in f_list:
+            if f.__name__ == "<lambda>":
+>               raise ValueError("The function should not be a lambda function.")
+E               ValueError: The function should not be a lambda function.
+
+../../../src/src_0569.py:8: ValueError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        f_list = [lambda x: x**2, lambda x, y: x*y, lambda x, y, z: x+y+z]
+        with pytest.raises(ValueError):
+>           task_func(f_list, invalid_input=True)
+E           TypeError: task_func() got an unexpected keyword argument 'invalid_input'
+
+test_0569.py:14: TypeError
+=========================== short test summary info ============================
+FAILED test_0569.py::test_task_func - ValueError: The function should not be ...
+FAILED test_0569.py::test_task_func_invalid_input - TypeError: task_func() go...
+2 failed in 2.11s

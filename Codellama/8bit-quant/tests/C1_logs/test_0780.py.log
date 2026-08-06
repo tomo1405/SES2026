@@ -1,0 +1,52 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_valid_directory ________________________
+
+    def test_task_func_valid_directory():
+        directory = "/tmp/test_dir"
+        os.makedirs(directory, exist_ok=True)
+        backup_dir, errors = task_func(directory)
+        assert backup_dir == "/fake/backup/path"
+>       assert not errors
+E       assert not ["[Errno 13] Permission denied: '/fake'"]
+
+test_0780.py:11: AssertionError
+_______________________ test_task_func_invalid_directory _______________________
+
+    def test_task_func_invalid_directory():
+        directory = "/tmp/test_dir"
+        backup_dir, errors = task_func(directory)
+>       assert backup_dir is None
+E       AssertionError: assert '/fake/backup/path' is None
+
+test_0780.py:17: AssertionError
+_______________________ test_task_func_permission_denied _______________________
+
+    def test_task_func_permission_denied():
+        directory = "/tmp/test_dir"
+        os.makedirs(directory, exist_ok=True)
+        backup_dir, errors = task_func(directory)
+        assert backup_dir == "/fake/backup/path"
+>       assert errors[0] == f"Permission denied: {e}"
+                                                  ^
+E       NameError: name 'e' is not defined
+
+test_0780.py:26: NameError
+___________________________ test_task_func_exception ___________________________
+
+    def test_task_func_exception():
+        directory = "/tmp/test_dir"
+        os.makedirs(directory, exist_ok=True)
+        backup_dir, errors = task_func(directory)
+        assert backup_dir == "/fake/backup/path"
+>       assert errors[0] == str(e)
+                                ^
+E       NameError: name 'e' is not defined
+
+test_0780.py:34: NameError
+=========================== short test summary info ============================
+FAILED test_0780.py::test_task_func_valid_directory - assert not ["[Errno 13]...
+FAILED test_0780.py::test_task_func_invalid_directory - AssertionError: asser...
+FAILED test_0780.py::test_task_func_permission_denied - NameError: name 'e' i...
+FAILED test_0780.py::test_task_func_exception - NameError: name 'e' is not de...
+4 failed in 0.47s

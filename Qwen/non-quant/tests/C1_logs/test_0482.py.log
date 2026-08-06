@@ -1,0 +1,58 @@
+.FF.F.                                                                   [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_single_element ______________________
+
+    def test_task_func_with_single_element():
+        data_list = ["apple, banana, cherry"]
+        expected_df = pd.DataFrame({
+            "Original String": ["apple, banana, cherry"],
+            "Randomized String": ["banana, apple, cherry"]
+        })
+        result = task_func(data_list)
+>       assert result.equals(expected_df)
+E       assert False
+E        +  where False = equals(         Original String      Randomized String\n0  apple, banana, cherry  banana, apple, cherry)
+E        +    where equals =          Original String      Randomized String\n0  apple, banana, cherry  cherry, apple, banana.equals
+
+test_0482.py:17: AssertionError
+____________________ test_task_func_with_multiple_elements _____________________
+
+    def test_task_func_with_multiple_elements():
+        data_list = [
+            "apple, banana, cherry",
+            "dog, elephant, frog"
+        ]
+        expected_df = pd.DataFrame({
+            "Original String": [
+                "apple, banana, cherry",
+                "dog, elephant, frog"
+            ],
+            "Randomized String": [
+                "banana, apple, cherry",
+                "elephant, frog, dog"
+            ]
+        })
+        result = task_func(data_list)
+>       assert result.equals(expected_df)
+E       assert False
+E        +  where False = equals(         Original String      Randomized String\n0  apple, banana, cherry  banana, apple, cherry\n1    dog, elephant, frog    elephant, frog, dog)
+E        +    where equals =          Original String      Randomized String\n0  apple, banana, cherry  cherry, apple, banana\n1    dog, elephant, frog    frog, elephant, dog.equals
+
+test_0482.py:35: AssertionError
+______________________ test_task_func_with_different_seed ______________________
+
+    def test_task_func_with_different_seed():
+        data_list = ["apple, banana, cherry"]
+        result1 = task_func(data_list, seed=1)
+        result2 = task_func(data_list, seed=2)
+>       assert not result1.equals(result2)
+E       assert not True
+E        +  where True = equals(         Original String      Randomized String\n0  apple, banana, cherry  apple, cherry, banana)
+E        +    where equals =          Original String      Randomized String\n0  apple, banana, cherry  apple, cherry, banana.equals
+
+test_0482.py:62: AssertionError
+=========================== short test summary info ============================
+FAILED test_0482.py::test_task_func_with_single_element - assert False
+FAILED test_0482.py::test_task_func_with_multiple_elements - assert False
+FAILED test_0482.py::test_task_func_with_different_seed - assert not True
+3 failed, 3 passed in 1.19s

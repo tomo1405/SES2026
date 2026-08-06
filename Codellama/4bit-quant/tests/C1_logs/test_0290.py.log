@@ -1,0 +1,37 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        X = [[1, 2], [3, 4], [5, 6], [7, 8]]
+        y = [0, 1, 0, 1]
+        n_splits = 2
+        batch_size = 32
+        epochs = 10
+    
+>       history = task_func(X, y, n_splits, batch_size, epochs)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0290.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+X = [[1, 2], [3, 4], [5, 6], [7, 8]], y = [0, 1, 0, 1], n_splits = 2
+batch_size = 32, epochs = 10
+
+    def task_func(X, y, n_splits, batch_size, epochs):
+        scaler = MinMaxScaler()
+        X_scaled = scaler.fit_transform(X)
+    
+        kf = KFold(n_splits=n_splits)
+        history = []
+    
+        for train_index, test_index in kf.split(X_scaled):
+            X_train, X_test = X_scaled[train_index], X_scaled[test_index]
+>           y_train, y_test = y[train_index], y[test_index]
+                              ^^^^^^^^^^^^^^
+E           TypeError: only integer scalar arrays can be converted to a scalar index
+
+../../../src/src_0290.py:13: TypeError
+=========================== short test summary info ============================
+FAILED test_0290.py::test_task_func - TypeError: only integer scalar arrays c...
+1 failed in 9.53s

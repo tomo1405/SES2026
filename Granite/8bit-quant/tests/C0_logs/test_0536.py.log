@@ -1,0 +1,35 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        db_path = "test.db"
+        table_name = "test_table"
+        num_entries = 10
+        random_seed = 42
+    
+        # Mock the random functions to make the test deterministic
+        seed(random_seed)
+        np.random.seed(random_seed)
+>       choice_mock = unittest.mock.Mock(side_effect=[
+                      ^^^^^^^^^^^^^
+            "John", "Jane", "Steve", "Emma", "Liam", "Olivia"
+        ])
+
+test_0536.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'mock'
+
+    def __getattr__(name):
+        if name == 'IsolatedAsyncioTestCase':
+            global IsolatedAsyncioTestCase
+            from .async_case import IsolatedAsyncioTestCase
+            return IsolatedAsyncioTestCase
+>       raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+E       AttributeError: module 'unittest' has no attribute 'mock'
+
+/usr/lib/python3.12/unittest/__init__.py:85: AttributeError
+=========================== short test summary info ============================
+FAILED test_0536.py::test_task_func - AttributeError: module 'unittest' has n...
+1 failed in 0.56s

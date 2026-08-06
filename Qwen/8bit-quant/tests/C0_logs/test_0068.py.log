@@ -1,0 +1,46 @@
+EE                                                                       [100%]
+==================================== ERRORS ====================================
+_______________________ ERROR at setup of test_task_func _______________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7db4f4a29d30>
+
+    @pytest.fixture
+    def mock_os(monkeypatch):
+        files = ['EMPLOYEE1.txt', 'EMPLOYEE2.txt', 'NOTEMPLOYEE.txt']
+>       monkeypatch.setattr('os', MockOsModule(files))
+
+test_0068.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+import_path = 'os', raising = True
+
+    def derive_importpath(import_path: str, raising: bool) -> tuple[str, object]:
+        if not isinstance(import_path, str) or "." not in import_path:
+>           raise TypeError(f"must be absolute import path string, not {import_path!r}")
+E           TypeError: must be absolute import path string, not 'os'
+
+../../../.venv/lib/python3.12/site-packages/_pytest/monkeypatch.py:105: TypeError
+______________ ERROR at setup of test_task_func_no_matching_files ______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7db4f5d59370>
+
+    @pytest.fixture
+    def mock_os(monkeypatch):
+        files = ['EMPLOYEE1.txt', 'EMPLOYEE2.txt', 'NOTEMPLOYEE.txt']
+>       monkeypatch.setattr('os', MockOsModule(files))
+
+test_0068.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+import_path = 'os', raising = True
+
+    def derive_importpath(import_path: str, raising: bool) -> tuple[str, object]:
+        if not isinstance(import_path, str) or "." not in import_path:
+>           raise TypeError(f"must be absolute import path string, not {import_path!r}")
+E           TypeError: must be absolute import path string, not 'os'
+
+../../../.venv/lib/python3.12/site-packages/_pytest/monkeypatch.py:105: TypeError
+=========================== short test summary info ============================
+ERROR test_0068.py::test_task_func - TypeError: must be absolute import path ...
+ERROR test_0068.py::test_task_func_no_matching_files - TypeError: must be abs...
+2 errors in 1.22s

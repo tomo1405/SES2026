@@ -1,0 +1,50 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_valid_csv _________________________
+
+    def test_task_func_with_valid_csv():
+        # Create a temporary CSV file
+        with tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix='.csv') as temp_file:
+            temp_file.write("col1,col2\nrow1,row2\nrow3,row4")
+            temp_file.flush()
+            filename = temp_file.name
+    
+            # Call the function
+            result = task_func(filename)
+    
+            # Check if the function returned the correct filename
+            assert result == filename
+    
+            # Read the content of the file after processing
+            with open(filename, 'r') as file:
+                content = file.read()
+    
+            # Check if the content is reversed
+            expected_content = "col1,col2\nrow3,row4\nrow1,row2"
+>           assert content == expected_content
+E           AssertionError: assert 'row3,row4\nr...\ncol1,col2\n' == 'col1,col2\nr...w4\nrow1,row2'
+E             
+E             + row3,row4
+E             + row1,row2
+E               col1,col2
+E             - row3,row4
+E             - row1,row2
+
+test_0673.py:25: AssertionError
+_____________________ test_task_func_with_nonexistent_file _____________________
+
+    def test_task_func_with_nonexistent_file():
+        # Create a non-existent filename
+        filename = "non_existent_file.csv"
+    
+        # Call the function and capture stderr
+>       with pytest.raises(FileNotFoundError) as excinfo:
+E       Failed: DID NOT RAISE FileNotFoundError
+
+test_0673.py:35: Failed
+----------------------------- Captured stderr call -----------------------------
+An error occurred: [Errno 2] No such file or directory: 'non_existent_file.csv'
+=========================== short test summary info ============================
+FAILED test_0673.py::test_task_func_with_valid_csv - AssertionError: assert '...
+FAILED test_0673.py::test_task_func_with_nonexistent_file - Failed: DID NOT R...
+2 failed, 1 passed in 0.44s

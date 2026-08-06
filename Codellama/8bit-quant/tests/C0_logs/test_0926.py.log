@@ -1,0 +1,41 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test 1: Check if the function returns a pandas DataFrame
+        result = task_func()
+        assert isinstance(result, pd.DataFrame)
+    
+        # Test 2: Check if the function returns the correct number of rows and columns
+        expected_rows = 1000
+        expected_cols = 5
+        assert result.shape == (expected_rows, expected_cols)
+    
+        # Test 3: Check if the function correctly replaces values less than 10 with -1
+        expected_values = [-1, -1, -1, -1, -1]
+>       assert (result[result < 10] == expected_values).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0926.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = A    False
+B    False
+C    False
+D    False
+E    False
+dtype: bool
+
+    @final
+    def __bool__(self) -> NoReturn:
+>       raise ValueError(
+            f"The truth value of a {type(self).__name__} is ambiguous. "
+            "Use a.empty, a.bool(), a.item(), a.any() or a.all()."
+        )
+E       ValueError: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:1513: ValueError
+=========================== short test summary info ============================
+FAILED test_0926.py::test_task_func - ValueError: The truth value of a Series...
+1 failed in 1.27s

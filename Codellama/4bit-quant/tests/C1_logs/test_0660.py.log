@@ -1,0 +1,28 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        x = np.array([1, 2, 3])
+        y = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+        labels = ['label1', 'label2', 'label3']
+        fig = task_func(x, y, labels)
+        assert isinstance(fig, plt.Figure)
+        assert len(fig.axes) == 1
+        ax = fig.axes[0]
+        assert len(ax.lines) == 3
+        for i in range(len(x)):
+            mu = np.mean(y[i])
+            sigma = np.std(y[i])
+            pdf = stats.norm.pdf(x[i], mu, sigma)
+            assert ax.lines[i].get_xdata() == x[i]
+            assert ax.lines[i].get_ydata() == pdf
+>       assert ax.get_legend() == labels
+E       AssertionError: assert <matplotlib.legend.Legend object at 0x7ec8e84d05f0> == ['label1', 'label2', 'label3']
+E        +  where <matplotlib.legend.Legend object at 0x7ec8e84d05f0> = get_legend()
+E        +    where get_legend = <Axes: >.get_legend
+
+test_0660.py:22: AssertionError
+=========================== short test summary info ============================
+FAILED test_0660.py::test_task_func - AssertionError: assert <matplotlib.lege...
+1 failed in 3.61s

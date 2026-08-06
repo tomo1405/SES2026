@@ -1,0 +1,30 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        def sample_function(arg1, arg2, arg3=10, arg4=20):
+            pass
+    
+        result = task_func(sample_function)
+        assert result['function_name'] == 'sample_function'
+>       assert result['is_lambda'] == False
+E       assert True == False
+
+test_0567.py:10: AssertionError
+_______________________ test_task_func_with_annotations ________________________
+
+    def test_task_func_with_annotations():
+        def sample_function(arg1: int, arg2: str, arg3: float = 10.0, arg4: bool = True) -> float:
+            pass
+    
+        result = task_func(sample_function)
+        assert result['function_name'] == 'sample_function'
+>       assert result['is_lambda'] == False
+E       assert True == False
+
+test_0567.py:29: AssertionError
+=========================== short test summary info ============================
+FAILED test_0567.py::test_task_func - assert True == False
+FAILED test_0567.py::test_task_func_with_annotations - assert True == False
+2 failed, 1 passed in 0.45s

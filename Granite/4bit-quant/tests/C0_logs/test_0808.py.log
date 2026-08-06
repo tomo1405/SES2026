@@ -1,0 +1,58 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data = np.array([1, 2, 3, 4, 5])
+        threshold = 2.0
+        expected_outliers = [0, 4]
+        expected_mean = 3
+        expected_variance = 2
+    
+        outliers, mean, variance = task_func(data, threshold)
+    
+>       assert outliers == expected_outliers
+E       assert [] == [0, 4]
+E         
+E         Right contains 2 more items, first extra item: 0
+E         Use -v to get more diff
+
+test_0808.py:15: AssertionError
+____________________ test_task_func_with_default_threshold _____________________
+
+    def test_task_func_with_default_threshold():
+        data = np.array([1, 2, 3, 4, 5])
+        expected_outliers = []
+        expected_mean = 3
+        expected_variance = 2
+    
+        outliers, mean, variance = task_func(data)
+    
+        assert outliers == expected_outliers
+        assert mean == expected_mean
+>       assert variance == expected_variance
+E       assert np.float64(2.0000000000000004) == 2
+
+test_0808.py:29: AssertionError
+_______________________ test_task_func_with_no_outliers ________________________
+
+    def test_task_func_with_no_outliers():
+        data = np.array([1, 2, 3, 4, 5])
+        threshold = 100
+        expected_outliers = []
+        expected_mean = 3
+        expected_variance = 2
+    
+        outliers, mean, variance = task_func(data, threshold)
+    
+        assert outliers == expected_outliers
+        assert mean == expected_mean
+>       assert variance == expected_variance
+E       assert np.float64(2.0000000000000004) == 2
+
+test_0808.py:42: AssertionError
+=========================== short test summary info ============================
+FAILED test_0808.py::test_task_func - assert [] == [0, 4]
+FAILED test_0808.py::test_task_func_with_default_threshold - assert np.float6...
+FAILED test_0808.py::test_task_func_with_no_outliers - assert np.float64(2.00...
+3 failed in 2.10s

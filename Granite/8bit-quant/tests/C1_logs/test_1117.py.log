@@ -1,0 +1,39 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        dict1 = {'EMP$$': 5, 'ENG$$': 3}
+        mean_age, median_age, mode_age = task_func(dict1)
+        assert mean_age > AGE_RANGE[0] and mean_age < AGE_RANGE[1]
+        assert median_age > AGE_RANGE[0] and median_age < AGE_RANGE[1]
+>       assert mode_age == []
+E       assert [57, 53, 49, 40, 56] == []
+E         
+E         Left contains 5 more items, first extra item: 57
+E         Use -v to get more diff
+
+test_1117.py:14: AssertionError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        with pytest.raises(TypeError):
+>           task_func('invalid input')
+
+test_1117.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dict1 = 'invalid input'
+
+    def task_func(dict1):
+        emp_ages = []
+    
+>       for prefix, num_employees in dict1.items():
+                                     ^^^^^^^^^^^
+E       AttributeError: 'str' object has no attribute 'items'
+
+../../../src/src_1117.py:8: AttributeError
+=========================== short test summary info ============================
+FAILED test_1117.py::test_task_func - assert [57, 53, 49, 40, 56] == []
+FAILED test_1117.py::test_task_func_invalid_input - AttributeError: 'str' obj...
+2 failed, 1 passed in 0.51s

@@ -1,0 +1,10 @@
+import itertools
+import string
+import pandas as pd
+def task_func():
+    LETTERS = list(string.ascii_lowercase)
+    combinations = list(itertools.product(LETTERS, repeat=3))
+
+    df = pd.DataFrame(combinations, columns=["Letter 1", "Letter 2", "Letter 3"])
+
+    return df

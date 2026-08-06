@@ -1,0 +1,105 @@
+EF.FFF                                                                   [100%]
+==================================== ERRORS ====================================
+_______________ ERROR at setup of test_task_func_file_not_found ________________
+file /work/tomohiro-w/utg/Qwen/8bit-quant/tests/test_0714.py, line 12
+  def test_task_func_file_not_found(mocker):
+E       fixture 'mocker' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, cov, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, no_cover, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/work/tomohiro-w/utg/Qwen/8bit-quant/tests/test_0714.py:12
+=================================== FAILURES ===================================
+__________________________ test_task_func_no_keywords __________________________
+
+    def test_task_func_no_keywords():
+>       formatted_lines = task_func('test_log.txt', [])
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0714.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+log_file_path = 'test_log.txt', keywords = []
+
+    def task_func(log_file_path: str, keywords: list):
+        if not os.path.exists(log_file_path):
+>           raise FileNotFoundError(f"Log file {log_file_path} does not exist.")
+E           FileNotFoundError: Log file test_log.txt does not exist.
+
+../../../src/src_0714.py:5: FileNotFoundError
+_____________________ test_task_func_single_keyword_match ______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-2160/test_task_func_single_keyword_0')
+
+    def test_task_func_single_keyword_match(tmp_path):
+        log_content = """error 404 Not Found
+        warning 500 Internal Server Error
+        info User logged in"""
+        log_file = tmp_path / "test_log.txt"
+        log_file.write_text(log_content)
+        formatted_lines = task_func(str(log_file), ['error'])
+        expected_output = [
+            "      error :             404 :         Not Found"
+        ]
+>       assert formatted_lines == expected_output
+E       AssertionError: assert ['           ...   Not Found'] == ['      error...   Not Found']
+E         
+E         At index 0 diff: '               error :                  404 :            Not Found' != '      error :             404 :         Not Found'
+E         Use -v to get more diff
+
+test_0714.py:38: AssertionError
+____________________ test_task_func_multiple_keywords_match ____________________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-2160/test_task_func_multiple_keywor0')
+
+    def test_task_func_multiple_keywords_match(tmp_path):
+        log_content = """error 404 Not Found
+        warning 500 Internal Server Error
+        info User logged in
+        error 502 Bad Gateway"""
+        log_file = tmp_path / "test_log.txt"
+        log_file.write_text(log_content)
+        formatted_lines = task_func(str(log_file), ['error', 'warning'])
+        expected_output = [
+            "      error :             404 :         Not Found",
+            "      error :             502 :       Bad Gateway",
+            "    warning :             500 : Internal Server Error"
+        ]
+>       assert formatted_lines == expected_output
+E       AssertionError: assert ['           ... Bad Gateway'] == ['      error...Server Error']
+E         
+E         At index 0 diff: '               error :                  404 :            Not Found' != '      error :             404 :         Not Found'
+E         Use -v to get more diff
+
+test_0714.py:53: AssertionError
+____________________ test_task_func_unexpected_line_format _____________________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-2160/test_task_func_unexpected_line0')
+
+    def test_task_func_unexpected_line_format(tmp_path):
+        log_content = """error 404 Not Found
+        warning 500 Internal Server Error
+        info User logged in
+        unexpected line without spaces"""
+        log_file = tmp_path / "test_log.txt"
+        log_file.write_text(log_content)
+        formatted_lines = task_func(str(log_file), ['error', 'warning'])
+        expected_output = [
+            "      error :             404 :         Not Found",
+            "    warning :             500 : Internal Server Error",
+            "Line format unexpected: unexpected line without spaces"
+        ]
+>       assert formatted_lines == expected_output
+E       AssertionError: assert ['           ...Server Error'] == ['      error...thout spaces']
+E         
+E         At index 0 diff: '               error :                  404 :            Not Found' != '      error :             404 :         Not Found'
+E         Right contains one more item: 'Line format unexpected: unexpected line without spaces'
+E         Use -v to get more diff
+
+test_0714.py:68: AssertionError
+=========================== short test summary info ============================
+FAILED test_0714.py::test_task_func_no_keywords - FileNotFoundError: Log file...
+FAILED test_0714.py::test_task_func_single_keyword_match - AssertionError: as...
+FAILED test_0714.py::test_task_func_multiple_keywords_match - AssertionError:...
+FAILED test_0714.py::test_task_func_unexpected_line_format - AssertionError: ...
+ERROR test_0714.py::test_task_func_file_not_found
+4 failed, 1 passed, 1 error in 0.56s

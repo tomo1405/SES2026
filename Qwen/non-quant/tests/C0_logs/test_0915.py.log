@@ -1,0 +1,85 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+_____________________________ test_task_func_plot ______________________________
+
+sample_data =            date  closing_price
+0  1.672531e+09            100
+1  1.672618e+09            102
+2  1.672704e+09            101
+3  1.672790e+09            105
+4  1.672877e+09            107
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e53617988f0>
+
+    def test_task_func_plot(sample_data, monkeypatch):
+        def mock_scatter(x, y, color):
+            assert len(x) == 5
+            assert len(y) == 5
+            assert color == 'black'
+    
+        def mock_plot(x, y, color, linewidth):
+            assert len(x) == 7
+            assert len(y) == 7
+            assert color == 'blue'
+            assert linewidth == 3
+    
+        monkeypatch.setattr(plt.Axes, 'scatter', mock_scatter)
+        monkeypatch.setattr(plt.Axes, 'plot', mock_plot)
+    
+>       task_func(sample_data)
+
+test_0915.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df =            date  closing_price
+0  1.672531e+09            100
+1  1.672618e+09            102
+2  1.672704e+09            101
+3  1.672790e+09            105
+4  1.672877e+09            107
+
+    def task_func(df):
+        # Convert date to timestamp
+        df['date'] = pd.to_datetime(df['date'])
+        df['date'] = df['date'].map(pd.Timestamp.timestamp)
+    
+        # Prepare data
+        X = df['date'].values.reshape(-1, 1)
+        y = df['closing_price'].values
+    
+        # Fit model
+        model = LinearRegression()
+        model.fit(X, y)
+    
+        # Predict future prices
+        future_dates = np.array([df['date'].max() + i*24*60*60 for i in range(1, 8)]).reshape(-1, 1)
+        pred_prices = model.predict(future_dates)
+    
+        # Plot
+        fig, ax = plt.subplots()
+>       ax.scatter(df['date'], df['closing_price'], color='black')
+E       TypeError: test_task_func_plot.<locals>.mock_scatter() got multiple values for argument 'color'
+
+../../../src/src_0915.py:24: TypeError
+_______________________ test_task_func_dates_conversion ________________________
+
+sample_data =            date  closing_price
+0  1.672531e+09            100
+1  1.672618e+09            102
+2  1.672704e+09            101
+3  1.672790e+09            105
+4  1.672877e+09            107
+
+    def test_task_func_dates_conversion(sample_data):
+        original_dates = sample_data['date'].copy()
+        task_func(sample_data)
+        converted_dates = sample_data['date']
+        assert not np.array_equal(original_dates, converted_dates)
+>       assert all(isinstance(date, np.float64) for date in converted_dates)
+E       assert False
+E        +  where False = all(<generator object test_task_func_dates_conversion.<locals>.<genexpr> at 0x7e53215c5540>)
+
+test_0915.py:44: AssertionError
+=========================== short test summary info ============================
+FAILED test_0915.py::test_task_func_plot - TypeError: test_task_func_plot.<lo...
+FAILED test_0915.py::test_task_func_dates_conversion - assert False
+2 failed, 1 passed in 3.53s

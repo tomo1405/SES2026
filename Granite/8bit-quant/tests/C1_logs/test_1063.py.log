@@ -1,0 +1,68 @@
+F..                                                                      [100%]
+=================================== FAILURES ===================================
+_________________ test_task_func[arr0-Time Series of Row Sums] _________________
+
+cls = <class 'pandas.Series'>, axis = 1
+
+    @final
+    @classmethod
+    def _get_axis_number(cls, axis: Axis) -> AxisInt:
+        try:
+>           return cls._AXIS_TO_AXIS_NUMBER[axis]
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           KeyError: 1
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:523: KeyError
+
+The above exception was the direct cause of the following exception:
+
+arr = 0    1
+1    2
+2    3
+dtype: int64
+expected_title = 'Time Series of Row Sums'
+
+    @pytest.mark.parametrize("arr, expected_title", [
+        (pd.Series([1, 2, 3]), "Time Series of Row Sums"),
+        (pd.Series([]), "Time Series of Row Sums"),
+        (pd.DataFrame([[1, 2], [3, 4]]), "Time Series of Row Sums"),
+    ])
+    def test_task_func(arr, expected_title):
+>       ax = task_func(arr)
+             ^^^^^^^^^^^^^^
+
+test_1063.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1063.py:9: in task_func
+    row_sums = arr.sum(axis=1)
+               ^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/util/_decorators.py:336: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/series.py:7969: in sum
+    return NDFrame.sum(
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:11907: in sum
+    return self._min_count_stat_function(
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:11889: in _min_count_stat_function
+    return self._reduce(
+../../../.venv/lib/python3.12/site-packages/pandas/core/series.py:7476: in _reduce
+    self._get_axis_number(axis)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cls = <class 'pandas.Series'>, axis = 1
+
+    @final
+    @classmethod
+    def _get_axis_number(cls, axis: Axis) -> AxisInt:
+        try:
+            return cls._AXIS_TO_AXIS_NUMBER[axis]
+        except KeyError as err:
+>           raise ValueError(
+                f"No axis named {axis} for object type {cls.__name__}"
+            ) from err
+E           ValueError: No axis named 1 for object type Series
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:525: ValueError
+=========================== short test summary info ============================
+FAILED test_1063.py::test_task_func[arr0-Time Series of Row Sums] - ValueErro...
+1 failed, 2 passed in 2.50s

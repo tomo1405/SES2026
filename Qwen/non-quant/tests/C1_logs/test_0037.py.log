@@ -1,0 +1,183 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_positive_values ________________________
+
+sample_df =    A  B  C
+0  1  4  7
+1  2  5  8
+2  3  6  9
+
+    def test_task_func_positive_values(sample_df):
+        with pytest.raises(ValueError):
+>           task_func(sample_df)
+
+test_0037.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0037.py:10: in task_func
+    df = df.applymap(lambda x: x if x in TARGET_VALUES else 0)
+         ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =    A  B  C
+0  1  4  7
+1  2  5  8
+2  3  6  9, name = 'applymap'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute 'applymap'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+________________________ test_task_func_constant_column ________________________
+
+    def test_task_func_constant_column():
+        data = {
+            'A': [1, 1, 1],
+            'B': [2, 2, 2],
+            'C': [3, 3, 3]
+        }
+        df = pd.DataFrame(data)
+>       transformed_df, fig = task_func(df)
+                              ^^^^^^^^^^^^^
+
+test_0037.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0037.py:10: in task_func
+    df = df.applymap(lambda x: x if x in TARGET_VALUES else 0)
+         ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =    A  B  C
+0  1  2  3
+1  1  2  3
+2  1  2  3, name = 'applymap'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute 'applymap'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+______________________ test_task_func_non_constant_column ______________________
+
+    def test_task_func_non_constant_column():
+        data = {
+            'A': [1, 2, 3],
+            'B': [4, 5, 6],
+            'C': [7, 8, 9]
+        }
+        df = pd.DataFrame(data)
+>       transformed_df, fig = task_func(df)
+                              ^^^^^^^^^^^^^
+
+test_0037.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0037.py:10: in task_func
+    df = df.applymap(lambda x: x if x in TARGET_VALUES else 0)
+         ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =    A  B  C
+0  1  4  7
+1  2  5  8
+2  3  6  9, name = 'applymap'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute 'applymap'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+______________________ test_task_func_with_target_values _______________________
+
+    def test_task_func_with_target_values():
+        data = {
+            'A': [1, 3, 4],
+            'B': [2, 5, 6],
+            'C': [7, 8, 9]
+        }
+        df = pd.DataFrame(data)
+>       transformed_df, fig = task_func(df)
+                              ^^^^^^^^^^^^^
+
+test_0037.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0037.py:10: in task_func
+    df = df.applymap(lambda x: x if x in TARGET_VALUES else 0)
+         ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self =    A  B  C
+0  1  2  7
+1  3  5  8
+2  4  6  9, name = 'applymap'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute 'applymap'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:6206: AttributeError
+=========================== short test summary info ============================
+FAILED test_0037.py::test_task_func_positive_values - AttributeError: 'DataFr...
+FAILED test_0037.py::test_task_func_constant_column - AttributeError: 'DataFr...
+FAILED test_0037.py::test_task_func_non_constant_column - AttributeError: 'Da...
+FAILED test_0037.py::test_task_func_with_target_values - AttributeError: 'Dat...
+4 failed in 3.83s

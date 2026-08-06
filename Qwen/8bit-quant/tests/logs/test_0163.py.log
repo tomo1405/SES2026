@@ -1,0 +1,64 @@
+.FFFF.F.                                                                 [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_single_word ________________________
+
+    def test_task_func_with_single_word():
+        ax = task_func("hello")
+>       assert len(ax.patches) == 1  # One bar should be plotted for one word
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 6 == 1
+E        +  where 6 = len(<Axes.ArtistList of 6 patches>)
+E        +    where <Axes.ArtistList of 6 patches> = <Axes: title={'center': 'Distribution of Word Lengths'}, xlabel='Word Length', ylabel='Frequency'>.patches
+
+test_0163.py:12: AssertionError
+______________________ test_task_func_with_multiple_words ______________________
+
+    def test_task_func_with_multiple_words():
+        ax = task_func("hello world")
+>       assert len(ax.patches) == 2  # Two bars should be plotted for two words
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 6 == 2
+E        +  where 6 = len(<Axes.ArtistList of 6 patches>)
+E        +    where <Axes.ArtistList of 6 patches> = <Axes: title={'center': 'Distribution of Word Lengths'}, xlabel='Word Length', ylabel='Frequency'>.patches
+
+test_0163.py:17: AssertionError
+_______________________ test_task_func_with_punctuation ________________________
+
+    def test_task_func_with_punctuation():
+        ax = task_func("hello, world!")
+>       assert len(ax.patches) == 2  # Two bars should be plotted for two words
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 6 == 2
+E        +  where 6 = len(<Axes.ArtistList of 6 patches>)
+E        +    where <Axes.ArtistList of 6 patches> = <Axes: title={'center': 'Distribution of Word Lengths'}, xlabel='Word Length', ylabel='Frequency'>.patches
+
+test_0163.py:25: AssertionError
+__________________________ test_task_func_with_rwidth __________________________
+
+    def test_task_func_with_rwidth():
+        ax = task_func("hello", rwidth=0.5)
+>       assert len(ax.patches) == 1  # One bar should be plotted for one word
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 6 == 1
+E        +  where 6 = len(<Axes.ArtistList of 6 patches>)
+E        +    where <Axes.ArtistList of 6 patches> = <Axes: title={'center': 'Distribution of Word Lengths'}, xlabel='Word Length', ylabel='Frequency'>.patches
+
+test_0163.py:33: AssertionError
+________________________ test_task_func_with_large_text ________________________
+
+    def test_task_func_with_large_text():
+        ax = task_func("a" * 100 + " b" * 100)
+>       assert len(ax.patches) == 2  # Two bars should be plotted for two different word lengths
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 101 == 2
+E        +  where 101 = len(<Axes.ArtistList of 101 patches>)
+E        +    where <Axes.ArtistList of 101 patches> = <Axes: title={'center': 'Distribution of Word Lengths'}, xlabel='Word Length', ylabel='Frequency'>.patches
+
+test_0163.py:42: AssertionError
+=========================== short test summary info ============================
+FAILED test_0163.py::test_task_func_with_single_word - AssertionError: assert...
+FAILED test_0163.py::test_task_func_with_multiple_words - AssertionError: ass...
+FAILED test_0163.py::test_task_func_with_punctuation - AssertionError: assert...
+FAILED test_0163.py::test_task_func_with_rwidth - AssertionError: assert 6 == 1
+FAILED test_0163.py::test_task_func_with_large_text - AssertionError: assert ...
+5 failed, 3 passed in 1.68s

@@ -1,0 +1,26 @@
+F..                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_file = <MagicMock name='open' id='130741224611888'>
+
+    @patch('src_0580.open', new_callable=mock_open, read_data="word1,word2\nword3,word4")
+    def test_task_func(mock_file):
+        # Prepare a temporary CSV file content
+        csv_content = "word1,word2\nword3,word4"
+    
+        # Create a BytesIO object to simulate file reading
+        mock_file.return_value.__iter__.return_value = iter([csv_content.splitlines()])
+    
+        # Call the function
+        ax, most_common_words = task_func("test.csv")
+    
+        # Assertions
+>       assert isinstance(ax, matplotlib.axes.AxesSubplot)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'matplotlib.axes' has no attribute 'AxesSubplot'
+
+test_0580.py:25: AttributeError
+=========================== short test summary info ============================
+FAILED test_0580.py::test_task_func - AttributeError: module 'matplotlib.axes...
+1 failed, 2 passed in 1.55s

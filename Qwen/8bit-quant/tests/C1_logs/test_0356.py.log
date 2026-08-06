@@ -1,0 +1,38 @@
+..F..                                                                    [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_wave_values __________________________
+
+sample_data = (1.0, 5.0, array([0.        , 0.01010101, 0.02020202, 0.03030303, 0.04040404,
+       0.05050505, 0.06060606, 0.0707070...1, 0.91919192, 0.92929293, 0.93939394, 0.94949495,
+       0.95959596, 0.96969697, 0.97979798, 0.98989899, 1.        ]))
+
+    def test_task_func_wave_values(sample_data):
+        amplitude, frequency, time = sample_data
+        wave, _, _ = task_func(amplitude, frequency, time)
+        expected_wave = amplitude * np.exp(1j * 2 * np.pi * frequency * time)
+        window = np.hanning(time.size)
+        expected_wave *= window
+>       np.testing.assert_allclose(wave, expected_wave)
+E       AssertionError: 
+E       Not equal to tolerance rtol=1e-07, atol=0
+E       
+E       Mismatched elements: 99 / 100 (99%)
+E       First 5 mismatches are at indices:
+E        [1]: (0.0009373741638792361+0.00030786336391264743j) (ACTUAL), (0.0009564002673655009+0.0003141121388918843j) (DESIRED)
+E        [2]: (0.0031748982515999043+0.002337628056805133j) (ACTUAL), (0.0032392749718155025+0.0023850276316750496j) (DESIRED)
+E        [3]: (0.005137201301163156+0.0072141898005536375j) (ACTUAL), (0.005241192008859973+0.007360224316010307j) (DESIRED)
+E        [4]: (0.004664149794657399+0.015000004928678748j) (ACTUAL), (0.004758341805576259+0.015302928438906366j) (DESIRED)
+E        [5]: (-0.00038826777120530505+0.02446866153735194j) (ACTUAL), (-0.00039608492011727393+0.0249612987972519j) (DESIRED)
+E       Max absolute difference among violations: 0.02418881
+E       Max relative difference among violations: 2.91655816
+E        ACTUAL: array([ 0.000000e+00+0.000000e+00j,  9.373742e-04+3.078634e-04j,
+E               3.174898e-03+2.337628e-03j,  5.137201e-03+7.214190e-03j,
+E               4.664150e-03+1.500000e-02j, -3.882678e-04+2.446866e-02j,...
+E        DESIRED: array([ 0.000000e+00+0.000000e+00j,  9.564003e-04+3.141121e-04j,
+E               3.239275e-03+2.385028e-03j,  5.241192e-03+7.360224e-03j,
+E               4.758342e-03+1.530293e-02j, -3.960849e-04+2.496130e-02j,...
+
+test_0356.py:31: AssertionError
+=========================== short test summary info ============================
+FAILED test_0356.py::test_task_func_wave_values - AssertionError: 
+1 failed, 4 passed in 3.38s

@@ -1,0 +1,142 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        L = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        flattened = np.hstack(L)
+>       mode = stats.mode(flattened)[0][0]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       IndexError: invalid index to scalar variable.
+
+test_0737.py:9: IndexError
+__________________________ test_task_func_empty_list ___________________________
+
+    def test_task_func_empty_list():
+        L = []
+>       assert task_func(L) == None
+               ^^^^^^^^^^^^
+
+test_0737.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0737.py:4: in task_func
+    flattened = np.hstack(L)
+              ^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tup = [], dtype = None, casting = 'same_kind'
+
+    @array_function_dispatch(_vhstack_dispatcher)
+    def hstack(tup, *, dtype=None, casting="same_kind"):
+        """
+        Stack arrays in sequence horizontally (column wise).
+    
+        This is equivalent to concatenation along the second axis, except for 1-D
+        arrays where it concatenates along the first axis. Rebuilds arrays divided
+        by `hsplit`.
+    
+        This function makes most sense for arrays with up to 3 dimensions. For
+        instance, for pixel-data with a height (first axis), width (second axis),
+        and r/g/b channels (third axis). The functions `concatenate`, `stack` and
+        `block` provide more general stacking and concatenation operations.
+    
+        Parameters
+        ----------
+        tup : sequence of ndarrays
+            The arrays must have the same shape along all but the second axis,
+            except 1-D arrays which can be any length. In the case of a single
+            array_like input, it will be treated as a sequence of arrays; i.e.,
+            each element along the zeroth axis is treated as a separate array.
+    
+        dtype : str or dtype
+            If provided, the destination array will have this dtype. Cannot be
+            provided together with `out`.
+    
+            .. versionadded:: 1.24
+    
+        casting : {'no', 'equiv', 'safe', 'same_kind', 'unsafe'}, optional
+            Controls what kind of data casting may occur. Defaults to 'same_kind'.
+    
+            .. versionadded:: 1.24
+    
+        Returns
+        -------
+        stacked : ndarray
+            The array formed by stacking the given arrays.
+    
+        See Also
+        --------
+        concatenate : Join a sequence of arrays along an existing axis.
+        stack : Join a sequence of arrays along a new axis.
+        block : Assemble an nd-array from nested lists of blocks.
+        vstack : Stack arrays in sequence vertically (row wise).
+        dstack : Stack arrays in sequence depth wise (along third axis).
+        column_stack : Stack 1-D arrays as columns into a 2-D array.
+        hsplit : Split an array into multiple sub-arrays
+                 horizontally (column-wise).
+        unstack : Split an array into a tuple of sub-arrays along an axis.
+    
+        Examples
+        --------
+        >>> import numpy as np
+        >>> a = np.array((1,2,3))
+        >>> b = np.array((4,5,6))
+        >>> np.hstack((a,b))
+        array([1, 2, 3, 4, 5, 6])
+        >>> a = np.array([[1],[2],[3]])
+        >>> b = np.array([[4],[5],[6]])
+        >>> np.hstack((a,b))
+        array([[1, 4],
+               [2, 5],
+               [3, 6]])
+    
+        """
+        arrs = atleast_1d(*tup)
+        if not isinstance(arrs, tuple):
+            arrs = (arrs,)
+        # As a special case, dimension 0 of 1-dimensional arrays is "horizontal"
+        if arrs and arrs[0].ndim == 1:
+            return _nx.concatenate(arrs, 0, dtype=dtype, casting=casting)
+        else:
+>           return _nx.concatenate(arrs, 1, dtype=dtype, casting=casting)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           ValueError: need at least one array to concatenate
+
+../../../.venv/lib/python3.12/site-packages/numpy/_core/shape_base.py:365: ValueError
+______________________ test_task_func_single_element_list ______________________
+
+    def test_task_func_single_element_list():
+        L = [[1]]
+        flattened = np.hstack(L)
+>       mode = stats.mode(flattened)[0][0]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       IndexError: invalid index to scalar variable.
+
+test_0737.py:19: IndexError
+______________________ test_task_func_duplicate_elements _______________________
+
+    def test_task_func_duplicate_elements():
+        L = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        flattened = np.hstack(L)
+>       mode = stats.mode(flattened)[0][0]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       IndexError: invalid index to scalar variable.
+
+test_0737.py:25: IndexError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        L = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        flattened = np.hstack(L)
+>       mode = stats.mode(flattened)[0][0]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       IndexError: invalid index to scalar variable.
+
+test_0737.py:31: IndexError
+=========================== short test summary info ============================
+FAILED test_0737.py::test_task_func - IndexError: invalid index to scalar var...
+FAILED test_0737.py::test_task_func_empty_list - ValueError: need at least on...
+FAILED test_0737.py::test_task_func_single_element_list - IndexError: invalid...
+FAILED test_0737.py::test_task_func_duplicate_elements - IndexError: invalid ...
+FAILED test_0737.py::test_task_func_invalid_input - IndexError: invalid index...
+5 failed in 2.25s

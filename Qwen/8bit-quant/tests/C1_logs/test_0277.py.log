@@ -1,0 +1,44 @@
+.F.                                                                      [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_zero_variance _______________________
+
+    def test_task_func_with_zero_variance():
+        # Test with a matrix where all rows have the same max value
+        matrix = [[1, 1, 1], [1, 1, 1]]
+        skewness, kurtosis, ax = task_func(matrix)
+    
+        # Check if the skewness and kurtosis are calculated correctly
+        expected_skewness = stats.skew([1, 1])
+        expected_kurtosis = stats.kurtosis([1, 1])
+    
+>       assert np.isclose(skewness, expected_skewness)
+E       assert np.False_
+E        +  where np.False_ = <function isclose at 0x7d84b3f20d30>(np.float64(nan), np.float64(nan))
+E        +    where <function isclose at 0x7d84b3f20d30> = np.isclose
+
+test_0277.py:36: AssertionError
+=============================== warnings summary ===============================
+Qwen/8bit-quant/tests/test_0277.py::test_task_func_with_zero_variance
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/scipy/stats/_distn_infrastructure.py:2079: RuntimeWarning: divide by zero encountered in divide
+    x = np.asarray((x - loc)/scale, dtype=dtyp)
+
+Qwen/8bit-quant/tests/test_0277.py::test_task_func_with_zero_variance
+  /work/tomohiro-w/utg/src/src_0277.py:15: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+    skewness = stats.skew(max_values)
+
+Qwen/8bit-quant/tests/test_0277.py::test_task_func_with_zero_variance
+  /work/tomohiro-w/utg/src/src_0277.py:16: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+    kurtosis = stats.kurtosis(max_values)
+
+Qwen/8bit-quant/tests/test_0277.py::test_task_func_with_zero_variance
+  /work/tomohiro-w/utg/Qwen/8bit-quant/tests/test_0277.py:33: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+    expected_skewness = stats.skew([1, 1])
+
+Qwen/8bit-quant/tests/test_0277.py::test_task_func_with_zero_variance
+  /work/tomohiro-w/utg/Qwen/8bit-quant/tests/test_0277.py:34: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+    expected_kurtosis = stats.kurtosis([1, 1])
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0277.py::test_task_func_with_zero_variance - assert np.False_
+1 failed, 2 passed, 5 warnings in 3.09s

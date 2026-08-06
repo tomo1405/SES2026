@@ -1,0 +1,48 @@
+....F                                                                    [100%]
+=================================== FAILURES ===================================
+__________________ test_task_func_custom_labels_and_data_size __________________
+
+    def test_task_func_custom_labels_and_data_size():
+        custom_labels = ['X', 'Y', 'Z']
+>       fig, data, plot_filename = task_func(labels=custom_labels, data_size=7)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0169.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0169.py:11: in task_func
+    data = pd.DataFrame(np.random.rand(data_size, num_groups), columns=labels)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:814: in __init__
+    mgr = ndarray_to_mgr(
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:299: in ndarray_to_mgr
+    _check_values_indices_shape_match(values, index, columns)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+values = array([[0.93026452, 0.03344117, 0.27337279, 0.01516753, 0.377112  ],
+       [0.33438162, 0.94070369, 0.27850253, 0.523... 0.41486425, 0.24037173, 0.01343515, 0.44129634],
+       [0.98042014, 0.33151331, 0.88957173, 0.41865649, 0.01603031]])
+index = RangeIndex(start=0, stop=7, step=1)
+columns = Index(['X', 'Y', 'Z'], dtype='str')
+
+    def _check_values_indices_shape_match(
+        values: np.ndarray, index: Index, columns: Index
+    ) -> None:
+        """
+        Check that the shape implied by our axes matches the actual shape of the
+        data.
+        """
+        if values.shape[1] != len(columns) or values.shape[0] != len(index):
+            # Could let this raise in Block constructor, but we get a more
+            #  helpful exception message this way.
+            if values.shape[0] == 0 < len(index):
+                raise ValueError("Empty data passed with indices specified.")
+    
+            passed = values.shape
+            implied = (len(index), len(columns))
+>           raise ValueError(f"Shape of passed values is {passed}, indices imply {implied}")
+E           ValueError: Shape of passed values is (7, 5), indices imply (7, 3)
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:372: ValueError
+=========================== short test summary info ============================
+FAILED test_0169.py::test_task_func_custom_labels_and_data_size - ValueError:...
+1 failed, 4 passed in 2.40s

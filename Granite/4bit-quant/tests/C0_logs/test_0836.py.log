@@ -1,0 +1,21 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        n_rows = 10
+        remove_cols = [0, 2]
+        columns = ['A', 'B', 'C', 'D', 'E']
+        random_seed = 42
+        df = task_func(n_rows, remove_cols, columns, random_seed)
+        assert df.shape == (n_rows, len(columns) - len(remove_cols))
+>       assert df.columns.tolist() == list(columns)[len(remove_cols):]
+E       AssertionError: assert ['B', 'D', 'E'] == ['C', 'D', 'E']
+E         
+E         At index 0 diff: 'B' != 'C'
+E         Use -v to get more diff
+
+test_0836.py:11: AssertionError
+=========================== short test summary info ============================
+FAILED test_0836.py::test_task_func - AssertionError: assert ['B', 'D', 'E'] ...
+1 failed, 1 passed in 1.32s

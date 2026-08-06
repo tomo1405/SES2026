@@ -1,0 +1,26 @@
+..F.                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_content_mismatch ________________________
+
+    def test_task_func_content_mismatch():
+        # Create a temporary file
+        with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+            filename = temp_file.name
+            data = {"key": "value"}
+            wrong_data = {"wrong_key": "wrong_value"}
+    
+            # Write incorrect data to the file
+            with open(filename, 'w') as f:
+                json.dump(wrong_data, f)
+    
+            # Call the function
+            success, result = task_func(filename, data)
+    
+            # Assert the results
+>           assert success is False
+E           assert True is False
+
+test_0831.py:51: AssertionError
+=========================== short test summary info ============================
+FAILED test_0831.py::test_task_func_content_mismatch - assert True is False
+1 failed, 3 passed in 0.50s

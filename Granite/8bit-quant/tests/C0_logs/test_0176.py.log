@@ -1,0 +1,98 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_with_empty_df _________________________
+
+sample_df =    Likes  Views                         Title
+0    100   1000      How to Train Your Dragon
+1    200   2000        How...       How to Cook a Turkey
+3    400   4000         How to Draw a Unicorn
+4    500   5000  How to Write a Python Script
+
+    def test_task_func_with_empty_df(sample_df):
+        empty_df = pd.DataFrame()
+        ax = task_func(empty_df)
+>       assert ax.get_title() == 'Empty DataFrame'
+E       AssertionError: assert '' == 'Empty DataFrame'
+E         
+E         - Empty DataFrame
+
+test_0176.py:16: AssertionError
+_____________________ test_task_func_with_missing_columns ______________________
+
+sample_df =    Likes  Views                         Title
+0    100   1000      How to Train Your Dragon
+1    200   2000        How...       How to Cook a Turkey
+3    400   4000         How to Draw a Unicorn
+4    500   5000  How to Write a Python Script
+
+    def test_task_func_with_missing_columns(sample_df):
+        missing_columns_df = sample_df.drop(['Likes', 'Views', 'Title'], axis=1)
+        ax = task_func(missing_columns_df)
+>       assert ax.get_title() == 'Missing Required Columns'
+E       AssertionError: assert '' == 'Missing Required Columns'
+E         
+E         - Missing Required Columns
+
+test_0176.py:21: AssertionError
+__________________ test_task_func_with_no_interesting_videos ___________________
+
+sample_df =    Likes  Views                         Title
+0    100   1000      How to Train Your Dragon
+1    200   2000        How...       How to Cook a Turkey
+3    400   4000         How to Draw a Unicorn
+4    500   5000  How to Write a Python Script
+
+    def test_task_func_with_no_interesting_videos(sample_df):
+        no_interesting_videos_df = sample_df.copy()
+>       no_interesting_videos_df['Title'] = ['Foo', 'Bar', 'Baz']
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0176.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:4672: in __setitem__
+    self._set_item(key, value)
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:4872: in _set_item
+    value, refs = self._sanitize_column(value)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:5754: in _sanitize_column
+    com.require_length_match(value, self.index)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = ['Foo', 'Bar', 'Baz'], index = RangeIndex(start=0, stop=5, step=1)
+
+    def require_length_match(data, index: Index) -> None:
+        """
+        Check the length of data matches the length of the index.
+        """
+        if len(data) != len(index):
+>           raise ValueError(
+                "Length of values "
+                f"({len(data)}) "
+                "does not match length of index "
+                f"({len(index)})"
+            )
+E           ValueError: Length of values (3) does not match length of index (5)
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/common.py:601: ValueError
+____________________ test_task_func_with_interesting_videos ____________________
+
+sample_df =    Likes  Views                         Title
+0    100   1000      How to Train Your Dragon
+1    200   2000        How...       How to Cook a Turkey
+3    400   4000         How to Draw a Unicorn
+4    500   5000  How to Write a Python Script
+
+    def test_task_func_with_interesting_videos(sample_df):
+        ax = task_func(sample_df)
+>       assert ax.get_title() == 'Like Ratio'
+E       AssertionError: assert '' == 'Like Ratio'
+E         
+E         - Like Ratio
+
+test_0176.py:31: AssertionError
+=========================== short test summary info ============================
+FAILED test_0176.py::test_task_func_with_empty_df - AssertionError: assert ''...
+FAILED test_0176.py::test_task_func_with_missing_columns - AssertionError: as...
+FAILED test_0176.py::test_task_func_with_no_interesting_videos - ValueError: ...
+FAILED test_0176.py::test_task_func_with_interesting_videos - AssertionError:...
+4 failed in 2.22s

@@ -1,0 +1,64 @@
+FF.FF                                                                    [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        list_of_pairs = [(1, 2), (3, 4), (5, 6)]
+        expected_result = np.array([120])
+>       assert np.array_equal(task_func(list_of_pairs), expected_result)
+E       assert False
+E        +  where False = <function array_equal at 0x74d0fcbe48b0>(array([48]), array([120]))
+E        +    where <function array_equal at 0x74d0fcbe48b0> = np.array_equal
+E        +    and   array([48]) = task_func([(1, 2), (3, 4), (5, 6)])
+
+test_0034.py:8: AssertionError
+__________________________ test_task_func_empty_list ___________________________
+
+    def test_task_func_empty_list():
+        list_of_pairs = []
+        expected_result = np.array([])
+>       assert np.array_equal(task_func(list_of_pairs), expected_result)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0034.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+list_of_pairs = []
+
+    def task_func(list_of_pairs):
+        second_values = [pair[1] for pair in list_of_pairs]
+>       product = reduce(np.multiply, second_values)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: reduce() of empty iterable with no initial value
+
+../../../src/src_0034.py:5: TypeError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        list_of_pairs = [(1, 2), (3, 4), (5, 6), (7, 8)]
+        expected_result = np.array([120])
+>       assert np.array_equal(task_func(list_of_pairs), expected_result)
+E       assert False
+E        +  where False = <function array_equal at 0x74d0fcbe48b0>(array([384]), array([120]))
+E        +    where <function array_equal at 0x74d0fcbe48b0> = np.array_equal
+E        +    and   array([384]) = task_func([(1, 2), (3, 4), (5, 6), (7, 8)])
+
+test_0034.py:26: AssertionError
+________________________ test_task_func_invalid_input_2 ________________________
+
+    def test_task_func_invalid_input_2():
+        list_of_pairs = [(1, 2), (3, 4), (5, 6), (7, 8), (9, 10)]
+        expected_result = np.array([120])
+>       assert np.array_equal(task_func(list_of_pairs), expected_result)
+E       assert False
+E        +  where False = <function array_equal at 0x74d0fcbe48b0>(array([3840]), array([120]))
+E        +    where <function array_equal at 0x74d0fcbe48b0> = np.array_equal
+E        +    and   array([3840]) = task_func([(1, 2), (3, 4), (5, 6), (7, 8), (9, 10)])
+
+test_0034.py:32: AssertionError
+=========================== short test summary info ============================
+FAILED test_0034.py::test_task_func - assert False
+FAILED test_0034.py::test_task_func_empty_list - TypeError: reduce() of empty...
+FAILED test_0034.py::test_task_func_invalid_input - assert False
+FAILED test_0034.py::test_task_func_invalid_input_2 - assert False
+4 failed, 1 passed in 0.52s

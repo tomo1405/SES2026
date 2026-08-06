@@ -1,0 +1,39 @@
+....FF.F                                                                 [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_random_seed __________________________
+
+    def test_task_func_random_seed():
+        result1 = task_func(5, [0, 1], random_seed=42)
+        result2 = task_func(5, [0, 1], random_seed=42)
+>       pd.testing.assert_frame_equal(result1, result2, check_dtype=False, check_exact=False, err_msg="Results with the same random seed should be identical.")
+E       TypeError: assert_frame_equal() got an unexpected keyword argument 'err_msg'
+
+test_0838.py:33: TypeError
+___________________________ test_task_func_no_scale ____________________________
+
+    def test_task_func_no_scale():
+        result = task_func(5, [], random_seed=42)
+>       assert result.equals(pd.DataFrame(np.random.randint(0, 100, size=(5, 5)), columns=['A', 'B', 'C', 'D', 'E'])), "No columns should be scaled if scale_cols is empty."
+E       AssertionError: No columns should be scaled if scale_cols is empty.
+E       assert False
+E        +  where False = equals(    A   B   C   D   E\n0  75  57  21  88  48\n1  90  58  41  91  59\n2  79  14  61  61  46\n3  61  50  54  63   2\n4  50   6  20  72  38)
+E        +    where equals =     A   B   C   D   E\n0  51  92  14  71  60\n1  20  82  86  74  74\n2  87  99  23   2  21\n3  52   1  87  29  37\n4   1  63  59  20  32.equals
+E        +    and       A   B   C   D   E\n0  75  57  21  88  48\n1  90  58  41  91  59\n2  79  14  61  61  46\n3  61  50  54  63   2\n4  50   6  20  72  38 = <class 'pandas.DataFrame'>(array([[75, 57, 21, 88, 48],\n       [90, 58, 41, 91, 59],\n       [79, 14, 61, 61, 46],\n       [61, 50, 54, 63,  2],\n       [50,  6, 20, 72, 38]]), columns=['A', 'B', 'C', 'D', 'E'])
+E        +      where <class 'pandas.DataFrame'> = pd.DataFrame
+E        +      and   array([[75, 57, 21, 88, 48],\n       [90, 58, 41, 91, 59],\n       [79, 14, 61, 61, 46],\n       [61, 50, 54, 63,  2],\n       [50,  6, 20, 72, 38]]) = randint(0, 100, size=(5, 5))
+E        +        where randint = <module 'numpy.random' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/random/__init__.py'>.randint
+E        +          where <module 'numpy.random' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/random/__init__.py'> = np.random
+
+test_0838.py:37: AssertionError
+____________________ test_task_func_invalid_columns_length _____________________
+
+    def test_task_func_invalid_columns_length():
+>       with pytest.raises(IndexError):
+E       Failed: DID NOT RAISE IndexError
+
+test_0838.py:44: Failed
+=========================== short test summary info ============================
+FAILED test_0838.py::test_task_func_random_seed - TypeError: assert_frame_equ...
+FAILED test_0838.py::test_task_func_no_scale - AssertionError: No columns sho...
+FAILED test_0838.py::test_task_func_invalid_columns_length - Failed: DID NOT ...
+3 failed, 5 passed in 2.93s

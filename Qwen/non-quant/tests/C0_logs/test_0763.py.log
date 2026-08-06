@@ -1,0 +1,30 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Change the current working directory to the temporary directory
+            original_cwd = os.getcwd()
+            os.chdir(temp_dir)
+    
+            # Call the function
+            zipped_file = task_func()
+    
+            # Check if the zip file exists
+            assert os.path.exists(zipped_file)
+    
+            # Unzip the file to check contents
+            with zipfile.ZipFile(zipped_file, 'r') as zip_ref:
+                zip_ref.extractall(temp_dir)
+    
+            # Check if all files are created and have the correct content
+            for file_name in ['file1.txt', 'file2.txt', 'file3.txt']:
+>               file_path = os.path.join(temp_dir, directory_name, file_name)
+                                                   ^^^^^^^^^^^^^^
+E               NameError: name 'directory_name' is not defined
+
+/work/tomohiro-w/utg/Qwen/non-quant/tests/test_0763.py:27: NameError
+=========================== short test summary info ============================
+FAILED test_0763.py::test_task_func - NameError: name 'directory_name' is not...
+1 failed in 0.47s

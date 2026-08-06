@@ -1,0 +1,40 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_file ___________________________
+
+    def test_task_func_valid_file():
+        client_socket = None
+        cert_file = "cert.pem"
+        key_file = "key.pem"
+        buffer_size = 1024
+        request = "test_file.txt"
+        response = "098f6bcd4621d373cade4e832627b4f6"
+    
+        with pytest.raises(Exception) as e:
+            task_func(client_socket, cert_file, key_file, buffer_size)
+    
+>       assert e.value.args[0] == "Error: File not found"
+E       AssertionError: assert 2 == 'Error: File not found'
+
+test_1040.py:15: AssertionError
+_________________________ test_task_func_invalid_file __________________________
+
+    def test_task_func_invalid_file():
+        client_socket = None
+        cert_file = "cert.pem"
+        key_file = "key.pem"
+        buffer_size = 1024
+        request = "invalid_file.txt"
+        response = "Error: File not found"
+    
+        with pytest.raises(Exception) as e:
+            task_func(client_socket, cert_file, key_file, buffer_size)
+    
+>       assert e.value.args[0] == response
+E       AssertionError: assert 2 == 'Error: File not found'
+
+test_1040.py:28: AssertionError
+=========================== short test summary info ============================
+FAILED test_1040.py::test_task_func_valid_file - AssertionError: assert 2 == ...
+FAILED test_1040.py::test_task_func_invalid_file - AssertionError: assert 2 =...
+2 failed in 0.50s

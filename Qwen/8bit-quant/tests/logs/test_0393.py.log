@@ -1,0 +1,118 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_group __________________________
+
+mock_plt = None
+sample_df =   category  values
+0        A      10
+1        B      20
+2        A      30
+3        C      40
+
+    def test_task_func_valid_group(mock_plt, sample_df):
+>       ax = task_func(sample_df, 'category', 'values', 'A')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0393.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df =   category  values
+0        A      10
+1        B      20
+2        A      30
+3        C      40
+group_col = 'category', value_col = 'values', group_name = 'A'
+
+    def task_func(df, group_col, value_col, group_name):
+        # Filter the DataFrame to select the specific group
+        group_data = df[df[group_col] == group_name]
+        if group_data.empty:
+            raise ValueError
+    
+        # Create a figure and axes
+        fig, ax = plt.subplots()
+    
+        # Get the number of bars
+        num_bars = len(group_data)
+    
+        # Set the width of the bars
+        bar_width = 0.35
+    
+        # Generate positions for the bars
+        index = np.arange(num_bars)
+    
+        # Create the bar chart
+        bars = ax.bar(index, group_data[value_col], bar_width, color=COLORS[:num_bars])
+    
+        # Set labels and title
+        ax.set_xlabel(group_col)
+        ax.set_ylabel(value_col)
+        ax.set_title(f'Bar chart of {value_col} for {group_name}')
+    
+        # Set x-axis ticks and labels
+        ax.set_xticks(index)
+>       ax.set_xticklabels(group_data[group_col])
+        ^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'MockAxes' object has no attribute 'set_xticklabels'
+
+../../../src/src_0393.py:33: AttributeError
+_________________________ test_task_func_single_group __________________________
+
+mock_plt = None
+sample_df =   category  values
+0        A      10
+1        B      20
+2        A      30
+3        C      40
+
+    def test_task_func_single_group(mock_plt, sample_df):
+>       ax = task_func(sample_df, 'category', 'values', 'B')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0393.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df =   category  values
+0        A      10
+1        B      20
+2        A      30
+3        C      40
+group_col = 'category', value_col = 'values', group_name = 'B'
+
+    def task_func(df, group_col, value_col, group_name):
+        # Filter the DataFrame to select the specific group
+        group_data = df[df[group_col] == group_name]
+        if group_data.empty:
+            raise ValueError
+    
+        # Create a figure and axes
+        fig, ax = plt.subplots()
+    
+        # Get the number of bars
+        num_bars = len(group_data)
+    
+        # Set the width of the bars
+        bar_width = 0.35
+    
+        # Generate positions for the bars
+        index = np.arange(num_bars)
+    
+        # Create the bar chart
+        bars = ax.bar(index, group_data[value_col], bar_width, color=COLORS[:num_bars])
+    
+        # Set labels and title
+        ax.set_xlabel(group_col)
+        ax.set_ylabel(value_col)
+        ax.set_title(f'Bar chart of {value_col} for {group_name}')
+    
+        # Set x-axis ticks and labels
+        ax.set_xticks(index)
+>       ax.set_xticklabels(group_data[group_col])
+        ^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'MockAxes' object has no attribute 'set_xticklabels'
+
+../../../src/src_0393.py:33: AttributeError
+=========================== short test summary info ============================
+FAILED test_0393.py::test_task_func_valid_group - AttributeError: 'MockAxes' ...
+FAILED test_0393.py::test_task_func_single_group - AttributeError: 'MockAxes'...
+2 failed, 1 passed in 2.01s

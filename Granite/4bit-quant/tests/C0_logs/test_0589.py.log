@@ -1,0 +1,27 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        df = task_func()
+        assert isinstance(df, pd.DataFrame)
+        assert 'X' in df.columns and 'Y' in df.columns
+>       assert df.shape == (SIZE, 2)
+                            ^^^^
+E       NameError: name 'SIZE' is not defined
+
+test_0589.py:10: NameError
+__________________________ test_task_func_scatterplot __________________________
+
+    def test_task_func_scatterplot():
+        df = task_func()
+        assert len(plt.get_fignums()) == 1
+>       assert len(plt.get_current_fig_manager().toolbar.tools) == 6
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'NoneType' object has no attribute 'tools'
+
+test_0589.py:15: AttributeError
+=========================== short test summary info ============================
+FAILED test_0589.py::test_task_func - NameError: name 'SIZE' is not defined
+FAILED test_0589.py::test_task_func_scatterplot - AttributeError: 'NoneType' ...
+2 failed in 3.98s

@@ -1,0 +1,72 @@
+..FF..FF                                                                 [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_default_seed __________________________
+
+    def test_task_func_default_seed():
+        result = task_func(3, 5)
+        expected = Counter({'a': 4, 'b': 3, 'c': 3, 'd': 2, 'e': 3})
+>       assert result == expected
+E       AssertionError: assert Counter({'c':...': 3, 'e': 2}) == Counter({'a':...': 3, 'd': 2})
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'d': 4} != {'d': 2}
+E         {'e': 2} != {'e': 3}
+E         {'c': 6} != {'c': 3}
+E         Right contains 1 more item:
+E         {'a': 4}
+E         Use -v to get more diff
+
+test_0897.py:16: AssertionError
+__________________________ test_task_func_custom_seed __________________________
+
+    def test_task_func_custom_seed():
+        result = task_func(3, 5, seed=123)
+        expected = Counter({'a': 4, 'b': 3, 'c': 3, 'd': 2, 'e': 3})
+>       assert result == expected
+E       AssertionError: assert Counter({'a':...': 3, 'e': 2}) == Counter({'a':...': 3, 'd': 2})
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'b': 4} != {'b': 3}
+E         {'e': 2} != {'e': 3}
+E         {'a': 6} != {'a': 4}
+E         Right contains 1 more item:
+E         {'d': 2}
+E         Use -v to get more diff
+
+test_0897.py:21: AssertionError
+_____________________________ test_task_func_all_a _____________________________
+
+    def test_task_func_all_a():
+        result = task_func(3, 5, seed=456)
+>       assert result == Counter({'a': 15})
+E       AssertionError: assert Counter({'d':...': 2, 'a': 1}) == Counter({'a': 15})
+E         
+E         Differing items:
+E         {'a': 1} != {'a': 15}
+E         Left contains 4 more items:
+E         {'b': 2, 'c': 3, 'd': 5, 'e': 4}
+E         Use -v to get more diff
+
+test_0897.py:33: AssertionError
+_____________________________ test_task_func_all_e _____________________________
+
+    def test_task_func_all_e():
+        result = task_func(3, 5, seed=789)
+>       assert result == Counter({'e': 15})
+E       AssertionError: assert Counter({'b':...': 3, 'a': 1}) == Counter({'e': 15})
+E         
+E         Left contains 4 more items:
+E         {'a': 1, 'b': 7, 'c': 4, 'd': 3}
+E         Right contains 1 more item:
+E         {'e': 15}
+E         Use -v to get more diff
+
+test_0897.py:37: AssertionError
+=========================== short test summary info ============================
+FAILED test_0897.py::test_task_func_default_seed - AssertionError: assert Cou...
+FAILED test_0897.py::test_task_func_custom_seed - AssertionError: assert Coun...
+FAILED test_0897.py::test_task_func_all_a - AssertionError: assert Counter({'...
+FAILED test_0897.py::test_task_func_all_e - AssertionError: assert Counter({'...
+4 failed, 4 passed in 0.57s

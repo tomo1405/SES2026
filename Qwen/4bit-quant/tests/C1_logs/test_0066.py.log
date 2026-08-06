@@ -1,0 +1,24 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sample_data = [[1, 2, 3], [1, 2, 4], [2, 3, 5], [1, 2, 3], [2, 3, 6]]
+
+    def test_task_func(sample_data):
+        analyzed_df, ax = task_func(sample_data)
+    
+        # Check if the DataFrame is correctly grouped and counted
+        expected_df = pd.DataFrame({
+            'col1': [1, 1, 2],
+            'col2': [2, 2, 3],
+            'col3': [2, 1, 2]
+        })
+>       assert analyzed_df.equals(expected_df)
+E       assert False
+E        +  where False = equals(   col1  col2  col3\n0     1     2     2\n1     1     2     1\n2     2     3     2)
+E        +    where equals =    col1  col2  col3\n0     1     2     2\n1     2     3     2.equals
+
+test_0066.py:25: AssertionError
+=========================== short test summary info ============================
+FAILED test_0066.py::test_task_func - assert False
+1 failed in 2.10s

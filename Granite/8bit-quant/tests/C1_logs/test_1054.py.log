@@ -1,0 +1,116 @@
+.FF.                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_without_save_path _______________________
+
+    def test_task_func_without_save_path():
+        file_path = "test.csv"
+        with patch("matplotlib.pyplot.show") as mock_show:
+            task_func(file_path)
+>           mock_show.assert_called_once()
+
+test_1054.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='show' id='126369217217216'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'show' to have been called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:923: AssertionError
+______________________ test_task_func_with_file_not_found ______________________
+
+file_path = 'test.csv', save_path = 'test.png'
+
+    def task_func(file_path, save_path=None):
+        try:
+            # Reading the CSV file into a DataFrame
+>           df = pd.read_csv(file_path, usecols=[0], names=["Text"], header=None)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../../../src/src_1054.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/unittest/mock.py:1134: in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/unittest/mock.py:1138: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='read_csv' id='126369215060768'>, args = ('test.csv',)
+kwargs = {'usecols': [0], 'names': ['Text'], 'header': None}
+
+    def _execute_mock_call(self, /, *args, **kwargs):
+        # separate from _increment_mock_call so that awaited functions are
+        # executed separately from their call, also AsyncMock overrides this method
+    
+        effect = self.side_effect
+        if effect is not None:
+            if _is_exception(effect):
+>               raise effect
+E               FileNotFoundError: File not found
+
+/usr/lib/python3.12/unittest/mock.py:1193: FileNotFoundError
+
+The above exception was the direct cause of the following exception:
+
+    def test_task_func_with_file_not_found():
+        file_path = "test.csv"
+        save_path = "test.png"
+        with patch("pandas.read_csv", side_effect=FileNotFoundError("File not found")):
+            with patch("matplotlib.pyplot.savefig") as mock_savefig:
+                with patch("sys.exit") as mock_exit:
+>                   task_func(file_path, save_path)
+
+test_1054.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = 'test.csv', save_path = 'test.png'
+
+    def task_func(file_path, save_path=None):
+        try:
+            # Reading the CSV file into a DataFrame
+            df = pd.read_csv(file_path, usecols=[0], names=["Text"], header=None)
+    
+            # Vectorizing the text
+            vectorizer = CountVectorizer(stop_words=STOP_WORDS)
+            word_count = vectorizer.fit_transform(df["Text"].dropna())
+    
+            # Calculating word frequency
+            sum_words = word_count.sum(axis=0)
+            words_freq = [
+                (word, sum_words[0, idx]) for word, idx in vectorizer.vocabulary_.items()
+            ]
+            words_freq = sorted(words_freq, key=lambda x: x[1], reverse=True)
+    
+            # Preparing data for the top 10 words
+            top_words = words_freq[:10]
+            df_top = pd.DataFrame(top_words, columns=["Word", "Count"])
+    
+            # Plotting
+            ax = df_top.plot.bar(x="Word", y="Count", rot=0, legend=False)
+    
+            # Saving or displaying the plot
+            if save_path:
+                plt.savefig(save_path)
+                plt.close()
+    
+            return None if save_path else ax
+    
+        except FileNotFoundError as exc:
+>           raise FileNotFoundError(f"File not found: {file_path}") from exc
+E           FileNotFoundError: File not found: test.csv
+
+../../../src/src_1054.py:37: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_1054.py::test_task_func_without_save_path - AssertionError: Expec...
+FAILED test_1054.py::test_task_func_with_file_not_found - FileNotFoundError: ...
+2 failed, 2 passed in 3.92s

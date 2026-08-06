@@ -1,0 +1,25 @@
+F..                                                                      [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_success ____________________________
+
+    def test_task_func_success():
+        # Create a temporary directory and a sample script file
+        with tempfile.TemporaryDirectory() as temp_dir:
+            script_path = os.path.join(temp_dir, "sample_script.py")
+            with open(script_path, "w") as f:
+                f.write("print('Hello, World!')")
+    
+            # Call the function with the path to the script and the temporary directory
+            result = task_func(script_path, temp_dir)
+    
+            # Assert that the function returns the expected success message
+>           assert result == "Script executed successfully!"
+E           AssertionError: assert 'Script execution failed!' == 'Script execu...successfully!'
+E             
+E             - Script executed successfully!
+E             + Script execution failed!
+
+test_1104.py:17: AssertionError
+=========================== short test summary info ============================
+FAILED test_1104.py::test_task_func_success - AssertionError: assert 'Script ...
+1 failed, 2 passed in 0.50s

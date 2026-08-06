@@ -1,0 +1,38 @@
+FF..                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        example_str = "This is a test [string] with some repeated words and more words"
+        ax, top_n_words = task_func(example_str, top_n=5)
+    
+        # Check if the returned object is a matplotlib AxesSubplot
+        assert isinstance(ax, plt.Axes), "The first return value should be a matplotlib AxesSubplot"
+    
+        # Check if the top_n_words dictionary has the correct number of items
+>       assert len(top_n_words) == 5, "The top_n_words dictionary should have 5 items"
+E       AssertionError: The top_n_words dictionary should have 5 items
+E       assert 4 == 5
+E        +  where 4 = len({'This': 1, 'is': 1, 'a': 1, 'test': 1})
+
+test_0320.py:14: AssertionError
+_______________ test_task_func_with_less_than_top_n_unique_words _______________
+
+    def test_task_func_with_less_than_top_n_unique_words():
+        example_str = "This is a test string"
+        ax, top_n_words = task_func(example_str, top_n=10)
+    
+        # Check if the returned object is a matplotlib AxesSubplot
+        assert isinstance(ax, plt.Axes), "The first return value should be a matplotlib AxesSubplot"
+    
+        # Check if the top_n_words dictionary has the correct number of items
+>       assert len(top_n_words) == 4, "The top_n_words dictionary should have 4 items"
+E       AssertionError: The top_n_words dictionary should have 4 items
+E       assert 0 == 4
+E        +  where 0 = len({})
+
+test_0320.py:28: AssertionError
+=========================== short test summary info ============================
+FAILED test_0320.py::test_task_func - AssertionError: The top_n_words diction...
+FAILED test_0320.py::test_task_func_with_less_than_top_n_unique_words - Asser...
+2 failed, 2 passed in 4.82s

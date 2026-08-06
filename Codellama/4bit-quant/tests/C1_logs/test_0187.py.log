@@ -1,0 +1,26 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Empty dictionary
+        with pytest.raises(ValueError):
+            task_func({})
+    
+        # Test case 2: Dictionary with invalid values
+        with pytest.raises(ValueError):
+            task_func({'a': {'Lat': 'abc', 'Lon': 'def'}})
+    
+        # Test case 3: Dictionary with valid values
+        dic = {'a': {'Lat': 10, 'Lon': 20}, 'b': {'Lat': 30, 'Lon': 40}}
+        folium_map, distances = task_func(dic)
+        assert isinstance(folium_map, folium.Map)
+        assert isinstance(distances, dict)
+>       assert len(distances) == 2
+E       AssertionError: assert 1 == 2
+E        +  where 1 = len({('a', 'b'): 3035.7289569056334})
+
+test_0187.py:20: AssertionError
+=========================== short test summary info ============================
+FAILED test_0187.py::test_task_func - AssertionError: assert 1 == 2
+1 failed in 2.02s

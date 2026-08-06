@@ -1,0 +1,33 @@
+.F.                                                                      [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_no_data ____________________________
+
+mock_get = <MagicMock name='get' id='128844490183536'>
+
+    @patch('src_0995.requests.get')
+    def test_task_func_no_data(mock_get):
+        # Mock the response with no data
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.text = "<html><body></body></html>"
+        mock_get.return_value = mock_response
+    
+        # Define inputs and expected output
+        url = "http://example.com"
+        csv_file_path = "test_output.csv"
+        expected_data = [("No Title", "No Date", "No Author")]
+    
+        # Call the function
+        result = task_func(url, csv_file_path)
+    
+        # Assert the result
+>       assert result == expected_data
+E       AssertionError: assert [] == [('No Title',... 'No Author')]
+E         
+E         Right contains one more item: ('No Title', 'No Date', 'No Author')
+E         Use -v to get more diff
+
+test_0995.py:67: AssertionError
+=========================== short test summary info ============================
+FAILED test_0995.py::test_task_func_no_data - AssertionError: assert [] == [(...
+1 failed, 2 passed in 1.94s

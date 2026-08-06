@@ -1,0 +1,30 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Mock the input DataFrame
+        df = pd.DataFrame({
+            "Age": [25, 30, 35, 40, 45],
+            "Height": [160, 170, 180, 190, 200]
+        })
+    
+        # Test case 1: age > 35 and height < 170
+        age = 35
+        height = 170
+        expected_df = pd.DataFrame({
+            "Age": [35, 40, 45],
+            "Height": [170, 180, 190],
+            "Cluster": [1, 1, 1]
+        })
+        expected_ax = None
+        actual_df, actual_ax = task_func(df, age, height)
+>       assert actual_df.equals(expected_df) and actual_ax == expected_ax
+E       assert (False)
+E        +  where False = equals(   Age  Height  Cluster\n0   35     170        1\n1   40     180        1\n2   45     190        1)
+E        +    where equals = Empty DataFrame\nColumns: [Age, Height, Cluster]\nIndex: [].equals
+
+test_0052.py:22: AssertionError
+=========================== short test summary info ============================
+FAILED test_0052.py::test_task_func - assert (False)
+1 failed in 4.09s

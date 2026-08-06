@@ -1,0 +1,27 @@
+...F                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        df = pd.DataFrame({'date': pd.to_datetime(['2022-01-01', '2022-01-02', '2022-01-03']), 'value': [1, 2, 3]})
+>       ax = task_func(df)
+             ^^^^^^^^^^^^^
+
+test_0108.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df =         date  value
+0 2022-01-01      1
+1 2022-01-02      2
+2 2022-01-03      3
+n_clusters = 3, random_state = 0
+
+    def task_func(df, n_clusters=3, random_state=0):
+        if df.empty or not all(col in df.columns for col in ['group', 'date', 'value']):
+>           raise ValueError("DataFrame must be non-empty and contain 'group', 'date', and 'value' columns.")
+E           ValueError: DataFrame must be non-empty and contain 'group', 'date', and 'value' columns.
+
+../../../src/src_0108.py:6: ValueError
+=========================== short test summary info ============================
+FAILED test_0108.py::test_task_func_valid_input - ValueError: DataFrame must ...
+1 failed, 3 passed in 3.55s

@@ -1,0 +1,27 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: Invalid input
+        with pytest.raises(ValueError):
+>           task_func(df=None, columns=['A', 'B', 'C'])
+
+test_0885.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df = None, columns = ['A', 'B', 'C'], larger = 50, equal = 900
+
+    def task_func(df, columns=['A', 'B', 'C'], larger=50, equal=900):
+        if len(columns) != 3:
+            raise ValueError("Exactly three columns should be specified.")
+    
+        for column in columns:
+>           if column not in df.columns:
+                             ^^^^^^^^^^
+E           AttributeError: 'NoneType' object has no attribute 'columns'
+
+../../../src/src_0885.py:8: AttributeError
+=========================== short test summary info ============================
+FAILED test_0885.py::test_task_func - AttributeError: 'NoneType' object has n...
+1 failed in 2.53s

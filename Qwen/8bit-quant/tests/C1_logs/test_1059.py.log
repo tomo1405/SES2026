@@ -1,0 +1,55 @@
+.FFFF                                                                    [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_max_pairs ___________________________
+
+    def test_task_func_max_pairs():
+        ax = task_func(num_pairs=100)
+        assert isinstance(ax, plt.Axes)
+>       assert len(ax.patches) == len(SHAPES) * len(COLORS)  # Maximum number of pairs
+                                      ^^^^^^
+E       NameError: name 'SHAPES' is not defined
+
+test_1059.py:13: NameError
+__________________________ test_task_func_zero_pairs ___________________________
+
+    def test_task_func_zero_pairs():
+        ax = task_func(num_pairs=0)
+        assert isinstance(ax, plt.Axes)
+>       assert len(ax.patches) == 0  # No pairs should be plotted
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 110 == 0
+E        +  where 110 = len(<Axes.ArtistList of 110 patches>)
+E        +    where <Axes.ArtistList of 110 patches> = <Axes: ylabel='count'>.patches
+
+test_1059.py:18: AssertionError
+________________________ test_task_func_negative_pairs _________________________
+
+    def test_task_func_negative_pairs():
+        ax = task_func(num_pairs=-5)
+        assert isinstance(ax, plt.Axes)
+>       assert len(ax.patches) == 0  # Negative number of pairs should result in no plotting
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 205 == 0
+E        +  where 205 = len(<Axes.ArtistList of 205 patches>)
+E        +    where <Axes.ArtistList of 205 patches> = <Axes: ylabel='count'>.patches
+
+test_1059.py:23: AssertionError
+___________________ test_task_func_specific_number_of_pairs ____________________
+
+    def test_task_func_specific_number_of_pairs():
+        num_pairs = 5
+        ax = task_func(num_pairs=num_pairs)
+        assert isinstance(ax, plt.Axes)
+>       assert len(ax.patches) == num_pairs  # Specific number of pairs should be plotted
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 210 == 5
+E        +  where 210 = len(<Axes.ArtistList of 210 patches>)
+E        +    where <Axes.ArtistList of 210 patches> = <Axes: ylabel='count'>.patches
+
+test_1059.py:29: AssertionError
+=========================== short test summary info ============================
+FAILED test_1059.py::test_task_func_max_pairs - NameError: name 'SHAPES' is n...
+FAILED test_1059.py::test_task_func_zero_pairs - AssertionError: assert 110 == 0
+FAILED test_1059.py::test_task_func_negative_pairs - AssertionError: assert 2...
+FAILED test_1059.py::test_task_func_specific_number_of_pairs - AssertionError...
+4 failed, 1 passed in 5.12s

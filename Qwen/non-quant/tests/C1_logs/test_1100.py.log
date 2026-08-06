@@ -1,0 +1,95 @@
+..FFFFFFF                                                                [100%]
+=================================== FAILURES ===================================
+___________________ test_task_func_single_word_not_stopword ____________________
+
+    def test_task_func_single_word_not_stopword():
+>       assert task_func("hello") == [('hello', 1)]
+E       AssertionError: assert [] == [('hello', 1)]
+E         
+E         Right contains one more item: ('hello', 1)
+E         Use -v to get more diff
+
+test_1100.py:11: AssertionError
+_____________________ test_task_func_single_word_stopword ______________________
+
+    def test_task_func_single_word_stopword():
+>       assert task_func("the") == []
+E       AssertionError: assert [('the', 1)] == []
+E         
+E         Left contains one more item: ('the', 1)
+E         Use -v to get more diff
+
+test_1100.py:14: AssertionError
+_________________ test_task_func_multiple_words_with_stopwords _________________
+
+    def test_task_func_multiple_words_with_stopwords():
+        text = "this is a test with some stopwords"
+        expected = [('test', 1), ('some', 1), ('stopwords', 1)]
+>       assert sorted(task_func(text)) == sorted(expected)
+E       AssertionError: assert [('a', 1), ('..., ('with', 1)] == [('some', 1),..., ('test', 1)]
+E         
+E         At index 0 diff: ('a', 1) != ('some', 1)
+E         Left contains one more item: ('with', 1)
+E         Use -v to get more diff
+
+test_1100.py:19: AssertionError
+___________________________ test_task_func_with_urls ___________________________
+
+    def test_task_func_with_urls():
+        text = "Check out this link http://example.com and see what happens"
+        expected = [('Check', 1), ('link', 1), ('see', 1), ('what', 1), ('happens', 1)]
+>       assert sorted(task_func(text)) == sorted(expected)
+E       AssertionError: assert [('and', 1), ..., ('what', 1)] == [('Check', 1)..., ('what', 1)]
+E         
+E         At index 0 diff: ('and', 1) != ('Check', 1)
+E         Right contains one more item: ('what', 1)
+E         Use -v to get more diff
+
+test_1100.py:24: AssertionError
+______________________ test_task_func_case_insensitivity _______________________
+
+    def test_task_func_case_insensitivity():
+        text = "This is a TEST with SOME STOPWORDS"
+        expected = [('TEST', 1), ('SOME', 1), ('STOPWORDS', 1)]
+>       assert sorted(task_func(text)) == sorted(expected)
+E       AssertionError: assert [('a', 1), ('..., ('with', 1)] == [('SOME', 1),..., ('TEST', 1)]
+E         
+E         At index 0 diff: ('a', 1) != ('SOME', 1)
+E         Use -v to get more diff
+
+test_1100.py:29: AssertionError
+__________________________ test_task_func_punctuation __________________________
+
+    def test_task_func_punctuation():
+        text = "Hello, world! This is a test."
+        expected = [('Hello', 1), ('world', 1), ('This', 1), ('test', 1)]
+>       assert sorted(task_func(text)) == sorted(expected)
+E       AssertionError: assert [('a', 1), ('is', 1)] == [('Hello', 1)... ('world', 1)]
+E         
+E         At index 0 diff: ('a', 1) != ('Hello', 1)
+E         Right contains 2 more items, first extra item: ('test', 1)
+E         Use -v to get more diff
+
+test_1100.py:34: AssertionError
+____________________________ test_task_func_numbers ____________________________
+
+    def test_task_func_numbers():
+        text = "The year is 2023 and the time is 14:00"
+        expected = [('year', 1), ('2023', 1), ('time', 1), ('1400', 1)]
+>       assert sorted(task_func(text)) == sorted(expected)
+E       AssertionError: assert [('and', 1), ...), ('the', 1)] == [('1400', 1),..., ('year', 1)]
+E         
+E         At index 0 diff: ('and', 1) != ('1400', 1)
+E         Right contains one more item: ('year', 1)
+E         Use -v to get more diff
+
+test_1100.py:39: AssertionError
+=========================== short test summary info ============================
+FAILED test_1100.py::test_task_func_single_word_not_stopword - AssertionError...
+FAILED test_1100.py::test_task_func_single_word_stopword - AssertionError: as...
+FAILED test_1100.py::test_task_func_multiple_words_with_stopwords - Assertion...
+FAILED test_1100.py::test_task_func_with_urls - AssertionError: assert [('and...
+FAILED test_1100.py::test_task_func_case_insensitivity - AssertionError: asse...
+FAILED test_1100.py::test_task_func_punctuation - AssertionError: assert [('a...
+FAILED test_1100.py::test_task_func_numbers - AssertionError: assert [('and',...
+7 failed, 2 passed in 0.51s

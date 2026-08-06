@@ -1,0 +1,23 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        person_names = ['John Smith', 'Jane Doe', 'Bob Johnson']
+        email_domains = ['gmail.com', 'yahoo.com', 'outlook.com']
+        num_records = 2
+    
+        df = task_func(person_names, email_domains, num_records)
+    
+        assert isinstance(df, pd.DataFrame)
+        assert df.shape == (num_records, 2)
+        assert df.columns.tolist() == ['Name', 'Email']
+        for index, row in df.iterrows():
+            name, email = row['Name'], row['Email']
+>           assert '@' in email
+E           AssertionError: assert '@' in 'jane[at]outlook.com'
+
+test_0924.py:19: AssertionError
+=========================== short test summary info ============================
+FAILED test_0924.py::test_task_func - AssertionError: assert '@' in 'jane[at]...
+1 failed, 1 passed in 1.36s

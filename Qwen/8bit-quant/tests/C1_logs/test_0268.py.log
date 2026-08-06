@@ -1,0 +1,34 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Mock data input
+        data = {'b': 2, 'c': 3}
+        sample_rate = 8000
+    
+        # Call the function
+        fft_result, ax = task_func(data, sample_rate)
+    
+        # Check that the new key 'a' is added to the data
+        assert 'a' in data
+        assert data['a'] == 1
+    
+        # Check that the signal is generated correctly
+        signal = np.array([1, 2, 3])
+        time = np.linspace(0, 2, 2 * sample_rate, False)
+        expected_signal = np.sin(np.outer(time, signal) * np.pi)
+>       assert np.allclose(expected_signal, np.array(list(data.values())))
+E       AssertionError: assert False
+E        +  where False = <function allclose at 0x7bd617b0c6f0>(array([[ 0.        ,  0.        ,  0.        ],\n       [ 0.0003927 ,  0.0007854 ,  0.0011781 ],\n       [ 0.0007854 ,  ...28],\n       [-0.0007854 , -0.0015708 , -0.00235619],\n       [-0.0003927 , -0.0007854 , -0.0011781 ]], shape=(16000, 3)), array([2, 3, 1]))
+E        +    where <function allclose at 0x7bd617b0c6f0> = np.allclose
+E        +    and   array([2, 3, 1]) = <built-in function array>([2, 3, 1])
+E        +      where <built-in function array> = np.array
+E        +      and   [2, 3, 1] = list(dict_values([2, 3, 1]))
+E        +        where dict_values([2, 3, 1]) = <built-in method values of dict object at 0x7bd4fb1abb80>()
+E        +          where <built-in method values of dict object at 0x7bd4fb1abb80> = {'b': 2, 'c': 3, 'a': 1}.values
+
+test_0268.py:23: AssertionError
+=========================== short test summary info ============================
+FAILED test_0268.py::test_task_func - AssertionError: assert False
+1 failed in 2.26s

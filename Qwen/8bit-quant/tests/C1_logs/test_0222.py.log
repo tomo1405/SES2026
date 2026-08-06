@@ -1,0 +1,28 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sample_df =    feature1  feature2  feature3  feature4  feature5
+0         1         5         2         6         3
+1         2   ...    4         3
+3         4         2         5         3         3
+4         5         1         6         2         3
+replacement_dict = {'feature1': {1: 10, 2: 20}, 'feature2': {5: 50, 4: 40}}
+
+    def test_task_func(sample_df, replacement_dict):
+        expected_output = {
+            'feature1': {'mean': 22.5, 'median': 20.0, 'mode': 20, 'variance': 62.5},
+            'feature2': {'mean': 30.0, 'median': 40.0, 'mode': 40, 'variance': 62.5},
+            'feature3': {'mean': 4.0, 'median': 4.0, 'mode': 4, 'variance': 2.0},
+            'feature4': {'mean': 4.0, 'median': 4.0, 'mode': 4, 'variance': 2.0},
+            'feature5': {'mean': 3.0, 'median': 3.0, 'mode': 3, 'variance': 0.0}
+        }
+    
+        result = task_func(sample_df, replacement_dict)
+>       assert result == expected_output
+E       AssertionError: assert 'Invalid input' == {'feature1': {'mean': 22.5, 'median': 20.0, 'mode': 20, 'variance': 62.5}, 'feature2': {'mean': 30.0, 'median': 40.0, ... 'median': 4.0, 'mode': 4, 'variance': 2.0}, 'feature4': {'mean': 4.0, 'median': 4.0, 'mode': 4, 'variance': 2.0}, ...}
+
+test_0222.py:33: AssertionError
+=========================== short test summary info ============================
+FAILED test_0222.py::test_task_func - AssertionError: assert 'Invalid input' ...
+1 failed, 1 passed in 2.77s

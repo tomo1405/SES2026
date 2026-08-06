@@ -1,0 +1,46 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_no_xlsx_files _________________________
+
+    def test_task_func_no_xlsx_files():
+        temp_dir = './temp_test_dir/'
+        os.makedirs(temp_dir, exist_ok=True)
+        assert task_func(directory_path=temp_dir) == 0
+>       os.rmdir(temp_dir)
+E       FileNotFoundError: [Errno 2] No such file or directory: './temp_test_dir/'
+
+test_0375.py:17: FileNotFoundError
+________________________ test_task_func_with_xlsx_files ________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-2079/test_task_func_with_xlsx_files0')
+
+    def test_task_func_with_xlsx_files(tmpdir):
+        # Create a temporary directory and add some xlsx files
+        temp_dir = tmpdir.mkdir('xlsx_files')
+        wb1 = Workbook()
+        ws1 = wb1.active
+        ws1['A1'] = 'Test "Quote"'
+        wb1.save(os.path.join(temp_dir, 'test1.xlsx'))
+    
+        wb2 = Workbook()
+        ws2 = wb2.active
+        ws2['A1'] = 'Another "Quote"'
+        wb2.save(os.path.join(temp_dir, 'test2.xlsx'))
+    
+        # Run the function
+        processed_files = task_func(directory_path=str(temp_dir))
+    
+        # Check that the function processed the correct number of files
+        assert processed_files == 2
+    
+        # Check that the quotes were escaped correctly
+        for filename in glob.glob(os.path.join(temp_dir, '*.xlsx')):
+>           workbook = load_workbook(filename=filename)
+                       ^^^^^^^^^^^^^
+E           NameError: name 'load_workbook' is not defined
+
+test_0375.py:40: NameError
+=========================== short test summary info ============================
+FAILED test_0375.py::test_task_func_no_xlsx_files - FileNotFoundError: [Errno...
+FAILED test_0375.py::test_task_func_with_xlsx_files - NameError: name 'load_w...
+2 failed, 1 passed in 1.19s

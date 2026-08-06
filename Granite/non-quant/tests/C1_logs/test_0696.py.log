@@ -1,0 +1,102 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_______________ test_task_func[tuples_list0-1-expected_output0] ________________
+
+tuples_list = [(1, 2), (3, 4)], n_components = 1
+expected_output = [[1.41421356], [2.82842712]]
+
+    @pytest.mark.parametrize("tuples_list, n_components, expected_output", [
+        ([(1, 2), (3, 4)], 1, [[1.41421356], [2.82842712]]),
+        ([(5, 6), (7, 8)], 2, [[-0.70710678, -0.70710678], [0.70710678, -0.70710678]]),
+        ([(9, 10, 11), (12, 13, 14)], 3, [[-0.27059805, -0.5411961, 0.80000000], [0.27059805, -0.5411961, -0.80000000]]),
+    ])
+    def test_task_func(tuples_list, n_components, expected_output):
+        result = task_func(tuples_list, n_components)
+>       assert result.tolist() == expected_output
+E       assert [[-1.41421356...213562373095]] == [[1.41421356], [2.82842712]]
+E         
+E         At index 0 diff: [-1.4142135623730945] != [1.41421356]
+E         Use -v to get more diff
+
+test_0696.py:11: AssertionError
+_______________ test_task_func[tuples_list1-2-expected_output1] ________________
+
+tuples_list = [(5, 6), (7, 8)], n_components = 2
+expected_output = [[-0.70710678, -0.70710678], [0.70710678, -0.70710678]]
+
+    @pytest.mark.parametrize("tuples_list, n_components, expected_output", [
+        ([(1, 2), (3, 4)], 1, [[1.41421356], [2.82842712]]),
+        ([(5, 6), (7, 8)], 2, [[-0.70710678, -0.70710678], [0.70710678, -0.70710678]]),
+        ([(9, 10, 11), (12, 13, 14)], 3, [[-0.27059805, -0.5411961, 0.80000000], [0.27059805, -0.5411961, -0.80000000]]),
+    ])
+    def test_task_func(tuples_list, n_components, expected_output):
+        result = task_func(tuples_list, n_components)
+>       assert result.tolist() == expected_output
+E       assert [[-1.41421356...64653318e-17]] == [[-0.70710678... -0.70710678]]
+E         
+E         At index 0 diff: [-1.4142135623730945, -2.3721342664653315e-17] != [-0.70710678, -0.70710678]
+E         Use -v to get more diff
+
+test_0696.py:11: AssertionError
+_______________ test_task_func[tuples_list2-3-expected_output2] ________________
+
+tuples_list = [(9, 10, 11), (12, 13, 14)], n_components = 3
+expected_output = [[-0.27059805, -0.5411961, 0.8], [0.27059805, -0.5411961, -0.8]]
+
+    @pytest.mark.parametrize("tuples_list, n_components, expected_output", [
+        ([(1, 2), (3, 4)], 1, [[1.41421356], [2.82842712]]),
+        ([(5, 6), (7, 8)], 2, [[-0.70710678, -0.70710678], [0.70710678, -0.70710678]]),
+        ([(9, 10, 11), (12, 13, 14)], 3, [[-0.27059805, -0.5411961, 0.80000000], [0.27059805, -0.5411961, -0.80000000]]),
+    ])
+    def test_task_func(tuples_list, n_components, expected_output):
+>       result = task_func(tuples_list, n_components)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0696.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0696.py:6: in task_func
+    transformed_data = pca.fit_transform(data)
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/utils/_set_output.py:319: in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/base.py:1403: in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/decomposition/_pca.py:466: in fit_transform
+    U, S, _, X, x_is_centered, xp = self._fit(X)
+                                    ^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sklearn/decomposition/_pca.py:540: in _fit
+    return self._fit_full(X, n_components, xp, is_array_api_compliant)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PCA(n_components=3), X = array([[ 9., 10., 11.],
+       [12., 13., 14.]])
+n_components = 3
+xp = <module 'sklearn.externals.array_api_compat.numpy' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/sklearn/externals/array_api_compat/numpy/__init__.py'>
+is_array_api_compliant = False
+
+    def _fit_full(self, X, n_components, xp, is_array_api_compliant):
+        """Fit the model by computing full SVD on X."""
+        n_samples, n_features = X.shape
+    
+        if n_components == "mle":
+            if n_samples < n_features:
+                raise ValueError(
+                    "n_components='mle' is only supported if n_samples >= n_features"
+                )
+        elif not 0 <= n_components <= min(n_samples, n_features):
+>           raise ValueError(
+                f"n_components={n_components} must be between 0 and "
+                f"min(n_samples, n_features)={min(n_samples, n_features)} with "
+                f"svd_solver={self._fit_svd_solver!r}"
+            )
+E           ValueError: n_components=3 must be between 0 and min(n_samples, n_features)=2 with svd_solver='full'
+
+../../../.venv/lib/python3.12/site-packages/sklearn/decomposition/_pca.py:554: ValueError
+=========================== short test summary info ============================
+FAILED test_0696.py::test_task_func[tuples_list0-1-expected_output0] - assert...
+FAILED test_0696.py::test_task_func[tuples_list1-2-expected_output1] - assert...
+FAILED test_0696.py::test_task_func[tuples_list2-3-expected_output2] - ValueE...
+3 failed in 3.34s

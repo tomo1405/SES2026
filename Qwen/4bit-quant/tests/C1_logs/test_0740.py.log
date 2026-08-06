@@ -1,0 +1,61 @@
+.F.FF                                                                    [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_no_hex_key ________________________
+
+    def test_task_func_with_no_hex_key():
+        # Test with no hex key provided, should use a random choice from KEYS
+        result = task_func()
+        assert isinstance(result, float), "The result should be a float"
+        # Check if the result is one of the possible values
+>       expected_values = [round(struct.unpack('!f', bytes.fromhex(key))[0], 2) for key in KEYS]
+                                                                                           ^^^^
+E       NameError: name 'KEYS' is not defined
+
+test_0740.py:21: NameError
+______________________ test_task_func_with_short_hex_key _______________________
+
+    def test_task_func_with_short_hex_key():
+        # Test with a short hex key
+        short_hex_key = '1234'
+        with pytest.raises(ValueError):
+>           task_func(short_hex_key)
+
+test_0740.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+hex_key = '1234'
+
+    def task_func(hex_key=None):
+        if hex_key is None:
+            hex_key = random.choice(KEYS)
+>       float_num = struct.unpack('!f', bytes.fromhex(hex_key))[0]
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       struct.error: unpack requires a buffer of 4 bytes
+
+../../../src/src_0740.py:8: error
+_______________________ test_task_func_with_long_hex_key _______________________
+
+    def test_task_func_with_long_hex_key():
+        # Test with a long hex key
+        long_hex_key = '123456789ABCDEF0'
+        with pytest.raises(ValueError):
+>           task_func(long_hex_key)
+
+test_0740.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+hex_key = '123456789ABCDEF0'
+
+    def task_func(hex_key=None):
+        if hex_key is None:
+            hex_key = random.choice(KEYS)
+>       float_num = struct.unpack('!f', bytes.fromhex(hex_key))[0]
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       struct.error: unpack requires a buffer of 4 bytes
+
+../../../src/src_0740.py:8: error
+=========================== short test summary info ============================
+FAILED test_0740.py::test_task_func_with_no_hex_key - NameError: name 'KEYS' ...
+FAILED test_0740.py::test_task_func_with_short_hex_key - struct.error: unpack...
+FAILED test_0740.py::test_task_func_with_long_hex_key - struct.error: unpack ...
+3 failed, 2 passed in 0.46s

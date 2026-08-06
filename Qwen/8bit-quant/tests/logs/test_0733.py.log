@@ -1,0 +1,114 @@
+FFFFFFF                                                                  [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_empty_string _______________________
+
+mock_stemmer = None
+
+    def test_task_func_with_empty_string(mock_stemmer):
+>       assert task_func("") == {}
+E       AssertionError: assert {'': 1} == {}
+E         
+E         Left contains 1 more item:
+E         {'': 1}
+E         Use -v to get more diff
+
+test_0733.py:16: AssertionError
+_______________________ test_task_func_with_single_word ________________________
+
+mock_stemmer = None
+
+    def test_task_func_with_single_word(mock_stemmer):
+>       assert task_func("Hello") == {'hello': 1}
+E       AssertionError: assert {'': 1} == {'hello': 1}
+E         
+E         Left contains 1 more item:
+E         {'': 1}
+E         Right contains 1 more item:
+E         {'hello': 1}
+E         Use -v to get more diff
+
+test_0733.py:19: AssertionError
+______________________ test_task_func_with_multiple_words ______________________
+
+mock_stemmer = None
+
+    def test_task_func_with_multiple_words(mock_stemmer):
+>       assert task_func("Hello world! Hello again.") == {'hello': 2, 'world': 1, 'again': 1}
+E       AssertionError: assert {'hello': 2, 'world': 1} == {'hello': 2, ...1, 'again': 1}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Right contains 1 more item:
+E         {'again': 1}
+E         Use -v to get more diff
+
+test_0733.py:22: AssertionError
+_______________________ test_task_func_with_punctuation ________________________
+
+mock_stemmer = None
+
+    def test_task_func_with_punctuation(mock_stemmer):
+>       assert task_func("Hello, world!") == {'hello': 1, 'world': 1}
+E       AssertionError: assert {'hello': 1, '': 1} == {'hello': 1, 'world': 1}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Left contains 1 more item:
+E         {'': 1}
+E         Right contains 1 more item:
+E         {'world': 1}
+E         Use -v to get more diff
+
+test_0733.py:25: AssertionError
+_________________ test_task_func_with_uppercase_and_lowercase __________________
+
+mock_stemmer = None
+
+    def test_task_func_with_uppercase_and_lowercase(mock_stemmer):
+>       assert task_func("Hello hello") == {'hello': 2}
+E       AssertionError: assert {'hello': 1} == {'hello': 2}
+E         
+E         Differing items:
+E         {'hello': 1} != {'hello': 2}
+E         Use -v to get more diff
+
+test_0733.py:28: AssertionError
+_________________________ test_task_func_with_numbers __________________________
+
+mock_stemmer = None
+
+    def test_task_func_with_numbers(mock_stemmer):
+>       assert task_func("Hello 123 world") == {'hello': 1, 'world': 1}
+E       AssertionError: assert {'hello': 1, '123': 1} == {'hello': 1, 'world': 1}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Left contains 1 more item:
+E         {'123': 1}
+E         Right contains 1 more item:
+E         {'world': 1}
+E         Use -v to get more diff
+
+test_0733.py:31: AssertionError
+____________________ test_task_func_with_special_characters ____________________
+
+mock_stemmer = None
+
+    def test_task_func_with_special_characters(mock_stemmer):
+>       assert task_func("Hello @world! #python") == {'hello': 1, 'world': 1, 'python': 1}
+E       AssertionError: assert {'hello': 1, ...ld': 1, '': 1} == {'hello': 1, ..., 'python': 1}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Left contains 1 more item:
+E         {'': 1}
+E         Right contains 1 more item:
+E         {'python': 1}
+E         Use -v to get more diff
+
+test_0733.py:34: AssertionError
+=========================== short test summary info ============================
+FAILED test_0733.py::test_task_func_with_empty_string - AssertionError: asser...
+FAILED test_0733.py::test_task_func_with_single_word - AssertionError: assert...
+FAILED test_0733.py::test_task_func_with_multiple_words - AssertionError: ass...
+FAILED test_0733.py::test_task_func_with_punctuation - AssertionError: assert...
+FAILED test_0733.py::test_task_func_with_uppercase_and_lowercase - AssertionE...
+FAILED test_0733.py::test_task_func_with_numbers - AssertionError: assert {'h...
+FAILED test_0733.py::test_task_func_with_special_characters - AssertionError:...
+7 failed in 3.73s

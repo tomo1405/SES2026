@@ -1,0 +1,56 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_os_urandom = None
+sample_file = '/tmp/pytest-of-tomohiro-w/pytest-2136/test_task_func0/sample.txt'
+
+    def test_task_func(mock_os_urandom, sample_file):
+>       pub_key, encrypted_file, encrypted_key_file = task_func(sample_file)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^
+
+test_0588.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0588.py:8: in task_func
+    (pub_key, priv_key) = rsa.newkeys(512)
+                          ^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/rsa/key.py:834: in newkeys
+    (p, q, e, d) = gen_keys(nbits, getprime_func, accurate=accurate, exponent=exponent)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/rsa/key.py:776: in gen_keys
+    (p, q) = find_p_q(nbits // 2, getprime_func, accurate)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/rsa/key.py:670: in find_p_q
+    p = getprime_func(pbits)
+        ^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/rsa/prime.py:166: in getprime
+    if is_prime(integer):
+       ^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/rsa/prime.py:141: in is_prime
+    return miller_rabin_primality_testing(number, k + 1)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/rsa/prime.py:97: in miller_rabin_primality_testing
+    a = rsa.randnum.randint(n - 3) + 1
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/rsa/randnum.py:84: in randint
+    value = read_random_int(bit_size)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/rsa/randnum.py:49: in read_random_int
+    randomdata = read_random_bits(nbits)
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/rsa/randnum.py:39: in read_random_bits
+    randomvalue = ord(os.urandom(1))
+                      ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <test_0588.MockRandom object at 0x721e7a5dd040>, n = 1
+
+    def urandom(self, n):
+>       return self.values.pop(0)
+               ^^^^^^^^^^^^^^^^^^
+E       IndexError: pop from empty list
+
+test_0588.py:15: IndexError
+=========================== short test summary info ============================
+FAILED test_0588.py::test_task_func - IndexError: pop from empty list
+1 failed in 0.54s

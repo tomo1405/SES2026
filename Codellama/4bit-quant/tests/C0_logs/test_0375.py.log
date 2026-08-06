@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        directory_path = './xlsx_files/'
+        xlsx_files = glob.glob(directory_path + '/*.xlsx')
+        processed_files = 0
+    
+        for xlsx_file in xlsx_files:
+            workbook = load_workbook(filename=xlsx_file)
+    
+            for sheet in workbook.sheetnames:
+                for row in workbook[sheet].iter_rows():
+                    for cell in row:
+                        if isinstance(cell.value, str):
+                            cell.value = re.sub(r'(?<=(^|[^\\])(\\\\)*)"', r'\"',
+                                                cell.value)
+    
+            workbook.save(xlsx_file)
+            processed_files += 1
+    
+>       assert processed_files == 1
+E       assert 0 == 1
+
+test_0375.py:23: AssertionError
+=========================== short test summary info ============================
+FAILED test_0375.py::test_task_func - assert 0 == 1
+1 failed in 0.40s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

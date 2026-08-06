@@ -1,0 +1,86 @@
+FFF.F                                                                    [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_valid_data ________________________
+
+    def test_task_func_with_valid_data():
+        department_data = {
+            'EMP$$': 3,
+            'MAN$$': 2,
+            'DEV$$': 1,
+            'HR$$': 0
+        }
+        result = task_func(department_data)
+        level_data = json.loads(result)
+    
+        assert isinstance(level_data, dict)
+>       assert set(level_data.keys()) == set(department_data.keys())
+E       AssertionError: assert {'DEV$$', 'EMP$$', 'MAN$$'} == {'DEV$$', 'EM...R$$', 'MAN$$'}
+E         
+E         Extra items in the right set:
+E         'HR$$'
+E         Use -v to get more diff
+
+test_1118.py:17: AssertionError
+______________________ test_task_func_with_invalid_prefix ______________________
+
+    def test_task_func_with_invalid_prefix():
+        department_data = {
+            'INVALID$$': 3,
+            'EMP$$': 2
+        }
+        result = task_func(department_data)
+        level_data = json.loads(result)
+    
+        assert isinstance(level_data, dict)
+        assert 'INVALID$$' not in level_data
+        assert len(level_data['EMP$$']) == 2
+        for level in level_data['EMP$$']:
+>           assert level in LEVELS
+                            ^^^^^^
+E           NameError: name 'LEVELS' is not defined
+
+test_1118.py:36: NameError
+____________________ test_task_func_with_no_valid_employees ____________________
+
+    def test_task_func_with_no_valid_employees():
+        department_data = {
+            'HR$$': 0,
+            'DEV$$': 0
+        }
+        result = task_func(department_data)
+        level_data = json.loads(result)
+    
+        assert isinstance(level_data, dict)
+>       assert level_data == {'HR$$': [], 'DEV$$': []}
+E       AssertionError: assert {} == {'HR$$': [], 'DEV$$': []}
+E         
+E         Right contains 2 more items:
+E         {'DEV$$': [], 'HR$$': []}
+E         Use -v to get more diff
+
+test_1118.py:47: AssertionError
+____________________ test_task_func_with_negative_employees ____________________
+
+    def test_task_func_with_negative_employees():
+        department_data = {
+            'EMP$$': -1,
+            'MAN$$': 2
+        }
+        result = task_func(department_data)
+        level_data = json.loads(result)
+    
+        assert isinstance(level_data, dict)
+        assert 'EMP$$' not in level_data
+        assert len(level_data['MAN$$']) == 2
+        for level in level_data['MAN$$']:
+>           assert level in LEVELS
+                            ^^^^^^
+E           NameError: name 'LEVELS' is not defined
+
+test_1118.py:69: NameError
+=========================== short test summary info ============================
+FAILED test_1118.py::test_task_func_with_valid_data - AssertionError: assert ...
+FAILED test_1118.py::test_task_func_with_invalid_prefix - NameError: name 'LE...
+FAILED test_1118.py::test_task_func_with_no_valid_employees - AssertionError:...
+FAILED test_1118.py::test_task_func_with_negative_employees - NameError: name...
+4 failed, 1 passed in 0.50s

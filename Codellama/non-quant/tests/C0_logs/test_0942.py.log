@@ -1,0 +1,24 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        start_date = '2022-01-01'
+        periods = 10
+        freq = 'D'
+        random_seed = 0
+        forecast_df, ax = task_func(start_date, periods, freq, random_seed)
+    
+        assert isinstance(forecast_df, pd.DataFrame)
+        assert isinstance(ax, plt.Axes)
+        assert len(forecast_df) == periods
+>       assert len(ax.get_xticklabels()) == periods
+E       AssertionError: assert 2 == 10
+E        +  where 2 = len([Text(18993, 0, '01\nJan\n2022'), Text(19002, 0, '10')])
+E        +    where [Text(18993, 0, '01\nJan\n2022'), Text(19002, 0, '10')] = get_xticklabels()
+E        +      where get_xticklabels = <Axes: title={'center': 'Sales Forecast'}, xlabel='Date', ylabel='Sales'>.get_xticklabels
+
+test_0942.py:17: AssertionError
+=========================== short test summary info ============================
+FAILED test_0942.py::test_task_func - AssertionError: assert 2 == 10
+1 failed in 2.17s

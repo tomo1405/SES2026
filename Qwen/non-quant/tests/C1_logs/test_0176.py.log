@@ -1,0 +1,46 @@
+...FF                                                                    [100%]
+=================================== FAILURES ===================================
+____________________ test_task_func_with_interesting_videos ____________________
+
+    def test_task_func_with_interesting_videos():
+        df = pd.DataFrame({
+            'Title': ['How to Code', 'What is Python', 'Unrelated Video'],
+            'Likes': [10, 20, 5],
+            'Views': [100, 200, 1000]
+        })
+        ax = task_func(df)
+        assert isinstance(ax, plt.Axes)
+        assert 'Like Ratio' in ax.get_legend_handles_labels()[1]
+        assert ax.get_ylabel() == 'Like Ratio'
+>       assert all(label.get_rotation() == 'vertical' for label in ax.get_xticklabels())
+E       assert False
+E        +  where False = all(<generator object test_task_func_with_interesting_videos.<locals>.<genexpr> at 0x7179d62dc860>)
+
+test_0176.py:35: AssertionError
+________________________ test_task_func_with_zero_views ________________________
+
+    def test_task_func_with_zero_views():
+        df = pd.DataFrame({
+            'Title': ['How to Code', 'What is Python'],
+            'Likes': [10, 20],
+            'Views': [0, 0]
+        })
+        ax = task_func(df)
+        assert isinstance(ax, plt.Axes)
+        assert 'Like Ratio' in ax.get_legend_handles_labels()[1]
+        assert ax.get_ylabel() == 'Like Ratio'
+>       assert all(label.get_rotation() == 'vertical' for label in ax.get_xticklabels())
+E       assert False
+E        +  where False = all(<generator object test_task_func_with_zero_views.<locals>.<genexpr> at 0x717a7335ef60>)
+
+test_0176.py:47: AssertionError
+=============================== warnings summary ===============================
+Qwen/non-quant/tests/test_0176.py::test_task_func_with_zero_views
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/matplotlib/transforms.py:2496: RuntimeWarning: invalid value encountered in dot
+    return Affine2D(np.dot(self._b.get_affine().get_matrix(),
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0176.py::test_task_func_with_interesting_videos - assert False
+FAILED test_0176.py::test_task_func_with_zero_views - assert False
+2 failed, 3 passed, 1 warning in 2.03s

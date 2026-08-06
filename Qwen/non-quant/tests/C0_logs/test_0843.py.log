@@ -1,0 +1,38 @@
+....F.                                                                   [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_repeated_calls _________________________
+
+temp_db_path = '/tmp/pytest-of-tomohiro-w/pytest-1311/test_task_func_repeated_calls0/temp.db'
+
+    def test_task_func_repeated_calls(temp_db_path):
+        num_entries = 2
+        task_func(temp_db_path, num_entries)
+>       task_func(temp_db_path, num_entries)
+
+test_0843.py:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+db_path = '/tmp/pytest-of-tomohiro-w/pytest-1311/test_task_func_repeated_calls0/temp.db'
+num_entries = 2, users = ['Alice', 'Bob', 'Charlie', 'Dave', 'Eve']
+countries = ['USA', 'UK', 'Canada', 'Australia', 'India'], random_seed = None
+
+    def task_func(db_path,
+              num_entries,
+              users=['Alice', 'Bob', 'Charlie', 'Dave', 'Eve'],
+              countries=['USA', 'UK', 'Canada', 'Australia', 'India'],
+              random_seed=None):
+        random.seed(random_seed)
+    
+        conn = sqlite3.connect(db_path)
+        c = conn.cursor()
+    
+>       c.execute('''
+            CREATE TABLE users
+            (id INTEGER PRIMARY KEY, name TEXT, age INTEGER, country TEXT)
+        ''')
+E       sqlite3.OperationalError: table users already exists
+
+../../../src/src_0843.py:13: OperationalError
+=========================== short test summary info ============================
+FAILED test_0843.py::test_task_func_repeated_calls - sqlite3.OperationalError...
+1 failed, 5 passed in 0.49s

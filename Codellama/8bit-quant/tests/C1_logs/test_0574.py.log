@@ -1,0 +1,29 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        array_length = 100
+        df, ax = task_func(array_length)
+    
+        assert isinstance(df, pd.DataFrame)
+        assert isinstance(ax, matplotlib.axes.Axes)
+    
+        assert df.shape == (3, 2)
+        assert df.index.tolist() == ['Mean', 'Median', 'Standard Deviation']
+        assert df.columns.tolist() == ['Array1', 'Array2']
+    
+>       assert np.allclose(df.loc['Mean', 'Array1'], np.mean(np.random.rand(array_length)))
+E       AssertionError: assert False
+E        +  where False = <function allclose at 0x7f231d564a70>(np.float64(0.48928094207355377), np.float64(0.5071783488108175))
+E        +    where <function allclose at 0x7f231d564a70> = np.allclose
+E        +    and   np.float64(0.5071783488108175) = <function mean at 0x7f231d551770>(array([0.42262129, 0.57613806, 0.81223501, 0.6162511 , 0.02693262,\n       0.5856211 , 0.94521102, 0.03095475, 0.476201...86, 0.37657731, 0.83469037, 0.91321185, 0.45433816,\n       0.22425922, 0.88946206, 0.84487219, 0.48374196, 0.0042055 ]))
+E        +      where <function mean at 0x7f231d551770> = np.mean
+E        +      and   array([0.42262129, 0.57613806, 0.81223501, 0.6162511 , 0.02693262,\n       0.5856211 , 0.94521102, 0.03095475, 0.476201...86, 0.37657731, 0.83469037, 0.91321185, 0.45433816,\n       0.22425922, 0.88946206, 0.84487219, 0.48374196, 0.0042055 ]) = rand(100)
+E        +        where rand = <module 'numpy.random' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/random/__init__.py'>.rand
+E        +          where <module 'numpy.random' from '/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/numpy/random/__init__.py'> = np.random
+
+test_0574.py:18: AssertionError
+=========================== short test summary info ============================
+FAILED test_0574.py::test_task_func - AssertionError: assert False
+1 failed in 2.03s

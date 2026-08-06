@@ -1,0 +1,144 @@
+FFFFF.F                                                                  [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_default_values ______________________
+
+    def test_task_func_with_default_values():
+        animal_dict = {'a': 'Cat', 'b': 'Dog', 'c': 'Elephant'}
+        expected_reversed_dict = {'Cat': ['a'], 'Dog': ['b'], 'Elephant': ['c']}
+        expected_animal_counter = collections.Counter({'Cat': 1, 'Dog': 1, 'Elephant': 1})
+    
+        reversed_dict, animal_counter = task_func(animal_dict)
+        assert reversed_dict == expected_reversed_dict
+>       assert animal_counter == expected_animal_counter
+E       AssertionError: assert Counter({'Zeb...Elephant': 1}) == Counter({'Cat...Elephant': 1})
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'Cat': 7} != {'Cat': 1}
+E         {'Dog': 7} != {'Dog': 1}
+E         Left contains 8 more items:
+E         {'Bear': 8,...
+E         
+E         ...Full output truncated (8 lines hidden), use '-vv' to show
+
+test_0385.py:15: AssertionError
+______________ test_task_func_with_max_count_greater_than_default ______________
+
+    def test_task_func_with_max_count_greater_than_default():
+        animal_dict = {'x': 'Lion', 'y': 'Tiger', 'z': 'Bear'}
+        max_count = 20
+        expected_reversed_dict = {'Lion': ['x'], 'Tiger': ['y'], 'Bear': ['z']}
+        expected_animal_counter = collections.Counter({'Lion': 1, 'Tiger': 1, 'Bear': 1})
+    
+        reversed_dict, animal_counter = task_func(animal_dict, max_count=max_count)
+        assert reversed_dict == expected_reversed_dict
+>       assert animal_counter == expected_animal_counter
+E       AssertionError: assert Counter({'Zeb...Elephant': 2}) == Counter({'Lio...1, 'Bear': 1})
+E         
+E         Differing items:
+E         {'Tiger': 17} != {'Tiger': 1}
+E         {'Bear': 16} != {'Bear': 1}
+E         {'Lion': 9} != {'Lion': 1}
+E         Left contains 8 more items:
+E         {'Cat': 13,...
+E         
+E         ...Full output truncated (8 lines hidden), use '-vv' to show
+
+test_0385.py:25: AssertionError
+______________________ test_task_func_with_different_seed ______________________
+
+    def test_task_func_with_different_seed():
+        animal_dict = {'m': 'Giraffe', 'n': 'Horse', 'o': 'Rabbit'}
+        seed = 42
+        expected_reversed_dict = {'Giraffe': ['m'], 'Horse': ['n'], 'Rabbit': ['o']}
+        expected_animal_counter = collections.Counter({'Giraffe': 1, 'Horse': 1, 'Rabbit': 1})
+    
+        reversed_dict, animal_counter = task_func(animal_dict, seed=seed)
+        assert reversed_dict == expected_reversed_dict
+>       assert animal_counter == expected_animal_counter
+E       AssertionError: assert Counter({'Sna... 2, 'Dog': 1}) == Counter({'Gir... 'Rabbit': 1})
+E         
+E         Differing items:
+E         {'Giraffe': 2} != {'Giraffe': 1}
+E         {'Rabbit': 2} != {'Rabbit': 1}
+E         {'Horse': 9} != {'Horse': 1}
+E         Left contains 8 more items:
+E         {'Bear': 3,...
+E         
+E         ...Full output truncated (8 lines hidden), use '-vv' to show
+
+test_0385.py:35: AssertionError
+____________________ test_task_func_with_non_animal_values _____________________
+
+    def test_task_func_with_non_animal_values():
+        animal_dict = {'p': 'Fish', 'q': 'Monkey', 'r': 'Cat'}
+        expected_reversed_dict = {'Cat': ['r']}
+        expected_animal_counter = collections.Counter({'Cat': 1})
+    
+        reversed_dict, animal_counter = task_func(animal_dict)
+        assert reversed_dict == expected_reversed_dict
+>       assert animal_counter == expected_animal_counter
+E       AssertionError: assert Counter({'Zeb...Elephant': 1}) == Counter({'Cat': 1})
+E         
+E         Differing items:
+E         {'Cat': 7} != {'Cat': 1}
+E         Left contains 10 more items:
+E         {'Bear': 8,
+E          'Dog': 7,
+E          'Elephant': 1,...
+E         
+E         ...Full output truncated (8 lines hidden), use '-vv' to show
+
+test_0385.py:44: AssertionError
+________________________ test_task_func_with_empty_dict ________________________
+
+    def test_task_func_with_empty_dict():
+        animal_dict = {}
+        expected_reversed_dict = {}
+        expected_animal_counter = collections.Counter()
+    
+        reversed_dict, animal_counter = task_func(animal_dict)
+        assert reversed_dict == expected_reversed_dict
+>       assert animal_counter == expected_animal_counter
+E       AssertionError: assert Counter({'Zeb...Elephant': 1}) == Counter()
+E         
+E         Left contains 11 more items:
+E         {'Bear': 8,
+E          'Cat': 7,
+E          'Dog': 7,
+E          'Elephant': 1,
+E          'Giraffe': 7,...
+E         
+E         ...Full output truncated (7 lines hidden), use '-vv' to show
+
+test_0385.py:53: AssertionError
+____________________ test_task_func_with_non_string_values _____________________
+
+    def test_task_func_with_non_string_values():
+        animal_dict = {'t': 123, 'u': 'Zebra', 'v': None}
+        expected_reversed_dict = {'Zebra': ['u']}
+        expected_animal_counter = collections.Counter({'Zebra': 1})
+    
+        reversed_dict, animal_counter = task_func(animal_dict)
+        assert reversed_dict == expected_reversed_dict
+>       assert animal_counter == expected_animal_counter
+E       AssertionError: assert Counter({'Zeb...Elephant': 1}) == Counter({'Zebra': 1})
+E         
+E         Differing items:
+E         {'Zebra': 10} != {'Zebra': 1}
+E         Left contains 10 more items:
+E         {'Bear': 8,
+E          'Cat': 7,
+E          'Dog': 7,...
+E         
+E         ...Full output truncated (8 lines hidden), use '-vv' to show
+
+test_0385.py:66: AssertionError
+=========================== short test summary info ============================
+FAILED test_0385.py::test_task_func_with_default_values - AssertionError: ass...
+FAILED test_0385.py::test_task_func_with_max_count_greater_than_default - Ass...
+FAILED test_0385.py::test_task_func_with_different_seed - AssertionError: ass...
+FAILED test_0385.py::test_task_func_with_non_animal_values - AssertionError: ...
+FAILED test_0385.py::test_task_func_with_empty_dict - AssertionError: assert ...
+FAILED test_0385.py::test_task_func_with_non_string_values - AssertionError: ...
+6 failed, 1 passed in 0.46s

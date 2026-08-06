@@ -1,0 +1,55 @@
+F..F                                                                     [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_valid_request _________________________
+
+    def test_task_func_valid_request():
+        # Create a temporary file and write some data to it
+        with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+            temp_file.write(b"Hello, World!")
+            temp_file.flush()
+            file_name = temp_file.name
+    
+        # Construct a valid GET request
+        request = f"GET /{file_name} HTTP/1.1"
+    
+        # Call the function
+        response = task_func(request)
+    
+        # Check the response
+>       assert response.startswith("HTTP/1.1 200 OK")
+E       AssertionError: assert False
+E        +  where False = <built-in method startswith of str object at 0x75157822f190>('HTTP/1.1 200 OK')
+E        +    where <built-in method startswith of str object at 0x75157822f190> = 'HTTP/1.1 400 BAD REQUEST\r\n\r\nBad Request'.startswith
+
+test_1042.py:20: AssertionError
+_________________________ test_task_func_server_error __________________________
+
+    def test_task_func_server_error():
+        # Create a temporary file that cannot be read
+        with tempfile.TemporaryDirectory() as temp_dir:
+            file_path = os.path.join(temp_dir, "unreadable_file.txt")
+            with open(file_path, "wb") as file:
+                file.write(b"Hello, World!")
+            os.chmod(file_path, 0)  # Make the file unreadable
+    
+            # Construct a valid GET request
+            request = f"GET /{os.path.basename(file_path)} HTTP/1.1"
+    
+            # Call the function
+            response = task_func(request)
+    
+            # Check the response
+>           assert response == "HTTP/1.1 500 INTERNAL SERVER ERROR\r\n\r\nInternal Server Error"
+E           AssertionError: assert 'HTTP/1.1 404...ile Not Found' == 'HTTP/1.1 500... Server Error'
+E             
+E             - HTTP/1.1 500 INTERNAL SERVER ERROR
+E             + HTTP/1.1 404 NOT FOUND
+E               
+E             - Internal Server Error
+E             + File Not Found
+
+test_1042.py:62: AssertionError
+=========================== short test summary info ============================
+FAILED test_1042.py::test_task_func_valid_request - AssertionError: assert False
+FAILED test_1042.py::test_task_func_server_error - AssertionError: assert 'HT...
+2 failed, 2 passed in 0.49s

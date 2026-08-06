@@ -1,0 +1,33 @@
+.F........                                                               [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_custom_filename ______________________
+
+    def test_task_func_with_custom_filename():
+        strings = ["foo", "bar"]
+        filename = "test_file.pkl"
+>       result = task_func(strings, filename)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0730.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+strings = ['foo', 'bar'], filename = 'test_file.pkl'
+
+    def task_func(strings, filename=None):
+    
+        if filename is None:
+            # Generate a unique filename using a random string
+            filename = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(10)) + ".pkl"
+    
+        with open(filename, 'wb') as file:
+            pickle.dump(strings, file)
+    
+        with open(filename, 'rb') as file:
+>           loaded_strings = pickle.load(file)
+                             ^^^^^^^^^^^^^^^^^
+E           _pickle.UnpicklingError: invalid load key, '\x00'.
+
+../../../src/src_0730.py:15: UnpicklingError
+=========================== short test summary info ============================
+FAILED test_0730.py::test_task_func_with_custom_filename - _pickle.Unpickling...
+1 failed, 9 passed in 0.62s

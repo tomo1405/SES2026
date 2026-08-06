@@ -1,0 +1,44 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_default_keys _______________________
+
+    def test_task_func_with_default_keys():
+        hex_key = random.choice(KEYS)
+        float_num = struct.unpack('!f', bytes.fromhex(hex_key))[0]
+        encoded_float = codecs.encode(str(float_num), 'utf-8')
+>       assert task_func() == encoded_float
+E       AssertionError: assert b'36806.078125' == b'75378848.0'
+E         
+E         At index 0 diff: b'3' != b'7'
+E         Use -v to get more diff
+
+test_0546.py:11: AssertionError
+________________________ test_task_func_with_empty_keys ________________________
+
+    def test_task_func_with_empty_keys():
+>       assert task_func([]) is None
+               ^^^^^^^^^^^^^
+
+test_0546.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0546.py:6: in task_func
+    hex_key = random.choice(hex_keys)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <random.Random object at 0x3d951330>, seq = []
+
+    def choice(self, seq):
+        """Choose a random element from a non-empty sequence."""
+    
+        # As an accommodation for NumPy, we don't use "if not seq"
+        # because bool(numpy.array()) raises a ValueError.
+        if not len(seq):
+>           raise IndexError('Cannot choose from an empty sequence')
+E           IndexError: Cannot choose from an empty sequence
+
+/usr/lib/python3.12/random.py:347: IndexError
+=========================== short test summary info ============================
+FAILED test_0546.py::test_task_func_with_default_keys - AssertionError: asser...
+FAILED test_0546.py::test_task_func_with_empty_keys - IndexError: Cannot choo...
+2 failed, 1 passed in 0.49s

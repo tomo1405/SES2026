@@ -1,0 +1,42 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+nested_dict = {'a': {'x': 1, 'y': 2}, 'b': {'y': 3, 'z': 4}, 'c': {'x': 5, 'z': 6}}
+
+    def test_task_func(nested_dict):
+        result = task_func(nested_dict)
+        assert isinstance(result, dict)
+        assert all(isinstance(k, str) and isinstance(v, float) for k, v in result.items())
+        assert len(result) == 3
+        for k, v in result.items():
+>           assert math.sin(nested_dict[k].get(k, 0)) == v
+                            ^^^^^^^^^^^^^^
+E           KeyError: 'x'
+
+test_0683.py:16: KeyError
+________________________ test_task_func_with_none_dict _________________________
+
+nested_dict = None
+
+    def test_task_func_with_none_dict(nested_dict):
+        nested_dict = None
+        with pytest.raises(TypeError):
+>           task_func(nested_dict)
+
+test_0683.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+nested_dict = None
+
+    def task_func(nested_dict):
+        counter = Counter()
+>       for sub_dict in nested_dict.values():
+                        ^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'NoneType' object has no attribute 'values'
+
+../../../src/src_0683.py:5: AttributeError
+=========================== short test summary info ============================
+FAILED test_0683.py::test_task_func - KeyError: 'x'
+FAILED test_0683.py::test_task_func_with_none_dict - AttributeError: 'NoneTyp...
+2 failed, 1 passed in 0.47s

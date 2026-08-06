@@ -1,0 +1,35 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sample_df =   group  value
+0     A     10
+1     A     20
+2     B     30
+3     B     40
+4     C     50
+5     C     60
+
+    def test_task_func(sample_df):
+        ax = task_func(sample_df, 'group', 'value')
+    
+        # Check if the plot is created correctly
+        assert isinstance(ax, plt.Axes)
+    
+        # Check if the correct number of bars are plotted
+        bars = ax.patches
+        assert len(bars) == 3, "There should be 3 bars, one for each group"
+    
+        # Check if the correct colors are used
+        expected_colors = ['r', 'g', 'b']
+        for i, bar in enumerate(bars):
+>           assert bar.get_facecolor() == expected_colors[i], f"Bar {i+1} should have color {expected_colors[i]}"
+E           AssertionError: Bar 1 should have color r
+E           assert (1.0, 0.0, 0.0, 1.0) == 'r'
+E            +  where (1.0, 0.0, 0.0, 1.0) = get_facecolor()
+E            +    where get_facecolor = <matplotlib.patches.Rectangle object at 0x7985840b3680>.get_facecolor
+
+test_0338.py:28: AssertionError
+=========================== short test summary info ============================
+FAILED test_0338.py::test_task_func - AssertionError: Bar 1 should have color r
+1 failed in 2.10s

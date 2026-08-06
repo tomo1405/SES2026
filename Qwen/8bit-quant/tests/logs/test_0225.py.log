@@ -1,0 +1,51 @@
+FF.F.                                                                    [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_default_values _________________________
+
+    def test_task_func_default_values():
+        data, ax, mean_fft, median_fft = task_func()
+        x_values = np.arange(-10, 10, 0.1)
+        expected_mean_fft = abs(np.mean(fft([abs(np.sin(x) - np.cos(x)) for x in x_values])))
+        expected_median_fft = abs(np.median(fft([abs(np.sin(x) - np.cos(x)) for x in x_values])))
+>       assert isinstance(data, list)
+E       assert False
+E        +  where False = isinstance(<generator object task_func.<locals>.<genexpr> at 0x7eb0a2a5d540>, list)
+
+test_0225.py:12: AssertionError
+_________________________ test_task_func_custom_range __________________________
+
+    def test_task_func_custom_range():
+        data, ax, mean_fft, median_fft = task_func(range_start=0, range_end=5, step=0.5)
+        x_values = np.arange(0, 5, 0.5)
+        expected_mean_fft = abs(np.mean(fft([abs(np.sin(x) - np.cos(x)) for x in x_values])))
+        expected_median_fft = abs(np.median(fft([abs(np.sin(x) - np.cos(x)) for x in x_values])))
+>       assert isinstance(data, list)
+E       assert False
+E        +  where False = isinstance(<generator object task_func.<locals>.<genexpr> at 0x7eb0a29e5640>, list)
+
+test_0225.py:22: AssertionError
+___________________________ test_task_func_step_zero ___________________________
+
+    def test_task_func_step_zero():
+        with pytest.raises(ValueError):
+>           task_func(step=0)
+
+test_0225.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+range_start = -10, range_end = 10, step = 0
+
+    def task_func(range_start=-10, range_end=10, step=0.1):
+        if range_start>range_end:
+            raise ValueError("range_start cannot be smaller than range_end.")
+    
+>       x_values = np.arange(range_start, range_end, step)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ZeroDivisionError: division by zero
+
+../../../src/src_0225.py:8: ZeroDivisionError
+=========================== short test summary info ============================
+FAILED test_0225.py::test_task_func_default_values - assert False
+FAILED test_0225.py::test_task_func_custom_range - assert False
+FAILED test_0225.py::test_task_func_step_zero - ZeroDivisionError: division b...
+3 failed, 2 passed in 2.94s

@@ -1,0 +1,47 @@
+FFF...                                                                   [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_output _____________________________
+
+    def test_task_func_output():
+        df = task_func()
+        assert isinstance(df, pd.DataFrame), "The function should return a pandas DataFrame."
+        assert 'Random Numbers' in df.columns, "DataFrame should contain 'Random Numbers' column."
+        assert 'Moving Average' in df.columns, "DataFrame should contain 'Moving Average' column."
+>       assert len(df) == SIZE, "DataFrame should have 1000 rows."
+                          ^^^^
+E       NameError: name 'SIZE' is not defined
+
+test_0581.py:12: NameError
+__________________________ test_random_numbers_range ___________________________
+
+    def test_random_numbers_range():
+        df = task_func()
+        random_numbers = df['Random Numbers']
+>       assert all(0 <= num <= RANGE for num in random_numbers), "All random numbers should be within the range 0 to 10000."
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0581.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <map object at 0x767d07315a50>
+
+>   assert all(0 <= num <= RANGE for num in random_numbers), "All random numbers should be within the range 0 to 10000."
+                           ^^^^^
+E   NameError: name 'RANGE' is not defined
+
+test_0581.py:17: NameError
+__________________________ test_moving_average_length __________________________
+
+    def test_moving_average_length():
+        df = task_func()
+        moving_avg = df['Moving Average']
+>       assert len(moving_avg) == SIZE, "Moving average list should have 1000 elements."
+                                  ^^^^
+E       NameError: name 'SIZE' is not defined
+
+test_0581.py:22: NameError
+=========================== short test summary info ============================
+FAILED test_0581.py::test_task_func_output - NameError: name 'SIZE' is not de...
+FAILED test_0581.py::test_random_numbers_range - NameError: name 'RANGE' is n...
+FAILED test_0581.py::test_moving_average_length - NameError: name 'SIZE' is n...
+3 failed, 3 passed in 2.41s

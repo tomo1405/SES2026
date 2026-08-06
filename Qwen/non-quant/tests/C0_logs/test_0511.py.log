@@ -1,0 +1,32 @@
+.F..                                                                     [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_different_files ________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1275/test_task_func_different_files0')
+
+    def test_task_func_different_files(tmp_path):
+        content1 = "Line 1\nLine 2\n"
+        content2 = "Line 1\nDifferent Line 2\nLine 3\n"
+    
+        file1 = tmp_path / "file1.gz"
+        file2 = tmp_path / "file2.gz"
+    
+        with gzip.open(file1, 'wt') as f:
+            f.write(content1)
+        with gzip.open(file2, 'wt') as f:
+            f.write(content2)
+    
+        result = task_func(str(file1), str(file2))
+        expected_diff = "- Line 2\n+ Different Line 2\n+ Line 3\n"
+>       assert result == expected_diff
+E       AssertionError: assert '+ Different ...2\n+ Line 3\n' == '- Line 2\n+ ...2\n+ Line 3\n'
+E         
+E         + + Different Line 2
+E           - Line 2
+E         - + Different Line 2
+E           + Line 3
+
+test_0511.py:33: AssertionError
+=========================== short test summary info ============================
+FAILED test_0511.py::test_task_func_different_files - AssertionError: assert ...
+1 failed, 3 passed in 0.47s

@@ -1,0 +1,52 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_valid_request _______________________
+
+    def test_task_func_with_valid_request():
+        client_socket = None
+        cert_file = "path/to/certfile"
+        key_file = "path/to/keyfile"
+        buffer_size = 1024
+        expected_response = "expected_response"
+    
+        try:
+            context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+>           context.load_cert_chain(certfile=cert_file, keyfile=key_file)
+E           FileNotFoundError: [Errno 2] No such file or directory
+
+test_1040.py:16: FileNotFoundError
+_____________________ test_task_func_with_invalid_request ______________________
+
+    def test_task_func_with_invalid_request():
+        client_socket = None
+        cert_file = "path/to/certfile"
+        key_file = "path/to/keyfile"
+        buffer_size = 1024
+        expected_response = "File not found"
+    
+        try:
+            context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+>           context.load_cert_chain(certfile=cert_file, keyfile=key_file)
+E           FileNotFoundError: [Errno 2] No such file or directory
+
+test_1040.py:40: FileNotFoundError
+________________________ test_task_func_with_exception _________________________
+
+    def test_task_func_with_exception():
+        client_socket = None
+        cert_file = "path/to/certfile"
+        key_file = "path/to/keyfile"
+        buffer_size = 1024
+        expected_response = "Error: Some exception occurred"
+    
+        try:
+            context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+>           context.load_cert_chain(certfile=cert_file, keyfile=key_file)
+E           FileNotFoundError: [Errno 2] No such file or directory
+
+test_1040.py:59: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_1040.py::test_task_func_with_valid_request - FileNotFoundError: [...
+FAILED test_1040.py::test_task_func_with_invalid_request - FileNotFoundError:...
+FAILED test_1040.py::test_task_func_with_exception - FileNotFoundError: [Errn...
+3 failed in 0.50s

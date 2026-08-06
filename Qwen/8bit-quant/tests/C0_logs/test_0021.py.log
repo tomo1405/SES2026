@@ -1,0 +1,41 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sample_csv_file = '/tmp/pytest-of-tomohiro-w/pytest-2042/test_task_func0/sample.csv'
+
+    def test_task_func(sample_csv_file):
+        df, ax = task_func(sample_csv_file)
+    
+        # Check if the DataFrame is correctly read and processed
+        assert isinstance(df, pd.DataFrame)
+        assert "dict_column" in df.columns
+        assert "hue_column" in df.columns
+    
+        # Check if 'dict_column' has been converted to dictionaries
+        for item in df["dict_column"]:
+            assert isinstance(item, dict)
+    
+        # Check if 'hue_column' is a string representation of dictionaries
+        for item in df["hue_column"]:
+            assert isinstance(item, str)
+>           assert ast.literal_eval(item) in df["dict_column"]
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0021.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:1958: in __contains__
+    return key in self._info_axis
+           ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = RangeIndex(start=0, stop=2, step=1), key = {'a': 1}
+
+    def __contains__(self, key: Any) -> bool:
+>       hash(key)
+E       TypeError: unhashable type: 'dict'
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/range.py:459: TypeError
+=========================== short test summary info ============================
+FAILED test_0021.py::test_task_func - TypeError: unhashable type: 'dict'
+1 failed in 4.30s

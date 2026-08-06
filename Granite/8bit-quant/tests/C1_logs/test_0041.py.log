@@ -1,0 +1,35 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data_matrix = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+        expected_feature_columns = ["Feature 1", "Feature 2", "Feature 3"]
+        expected_df = pd.DataFrame(zscore(data_matrix, axis=1), columns=expected_feature_columns)
+        expected_df["Mean"] = expected_df.mean(axis=1)
+        expected_correlation_matrix = expected_df.corr()
+        expected_ax = sns.heatmap(expected_correlation_matrix, annot=True, fmt=".2f")
+    
+        df, ax = task_func(data_matrix)
+    
+        assert isinstance(df, pd.DataFrame)
+>       assert isinstance(ax, sns.axisgrid.Axes)
+                              ^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'seaborn.axisgrid' has no attribute 'Axes'
+
+test_0041.py:18: AttributeError
+=============================== warnings summary ===============================
+Granite/8bit-quant/tests/test_0041.py::test_task_func
+Granite/8bit-quant/tests/test_0041.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/matrix.py:202: RuntimeWarning: All-NaN slice encountered
+    vmin = np.nanmin(calc_data)
+
+Granite/8bit-quant/tests/test_0041.py::test_task_func
+Granite/8bit-quant/tests/test_0041.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/matrix.py:207: RuntimeWarning: All-NaN slice encountered
+    vmax = np.nanmax(calc_data)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0041.py::test_task_func - AttributeError: module 'seaborn.axisgri...
+1 failed, 4 warnings in 3.59s

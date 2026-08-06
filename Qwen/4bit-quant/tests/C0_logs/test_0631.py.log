@@ -1,0 +1,63 @@
+FE                                                                       [100%]
+==================================== ERRORS ====================================
+_____________________ ERROR at teardown of test_task_func ______________________
+
+module = <module 'test_0631' from '/work/tomohiro-w/utg/Qwen/4bit-quant/tests/test_0631.py'>
+
+    def teardown_module(module):
+        if os.path.exists('./output'):
+            os.remove(os.path.join('./output', 'test_file.json'))
+>           os.rmdir('./output')
+E           OSError: [Errno 39] Directory not empty: './output'
+
+test_0631.py:45: OSError
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a sample DataFrame
+        data = {
+            'A': [1, 2, None],
+            'B': [None, 4, 5]
+        }
+        df = pd.DataFrame(data)
+    
+        # Define filename and output directory
+        filename = 'test_file.json'
+        output_dir = './output'
+    
+        # Call the function
+        result = task_func(df, filename, output_dir)
+    
+        # Check if the output directory exists
+        assert os.path.exists(output_dir), "Output directory does not exist"
+    
+        # Check if the file was created
+        expected_file_path = os.path.join(output_dir, filename)
+        assert os.path.isfile(expected_file_path), "File was not created"
+    
+        # Check if the function returns the correct file path
+        assert result == expected_file_path, "Function did not return the correct file path"
+    
+        # Read the content of the file to verify its contents
+        with open(expected_file_path, 'r') as f:
+            content = f.read()
+    
+        # Define the expected JSON content
+        expected_content = '[{"A": 1, "B": null}, {"A": 2, "B": 4}, {"A": null, "B": 5}]'
+    
+        # Check if the file content matches the expected content
+>       assert content == expected_content, "File content does not match the expected content"
+E       AssertionError: File content does not match the expected content
+E       assert '[{"A":1.0,"B...ull,"B":5.0}]' == '[{"A": 1, "B...ull, "B": 5}]'
+E         
+E         - [{"A": 1, "B": null}, {"A": 2, "B": 4}, {"A": null, "B": 5}]
+E         ?       -  -    -      -     -  -    -   -     -     -    -
+E         + [{"A":1.0,"B":null},{"A":2.0,"B":4.0},{"A":null,"B":5.0}]
+E         ?        ++                 ++      ++                 ++
+
+test_0631.py:39: AssertionError
+=========================== short test summary info ============================
+FAILED test_0631.py::test_task_func - AssertionError: File content does not m...
+ERROR test_0631.py::test_task_func - OSError: [Errno 39] Directory not empty:...
+1 failed, 1 error in 1.10s

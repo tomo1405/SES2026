@@ -1,0 +1,72 @@
+F..FFFF                                                                  [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        source_directory = "path/to/source/directory"
+        target_directory = "path/to/target/directory"
+>       converted_files = task_func(source_directory, target_directory)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0965.py:8: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+source_directory = 'path/to/source/directory'
+target_directory = 'path/to/target/directory'
+
+    def task_func(source_directory: str, target_directory: str) -> int:
+        converted_files = 0
+        extensions = [".txt", ".docx", ".xlsx", ".csv"]
+    
+        if not os.path.exists(source_directory):
+>           raise FileNotFoundError("source_directory must exist.")
+E           FileNotFoundError: source_directory must exist.
+
+../../../src/src_0965.py:10: FileNotFoundError
+____________________ test_task_func_with_invalid_extension _____________________
+
+    def test_task_func_with_invalid_extension():
+        source_directory = "path/to/source/directory"
+        target_directory = "path/to/target/directory"
+        with pytest.raises(ValueError):
+>           task_func(source_directory, target_directory, extensions=["invalid"])
+E           TypeError: task_func() got an unexpected keyword argument 'extensions'
+
+test_0965.py:30: TypeError
+_______________________ test_task_func_with_invalid_file _______________________
+
+    def test_task_func_with_invalid_file():
+        source_directory = "path/to/source/directory"
+        target_directory = "path/to/target/directory"
+        with pytest.raises(ValueError):
+>           task_func(source_directory, target_directory, file="invalid")
+E           TypeError: task_func() got an unexpected keyword argument 'file'
+
+test_0965.py:37: TypeError
+_____________________ test_task_func_with_invalid_filepath _____________________
+
+    def test_task_func_with_invalid_filepath():
+        source_directory = "path/to/source/directory"
+        target_directory = "path/to/target/directory"
+        with pytest.raises(ValueError):
+>           task_func(source_directory, target_directory, filepath="invalid")
+E           TypeError: task_func() got an unexpected keyword argument 'filepath'
+
+test_0965.py:44: TypeError
+_________________ test_task_func_with_invalid_target_filepath __________________
+
+    def test_task_func_with_invalid_target_filepath():
+        source_directory = "path/to/source/directory"
+        target_directory = "path/to/target/directory"
+        with pytest.raises(ValueError):
+>           task_func(source_directory, target_directory, target_filepath="invalid")
+E           TypeError: task_func() got an unexpected keyword argument 'target_filepath'
+
+test_0965.py:51: TypeError
+=========================== short test summary info ============================
+FAILED test_0965.py::test_task_func - FileNotFoundError: source_directory mus...
+FAILED test_0965.py::test_task_func_with_invalid_extension - TypeError: task_...
+FAILED test_0965.py::test_task_func_with_invalid_file - TypeError: task_func(...
+FAILED test_0965.py::test_task_func_with_invalid_filepath - TypeError: task_f...
+FAILED test_0965.py::test_task_func_with_invalid_target_filepath - TypeError:...
+5 failed, 2 passed in 1.42s

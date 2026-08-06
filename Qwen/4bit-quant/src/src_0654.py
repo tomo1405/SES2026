@@ -1,0 +1,11 @@
+import matplotlib.pyplot as plt
+import seaborn as sns
+def task_func(dataframe, target_value='332'):
+    mask = dataframe.applymap(lambda x: x == target_value)
+
+    # Plot the heatmap
+    plt.figure(figsize=(8, 6))
+    ax = sns.heatmap(mask, cmap='Blues', cbar=False)  # Adjusted to not display color bar for clarity in Boolean visualization
+    plt.show()
+
+    return mask, ax

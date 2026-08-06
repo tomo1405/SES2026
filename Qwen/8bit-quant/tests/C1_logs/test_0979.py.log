@@ -1,0 +1,68 @@
+.FFF..F                                                                  [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_empty_array __________________________
+
+    def test_task_func_empty_array():
+>       result = task_func(np.array([]))
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0979.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+array = array([], dtype=float64), seed = None
+
+    def task_func(array, seed=None):
+        if seed is not None:
+            np.random.seed(seed)
+    
+        if not isinstance(array, np.ndarray) or len(array.shape) != 2:
+>           raise ValueError("Input must be a 2D numpy array.")
+E           ValueError: Input must be a 2D numpy array.
+
+../../../src/src_0979.py:9: ValueError
+_______________________ test_task_func_zero_column_array _______________________
+
+    def test_task_func_zero_column_array():
+        result = task_func(np.array([[1], [2], [3]]))
+>       assert result.equals(pd.DataFrame(columns=["PC1", "PC2"]))
+E       AssertionError: assert False
+E        +  where False = equals(Empty DataFrame\nColumns: [PC1, PC2]\nIndex: [])
+E        +    where equals =    PC1\n0 -1.0\n1  0.0\n2  1.0.equals
+E        +    and   Empty DataFrame\nColumns: [PC1, PC2]\nIndex: [] = <class 'pandas.DataFrame'>(columns=['PC1', 'PC2'])
+E        +      where <class 'pandas.DataFrame'> = pd.DataFrame
+
+test_0979.py:16: AssertionError
+______________________ test_task_func_2d_array_with_seed _______________________
+
+    def test_task_func_2d_array_with_seed():
+        np.random.seed(42)
+        array = np.array([[1, 2], [3, 4], [5, 6]])
+        result = task_func(array, seed=42)
+        expected = pd.DataFrame({
+            "PC1": [-1.22474487, 0., 1.22474487],
+            "PC2": [-0.70710678, 0.70710678, -0.70710678]
+        })
+>       pd.testing.assert_frame_equal(result, expected, check_less_precise=1)
+E       TypeError: assert_frame_equal() got an unexpected keyword argument 'check_less_precise'
+
+test_0979.py:26: TypeError
+_____________________ test_task_func_more_than_two_columns _____________________
+
+    def test_task_func_more_than_two_columns():
+        np.random.seed(42)
+        array = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+        result = task_func(array, seed=42)
+        expected = pd.DataFrame({
+            "PC1": [-1.22474487, 0., 1.22474487],
+            "PC2": [-0.70710678, 0.70710678, -0.70710678]
+        })
+>       pd.testing.assert_frame_equal(result, expected, check_less_precise=1)
+E       TypeError: assert_frame_equal() got an unexpected keyword argument 'check_less_precise'
+
+test_0979.py:47: TypeError
+=========================== short test summary info ============================
+FAILED test_0979.py::test_task_func_empty_array - ValueError: Input must be a...
+FAILED test_0979.py::test_task_func_zero_column_array - AssertionError: asser...
+FAILED test_0979.py::test_task_func_2d_array_with_seed - TypeError: assert_fr...
+FAILED test_0979.py::test_task_func_more_than_two_columns - TypeError: assert...
+4 failed, 3 passed in 3.45s

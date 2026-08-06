@@ -1,0 +1,51 @@
+.F.F..                                                                   [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_empty_dataframe ________________________
+
+    def test_task_func_empty_dataframe():
+        df = pd.DataFrame(columns=['Customer', 'Sales', 'Category'])
+>       result = task_func(df)
+                 ^^^^^^^^^^^^^
+
+test_0233.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df = Empty DataFrame
+Columns: [Customer, Sales, Category]
+Index: []
+
+    def task_func(df):
+    
+        if not isinstance(df, pd.DataFrame):
+            raise ValueError("The input df is not a DataFrame")
+    
+        df = df.drop_duplicates(subset='Customer')
+        total_sales = df['Sales'].sum()
+>       popular_category = collections.Counter(df['Category']).most_common(1)[0][0]
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       IndexError: list index out of range
+
+../../../src/src_0233.py:10: IndexError
+__________________ test_task_func_multiple_rows_same_customer __________________
+
+    def test_task_func_multiple_rows_same_customer():
+        data = {
+            'Customer': ['A', 'A', 'B'],
+            'Sales': [100, 50, 200],
+            'Category': ['Electronics', 'Electronics', 'Clothing']
+        }
+        df = pd.DataFrame(data)
+        result = task_func(df)
+>       assert result == {'Total Sales': 350, 'Most Popular Category': 'Electronics'}
+E       AssertionError: assert {'Total Sales...'Electronics'} == {'Total Sales...'Electronics'}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'Total Sales': np.int64(300)} != {'Total Sales': 350}
+E         Use -v to get more diff
+
+test_0233.py:32: AssertionError
+=========================== short test summary info ============================
+FAILED test_0233.py::test_task_func_empty_dataframe - IndexError: list index ...
+FAILED test_0233.py::test_task_func_multiple_rows_same_customer - AssertionEr...
+2 failed, 4 passed in 1.04s

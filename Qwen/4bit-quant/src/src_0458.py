@@ -1,0 +1,10 @@
+import pandas as pd
+import numpy as np
+def task_func(L):
+
+    flattened = np.concatenate([l for l in L if l])
+    if not np.issubdtype(flattened.dtype, np.integer):
+        raise TypeError("Expected list of list of int")
+    bins = len(np.unique(flattened))
+    ax = pd.Series(flattened).plot(kind="hist", rwidth=0.8, bins=bins)
+    return ax

@@ -1,0 +1,46 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: range_start < range_end
+        range_start = -10
+        range_end = 10
+        step = 0.1
+        data, ax, mean_fft, median_fft = task_func(range_start, range_end, step)
+        assert data is not None
+        assert ax is not None
+        assert mean_fft is not None
+        assert median_fft is not None
+    
+        # Test case 2: range_start > range_end
+        range_start = 10
+        range_end = -10
+        step = 0.1
+        with pytest.raises(ValueError):
+            task_func(range_start, range_end, step)
+    
+        # Test case 3: step = 0
+        range_start = -10
+        range_end = 10
+        step = 0
+        with pytest.raises(ValueError):
+>           task_func(range_start, range_end, step)
+
+test_0225.py:30: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+range_start = -10, range_end = 10, step = 0
+
+    def task_func(range_start=-10, range_end=10, step=0.1):
+        if range_start>range_end:
+            raise ValueError("range_start cannot be smaller than range_end.")
+    
+>       x_values = np.arange(range_start, range_end, step)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ZeroDivisionError: division by zero
+
+../../../src/src_0225.py:8: ZeroDivisionError
+=========================== short test summary info ============================
+FAILED test_0225.py::test_task_func - ZeroDivisionError: division by zero
+1 failed in 2.83s

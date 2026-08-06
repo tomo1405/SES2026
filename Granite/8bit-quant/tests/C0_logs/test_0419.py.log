@@ -1,0 +1,187 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        X = [[0, 0], [0, 1], [1, 0], [1, 1]]
+        Y = [0, 1, 1, 0]
+    
+>       model, ax = task_func(X, Y)
+                    ^^^^^^^^^^^^^^^
+
+test_0419.py:8: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0419.py:11: in task_func
+    model.fit(X_train, Y_train, epochs=200, batch_size=1, verbose=0)
+../../../.venv/lib/python3.12/site-packages/keras/src/utils/traceback_utils.py:122: in error_handler
+    raise e.with_traceback(filtered_tb) from None
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+x = [[1, 0], [0, 0]], y = [1, 0], sample_weight = None, batch_size = 1
+steps_per_epoch = None, shuffle = True, class_weight = None
+
+    def get_data_adapter(
+        x,
+        y=None,
+        sample_weight=None,
+        batch_size=None,
+        steps_per_epoch=None,
+        shuffle=False,
+        class_weight=None,
+    ):
+        # Allow passing a custom data adapter.
+        if isinstance(x, data_adapter.DataAdapter):
+            return x
+    
+        # Check for multi-process/worker distribution.
+        distribution = distribution_lib.distribution()
+        if (
+            distribution is not None
+            and getattr(distribution, "_is_multi_process", False)
+            and getattr(distribution, "auto_shard_dataset", False)
+            and not is_tf_dataset(x)
+        ):
+            raise ValueError(
+                "When using a multi-worker distribution with auto-sharding enabled, "
+                "the data must be provided as a `tf.data.Dataset` instance. "
+                f"Received: type(x)={type(x)}. "
+                "If the dataset is already sharded across workers, then set "
+                "`distribution.auto_shard_dataset = False`."
+            )
+    
+        if array_data_adapter.can_convert_arrays((x, y, sample_weight)):
+            return ArrayDataAdapter(
+                x,
+                y,
+                sample_weight=sample_weight,
+                class_weight=class_weight,
+                shuffle=shuffle,
+                batch_size=batch_size,
+                steps=steps_per_epoch,
+            )
+        elif is_tf_dataset(x):
+            # Unsupported args: y, sample_weight, shuffle
+            if y is not None:
+                raise_unsupported_arg("y", "the targets", "tf.data.Dataset")
+            if sample_weight is not None:
+                raise_unsupported_arg(
+                    "sample_weights", "the sample weights", "tf.data.Dataset"
+                )
+            if shuffle:
+                warnings.warn(
+                    "`shuffle=True` was passed, but will be ignored since the "
+                    "data `x` was provided as a tf.data.Dataset. The Dataset is "
+                    "expected to already be shuffled "
+                    "(via `.shuffle(buffer_size)`).",
+                    stacklevel=2,
+                )
+            return TFDatasetAdapter(
+                x, class_weight=class_weight, distribution=distribution
+            )
+    
+        elif isinstance(x, py_dataset_adapter.PyDataset):
+            if y is not None:
+                raise_unsupported_arg("y", "the targets", "PyDataset")
+            if sample_weight is not None:
+                raise_unsupported_arg(
+                    "sample_weights", "the sample weights", "PyDataset"
+                )
+            if getattr(x, "num_batches", None) is None and shuffle:
+                warnings.warn(
+                    "`shuffle=True` was passed, but will be ignored since the "
+                    "data `x` was provided as an infinite PyDataset. The "
+                    "PyDataset is expected to already be shuffled.",
+                    stacklevel=2,
+                )
+            return PyDatasetAdapter(x, class_weight=class_weight, shuffle=shuffle)
+    
+        elif is_torch_dataloader(x):
+            if y is not None:
+                raise_unsupported_arg("y", "the targets", "torch DataLoader")
+            if sample_weight is not None:
+                raise_unsupported_arg(
+                    "sample_weights", "the sample weights", "torch DataLoader"
+                )
+            if class_weight is not None:
+                raise ValueError(
+                    "Argument `class_weight` is not supported for torch "
+                    f"DataLoader inputs. You can modify your `__getitem__ ` method"
+                    " to return input tensor, label and class_weight. "
+                    "Alternatively, use a custom training loop. See the User Guide "
+                    "https://keras.io/guides/custom_train_step_in_torch/"
+                    "#supporting-sampleweight-amp-classweight for more details. "
+                    f"Received: class_weight={class_weight}"
+                )
+            if shuffle:
+                warnings.warn(
+                    "`shuffle=True` was passed, but will be ignored since the "
+                    "data `x` was provided as a torch DataLoader. The DataLoader "
+                    "is expected to already be shuffled.",
+                    stacklevel=2,
+                )
+            return TorchDataLoaderAdapter(x)
+    
+        elif is_grain_dataset(x):
+            if y is not None:
+                raise_unsupported_arg(
+                    "y", "the targets", "grain.Dataset and grain.DataLoader"
+                )
+            if sample_weight is not None:
+                raise_unsupported_arg(
+                    "sample_weights",
+                    "the sample weights",
+                    "grain.Dataset and grain.DataLoader",
+                )
+            if class_weight is not None:
+                raise ValueError(
+                    "Argument `class_weight` is not supported for grain.Dataset "
+                    f"and grain.DataLoader inputs. You can modify your "
+                    "`__getitem__ ` method to return input tensor, label and "
+                    "class_weight. "
+                    f"Received: class_weight={class_weight}"
+                )
+            if shuffle:
+                warnings.warn(
+                    "`shuffle=True` was passed, but will be ignored since the "
+                    "data `x` was provided as a grain dataset. The grain dataset "
+                    "is expected to already be shuffled.",
+                    stacklevel=2,
+                )
+            return GrainDatasetAdapter(x)
+    
+        elif isinstance(x, types.GeneratorType):
+            if y is not None:
+                raise_unsupported_arg("y", "the targets", "generator")
+            if sample_weight is not None:
+                raise_unsupported_arg(
+                    "sample_weights", "the sample weights", "generator"
+                )
+            if class_weight is not None:
+                raise ValueError(
+                    "Argument `class_weight` is not supported for Python "
+                    f"generator inputs. Received: class_weight={class_weight}"
+                )
+            if shuffle:
+                warnings.warn(
+                    "`shuffle=True` was passed, but will be ignored since the "
+                    "data `x` was provided as a generator. The generator "
+                    "is expected to yield already-shuffled data.",
+                    stacklevel=2,
+                )
+            return GeneratorDataAdapter(x)
+        else:
+>           raise ValueError(f"Unrecognized data type: x={x} (of type {type(x)})")
+E           ValueError: Unrecognized data type: x=[[1, 0], [0, 0]] (of type <class 'list'>)
+
+../../../.venv/lib/python3.12/site-packages/keras/src/trainers/data_adapters/__init__.py:172: ValueError
+----------------------------- Captured stderr call -----------------------------
+E0000 00:00:1785223986.605306  650744 cuda_platform.cc:52] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: UNKNOWN ERROR (303)
+=============================== warnings summary ===============================
+Granite/8bit-quant/tests/test_0419.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/keras/src/layers/core/dense.py:107: UserWarning: Do not pass an `input_shape`/`input_dim` argument to a layer. When using Sequential models, prefer using an `Input(shape)` object as the first layer in the model instead.
+    super().__init__(activity_regularizer=activity_regularizer, **kwargs)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0419.py::test_task_func - ValueError: Unrecognized data type: x=[...
+1 failed, 1 warning in 9.76s

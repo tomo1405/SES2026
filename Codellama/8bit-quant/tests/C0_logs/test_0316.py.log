@@ -1,0 +1,131 @@
+FFF.                                                                     [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_valid_dir ___________________________
+
+    def test_task_func_valid_dir():
+        dir = 'test_dir'
+        api_key = 'test_api_key'
+        recipient_email = 'test@example.com'
+        file_list = ['file1.txt', 'file2.txt']
+    
+        with patch('os.listdir', return_value=file_list):
+>           assert task_func(dir, api_key, recipient_email) == True
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0316.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0316.py:21: in task_func
+    response = sg.send(message)
+               ^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sendgrid/base_interface.py:63: in send
+    return self.client.mail.send.post(request_body=message)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/python_http_client/client.py:277: in http_request
+    self._make_request(opener, request, timeout=timeout)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <python_http_client.client.Client object at 0x7c20feae1490>
+opener = <urllib.request.OpenerDirector object at 0x7c20feae1550>
+request = <urllib.request.Request object at 0x7c20feae18e0>, timeout = None
+
+    def _make_request(self, opener, request, timeout=None):
+        """Make the API call and return the response. This is separated into
+           it's own function, so we can mock it easily for testing.
+    
+        :param opener:
+        :type opener:
+        :param request: url payload to request
+        :type request: urllib.Request object
+        :param timeout: timeout value or None
+        :type timeout: float
+        :return: urllib response
+        """
+        timeout = timeout or self.timeout
+        try:
+            return opener.open(request, timeout=timeout)
+        except HTTPError as err:
+            exc = handle_error(err)
+            exc.__cause__ = None
+            _logger.debug('{method} Response: {status} {body}'.format(
+                method=request.get_method(),
+                status=exc.status_code,
+                body=exc.body))
+>           raise exc
+E           python_http_client.exceptions.UnauthorizedError: HTTP Error 401: Unauthorized
+
+../../../.venv/lib/python3.12/site-packages/python_http_client/client.py:184: UnauthorizedError
+----------------------------- Captured stdout call -----------------------------
+HTTP error occurred: HTTP Error 401: Unauthorized
+__________________________ test_task_func_invalid_dir __________________________
+
+    def test_task_func_invalid_dir():
+        dir = 'invalid_dir'
+        api_key = 'test_api_key'
+        recipient_email = 'test@example.com'
+    
+        with pytest.raises(FileNotFoundError):
+>           task_func(dir, api_key, recipient_email)
+
+test_0316.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0316.py:21: in task_func
+    response = sg.send(message)
+               ^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/sendgrid/base_interface.py:63: in send
+    return self.client.mail.send.post(request_body=message)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/python_http_client/client.py:277: in http_request
+    self._make_request(opener, request, timeout=timeout)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <python_http_client.client.Client object at 0x7c20feae0d70>
+opener = <urllib.request.OpenerDirector object at 0x7c20feae0cb0>
+request = <urllib.request.Request object at 0x7c20feae0b90>, timeout = None
+
+    def _make_request(self, opener, request, timeout=None):
+        """Make the API call and return the response. This is separated into
+           it's own function, so we can mock it easily for testing.
+    
+        :param opener:
+        :type opener:
+        :param request: url payload to request
+        :type request: urllib.Request object
+        :param timeout: timeout value or None
+        :type timeout: float
+        :return: urllib response
+        """
+        timeout = timeout or self.timeout
+        try:
+            return opener.open(request, timeout=timeout)
+        except HTTPError as err:
+            exc = handle_error(err)
+            exc.__cause__ = None
+            _logger.debug('{method} Response: {status} {body}'.format(
+                method=request.get_method(),
+                status=exc.status_code,
+                body=exc.body))
+>           raise exc
+E           python_http_client.exceptions.UnauthorizedError: HTTP Error 401: Unauthorized
+
+../../../.venv/lib/python3.12/site-packages/python_http_client/client.py:184: UnauthorizedError
+----------------------------- Captured stdout call -----------------------------
+HTTP error occurred: HTTP Error 401: Unauthorized
+________________________ test_task_func_sendgrid_error _________________________
+
+    def test_task_func_sendgrid_error():
+        dir = 'test_dir'
+        api_key = 'test_api_key'
+        recipient_email = 'test@example.com'
+        file_list = ['file1.txt', 'file2.txt']
+    
+        with patch('os.listdir', return_value=file_list):
+>           with patch('sendgrid.SendGridAPIClient.send', side_effect=HTTPError):
+                                                                      ^^^^^^^^^
+E           NameError: name 'HTTPError' is not defined
+
+test_0316.py:31: NameError
+=========================== short test summary info ============================
+FAILED test_0316.py::test_task_func_valid_dir - python_http_client.exceptions...
+FAILED test_0316.py::test_task_func_invalid_dir - python_http_client.exceptio...
+FAILED test_0316.py::test_task_func_sendgrid_error - NameError: name 'HTTPErr...
+3 failed, 1 passed in 1.57s

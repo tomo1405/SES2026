@@ -1,0 +1,39 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        target_value = '332'
+        array = np.array([['0', '1', '2'], ['a', 'bb', 'ccc'], ['332', '33', '2'], ['33', '22', '332']])
+        mean, variance, skewness, kurtosis = task_func(target_value, array)
+        assert isinstance(mean, float)
+>       assert isinstance(variance, float)
+E       AssertionError: assert False
+E        +  where False = isinstance('N/A', float)
+
+test_0653.py:11: AssertionError
+________________________ test_task_func_not_enough_data ________________________
+
+    def test_task_func_not_enough_data():
+        target_value = '332'
+        array = np.array([['0', '1', '2'], ['a', 'bb', 'ccc'], ['332', '33', '2']])
+        mean, variance, skewness, kurtosis = task_func(target_value, array)
+>       assert mean == 'N/A'
+E       AssertionError: assert np.float64(2.0) == 'N/A'
+
+test_0653.py:19: AssertionError
+_____________________________ test_task_func_plot ______________________________
+
+    def test_task_func_plot():
+        target_value = '332'
+        array = np.array([['0', '1', '2'], ['a', 'bb', 'ccc'], ['332', '33', '2'], ['33', '22', '332']])
+>       with pytest.warns(UserWarning):
+E       Failed: DID NOT WARN. No warnings of type (<class 'UserWarning'>,) were emitted.
+E        Emitted warnings: [].
+
+test_0653.py:27: Failed
+=========================== short test summary info ============================
+FAILED test_0653.py::test_task_func - AssertionError: assert False
+FAILED test_0653.py::test_task_func_not_enough_data - AssertionError: assert ...
+FAILED test_0653.py::test_task_func_plot - Failed: DID NOT WARN. No warnings ...
+3 failed in 3.19s

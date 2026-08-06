@@ -1,0 +1,55 @@
+F.FFF.                                                                   [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_valid_url ___________________________
+
+    def test_task_func_valid_url():
+        url = "https://example.com/example.zip"
+        result = task_func(url)
+>       assert result.startswith("mnt/data/downloads/")
+E       AssertionError: assert False
+E        +  where False = <built-in method startswith of str object at 0x77e118adc490>('mnt/data/downloads/')
+E        +    where <built-in method startswith of str object at 0x77e118adc490> = 'Error: Unable to download the file from the provided URL.'.startswith
+
+test_1007.py:8: AssertionError
+________________ test_task_func_valid_url_custom_download_path _________________
+
+    def test_task_func_valid_url_custom_download_path():
+        url = "https://example.com/example.zip"
+        download_path = "custom/download/path/"
+        result = task_func(url, download_path)
+>       assert result.startswith(download_path)
+E       AssertionError: assert False
+E        +  where False = <built-in method startswith of str object at 0x77e118adc490>('custom/download/path/')
+E        +    where <built-in method startswith of str object at 0x77e118adc490> = 'Error: Unable to download the file from the provided URL.'.startswith
+
+test_1007.py:19: AssertionError
+_____________________ test_task_func_invalid_content_type ______________________
+
+    def test_task_func_invalid_content_type():
+        url = "https://example.com/invalid.zip"
+        result = task_func(url)
+>       assert result == "Error: The URL does not point to a ZIP file."
+E       AssertionError: assert 'Error: Unabl...provided URL.' == 'Error: The U...o a ZIP file.'
+E         
+E         - Error: The URL does not point to a ZIP file.
+E         + Error: Unable to download the file from the provided URL.
+
+test_1007.py:24: AssertionError
+______________________ test_task_func_zip_file_corrupted _______________________
+
+    def test_task_func_zip_file_corrupted():
+        url = "https://example.com/corrupted.zip"
+        result = task_func(url)
+>       assert result == "Error: The downloaded file is not a valid ZIP file."
+E       AssertionError: assert 'Error: Unabl...provided URL.' == 'Error: The d...lid ZIP file.'
+E         
+E         - Error: The downloaded file is not a valid ZIP file.
+E         + Error: Unable to download the file from the provided URL.
+
+test_1007.py:29: AssertionError
+=========================== short test summary info ============================
+FAILED test_1007.py::test_task_func_valid_url - AssertionError: assert False
+FAILED test_1007.py::test_task_func_valid_url_custom_download_path - Assertio...
+FAILED test_1007.py::test_task_func_invalid_content_type - AssertionError: as...
+FAILED test_1007.py::test_task_func_zip_file_corrupted - AssertionError: asse...
+4 failed, 2 passed in 0.92s

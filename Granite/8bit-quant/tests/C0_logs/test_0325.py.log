@@ -1,0 +1,110 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        file_list = ["file1.txt", "file2.txt", "file3.txt"]
+        exit_codes = task_func(file_list)
+>       assert len(exit_codes) == len(file_list)
+E       AssertionError: assert 0 == 3
+E        +  where 0 = len([])
+E        +  and   3 = len(['file1.txt', 'file2.txt', 'file3.txt'])
+
+test_0325.py:9: AssertionError
+______________________ test_task_func_with_none_file_list ______________________
+
+    def test_task_func_with_none_file_list():
+        file_list = None
+>       exit_codes = task_func(file_list)
+                     ^^^^^^^^^^^^^^^^^^^^
+
+test_0325.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_list = None
+
+    def task_func(file_list):
+    
+        exit_codes = []
+    
+        def execute_file(file):
+            file_path = file
+            process = subprocess.Popen(file_path)
+            time.sleep(1)  # wait for the process to start
+            exit_codes.append(process.poll())  # store the exit code
+    
+        # Start a thread for each file
+>       threads = [threading.Thread(target=execute_file, args=(file,)) for file in file_list]
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: 'NoneType' object is not iterable
+
+../../../src/src_0325.py:15: TypeError
+=============================== warnings summary ===============================
+Granite/8bit-quant/tests/test_0325.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/_pytest/threadexception.py:58: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-3 (execute_file)
+  
+  Traceback (most recent call last):
+    File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
+      self.run()
+    File "/usr/lib/python3.12/threading.py", line 1010, in run
+      self._target(*self._args, **self._kwargs)
+    File "/work/tomohiro-w/utg/src/src_0325.py", line 10, in execute_file
+      process = subprocess.Popen(file_path)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/usr/lib/python3.12/subprocess.py", line 1026, in __init__
+      self._execute_child(args, executable, preexec_fn, close_fds,
+    File "/usr/lib/python3.12/subprocess.py", line 1955, in _execute_child
+      raise child_exception_type(errno_num, err_msg, err_filename)
+  FileNotFoundError: [Errno 2] No such file or directory: 'file3.txt'
+  
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+    warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+
+Granite/8bit-quant/tests/test_0325.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/_pytest/threadexception.py:58: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-2 (execute_file)
+  
+  Traceback (most recent call last):
+    File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
+      self.run()
+    File "/usr/lib/python3.12/threading.py", line 1010, in run
+      self._target(*self._args, **self._kwargs)
+    File "/work/tomohiro-w/utg/src/src_0325.py", line 10, in execute_file
+      process = subprocess.Popen(file_path)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/usr/lib/python3.12/subprocess.py", line 1026, in __init__
+      self._execute_child(args, executable, preexec_fn, close_fds,
+    File "/usr/lib/python3.12/subprocess.py", line 1955, in _execute_child
+      raise child_exception_type(errno_num, err_msg, err_filename)
+  FileNotFoundError: [Errno 2] No such file or directory: 'file2.txt'
+  
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+    warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+
+Granite/8bit-quant/tests/test_0325.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/_pytest/threadexception.py:58: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-1 (execute_file)
+  
+  Traceback (most recent call last):
+    File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
+      self.run()
+    File "/usr/lib/python3.12/threading.py", line 1010, in run
+      self._target(*self._args, **self._kwargs)
+    File "/work/tomohiro-w/utg/src/src_0325.py", line 10, in execute_file
+      process = subprocess.Popen(file_path)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/usr/lib/python3.12/subprocess.py", line 1026, in __init__
+      self._execute_child(args, executable, preexec_fn, close_fds,
+    File "/usr/lib/python3.12/subprocess.py", line 1955, in _execute_child
+      raise child_exception_type(errno_num, err_msg, err_filename)
+  FileNotFoundError: [Errno 2] No such file or directory: 'file1.txt'
+  
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+    warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0325.py::test_task_func - AssertionError: assert 0 == 3
+FAILED test_0325.py::test_task_func_with_none_file_list - TypeError: 'NoneTyp...
+2 failed, 1 passed, 3 warnings in 0.44s

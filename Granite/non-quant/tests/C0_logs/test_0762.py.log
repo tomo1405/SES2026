@@ -1,0 +1,38 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        json_str = '{"name": "John", "email": "john@example.com", "age": 30, "location": null}'
+        expected_output = {
+            "data": {
+                "name": "John",
+>               "email": REPLACE_NONE,
+                         ^^^^^^^^^^^^
+                "age": 30
+            },
+            "value_counts": Counter({30: 1, "John": 1, REPLACE_NONE: 1})
+        }
+E       NameError: name 'REPLACE_NONE' is not defined
+
+test_0762.py:11: NameError
+_____________________ test_task_func_with_non_string_value _____________________
+
+    def test_task_func_with_non_string_value():
+        json_str = '{"name": "John", "age": 30, "location": true}'
+        expected_output = {
+            "data": {
+                "name": "John",
+                "age": 30,
+>               "location": REPLACE_NONE
+                            ^^^^^^^^^^^^
+            },
+            "value_counts": Counter({30: 1, "John": 1, REPLACE_NONE: 1})
+        }
+E       NameError: name 'REPLACE_NONE' is not defined
+
+test_0762.py:34: NameError
+=========================== short test summary info ============================
+FAILED test_0762.py::test_task_func - NameError: name 'REPLACE_NONE' is not d...
+FAILED test_0762.py::test_task_func_with_non_string_value - NameError: name '...
+2 failed, 1 passed in 0.51s

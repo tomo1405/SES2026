@@ -1,0 +1,79 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_https_conn = <MagicMock name='HTTPSConnection' id='139643906953376'>
+mock_create_connection = <MagicMock name='create_connection' id='139643906958464'>
+mock_create_default_context = <MagicMock name='create_default_context' id='139643906961776'>
+
+    @patch('src_0315.ssl.create_default_context')
+    @patch('src_0315.socket.create_connection')
+    @patch('src_0315.http.client.HTTPSConnection')
+    def test_task_func(mock_https_conn, mock_create_connection, mock_create_default_context):
+        # Setup mock objects
+        mock_context = MagicMock()
+        mock_sock = MagicMock()
+        mock_ssock = MagicMock()
+        mock_response = MagicMock()
+        mock_conn = MagicMock()
+    
+        # Configure mocks
+        mock_create_default_context.return_value = mock_context
+        mock_create_connection.return_value = mock_sock
+        mock_context.wrap_socket.return_value = mock_ssock
+        mock_https_conn.return_value = mock_conn
+        mock_conn.getresponse.return_value = mock_response
+        mock_response.read.return_value = b'{"key": "value"}'
+    
+        # Test data
+        server_name = 'example.com'
+        server_port = 443
+        path = '/api/data'
+    
+        # Call the function
+        result = task_func(server_name, server_port, path)
+    
+        # Assertions
+        mock_create_default_context.assert_called_once()
+        mock_create_connection.assert_called_once_with((server_name, server_port))
+>       mock_context.wrap_socket.assert_called_once_with(mock_sock, server_hostname=server_name)
+
+test_0315.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/unittest/mock.py:956: in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='create_default_context().wrap_socket' id='139643903199520'>
+args = (<MagicMock name='create_connection()' id='139643903168240'>,)
+kwargs = {'server_hostname': 'example.com'}
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\n  Actual: %s'
+                    % (expected, actual))
+            raise AssertionError(error_message)
+    
+        def _error_message():
+            msg = self._format_mock_failure_message(args, kwargs)
+            return msg
+        expected = self._call_matcher(_Call((args, kwargs), two=True))
+        actual = self._call_matcher(self.call_args)
+        if actual != expected:
+            cause = expected if isinstance(expected, Exception) else None
+>           raise AssertionError(_error_message()) from cause
+E           AssertionError: expected call not found.
+E           Expected: wrap_socket(<MagicMock name='create_connection()' id='139643903168240'>, server_hostname='example.com')
+E             Actual: wrap_socket(<MagicMock name='create_connection().__enter__()' id='139643903171216'>, server_hostname='example.com')
+
+/usr/lib/python3.12/unittest/mock.py:944: AssertionError
+=========================== short test summary info ============================
+FAILED test_0315.py::test_task_func - AssertionError: expected call not found.
+1 failed in 0.50s

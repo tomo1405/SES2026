@@ -1,0 +1,74 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sample_df =      A    B    C
+0  1.0  5.0  foo
+1  2.0  NaN  bar
+2  NaN  NaN  baz
+3  4.0  8.0  qux
+
+    def test_task_func(sample_df):
+>       description, plots = task_func(sample_df)
+                             ^^^^^^^^^^^^^^^^^^^^
+
+test_0044.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0044.py:4: in task_func
+    df = df.fillna(df.mean(axis=0))
+                   ^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/util/_decorators.py:336: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:14473: in mean
+    result = super().mean(
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:11831: in mean
+    return self._stat_function(
+../../../.venv/lib/python3.12/site-packages/pandas/core/generic.py:11785: in _stat_function
+    return self._reduce(
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:13633: in _reduce
+    res = df._mgr.reduce(blk_func)
+          ^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/managers.py:1681: in reduce
+    res_blocks = [blk.reduce(func) for blk in self.blocks]
+                  ^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/blocks.py:358: in reduce
+    result = func(self.values)
+             ^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:13561: in blk_func
+    return values._reduce(name, skipna=skipna, keepdims=True, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <ArrowStringArray>
+['foo', 'bar', 'baz', 'qux']
+Length: 4, dtype: str
+name = 'mean', skipna = True, keepdims = True, kwargs = {}
+
+    def _reduce(
+        self, name: str, *, skipna: bool = True, keepdims: bool = False, **kwargs
+    ):
+        if self.dtype.na_value is np.nan and name in ["any", "all"]:
+            if not skipna:
+                nas = pc.is_null(self._pa_array)
+                arr = pc.or_kleene(nas, pc.not_equal(self._pa_array, ""))
+            else:
+                arr = pc.not_equal(self._pa_array, "")
+            result = ArrowExtensionArray(arr)._reduce(
+                name, skipna=skipna, keepdims=keepdims, **kwargs
+            )
+            if keepdims:
+                # ArrowExtensionArray will return a length-1 bool[pyarrow] array
+                return result.astype(np.bool_)
+            return result
+    
+        if name in ("min", "max", "sum", "argmin", "argmax"):
+            result = self._reduce_calc(name, skipna=skipna, keepdims=keepdims, **kwargs)
+        else:
+>           raise TypeError(f"Cannot perform reduction '{name}' with string dtype")
+E           TypeError: Cannot perform reduction 'mean' with string dtype
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/arrays/string_arrow.py:563: TypeError
+=========================== short test summary info ============================
+FAILED test_0044.py::test_task_func - TypeError: Cannot perform reduction 'me...
+1 failed in 3.62s

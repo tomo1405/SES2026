@@ -1,0 +1,26 @@
+....F.                                                                   [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_sensor_values _________________________
+
+    def test_task_func_sensor_values():
+        df = task_func(start_time=1000, end_time=2000, step=100)
+        for index, row in df.iterrows():
+            ts = row["Timestamp"]
+            dt = datetime.strptime(ts, "%Y-%m-%d %H:%M:%S.%f").timestamp() * 1000
+>           assert math.isclose(row["Sensor1"], math.sin(dt / 1000), rel_tol=0.1)
+E           assert False
+E            +  where False = <built-in function isclose>(0.8911424001090198, -0.2425917070272344, rel_tol=0.1)
+E            +    where <built-in function isclose> = math.isclose
+E            +    and   -0.2425917070272344 = <built-in function sin>((-32399000.0 / 1000))
+E            +      where <built-in function sin> = math.sin
+
+test_0485.py:33: AssertionError
+=============================== warnings summary ===============================
+Qwen/non-quant/tests/test_0485.py: 40 warnings
+  /work/tomohiro-w/utg/src/src_0485.py:24: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+    dt = datetime.utcfromtimestamp(ts / 1000).strftime("%Y-%m-%d %H:%M:%S.%f")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0485.py::test_task_func_sensor_values - assert False
+1 failed, 5 passed, 40 warnings in 1.10s

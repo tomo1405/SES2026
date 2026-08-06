@@ -1,0 +1,73 @@
+F.FF                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_valid_input ________________________
+
+    def test_task_func_with_valid_input():
+        script_name = 'backup.sh'
+        log_file = '/home/user/backup_log.json'
+>       log_data = task_func(script_name, log_file)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0013.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+script_name = 'backup.sh', log_file = '/home/user/backup_log.json'
+
+    def task_func(script_name='backup.sh', log_file='/home/user/backup_log.json'):
+        log_data = {}
+    
+        if not os.path.isfile(script_name):
+>           raise FileNotFoundError(f"Script {script_name} does not exist.")
+E           FileNotFoundError: Script backup.sh does not exist.
+
+../../../src/src_0013.py:9: FileNotFoundError
+_____________________ test_task_func_with_invalid_log_file _____________________
+
+    def test_task_func_with_invalid_log_file():
+        script_name = 'backup.sh'
+        log_file = '/invalid/log/file.json'
+        with pytest.raises(RuntimeError):
+>           task_func(script_name, log_file)
+
+test_0013.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+script_name = 'backup.sh', log_file = '/invalid/log/file.json'
+
+    def task_func(script_name='backup.sh', log_file='/home/user/backup_log.json'):
+        log_data = {}
+    
+        if not os.path.isfile(script_name):
+>           raise FileNotFoundError(f"Script {script_name} does not exist.")
+E           FileNotFoundError: Script backup.sh does not exist.
+
+../../../src/src_0013.py:9: FileNotFoundError
+_______________ test_task_func_with_invalid_script_and_log_file ________________
+
+    def test_task_func_with_invalid_script_and_log_file():
+        script_name = 'invalid_script.sh'
+        log_file = '/invalid/log/file.json'
+        with pytest.raises(FileNotFoundError) as excinfo:
+            task_func(script_name, log_file)
+        assert 'Script invalid_script.sh does not exist.' in str(excinfo.value)
+        with pytest.raises(RuntimeError) as excinfo:
+>           task_func(script_name, log_file)
+
+test_0013.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+script_name = 'invalid_script.sh', log_file = '/invalid/log/file.json'
+
+    def task_func(script_name='backup.sh', log_file='/home/user/backup_log.json'):
+        log_data = {}
+    
+        if not os.path.isfile(script_name):
+>           raise FileNotFoundError(f"Script {script_name} does not exist.")
+E           FileNotFoundError: Script invalid_script.sh does not exist.
+
+../../../src/src_0013.py:9: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0013.py::test_task_func_with_valid_input - FileNotFoundError: Scr...
+FAILED test_0013.py::test_task_func_with_invalid_log_file - FileNotFoundError...
+FAILED test_0013.py::test_task_func_with_invalid_script_and_log_file - FileNo...
+3 failed, 1 passed in 0.40s

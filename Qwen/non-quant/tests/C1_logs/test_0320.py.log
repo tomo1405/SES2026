@@ -1,0 +1,53 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        example_str = "This is a test [example] string with some words [and] more words."
+        ax, top_n_words = task_func(example_str, top_n=5)
+    
+        # Check if the returned object is a matplotlib AxesSubplot
+        assert isinstance(ax, plt.Axes)
+    
+        # Check if the top_n_words is a dictionary
+        assert isinstance(top_n_words, dict)
+    
+        # Check if the dictionary contains the correct number of items
+        assert len(top_n_words) == 5
+    
+        # Check if the dictionary contains the correct words and frequencies
+        expected_words = {'words', 'test', 'a', 'is', 'with'}
+>       assert set(top_n_words.keys()) == expected_words
+E       AssertionError: assert {'This', 'a',...ring', 'test'} == {'a', 'is', '...ith', 'words'}
+E         
+E         Extra items in the left set:
+E         'string'
+E         'This'
+E         Extra items in the right set:
+E         'with'
+E         'words'
+E         Use -v to get more diff
+
+test_0320.py:21: AssertionError
+________________ test_task_func_top_n_greater_than_unique_words ________________
+
+    def test_task_func_top_n_greater_than_unique_words():
+        example_str = "Single word repeated"
+        ax, top_n_words = task_func(example_str, top_n=10)
+    
+        # Check if the returned object is a matplotlib AxesSubplot
+        assert isinstance(ax, plt.Axes)
+    
+        # Check if the top_n_words is a dictionary
+        assert isinstance(top_n_words, dict)
+    
+        # Check if the dictionary contains the correct number of items
+>       assert len(top_n_words) == 1
+E       assert 0 == 1
+E        +  where 0 = len({})
+
+test_0320.py:34: AssertionError
+=========================== short test summary info ============================
+FAILED test_0320.py::test_task_func - AssertionError: assert {'This', 'a',......
+FAILED test_0320.py::test_task_func_top_n_greater_than_unique_words - assert ...
+2 failed, 1 passed in 4.20s

@@ -1,0 +1,39 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test 1: Threshold is not an integer
+        with pytest.raises(ValueError):
+            task_func(threshold=128.5)
+    
+        # Test 2: Threshold is not between 0 and 255
+        with pytest.raises(ValueError):
+            task_func(threshold=-1)
+    
+        # Test 3: Image path does not exist
+        with pytest.raises(FileNotFoundError):
+            task_func(image_path='image.jpg')
+    
+        # Test 4: Image path exists but is not a valid image file
+        with pytest.raises(ValueError):
+>           task_func(image_path='image.txt')
+
+test_0424.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+image_path = 'image.txt', threshold = 128
+
+    def task_func(image_path='image.jpg', threshold=128):
+    
+        if not isinstance(threshold, int) or not (0 <= threshold <= 255):
+            raise ValueError("Threshold must be an integer between 0 and 255.")
+    
+        if not os.path.exists(image_path):
+>           raise FileNotFoundError(f"No image found at {image_path}")
+E           FileNotFoundError: No image found at image.txt
+
+../../../src/src_0424.py:10: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0424.py::test_task_func - FileNotFoundError: No image found at im...
+1 failed in 0.67s

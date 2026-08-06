@@ -1,0 +1,18 @@
+import pytest
+from src_0008 import task_func
+
+def test_task_func():
+    csv_file_path = 'path/to/csv/file'
+    expected_top_selling_product = 'Product A'
+
+    with open(csv_file_path, 'r') as f:
+        reader = csv.reader(f)
+        next(reader)  # Skip the header row
+        sales_data = collections.defaultdict(int)
+        for row in reader:
+            product, quantity = row[0], int(row[1])
+            sales_data[product] += quantity
+
+    top_selling_product = max(sales_data.items(), key=operator.itemgetter(1))[0]
+
+    assert top_selling_product == expected_top_selling_product

@@ -1,0 +1,76 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_with_no_data __________________________
+
+    def test_task_func_with_no_data():
+        data = []
+>       ax = task_func(data)
+             ^^^^^^^^^^^^^^^
+
+test_0211.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = []
+
+    def task_func(data):
+        letter_counts = collections.Counter([item[0] for item in data])
+>       max_value_letter = max(data, key=itemgetter(1))[0]
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: max() iterable argument is empty
+
+../../../src/src_0211.py:6: ValueError
+_______________________ test_task_func_with_single_entry _______________________
+
+    def test_task_func_with_single_entry():
+        data = [('a', 1)]
+        ax = task_func(data)
+>       assert len(ax.patches) == 1, "One bar should be present for single entry"
+E       AssertionError: One bar should be present for single entry
+E       assert 2 == 1
+E        +  where 2 = len(<Axes.ArtistList of 2 patches>)
+E        +    where <Axes.ArtistList of 2 patches> = <Axes: title={'center': 'Letter Counts with Max Value Letter Highlighted'}, xlabel='Letter', ylabel='Count'>.patches
+
+test_0211.py:16: AssertionError
+_____________________ test_task_func_with_multiple_entries _____________________
+
+    def test_task_func_with_multiple_entries():
+        data = [('a', 1), ('b', 2), ('c', 3), ('a', 4)]
+        ax = task_func(data)
+>       assert len(ax.patches) == 3, "Three bars should be present for multiple entries"
+E       AssertionError: Three bars should be present for multiple entries
+E       assert 4 == 3
+E        +  where 4 = len(<Axes.ArtistList of 4 patches>)
+E        +    where <Axes.ArtistList of 4 patches> = <Axes: title={'center': 'Letter Counts with Max Value Letter Highlighted'}, xlabel='Letter', ylabel='Count'>.patches
+
+test_0211.py:25: AssertionError
+_______________ test_task_func_with_max_value_letter_not_in_data _______________
+
+    def test_task_func_with_max_value_letter_not_in_data():
+        data = [('x', 1), ('y', 2), ('z', 3)]
+        ax = task_func(data)
+>       assert len(ax.patches) == 3, "Three bars should be present"
+E       AssertionError: Three bars should be present
+E       assert 4 == 3
+E        +  where 4 = len(<Axes.ArtistList of 4 patches>)
+E        +    where <Axes.ArtistList of 4 patches> = <Axes: title={'center': 'Letter Counts with Max Value Letter Highlighted'}, xlabel='Letter', ylabel='Count'>.patches
+
+test_0211.py:36: AssertionError
+_____________________ test_task_func_with_identical_values _____________________
+
+    def test_task_func_with_identical_values():
+        data = [('a', 1), ('b', 1), ('c', 1)]
+        ax = task_func(data)
+>       assert len(ax.patches) == 3, "Three bars should be present"
+E       AssertionError: Three bars should be present
+E       assert 4 == 3
+E        +  where 4 = len(<Axes.ArtistList of 4 patches>)
+E        +    where <Axes.ArtistList of 4 patches> = <Axes: title={'center': 'Letter Counts with Max Value Letter Highlighted'}, xlabel='Letter', ylabel='Count'>.patches
+
+test_0211.py:46: AssertionError
+=========================== short test summary info ============================
+FAILED test_0211.py::test_task_func_with_no_data - ValueError: max() iterable...
+FAILED test_0211.py::test_task_func_with_single_entry - AssertionError: One b...
+FAILED test_0211.py::test_task_func_with_multiple_entries - AssertionError: T...
+FAILED test_0211.py::test_task_func_with_max_value_letter_not_in_data - Asser...
+FAILED test_0211.py::test_task_func_with_identical_values - AssertionError: T...
+5 failed in 1.54s

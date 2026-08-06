@@ -1,0 +1,56 @@
+.F.FF.                                                                   [100%]
+=================================== FAILURES ===================================
+_________________ test_task_func_nonexistent_source_directory __________________
+
+    def test_task_func_nonexistent_source_directory():
+        with tempfile.TemporaryDirectory() as target_dir:
+            zip_name = "test_zip"
+>           with pytest.raises(OSError) as excinfo:
+E           Failed: DID NOT RAISE OSError
+
+test_0964.py:24: Failed
+___________________ test_task_func_existing_target_directory ___________________
+
+    def test_task_func_existing_target_directory():
+        with tempfile.TemporaryDirectory() as source_dir, tempfile.TemporaryDirectory() as target_dir:
+            # Create some sample files in the source directory
+            for ext in [".txt", ".docx", ".xlsx", ".csv"]:
+                open(os.path.join(source_dir, f"file{ext}"), 'a').close()
+    
+            zip_name = "test_zip"
+            result1 = task_func(source_dir, target_dir, zip_name)
+            result2 = task_func(source_dir, target_dir, zip_name)
+    
+            assert os.path.exists(result1)
+            assert os.path.exists(result2)
+>           assert result1 != result2
+E           AssertionError: assert '/tmp/tmpvkstrx57/test_zip.zip' != '/tmp/tmpvkstrx57/test_zip.zip'
+
+test_0964.py:50: AssertionError
+__________________ test_task_func_with_whitespace_in_zip_name __________________
+
+    def test_task_func_with_whitespace_in_zip_name():
+        with tempfile.TemporaryDirectory() as source_dir, tempfile.TemporaryDirectory() as target_dir:
+            # Create some sample files in the source directory
+            for ext in [".txt", ".docx", ".xlsx", ".csv"]:
+                open(os.path.join(source_dir, f"file{ext}"), 'a').close()
+    
+            zip_name = " test zip "
+            result = task_func(source_dir, target_dir, zip_name)
+    
+            assert os.path.exists(result)
+            assert result.endswith(".zip")
+>           assert os.path.basename(result) == "test_zip.zip"
+E           AssertionError: assert 'test zip.zip' == 'test_zip.zip'
+E             
+E             - test_zip.zip
+E             ?     ^
+E             + test zip.zip
+E             ?     ^
+
+test_0964.py:63: AssertionError
+=========================== short test summary info ============================
+FAILED test_0964.py::test_task_func_nonexistent_source_directory - Failed: DI...
+FAILED test_0964.py::test_task_func_existing_target_directory - AssertionErro...
+FAILED test_0964.py::test_task_func_with_whitespace_in_zip_name - AssertionEr...
+3 failed, 3 passed in 0.51s

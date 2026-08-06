@@ -1,0 +1,26 @@
+.F                                                                       [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_sample_array __________________________
+
+sample_array = array([[1, 2, 3],
+       [4, 5, 6],
+       [7, 8, 9]])
+
+    def test_task_func_sample_array(sample_array):
+        ax = task_func(sample_array)
+        assert isinstance(ax, plt.Axes)
+        assert ax.get_title() == "Time Series of Row Sums"
+    
+        expected_dates = pd.date_range(start="1/1/2020", periods=3)
+        actual_dates = ax.lines[0].get_xdata()
+    
+>       assert all(expected_dates == actual_dates)
+E       AssertionError: assert False
+E        +  where False = all(DatetimeIndex...s]', freq='D') == array([Period... dtype=object)
+E           
+E           Use -v to get more diff)
+
+test_1063.py:28: AssertionError
+=========================== short test summary info ============================
+FAILED test_1063.py::test_task_func_sample_array - AssertionError: assert False
+1 failed, 1 passed in 2.30s

@@ -1,0 +1,33 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        csv_content = "col1,col2,col3\n1,2,3\n4,5,6"
+        filename = "test_file.xls"
+        expected_path = os.path.abspath(filename)
+    
+        result = task_func(csv_content, filename)
+    
+        assert result == expected_path
+    
+        with open(result, "rb") as f:
+            book = xlwt.Workbook(f)
+>           sheet1 = book.get_sheet(0)
+                     ^^^^^^^^^^^^^^^^^
+
+test_0500.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <xlwt.Workbook.Workbook object at 0x75b6fd29d970>, sheet = 0
+
+    def get_sheet(self, sheet):
+        if isinstance(sheet, int_types):
+>           return self.__worksheets[sheet]
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+E           IndexError: list index out of range
+
+../../../.venv/lib/python3.12/site-packages/xlwt/Workbook.py:378: IndexError
+=========================== short test summary info ============================
+FAILED test_0500.py::test_task_func - IndexError: list index out of range
+1 failed in 0.50s

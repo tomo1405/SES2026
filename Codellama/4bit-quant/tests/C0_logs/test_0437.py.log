@@ -1,0 +1,36 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that the function raises a TypeError when the input is not a string
+        with pytest.raises(TypeError):
+            task_func(123)
+    
+        # Test that the function returns a dictionary and a matplotlib Axes object
+        result = task_func("hello world")
+        assert isinstance(result, tuple)
+        assert isinstance(result[0], dict)
+        assert isinstance(result[1], matplotlib.axes.Axes)
+    
+        # Test that the dictionary contains the correct keys and values
+        letter_counts, ax = result
+        assert set(letter_counts.keys()) == set(string.ascii_lowercase)
+        assert all(isinstance(value, int) for value in letter_counts.values())
+    
+        # Test that the Axes object has the correct labels and title
+        assert ax.get_xlabel() == "Letters"
+        assert ax.get_ylabel() == "Frequency"
+        assert ax.get_title() == "Letter Frequencies"
+    
+        # Test that the Axes object has the correct bar plot
+>       assert ax.get_xlim() == (0, 26)
+E       assert (np.float64(-...loat64(26.69)) == (0, 26)
+E         
+E         At index 0 diff: np.float64(-1.69) != 0
+E         Use -v to get more diff
+
+test_0437.py:30: AssertionError
+=========================== short test summary info ============================
+FAILED test_0437.py::test_task_func - assert (np.float64(-...loat64(26.69)) =...
+1 failed in 1.51s

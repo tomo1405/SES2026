@@ -1,0 +1,45 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test 1: Empty DataFrame
+        df = pd.DataFrame()
+        with pytest.raises(ValueError):
+            task_func(df)
+    
+        # Test 2: DataFrame without required columns
+        df = pd.DataFrame({'group': [1, 2, 3], 'date': [1, 2, 3], 'value': [1, 2, 3]})
+        with pytest.raises(ValueError):
+            task_func(df)
+    
+        # Test 3: 'date' column not in datetime format
+        df = pd.DataFrame({'group': [1, 2, 3], 'date': [1, 2, 3], 'value': [1, 2, 3]})
+        with pytest.raises(ValueError):
+            task_func(df)
+    
+        # Test 4: Valid DataFrame
+        df = pd.DataFrame({'group': [1, 2, 3], 'date': [1, 2, 3], 'value': [1, 2, 3]})
+>       heatmap_fig, pairplot_grid = task_func(df)
+                                     ^^^^^^^^^^^^^
+
+test_0106.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df =    group  date  value
+0      1     1      1
+1      2     2      2
+2      3     3      3
+
+    def task_func(df):
+        if df.empty or not all(col in df.columns for col in ['group', 'date', 'value']):
+            raise ValueError("DataFrame must be non-empty and contain 'group', 'date', and 'value' columns.")
+    
+        if not pd.api.types.is_datetime64_any_dtype(df['date']):
+>           raise ValueError("'date' column must be in datetime format.")
+E           ValueError: 'date' column must be in datetime format.
+
+../../../src/src_0106.py:9: ValueError
+=========================== short test summary info ============================
+FAILED test_0106.py::test_task_func - ValueError: 'date' column must be in da...
+1 failed in 3.29s

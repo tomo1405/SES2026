@@ -1,0 +1,32 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        source_directory = "path/to/source/directory"
+        target_directory = "path/to/target/directory"
+        zip_name = "my_zip_file"
+    
+        with pytest.raises(OSError):
+            task_func(source_directory="invalid_directory", target_directory=target_directory, zip_name=zip_name)
+    
+>       zip_path = task_func(source_directory=source_directory, target_directory=target_directory, zip_name=zip_name)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0964.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+source_directory = 'path/to/source/directory'
+target_directory = 'path/to/target/directory', zip_name = 'my_zip_file'
+
+    def task_func(source_directory, target_directory, zip_name):
+        if not os.path.exists(source_directory):
+>           raise OSError("source_directory must exist.")
+E           OSError: source_directory must exist.
+
+test_0964.py:9: OSError
+=========================== short test summary info ============================
+FAILED test_0964.py::test_task_func - OSError: source_directory must exist.
+1 failed in 0.49s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

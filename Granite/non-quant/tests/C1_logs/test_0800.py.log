@@ -1,0 +1,45 @@
+...FF.                                                                   [100%]
+=================================== FAILURES ===================================
+_________________ test_random_seed[123-expected_common_rows0] __________________
+
+input_list = [['a', 'b', 'c'], ['d', 'e', 'f'], ['g', 'h', 'i']]
+random_seed = 123, expected_common_rows =    a  b  c
+0  a  b  c
+1  d  e  f
+
+    @pytest.mark.parametrize("random_seed, expected_common_rows", [
+        (123, pd.DataFrame([['a', 'b', 'c'], ['d', 'e', 'f']], columns=['a', 'b', 'c'])),
+        (456, pd.DataFrame([['g', 'h', 'i']], columns=['g', 'h', 'i'])),
+    ])
+    def test_random_seed(input_list, random_seed, expected_common_rows):
+        seed(random_seed)
+        common_rows, dataframes = task_func(input_list)
+>       assert common_rows.equals(expected_common_rows)
+E       assert False
+E        +  where False = equals(   a  b  c\n0  a  b  c\n1  d  e  f)
+E        +    where equals =    b  c  k\n0  a  b  c\n1  g  h  i\n3  d  e  f.equals
+
+test_0800.py:26: AssertionError
+_________________ test_random_seed[456-expected_common_rows1] __________________
+
+input_list = [['a', 'b', 'c'], ['d', 'e', 'f'], ['g', 'h', 'i']]
+random_seed = 456, expected_common_rows =    g  h  i
+0  g  h  i
+
+    @pytest.mark.parametrize("random_seed, expected_common_rows", [
+        (123, pd.DataFrame([['a', 'b', 'c'], ['d', 'e', 'f']], columns=['a', 'b', 'c'])),
+        (456, pd.DataFrame([['g', 'h', 'i']], columns=['g', 'h', 'i'])),
+    ])
+    def test_random_seed(input_list, random_seed, expected_common_rows):
+        seed(random_seed)
+        common_rows, dataframes = task_func(input_list)
+>       assert common_rows.equals(expected_common_rows)
+E       assert False
+E        +  where False = equals(   g  h  i\n0  g  h  i)
+E        +    where equals =    t  z  l\n0  g  h  i\n1  d  e  f\n6  a  b  c.equals
+
+test_0800.py:26: AssertionError
+=========================== short test summary info ============================
+FAILED test_0800.py::test_random_seed[123-expected_common_rows0] - assert False
+FAILED test_0800.py::test_random_seed[456-expected_common_rows1] - assert False
+2 failed, 4 passed in 1.22s

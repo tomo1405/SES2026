@@ -1,0 +1,47 @@
+..F                                                                      [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        # Test with invalid input
+        with pytest.raises(ValueError):
+>           task_func(animals="invalid", foods="invalid")
+
+test_1058.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1058.py:31: in task_func
+    df = pd.DataFrame(data, columns=foods)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:814: in __init__
+    mgr = ndarray_to_mgr(
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:295: in ndarray_to_mgr
+    index, columns = _get_axes(
+../../../.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:722: in _get_axes
+    columns = ensure_index(columns)
+              ^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py:7975: in ensure_index
+    return Index(index_like, copy=copy)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py:541: in __new__
+    raise cls._raise_scalar_data_error(data)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cls = <class 'pandas.Index'>, data = 'invalid'
+
+    @final
+    @classmethod
+    def _raise_scalar_data_error(cls, data):
+        # We return the TypeError so that we can raise it from the constructor
+        #  in order to keep mypy happy
+>       raise TypeError(
+            f"{cls.__name__}(...) must be called with a collection of some "
+            f"kind, {repr(data) if not isinstance(data, np.generic) else str(data)} "
+            "was passed"
+        )
+E       TypeError: Index(...) must be called with a collection of some kind, 'invalid' was passed
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/base.py:5280: TypeError
+=========================== short test summary info ============================
+FAILED test_1058.py::test_task_func_invalid_input - TypeError: Index(...) mus...
+1 failed, 2 passed in 1.74s

@@ -1,0 +1,45 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        epoch_milliseconds = 1647225600000
+        teams = ["Team1", "Team2", "Team3", "Team4", "Team5"]
+        random_seed = 0
+    
+        performance_data, fig = task_func(epoch_milliseconds, teams, random_seed)
+    
+        assert isinstance(performance_data, dict)
+        assert all(isinstance(team, str) for team in teams)
+>       assert all(isinstance(performance, float) for performance in performance_data.values())
+E       assert False
+E        +  where False = all(<generator object test_task_func.<locals>.<genexpr> at 0x79dc02161460>)
+
+test_0494.py:13: AssertionError
+_________________________ test_task_func_invalid_teams _________________________
+
+    def test_task_func_invalid_teams():
+        epoch_milliseconds = 1647225600000
+        teams = ["Team1", "Team2", "Team3", "Team4", "Team5"]
+        random_seed = 0
+    
+>       with pytest.raises(TypeError):
+E       Failed: DID NOT RAISE TypeError
+
+test_0494.py:24: Failed
+____________________ test_task_func_invalid_epoch_timestamp ____________________
+
+    def test_task_func_invalid_epoch_timestamp():
+        epoch_milliseconds = 1647225600000
+        teams = ["Team1", "Team2", "Team3", "Team4", "Team5"]
+        random_seed = 0
+    
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0494.py:32: Failed
+=========================== short test summary info ============================
+FAILED test_0494.py::test_task_func - assert False
+FAILED test_0494.py::test_task_func_invalid_teams - Failed: DID NOT RAISE Typ...
+FAILED test_0494.py::test_task_func_invalid_epoch_timestamp - Failed: DID NOT...
+3 failed in 1.55s

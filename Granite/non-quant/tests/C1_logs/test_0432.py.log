@@ -1,0 +1,33 @@
+F..                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        image_file = "test_image.jpg"
+        histogram_expected = np.random.randint(0, 256, size=256)
+    
+        with open(image_file, "wb") as f:
+            f.write(os.urandom(1024))
+    
+        img = cv2.imread(image_file, cv2.IMREAD_GRAYSCALE)
+>       histogram_actual = task_func(image_file)
+                           ^^^^^^^^^^^^^^^^^^^^^
+
+test_0432.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+image_file = 'test_image.jpg'
+
+    def task_func(image_file: str) -> np.ndarray:
+        if not os.path.exists(image_file):
+            raise FileNotFoundError(f"The file {image_file} does not exist.")
+    
+        img = cv2.imread(image_file, cv2.IMREAD_GRAYSCALE)
+        if img is None:
+>           raise ValueError("Invalid image file.")
+E           ValueError: Invalid image file.
+
+../../../src/src_0432.py:10: ValueError
+=========================== short test summary info ============================
+FAILED test_0432.py::test_task_func - ValueError: Invalid image file.
+1 failed, 2 passed in 0.71s

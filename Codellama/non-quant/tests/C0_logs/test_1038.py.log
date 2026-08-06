@@ -1,0 +1,96 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        s1 = pd.Series([1, 2, 3, 4, 5])
+        s2 = pd.Series([2, 4, 6, 8, 10])
+        n_clusters = 3
+    
+>       labels, ax = task_func(s1, s2, n_clusters)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1038.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1038.py:20: in task_func
+    scatter = ax.scatter(df[s1.name], df[s2.name], c=labels)
+                         ^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/frame.py:4378: in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = RangeIndex(start=0, stop=2, step=1), key = None
+
+    def get_loc(self, key) -> int:
+        """
+        Get integer location for requested label.
+    
+        Parameters
+        ----------
+        key : int or float
+            Label to locate. Integer-like floats (e.g. 3.0) are accepted and
+            treated as the corresponding integer. Non-integer floats and other
+            non-integer labels are not valid and will raise KeyError or
+            InvalidIndexError.
+    
+        Returns
+        -------
+        int
+            Integer location of the label within the RangeIndex.
+    
+        Raises
+        ------
+        KeyError
+            If the label is not present in the RangeIndex or the label is a
+            non-integer value.
+        InvalidIndexError
+            If the label is of an invalid type for the RangeIndex.
+    
+        See Also
+        --------
+        RangeIndex.get_slice_bound : Calculate slice bound that corresponds to
+            given label.
+        RangeIndex.get_indexer : Computes indexer and mask for new index given
+            the current index.
+        RangeIndex.get_non_unique : Returns indexer and masks for new index given
+            the current index.
+        RangeIndex.get_indexer_for : Returns an indexer even when non-unique.
+    
+        Examples
+        --------
+        >>> idx = pd.RangeIndex(5)
+        >>> idx.get_loc(3)
+        3
+    
+        >>> idx = pd.RangeIndex(2, 10, 2)  # values [2, 4, 6, 8]
+        >>> idx.get_loc(6)
+        2
+        """
+        if is_integer(key) or (is_float(key) and key.is_integer()):
+            new_key = int(key)
+            try:
+                return self._range.index(new_key)
+            except ValueError as err:
+                raise KeyError(key) from err
+        if isinstance(key, Hashable):
+>           raise KeyError(key)
+E           KeyError: None
+
+../../../.venv/lib/python3.12/site-packages/pandas/core/indexes/range.py:525: KeyError
+________________________ test_task_func_invalid_series _________________________
+
+    def test_task_func_invalid_series():
+        s1 = pd.Series([1, 2, 3, 4, 5])
+        s2 = pd.Series([2, 4, 6, 8, 10])
+        n_clusters = 3
+    
+        with pytest.raises(ValueError):
+>           task_func(s1, s2, n_clusters=n_clusters, random_state=42)
+E           TypeError: task_func() got an unexpected keyword argument 'random_state'
+
+test_1038.py:43: TypeError
+=========================== short test summary info ============================
+FAILED test_1038.py::test_task_func - KeyError: None
+FAILED test_1038.py::test_task_func_invalid_series - TypeError: task_func() g...
+2 failed, 1 passed in 3.91s

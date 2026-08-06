@@ -1,0 +1,30 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that the function returns a string
+        assert isinstance(task_func(), str)
+    
+        # Test that the function raises a ValueError if the server address is invalid
+        with pytest.raises(ValueError):
+>           task_func(server_address="invalid_address")
+
+test_1041.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+server_address = 'invalid_address', server_port = 12345, buffer_size = 1024
+run_duration = 5
+
+    def task_func(
+        server_address="localhost", server_port=12345, buffer_size=1024, run_duration=5
+    ):
+        server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        server.setblocking(0)
+>       server.bind((server_address, server_port))
+E       socket.gaierror: [Errno -3] Temporary failure in name resolution
+
+../../../src/src_1041.py:10: gaierror
+=========================== short test summary info ============================
+FAILED test_1041.py::test_task_func - socket.gaierror: [Errno -3] Temporary f...
+1 failed in 5.50s

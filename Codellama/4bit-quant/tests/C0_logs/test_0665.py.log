@@ -1,0 +1,26 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        sales_data = pd.DataFrame({
+            'Month': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            'Sales': [100, 120, 150, 100, 100, 150]
+        })
+    
+        ax = task_func(sales_data)
+    
+        assert ax.get_xlabel() == 'Month'
+        assert ax.get_ylabel() == 'Sales'
+        assert ax.get_title() == 'Monthly Sales Trends with Standard Deviation'
+        assert len(ax.get_xticks()) == 6
+>       assert len(ax.get_yticks()) == 6
+E       AssertionError: assert 7 == 6
+E        +  where 7 = len(array([ 60.,  80., 100., 120., 140., 160., 180.]))
+E        +    where array([ 60.,  80., 100., 120., 140., 160., 180.]) = get_yticks()
+E        +      where get_yticks = <Axes: title={'center': 'Monthly Sales Trends with Standard Deviation'}, xlabel='Month', ylabel='Sales'>.get_yticks
+
+test_0665.py:17: AssertionError
+=========================== short test summary info ============================
+FAILED test_0665.py::test_task_func - AssertionError: assert 7 == 6
+1 failed in 2.15s

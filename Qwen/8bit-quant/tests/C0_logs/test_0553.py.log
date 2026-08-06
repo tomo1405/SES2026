@@ -1,0 +1,27 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_plt = <test_0553.MockFigure object at 0x760bdf5de240>
+
+    def test_task_func(mock_plt):
+        a = ['apple', 'banana', 'apple']
+        b = ['banana', 'banana', 'apple']
+        items = ['apple', 'banana']
+    
+        ax = task_func(a, b, items)
+    
+        # Check that the correct number of items were counted
+        combined = list(itertools.chain(a, b))
+        counter = collections.Counter(combined)
+        expected_counts = [counter.get(item, 0) for item in items]
+>       assert expected_counts == [3, 4]
+E       assert [3, 3] == [3, 4]
+E         
+E         At index 1 diff: 3 != 4
+E         Use -v to get more diff
+
+test_0553.py:48: AssertionError
+=========================== short test summary info ============================
+FAILED test_0553.py::test_task_func - assert [3, 3] == [3, 4]
+1 failed in 1.82s

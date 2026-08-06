@@ -1,0 +1,34 @@
+..F                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        df = pd.DataFrame({'a': [1, 2, 3], 'b': [4, 5, 6]})
+>       greater_avg, num_greater_value, ax = task_func(df, 'a', 2)
+                                             ^^^^^^^^^^^^^^^^^^^^^
+
+test_0202.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+df =    a  b
+0  1  4
+1  2  5
+2  3  6, column = 'a', value = 2
+
+    def task_func(df, column, value):
+        if column not in df.columns:
+            raise ValueError(f"Column '{column}' does not exist in DataFrame")
+        if not isinstance(value, (int, float)):
+            raise ValueError("Value must be a number")
+    
+        data = df[column].values
+        avg = statistics.mean(data)
+        greater_avg = data[data > avg]
+    
+>       data.sort()
+E       ValueError: sort array is read-only
+
+../../../src/src_0202.py:13: ValueError
+=========================== short test summary info ============================
+FAILED test_0202.py::test_task_func_valid_input - ValueError: sort array is r...
+1 failed, 2 passed in 1.07s

@@ -1,0 +1,41 @@
+.FF.                                                                     [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_file_not_found _________________________
+
+    def test_task_func_file_not_found():
+        # Use a non-existent filename
+        filename = "non_existent_file.json"
+        data = {"key": "value"}
+    
+        # Call the function
+        success, result = task_func(filename, data)
+    
+        # Check if the function returns False and None
+>       assert success is False
+E       assert True is False
+
+test_0831.py:39: AssertionError
+______________________ test_task_func_read_write_mismatch ______________________
+
+    def test_task_func_read_write_mismatch():
+        # Create a temporary file
+        with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+            filename = temp_file.name
+            data = {"key": "value"}
+    
+            # Write some different data to the file manually
+            with open(filename, 'w') as f:
+                f.write('{"different_key": "different_value"}')
+    
+            # Call the function
+            success, result = task_func(filename, data)
+    
+            # Check if the function returns False and None
+>           assert success is False
+E           assert True is False
+
+test_0831.py:56: AssertionError
+=========================== short test summary info ============================
+FAILED test_0831.py::test_task_func_file_not_found - assert True is False
+FAILED test_0831.py::test_task_func_read_write_mismatch - assert True is False
+2 failed, 2 passed in 0.46s

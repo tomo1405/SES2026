@@ -1,0 +1,29 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        mu = 0
+        sigma = 1
+        num_samples = 1000
+        seed = 77
+    
+        # Capture the figure returned by the function
+        fig = task_func(mu, sigma, num_samples, seed)
+    
+        # Check that the figure is a matplotlib Figure object
+        assert isinstance(fig, plt.Figure)
+    
+        # Check that the figure has two subplots
+        assert len(fig.axes) == 2
+    
+        # Check that the first subplot is a histogram
+        ax1 = fig.axes[0]
+        assert isinstance(ax1, plt.Axes)
+>       assert 'hist' in [child.get_label() for child in ax1.get_children()]
+E       AssertionError: assert 'hist' in ['_nolegend_', '_nolegend_', '_nolegend_', '_nolegend_', '_nolegend_', '_nolegend_', ...]
+
+test_0394.py:24: AssertionError
+=========================== short test summary info ============================
+FAILED test_0394.py::test_task_func - AssertionError: assert 'hist' in ['_nol...
+1 failed in 2.87s

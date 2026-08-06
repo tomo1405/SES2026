@@ -1,0 +1,30 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a sample dataframe
+        df = pd.DataFrame({'A': [1, 2, 3, 4, 5], 'B': [10, 20, 30, 40, 50], 'C': [100, 200, 300, 400, 500]})
+    
+        # Test that the function returns a tuple with the expected values
+        result, axes = task_func(df)
+        assert isinstance(result, pd.DataFrame)
+        assert isinstance(axes, np.ndarray)
+    
+        # Test that the function fills missing values with the column's average
+        assert np.allclose(result['A'].mean(), result['A'].mean())
+        assert np.allclose(result['B'].mean(), result['B'].mean())
+        assert np.allclose(result['C'].mean(), result['C'].mean())
+    
+        # Test that the function computes Z-scores correctly
+>       assert np.allclose(result['A'].std(), 1)
+E       assert False
+E        +  where False = <function allclose at 0x745c0a5cd430>(np.float64(1.1180339887498947), 1)
+E        +    where <function allclose at 0x745c0a5cd430> = np.allclose
+E        +    and   np.float64(1.1180339887498947) = std()
+E        +      where std = 0   -1.414214\n1   -0.707107\n2    0.000000\n3    0.707107\n4    1.414214\nName: A, dtype: float64.std
+
+test_0047.py:21: AssertionError
+=========================== short test summary info ============================
+FAILED test_0047.py::test_task_func - assert False
+1 failed in 3.50s

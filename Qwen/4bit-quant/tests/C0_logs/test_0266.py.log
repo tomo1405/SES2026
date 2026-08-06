@@ -1,0 +1,39 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+tmpdir = local('/tmp/pytest-of-tomohiro-w/pytest-1346/test_task_func0')
+
+    def test_task_func(tmpdir):
+        # Prepare test data
+        test_data = {'b': 2, 'c': 3}
+        expected_data = {'b': 2, 'c': 3, 'a': 1}
+        expected_freq = {'b': 1, 'c': 1, 'a': 1}
+    
+        # Create a temporary directory for the JSON file
+        tmp_dir = tmpdir.mkdir("test_task_func")
+        json_file_name = "test_data.json"
+        json_file_path = task_func(test_data, json_file_name=json_file_name)
+    
+        # Check if the file exists
+        assert os.path.exists(json_file_path)
+    
+        # Read the contents of the JSON file
+        with open(json_file_path, 'r') as json_file:
+            actual_data = json.load(json_file)
+    
+        # Verify the contents of the JSON file
+        assert actual_data['data'] == expected_data
+>       assert actual_data['freq'] == expected_freq
+E       AssertionError: assert {'2': 1, '3': 1, '1': 1} == {'b': 1, 'c': 1, 'a': 1}
+E         
+E         Left contains 3 more items:
+E         {'1': 1, '2': 1, '3': 1}
+E         Right contains 3 more items:
+E         {'a': 1, 'b': 1, 'c': 1}
+E         Use -v to get more diff
+
+test_0266.py:26: AssertionError
+=========================== short test summary info ============================
+FAILED test_0266.py::test_task_func - AssertionError: assert {'2': 1, '3': 1,...
+1 failed in 0.43s

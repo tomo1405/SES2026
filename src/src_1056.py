@@ -1,0 +1,18 @@
+import pandas as pd
+import itertools
+import random
+def task_func(colors, states):
+    combinations = list(itertools.product(colors, states))
+    random.seed(42)
+    random.shuffle(combinations)
+    num_columns = min(len(colors), len(states))
+
+    data = {
+        f"Color:State {i+1}": [
+            f"{comb[0]}:{comb[1]}" for comb in combinations[i::num_columns]
+        ]
+        for i in range(num_columns)
+    }
+    df = pd.DataFrame(data)
+
+    return df

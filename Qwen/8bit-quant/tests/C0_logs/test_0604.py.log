@@ -1,0 +1,35 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with 2x2 matrices
+        matrix1 = np.array([[1, 2], [3, 4]])
+        matrix2 = np.array([[5, 6], [7, 8]])
+        expected_output = "1 2 5 6\n3 4 7 8"
+        assert task_func(matrix1, matrix2) == expected_output
+    
+        # Test with different shapes
+        matrix1 = np.array([[1, 2], [3, 4], [5, 6]])
+        matrix2 = np.array([[7, 8]])
+        expected_output = "1 2 7 8\n3 4 7 8\n5 6 7 8"
+>       assert task_func(matrix1, matrix2) == expected_output
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0604.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+matrix1 = array([[1, 2],
+       [3, 4],
+       [5, 6]])
+matrix2 = array([[7, 8]])
+
+    def task_func(matrix1, matrix2):
+>       combined_matrix = np.concatenate((matrix1, matrix2), axis=1)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: all the input array dimensions except for the concatenation axis must match exactly, but along dimension 0, the array at index 0 has size 3 and the array at index 1 has size 1
+
+../../../src/src_0604.py:4: ValueError
+=========================== short test summary info ============================
+FAILED test_0604.py::test_task_func - ValueError: all the input array dimensi...
+1 failed in 1.39s

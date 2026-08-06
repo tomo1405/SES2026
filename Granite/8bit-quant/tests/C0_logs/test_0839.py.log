@@ -1,0 +1,69 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        import pandas as pd
+        text_series = pd.Series(["Hello, World!", "This is a test."])
+        expected_result = pd.Series(["hello world", "this is a test"])
+        result = task_func(text_series)
+>       assert result.equals(expected_result)
+E       assert False
+E        +  where False = equals(0       hello world\n1    this is a test\ndtype: str)
+E        +    where equals = 0      hello world\n1    thi is a test\ndtype: str.equals
+
+test_0839.py:9: AssertionError
+___________________________ test_task_func_null_text ___________________________
+
+    def test_task_func_null_text():
+        import pandas as pd
+        text_series = pd.Series([None])
+        expected_result = pd.Series([None])
+>       result = task_func(text_series)
+                 ^^^^^^^^^^^^^^^^^^^^^^
+
+test_0839.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0839.py:15: in task_func
+    return text_series.apply(process_text)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/series.py:5084: in apply
+    ).apply()
+      ^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/apply.py:1520: in apply
+    return self.apply_standard()
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/apply.py:1578: in apply_standard
+    mapped = obj._map_values(mapper=curried)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/base.py:1022: in _map_values
+    return algorithms.map_array(arr, mapper, na_action=na_action)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.venv/lib/python3.12/site-packages/pandas/core/algorithms.py:1715: in map_array
+    return lib.map_infer(values, mapper)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pandas/_libs/lib.pyx:3071: in pandas._libs.lib.map_infer
+    ???
+../../../src/src_0839.py:8: in process_text
+    text = re.sub('[^\sa-zA-Z0-9]', '', text).lower().strip()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pattern = '[^\\sa-zA-Z0-9]', repl = '', string = None, count = 0, flags = 0
+
+    def sub(pattern, repl, string, count=0, flags=0):
+        """Return the string obtained by replacing the leftmost
+        non-overlapping occurrences of the pattern in string by the
+        replacement repl.  repl can be either a string or a callable;
+        if a string, backslash escapes in it are processed.  If it is
+        a callable, it's passed the Match object and must return
+        a replacement string to be used."""
+>       return _compile(pattern, flags).sub(repl, string, count)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: expected string or bytes-like object, got 'NoneType'
+
+/usr/lib/python3.12/re/__init__.py:186: TypeError
+=========================== short test summary info ============================
+FAILED test_0839.py::test_task_func - assert False
+FAILED test_0839.py::test_task_func_null_text - TypeError: expected string or...
+2 failed, 1 passed in 3.78s

@@ -1,0 +1,32 @@
+F...F                                                                    [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data_list = ["a, b, c", "d, e, f", "g, h, i"]
+        seed = 123
+        df = task_func(data_list, seed)
+        assert isinstance(df, pd.DataFrame)
+        assert df.shape == (3, 2)
+        assert df.columns.tolist() == ["Original String", "Modified String"]
+        assert df["Original String"].tolist() == ["a, b, c", "d, e, f", "g, h, i"]
+>       assert df["Modified String"].tolist() == ["b, a, c", "e, d, f", "h, g, i"]
+E       AssertionError: assert ['a, c', 'd, f', 'h, i, g'] == ['b, a, c', '...f', 'h, g, i']
+E         
+E         At index 0 diff: 'a, c' != 'b, a, c'
+E         Use -v to get more diff
+
+test_0483.py:16: AssertionError
+_______________________ test_task_func_with_invalid_seed _______________________
+
+    def test_task_func_with_invalid_seed():
+        data_list = ["a, b, c", "d, e, f", "g, h, i"]
+        seed = "invalid"
+>       with pytest.raises(TypeError):
+E       Failed: DID NOT RAISE TypeError
+
+test_0483.py:42: Failed
+=========================== short test summary info ============================
+FAILED test_0483.py::test_task_func - AssertionError: assert ['a, c', 'd, f',...
+FAILED test_0483.py::test_task_func_with_invalid_seed - Failed: DID NOT RAISE...
+2 failed, 3 passed in 1.25s

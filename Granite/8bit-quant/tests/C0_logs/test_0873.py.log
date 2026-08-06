@@ -1,0 +1,21 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data_list = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        expected_mean_values = [2, 5, 8]
+    
+        unzipped_data = list(itertools.zip_longest(*data_list, fillvalue=np.nan))
+        mean_values = [np.nanmean([val for val in column if isinstance(val, (int, float))]) for column in unzipped_data]
+    
+>       assert mean_values == expected_mean_values
+E       assert [np.float64(4....float64(6.0)] == [2, 5, 8]
+E         
+E         At index 0 diff: np.float64(4.0) != 2
+E         Use -v to get more diff
+
+test_0873.py:13: AssertionError
+=========================== short test summary info ============================
+FAILED test_0873.py::test_task_func - assert [np.float64(4....float64(6.0)] =...
+1 failed in 0.63s

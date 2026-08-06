@@ -1,0 +1,64 @@
+.FFFF                                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_data_distribution _______________________
+
+    def test_task_func_data_distribution():
+        data = task_func(size=1000).get_axes()[0].patches
+        assert len(data) > 0, "The histogram should have at least one bin."
+    
+        # Check if the number of bins is correct
+        bin_edges = np.histogram_bin_edges(task_func(size=1000).get_axes()[0].lines[0].get_xdata(), bins='auto')
+        number_of_bins = len(bin_edges) - 1
+>       assert len(data) == number_of_bins, "The number of bins in the histogram does not match the calculated number of bins."
+E       AssertionError: The number of bins in the histogram does not match the calculated number of bins.
+E       assert 27 == 11
+E        +  where 27 = len(<Axes.ArtistList of 27 patches>)
+
+test_0583.py:17: AssertionError
+__________________________ test_task_func_plot_lines ___________________________
+
+    def test_task_func_plot_lines():
+        fig = task_func()
+        lines = fig.get_axes()[0].lines
+        assert len(lines) == 1, "The plot should have exactly one line (the normal distribution curve)."
+>       assert lines[0].get_color() == 'k', "The line color should be black."
+E       AssertionError: The line color should be black.
+E       assert (0.0, 0.0, 0.0, 1) == 'k'
+E        +  where (0.0, 0.0, 0.0, 1) = get_color()
+E        +    where get_color = <matplotlib.lines.Line2D object at 0x7fe7791f0c50>.get_color
+
+test_0583.py:23: AssertionError
+_____________________ test_task_func_histogram_properties ______________________
+
+    def test_task_func_histogram_properties():
+        fig = task_func()
+        hist = fig.get_axes()[0].patches
+        assert all(patch.get_alpha() == 0.6 for patch in hist), "The alpha value of each bar in the histogram should be 0.6."
+>       assert all(patch.get_facecolor() == (0.0, 0.6, 0.0, 1.0) for patch in hist), "The color of each bar in the histogram should be green."
+E       AssertionError: The color of each bar in the histogram should be green.
+E       assert False
+E        +  where False = all(<generator object test_task_func_histogram_properties.<locals>.<genexpr> at 0x7fe77935dff0>)
+
+test_0583.py:30: AssertionError
+______________________ test_task_func_with_different_size ______________________
+
+    def test_task_func_with_different_size():
+        fig = task_func(size=500)
+        data = fig.get_axes()[0].patches
+        assert len(data) > 0, "The histogram should have at least one bin when size is 500."
+    
+        # Check if the number of bins is correct
+        bin_edges = np.histogram_bin_edges(fig.get_axes()[0].lines[0].get_xdata(), bins='auto')
+        number_of_bins = len(bin_edges) - 1
+>       assert len(data) == number_of_bins, "The number of bins in the histogram does not match the calculated number of bins when size is 500."
+E       AssertionError: The number of bins in the histogram does not match the calculated number of bins when size is 500.
+E       assert 19 == 10
+E        +  where 19 = len(<Axes.ArtistList of 19 patches>)
+
+test_0583.py:40: AssertionError
+=========================== short test summary info ============================
+FAILED test_0583.py::test_task_func_data_distribution - AssertionError: The n...
+FAILED test_0583.py::test_task_func_plot_lines - AssertionError: The line col...
+FAILED test_0583.py::test_task_func_histogram_properties - AssertionError: Th...
+FAILED test_0583.py::test_task_func_with_different_size - AssertionError: The...
+4 failed, 1 passed in 3.08s

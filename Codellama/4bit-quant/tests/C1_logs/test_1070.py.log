@@ -1,0 +1,57 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data_dict = {"a": [1, 2, 3, 4, 5], "b": [1, 2, 3, 4, 5], "c": [1, 2, 3, 4, 5]}
+        axes_list = task_func(data_dict)
+        assert len(axes_list) == 3
+        for ax in axes_list:
+            assert isinstance(ax, plt.Axes)
+            assert ax.get_title() in ["a", "b", "c"]
+            assert len(ax.get_xticks()) == 5
+>           assert len(ax.get_yticks()) == 5
+E           AssertionError: assert 7 == 5
+E            +  where 7 = len(array([0. , 0.2, 0.4, 0.6, 0.8, 1. , 1.2]))
+E            +    where array([0. , 0.2, 0.4, 0.6, 0.8, 1. , 1.2]) = get_yticks()
+E            +      where get_yticks = <Axes: title={'center': 'a'}, xlabel='a'>.get_yticks
+
+test_1070.py:14: AssertionError
+____________________________ test_task_func_uniform ____________________________
+
+    def test_task_func_uniform():
+        data_dict = {"a": [1, 1, 1, 1, 1], "b": [1, 1, 1, 1, 1], "c": [1, 1, 1, 1, 1]}
+        axes_list = task_func(data_dict)
+        assert len(axes_list) == 3
+        for ax in axes_list:
+            assert isinstance(ax, plt.Axes)
+            assert ax.get_title() in ["a", "b", "c"]
+>           assert len(ax.get_xticks()) == 5
+E           AssertionError: assert 1 == 5
+E            +  where 1 = len(array([0]))
+E            +    where array([0]) = get_xticks()
+E            +      where get_xticks = <Axes: title={'center': 'a'}, xlabel='a'>.get_xticks
+
+test_1070.py:25: AssertionError
+__________________________ test_task_func_non_uniform __________________________
+
+    def test_task_func_non_uniform():
+        data_dict = {"a": [1, 2, 3, 4, 5], "b": [1, 2, 3, 4, 5], "c": [1, 2, 3, 4, 5]}
+        axes_list = task_func(data_dict)
+        assert len(axes_list) == 3
+        for ax in axes_list:
+            assert isinstance(ax, plt.Axes)
+            assert ax.get_title() in ["a", "b", "c"]
+            assert len(ax.get_xticks()) == 5
+>           assert len(ax.get_yticks()) == 5
+E           AssertionError: assert 7 == 5
+E            +  where 7 = len(array([0. , 0.2, 0.4, 0.6, 0.8, 1. , 1.2]))
+E            +    where array([0. , 0.2, 0.4, 0.6, 0.8, 1. , 1.2]) = get_yticks()
+E            +      where get_yticks = <Axes: title={'center': 'a'}, xlabel='a'>.get_yticks
+
+test_1070.py:38: AssertionError
+=========================== short test summary info ============================
+FAILED test_1070.py::test_task_func - AssertionError: assert 7 == 5
+FAILED test_1070.py::test_task_func_uniform - AssertionError: assert 1 == 5
+FAILED test_1070.py::test_task_func_non_uniform - AssertionError: assert 7 == 5
+3 failed in 2.34s

@@ -1,0 +1,50 @@
+..FF.                                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_pie_chart_labels ________________________
+
+sample_data =         Job
+0  Engineer
+1    Doctor
+2  Engineer
+3    Artist
+4    Doctor
+5  Engineer
+
+    def test_task_func_pie_chart_labels(sample_data):
+        fig = task_func(sample_data)
+        ax = fig.axes[0]
+        labels = [text.get_text() for text in ax.get_xticklabels()]
+        expected_labels = ['Engineer', 'Doctor', 'Artist']
+>       assert set(labels) == set(expected_labels)
+E       AssertionError: assert set() == {'Artist', 'D...', 'Engineer'}
+E         
+E         Extra items in the right set:
+E         'Engineer'
+E         'Artist'
+E         'Doctor'
+E         Use -v to get more diff
+
+test_0252.py:26: AssertionError
+________________________ test_task_func_pie_chart_sizes ________________________
+
+sample_data =         Job
+0  Engineer
+1    Doctor
+2  Engineer
+3    Artist
+4    Doctor
+5  Engineer
+
+    def test_task_func_pie_chart_sizes(sample_data):
+        fig = task_func(sample_data)
+        ax = fig.axes[0]
+        wedges = ax.patches
+>       sizes = [wedge.get_width() for wedge in wedges]
+                 ^^^^^^^^^^^^^^^
+E       AttributeError: 'Wedge' object has no attribute 'get_width'. Did you mean: 'set_width'?
+
+test_0252.py:32: AttributeError
+=========================== short test summary info ============================
+FAILED test_0252.py::test_task_func_pie_chart_labels - AssertionError: assert...
+FAILED test_0252.py::test_task_func_pie_chart_sizes - AttributeError: 'Wedge'...
+2 failed, 3 passed in 2.40s

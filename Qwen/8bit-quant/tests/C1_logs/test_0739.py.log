@@ -1,0 +1,39 @@
+..FF...                                                                  [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_nested_lists _______________________
+
+    def test_task_func_with_nested_lists():
+        L = [[1, 2], [3, 4], [5]]
+        expected_iqr = iqr([1, 2, 3, 4, 5])
+>       assert task_func(L) == expected_iqr
+               ^^^^^^^^^^^^
+
+test_0739.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+L = [[1, 2], [3, 4], [5]]
+
+    def task_func(L):
+>       flattened = np.array(L).flatten()
+                    ^^^^^^^^^^^
+E       ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (3,) + inhomogeneous part.
+
+../../../src/src_0739.py:4: ValueError
+________________________ test_task_func_with_empty_list ________________________
+
+    def test_task_func_with_empty_list():
+        L = []
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0739.py:23: Failed
+=============================== warnings summary ===============================
+Qwen/8bit-quant/tests/test_0739.py::test_task_func_with_empty_list
+  /work/tomohiro-w/utg/src/src_0739.py:5: SmallSampleWarning: One or more sample arguments is too small; all returned values will be NaN. See documentation for sample size requirements.
+    iqr_value = iqr(flattened)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0739.py::test_task_func_with_nested_lists - ValueError: setting a...
+FAILED test_0739.py::test_task_func_with_empty_list - Failed: DID NOT RAISE V...
+2 failed, 5 passed, 1 warning in 2.76s

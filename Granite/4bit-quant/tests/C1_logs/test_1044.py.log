@@ -1,0 +1,71 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Mock the input data
+        data_list = ["A", "B", "C", "D", "E"]
+    
+        # Mock the expected output
+        expected_output = "The distribution of predefined categories is not uniform."
+    
+        # Mock the print function to capture the output
+        with patch("builtins.print") as mock_print:
+            # Call the function
+            ax = task_func(data_list)
+    
+            # Assert that the output matches the expected value
+>           mock_print.assert_called_with(expected_output)
+
+test_1044.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='print' id='126574114852112'>
+args = ('The distribution of predefined categories is not uniform.',)
+kwargs = {}
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\n  Actual: %s'
+                    % (expected, actual))
+>           raise AssertionError(error_message)
+E           AssertionError: expected call not found.
+E           Expected: print('The distribution of predefined categories is not uniform.')
+E             Actual: not called.
+
+/usr/lib/python3.12/unittest/mock.py:935: AssertionError
+_____________________ test_task_func_with_empty_data_list ______________________
+
+    def test_task_func_with_empty_data_list():
+        # Mock the input data
+        data_list = []
+    
+        # Mock the expected exception
+        expected_exception = ValueError
+    
+        # Call the function and assert that the expected exception is raised
+        with patch("src_1044.task_func", side_effect=expected_exception):
+>           task_func(data_list)
+
+test_1044.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data_list = []
+
+    def task_func(data_list):
+    
+        if not data_list:
+>           raise ValueError("The data list is empty.")
+E           ValueError: The data list is empty.
+
+../../../src/src_1044.py:8: ValueError
+=========================== short test summary info ============================
+FAILED test_1044.py::test_task_func - AssertionError: expected call not found.
+FAILED test_1044.py::test_task_func_with_empty_data_list - ValueError: The da...
+2 failed in 2.85s

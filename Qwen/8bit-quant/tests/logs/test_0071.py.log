@@ -1,0 +1,135 @@
+F.F.                                                                     [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_with_data ___________________________
+
+mock_file = <MagicMock name='open' id='128301886293104'>
+
+    @patch('builtins.open', new_callable=mock_open, read_data='[{"email": "test@example.com", "list": [1, 2, 3]}]')
+    def test_task_func_with_data(mock_file):
+        df, ax = task_func('dummy_file.json')
+    
+        # Check DataFrame structure
+        assert isinstance(df, pd.DataFrame)
+        assert list(df.columns) == ['email', 'list', 'sum', 'mean']
+    
+        # Check DataFrame content
+        assert df.loc[0, 'email'] == 'test@example.com'
+        assert df.loc[0, 'list'] == [1, 2, 3]
+        assert df.loc[0, 'sum'] == 6
+        assert df.loc[0, 'mean'] == 2.0
+    
+        # Check plot
+>       assert isinstance(ax, plt.AxesSubplot)
+                              ^^^^^^^^^^^^^^^
+E       AttributeError: module 'matplotlib.pyplot' has no attribute 'AxesSubplot'
+
+test_0071.py:26: AttributeError
+_____________________ test_task_func_with_nonexistent_file _____________________
+
+args = (), keywargs = {}
+
+    @wraps(func)
+    def patched(*args, **keywargs):
+>       with self.decoration_helper(patched,
+                                    args,
+                                    keywargs) as (newargs, newkeywargs):
+
+/usr/lib/python3.12/unittest/mock.py:1387: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+/usr/lib/python3.12/unittest/mock.py:1369: in decoration_helper
+    arg = exit_stack.enter_context(patching)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/contextlib.py:526: in enter_context
+    result = _enter(cm)
+             ^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <unittest.mock._patch object at 0x74b097a8a480>
+
+    def __enter__(self):
+        """Perform the patch."""
+        new, spec, spec_set = self.new, self.spec, self.spec_set
+        autospec, kwargs = self.autospec, self.kwargs
+        new_callable = self.new_callable
+        self.target = self.getter()
+    
+        # normalise False to None
+        if spec is False:
+            spec = None
+        if spec_set is False:
+            spec_set = None
+        if autospec is False:
+            autospec = None
+    
+        if spec is not None and autospec is not None:
+            raise TypeError("Can't specify spec and autospec")
+        if ((spec is not None or autospec is not None) and
+            spec_set not in (True, None)):
+            raise TypeError("Can't provide explicit spec_set *and* spec or autospec")
+    
+        original, local = self.get_original()
+    
+        if new is DEFAULT and autospec is None:
+            inherit = False
+            if spec is True:
+                # set spec to the object we are replacing
+                spec = original
+                if spec_set is True:
+                    spec_set = original
+                    spec = None
+            elif spec is not None:
+                if spec_set is True:
+                    spec_set = spec
+                    spec = None
+            elif spec_set is True:
+                spec_set = original
+    
+            if spec is not None or spec_set is not None:
+                if original is DEFAULT:
+                    raise TypeError("Can't use 'spec' with create=True")
+                if isinstance(original, type):
+                    # If we're patching out a class and there is a spec
+                    inherit = True
+            if spec is None and _is_async_obj(original):
+                Klass = AsyncMock
+            else:
+                Klass = MagicMock
+            _kwargs = {}
+            if new_callable is not None:
+                Klass = new_callable
+            elif spec is not None or spec_set is not None:
+                this_spec = spec
+                if spec_set is not None:
+                    this_spec = spec_set
+                if _is_list(this_spec):
+                    not_callable = '__call__' not in this_spec
+                else:
+                    not_callable = not callable(this_spec)
+                if _is_async_obj(this_spec):
+                    Klass = AsyncMock
+                elif not_callable:
+                    Klass = NonCallableMagicMock
+    
+            if spec is not None:
+                _kwargs['spec'] = spec
+            if spec_set is not None:
+                _kwargs['spec_set'] = spec_set
+    
+            # add a name to mocks
+            if (isinstance(Klass, type) and
+                issubclass(Klass, NonCallableMock) and self.attribute):
+                _kwargs['name'] = self.attribute
+    
+            _kwargs.update(kwargs)
+>           new = Klass(**_kwargs)
+                  ^^^^^^^^^^^^^^^^
+E           TypeError: mock_open() got an unexpected keyword argument 'side_effect'
+
+/usr/lib/python3.12/unittest/mock.py:1512: TypeError
+=========================== short test summary info ============================
+FAILED test_0071.py::test_task_func_with_data - AttributeError: module 'matpl...
+FAILED test_0071.py::test_task_func_with_nonexistent_file - TypeError: mock_o...
+2 failed, 2 passed in 2.26s

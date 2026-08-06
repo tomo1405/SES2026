@@ -1,0 +1,29 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that the function returns a tuple with two elements
+        result = task_func()
+        assert isinstance(result, tuple)
+        assert len(result) == 2
+    
+        # Test that the first element of the tuple is a pandas DataFrame
+        sales_df, ax = result
+        assert isinstance(sales_df, pd.DataFrame)
+    
+        # Test that the second element of the tuple is a matplotlib Axes object
+        assert isinstance(ax, plt.Axes)
+    
+        # Test that the DataFrame has the correct columns
+        assert set(sales_df.columns) == {'Date', 'Category', 'Sales'}
+    
+        # Test that the DataFrame has the correct number of rows
+>       assert len(sales_df) == 13
+E       assert 65 == 13
+E        +  where 65 = len(         Date        Category  Sales\n0  2016-01-08     Electronics    272\n1  2016-01-08         Fashion    147\n2  2016... Home & Kitchen    435\n63 2017-01-13      Automotive    488\n64 2017-01-13          Sports    205\n\n[65 rows x 3 columns])
+
+test_0943.py:23: AssertionError
+=========================== short test summary info ============================
+FAILED test_0943.py::test_task_func - assert 65 == 13
+1 failed in 2.09s

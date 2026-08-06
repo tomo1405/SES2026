@@ -1,0 +1,28 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that the function returns a DataFrame with the correct column names
+        result = task_func()
+        assert isinstance(result, pd.DataFrame)
+        assert result.columns.tolist() == ['Normalized Value']
+    
+        # Test that the function raises a ValueError when max_value is less than min_value
+        with pytest.raises(ValueError):
+            task_func(max_value=0.0, min_value=10.0)
+    
+        # Test that the function returns a DataFrame with the correct number of rows
+        result = task_func(n_data_points=1000)
+        assert len(result) == 1000
+    
+        # Test that the function returns a DataFrame with the correct values
+        result = task_func(n_data_points=5000, min_value=0.0, max_value=10.0)
+>       assert all(result['Normalized Value'] >= 0.0)
+E       assert False
+E        +  where False = all(0       1.524668\n1       1.620483\n2      -1.616969\n3       0.396210\n4      -1.698448\n          ...   \n4995    1.364858\n4996   -0.131825\n4997    0.496922\n4998    0.102818\n4999    0.779473\nName: Normalized Value, Length: 5000, dtype: float64 >= 0.0)
+
+test_0248.py:22: AssertionError
+=========================== short test summary info ============================
+FAILED test_0248.py::test_task_func - assert False
+1 failed in 2.83s

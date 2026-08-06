@@ -1,0 +1,42 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sample_sales_data =   Month    A    B    C
+0   Jan  100  150  200
+1   Feb  110  160  210
+2   Mar  120  170  220
+3   Apr  130  180  230
+4   May  140  190  240
+
+    def test_task_func(sample_sales_data):
+        ax = task_func(sample_sales_data)
+    
+        # Check if the plot is created with the correct number of lines
+        assert len(ax.lines) == 3  # One line per product (excluding 'Month' column)
+    
+        # Check if the fill_between areas are created
+        assert len(ax.collections) == 3  # One fill_between per product
+    
+        # Check if the x-axis and y-axis labels are set correctly
+        assert ax.get_xlabel() == 'Month'
+        assert ax.get_ylabel() == 'Sales'
+    
+        # Check if the title is set correctly
+        assert ax.get_title() == 'Monthly Sales Trends with Standard Deviation'
+    
+        # Check if the legend is present
+        assert ax.get_legend() is not None
+    
+        # Check if the x-ticks are set correctly
+        expected_xticks = sample_sales_data['Month'].tolist()
+>       assert list(ax.get_xticks()) == expected_xticks
+E       AssertionError: assert [np.float64(0....float64(4.0)] == ['Jan', 'Feb'... 'Apr', 'May']
+E         
+E         At index 0 diff: np.float64(0.0) != 'Jan'
+E         Use -v to get more diff
+
+test_0665.py:41: AssertionError
+=========================== short test summary info ============================
+FAILED test_0665.py::test_task_func - AssertionError: assert [np.float64(0......
+1 failed in 2.16s

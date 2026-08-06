@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        directory = "/path/to/directory"
+        expected_directory = "/path/to/directory"
+        expected_moved_files = {
+            "subdirectory1": ["file1_20230101000000.txt", "file2_20230101000000.txt"],
+            "subdirectory2": ["file3_20230101000000.txt"]
+        }
+    
+>       actual_directory, actual_moved_files = task_func(directory)
+                                               ^^^^^^^^^^^^^^^^^^^^
+
+test_0314.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = '/path/to/directory'
+
+    def task_func(directory):
+        DATE_FORMAT = '%Y%m%d%H%M%S'
+        moved_files = {}
+>       for filename in os.listdir(directory):
+                        ^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/path/to/directory'
+
+../../../src/src_0314.py:8: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0314.py::test_task_func - FileNotFoundError: [Errno 2] No such fi...
+1 failed in 0.41s

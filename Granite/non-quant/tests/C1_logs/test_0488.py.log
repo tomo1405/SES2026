@@ -1,0 +1,25 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        file_path = "path/to/log/file.log"
+        expected_df = pd.DataFrame({
+            "Timestamp": ["2023-01-01 12:00:00.000000", "2023-01-02 08:00:00.000000"],
+            "Level": ["INFO", "ERROR"],
+            "Message": ["Log message 1", "Log message 2"]
+        })
+    
+        # Test if the function raises a FileNotFoundError if the file does not exist
+        with pytest.raises(FileNotFoundError):
+            task_func("path/to/nonexistent/file.log")
+    
+        # Test if the function returns the expected DataFrame when the file exists
+>       with open(file_path, "w") as f:
+             ^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'path/to/log/file.log'
+
+test_0488.py:20: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0488.py::test_task_func - FileNotFoundError: [Errno 2] No such fi...
+1 failed in 1.22s

@@ -1,0 +1,209 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+mock_client_socket = <test_1043.mock_client_socket.<locals>.MockSocket object at 0x79af6a5b7b00>
+mock_getpass = None, mock_smtplib_send_message = None
+
+    def test_task_func(mock_client_socket, mock_getpass, mock_smtplib_send_message):
+>       task_func(mock_client_socket)
+
+test_1043.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1043.py:21: in task_func
+    smtp.login(email["From"], getpass.getpass("Password: "))
+/usr/lib/python3.12/smtplib.py:750: in login
+    raise last_exception
+/usr/lib/python3.12/smtplib.py:739: in login
+    (code, resp) = self.auth(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <smtplib.SMTP object at 0x79af6c24dfd0>, mechanism = 'LOGIN'
+authobject = <bound method SMTP.auth_login of <smtplib.SMTP object at 0x79af6c24dfd0>>
+initial_response_ok = True
+
+    def auth(self, mechanism, authobject, *, initial_response_ok=True):
+        """Authentication command - requires response processing.
+    
+        'mechanism' specifies which authentication mechanism is to
+        be used - the valid values are those listed in the 'auth'
+        element of 'esmtp_features'.
+    
+        'authobject' must be a callable object taking a single argument:
+    
+                data = authobject(challenge)
+    
+        It will be called to process the server's challenge response; the
+        challenge argument it is passed will be a bytes.  It should return
+        an ASCII string that will be base64 encoded and sent to the server.
+    
+        Keyword arguments:
+            - initial_response_ok: Allow sending the RFC 4954 initial-response
+              to the AUTH command, if the authentication methods supports it.
+        """
+        # RFC 4954 allows auth methods to provide an initial response.  Not all
+        # methods support it.  By definition, if they return something other
+        # than None when challenge is None, then they do.  See issue #15014.
+        mechanism = mechanism.upper()
+        initial_response = (authobject() if initial_response_ok else None)
+        if initial_response is not None:
+            response = encode_base64(initial_response.encode('ascii'), eol='')
+            (code, resp) = self.docmd("AUTH", mechanism + " " + response)
+            self._auth_challenge_count = 1
+        else:
+            (code, resp) = self.docmd("AUTH", mechanism)
+            self._auth_challenge_count = 0
+        # If server responds with a challenge, send the response.
+        while code == 334:
+            self._auth_challenge_count += 1
+            challenge = base64.decodebytes(resp)
+            response = encode_base64(
+                authobject(challenge).encode('ascii'), eol='')
+            (code, resp) = self.docmd(response)
+            # If server keeps sending challenges, something is wrong.
+            if self._auth_challenge_count > _MAXCHALLENGE:
+                raise SMTPException(
+                    "Server AUTH mechanism infinite loop. Last response: "
+                    + repr((code, resp))
+                )
+        if code in (235, 503):
+            return (code, resp)
+>       raise SMTPAuthenticationError(code, resp)
+E       smtplib.SMTPAuthenticationError: (535, b'5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials 41be03b00d2f7-cbbb6581beesm4915698a12.0 - gsmtp')
+
+/usr/lib/python3.12/smtplib.py:662: SMTPAuthenticationError
+----------------------------- Captured stdout call -----------------------------
+Received: Test message
+________________________ test_task_func_email_creation _________________________
+
+mock_smtp = <MagicMock name='SMTP' id='133794310561360'>
+mock_email = <MagicMock name='EmailMessage' id='133794307397232'>
+mock_client_socket = <test_1043.mock_client_socket.<locals>.MockSocket object at 0x79af6a2a7350>
+mock_getpass = None
+
+    @patch('src_1043.EmailMessage')
+    @patch('src_1043.smtplib.SMTP')
+    def test_task_func_email_creation(mock_smtp, mock_email, mock_client_socket, mock_getpass):
+        task_func(mock_client_socket)
+        mock_email.assert_called_once()
+        email_instance = mock_email.return_value
+>       assert email_instance["From"] == "test@example.com"
+E       AssertionError: assert <MagicMock name='EmailMessage().__getitem__()' id='133794307876640'> == 'test@example.com'
+
+test_1043.py:46: AssertionError
+----------------------------- Captured stdout call -----------------------------
+Received: Test message
+__________________________ test_task_func_smtp_login ___________________________
+
+mock_smtp = <MagicMock name='SMTP' id='133794307106496'>
+mock_client_socket = <test_1043.mock_client_socket.<locals>.MockSocket object at 0x79af6a25fc20>
+mock_getpass = None
+
+    @patch('src_1043.smtplib.SMTP')
+    def test_task_func_smtp_login(mock_smtp, mock_client_socket, mock_getpass):
+        task_func(mock_client_socket)
+        mock_smtp.assert_called_once_with("smtp.gmail.com", 587)
+        smtp_instance = mock_smtp.return_value
+>       smtp_instance.starttls.assert_called_once()
+
+test_1043.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='SMTP().starttls' id='133794307869200'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'starttls' to have been called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:923: AssertionError
+----------------------------- Captured stdout call -----------------------------
+Received: Test message
+________________________ test_task_func_password_prompt ________________________
+
+mock_getpass = <MagicMock name='getpass' id='133794307111248'>
+mock_client_socket = <test_1043.mock_client_socket.<locals>.MockSocket object at 0x79af6a25fbf0>
+
+    @patch('src_1043.getpass.getpass')
+    def test_task_func_password_prompt(mock_getpass, mock_client_socket):
+        mock_getpass.side_effect = ["test@example.com", "recipient@example.com", "password123"]
+>       task_func(mock_client_socket)
+
+test_1043.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_1043.py:21: in task_func
+    smtp.login(email["From"], getpass.getpass("Password: "))
+/usr/lib/python3.12/smtplib.py:750: in login
+    raise last_exception
+/usr/lib/python3.12/smtplib.py:739: in login
+    (code, resp) = self.auth(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <smtplib.SMTP object at 0x79af6a2a7650>, mechanism = 'LOGIN'
+authobject = <bound method SMTP.auth_login of <smtplib.SMTP object at 0x79af6a2a7650>>
+initial_response_ok = True
+
+    def auth(self, mechanism, authobject, *, initial_response_ok=True):
+        """Authentication command - requires response processing.
+    
+        'mechanism' specifies which authentication mechanism is to
+        be used - the valid values are those listed in the 'auth'
+        element of 'esmtp_features'.
+    
+        'authobject' must be a callable object taking a single argument:
+    
+                data = authobject(challenge)
+    
+        It will be called to process the server's challenge response; the
+        challenge argument it is passed will be a bytes.  It should return
+        an ASCII string that will be base64 encoded and sent to the server.
+    
+        Keyword arguments:
+            - initial_response_ok: Allow sending the RFC 4954 initial-response
+              to the AUTH command, if the authentication methods supports it.
+        """
+        # RFC 4954 allows auth methods to provide an initial response.  Not all
+        # methods support it.  By definition, if they return something other
+        # than None when challenge is None, then they do.  See issue #15014.
+        mechanism = mechanism.upper()
+        initial_response = (authobject() if initial_response_ok else None)
+        if initial_response is not None:
+            response = encode_base64(initial_response.encode('ascii'), eol='')
+            (code, resp) = self.docmd("AUTH", mechanism + " " + response)
+            self._auth_challenge_count = 1
+        else:
+            (code, resp) = self.docmd("AUTH", mechanism)
+            self._auth_challenge_count = 0
+        # If server responds with a challenge, send the response.
+        while code == 334:
+            self._auth_challenge_count += 1
+            challenge = base64.decodebytes(resp)
+            response = encode_base64(
+                authobject(challenge).encode('ascii'), eol='')
+            (code, resp) = self.docmd(response)
+            # If server keeps sending challenges, something is wrong.
+            if self._auth_challenge_count > _MAXCHALLENGE:
+                raise SMTPException(
+                    "Server AUTH mechanism infinite loop. Last response: "
+                    + repr((code, resp))
+                )
+        if code in (235, 503):
+            return (code, resp)
+>       raise SMTPAuthenticationError(code, resp)
+E       smtplib.SMTPAuthenticationError: (535, b'5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-84e9fbe1b0bsm235430b3a.0 - gsmtp')
+
+/usr/lib/python3.12/smtplib.py:662: SMTPAuthenticationError
+----------------------------- Captured stdout call -----------------------------
+Received: Test message
+=========================== short test summary info ============================
+FAILED test_1043.py::test_task_func - smtplib.SMTPAuthenticationError: (535, ...
+FAILED test_1043.py::test_task_func_email_creation - AssertionError: assert <...
+FAILED test_1043.py::test_task_func_smtp_login - AssertionError: Expected 'st...
+FAILED test_1043.py::test_task_func_password_prompt - smtplib.SMTPAuthenticat...
+4 failed in 2.79s

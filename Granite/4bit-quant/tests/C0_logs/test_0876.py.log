@@ -1,0 +1,50 @@
+FF.FF                                                                    [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+input_data = {'Name': ['Alice', 'Bob', 'Charlie'], 'Age': [25, 30, None], 'Occupation': ['Engineer', 'Doctor', 'Teacher']}
+
+    def test_task_func(input_data):
+        df = task_func(input_data)
+        assert isinstance(df, pd.DataFrame)
+        assert list(df.columns) == ['Name', 'Age', 'Occupation']
+>       assert df['Age'].dtype == 'Int64'
+E       AssertionError: assert dtype('float64') == 'Int64'
+E        +  where dtype('float64') = 0    25.0\n1    30.0\n2     NaN\nName: Age, dtype: float64.dtype
+
+test_0876.py:17: AssertionError
+_________________________ test_task_func_fill_missing __________________________
+
+input_data = {'Name': ['Alice', 'Bob', 'Charlie'], 'Age': [25, 30, None], 'Occupation': ['Engineer', 'Doctor', 'Teacher']}
+
+    def test_task_func_fill_missing(input_data):
+        df = task_func(input_data, fill_missing=True)
+>       assert df['Age'].dtype == 'Int64'
+E       AssertionError: assert dtype('float64') == 'Int64'
+E        +  where dtype('float64') = 0    25.0\n1    30.0\n2    54.0\nName: Age, dtype: float64.dtype
+
+test_0876.py:22: AssertionError
+________________________ test_task_func_invalid_column _________________________
+
+input_data = {'Name': ['Alice', 'Bob', 'Charlie'], 'Age': [25, 30, None], 'Occupation': ['Engineer', 'Doctor', 'Teacher']}
+
+    def test_task_func_invalid_column(input_data):
+>       with pytest.raises(ValueError, match='Invalid column'):
+E       Failed: DID NOT RAISE ValueError
+
+test_0876.py:31: Failed
+_______________________ test_task_func_invalid_num_range _______________________
+
+input_data = {'Name': ['Alice', 'Bob', 'Charlie'], 'Age': [25, 30, None], 'Occupation': ['Engineer', 'Doctor', 'Teacher']}
+
+    def test_task_func_invalid_num_range(input_data):
+>       with pytest.raises(ValueError, match='Invalid number range'):
+E       Failed: DID NOT RAISE ValueError
+
+test_0876.py:35: Failed
+=========================== short test summary info ============================
+FAILED test_0876.py::test_task_func - AssertionError: assert dtype('float64')...
+FAILED test_0876.py::test_task_func_fill_missing - AssertionError: assert dty...
+FAILED test_0876.py::test_task_func_invalid_column - Failed: DID NOT RAISE Va...
+FAILED test_0876.py::test_task_func_invalid_num_range - Failed: DID NOT RAISE...
+4 failed, 1 passed in 1.42s

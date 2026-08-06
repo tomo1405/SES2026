@@ -1,0 +1,45 @@
+...FF                                                                    [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        data = pd.DataFrame({'dates': ['2023-10-01', '2023-10-02', '2023-10-01']})
+        ax = task_func(data, "%Y-%m-%d", "Russia")
+        assert 'parsed_dates' in data.columns
+>       assert all(isinstance(date, datetime.date) for date in data['parsed_dates'])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0476.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <map object at 0x7fcc26bf22c0>
+
+>   assert all(isinstance(date, datetime.date) for date in data['parsed_dates'])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: isinstance() arg 2 must be a type, a tuple of types, or a union
+
+test_0476.py:22: TypeError
+___________________ test_task_func_with_custom_country_codes ___________________
+
+    def test_task_func_with_custom_country_codes():
+        custom_country_codes = {'Russia': 'ru_RU', 'Japan': 'ja_JP'}
+        data = pd.DataFrame({'dates': ['2023-10-01', '2023-10-02', '2023-10-01']})
+        ax = task_func(data, "%Y-%m-%d", "Japan", country_codes=custom_country_codes)
+        assert 'parsed_dates' in data.columns
+>       assert all(isinstance(date, datetime.date) for date in data['parsed_dates'])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0476.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <map object at 0x7fcc269bc340>
+
+>   assert all(isinstance(date, datetime.date) for date in data['parsed_dates'])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: isinstance() arg 2 must be a type, a tuple of types, or a union
+
+test_0476.py:31: TypeError
+=========================== short test summary info ============================
+FAILED test_0476.py::test_task_func_valid_input - TypeError: isinstance() arg...
+FAILED test_0476.py::test_task_func_with_custom_country_codes - TypeError: is...
+2 failed, 3 passed in 3.10s

@@ -1,0 +1,163 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_________________ test_task_func[1-None-None-expected_output0] _________________
+
+dictionary = {'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]}, item = 1
+sample_size = None, random_seed = None
+expected_output = [((0, 'A'),    A  B  C
+0  1  4  7
+1  2  5  8
+2  3  6  9), ((1, 'A'),    A  B  C
+0  1  4  7
+1  2  5  8
+2  3  6  9), ((2... ((1, 'B'),    A  B  C
+0  1  4  7
+1  2  5  8
+2  3  6  9), ((2, 'B'),    A  B  C
+0  1  4  7
+1  2  5  8
+2  3  6  9), ...]
+
+    @pytest.mark.parametrize("item, sample_size, random_seed, expected_output", [
+        (1, None, None, [
+            ((0, 'A'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((1, 'A'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((2, 'A'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((0, 'B'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((1, 'B'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((2, 'B'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((0, 'C'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((1, 'C'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((2, 'C'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+        ]),
+        (2, 2, None, [
+            ((1, 'A'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((2, 'A'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((1, 'B'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((2, 'B'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((1, 'C'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((2, 'C'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+        ]),
+        (3, None, 123, [
+            ((2, 'A'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((0, 'B'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((1, 'C'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+        ]),
+    ])
+    def test_task_func(dictionary, item, sample_size, random_seed, expected_output):
+        positions, dataframe = task_func(dictionary, item, sample_size, random_seed)
+>       assert positions == expected_output[0]
+E       AssertionError: assert [(0, 'A')] == ((0, 'A'),   ... 8\n2  3  6  9)
+E         
+E         Right contains one more item:    A  B  C\n0  1  4  7\n1  2  5  8\n2  3  6  9
+E         Use -v to get more diff
+
+test_0812.py:38: AssertionError
+__________________ test_task_func[2-2-None-expected_output1] ___________________
+
+dictionary = {'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]}, item = 2
+sample_size = 2, random_seed = None
+expected_output = [((1, 'A'),    A  B  C
+0  1  4  7
+1  2  5  8
+2  3  6  9), ((2, 'A'),    A  B  C
+0  1  4  7
+1  2  5  8
+2  3  6  9), ((1...  9), ((1, 'C'),    A  B  C
+0  1  4  7
+1  2  5  8
+2  3  6  9), ((2, 'C'),    A  B  C
+0  1  4  7
+1  2  5  8
+2  3  6  9)]
+
+    @pytest.mark.parametrize("item, sample_size, random_seed, expected_output", [
+        (1, None, None, [
+            ((0, 'A'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((1, 'A'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((2, 'A'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((0, 'B'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((1, 'B'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((2, 'B'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((0, 'C'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((1, 'C'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((2, 'C'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+        ]),
+        (2, 2, None, [
+            ((1, 'A'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((2, 'A'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((1, 'B'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((2, 'B'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((1, 'C'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((2, 'C'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+        ]),
+        (3, None, 123, [
+            ((2, 'A'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((0, 'B'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((1, 'C'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+        ]),
+    ])
+    def test_task_func(dictionary, item, sample_size, random_seed, expected_output):
+        positions, dataframe = task_func(dictionary, item, sample_size, random_seed)
+>       assert positions == expected_output[0]
+E       AssertionError: assert [(1, 'A')] == ((1, 'A'),   ... 8\n2  3  6  9)
+E         
+E         Right contains one more item:    A  B  C\n0  1  4  7\n1  2  5  8\n2  3  6  9
+E         Use -v to get more diff
+
+test_0812.py:38: AssertionError
+_________________ test_task_func[3-None-123-expected_output2] __________________
+
+dictionary = {'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]}, item = 3
+sample_size = None, random_seed = 123
+expected_output = [((2, 'A'),    A  B  C
+0  1  4  7
+1  2  5  8
+2  3  6  9), ((0, 'B'),    A  B  C
+0  1  4  7
+1  2  5  8
+2  3  6  9), ((1, 'C'),    A  B  C
+0  1  4  7
+1  2  5  8
+2  3  6  9)]
+
+    @pytest.mark.parametrize("item, sample_size, random_seed, expected_output", [
+        (1, None, None, [
+            ((0, 'A'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((1, 'A'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((2, 'A'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((0, 'B'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((1, 'B'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((2, 'B'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((0, 'C'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((1, 'C'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((2, 'C'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+        ]),
+        (2, 2, None, [
+            ((1, 'A'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((2, 'A'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((1, 'B'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((2, 'B'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((1, 'C'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((2, 'C'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+        ]),
+        (3, None, 123, [
+            ((2, 'A'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((0, 'B'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+            ((1, 'C'), pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})),
+        ]),
+    ])
+    def test_task_func(dictionary, item, sample_size, random_seed, expected_output):
+        positions, dataframe = task_func(dictionary, item, sample_size, random_seed)
+>       assert positions == expected_output[0]
+E       AssertionError: assert [(2, 'A')] == ((2, 'A'),   ... 8\n2  3  6  9)
+E         
+E         Right contains one more item:    A  B  C\n0  1  4  7\n1  2  5  8\n2  3  6  9
+E         Use -v to get more diff
+
+test_0812.py:38: AssertionError
+=========================== short test summary info ============================
+FAILED test_0812.py::test_task_func[1-None-None-expected_output0] - Assertion...
+FAILED test_0812.py::test_task_func[2-2-None-expected_output1] - AssertionErr...
+FAILED test_0812.py::test_task_func[3-None-123-expected_output2] - AssertionE...
+3 failed in 1.38s

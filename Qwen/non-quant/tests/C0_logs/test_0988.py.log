@@ -1,0 +1,67 @@
+.FF..                                                                    [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_empty_data ___________________________
+
+    def test_task_func_empty_data():
+        json_data = '{"key1": {"key2": []}}'
+        data_key = "key1.key2"
+        original, normalized, ax = task_func(json_data, data_key)
+    
+        assert isinstance(original, pd.Series)
+>       assert isinstance(normalized, pd.Series)
+E       AssertionError: assert False
+E        +  where False = isinstance(None, <class 'pandas.Series'>)
+E        +    where <class 'pandas.Series'> = pd.Series
+
+test_0988.py:29: AssertionError
+_______________________ test_task_func_invalid_key_path ________________________
+
+    def test_task_func_invalid_key_path():
+        json_data = '{"key1": {"key2": [1, 2, 3, 4, 5]}}'
+        data_key = "key1.key3"
+    
+        with pytest.raises(KeyError) as excinfo:
+            task_func(json_data, data_key)
+    
+>       assert str(excinfo.value) == "Key path 'key1.key3' not found in the provided JSON data."
+E       assert '"Key path \'...d JSON data."' == "Key path 'ke...ed JSON data."
+E         
+E         - Key path 'key1.key3' not found in the provided JSON data.
+E         + "Key path 'key1.key3' not found in the provided JSON data."
+E         ? +                                                         +
+
+test_0988.py:42: AssertionError
+=============================== warnings summary ===============================
+Qwen/non-quant/tests/test_0988.py::test_task_func_valid_json
+Qwen/non-quant/tests/test_0988.py::test_task_func_empty_data
+Qwen/non-quant/tests/test_0988.py::test_task_func_non_numeric_data
+Qwen/non-quant/tests/test_0988.py::test_task_func_single_value
+  /work/tomohiro-w/utg/src/src_0988.py:11: UserWarning: Instantiating Float64Dtype without any arguments.Pass a Float64Dtype instance to silence this warning.
+    values = pd.Series(data, dtype=pd.Float64Dtype)
+
+Qwen/non-quant/tests/test_0988.py::test_task_func_valid_json
+Qwen/non-quant/tests/test_0988.py::test_task_func_single_value
+  /work/tomohiro-w/utg/src/src_0988.py:19: UserWarning: Instantiating Float64Dtype without any arguments.Pass a Float64Dtype instance to silence this warning.
+    normalized_values = pd.Series(
+
+Qwen/non-quant/tests/test_0988.py::test_task_func_valid_json
+  /work/tomohiro-w/utg/Qwen/non-quant/tests/test_0988.py:20: UserWarning: Instantiating Float64Dtype without any arguments.Pass a Float64Dtype instance to silence this warning.
+    assert all(original == pd.Series([1, 2, 3, 4, 5], dtype=pd.Float64Dtype))
+
+Qwen/non-quant/tests/test_0988.py::test_task_func_valid_json
+  /work/tomohiro-w/utg/Qwen/non-quant/tests/test_0988.py:21: UserWarning: Instantiating Float64Dtype without any arguments.Pass a Float64Dtype instance to silence this warning.
+    assert all(normalized == pd.Series([0.0, 0.25, 0.5, 0.75, 1.0], dtype=pd.Float64Dtype))
+
+Qwen/non-quant/tests/test_0988.py::test_task_func_single_value
+  /work/tomohiro-w/utg/Qwen/non-quant/tests/test_0988.py:62: UserWarning: Instantiating Float64Dtype without any arguments.Pass a Float64Dtype instance to silence this warning.
+    assert all(original == pd.Series([10], dtype=pd.Float64Dtype))
+
+Qwen/non-quant/tests/test_0988.py::test_task_func_single_value
+  /work/tomohiro-w/utg/Qwen/non-quant/tests/test_0988.py:63: UserWarning: Instantiating Float64Dtype without any arguments.Pass a Float64Dtype instance to silence this warning.
+    assert all(normalized == pd.Series([0.0], dtype=pd.Float64Dtype))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0988.py::test_task_func_empty_data - AssertionError: assert False
+FAILED test_0988.py::test_task_func_invalid_key_path - assert '"Key path \'.....
+2 failed, 3 passed, 10 warnings in 3.46s

@@ -1,0 +1,18 @@
+import seaborn as sns
+from random import sample
+# Constants
+COLUMNS = ['A', 'B', 'C', 'D', 'E']
+def task_func(df, tuples, n_plots):
+    if not df.empty:
+        df = df[~df.apply(tuple, axis=1).isin(tuples)]
+
+    plots = []
+    if n_plots > 0 and not df.empty:
+        available_columns = df.columns.tolist()
+        for _ in range(min(n_plots, len(available_columns) // 2)):  # Ensure we have enough columns
+            # Randomly select two columns for pairplot
+            selected_columns = sample(available_columns, 2)
+            plot = sns.pairplot(df, vars=selected_columns)
+            plots.append(plot)
+
+    return df, plots

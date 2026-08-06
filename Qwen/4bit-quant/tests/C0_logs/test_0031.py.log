@@ -1,0 +1,123 @@
+F.FFFF                                                                   [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_json ___________________________
+
+    def test_task_func_valid_json():
+        # Arrange
+        file_path = 'test_data/valid.json'
+        attribute = 'name'
+    
+        # Act & Assert
+>       assert task_func(file_path, attribute) == 'John Doe'
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0031.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = 'test_data/valid.json', attribute = 'name'
+INPUT_JSON = {'type': 'object', 'properties': {'name': {'type': <class 'str'>}, 'age': {'type': <class 'int'>}, 'email': {'type': <class 'str'>}}, 'required': ['name', 'age', 'email']}
+EMAIL_REGEX = '^[a-z0-9]+[\\._]?[a-z0-9]+[@]\\w+[.]\\w{2,3}$'
+
+    def task_func(
+        file_path,
+        attribute,
+        INPUT_JSON={
+            "type": "object",
+            "properties": {
+                "name": {"type": str},
+                "age": {"type": int},
+                "email": {"type": str}
+            },
+            "required": ["name", "age", "email"]
+        },
+        EMAIL_REGEX=r"^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$"):
+        if not os.path.isfile(file_path):
+>           raise ValueError(f'{file_path} does not exist.')
+E           ValueError: test_data/valid.json does not exist.
+
+../../../src/src_0031.py:18: ValueError
+____________________ test_task_func_missing_required_field _____________________
+
+    def test_task_func_missing_required_field():
+        # Arrange
+        file_path = 'test_data/missing_name.json'
+        attribute = 'name'
+    
+        # Act & Assert
+>       with pytest.raises(ValueError, match='name is missing from the JSON object.'):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'name is missing from the JSON object.'
+E         Actual message: 'test_data/missing_name.json does not exist.'
+
+test_0031.py:27: AssertionError
+_________________________ test_task_func_invalid_type __________________________
+
+    def test_task_func_invalid_type():
+        # Arrange
+        file_path = 'test_data/invalid_age_type.json'
+        attribute = 'age'
+    
+        # Act & Assert
+>       with pytest.raises(ValueError, match='age is not of type <class \'int\'>.'):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: "age is not of type <class 'int'>."
+E         Actual message: 'test_data/invalid_age_type.json does not exist.'
+
+test_0031.py:36: AssertionError
+_________________________ test_task_func_invalid_email _________________________
+
+    def test_task_func_invalid_email():
+        # Arrange
+        file_path = 'test_data/invalid_email.json'
+        attribute = 'email'
+    
+        # Act & Assert
+>       with pytest.raises(ValueError, match='Email is not valid.'):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'Email is not valid.'
+E         Actual message: 'test_data/invalid_email.json does not exist.'
+
+test_0031.py:45: AssertionError
+__________________________ test_task_func_valid_email __________________________
+
+    def test_task_func_valid_email():
+        # Arrange
+        file_path = 'test_data/valid_email.json'
+        attribute = 'email'
+    
+        # Act & Assert
+>       assert task_func(file_path, attribute) == 'john.doe@example.com'
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0031.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = 'test_data/valid_email.json', attribute = 'email'
+INPUT_JSON = {'type': 'object', 'properties': {'name': {'type': <class 'str'>}, 'age': {'type': <class 'int'>}, 'email': {'type': <class 'str'>}}, 'required': ['name', 'age', 'email']}
+EMAIL_REGEX = '^[a-z0-9]+[\\._]?[a-z0-9]+[@]\\w+[.]\\w{2,3}$'
+
+    def task_func(
+        file_path,
+        attribute,
+        INPUT_JSON={
+            "type": "object",
+            "properties": {
+                "name": {"type": str},
+                "age": {"type": int},
+                "email": {"type": str}
+            },
+            "required": ["name", "age", "email"]
+        },
+        EMAIL_REGEX=r"^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$"):
+        if not os.path.isfile(file_path):
+>           raise ValueError(f'{file_path} does not exist.')
+E           ValueError: test_data/valid_email.json does not exist.
+
+../../../src/src_0031.py:18: ValueError
+=========================== short test summary info ============================
+FAILED test_0031.py::test_task_func_valid_json - ValueError: test_data/valid....
+FAILED test_0031.py::test_task_func_missing_required_field - AssertionError: ...
+FAILED test_0031.py::test_task_func_invalid_type - AssertionError: Regex patt...
+FAILED test_0031.py::test_task_func_invalid_email - AssertionError: Regex pat...
+FAILED test_0031.py::test_task_func_valid_email - ValueError: test_data/valid...
+5 failed, 1 passed in 0.61s

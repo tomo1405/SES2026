@@ -1,0 +1,27 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test case 1: input is not a DataFrame
+        df = 'not a DataFrame'
+        with raises(ValueError) as e:
+            task_func(df)
+        assert str(e.value) == "The input df is not a DataFrame"
+    
+        # Test case 2: input is a DataFrame with correct shape
+        df = pd.DataFrame({col: [i for i in range(10)] for col in FEATURES+[TARGET]})
+        model = task_func(df)
+        assert isinstance(model, LinearRegression)
+    
+        # Test case 3: input is a DataFrame with incorrect shape
+        df = pd.DataFrame({col: [i for i in range(11)] for col in FEATURES+[TARGET]})
+>       with raises(ValueError) as e:
+E       Failed: DID NOT RAISE ValueError
+
+test_0365.py:39: Failed
+=========================== short test summary info ============================
+FAILED test_0365.py::test_task_func - Failed: DID NOT RAISE ValueError
+1 failed in 2.89s
+/work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/coverage/control.py:956: CoverageWarning: No data was collected. (no-data-collected); see https://coverage.readthedocs.io/en/7.14.3/messages.html#warning-no-data-collected
+  self._warn("No data was collected.", slug="no-data-collected")

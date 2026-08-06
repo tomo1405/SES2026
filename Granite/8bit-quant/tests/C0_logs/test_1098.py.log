@@ -1,0 +1,65 @@
+FFFF..F                                                                  [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        assert task_func("This is a test.") == "test"
+        assert task_func("This is another test!") == "another test"
+>       assert task_func("This is a test... And this is another test?") == "test and this is another test"
+E       AssertionError: assert 'test another test' == 'test and thi... another test'
+E         
+E         - test and this is another test
+E         + test another test
+
+test_1098.py:7: AssertionError
+___________________________ test_task_func_with_urls ___________________________
+
+    def test_task_func_with_urls():
+>       assert task_func("This is a test. Here is a URL: https://www.example.com") == "test here is a url"
+E       AssertionError: assert 'test Here URL' == 'test here is a url'
+E         
+E         - test here is a url
+E         + test Here URL
+
+test_1098.py:12: AssertionError
+_______________________ test_task_func_with_punctuation ________________________
+
+    def test_task_func_with_punctuation():
+        assert task_func("This is a test!") == "test"
+        assert task_func("This is a test...") == "test"
+        assert task_func("This is a test?") == "test"
+>       assert task_func("This is a test. This is another test!") == "test this is another test"
+E       AssertionError: assert 'test another test' == 'test this is another test'
+E         
+E         - test this is another test
+E         ?     --------
+E         + test another test
+
+test_1098.py:20: AssertionError
+________________________ test_task_func_with_stopwords _________________________
+
+    def test_task_func_with_stopwords():
+>       assert task_func("This is a test. This is another test.") == "test this is another test"
+E       AssertionError: assert 'test another test' == 'test this is another test'
+E         
+E         - test this is another test
+E         ?     --------
+E         + test another test
+
+test_1098.py:24: AssertionError
+______________________ test_task_func_with_only_stopwords ______________________
+
+    def test_task_func_with_only_stopwords():
+>       assert task_func("this is a test. this is another test. this is a stopword. this is a stopword. this is a stopword.") == ""
+E       AssertionError: assert 'test another...word stopword' == ''
+E         
+E         + test another test stopword stopword stopword
+
+test_1098.py:36: AssertionError
+=========================== short test summary info ============================
+FAILED test_1098.py::test_task_func - AssertionError: assert 'test another te...
+FAILED test_1098.py::test_task_func_with_urls - AssertionError: assert 'test ...
+FAILED test_1098.py::test_task_func_with_punctuation - AssertionError: assert...
+FAILED test_1098.py::test_task_func_with_stopwords - AssertionError: assert '...
+FAILED test_1098.py::test_task_func_with_only_stopwords - AssertionError: ass...
+5 failed, 2 passed in 0.54s

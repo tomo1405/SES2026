@@ -1,0 +1,53 @@
+......FF                                                                 [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_plot_labels __________________________
+
+    def test_task_func_plot_labels():
+        df, ax = task_func()
+        for category in ["A", "B", "C", "D", "E"]:
+>           assert category in ax.get_legend().get_texts()
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: 'NoneType' object has no attribute 'get_texts'
+
+test_0478.py:41: AttributeError
+_______________________ test_task_func_plot_data_points ________________________
+
+    def test_task_func_plot_data_points():
+        df, ax = task_func(N=5)
+        for category in ["A", "B", "C", "D", "E"]:
+>           points = ax.collections[0].get_offsets()[df['category'] == category]
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0478.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = masked_array(data=[[0.09997491581800289, 0.056411579027100256]],
+             mask=[[False, False]],
+       fill_value=1e+20)
+indx = 0    False
+1    False
+2    False
+3     True
+4    False
+Name: category, dtype: bool
+
+    def __getitem__(self, indx):
+        """
+        x.__getitem__(y) <==> x[y]
+    
+        Return the item described by i, as a masked array.
+    
+        """
+        # We could directly use ndarray.__getitem__ on self.
+        # But then we would have to modify __array_finalize__ to prevent the
+        # mask of being reshaped if it hasn't been set up properly yet
+        # So it's easier to stick to the current version
+>       dout = self.data[indx]
+               ^^^^^^^^^^^^^^^
+E       IndexError: boolean index did not match indexed array along axis 0; size of axis is 1 but size of corresponding boolean axis is 5
+
+../../../.venv/lib/python3.12/site-packages/numpy/ma/core.py:3288: IndexError
+=========================== short test summary info ============================
+FAILED test_0478.py::test_task_func_plot_labels - AttributeError: 'NoneType' ...
+FAILED test_0478.py::test_task_func_plot_data_points - IndexError: boolean in...
+2 failed, 6 passed in 2.39s

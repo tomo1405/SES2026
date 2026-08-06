@@ -1,0 +1,25 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that the function returns a numpy array
+        assert isinstance(task_func(), np.ndarray)
+    
+        # Test that the function raises a ValueError when length is negative
+        with pytest.raises(ValueError):
+            task_func(-1)
+    
+        # Test that the function returns the correct result for a few different inputs
+>       assert np.array_equal(task_func(10000, 0), np.array([0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5]))
+E       assert False
+E        +  where False = <function array_equal at 0x7d1fb7717db0>(array([ 0,  1,  2, ..., 38, 39, 40], shape=(10001,)), array([ 0,  1, -1,  2, -2,  3, -3,  4, -4,  5, -5]))
+E        +    where <function array_equal at 0x7d1fb7717db0> = np.array_equal
+E        +    and   array([ 0,  1,  2, ..., 38, 39, 40], shape=(10001,)) = task_func(10000, 0)
+E        +    and   array([ 0,  1, -1,  2, -2,  3, -3,  4, -4,  5, -5]) = <built-in function array>([0, 1, -1, 2, -2, 3, ...])
+E        +      where <built-in function array> = np.array
+
+test_0900.py:15: AssertionError
+=========================== short test summary info ============================
+FAILED test_0900.py::test_task_func - assert False
+1 failed in 0.63s

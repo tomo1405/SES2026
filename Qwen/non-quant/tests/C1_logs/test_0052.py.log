@@ -1,0 +1,45 @@
+F.F.                                                                     [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_no_clusters __________________________
+
+sample_df =    Age  Height
+0   25     160
+1   30     170
+2   35     180
+3   40     190
+4   45     200
+5   50     210
+
+    def test_task_func_no_clusters(sample_df):
+        age_threshold = 45
+        height_threshold = 180
+        result_df, ax = task_func(sample_df, age_threshold, height_threshold)
+>       assert result_df.equals(sample_df)
+E       assert False
+E        +  where False = equals(   Age  Height\n0   25     160\n1   30     170\n2   35     180\n3   40     190\n4   45     200\n5   50     210)
+E        +    where equals = Empty DataFrame\nColumns: [Age, Height, Cluster]\nIndex: [].equals
+
+test_0052.py:23: AssertionError
+___________________________ test_task_func_edge_case ___________________________
+
+sample_df =    Age  Height
+0   25     160
+1   30     170
+2   35     180
+3   40     190
+4   45     200
+5   50     210
+
+    def test_task_func_edge_case(sample_df):
+        age_threshold = 40
+        height_threshold = 200
+        result_df, ax = task_func(sample_df, age_threshold, height_threshold)
+>       assert len(result_df) == 2
+E       assert 0 == 2
+E        +  where 0 = len(Empty DataFrame\nColumns: [Age, Height, Cluster]\nIndex: [])
+
+test_0052.py:40: AssertionError
+=========================== short test summary info ============================
+FAILED test_0052.py::test_task_func_no_clusters - assert False
+FAILED test_0052.py::test_task_func_edge_case - assert 0 == 2
+2 failed, 2 passed in 3.91s

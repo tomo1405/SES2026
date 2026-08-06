@@ -1,0 +1,41 @@
+..FF                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_missing_names_key _______________________
+
+    def test_task_func_missing_names_key():
+        mock_data = {
+            'other_key': ['Alice', 'Bob', 'Charlie']
+        }
+        mock_response = requests.Response()
+        mock_response.status_code = 200
+        mock_response._content = json.dumps(mock_data).encode('utf-8')
+    
+        with patch('requests.get', return_value=mock_response):
+            result = task_func('http://example.com/data')
+>           assert result == []
+E           AssertionError: assert 'Invalid url input' == []
+
+test_0190.py:35: AssertionError
+_____________________ test_task_func_non_list_names_value ______________________
+
+    def test_task_func_non_list_names_value():
+        mock_data = {
+            'names': 'Not a list'
+        }
+        mock_response = requests.Response()
+        mock_response.status_code = 200
+        mock_response._content = json.dumps(mock_data).encode('utf-8')
+    
+        with patch('requests.get', return_value=mock_response):
+            result = task_func('http://example.com/data')
+>           assert result == []
+E           AssertionError: assert ['Not', 'a', 'list'] == []
+E             
+E             Left contains 3 more items, first extra item: 'Not'
+E             Use -v to get more diff
+
+test_0190.py:47: AssertionError
+=========================== short test summary info ============================
+FAILED test_0190.py::test_task_func_missing_names_key - AssertionError: asser...
+FAILED test_0190.py::test_task_func_non_list_names_value - AssertionError: as...
+2 failed, 2 passed in 0.62s

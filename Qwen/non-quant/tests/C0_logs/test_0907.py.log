@@ -1,0 +1,54 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_no_processed_files _______________________
+
+    def test_task_func_no_processed_files():
+        with tempfile.TemporaryDirectory() as source_dir, tempfile.TemporaryDirectory() as target_dir:
+            # Create some test files in the source directory without '_processed' suffix
+            test_files = ['file1.txt', 'file2.csv']
+            for file in test_files:
+                with open(os.path.join(source_dir, file), 'w') as f:
+                    f.write('test content')
+    
+            # Call the function
+            archive_path = task_func(source_dir, target_dir)
+    
+            # Check if the archive was created
+            assert os.path.exists(archive_path)
+    
+            # Check if the archive is empty
+            with zipfile.ZipFile(archive_path, 'r') as archive:
+                archive_contents = archive.namelist()
+                assert not archive_contents
+    
+            # Check if no files were moved to the target directory
+            target_files = os.listdir(target_dir)
+>           assert not target_files
+E           AssertionError: assert not ['archive.zip']
+
+test_0907.py:55: AssertionError
+____________________ test_task_func_empty_source_directory _____________________
+
+    def test_task_func_empty_source_directory():
+        with tempfile.TemporaryDirectory() as source_dir, tempfile.TemporaryDirectory() as target_dir:
+            # Call the function with an empty source directory
+            archive_path = task_func(source_dir, target_dir)
+    
+            # Check if the archive was created
+            assert os.path.exists(archive_path)
+    
+            # Check if the archive is empty
+            with zipfile.ZipFile(archive_path, 'r') as archive:
+                archive_contents = archive.namelist()
+                assert not archive_contents
+    
+            # Check if no files were moved to the target directory
+            target_files = os.listdir(target_dir)
+>           assert not target_files
+E           AssertionError: assert not ['archive.zip']
+
+test_0907.py:72: AssertionError
+=========================== short test summary info ============================
+FAILED test_0907.py::test_task_func_no_processed_files - AssertionError: asse...
+FAILED test_0907.py::test_task_func_empty_source_directory - AssertionError: ...
+2 failed, 1 passed in 0.49s

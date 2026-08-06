@@ -1,0 +1,30 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data = np.array([[1, 2], [3, 4], [5, 6]])
+        n_components = 2
+        random_state = 42
+    
+        result = task_func(data, n_components, random_state)
+    
+        assert isinstance(result, dict)
+        assert "transformed_data" in result
+        assert "ax" in result
+        assert isinstance(result["transformed_data"], np.ndarray)
+        assert isinstance(result["ax"], plt.Axes)
+    
+        transformed_data = result["transformed_data"]
+        ax = result["ax"]
+    
+        assert transformed_data.shape[1] == n_components
+        assert transformed_data.shape[0] == data.shape[0]
+>       assert ax.shape[0] == n_components
+               ^^^^^^^^
+E       AttributeError: 'Axes' object has no attribute 'shape'. Did you mean: 'sharex'?
+
+test_0448.py:24: AttributeError
+=========================== short test summary info ============================
+FAILED test_0448.py::test_task_func - AttributeError: 'Axes' object has no at...
+1 failed in 3.63s

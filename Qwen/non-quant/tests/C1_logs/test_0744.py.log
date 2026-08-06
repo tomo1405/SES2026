@@ -1,0 +1,34 @@
+..F.                                                                     [100%]
+=================================== FAILURES ===================================
+__________________ test_task_func_with_keys_matching_prefixes __________________
+
+temp_directory = '/tmp/pytest-of-tomohiro-w/pytest-1625/test_task_func_with_keys_match0'
+
+    def test_task_func_with_keys_matching_prefixes(temp_directory):
+        create_temp_files(temp_directory, {
+            "file1.json": {
+                "is_active": True,
+                "has_permission": False,
+                "can_edit": True,
+                "should_delete": False
+            },
+            "file2.json": {
+                "is_admin": True,
+                "has_access": True,
+                "can_view": False,
+                "should_notify": True
+            }
+        })
+        result = task_func(temp_directory)
+>       assert result == {"is_": 3, "has_": 2, "can_": 2, "should_": 2}
+E       AssertionError: assert {'is_': 2, 'h... 'should_': 2} == {'is_': 3, 'h... 'should_': 2}
+E         
+E         Omitting 3 identical items, use -vv to show
+E         Differing items:
+E         {'is_': 2} != {'is_': 3}
+E         Use -v to get more diff
+
+test_0744.py:55: AssertionError
+=========================== short test summary info ============================
+FAILED test_0744.py::test_task_func_with_keys_matching_prefixes - AssertionEr...
+1 failed, 3 passed in 0.47s

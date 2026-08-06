@@ -1,0 +1,37 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a sample dataframe
+        df = pd.DataFrame({"A": [1, 2, 3, 4, 5], "B": [10, 20, 30, 40, 50]})
+    
+        # Test that the function returns a dataframe and an axis object
+        principalDf, ax = task_func(df)
+        assert isinstance(principalDf, pd.DataFrame)
+        assert isinstance(ax, plt.Axes)
+    
+        # Test that the dataframe has the correct number of columns
+        assert principalDf.shape[1] == 2
+    
+        # Test that the dataframe has the correct column names
+        assert principalDf.columns.tolist() == ["Component 1", "Component 2"]
+    
+        # Test that the dataframe has the correct data types
+        assert principalDf.dtypes.tolist() == [np.float64, np.float64]
+    
+        # Test that the axis object has the correct data
+        assert ax.get_xlabel() == "Component 1"
+        assert ax.get_ylabel() == "Component 2"
+    
+        # Test that the axis object has the correct data limits
+>       assert ax.get_xlim() == (0, 1)
+E       assert (np.float64(-...726366465956)) == (0, 1)
+E         
+E         At index 0 diff: np.float64(-22.109726366465956) != 0
+E         Use -v to get more diff
+
+test_0046.py:32: AssertionError
+=========================== short test summary info ============================
+FAILED test_0046.py::test_task_func - assert (np.float64(-...726366465956)) =...
+1 failed in 3.92s

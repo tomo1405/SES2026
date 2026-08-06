@@ -1,0 +1,32 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+        f_list = [lambda x: x, lambda y: y]
+        file_path = "test_output.csv"
+        task_func(f_list, file_path)
+        df = pd.read_csv(file_path)
+        assert df.shape == (2, 5)
+        assert df["Function Name"].tolist() == ["<lambda>", "<lambda>"]
+        assert df["Number of Arguments"].tolist() == [1, 1]
+>       assert df["Defaults"].tolist() == [None, None]
+E       assert [nan, nan] == [None, None]
+E         
+E         At index 0 diff: nan != None
+E         Use -v to get more diff
+
+test_0572.py:14: AssertionError
+_________________________ test_task_func_invalid_input _________________________
+
+    def test_task_func_invalid_input():
+        f_list = [lambda x: x, lambda y: y]
+        file_path = "test_output.csv"
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0572.py:21: Failed
+=========================== short test summary info ============================
+FAILED test_0572.py::test_task_func_valid_input - assert [nan, nan] == [None,...
+FAILED test_0572.py::test_task_func_invalid_input - Failed: DID NOT RAISE Val...
+2 failed in 1.18s

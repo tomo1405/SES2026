@@ -1,0 +1,29 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sample_data =    closing_price   Z_score
+0            100 -1.465580
+1            102 -1.064051
+2            101 -1.264815
+3         ...8  0.140535
+6            107 -0.060229
+7            115  1.545886
+8            113  1.144357
+9            112  0.943592
+
+    def test_task_func(sample_data):
+        outliers, ax = task_func(sample_data)
+    
+        # Check if the outliers DataFrame is correctly identified
+        expected_outliers = sample_data.iloc[[7, 8]]
+>       assert outliers.equals(expected_outliers), "The outliers DataFrame is not correct"
+E       AssertionError: The outliers DataFrame is not correct
+E       assert False
+E        +  where False = equals(   closing_price   Z_score\n7            115  1.545886\n8            113  1.144357)
+E        +    where equals = Empty DataFrame\nColumns: [closing_price, Z_score]\nIndex: [].equals
+
+test_0916.py:19: AssertionError
+=========================== short test summary info ============================
+FAILED test_0916.py::test_task_func - AssertionError: The outliers DataFrame ...
+1 failed in 3.94s

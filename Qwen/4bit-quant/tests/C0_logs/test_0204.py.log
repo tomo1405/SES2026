@@ -1,0 +1,99 @@
+FFEEE                                                                    [100%]
+==================================== ERRORS ====================================
+________________ ERROR at setup of test_task_func_no_recipient _________________
+file /work/tomohiro-w/utg/Qwen/4bit-quant/tests/test_0204.py, line 37
+  def test_task_func_no_recipient(mock_smtp):
+E       fixture 'mock_smtp' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, cov, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, no_cover, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/work/tomohiro-w/utg/Qwen/4bit-quant/tests/test_0204.py:37
+__________________ ERROR at setup of test_task_func_no_names ___________________
+file /work/tomohiro-w/utg/Qwen/4bit-quant/tests/test_0204.py, line 46
+  def test_task_func_no_names(mock_smtp):
+E       fixture 'mock_smtp' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, cov, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, no_cover, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/work/tomohiro-w/utg/Qwen/4bit-quant/tests/test_0204.py:46
+_________________ ERROR at setup of test_task_func_empty_input _________________
+file /work/tomohiro-w/utg/Qwen/4bit-quant/tests/test_0204.py, line 55
+  def test_task_func_empty_input(mock_smtp):
+E       fixture 'mock_smtp' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, cov, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, no_cover, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/work/tomohiro-w/utg/Qwen/4bit-quant/tests/test_0204.py:55
+=================================== FAILURES ===================================
+__________________________ test_task_func_valid_input __________________________
+
+mock_smtp = <MagicMock name='SMTP' id='138598844568288'>
+
+    @patch('src_0204.smtplib.SMTP')
+    def test_task_func_valid_input(mock_smtp):
+        input_data = '{"recipient": "test@example.com", "names": ["Alice", "Bob"]}'
+        expected_output = ["Alice", "Bob"]
+    
+        mock_smtp_instance = MagicMock()
+        mock_smtp.return_value = mock_smtp_instance
+        mock_smtp_instance.starttls.return_value = None
+        mock_smtp_instance.login.return_value = None
+        mock_smtp_instance.sendmail.return_value = None
+        mock_smtp_instance.quit.return_value = None
+    
+        result = task_func(input_data)
+    
+        assert result == expected_output
+>       mock_smtp.assert_called_once_with(SMTP_SERVER, SMTP_PORT)
+                                          ^^^^^^^^^^^
+E       NameError: name 'SMTP_SERVER' is not defined
+
+test_0204.py:21: NameError
+_________________________ test_task_func_invalid_json __________________________
+
+mock_smtp = <MagicMock name='SMTP' id='138598846476272'>
+
+    @patch('src_0204.smtplib.SMTP')
+    def test_task_func_invalid_json(mock_smtp):
+        input_data = '{"recipient": "test@example.com", "names": [1, 2]}'
+        expected_output = []
+    
+>       result = task_func(input_data)
+                 ^^^^^^^^^^^^^^^^^^^^^
+
+test_0204.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input_data = '{"recipient": "test@example.com", "names": [1, 2]}'
+smtp_server = 'smtp.gmail.com', smtp_port = 587
+email_address = 'your.email@gmail.com', email_password = 'your.password'
+smtp = None
+
+    def task_func(input_data=None, smtp_server=SMTP_SERVER, smtp_port=SMTP_PORT, email_address=EMAIL_ADDRESS, email_password=EMAIL_PASSWORD, smtp=None):
+    
+        if input_data is None:
+            return []
+    
+        # Parse input JSON data
+        try:
+            data = json.loads(input_data)
+            recipient_email = data.get('recipient')
+            names = data.get('names', [])
+        except (json.JSONDecodeError, ValueError):
+            return []
+    
+        if not recipient_email or not names:
+            return []
+    
+>       message = 'Subject: Extracted Names\n\n' + '\n'.join(names)
+                                                   ^^^^^^^^^^^^^^^^
+E       TypeError: sequence item 0: expected str instance, int found
+
+../../../src/src_0204.py:24: TypeError
+=========================== short test summary info ============================
+FAILED test_0204.py::test_task_func_valid_input - NameError: name 'SMTP_SERVE...
+FAILED test_0204.py::test_task_func_invalid_json - TypeError: sequence item 0...
+ERROR test_0204.py::test_task_func_no_recipient
+ERROR test_0204.py::test_task_func_no_names
+ERROR test_0204.py::test_task_func_empty_input
+2 failed, 3 errors in 0.45s

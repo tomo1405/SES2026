@@ -1,0 +1,9 @@
+import pandas as pd
+from collections import Counter
+def task_func(df):
+    df['combination'] = pd.Series(df.apply(lambda row: tuple(sorted(row)), axis=1))
+    
+    # Using Counter from collections to calculate the frequency of each combination
+    combination_freq = Counter(df['combination'])
+    
+    return dict(combination_freq)

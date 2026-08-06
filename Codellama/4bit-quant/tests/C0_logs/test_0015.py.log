@@ -1,0 +1,76 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_valid_config __________________________
+
+    def test_task_func_valid_config():
+        config_file_path = 'path/to/config/file'
+        archieve_dir = '/home/user/archive'
+        project_dir = 'path/to/project/directory'
+    
+        config = configparser.ConfigParser()
+        config.read(config_file_path)
+>       config.set('Project', 'directory', project_dir)
+
+test_0015.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/configparser.py:1184: in set
+    super().set(section, option, value)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <configparser.ConfigParser object at 0x74c32c34f9e0>, section = 'Project'
+option = 'directory', value = 'path/to/project/directory'
+
+    def set(self, section, option, value=None):
+        """Set an option."""
+        if value:
+            value = self._interpolation.before_set(self, section, option,
+                                                   value)
+        if not section or section == self.default_section:
+            sectdict = self._defaults
+        else:
+            try:
+                sectdict = self._sections[section]
+            except KeyError:
+>               raise NoSectionError(section) from None
+E               configparser.NoSectionError: No section: 'Project'
+
+/usr/lib/python3.12/configparser.py:880: NoSectionError
+________________________ test_task_func_invalid_config _________________________
+
+    def test_task_func_invalid_config():
+        config_file_path = 'path/to/config/file'
+        archieve_dir = '/home/user/archive'
+        project_dir = 'path/to/project/directory'
+    
+        config = configparser.ConfigParser()
+        config.read(config_file_path)
+>       config.set('Project', 'directory', project_dir)
+
+test_0015.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/configparser.py:1184: in set
+    super().set(section, option, value)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <configparser.ConfigParser object at 0x74c32c34f290>, section = 'Project'
+option = 'directory', value = 'path/to/project/directory'
+
+    def set(self, section, option, value=None):
+        """Set an option."""
+        if value:
+            value = self._interpolation.before_set(self, section, option,
+                                                   value)
+        if not section or section == self.default_section:
+            sectdict = self._defaults
+        else:
+            try:
+                sectdict = self._sections[section]
+            except KeyError:
+>               raise NoSectionError(section) from None
+E               configparser.NoSectionError: No section: 'Project'
+
+/usr/lib/python3.12/configparser.py:880: NoSectionError
+=========================== short test summary info ============================
+FAILED test_0015.py::test_task_func_valid_config - configparser.NoSectionErro...
+FAILED test_0015.py::test_task_func_invalid_config - configparser.NoSectionEr...
+2 failed in 0.56s

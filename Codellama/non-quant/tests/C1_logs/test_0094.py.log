@@ -1,0 +1,24 @@
+F..                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        data = np.array([[1, 2], [3, 4], [5, 6]])
+        n_components = 2
+        expected_columns = ['PC1', 'PC2']
+        expected_data = np.array([[1, 2], [3, 4], [5, 6]])
+    
+        result, ax = task_func(data, n_components)
+    
+        assert isinstance(result, pd.DataFrame)
+        assert result.columns.tolist() == expected_columns
+>       assert np.allclose(result.values, expected_data)
+E       assert False
+E        +  where False = <function allclose at 0x7903b11f4330>(array([[-2.82842712e+00, -4.74426853e-17],\n       [ 0.00000000e+00, -0.00000000e+00],\n       [ 2.82842712e+00, -4.74426853e-17]]), array([[1, 2],\n       [3, 4],\n       [5, 6]]))
+E        +    where <function allclose at 0x7903b11f4330> = np.allclose
+E        +    and   array([[-2.82842712e+00, -4.74426853e-17],\n       [ 0.00000000e+00, -0.00000000e+00],\n       [ 2.82842712e+00, -4.74426853e-17]]) =         PC1           PC2\n0 -2.828427 -4.744269e-17\n1  0.000000 -0.000000e+00\n2  2.828427 -4.744269e-17.values
+
+test_0094.py:18: AssertionError
+=========================== short test summary info ============================
+FAILED test_0094.py::test_task_func - assert False
+1 failed, 2 passed in 3.58s

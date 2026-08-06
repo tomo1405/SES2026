@@ -1,0 +1,48 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        area_string = "2,000"
+        expected_price = 200
+        actual_price = task_func(area_string, data=DATA)
+>       assert actual_price == expected_price, "Unexpected predicted price"
+E       AssertionError: Unexpected predicted price
+E       assert np.float64(199.99999999999997) == 200
+
+test_1081.py:14: AssertionError
+___________________ test_task_func_with_invalid_area_string ____________________
+
+    def test_task_func_with_invalid_area_string():
+        area_string = "invalid"
+        expected_price = None
+>       actual_price = task_func(area_string, data=DATA)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_1081.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+area_string = 'invalid'
+data = {'Area_String': ['1,000', '2,000', '3,000', '4,000', '5,000'], 'Price': [100, 200, 300, 400, 500]}
+
+    def task_func(area_string, data=DATA):
+        # Convert area strings to float and prepare data for the model
+        df = pd.DataFrame(data)
+        df["Area_Float"] = df["Area_String"].str.replace(",", "").astype(float)
+    
+        # Train the linear regression model
+        X = df[["Area_Float"]]
+        Y = df["Price"]
+        model = LinearRegression()
+        model.fit(X, Y)
+    
+        # Predict the price for the given area string
+>       area_float = float(area_string.replace(",", ""))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: could not convert string to float: 'invalid'
+
+../../../src/src_1081.py:19: ValueError
+=========================== short test summary info ============================
+FAILED test_1081.py::test_task_func - AssertionError: Unexpected predicted price
+FAILED test_1081.py::test_task_func_with_invalid_area_string - ValueError: co...
+2 failed in 2.86s

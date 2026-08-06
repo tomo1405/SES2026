@@ -1,0 +1,44 @@
+...FF                                                                    [100%]
+=================================== FAILURES ===================================
+____________________ test_task_func_invalid_password_length ____________________
+
+    def test_task_func_invalid_password_length():
+        with pytest.raises(ValueError):
+>           task_func(datetime.now(), 'salt', 'invalid_password_length', 0)
+
+test_0257.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+utc_datetime = datetime.datetime(2026, 7, 30, 1, 28, 43, 526076), salt = 'salt'
+password_length = 'invalid_password_length', seed = 0
+
+    def task_func(utc_datetime, salt='salt', password_length=10, seed=0):
+        random.seed(seed)
+        # Test if the utc_datetime is a datetime object and the salt is a string
+        if not isinstance(utc_datetime, datetime):
+            raise ValueError("Input should be a datetime object")
+        if not isinstance(salt, str):
+            raise ValueError("Salt should be a string")
+    
+        # Convert the datetime to a string
+        utc_time_str = utc_datetime.strftime("%Y-%m-%d %H:%M:%S")
+        # Create the salted string
+        salted_string = utc_time_str + salt
+    
+        # Generate a random password
+>       password = ''.join(random.choice('abcdefghijklmnopqrstuvwxyz0123456789') for _ in range(password_length))
+                                                                                          ^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: 'str' object cannot be interpreted as an integer
+
+../../../src/src_0257.py:19: TypeError
+_________________________ test_task_func_invalid_seed __________________________
+
+    def test_task_func_invalid_seed():
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0257.py:34: Failed
+=========================== short test summary info ============================
+FAILED test_0257.py::test_task_func_invalid_password_length - TypeError: 'str...
+FAILED test_0257.py::test_task_func_invalid_seed - Failed: DID NOT RAISE Valu...
+2 failed, 3 passed in 0.39s

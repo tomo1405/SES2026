@@ -1,0 +1,32 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+csv_file = <_io.StringIO object at 0x7042c3c0e8c0>
+
+    def test_task_func(csv_file):
+        # Create a temporary file with the mock data
+        temp_file = io.StringIO(csv_data)
+    
+        # Call the function with the path to the temporary file
+        ax = task_func(temp_file)
+    
+        # Check if the returned object is an AxesSubplot instance
+        assert isinstance(ax, plt.Axes), "The function should return a matplotlib AxesSubplot object."
+    
+        # Check if the plot has been created correctly
+        assert len(ax.lines) == 1, "The plot should contain exactly one line."
+    
+        # Check if the title and labels are set correctly
+>       assert ax.get_title() == "          Plot Title          :          Normalized Column 1          ", "The plot title is not set correctly."
+E       AssertionError: The plot title is not set correctly.
+E       assert '          Pl...ized Column 1' == '          Pl...n 1          '
+E         
+E         -           Plot Title          :          Normalized Column 1          
+E         ?                      --------- --------                     ----------
+E         +           Plot Title :  Normalized Column 1
+
+test_1002.py:33: AssertionError
+=========================== short test summary info ============================
+FAILED test_1002.py::test_task_func - AssertionError: The plot title is not s...
+1 failed in 2.17s

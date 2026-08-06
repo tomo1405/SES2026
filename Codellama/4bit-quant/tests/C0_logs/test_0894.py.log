@@ -1,0 +1,38 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        logs = ["ERROR: 12:30:00", "ERROR: 13:45:00", "ERROR: 14:15:00"]
+        error_times, avg_time = task_func(logs)
+>       assert error_times == [time(12, 30), time(13, 45), time(14, 15)]
+                               ^^^^^^^^^^^^
+E       TypeError: 'module' object is not callable. Did you mean: 'time.time(...)'?
+
+test_0894.py:9: TypeError
+___________________________ test_task_func_no_errors ___________________________
+
+    def test_task_func_no_errors():
+        logs = ["INFO: 12:30:00", "INFO: 13:45:00", "INFO: 14:15:00"]
+        error_times, avg_time = task_func(logs)
+        assert error_times == []
+>       assert avg_time == time(0, 0)
+                           ^^^^^^^^^^
+E       TypeError: 'module' object is not callable. Did you mean: 'time.time(...)'?
+
+test_0894.py:16: TypeError
+_________________________ test_task_func_invalid_logs __________________________
+
+    def test_task_func_invalid_logs():
+        logs = ["ERROR: 12:30:00", "ERROR: 13:45:00", "ERROR: 14:15:00", "INFO: 15:15:00"]
+        error_times, avg_time = task_func(logs)
+>       assert error_times == [time(12, 30), time(13, 45), time(14, 15)]
+                               ^^^^^^^^^^^^
+E       TypeError: 'module' object is not callable. Did you mean: 'time.time(...)'?
+
+test_0894.py:21: TypeError
+=========================== short test summary info ============================
+FAILED test_0894.py::test_task_func - TypeError: 'module' object is not calla...
+FAILED test_0894.py::test_task_func_no_errors - TypeError: 'module' object is...
+FAILED test_0894.py::test_task_func_invalid_logs - TypeError: 'module' object...
+3 failed in 0.46s

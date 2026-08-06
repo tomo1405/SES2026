@@ -1,0 +1,213 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_valid_table ________________________
+
+url = 'http://example.com'
+
+    def task_func(url='http://example.com'):
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+        except requests.ConnectionError as e:
+            raise ConnectionError(f"Could not connect to URL: {e}")
+        except requests.HTTPError as e:
+            raise requests.HTTPError(f"HTTP error occurred: {e}")
+    
+        try:
+            soup = BeautifulSoup(response.text, 'html.parser')
+            table = soup.find('table')  # Assuming only the first table is of interest
+            if table is None:
+>               raise ValueError("No table found on the page.")
+E               ValueError: No table found on the page.
+
+../../../src/src_0130.py:17: ValueError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func_with_valid_table():
+        # Simulate a valid HTML page with a table
+        html_content = """
+        <html>
+            <body>
+                <table>
+                    <thead>
+                        <tr><th>Name</th><th>Age</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>John Doe</td><td>30</td></tr>
+                        <tr><td>Jane Smith</td><td>25</td></tr>
+                    </tbody>
+                </table>
+            </body>
+        </html>
+        """
+        mock_response = MockResponse(200, html_content)
+        with pytest.raises(requests.HTTPError):
+            # Simulate an HTTP error
+>           task_func()
+
+test_0130.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'http://example.com'
+
+    def task_func(url='http://example.com'):
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+        except requests.ConnectionError as e:
+            raise ConnectionError(f"Could not connect to URL: {e}")
+        except requests.HTTPError as e:
+            raise requests.HTTPError(f"HTTP error occurred: {e}")
+    
+        try:
+            soup = BeautifulSoup(response.text, 'html.parser')
+            table = soup.find('table')  # Assuming only the first table is of interest
+            if table is None:
+                raise ValueError("No table found on the page.")
+    
+            # Extracting headers if present
+            headers = [th.text.strip() for th in table.find_all('th')]
+    
+            # Extracting data rows
+            data = []
+            for row in table.find_all('tr'):
+                cols = row.find_all('td')
+                if not cols:  # This skips rows without <td> (like header rows)
+                    continue
+                cols = [ele.text.strip() for ele in cols]
+                data.append(cols)
+    
+            if not data:
+                raise ValueError("No data found in the table.")
+    
+            df = pd.DataFrame(data, columns=headers if headers else None)
+        except Exception as e:
+>           raise ValueError(f"Error parsing the page content: {e}")
+E           ValueError: Error parsing the page content: No table found on the page.
+
+../../../src/src_0130.py:36: ValueError
+___________________________ test_task_func_no_table ____________________________
+
+    def test_task_func_no_table():
+        # Simulate a page without a table
+        html_content = """
+        <html>
+            <body>
+                <h1>No Table Here</h1>
+            </body>
+        </html>
+        """
+        mock_response = MockResponse(200, html_content)
+        with pytest.raises(ValueError) as excinfo:
+            task_func()
+>       assert str(excinfo.value) == "No table found on the page."
+E       AssertionError: assert 'Error parsin... on the page.' == 'No table found on the page.'
+E         
+E         - No table found on the page.
+E         + Error parsing the page content: No table found on the page.
+
+test_0130.py:61: AssertionError
+__________________________ test_task_func_empty_table __________________________
+
+    def test_task_func_empty_table():
+        # Simulate a page with an empty table
+        html_content = """
+        <html>
+            <body>
+                <table>
+                    <thead>
+                        <tr><th>Name</th><th>Age</th></tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </body>
+        </html>
+        """
+        mock_response = MockResponse(200, html_content)
+        with pytest.raises(ValueError) as excinfo:
+            task_func()
+>       assert str(excinfo.value) == "No data found in the table."
+E       AssertionError: assert 'Error parsin... on the page.' == 'No data found in the table.'
+E         
+E         - No data found in the table.
+E         + Error parsing the page content: No table found on the page.
+
+test_0130.py:81: AssertionError
+_______________________ test_task_func_connection_error ________________________
+
+url = 'http://example.com'
+
+    def task_func(url='http://example.com'):
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+        except requests.ConnectionError as e:
+            raise ConnectionError(f"Could not connect to URL: {e}")
+        except requests.HTTPError as e:
+            raise requests.HTTPError(f"HTTP error occurred: {e}")
+    
+        try:
+            soup = BeautifulSoup(response.text, 'html.parser')
+            table = soup.find('table')  # Assuming only the first table is of interest
+            if table is None:
+>               raise ValueError("No table found on the page.")
+E               ValueError: No table found on the page.
+
+../../../src/src_0130.py:17: ValueError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func_connection_error():
+        # Simulate a connection error
+        with pytest.raises(ConnectionError) as excinfo:
+>           task_func()
+
+test_0130.py:86: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'http://example.com'
+
+    def task_func(url='http://example.com'):
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+        except requests.ConnectionError as e:
+            raise ConnectionError(f"Could not connect to URL: {e}")
+        except requests.HTTPError as e:
+            raise requests.HTTPError(f"HTTP error occurred: {e}")
+    
+        try:
+            soup = BeautifulSoup(response.text, 'html.parser')
+            table = soup.find('table')  # Assuming only the first table is of interest
+            if table is None:
+                raise ValueError("No table found on the page.")
+    
+            # Extracting headers if present
+            headers = [th.text.strip() for th in table.find_all('th')]
+    
+            # Extracting data rows
+            data = []
+            for row in table.find_all('tr'):
+                cols = row.find_all('td')
+                if not cols:  # This skips rows without <td> (like header rows)
+                    continue
+                cols = [ele.text.strip() for ele in cols]
+                data.append(cols)
+    
+            if not data:
+                raise ValueError("No data found in the table.")
+    
+            df = pd.DataFrame(data, columns=headers if headers else None)
+        except Exception as e:
+>           raise ValueError(f"Error parsing the page content: {e}")
+E           ValueError: Error parsing the page content: No table found on the page.
+
+../../../src/src_0130.py:36: ValueError
+=========================== short test summary info ============================
+FAILED test_0130.py::test_task_func_with_valid_table - ValueError: Error pars...
+FAILED test_0130.py::test_task_func_no_table - AssertionError: assert 'Error ...
+FAILED test_0130.py::test_task_func_empty_table - AssertionError: assert 'Err...
+FAILED test_0130.py::test_task_func_connection_error - ValueError: Error pars...
+4 failed in 1.85s

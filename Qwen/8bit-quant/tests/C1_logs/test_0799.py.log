@@ -1,0 +1,74 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_no_backup_dir _________________________
+
+setup_directory = '/tmp/tmp32xos63j'
+
+    def test_task_func_no_backup_dir(setup_directory):
+        result = task_func(setup_directory)
+>       assert result == f'Backup directory {os.path.join(setup_directory, "backup")} does not exist. Cannot rollback update.'
+E       AssertionError: assert 'No backups f...lback update.' == 'Backup direc...lback update.'
+E         
+E         - Backup directory /tmp/tmp32xos63j/backup does not exist. Cannot rollback update.
+E         + No backups found in /tmp/backup. Cannot rollback update.
+
+test_0799.py:22: AssertionError
+__________________________ test_task_func_no_backups ___________________________
+
+setup_backup_dir = '/tmp/tmpoqz857sh/backup'
+setup_directory = '/tmp/tmpvzjhsdhh'
+
+    def test_task_func_no_backups(setup_backup_dir, setup_directory):
+        result = task_func(setup_directory)
+>       assert result == f'No backups found in {setup_backup_dir}. Cannot rollback update.'
+E       AssertionError: assert 'No backups f...lback update.' == 'No backups f...lback update.'
+E         
+E         - No backups found in /tmp/tmpoqz857sh/backup. Cannot rollback update.
+E         ?                         ------------
+E         + No backups found in /tmp/backup. Cannot rollback update.
+
+test_0799.py:26: AssertionError
+__________________________ test_task_func_with_backup __________________________
+
+setup_backup_dir = '/tmp/tmpcux7aonl/backup'
+setup_directory = '/tmp/tmp2wvjqzjt'
+
+    def test_task_func_with_backup(setup_backup_dir, setup_directory):
+        backup_content = {'file1.txt': 'content1', 'file2.txt': 'content2'}
+        latest_backup = 'backup_1'
+        os.makedirs(os.path.join(setup_backup_dir, latest_backup))
+        for filename, content in backup_content.items():
+            with open(os.path.join(setup_backup_dir, latest_backup, filename), 'w') as f:
+                f.write(content)
+    
+        result = task_func(setup_directory)
+>       assert result == setup_directory
+E       AssertionError: assert 'No backups f...lback update.' == '/tmp/tmp2wvjqzjt'
+E         
+E         - /tmp/tmp2wvjqzjt
+E         + No backups found in /tmp/backup. Cannot rollback update.
+
+test_0799.py:37: AssertionError
+_______________________ test_task_func_directory_exists ________________________
+
+setup_backup_dir = '/tmp/tmpddhnh8a8/backup'
+setup_directory = '/tmp/tmpau55gli9'
+
+    def test_task_func_directory_exists(setup_backup_dir, setup_directory):
+>       os.makedirs(setup_directory)
+
+test_0799.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = '/tmp/tmpau55gli9', mode = 511, exist_ok = False
+
+>   ???
+E   FileExistsError: [Errno 17] File exists: '/tmp/tmpau55gli9'
+
+<frozen os>:225: FileExistsError
+=========================== short test summary info ============================
+FAILED test_0799.py::test_task_func_no_backup_dir - AssertionError: assert 'N...
+FAILED test_0799.py::test_task_func_no_backups - AssertionError: assert 'No b...
+FAILED test_0799.py::test_task_func_with_backup - AssertionError: assert 'No ...
+FAILED test_0799.py::test_task_func_directory_exists - FileExistsError: [Errn...
+4 failed in 0.55s

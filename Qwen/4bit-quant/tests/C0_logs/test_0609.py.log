@@ -1,0 +1,67 @@
+..F.FF                                                                   [100%]
+=================================== FAILURES ===================================
+__________________________ test_task_func_with_tuples __________________________
+
+sample_df =    A  B   C   D   E
+0  1  5   9  13  17
+1  2  6  10  14  18
+2  3  7  11  15  19
+3  4  8  12  16  20
+sample_tuples = [(1, 5), (3, 11)]
+
+    def test_task_func_with_tuples(sample_df, sample_tuples):
+        df, plots = task_func(sample_df, sample_tuples, 2)
+        expected_data = {
+            'A': [2, 4],
+            'B': [6, 8],
+            'C': [10, 12],
+            'D': [14, 16],
+            'E': [18, 20]
+        }
+        expected_df = pd.DataFrame(expected_data)
+>       assert df.equals(expected_df)
+E       assert False
+E        +  where False = equals(   A  B   C   D   E\n0  2  6  10  14  18\n1  4  8  12  16  20)
+E        +    where equals =    A  B   C   D   E\n0  1  5   9  13  17\n1  2  6  10  14  18\n2  3  7  11  15  19\n3  4  8  12  16  20.equals
+
+test_0609.py:41: AssertionError
+_____________________ test_task_func_insufficient_columns ______________________
+
+sample_df =    A  B   C   D   E
+0  1  5   9  13  17
+1  2  6  10  14  18
+2  3  7  11  15  19
+3  4  8  12  16  20
+sample_tuples = [(1, 5), (3, 11)]
+
+    def test_task_func_insufficient_columns(sample_df, sample_tuples):
+        df_reduced = sample_df.drop(columns=['C', 'D', 'E'])
+        df, plots = task_func(df_reduced, sample_tuples, 2)
+>       assert df.equals(df_reduced)
+E       assert False
+E        +  where False = equals(   A  B\n0  1  5\n1  2  6\n2  3  7\n3  4  8)
+E        +    where equals =    A  B\n1  2  6\n2  3  7\n3  4  8.equals
+
+test_0609.py:52: AssertionError
+___________________ test_task_func_more_plots_than_available ___________________
+
+sample_df =    A  B   C   D   E
+0  1  5   9  13  17
+1  2  6  10  14  18
+2  3  7  11  15  19
+3  4  8  12  16  20
+sample_tuples = [(1, 5), (3, 11)]
+
+    def test_task_func_more_plots_than_available(sample_df, sample_tuples):
+        df, plots = task_func(sample_df, sample_tuples, 10)
+        assert df.equals(sample_df)
+>       assert len(plots) == len(COLUMNS) // 2
+                                 ^^^^^^^
+E       NameError: name 'COLUMNS' is not defined
+
+test_0609.py:58: NameError
+=========================== short test summary info ============================
+FAILED test_0609.py::test_task_func_with_tuples - assert False
+FAILED test_0609.py::test_task_func_insufficient_columns - assert False
+FAILED test_0609.py::test_task_func_more_plots_than_available - NameError: na...
+3 failed, 3 passed in 5.19s

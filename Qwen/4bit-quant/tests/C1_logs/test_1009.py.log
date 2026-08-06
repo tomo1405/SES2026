@@ -1,0 +1,32 @@
+F...                                                                     [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_success ____________________________
+
+mock_get = <MagicMock name='get' id='138285734189232'>
+
+    @patch('src_1009.requests.get')
+    def test_task_func_success(mock_get):
+        # Mock the response object
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.text = "<html><body><table id='test_table'><tr><td>Header1</td><td>Header2</td></tr><tr><td>Data1</td><td>Data2</td></tr></table></body></html>"
+    
+        # Configure the mock to return the mock response
+        mock_get.return_value = mock_response
+    
+        # Call the function
+        result = task_func("http://example.com", "test_table")
+    
+        # Assert the result
+        expected_df = pd.DataFrame({"Header1": ["Data1"], "Header2": ["Data2"]})
+>       pd.testing.assert_frame_equal(result, expected_df)
+E       AssertionError: DataFrame are different
+E       
+E       DataFrame shape mismatch
+E       [left]:  (2, 2)
+E       [right]: (1, 2)
+
+test_1009.py:24: AssertionError
+=========================== short test summary info ============================
+FAILED test_1009.py::test_task_func_success - AssertionError: DataFrame are d...
+1 failed, 3 passed in 1.78s

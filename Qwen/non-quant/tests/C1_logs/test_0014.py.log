@@ -1,0 +1,51 @@
+FF..                                                                     [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_success ____________________________
+
+setup_ftp_mock = <MagicMock name='FTP' id='124211449002224'>
+setup_subprocess_mock = <MagicMock name='call' id='124211449186688'>
+cleanup_downloaded_files = None
+
+    def test_task_func_success(setup_ftp_mock, setup_subprocess_mock, cleanup_downloaded_files):
+        mock_ftp = setup_ftp_mock.return_value
+        mock_ftp.nlst.return_value = ['file1.txt', 'file2.txt']
+    
+        result = task_func()
+    
+        assert result == ['file1.txt', 'file2.txt']
+>       mock_ftp.connect.assert_called_once_with('ftp.dlptest.com')
+
+test_0014.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='FTP().connect' id='124211449338896'>
+args = ('ftp.dlptest.com',), kwargs = {}
+
+    def assert_called_once_with(self, /, *args, **kwargs):
+        """assert that the mock was called exactly once and that that call was
+        with the specified arguments."""
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to be called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'connect' to be called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:955: AssertionError
+______________________ test_task_func_connection_failure _______________________
+
+setup_ftp_mock = <MagicMock name='FTP' id='124211449345856'>
+
+    def test_task_func_connection_failure(setup_ftp_mock):
+        mock_ftp = setup_ftp_mock.return_value
+        mock_ftp.connect.side_effect = Exception("Connection failed")
+    
+>       with pytest.raises(Exception) as exc_info:
+E       Failed: DID NOT RAISE Exception
+
+test_0014.py:45: Failed
+=========================== short test summary info ============================
+FAILED test_0014.py::test_task_func_success - AssertionError: Expected 'conne...
+FAILED test_0014.py::test_task_func_connection_failure - Failed: DID NOT RAIS...
+2 failed, 2 passed in 0.44s

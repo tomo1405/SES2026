@@ -1,0 +1,45 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a sample data matrix
+        data_matrix = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+    
+        # Expected output for z-scores
+        expected_z_scores = np.array([
+            [-1.22474487, 0., 1.22474487],
+            [-1.22474487, 0., 1.22474487],
+            [-1.22474487, 0., 1.22474487]
+        ])
+    
+        # Expected column names
+        expected_columns = ["Feature 1", "Feature 2", "Feature 3"]
+    
+        # Expected mean values
+        expected_means = np.array([0., 0., 0.])
+    
+        # Call the function
+        df, ax = task_func(data_matrix)
+    
+        # Check if the DataFrame has the correct columns
+>       assert list(df.columns) == expected_columns
+E       AssertionError: assert ['Feature 1',...re 3', 'Mean'] == ['Feature 1',..., 'Feature 3']
+E         
+E         Left contains one more item: 'Mean'
+E         Use -v to get more diff
+
+test_0041.py:28: AssertionError
+=============================== warnings summary ===============================
+Qwen/non-quant/tests/test_0041.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/matrix.py:202: RuntimeWarning: All-NaN slice encountered
+    vmin = np.nanmin(calc_data)
+
+Qwen/non-quant/tests/test_0041.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/seaborn/matrix.py:207: RuntimeWarning: All-NaN slice encountered
+    vmax = np.nanmax(calc_data)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0041.py::test_task_func - AssertionError: assert ['Feature 1',......
+1 failed, 2 warnings in 3.51s

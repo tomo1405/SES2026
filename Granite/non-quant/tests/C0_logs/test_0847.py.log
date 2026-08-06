@@ -1,0 +1,18 @@
+.F.                                                                      [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_with_non_empty_list ______________________
+
+    def test_task_func_with_non_empty_list():
+        obj_list = [collections.Counter({'a': 1, 'b': 2}), collections.Counter({'a': 1, 'c': 3})]
+        attr = 'most_common'
+        expected_df = pd.DataFrame({'attribute': ['a', 'b', 'c'], 'count': [2, 1, 1]})
+        actual_df = task_func(obj_list, attr)
+>       assert actual_df.equals(expected_df)
+E       assert False
+E        +  where False = equals(  attribute  count\n0         a      2\n1         b      1\n2         c      1)
+E        +    where equals =                                            attribute  count\n0  <bound method Counter.most_common of Counter({...      1\n1  <bound method Counter.most_common of Counter({...      1.equals
+
+test_0847.py:18: AssertionError
+=========================== short test summary info ============================
+FAILED test_0847.py::test_task_func_with_non_empty_list - assert False
+1 failed, 2 passed in 1.20s

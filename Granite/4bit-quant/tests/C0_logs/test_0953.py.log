@@ -1,0 +1,41 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+_______________________ test_task_func_with_valid_input ________________________
+
+mock_random = <random.Random object at 0x15bf7070>
+
+    def test_task_func_with_valid_input(mock_random):
+        """
+        Test the task_func function with valid input.
+        """
+        task_list = ["Task 1", "Task 2", "Task 3"]
+        n_tasks = 2
+        expected_df = pd.DataFrame({
+            "Task Name": ["Task_1", "Task_2"],
+            "Assigned To": ["James Brown", "Robert Davis"],
+            "Due Date": ["2023-03-14", "2023-03-14"]
+        })
+        actual_df = task_func(task_list, n_tasks)
+>       pd.testing.assert_frame_equal(actual_df, expected_df)
+
+test_0953.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.venv/lib/python3.12/site-packages/pandas/_testing/asserters.py:846: in assert_extension_array_equal
+    _testing.assert_almost_equal(
+pandas/_libs/testing.pyx:53: in pandas._libs.testing.assert_almost_equal
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   AssertionError: DataFrame.iloc[:, 0] (column name="Task Name") are different
+E   
+E   DataFrame.iloc[:, 0] (column name="Task Name") values are different (50.0 %)
+E   [index]: [0, 1]
+E   [left]:  [Task_1, Task_3]
+E   [right]: [Task_1, Task_2]
+E   At positional index 1, first diff: Task_3 != Task_2
+
+pandas/_libs/testing.pyx:171: AssertionError
+=========================== short test summary info ============================
+FAILED test_0953.py::test_task_func_with_valid_input - AssertionError: DataFr...
+1 failed, 1 passed in 1.76s

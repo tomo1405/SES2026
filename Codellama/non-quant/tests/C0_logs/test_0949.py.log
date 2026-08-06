@@ -1,0 +1,37 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that the function returns a numpy array
+        assert isinstance(task_func(), np.ndarray)
+    
+        # Test that the function returns a matrix with the correct shape
+        assert task_func().shape == (3, 2)
+    
+        # Test that the function returns a matrix with values between 0 and 1
+        assert np.all(task_func() >= 0) and np.all(task_func() <= 1)
+    
+        # Test that the function returns a matrix with the same values as the input matrix
+        matrix = np.random.rand(3, 2)
+>       assert np.all(task_func(matrix) == matrix)
+                      ^^^^^^^^^^^^^^^^^
+
+test_0949.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0949.py:5: in task_func
+    matrix = np.random.rand(rows, columns)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+numpy/random/mtrand.pyx:1242: in numpy.random.mtrand.RandomState.rand
+    ???
+numpy/random/mtrand.pyx:446: in numpy.random.mtrand.RandomState.random_sample
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   TypeError: only integer scalar arrays can be converted to a scalar index
+
+numpy/random/_common.pyx:309: TypeError
+=========================== short test summary info ============================
+FAILED test_0949.py::test_task_func - TypeError: only integer scalar arrays c...
+1 failed in 2.68s

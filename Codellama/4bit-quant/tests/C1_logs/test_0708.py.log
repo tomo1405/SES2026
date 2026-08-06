@@ -1,0 +1,27 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Create a sample DataFrame
+        df = pd.DataFrame({'IntCol': [1, 10, 100, 1000]})
+    
+        # Test that the function modifies the DataFrame correctly
+        df_modified = task_func(df)
+>       assert np.allclose(df_modified['IntCol'], np.log10(df['IntCol']))
+E       AssertionError: assert False
+E        +  where False = <function allclose at 0x7f0dfa1ca170>(0    0.0\n1    1.0\n2    2.0\n3    3.0\nName: IntCol, dtype: float64, 0        -inf\n1    0.000000\n2    0.301030\n3    0.477121\nName: IntCol, dtype: float64)
+E        +    where <function allclose at 0x7f0dfa1ca170> = np.allclose
+E        +    and   0        -inf\n1    0.000000\n2    0.301030\n3    0.477121\nName: IntCol, dtype: float64 = <ufunc 'log10'>(0    0.0\n1    1.0\n2    2.0\n3    3.0\nName: IntCol, dtype: float64)
+E        +      where <ufunc 'log10'> = np.log10
+
+test_0708.py:14: AssertionError
+=============================== warnings summary ===============================
+Codellama/4bit-quant/tests/test_0708.py::test_task_func
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/pandas/core/arraylike.py:402: RuntimeWarning: divide by zero encountered in log10
+    result = getattr(ufunc, method)(*inputs, **kwargs)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0708.py::test_task_func - AssertionError: assert False
+1 failed, 1 warning in 1.37s

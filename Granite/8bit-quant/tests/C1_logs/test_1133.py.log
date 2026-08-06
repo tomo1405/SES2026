@@ -1,0 +1,45 @@
+FF.F                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        password = "password"
+        result = task_func(password)
+        assert isinstance(result, str)
+>       assert result.startswith("ME")
+E       AssertionError: assert False
+E        +  where False = <built-in method startswith of str object at 0x7e7511fa05d0>('ME')
+E        +    where <built-in method startswith of str object at 0x7e7511fa05d0> = 'Jvu1GuEp1HVCi7yVq5oUP969PHQv8xz0BG2hQ+LHib8='.startswith
+
+test_1133.py:11: AssertionError
+___________________________ test_task_func_with_salt ___________________________
+
+    def test_task_func_with_salt():
+        password = "password"
+        salt_length = 16
+        result = task_func(password, SALT_LENGTH=salt_length)
+        assert isinstance(result, str)
+>       assert result.startswith("ME")
+E       AssertionError: assert False
+E        +  where False = <built-in method startswith of str object at 0x7e7511fa1f50>('ME')
+E        +    where <built-in method startswith of str object at 0x7e7511fa1f50> = 'NzO+1kevd2XyHclBdgmO+trASqSyuohEFLBaJa6cxuM='.startswith
+
+test_1133.py:18: AssertionError
+__________________________ test_task_func_with_prefix __________________________
+
+    def test_task_func_with_prefix():
+        password = "password"
+        prefix = "ABC"
+        result = task_func(password, PREFIX=prefix)
+        assert isinstance(result, str)
+>       assert result.startswith(prefix)
+E       AssertionError: assert False
+E        +  where False = <built-in method startswith of str object at 0x7e7511fa2010>('ABC')
+E        +    where <built-in method startswith of str object at 0x7e7511fa2010> = 'pY/o5bB4TqXvRaldM7JTldPP+GjNMxQRY9gC66IkoXs='.startswith
+
+test_1133.py:32: AssertionError
+=========================== short test summary info ============================
+FAILED test_1133.py::test_task_func - AssertionError: assert False
+FAILED test_1133.py::test_task_func_with_salt - AssertionError: assert False
+FAILED test_1133.py::test_task_func_with_prefix - AssertionError: assert False
+3 failed, 1 passed in 0.50s

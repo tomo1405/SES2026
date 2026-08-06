@@ -1,0 +1,48 @@
+F.F.                                                                     [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+sample_df =    A  B   C   D   E
+0  1  5   9  13  17
+1  2  6  10  14  18
+2  3  7  11  15  19
+3  4  8  12  16  20
+
+    def test_task_func(sample_df):
+        tuples_to_drop = [(0, 1), (2, 3)]
+        n_plots = 3
+        df, plots = task_func(sample_df, tuples_to_drop, n_plots)
+    
+        # Check if the DataFrame is correctly modified
+        assert all(col in df.columns for col in ['A', 'B', 'C', 'D', 'E'])
+        assert df.shape == (4, 5)  # No rows should be dropped, only columns
+    
+        # Check if the plots list is correctly generated
+>       assert len(plots) == min(n_plots, len(list(combinations(['A', 'B', 'C', 'D', 'E'], 2))))
+                                                   ^^^^^^^^^^^^
+E       NameError: name 'combinations' is not defined
+
+test_0610.py:28: NameError
+___________________ test_task_func_more_plots_than_possible ____________________
+
+sample_df =    A  B   C   D   E
+0  1  5   9  13  17
+1  2  6  10  14  18
+2  3  7  11  15  19
+3  4  8  12  16  20
+
+    def test_task_func_more_plots_than_possible(sample_df):
+        tuples_to_drop = [(0, 1), (2, 3)]
+        n_plots = 10  # More than possible combinations of 2 out of 5 columns
+        df, plots = task_func(sample_df, tuples_to_drop, n_plots)
+    
+        # Check if the number of plots is limited by the number of possible combinations
+>       assert len(plots) == len(list(combinations(['A', 'B', 'C', 'D', 'E'], 2)))
+                                      ^^^^^^^^^^^^
+E       NameError: name 'combinations' is not defined
+
+test_0610.py:47: NameError
+=========================== short test summary info ============================
+FAILED test_0610.py::test_task_func - NameError: name 'combinations' is not d...
+FAILED test_0610.py::test_task_func_more_plots_than_possible - NameError: nam...
+2 failed, 2 passed in 2.60s

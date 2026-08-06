@@ -1,0 +1,50 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_model_structure ________________________
+
+    def test_task_func_model_structure():
+        # Sample data
+        X = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
+        Y = np.array([0, 1, 1, 0])
+    
+        model, _ = task_func(X, Y)
+    
+        # Check if the model has the correct number of layers
+        assert len(model.layers) == 1
+    
+        # Check if the layer is an instance of Dense
+>       assert isinstance(model.layers[0], Dense)
+                                           ^^^^^
+E       NameError: name 'Dense' is not defined
+
+test_0418.py:31: NameError
+________________________ test_task_func_model_training _________________________
+
+    def test_task_func_model_training():
+        # Sample data
+        X = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
+        Y = np.array([0, 1, 1, 0])
+    
+        model, _ = task_func(X, Y)
+    
+        # Check if the model has been trained
+        assert hasattr(model, 'history')
+    
+        # Check if the history contains 'loss' and 'val_loss'
+>       assert 'loss' in model.history
+               ^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: argument of type 'History' is not iterable
+
+test_0418.py:51: TypeError
+=============================== warnings summary ===============================
+Qwen/non-quant/tests/test_0418.py::test_task_func_output
+Qwen/non-quant/tests/test_0418.py::test_task_func_model_structure
+Qwen/non-quant/tests/test_0418.py::test_task_func_model_training
+  /work/tomohiro-w/utg/.venv/lib/python3.12/site-packages/keras/src/layers/core/dense.py:107: UserWarning: Do not pass an `input_shape`/`input_dim` argument to a layer. When using Sequential models, prefer using an `Input(shape)` object as the first layer in the model instead.
+    super().__init__(activity_regularizer=activity_regularizer, **kwargs)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_0418.py::test_task_func_model_structure - NameError: name 'Dense'...
+FAILED test_0418.py::test_task_func_model_training - TypeError: argument of t...
+2 failed, 1 passed, 3 warnings in 42.84s

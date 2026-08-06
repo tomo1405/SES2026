@@ -1,0 +1,33 @@
+F.FF                                                                     [100%]
+=================================== FAILURES ===================================
+_________________________ test_task_func_output_format _________________________
+
+    def test_task_func_output_format():
+        with patch('psutil.cpu_percent', return_value=50), \
+>            patch('psutil.virtual_memory', return_value=psutil._psutil_linux.svmem(total=1024, available=512, percent=50)), \
+                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+             patch('psutil.disk_usage', return_value=psutil._psutil_linux.sdiskusage(total=1024, used=512, free=512, percent=50)):
+E            AttributeError: module 'psutil._psutil_linux' has no attribute 'svmem'
+
+test_0378.py:10: AttributeError
+_________________________ test_task_func_memory_usage __________________________
+
+    def test_task_func_memory_usage():
+>       with patch('psutil.virtual_memory', return_value=psutil._psutil_linux.svmem(total=1024, available=256, percent=75)):
+                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'psutil._psutil_linux' has no attribute 'svmem'
+
+test_0378.py:28: AttributeError
+__________________________ test_task_func_disk_usage ___________________________
+
+    def test_task_func_disk_usage():
+>       with patch('psutil.disk_usage', return_value=psutil._psutil_linux.sdiskusage(total=1024, used=768, free=256, percent=75)):
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'psutil._psutil_linux' has no attribute 'sdiskusage'
+
+test_0378.py:33: AttributeError
+=========================== short test summary info ============================
+FAILED test_0378.py::test_task_func_output_format - AttributeError: module 'p...
+FAILED test_0378.py::test_task_func_memory_usage - AttributeError: module 'ps...
+FAILED test_0378.py::test_task_func_disk_usage - AttributeError: module 'psut...
+3 failed, 1 passed in 0.53s

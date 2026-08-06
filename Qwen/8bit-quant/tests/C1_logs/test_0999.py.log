@@ -1,0 +1,138 @@
+F.FF                                                                     [100%]
+=================================== FAILURES ===================================
+____________________________ test_task_func_success ____________________________
+
+mock_os_remove = <MagicMock name='remove' id='125415477099216'>
+mock_tarfile_open = <MagicMock name='open' id='125415477267104'>
+mock_md5 = <MagicMock name='md5' id='125415484361376'>
+mock_urlretrieve = <MagicMock name='urlretrieve' id='125415477273200'>
+
+    @patch('src_0999.urllib.request.urlretrieve')
+    @patch('src_0999.hashlib.md5')
+    @patch('src_0999.tarfile.open')
+    @patch('src_0999.os.remove')
+    def test_task_func_success(mock_os_remove, mock_tarfile_open, mock_md5, mock_urlretrieve):
+        # Mock the urlretrieve to succeed
+        mock_urlretrieve.return_value = None
+    
+        # Mock the md5 hash to match the expected checksum
+        mock_md5_instance = MagicMock()
+        mock_md5_instance.hexdigest.return_value = "d41d8cd98f00b204e9800998ecf8427e"
+        mock_md5.return_value = mock_md5_instance
+    
+        # Mock the tarfile extraction
+        mock_tar_ref = MagicMock()
+        mock_tarfile_open.return_value = mock_tar_ref
+    
+        # Call the function
+>       result = task_func("http://example.com/file.tar.gz")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0999.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'http://example.com/file.tar.gz'
+
+    def task_func(url):
+        try:
+            urllib.request.urlretrieve(url, TARGET_TAR_FILE)
+        except Exception as e:
+            print(e)
+            return False
+    
+        md5_hash = hashlib.md5()
+>       with open(TARGET_TAR_FILE, "rb") as f:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'downloaded_files.tar.gz'
+
+../../../src/src_0999.py:16: FileNotFoundError
+_________________________ test_task_func_md5_mismatch __________________________
+
+mock_md5 = <MagicMock name='md5' id='125415477312064'>
+mock_urlretrieve = <MagicMock name='urlretrieve' id='125415477430800'>
+
+    @patch('src_0999.urllib.request.urlretrieve')
+    @patch('src_0999.hashlib.md5')
+    def test_task_func_md5_mismatch(mock_md5, mock_urlretrieve):
+        # Mock the urlretrieve to succeed
+        mock_urlretrieve.return_value = None
+    
+        # Mock the md5 hash to mismatch the expected checksum
+        mock_md5_instance = MagicMock()
+        mock_md5_instance.hexdigest.return_value = "wrong_checksum"
+        mock_md5.return_value = mock_md5_instance
+    
+        # Call the function
+>       result = task_func("http://example.com/file.tar.gz")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0999.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'http://example.com/file.tar.gz'
+
+    def task_func(url):
+        try:
+            urllib.request.urlretrieve(url, TARGET_TAR_FILE)
+        except Exception as e:
+            print(e)
+            return False
+    
+        md5_hash = hashlib.md5()
+>       with open(TARGET_TAR_FILE, "rb") as f:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'downloaded_files.tar.gz'
+
+../../../src/src_0999.py:16: FileNotFoundError
+__________________ test_task_func_tarfile_extraction_failure ___________________
+
+mock_os_remove = <MagicMock name='remove' id='125415477310240'>
+mock_tarfile_open = <MagicMock name='open' id='125415477443760'>
+mock_md5 = <MagicMock name='md5' id='125415475563552'>
+mock_urlretrieve = <MagicMock name='urlretrieve' id='125415475567536'>
+
+    @patch('src_0999.urllib.request.urlretrieve')
+    @patch('src_0999.hashlib.md5')
+    @patch('src_0999.tarfile.open')
+    @patch('src_0999.os.remove')
+    def test_task_func_tarfile_extraction_failure(mock_os_remove, mock_tarfile_open, mock_md5, mock_urlretrieve):
+        # Mock the urlretrieve to succeed
+        mock_urlretrieve.return_value = None
+    
+        # Mock the md5 hash to match the expected checksum
+        mock_md5_instance = MagicMock()
+        mock_md5_instance.hexdigest.return_value = "d41d8cd98f00b204e9800998ecf8427e"
+        mock_md5.return_value = mock_md5_instance
+    
+        # Mock the tarfile extraction to fail
+        mock_tar_ref = MagicMock()
+        mock_tar_ref.extractall.side_effect = Exception("Failed to extract")
+        mock_tarfile_open.return_value = mock_tar_ref
+    
+        # Call the function
+>       result = task_func("http://example.com/file.tar.gz")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0999.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'http://example.com/file.tar.gz'
+
+    def task_func(url):
+        try:
+            urllib.request.urlretrieve(url, TARGET_TAR_FILE)
+        except Exception as e:
+            print(e)
+            return False
+    
+        md5_hash = hashlib.md5()
+>       with open(TARGET_TAR_FILE, "rb") as f:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'downloaded_files.tar.gz'
+
+../../../src/src_0999.py:16: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0999.py::test_task_func_success - FileNotFoundError: [Errno 2] No...
+FAILED test_0999.py::test_task_func_md5_mismatch - FileNotFoundError: [Errno ...
+FAILED test_0999.py::test_task_func_tarfile_extraction_failure - FileNotFound...
+3 failed, 1 passed in 0.62s

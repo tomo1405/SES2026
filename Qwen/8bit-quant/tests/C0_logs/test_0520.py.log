@@ -1,0 +1,45 @@
+...FFF                                                                   [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_with_empty_data ________________________
+
+    def test_task_func_with_empty_data():
+        data = {}
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+test_0520.py:34: Failed
+_____________________ test_task_func_with_non_numeric_data _____________________
+
+    def test_task_func_with_non_numeric_data():
+        data = {
+            'Apple': ['a', 'b', 'c'],
+            'Banana': [15, 25, 35]
+        }
+>       with pytest.raises(TypeError):
+E       Failed: DID NOT RAISE TypeError
+
+test_0520.py:42: Failed
+__________________________ test_task_func_plot_labels __________________________
+
+    def test_task_func_plot_labels():
+        data = {
+            'Apple': [10, 20, 30],
+            'Banana': [15, 25, 35]
+        }
+        fig = task_func(data)
+        assert fig.get_xlabel() == "Time"
+        assert fig.get_ylabel() == "Sales Quantity"
+        assert fig.get_title() == "Fruit Sales over Time"
+>       assert set([text.get_text() for text in fig.get_legend().get_texts()]) == {'Apple', 'Banana'}
+E       AssertionError: assert {'Apple', 'Banana', 'Cherry'} == {'Apple', 'Banana'}
+E         
+E         Extra items in the left set:
+E         'Cherry'
+E         Use -v to get more diff
+
+test_0520.py:54: AssertionError
+=========================== short test summary info ============================
+FAILED test_0520.py::test_task_func_with_empty_data - Failed: DID NOT RAISE V...
+FAILED test_0520.py::test_task_func_with_non_numeric_data - Failed: DID NOT R...
+FAILED test_0520.py::test_task_func_plot_labels - AssertionError: assert {'Ap...
+3 failed, 3 passed in 2.46s

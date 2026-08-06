@@ -1,0 +1,51 @@
+....FFF                                                                  [100%]
+=================================== FAILURES ===================================
+______________________ test_task_func_case_insensitivity _______________________
+
+    def test_task_func_case_insensitivity():
+        text = "Hello hello HELLO"
+>       assert task_func(text) == {'hello': 3}
+E       AssertionError: assert {'Hello': 1, ...1, 'HELLO': 1} == {'hello': 3}
+E         
+E         Differing items:
+E         {'hello': 1} != {'hello': 3}
+E         Left contains 2 more items:
+E         {'HELLO': 1, 'Hello': 1}
+E         Use -v to get more diff
+
+test_0333.py:27: AssertionError
+_______________________ test_task_func_with_punctuation ________________________
+
+    def test_task_func_with_punctuation():
+        text = "Hello, world! Hello."
+>       assert task_func(text) == {'world': 1, 'hello': 2}
+E       AssertionError: assert {'Hello': 2, 'world': 1} == {'world': 1, 'hello': 2}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Left contains 1 more item:
+E         {'Hello': 2}
+E         Right contains 1 more item:
+E         {'hello': 2}
+E         Use -v to get more diff
+
+test_0333.py:31: AssertionError
+_________________________ test_task_func_with_numbers __________________________
+
+    def test_task_func_with_numbers():
+        text = "Hello 123 world 456 hello"
+>       assert task_func(text) == {'world': 1, 'hello': 2}
+E       AssertionError: assert {'Hello': 1, ...'456': 1, ...} == {'world': 1, 'hello': 2}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'hello': 1} != {'hello': 2}
+E         Left contains 3 more items:
+E         {'123': 1, '456': 1, 'Hello': 1}
+E         Use -v to get more diff
+
+test_0333.py:35: AssertionError
+=========================== short test summary info ============================
+FAILED test_0333.py::test_task_func_case_insensitivity - AssertionError: asse...
+FAILED test_0333.py::test_task_func_with_punctuation - AssertionError: assert...
+FAILED test_0333.py::test_task_func_with_numbers - AssertionError: assert {'H...
+3 failed, 4 passed in 3.81s

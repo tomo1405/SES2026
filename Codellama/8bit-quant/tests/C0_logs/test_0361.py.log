@@ -1,0 +1,40 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_sheet_not_found ________________________
+
+    def test_task_func_sheet_not_found():
+        with pytest.raises(ValueError):
+>           task_func('test_data.xlsx', 'non_existent_sheet')
+
+test_0361.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_location = 'test_data.xlsx', sheet_name = 'non_existent_sheet'
+
+    def task_func(file_location, sheet_name):
+        if not os.path.exists(file_location):
+>           raise FileNotFoundError(f"No file found at {file_location}")
+E           FileNotFoundError: No file found at test_data.xlsx
+
+../../../src/src_0361.py:7: FileNotFoundError
+__________________________ test_task_func_valid_input __________________________
+
+    def test_task_func_valid_input():
+>       result, fig = task_func('test_data.xlsx', 'Sheet1')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0361.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_location = 'test_data.xlsx', sheet_name = 'Sheet1'
+
+    def task_func(file_location, sheet_name):
+        if not os.path.exists(file_location):
+>           raise FileNotFoundError(f"No file found at {file_location}")
+E           FileNotFoundError: No file found at test_data.xlsx
+
+../../../src/src_0361.py:7: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0361.py::test_task_func_sheet_not_found - FileNotFoundError: No f...
+FAILED test_0361.py::test_task_func_valid_input - FileNotFoundError: No file ...
+2 failed, 1 passed in 1.98s

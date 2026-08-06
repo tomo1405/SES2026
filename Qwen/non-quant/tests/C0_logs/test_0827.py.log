@@ -1,0 +1,19 @@
+....F.                                                                   [100%]
+=================================== FAILURES ===================================
+___________________ test_task_func_with_existing_target_dir ____________________
+
+    def test_task_func_with_existing_target_dir():
+        with tempfile.TemporaryDirectory() as source_dir, tempfile.TemporaryDirectory() as target_dir:
+            open(os.path.join(source_dir, 'file.txt'), 'w').close()
+            open(os.path.join(target_dir, 'existing_file.txt'), 'w').close()
+            assert task_func(source_dir, target_dir) == 1
+>           assert os.listdir(target_dir) == ['existing_file.txt', 'file.txt']
+E           AssertionError: assert ['file.txt', ...ing_file.txt'] == ['existing_fi...', 'file.txt']
+E             
+E             At index 0 diff: 'file.txt' != 'existing_file.txt'
+E             Use -v to get more diff
+
+test_0827.py:34: AssertionError
+=========================== short test summary info ============================
+FAILED test_0827.py::test_task_func_with_existing_target_dir - AssertionError...
+1 failed, 5 passed in 0.47s

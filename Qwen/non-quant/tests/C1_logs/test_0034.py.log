@@ -1,0 +1,37 @@
+..F.F                                                                    [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_negative_numbers _____________________
+
+    def test_task_func_with_negative_numbers():
+        input_data = [(1, -2), (3, 4), (5, -6)]
+        expected_output = np.array([288])
+>       assert np.array_equal(task_func(input_data), expected_output)
+E       assert False
+E        +  where False = <function array_equal at 0x7ac175793170>(array([48]), array([288]))
+E        +    where <function array_equal at 0x7ac175793170> = np.array_equal
+E        +    and   array([48]) = task_func([(1, -2), (3, 4), (5, -6)])
+
+test_0034.py:18: AssertionError
+________________________ test_task_func_with_empty_list ________________________
+
+    def test_task_func_with_empty_list():
+        input_data = []
+        with pytest.raises(IndexError):
+>           task_func(input_data)
+
+test_0034.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+list_of_pairs = []
+
+    def task_func(list_of_pairs):
+        second_values = [pair[1] for pair in list_of_pairs]
+>       product = reduce(np.multiply, second_values)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: reduce() of empty iterable with no initial value
+
+../../../src/src_0034.py:5: TypeError
+=========================== short test summary info ============================
+FAILED test_0034.py::test_task_func_with_negative_numbers - assert False
+FAILED test_0034.py::test_task_func_with_empty_list - TypeError: reduce() of ...
+2 failed, 3 passed in 0.54s

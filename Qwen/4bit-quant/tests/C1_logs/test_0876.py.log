@@ -1,0 +1,57 @@
+.F.FF                                                                    [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_with_fill ___________________________
+
+    def test_task_func_with_fill():
+        data = [
+            {'Name': 'Alice', 'Age': 25, 'Occupation': 'Engineer'},
+            {'Name': 'Bob', 'Age': np.nan, 'Occupation': 'Designer'}
+        ]
+        expected_df = pd.DataFrame(data, columns=['Name', 'Age', 'Occupation'])
+        expected_df['Age'] = expected_df['Age'].fillna(50)  # Assuming 50 is within the default range (0, 100)
+        result_df = task_func(data, fill_missing=True)
+>       assert result_df.equals(expected_df)
+E       assert False
+E        +  where False = equals(    Name   Age Occupation\n0  Alice  25.0   Engineer\n1    Bob  50.0   Designer)
+E        +    where equals =     Name   Age Occupation\n0  Alice  25.0   Engineer\n1    Bob  57.0   Designer.equals
+
+test_0876.py:23: AssertionError
+__________________________ test_task_func_custom_seed __________________________
+
+    def test_task_func_custom_seed():
+        data = [
+            {'Name': 'Alice', 'Age': 25, 'Occupation': 'Engineer'},
+            {'Name': 'Bob', 'Age': np.nan, 'Occupation': 'Designer'}
+        ]
+        seed = 42
+        expected_df = pd.DataFrame(data, columns=['Name', 'Age', 'Occupation'])
+        expected_df['Age'] = expected_df['Age'].fillna(50)  # Assuming 50 is within the default range (0, 100)
+        result_df = task_func(data, fill_missing=True, seed=seed)
+>       assert result_df.equals(expected_df)
+E       assert False
+E        +  where False = equals(    Name   Age Occupation\n0  Alice  25.0   Engineer\n1    Bob  50.0   Designer)
+E        +    where equals =     Name   Age Occupation\n0  Alice  25.0   Engineer\n1    Bob  81.0   Designer.equals
+
+test_0876.py:44: AssertionError
+_______________________ test_task_func_custom_num_range ________________________
+
+    def test_task_func_custom_num_range():
+        data = [
+            {'Name': 'Alice', 'Age': 25, 'Occupation': 'Engineer'},
+            {'Name': 'Bob', 'Age': np.nan, 'Occupation': 'Designer'}
+        ]
+        num_range = (50, 150)
+        expected_df = pd.DataFrame(data, columns=['Name', 'Age', 'Occupation'])
+        expected_df['Age'] = expected_df['Age'].fillna(100)  # Assuming 100 is within the custom range (50, 150)
+        result_df = task_func(data, fill_missing=True, num_range=num_range)
+>       assert result_df.equals(expected_df)
+E       assert False
+E        +  where False = equals(    Name    Age Occupation\n0  Alice   25.0   Engineer\n1    Bob  100.0   Designer)
+E        +    where equals =     Name   Age Occupation\n0  Alice  25.0   Engineer\n1    Bob  64.0   Designer.equals
+
+test_0876.py:55: AssertionError
+=========================== short test summary info ============================
+FAILED test_0876.py::test_task_func_with_fill - assert False
+FAILED test_0876.py::test_task_func_custom_seed - assert False
+FAILED test_0876.py::test_task_func_custom_num_range - assert False
+3 failed, 2 passed in 1.15s

@@ -1,0 +1,26 @@
+..F                                                                      [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_reproducibility ________________________
+
+setup_directories = ('/tmp/tmp5ooujuzq', '/tmp/tmp0lfvkf8h')
+
+    def test_task_func_reproducibility(setup_directories):
+        src_dir, dest_dir = setup_directories
+    
+        # Move a file with a specific seed
+        first_moved_file = task_func(src_dir, dest_dir, seed=42)
+        second_moved_file = task_func(src_dir, dest_dir, seed=42)
+    
+>       assert first_moved_file == second_moved_file, "Files moved are not the same with the same seed"
+E       AssertionError: Files moved are not the same with the same seed
+E       assert 'file_4.txt' == 'file_3.txt'
+E         
+E         - file_3.txt
+E         ?      ^
+E         + file_4.txt
+E         ?      ^
+
+test_0369.py:51: AssertionError
+=========================== short test summary info ============================
+FAILED test_0369.py::test_task_func_reproducibility - AssertionError: Files m...
+1 failed, 2 passed in 0.44s

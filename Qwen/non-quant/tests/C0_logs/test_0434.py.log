@@ -1,0 +1,98 @@
+F.FFF                                                                    [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_valid_signature ________________________
+
+    def test_task_func_valid_signature():
+        s = "SGVsbG8gV29ybGQh"  # Base64 encoded "Hello World!"
+        secret_key = "my_secret_key"
+        signature = "d2c5f2a3b1e1f1e1f1e1f1e1f1e1f1e1f1e1f1e1"  # Valid HMAC-SHA1 signature
+    
+>       assert task_func(s, signature, secret_key) == True
+E       AssertionError: assert False == True
+E        +  where False = task_func('SGVsbG8gV29ybGQh', 'd2c5f2a3b1e1f1e1f1e1f1e1f1e1f1e1f1e1f1e1', 'my_secret_key')
+
+test_0434.py:9: AssertionError
+_________________________ test_task_func_empty_string __________________________
+
+    def test_task_func_empty_string():
+        s = ""
+        secret_key = "my_secret_key"
+        signature = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"  # HMAC-SHA1 of empty string
+    
+>       assert task_func(s, signature, secret_key) == True
+E       AssertionError: assert False == True
+E        +  where False = task_func('', 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855', 'my_secret_key')
+
+test_0434.py:23: AssertionError
+_____________________ test_task_func_non_ascii_characters ______________________
+
+s = 'Café'
+
+    def _bytes_from_decode_data(s):
+        if isinstance(s, str):
+            try:
+>               return s.encode('ascii')
+                       ^^^^^^^^^^^^^^^^^
+E               UnicodeEncodeError: 'ascii' codec can't encode character '\xe9' in position 3: ordinal not in range(128)
+
+/usr/lib/python3.12/base64.py:37: UnicodeEncodeError
+
+During handling of the above exception, another exception occurred:
+
+    def test_task_func_non_ascii_characters():
+        s = "Café"  # Non-ASCII character
+        secret_key = "my_secret_key"
+        signature = "valid_signature"  # Precomputed valid HMAC-SHA1 signature
+    
+>       assert task_func(s, signature, secret_key) == True
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0434.py:30: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0434.py:6: in task_func
+    decoded_msg = base64.b64decode(s).decode()
+                  ^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/base64.py:83: in b64decode
+    s = _bytes_from_decode_data(s)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+s = 'Café'
+
+    def _bytes_from_decode_data(s):
+        if isinstance(s, str):
+            try:
+                return s.encode('ascii')
+            except UnicodeEncodeError:
+>               raise ValueError('string argument should contain only ASCII characters')
+E               ValueError: string argument should contain only ASCII characters
+
+/usr/lib/python3.12/base64.py:39: ValueError
+__________________________ test_task_func_long_string __________________________
+
+    def test_task_func_long_string():
+        s = "a" * 1000  # Long string
+        secret_key = "my_secret_key"
+        signature = "valid_signature"  # Precomputed valid HMAC-SHA1 signature
+    
+>       assert task_func(s, signature, secret_key) == True
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0434.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+s = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+signature = 'valid_signature', secret_key = 'my_secret_key'
+
+    def task_func(s, signature, secret_key):
+>       decoded_msg = base64.b64decode(s).decode()
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       UnicodeDecodeError: 'utf-8' codec can't decode byte 0xa6 in position 1: invalid start byte
+
+../../../src/src_0434.py:6: UnicodeDecodeError
+=========================== short test summary info ============================
+FAILED test_0434.py::test_task_func_valid_signature - AssertionError: assert ...
+FAILED test_0434.py::test_task_func_empty_string - AssertionError: assert Fal...
+FAILED test_0434.py::test_task_func_non_ascii_characters - ValueError: string...
+FAILED test_0434.py::test_task_func_long_string - UnicodeDecodeError: 'utf-8'...
+4 failed, 1 passed in 0.51s

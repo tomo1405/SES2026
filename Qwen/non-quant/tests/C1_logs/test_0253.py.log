@@ -1,0 +1,109 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Prepare test data
+        data = [
+            np.array([1, 2, 3]),
+            np.array([4, 5, 6]),
+            np.array([7, 8, 9])
+        ]
+        labels = ['Series 1', 'Series 2', 'Series 3']
+    
+        # Call the function
+        ax = task_func(data, labels)
+    
+        # Check if the plot has the correct number of lines
+>       assert len(ax.lines) == len(data)
+E       assert 5 == 3
+E        +  where 5 = len(<Axes.ArtistList of 5 lines>)
+E        +    where <Axes.ArtistList of 5 lines> = <Axes: >.lines
+E        +  and   3 = len([array([1, 2, 3]), array([4, 5, 6]), array([7, 8, 9])])
+
+test_0253.py:19: AssertionError
+__________________ test_task_func_with_less_data_than_colors ___________________
+
+    def test_task_func_with_less_data_than_colors():
+        # Prepare test data with less series than colors
+        data = [
+            np.array([1, 2, 3]),
+            np.array([4, 5, 6])
+        ]
+        labels = ['Series 1', 'Series 2']
+    
+        # Call the function
+        ax = task_func(data, labels)
+    
+        # Check if the plot has the correct number of lines
+>       assert len(ax.lines) == len(data)
+E       assert 5 == 2
+E        +  where 5 = len(<Axes.ArtistList of 5 lines>)
+E        +    where <Axes.ArtistList of 5 lines> = <Axes: >.lines
+E        +  and   2 = len([array([1, 2, 3]), array([4, 5, 6])])
+
+test_0253.py:42: AssertionError
+__________________ test_task_func_with_more_data_than_colors ___________________
+
+    def test_task_func_with_more_data_than_colors():
+        # Prepare test data with more series than colors
+        data = [
+            np.array([1, 2, 3]),
+            np.array([4, 5, 6]),
+            np.array([7, 8, 9]),
+            np.array([10, 11, 12])
+        ]
+        labels = ['Series 1', 'Series 2', 'Series 3', 'Series 4']
+    
+        # Call the function
+        ax = task_func(data, labels)
+    
+        # Check if the plot has the correct number of lines
+>       assert len(ax.lines) == len(data)
+E       assert 5 == 4
+E        +  where 5 = len(<Axes.ArtistList of 5 lines>)
+E        +    where <Axes.ArtistList of 5 lines> = <Axes: >.lines
+E        +  and   4 = len([array([1, 2, 3]), array([4, 5, 6]), array([7, 8, 9]), array([10, 11, 12])])
+
+test_0253.py:67: AssertionError
+_________________________ test_task_func_with_no_data __________________________
+
+    def test_task_func_with_no_data():
+        # Prepare test data with no series
+        data = []
+        labels = []
+    
+        # Call the function
+        ax = task_func(data, labels)
+    
+        # Check if the plot has no lines
+>       assert len(ax.lines) == 0
+E       assert 5 == 0
+E        +  where 5 = len(<Axes.ArtistList of 5 lines>)
+E        +    where <Axes.ArtistList of 5 lines> = <Axes: >.lines
+
+test_0253.py:87: AssertionError
+______________________ test_task_func_with_single_series _______________________
+
+    def test_task_func_with_single_series():
+        # Prepare test data with a single series
+        data = [np.array([1, 2, 3])]
+        labels = ['Series 1']
+    
+        # Call the function
+        ax = task_func(data, labels)
+    
+        # Check if the plot has one line
+>       assert len(ax.lines) == 1
+E       assert 5 == 1
+E        +  where 5 = len(<Axes.ArtistList of 5 lines>)
+E        +    where <Axes.ArtistList of 5 lines> = <Axes: >.lines
+
+test_0253.py:102: AssertionError
+=========================== short test summary info ============================
+FAILED test_0253.py::test_task_func - assert 5 == 3
+FAILED test_0253.py::test_task_func_with_less_data_than_colors - assert 5 == 2
+FAILED test_0253.py::test_task_func_with_more_data_than_colors - assert 5 == 4
+FAILED test_0253.py::test_task_func_with_no_data - assert 5 == 0
+FAILED test_0253.py::test_task_func_with_single_series - assert 5 == 1
+5 failed in 1.56s

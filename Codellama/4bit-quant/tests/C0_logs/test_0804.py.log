@@ -1,0 +1,29 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test that the function raises an error when the input file has no numeric columns
+        with pytest.raises(ValueError):
+            task_func('test_data.csv')
+    
+        # Test that the function returns a DataFrame with the expected columns
+        expected_columns = ['a', 'b', 'c']
+>       df = task_func('test_data.csv')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0804.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_name = 'test_data.csv'
+
+    def task_func(file_name: str) -> pd.DataFrame:
+        df = pd.read_csv(file_name)
+        if df.select_dtypes(include='number').empty:
+>           raise ValueError("Input must at least have one numeric column.")
+E           ValueError: Input must at least have one numeric column.
+
+../../../src/src_0804.py:6: ValueError
+=========================== short test summary info ============================
+FAILED test_0804.py::test_task_func - ValueError: Input must at least have on...
+1 failed in 2.74s

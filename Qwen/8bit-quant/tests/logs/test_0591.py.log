@@ -1,0 +1,91 @@
+.FFF                                                                     [100%]
+=================================== FAILURES ===================================
+___________________________ test_task_func_url_error ___________________________
+
+mock_urlopen = <MagicMock name='urlopen' id='126718874137808'>
+
+    @patch('urllib.request.urlopen')
+    def test_task_func_url_error(mock_urlopen):
+        mock_urlopen.side_effect = urllib.error.URLError("Mocked URLError")
+        with pytest.raises(urllib.error.URLError) as excinfo:
+            task_func("http://example.com")
+>       assert str(excinfo.value) == "Error fetching URL http://example.com: Mocked URLError"
+E       AssertionError: assert '<urlopen err...ed URLError>>' == 'Error fetchi...cked URLError'
+E         
+E         - Error fetching URL http://example.com: Mocked URLError
+E         + <urlopen error Error fetching URL http://example.com: <urlopen error Mocked URLError>>
+E         ? +++++++++++++++                                       +++++++++++++++               ++
+
+test_0591.py:20: AssertionError
+____________________________ test_task_func_success ____________________________
+
+mock_urlopen = <MagicMock name='urlopen' id='126718873910592'>
+
+    @patch('urllib.request.urlopen')
+    def test_task_func_success(mock_urlopen):
+        mock_response = Mock()
+        mock_response.read.return_value = b"<html><body><a href='link1'>Text1</a><a href='link2'>Text2</a></body></html>"
+        mock_urlopen.return_value = mock_response
+    
+        expected_df = pd.DataFrame({
+            'text': ['Text1', 'Text2'],
+            'href': ['link1', 'link2']
+        })
+        current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        expected_df['fetch_time'] = current_time
+    
+>       result_df = task_func("http://example.com")
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0591.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'http://example.com'
+
+    def task_func(url):
+    
+        if not url:
+            raise ValueError("URL must not be empty.")
+    
+        try:
+>           with urllib.request.urlopen(url) as res:
+E           TypeError: 'Mock' object does not support the context manager protocol
+
+../../../src/src_0591.py:11: TypeError
+___________________________ test_task_func_no_links ____________________________
+
+mock_urlopen = <MagicMock name='urlopen' id='126718863849472'>
+
+    @patch('urllib.request.urlopen')
+    def test_task_func_no_links(mock_urlopen):
+        mock_response = Mock()
+        mock_response.read.return_value = b"<html><body></body></html>"
+        mock_urlopen.return_value = mock_response
+    
+        expected_df = pd.DataFrame(columns=['text', 'href'])
+        current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        expected_df['fetch_time'] = current_time
+    
+>       result_df = task_func("http://example.com")
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0591.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+url = 'http://example.com'
+
+    def task_func(url):
+    
+        if not url:
+            raise ValueError("URL must not be empty.")
+    
+        try:
+>           with urllib.request.urlopen(url) as res:
+E           TypeError: 'Mock' object does not support the context manager protocol
+
+../../../src/src_0591.py:11: TypeError
+=========================== short test summary info ============================
+FAILED test_0591.py::test_task_func_url_error - AssertionError: assert '<urlo...
+FAILED test_0591.py::test_task_func_success - TypeError: 'Mock' object does n...
+FAILED test_0591.py::test_task_func_no_links - TypeError: 'Mock' object does ...
+3 failed, 1 passed in 1.53s

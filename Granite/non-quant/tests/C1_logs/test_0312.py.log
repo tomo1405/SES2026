@@ -1,0 +1,36 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        list_of_lists = [[1, 2, 3], [4, 5, 6], [], [7, 8, 9]]
+        random.seed(0)
+        expected_result = {
+            'mean': np.mean([1, 2, 3, 4, 5, 6, 7, 8, 9]),
+            'median': np.median([1, 2, 3, 4, 5, 6, 7, 8, 9]),
+>           'mode': stats.mode([1, 2, 3, 4, 5, 6, 7, 8, 9])[0][0]
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        }
+E       IndexError: invalid index to scalar variable.
+
+test_0312.py:12: IndexError
+______________________ test_task_func_with_seed_and_size _______________________
+
+    def test_task_func_with_seed_and_size():
+        list_of_lists = [[1, 2, 3], [], [4, 5, 6], [7, 8, 9]]
+        seed = 0
+        size = 10
+        random.seed(seed)
+        expected_result = {
+            'mean': np.mean([1, 2, 3, 4, 5, 6, 7, 8, 9] + [random.randint(0, 100) for _ in range(size)]),
+            'median': np.median([1, 2, 3, 4, 5, 6, 7, 8, 9] + [random.randint(0, 100) for _ in range(size)]),
+>           'mode': stats.mode([1, 2, 3, 4, 5, 6, 7, 8, 9] + [random.randint(0, 100) for _ in range(size)])[0][0]
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        }
+E       IndexError: invalid index to scalar variable.
+
+test_0312.py:25: IndexError
+=========================== short test summary info ============================
+FAILED test_0312.py::test_task_func - IndexError: invalid index to scalar var...
+FAILED test_0312.py::test_task_func_with_seed_and_size - IndexError: invalid ...
+2 failed in 1.75s

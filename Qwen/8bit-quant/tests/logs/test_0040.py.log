@@ -1,0 +1,30 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        # Test with a simple data matrix
+        data_matrix = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+>       significant_indices, ax = task_func(data_matrix)
+                                  ^^^^^^^^^^^^^^^^^^^^^^
+
+test_0040.py:8: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data_matrix = array([[1, 2, 3],
+       [4, 5, 6],
+       [7, 8, 9]])
+
+    def task_func(data_matrix):
+        means = np.mean(data_matrix, axis=1)
+        population_mean = np.mean(data_matrix)
+    
+        _, p_value = ttest_1samp(means, population_mean)
+>       significant_indices = np.where(p_value < ALPHA)[0]
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: Calling nonzero on 0d arrays is not allowed. Use np.atleast_1d(scalar).nonzero() instead. If the context of this error is of the form `arr[nonzero(cond)]`, just use `arr[cond]`.
+
+../../../src/src_0040.py:11: ValueError
+=========================== short test summary info ============================
+FAILED test_0040.py::test_task_func - ValueError: Calling nonzero on 0d array...
+1 failed in 2.80s

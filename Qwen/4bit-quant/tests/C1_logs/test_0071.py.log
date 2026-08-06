@@ -1,0 +1,49 @@
+.F.                                                                      [100%]
+=================================== FAILURES ===================================
+________________________ test_task_func_empty_json_file ________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-tomohiro-w/pytest-1662/test_task_func_empty_json_file0')
+
+    def test_task_func_empty_json_file(tmp_path):
+        json_file = tmp_path / "empty.json"
+        json_file.touch()
+    
+>       df, ax = task_func(str(json_file))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0071.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../src/src_0071.py:8: in task_func
+    email_data = json.load(file)
+                 ^^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/__init__.py:293: in load
+    return loads(fp.read(),
+/usr/lib/python3.12/json/__init__.py:346: in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/decoder.py:337: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <json.decoder.JSONDecoder object at 0x7fb997477b30>, s = '', idx = 0
+
+    def raw_decode(self, s, idx=0):
+        """Decode a JSON document from ``s`` (a ``str`` beginning with
+        a JSON document) and return a 2-tuple of the Python
+        representation and the index in ``s`` where the document ended.
+    
+        This can be used to decode a JSON document from a string that may
+        have extraneous data at the end.
+    
+        """
+        try:
+            obj, end = self.scan_once(s, idx)
+        except StopIteration as err:
+>           raise JSONDecodeError("Expecting value", s, err.value) from None
+E           json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+/usr/lib/python3.12/json/decoder.py:355: JSONDecodeError
+=========================== short test summary info ============================
+FAILED test_0071.py::test_task_func_empty_json_file - json.decoder.JSONDecode...
+1 failed, 2 passed in 2.01s

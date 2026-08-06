@@ -1,0 +1,32 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________________ test_task_func ________________________________
+
+    def test_task_func():
+        input_string = "This is a test string\nThis is another test string"
+        directory = "./text_files"
+>       file_paths = task_func(input_string, directory)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0848.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input_string = 'This is a test string\nThis is another test string'
+directory = './text_files'
+
+    def task_func(input_string, directory='./text_files'):
+        lines = input_string.split('\n')
+        file_paths = []
+        for line in lines:
+            line = re.sub('['+string.punctuation+']', '', line)
+            filename = str(random.randint(10000, 99999)) + '.txt'
+            filepath = os.path.join(directory, filename)
+            file_paths.append(filepath)
+>           with open(filepath, 'w') as file:
+                 ^^^^^^^^^^^^^^^^^^^
+E           FileNotFoundError: [Errno 2] No such file or directory: './text_files/77105.txt'
+
+../../../src/src_0848.py:13: FileNotFoundError
+=========================== short test summary info ============================
+FAILED test_0848.py::test_task_func - FileNotFoundError: [Errno 2] No such fi...
+1 failed in 0.48s

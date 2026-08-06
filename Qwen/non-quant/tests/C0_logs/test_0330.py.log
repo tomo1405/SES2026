@@ -1,0 +1,103 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_____________________ test_task_func_with_default_pattern ______________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x786a61c9a750>
+
+    def test_task_func_with_default_pattern(monkeypatch):
+        # Mock the open function to return mock data
+        mock_data = {'key1': 'value1', 'key2': 'value2'}
+        monkeypatch.setattr('builtins.open', lambda path, mode: mock_open(mock_data))
+    
+        # Call the function
+>       result = task_func('test_file.json')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0330.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = 'test_file.json', regex_pattern = '\\(.+?\\)|\\w'
+
+    def task_func(file_path: str, regex_pattern=r'\(.+?\)|\w') -> dict:
+>       with open(file_path, 'r') as file:
+E       TypeError: 'MockFile' object does not support the context manager protocol
+
+../../../src/src_0330.py:5: TypeError
+______________________ test_task_func_with_custom_pattern ______________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x786a60a69760>
+
+    def test_task_func_with_custom_pattern(monkeypatch):
+        # Mock the open function to return mock data
+        mock_data = {'key1': 'example (text)', 'key2': 'another example'}
+        monkeypatch.setattr('builtins.open', lambda path, mode: mock_open(mock_data))
+    
+        # Define a custom regex pattern
+        custom_pattern = r'\bexample\b'
+    
+        # Call the function with the custom pattern
+>       result = task_func('test_file.json', custom_pattern)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0330.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = 'test_file.json', regex_pattern = '\\bexample\\b'
+
+    def task_func(file_path: str, regex_pattern=r'\(.+?\)|\w') -> dict:
+>       with open(file_path, 'r') as file:
+E       TypeError: 'MockFile' object does not support the context manager protocol
+
+../../../src/src_0330.py:5: TypeError
+________________________ test_task_func_with_no_matches ________________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x786a60a69cd0>
+
+    def test_task_func_with_no_matches(monkeypatch):
+        # Mock the open function to return mock data
+        mock_data = {'key1': 'no match here', 'key2': 'also no match'}
+        monkeypatch.setattr('builtins.open', lambda path, mode: mock_open(mock_data))
+    
+        # Call the function
+>       result = task_func('test_file.json')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0330.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = 'test_file.json', regex_pattern = '\\(.+?\\)|\\w'
+
+    def task_func(file_path: str, regex_pattern=r'\(.+?\)|\w') -> dict:
+>       with open(file_path, 'r') as file:
+E       TypeError: 'MockFile' object does not support the context manager protocol
+
+../../../src/src_0330.py:5: TypeError
+________________________ test_task_func_with_empty_file ________________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x786a60a6a3f0>
+
+    def test_task_func_with_empty_file(monkeypatch):
+        # Mock the open function to return mock data
+        mock_data = {}
+        monkeypatch.setattr('builtins.open', lambda path, mode: mock_open(mock_data))
+    
+        # Call the function
+>       result = task_func('test_file.json')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_0330.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file_path = 'test_file.json', regex_pattern = '\\(.+?\\)|\\w'
+
+    def task_func(file_path: str, regex_pattern=r'\(.+?\)|\w') -> dict:
+>       with open(file_path, 'r') as file:
+E       TypeError: 'MockFile' object does not support the context manager protocol
+
+../../../src/src_0330.py:5: TypeError
+=========================== short test summary info ============================
+FAILED test_0330.py::test_task_func_with_default_pattern - TypeError: 'MockFi...
+FAILED test_0330.py::test_task_func_with_custom_pattern - TypeError: 'MockFil...
+FAILED test_0330.py::test_task_func_with_no_matches - TypeError: 'MockFile' o...
+FAILED test_0330.py::test_task_func_with_empty_file - TypeError: 'MockFile' o...
+4 failed in 0.44s
